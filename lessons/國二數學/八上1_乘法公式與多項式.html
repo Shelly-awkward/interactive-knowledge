@@ -581,7 +581,7 @@ function logEv(ev){
 }
 // ===== 雲端上傳（家長的 Google 試算表）=====
 // 設定 Apps Script 網頁應用程式網址（/exec 結尾）後，每次念書時段與交卷自動上傳；留空則只記在本機。
-const CLOUD_URL = "";
+const CLOUD_URL = "https://script.google.com/macros/s/AKfycbzLyAZ7eRQXQmBBNTvMObNAD3wAHGDD_osBunEQEhUe9pItU6sph1qTeAr3FOWP6OmI5A/exec";
 function cloudSend(row){
   if(!CLOUD_URL) return;
   const body = JSON.stringify(Object.assign({ ch: CH }, row));
