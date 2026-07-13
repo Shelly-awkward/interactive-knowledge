@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>夜市經濟學｜看懂世界怎麼運轉的 8 堂互動課</title>
+<style>
+:root{
+  --night:#14213D;
+  --night-deep:#0C1428;
+  --lantern:#FCA311;
+  --lantern-glow:#FFD166;
+  --seal:#D64541;
+  --money:#2A9D8F;
+  --paper:#F4F6FA;
+  --card:#FFFFFF;
+  --ink:#1E2430;
+  --ink-soft:#5A6478;
+  --line:#DDE3EE;
+  --radius:14px;
+  font-size:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation:none!important;transition:none!important;}
+}
+body{
+  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.75;
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  background:linear-gradient(180deg,var(--night-deep) 0%,var(--night) 70%,#1D2E52 100%);
+  color:#fff;
+  padding:56px 20px 40px;
+  position:relative;
+  overflow:hidden;
+}
+.hero-inner{max-width:860px;margin:0 auto;position:relative;z-index:2;}
+.hero .eyebrow{
+  display:inline-block;
+  color:var(--lantern);
+  font-weight:700;
+  letter-spacing:.35em;
+  font-size:.8rem;
+  border:1px solid rgba(252,163,17,.5);
+  padding:4px 14px 4px 18px;
+  border-radius:999px;
+  margin-bottom:18px;
+}
+.hero h1{
+  font-size:clamp(2rem,6vw,3.4rem);
+  font-weight:900;
+  letter-spacing:.06em;
+  line-height:1.25;
+}
+.hero h1 .hl{color:var(--lantern);}
+.hero p.sub{
+  margin-top:16px;
+  color:#C7D0E4;
+  max-width:560px;
+  font-size:1.02rem;
+}
+.hero .credit{
+  margin-top:22px;
+  font-size:.8rem;
+  color:#8B96B3;
+}
+/* lantern progress row */
+.lantern-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:30px;
+  align-items:flex-end;
+}
+.lantern{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  cursor:pointer;
+  background:none;
+  border:none;
+  font-family:inherit;
+}
+.lantern .bulb{
+  width:34px;height:42px;
+  border-radius:16px 16px 14px 14px;
+  background:#2A3A5E;
+  border:2px solid #3D5079;
+  position:relative;
+  transition:background .4s,box-shadow .4s,border-color .4s;
+}
+.lantern .bulb::before{
+  content:"";
+  position:absolute;top:-6px;left:50%;transform:translateX(-50%);
+  width:12px;height:5px;border-radius:3px;
+  background:#3D5079;
+}
+.lantern .bulb::after{
+  content:"";
+  position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);
+  width:3px;height:7px;
+  background:#3D5079;
+}
+.lantern.lit .bulb{
+  background:radial-gradient(circle at 50% 35%,var(--lantern-glow),var(--lantern) 70%);
+  border-color:var(--lantern-glow);
+  box-shadow:0 0 18px rgba(252,163,17,.75);
+}
+.lantern .lb{
+  font-size:.68rem;
+  color:#8B96B3;
+  letter-spacing:.05em;
+}
+.lantern.lit .lb{color:var(--lantern-glow);}
+.progress-note{font-size:.78rem;color:#8B96B3;margin-top:10px;}
+
+/* ---------- NAV ---------- */
+nav.toc{
+  position:sticky;top:0;z-index:50;
+  background:rgba(20,33,61,.96);
+  backdrop-filter:blur(6px);
+  border-bottom:2px solid var(--lantern);
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+nav.toc .row{
+  display:flex;gap:4px;
+  max-width:1000px;margin:0 auto;
+  padding:8px 12px;
+  white-space:nowrap;
+}
+nav.toc a{
+  color:#C7D0E4;
+  text-decoration:none;
+  font-size:.82rem;
+  font-weight:600;
+  padding:6px 12px;
+  border-radius:999px;
+  transition:background .2s,color .2s;
+  flex-shrink:0;
+}
+nav.toc a:hover,nav.toc a:focus-visible{background:rgba(252,163,17,.18);color:var(--lantern-glow);}
+nav.toc a:focus-visible{outline:2px solid var(--lantern);outline-offset:1px;}
+
+/* ---------- LAYOUT ---------- */
+main{max-width:860px;margin:0 auto;padding:20px 16px 80px;}
+section.unit{
+  margin-top:52px;
+  scroll-margin-top:70px;
+}
+.unit-head{
+  display:flex;align-items:baseline;gap:14px;
+  border-bottom:3px solid var(--night);
+  padding-bottom:10px;margin-bottom:20px;
+  flex-wrap:wrap;
+}
+.unit-head .no{
+  font-size:2.4rem;font-weight:900;color:var(--lantern);
+  line-height:1;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;
+}
+.unit-head h2{
+  font-size:clamp(1.3rem,3.5vw,1.7rem);
+  font-weight:900;letter-spacing:.04em;
+}
+.unit-head .tag{
+  margin-left:auto;
+  font-size:.72rem;color:var(--ink-soft);
+  background:#EAEEF6;border-radius:999px;padding:3px 12px;
+  align-self:center;
+}
+.story{
+  background:var(--night);
+  color:#E8ECF6;
+  border-radius:var(--radius);
+  padding:18px 20px;
+  margin-bottom:18px;
+  position:relative;
+  font-size:.96rem;
+}
+.story::before{
+  content:"阿哲的攤位";
+  position:absolute;top:-11px;left:16px;
+  background:var(--lantern);color:var(--night);
+  font-size:.7rem;font-weight:800;letter-spacing:.15em;
+  padding:2px 12px;border-radius:999px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:20px 22px;
+  margin-bottom:16px;
+  box-shadow:0 1px 3px rgba(20,33,61,.05);
+}
+.card h3{
+  font-size:1.05rem;font-weight:800;
+  margin-bottom:8px;
+  padding-left:12px;
+  border-left:4px solid var(--lantern);
+}
+.card p{margin-bottom:10px;font-size:.95rem;}
+.card p:last-child{margin-bottom:0;}
+.kw{
+  background:#FFF3DC;
+  border-bottom:2px solid var(--lantern);
+  padding:0 3px;font-weight:700;
+  border-radius:3px 3px 0 0;
+}
+.def{
+  background:#F0F4FB;
+  border-left:4px solid var(--night);
+  border-radius:0 10px 10px 0;
+  padding:12px 16px;margin:12px 0;
+  font-size:.9rem;
+}
+.def b{color:var(--night);}
+small.src{color:var(--ink-soft);font-size:.75rem;display:block;margin-top:8px;}
+
+/* ---------- GAME BOX ---------- */
+.game{
+  background:linear-gradient(160deg,#FFFDF7,#FFF6E4);
+  border:2px solid var(--lantern);
+  border-radius:var(--radius);
+  padding:20px 22px;
+  margin:18px 0;
+  position:relative;
+}
+.game::before{
+  content:"🎮 動手玩";
+  position:absolute;top:-13px;left:16px;
+  background:var(--seal);color:#fff;
+  font-size:.75rem;font-weight:800;letter-spacing:.12em;
+  padding:3px 14px;border-radius:999px;
+}
+.game h4{font-size:1rem;font-weight:800;margin-bottom:10px;color:var(--night);}
+.game .hint{font-size:.83rem;color:var(--ink-soft);margin-bottom:12px;}
+
+button.btn{
+  font-family:inherit;
+  background:var(--night);color:#fff;
+  border:none;border-radius:10px;
+  padding:9px 18px;
+  font-size:.9rem;font-weight:700;
+  cursor:pointer;
+  transition:transform .12s,background .2s;
+}
+button.btn:hover{background:#1F3159;}
+button.btn:active{transform:scale(.96);}
+button.btn:focus-visible{outline:3px solid var(--lantern);outline-offset:2px;}
+button.btn.warm{background:var(--lantern);color:var(--night);}
+button.btn.warm:hover{background:var(--lantern-glow);}
+button.btn.ghost{background:#fff;color:var(--night);border:2px solid var(--night);}
+button.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+
+input[type=range]{
+  width:100%;
+  accent-color:var(--seal);
+  height:6px;
+  cursor:pointer;
+}
+input[type=range]:focus-visible{outline:3px solid var(--lantern);outline-offset:4px;border-radius:4px;}
+
+.result{
+  margin-top:12px;
+  border-radius:10px;
+  padding:12px 16px;
+  font-size:.92rem;
+  font-weight:600;
+}
+.result.ok{background:#E2F3EF;color:#186156;border:1px solid var(--money);}
+.result.bad{background:#FBE7E5;color:#8E2B24;border:1px solid var(--seal);}
+.result.info{background:#EBF0FA;color:#26386A;border:1px solid #A8B8DC;}
+
+.bars{display:flex;gap:20px;align-items:flex-end;height:150px;margin:14px 0 6px;}
+.barwrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end;}
+.bar{
+  width:64%;
+  border-radius:8px 8px 0 0;
+  transition:height .35s ease;
+  min-height:4px;
+  position:relative;
+}
+.bar .val{
+  position:absolute;top:-24px;left:50%;transform:translateX(-50%);
+  font-weight:800;font-size:.9rem;font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+.bar.demand{background:linear-gradient(180deg,#E76F51,var(--seal));}
+.bar.supply{background:linear-gradient(180deg,#57C4B8,var(--money));}
+.barlabel{font-size:.8rem;font-weight:700;color:var(--ink-soft);}
+
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.chip{
+  font-family:inherit;
+  background:#fff;border:2px solid var(--line);
+  border-radius:999px;padding:6px 14px;
+  font-size:.83rem;font-weight:700;cursor:pointer;
+  transition:border-color .2s,background .2s;
+}
+.chip:hover{border-color:var(--lantern);}
+.chip.active{background:var(--night);color:#fff;border-color:var(--night);}
+.chip:focus-visible{outline:3px solid var(--lantern);outline-offset:2px;}
+
+/* budget game */
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:12px 0;}
+.item{
+  font-family:inherit;
+  background:#fff;border:2px solid var(--line);
+  border-radius:12px;padding:12px 10px;
+  text-align:center;cursor:pointer;
+  transition:border-color .2s,transform .12s,background .2s;
+  font-size:.88rem;
+}
+.item:hover{border-color:var(--lantern);}
+.item:active{transform:scale(.97);}
+.item:focus-visible{outline:3px solid var(--lantern);outline-offset:2px;}
+.item.picked{border-color:var(--money);background:#E7F5F2;}
+.item .emoji{font-size:1.6rem;display:block;margin-bottom:4px;}
+.item .price{font-weight:800;color:var(--seal);font-variant-numeric:tabular-nums;}
+.budgetbar{
+  height:20px;background:#E6EAF3;border-radius:999px;overflow:hidden;
+  margin:10px 0 4px;border:1px solid var(--line);
+}
+.budgetbar .fill{
+  height:100%;background:linear-gradient(90deg,var(--money),#57C4B8);
+  width:0%;transition:width .3s,background .3s;
+  border-radius:999px;
+}
+.budgetbar .fill.over{background:linear-gradient(90deg,var(--seal),#E76F51);}
+.budgetnum{font-size:.85rem;font-weight:700;font-variant-numeric:tabular-nums;}
+
+/* GDP steps */
+.gdp-stage{
+  display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;margin:14px 0;
+}
+.gdp-node{
+  flex:1;min-width:160px;
+  background:#fff;border:2px dashed var(--line);
+  border-radius:12px;padding:14px 12px;
+  text-align:center;opacity:.35;
+  transition:opacity .4s,border-color .4s;
+  font-size:.86rem;
+}
+.gdp-node.on{opacity:1;border-color:var(--money);border-style:solid;}
+.gdp-node .emoji{font-size:1.7rem;}
+.gdp-node .nm{font-weight:800;margin:4px 0;}
+.gdp-node .va{
+  margin-top:6px;background:#E7F5F2;color:#186156;
+  border-radius:8px;padding:4px 6px;font-weight:800;
+  font-variant-numeric:tabular-nums;
+}
+.gdp-total{
+  text-align:center;font-size:1.05rem;font-weight:800;
+  margin-top:8px;min-height:32px;color:var(--night);
+}
+
+/* credit creation table */
+table.ledger{
+  width:100%;border-collapse:collapse;margin:12px 0;
+  font-size:.86rem;background:#fff;border-radius:10px;overflow:hidden;
+}
+.ledger th{
+  background:var(--night);color:#fff;
+  padding:8px 10px;text-align:right;font-weight:700;
+}
+.ledger th:first-child{text-align:left;}
+.ledger td{
+  padding:7px 10px;border-bottom:1px solid var(--line);
+  text-align:right;font-variant-numeric:tabular-nums;
+}
+.ledger td:first-child{text-align:left;font-weight:700;}
+.ledger tr.total td{background:#FFF3DC;font-weight:800;border-bottom:none;}
+
+/* flip cards */
+.flipgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:12px;}
+.flip{
+  font-family:inherit;text-align:left;
+  background:#fff;border:2px solid var(--line);
+  border-radius:12px;padding:14px 16px;cursor:pointer;
+  transition:border-color .2s;font-size:.88rem;line-height:1.6;
+}
+.flip:hover{border-color:var(--lantern);}
+.flip:focus-visible{outline:3px solid var(--lantern);outline-offset:2px;}
+.flip .q{font-weight:700;}
+.flip .a{
+  display:none;margin-top:10px;padding-top:10px;
+  border-top:1px dashed var(--line);color:#186156;font-weight:700;
+}
+.flip .a .why{display:block;font-weight:400;color:var(--ink-soft);font-size:.82rem;margin-top:4px;}
+.flip.revealed{border-color:var(--money);}
+.flip.revealed .a{display:block;}
+.flip .tap{color:var(--ink-soft);font-size:.76rem;display:block;margin-top:8px;}
+.flip.revealed .tap{display:none;}
+
+/* fx panel */
+.fx-panels{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+@media(max-width:560px){.fx-panels{grid-template-columns:1fr;}}
+.fx-panel{
+  background:#fff;border:1px solid var(--line);border-radius:12px;
+  padding:14px 16px;font-size:.88rem;
+}
+.fx-panel h5{font-size:.92rem;margin-bottom:6px;}
+.fx-panel .big{
+  font-size:1.4rem;font-weight:900;font-variant-numeric:tabular-nums;
+  margin:4px 0;
+}
+.fx-rate{
+  text-align:center;font-size:1.3rem;font-weight:900;
+  font-variant-numeric:tabular-nums;margin:6px 0 2px;color:var(--night);
+}
+.fx-tag{
+  display:inline-block;border-radius:999px;padding:2px 12px;
+  font-size:.78rem;font-weight:800;margin-left:8px;vertical-align:middle;
+}
+.fx-tag.up{background:#E2F3EF;color:#186156;}
+.fx-tag.down{background:#FBE7E5;color:#8E2B24;}
+.fx-tag.mid{background:#EBF0FA;color:#26386A;}
+
+/* tax compare */
+.tax-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+@media(max-width:560px){.tax-row{grid-template-columns:1fr;}}
+.tax-person{
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;
+  font-size:.87rem;
+}
+.tax-person h5{font-weight:800;margin-bottom:6px;}
+.burden{
+  height:16px;background:#E6EAF3;border-radius:999px;overflow:hidden;margin:6px 0 2px;
+}
+.burden .fill{height:100%;background:var(--seal);border-radius:999px;transition:width .35s;}
+.burden-num{font-weight:800;font-variant-numeric:tabular-nums;font-size:.95rem;}
+
+/* quiz */
+.quiz-q{
+  background:#fff;border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px;margin-bottom:12px;
+}
+.quiz-q .qt{font-weight:800;margin-bottom:10px;font-size:.94rem;}
+.quiz-q .opts{display:grid;gap:8px;}
+.quiz-q .opt{
+  font-family:inherit;text-align:left;
+  background:#F6F8FC;border:2px solid var(--line);
+  border-radius:10px;padding:9px 14px;font-size:.88rem;cursor:pointer;
+  transition:border-color .15s,background .15s;
+}
+.quiz-q .opt:hover{border-color:var(--lantern);}
+.quiz-q .opt:focus-visible{outline:3px solid var(--lantern);outline-offset:2px;}
+.quiz-q .opt.correct{background:#E2F3EF;border-color:var(--money);font-weight:700;}
+.quiz-q .opt.wrong{background:#FBE7E5;border-color:var(--seal);}
+.quiz-q .exp{
+  display:none;margin-top:10px;font-size:.83rem;color:var(--ink-soft);
+  border-top:1px dashed var(--line);padding-top:8px;
+}
+.quiz-q.answered .exp{display:block;}
+.quiz-score{
+  text-align:center;background:var(--night);color:#fff;
+  border-radius:var(--radius);padding:24px;margin-top:16px;
+}
+.quiz-score .sc{font-size:2.6rem;font-weight:900;color:var(--lantern);font-variant-numeric:tabular-nums;}
+
+footer{
+  background:var(--night-deep);color:#8B96B3;
+  padding:32px 20px;text-align:center;font-size:.8rem;line-height:1.9;
+  margin-top:60px;
+}
+footer b{color:#C7D0E4;}
+.done-badge{
+  display:none;margin-left:10px;
+  background:var(--money);color:#fff;font-size:.7rem;font-weight:800;
+  border-radius:999px;padding:2px 12px;vertical-align:middle;letter-spacing:.1em;
+  align-self:center;
+}
+.done-badge.show{display:inline-block;}
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">國中生互動經濟課</span>
+    <h1>夜市經濟學<br><span class="hl">看懂世界怎麼運轉</span>的 8 堂課</h1>
+    <p class="sub">國二的阿哲在夜市擺攤賣雞蛋糕。從一個小攤子出發，你會發現：定價、發薪水、繳稅、銀行、匯率——課本上的經濟學，其實每天都在你身邊上演。</p>
+    <div class="lantern-row" id="lanternRow"></div>
+    <p class="progress-note">每完成一個單元的小遊戲，就點亮一盞燈籠。點燈籠可以跳到該單元。</p>
+    <p class="credit">改編自 吉田泰史《拯救人生的 2 小時經濟課》｜例子已在地化為台灣情境</p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="單元目錄">
+  <div class="row">
+    <a href="#u1">1 稀少性</a>
+    <a href="#u2">2 市場價格</a>
+    <a href="#u3">3 公司股票</a>
+    <a href="#u4">4 GDP</a>
+    <a href="#u5">5 政府與稅</a>
+    <a href="#u6">6 錢與銀行</a>
+    <a href="#u7">7 市場失靈</a>
+    <a href="#u8">8 國際經濟</a>
+    <a href="#final">期末挑戰</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ UNIT 1 ============ -->
+<section class="unit" id="u1">
+  <div class="unit-head">
+    <span class="no">01</span>
+    <h2>為什麼不能什麼都要？</h2>
+    <span class="done-badge" id="badge1">已點燈</span>
+    <span class="tag">稀少性・機會成本</span>
+  </div>
+
+  <div class="story">阿哲這個月存了 300 元零用錢。他想買新出的漫畫、想喝手搖飲、還想看電影……但錢就這麼多。「全部都要」是不可能的——他必須<b>選擇</b>。</div>
+
+  <div class="card">
+    <h3>經濟學的起點：東西不夠分</h3>
+    <p>能用來生產的資源——錢、時間、人力、土地、原料——數量都<span class="kw">有限</span>，但人想要的東西<span class="kw">無限</span>。這個「不夠」就叫做<span class="kw">稀少性</span>。</p>
+    <p>所以整個經濟學其實只在回答一個問題：<b>有限的資源，要怎麼分配才最有效？</b>企業想的是「有限的人力和資金，怎麼賺最多利潤」；你想的是「有限的零用錢，怎麼花最開心」——本質是同一題。</p>
+    <div class="def"><b>機會成本</b>：做了一個選擇時，你所放棄的選項中「價值最高的那一個」。選擇永遠有代價，就算標價是 0 元。</div>
+  </div>
+
+  <div class="game">
+    <h4>零用錢分配挑戰</h4>
+    <p class="hint">預算 300 元。點選你想買的東西，看看能不能全包——然後注意你「放棄了什麼」。</p>
+    <div class="items" id="budgetItems"></div>
+    <div class="budgetbar"><div class="fill" id="budgetFill"></div></div>
+    <div class="budgetnum" id="budgetNum">已花 0 / 300 元</div>
+    <div class="result info" id="budgetResult">還沒選任何東西。先挑挑看吧！</div>
+  </div>
+
+  <div class="card">
+    <h3>經濟活動的三個角色</h3>
+    <p>把複雜的社會簡化成模型，只剩三種角色在互動：<span class="kw">個人</span>（提供勞力、領薪水、消費）、<span class="kw">企業</span>（雇人、生產商品和服務）、<span class="kw">政府</span>（收稅、提供警察消防等公共服務、調節經濟）。</p>
+    <p>而大家拿著商品和金錢互相交換的場所，就是<span class="kw">市場</span>——下一課的主角。</p>
+  </div>
+</section>
+
+<!-- ============ UNIT 2 ============ -->
+<section class="unit" id="u2">
+  <div class="unit-head">
+    <span class="no">02</span>
+    <h2>雞蛋糕該賣多少錢？</h2>
+    <span class="done-badge" id="badge2">已點燈</span>
+    <span class="tag">供給與需求</span>
+  </div>
+
+  <div class="story">阿哲的雞蛋糕一份賣 50 元剛剛好，客人排隊、也不會做太多剩下來。有一天他心血來潮漲到 70 元——結果賣不完；降到 30 元——排隊排到隔壁攤，做都做不及。價格，好像有一個「剛剛好」的位置？</div>
+
+  <div class="card">
+    <h3>看不見的手</h3>
+    <p>價格越低，想買的人越多（<span class="kw">需求</span>）；價格越高，想賣的人越願意多做（<span class="kw">供給</span>）。當「想買的量」剛好等於「想賣的量」，這個價格叫<span class="kw">均衡價格</span>。</p>
+    <p>神奇的是：沒有人下命令，價格會<b>自動</b>走向均衡。太貴賣不完→只好降價；太便宜被搶光→自然漲價。經濟學家亞當・史密斯把這個自動調節機制稱為「<span class="kw">看不見的手</span>」。</p>
+  </div>
+
+  <div class="game">
+    <h4>找出均衡價格</h4>
+    <p class="hint">拉動滑桿調整雞蛋糕的價格，讓「想買的量」和「想賣的量」一樣多。再按下面的情境按鈕，看看均衡點怎麼移動。</p>
+    <div class="chips" id="mktChips">
+      <button class="chip active" data-sc="base">平常日</button>
+      <button class="chip" data-sc="demand">隔壁學校段考結束，人潮湧入</button>
+      <button class="chip" data-sc="supply">麵粉大漲價，成本變高</button>
+    </div>
+    <div style="margin-top:14px;">
+      <label for="priceSlider" style="font-weight:700;font-size:.9rem;">價格：<span id="priceLabel">50</span> 元／份</label>
+      <input type="range" id="priceSlider" min="20" max="80" step="1" value="35" aria-label="調整雞蛋糕價格">
+    </div>
+    <div class="bars">
+      <div class="barwrap">
+        <div class="bar demand" id="barD" style="height:60%"><span class="val" id="valD"></span></div>
+        <span class="barlabel">想買的量（需求）</span>
+      </div>
+      <div class="barwrap">
+        <div class="bar supply" id="barS" style="height:30%"><span class="val" id="valS"></span></div>
+        <span class="barlabel">想賣的量（供給）</span>
+      </div>
+    </div>
+    <div class="result info" id="mktResult"></div>
+  </div>
+
+  <div class="card">
+    <h3>物價與通貨膨脹</h3>
+    <p>單一商品有價格，而把整個社會所有商品的價格「平均起來看」，就是<span class="kw">物價</span>。物價持續上漲叫<span class="kw">通貨膨脹</span>（通膨）——同樣的錢買到的東西變少，等於<b>錢變薄了</b>；物價持續下跌叫<span class="kw">通貨緊縮</span>。</p>
+    <p>通縮聽起來划算，其實很危險：東西變便宜→店家賺不到錢→減薪裁員→大家更不敢花錢→東西更便宜……這個惡性循環叫<span class="kw">通縮螺旋</span>。</p>
+    <div class="def"><b>歷史上最誇張的通膨</b>：1922–23 年的德國，物價漲了超過一億倍。早上的薪水撐不到晚上，有人用鈔票糊牆壁，因為鈔票比壁紙便宜。</div>
+    <p>通膨還會「劫貧濟債」：靠固定收入（如年金）生活的人變窮，欠錢的人卻賺到——原本要賣 40 份雞蛋糕才還得起的債，物價翻倍後賣 20 份就夠了。</p>
+  </div>
+</section>
+
+<!-- ============ UNIT 3 ============ -->
+<section class="unit" id="u3">
+  <div class="unit-head">
+    <span class="no">03</span>
+    <h2>開一間公司要幾個人的錢？</h2>
+    <span class="done-badge" id="badge3">已點燈</span>
+    <span class="tag">股份有限公司</span>
+  </div>
+
+  <div class="story">阿哲的雞蛋糕大受歡迎，他想開分店，但一台機器要 10 萬元。他找了 10 個同學，每人出 1 萬元「入股」——恭喜，這 10 個人成了「股東」，阿哲雞蛋糕正式變成一間「股份有限公司」。</div>
+
+  <div class="card">
+    <h3>股份：把大錢切成小塊來募</h3>
+    <p>大生意需要大資金，一個人出不起，就把出資單位切成一小份一小份的<span class="kw">股份</span>，向很多人「廣募少量資金」。出錢的人叫<span class="kw">股東</span>，公司賺錢時可以分到<span class="kw">股息</span>。世界上第一間近代股份有限公司，是 1602 年的荷蘭東印度公司。</p>
+    <p>股東人多嘴雜怎麼決定事情？開<span class="kw">股東大會</span>投票——注意，不是一人一票，而是<b>一股一票</b>，出越多錢話語權越大。大公司的股東通常不自己經營，而是聘請專業經理人，這叫<span class="kw">所有權與經營權分離</span>。</p>
+  </div>
+
+  <div class="game">
+    <h4>公司倒了，你賠多少？</h4>
+    <p class="hint">你投資 1 萬元入股阿哲雞蛋糕公司。三年後公司經營不善倒閉，還欠了廠商 50 萬元。身為 10 位股東之一，你要賠多少？</p>
+    <div class="quiz-q" style="border:none;padding:0;margin:0;">
+      <div class="opts">
+        <button class="opt" data-llq="a">欠款 50 萬由 10 位股東平分，每人賠 5 萬</button>
+        <button class="opt" data-llq="b" data-ok="1">損失我出的 1 萬元，其他不用賠</button>
+        <button class="opt" data-llq="c">公司的債要股東無限扛下去，賠到還完為止</button>
+      </div>
+    </div>
+    <div class="result" id="llResult" style="display:none;"></div>
+  </div>
+
+  <div class="card">
+    <h3>為什麼「有限責任」是天才發明</h3>
+    <p>股東最多只損失自己投入的錢，公司欠再多都與股東個人財產無關——這叫<span class="kw">股東有限責任</span>。因為風險有上限，大家才敢放心投資各種公司，資金才會流向有創意的新事業。如果投資可能讓你賠到脫褲，誰還敢當股東？</p>
+    <p>不過公司權力大也可能亂來，所以需要<span class="kw">公司治理</span>：例如請和公司沒有利害關係的<span class="kw">外部董事</span>來監督經營，防止作假帳、隱瞞產品瑕疵。企業也被期待負起<span class="kw">社會責任（CSR）</span>——守法、做公益、顧環境，不能只顧賺錢。</p>
+  </div>
+</section>
+
+<!-- ============ UNIT 4 ============ -->
+<section class="unit" id="u4">
+  <div class="unit-head">
+    <span class="no">04</span>
+    <h2>一個國家一年賺多少？</h2>
+    <span class="done-badge" id="badge4">已點燈</span>
+    <span class="tag">GDP・附加價值</span>
+  </div>
+
+  <div class="story">新聞說「台灣今年 GDP 成長 3%」。阿哲問老師：GDP 到底怎麼算的？把全國每一筆買賣加起來嗎？老師說：那會重複計算喔——來，我們建一個只有三家公司的迷你國家看看。</div>
+
+  <div class="card">
+    <h3>附加價值：你「新創造」的部分</h3>
+    <p><span class="kw">GDP（國內生產毛額）</span>是一個國家在一段期間內（通常一年），境內新創造的<span class="kw">附加價值</span>總和。附加價值 = 賣出的金額 − 買進原料的金額，也就是這一關「新增加」的價值。</p>
+    <div class="def"><b>為什麼不能直接加總營業額？</b>麵包店賣 320 萬的麵包，裡面「包含」了 150 萬的麵粉、而麵粉裡又包含 100 萬的小麥——直接加總會把同一批小麥算三次。只加「新增的部分」才不重複。</div>
+  </div>
+
+  <div class="game">
+    <h4>福爾摩沙島 GDP 計算機</h4>
+    <p class="hint">這座島只有三家公司。按「下一關」逐步算出每一關的附加價值，最後算出全島 GDP。</p>
+    <div class="gdp-stage">
+      <div class="gdp-node" id="g1">
+        <span class="emoji">🌾</span>
+        <div class="nm">小麥農</div>
+        <div>賣出小麥 100 萬<br>進口肥料成本 20 萬</div>
+        <div class="va" id="g1v">附加價值：？</div>
+      </div>
+      <div class="gdp-node" id="g2">
+        <span class="emoji">🏭</span>
+        <div class="nm">麵粉廠</div>
+        <div>買小麥 100 萬<br>賣出麵粉 150 萬</div>
+        <div class="va" id="g2v">附加價值：？</div>
+      </div>
+      <div class="gdp-node" id="g3">
+        <span class="emoji">🥐</span>
+        <div class="nm">麵包店</div>
+        <div>買麵粉 150 萬<br>賣出麵包 320 萬</div>
+        <div class="va" id="g3v">附加價值：？</div>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <button class="btn warm" id="gdpBtn">下一關 ▶</button>
+    </div>
+    <div class="gdp-total" id="gdpTotal"></div>
+    <div class="result info" id="gdpNote" style="display:none;"></div>
+  </div>
+
+  <div class="card">
+    <h3>名目 vs 實質：小心物價的障眼法</h3>
+    <p>假設這個國家隔年什麼都沒多生產，但物價漲成 3 倍——直接用金額算的 <span class="kw">名目 GDP</span> 會變成 3 倍，看起來經濟大好，其實是假象。扣掉物價變動影響的 <span class="kw">實質 GDP</span> 才反映真正的生產量。看經濟新聞時，記得認明「實質」兩個字。</p>
+    <p>另外，GDP 只算「有市場價格」的生產：媽媽做的家事、你當志工的服務，雖然有價值，但沒有標價，所以<b>不計入 GDP</b>。</p>
+    <div class="def"><b>三面等價原則</b>：生產出來的價值，會以薪水、利潤等形式「分配」給人，人再把它「支出」掉。所以從生產、分配、支出三個角度算 GDP，答案一定相同。</div>
+  </div>
+</section>
+
+<!-- ============ UNIT 5 ============ -->
+<section class="unit" id="u5">
+  <div class="unit-head">
+    <span class="no">05</span>
+    <h2>路燈誰付錢？稅公平嗎？</h2>
+    <span class="done-badge" id="badge5">已點燈</span>
+    <span class="tag">財政・稅・國債</span>
+  </div>
+
+  <div class="story">夜市的路燈壞了，沒有攤販願意自掏腰包修——「我修好了，隔壁攤也免費沾光，憑什麼？」最後是市公所用稅金修好的。阿哲第一次覺得，繳稅好像……有點道理？</div>
+
+  <div class="card">
+    <h3>政府的三個工作</h3>
+    <p><b>① 提供公共財</b>：路燈、警察、消防這類服務<span class="kw">無法排他</span>——警察不能只保護有繳錢的人。既然沒辦法向使用者收費，市場上就不會有公司願意提供，只好由政府用稅金來做。</p>
+    <p><b>② 重新分配所得</b>：市場分配的所得有貧富差距。政府用<span class="kw">累進課稅</span>（賺越多、稅率越高）向高所得者多收一點，再透過社會福利照顧低所得者。</p>
+    <p><b>③ 穩定景氣</b>：不景氣時增加公共建設、減稅來創造需求；過熱時反向操作。這是 1929 年經濟大蕭條（美國每 4 人就有 1 人失業）後，經濟學家凱因斯留下的教訓：<b>政府不能對市場完全放任不管</b>。</p>
+  </div>
+
+  <div class="game">
+    <h4>哪種稅比較公平？</h4>
+    <p class="hint">小美月收入 2 萬 5（打工族），王董月收入 25 萬。拉動消費稅率，比較消費稅占兩人所得的比重。假設小美每月生活必需消費 2 萬元，王董消費 8 萬元。</p>
+    <label for="taxSlider" style="font-weight:700;font-size:.9rem;">消費稅率：<span id="taxLabel">5</span>%</label>
+    <input type="range" id="taxSlider" min="0" max="20" step="1" value="5" aria-label="調整消費稅率">
+    <div class="tax-row">
+      <div class="tax-person">
+        <h5>👩 小美（月收 25,000 元）</h5>
+        <div>每月消費 20,000 元 → 繳消費稅 <b id="taxA1">1,000</b> 元</div>
+        <div class="burden"><div class="fill" id="taxBar1" style="width:20%"></div></div>
+        <div class="burden-num">稅占所得 <span id="taxP1">4.0</span>%</div>
+      </div>
+      <div class="tax-person">
+        <h5>🕴️ 王董（月收 250,000 元）</h5>
+        <div>每月消費 80,000 元 → 繳消費稅 <b id="taxA2">4,000</b> 元</div>
+        <div class="burden"><div class="fill" id="taxBar2" style="width:3%"></div></div>
+        <div class="burden-num">稅占所得 <span id="taxP2">1.6</span>%</div>
+      </div>
+    </div>
+    <div class="result info" id="taxNote">拉拉看滑桿——注意兩人的「負擔率」誰比較重。</div>
+  </div>
+
+  <div class="card">
+    <h3>兩種公平＆國家也會欠錢</h3>
+    <p>剛才你看到的現象叫<span class="kw">累退性</span>：消費稅表面上人人稅率相同（<b>水平公平</b>：所得相同者繳相同的稅），但低所得者的消費占所得比例高，實際負擔反而更重。累進所得稅追求的則是<b>垂直公平</b>：能力越強、繳越多。兩種公平常常互相拉扯，這就是稅制設計的難題。</p>
+    <p>當稅收不夠支出，政府就發行<span class="kw">國債</span>向大家借錢。借錢建設道路橋梁，成果會留給下一代，還算合理；但借錢填補日常開銷的<span class="kw">赤字國債</span>，留給下一代的只有債務——祖父輩花的錢，孫子輩來還，這損害了<b>世代之間的公平</b>。日本的國債餘額已經接近 GDP 的兩倍，是全書作者最擔心的問題之一。</p>
+  </div>
+</section>
+
+<!-- ============ UNIT 6 ============ -->
+<section class="unit" id="u6">
+  <div class="unit-head">
+    <span class="no">06</span>
+    <h2>銀行的魔法：錢會生錢？</h2>
+    <span class="done-badge" id="badge6">已點燈</span>
+    <span class="tag">貨幣・信用創造・央行</span>
+  </div>
+
+  <div class="story">阿哲把賺到的 3 萬元存進銀行。他突發奇想：我的錢現在在保險箱裡睡覺嗎？行員笑著說：不，你的錢早就被借給別人開店了——而且說出來你可能不信，銀行體系可以把 100 萬「變成」1000 萬。</div>
+
+  <div class="card">
+    <h3>錢的三個功能</h3>
+    <p>沒有錢的世界只能以物易物：拿雞蛋糕的人想換飯糰，得先找到「剛好有飯糰、又剛好想要雞蛋糕」的人——累死。錢解決了這一切，因為它有三個功能：</p>
+    <p><b>① 價值標準</b>：麵包 60 元、飯糰 30 元，一眼看出麵包值兩個飯糰。<b>② 交換媒介</b>：先把雞蛋糕換成錢，再用錢買任何東西。<b>③ 價值儲藏</b>：雞蛋糕放三天就壞，錢可以存很久。</p>
+    <p>而且「錢」不只有現金：你存摺裡隨時能提領、能轉帳付款的<span class="kw">存款</span>，功能和現金幾乎一樣，也算貨幣。事實上，社會上的存款貨幣遠比現金多——它們是銀行「創造」出來的。</p>
+  </div>
+
+  <div class="game">
+    <h4>信用創造模擬器</h4>
+    <p class="hint">你存入 100 萬。銀行依規定保留 10%（<b>存款準備金</b>，以備你來提款），把剩下 90% 借出去。借到錢的人付款後，錢又被存進銀行……按「放貸下一輪」，看看全社會的存款總額會膨脹到多少。</p>
+    <table class="ledger">
+      <thead><tr><th>輪次</th><th>新增存款（萬元）</th><th>保留 10%</th><th>放貸出去</th></tr></thead>
+      <tbody id="ccBody">
+        <tr><td>第 1 輪（你的存款）</td><td>100.0</td><td>10.0</td><td>90.0</td></tr>
+      </tbody>
+      <tfoot><tr class="total"><td>存款總額</td><td id="ccTotal">100.0</td><td colspan="2" id="ccLimit">理論上限：100 ÷ 0.1 = 1000 萬</td></tr></tfoot>
+    </table>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn warm" id="ccBtn">放貸下一輪 ▶</button>
+      <button class="btn ghost" id="ccReset">重來</button>
+    </div>
+    <div class="result info" id="ccNote" style="display:none;"></div>
+  </div>
+
+  <div class="card">
+    <h3>中央銀行：銀行的銀行</h3>
+    <p>每個國家都有一間特別的銀行——台灣叫中央銀行、日本叫日本銀行、美國叫聯準會（Fed）。它不服務一般人，只做三件事：<b>唯一能印鈔票</b>、<b>當銀行的銀行</b>（借錢給一般銀行）、<b>當政府的銀行</b>（管國庫）。</p>
+    <p>它最重要的任務是<span class="kw">穩定物價</span>，工具是<span class="kw">金融政策</span>：不景氣時「降息」讓借錢變便宜，企業敢投資、大家敢買房，經濟就活絡；過熱時「升息」讓大家冷靜。具體做法之一是<span class="kw">公開市場操作</span>——央行向銀行買債券，等於把錢注入市場。</p>
+    <div class="def"><b>一條紅線</b>：央行原則上不能直接印鈔票買政府的國債。日本 1930 年代曾這麼做來籌軍費，結果引發失控的惡性通膨。無限印鈔＝錢的信用崩潰。</div>
+  </div>
+</section>
+
+<!-- ============ UNIT 7 ============ -->
+<section class="unit" id="u7">
+  <div class="unit-head">
+    <span class="no">07</span>
+    <h2>市場不是萬能的</h2>
+    <span class="done-badge" id="badge7">已點燈</span>
+    <span class="tag">市場失靈</span>
+  </div>
+
+  <div class="story">「看不見的手」這麼神，那還需要政府幹嘛？阿哲很快就遇到反例：上游工廠排廢水，害他洗雞蛋糕模具的水都是臭的——工廠賺錢，卻是整條街的人在付代價。市場，失靈了。</div>
+
+  <div class="card">
+    <h3>四種市場失靈</h3>
+    <p>市場自動調節有效率，但有四種情況它會失手，這時就需要政府介入：</p>
+    <p><b>① 公共財供給不足</b>：路燈、警消無法向使用者收費（<span class="kw">搭便車</span>問題），市場不會提供。<b>② 外部性</b>：交易「之外」的人被影響——工廠汙染害到居民是<span class="kw">外部不經濟</span>，果園變多讓隔壁養蜂人蜂蜜大豐收則是外部經濟。<b>③ 獨占／寡占</b>：只剩一兩家公司時，它們能聯手操縱價格（<span class="kw">卡特爾</span>），所以需要公平交易委員會和獨占禁止法來取締。<b>④ 資訊不對稱</b>：賣方比買方懂商品，劣質品把優質品趕出市場（<span class="kw">逆向選擇</span>）。</p>
+    <div class="def"><b>對付汙染的招數</b>：讓製造汙染的人自己付出代價——課碳稅、環境稅，或立法要求「汙染者付費」。把原本丟給社會的成本「內部化」回企業身上，過度生產就會踩剎車。</div>
+  </div>
+
+  <div class="game">
+    <h4>失靈偵探：這是哪一種？</h4>
+    <p class="hint">四個真實情境，判斷各屬於哪種市場失靈，點卡片核對答案。全部答完就點燈。</p>
+    <div class="flipgrid">
+      <button class="flip" id="f1">
+        <span class="q">💡 整條巷子沒路燈，住戶都希望有，但沒人願意出錢裝——「我裝了大家免費用，虧」。</span>
+        <span class="a">公共財供給不足<span class="why">無法排除沒付錢的人使用（搭便車），市場不會供給，需要政府用稅金提供。</span></span>
+        <span class="tap">點我看答案</span>
+      </button>
+      <button class="flip" id="f2">
+        <span class="q">🏭 工廠深夜偷排廢水，下游養殖戶的魚大量死亡，工廠卻照常獲利。</span>
+        <span class="a">外部不經濟（外部性）<span class="why">汙染成本沒有反映在工廠帳上，而是丟給無辜第三者。解法：罰款、環境稅、汙染者付費。</span></span>
+        <span class="tap">點我看答案</span>
+      </button>
+      <button class="flip" id="f3">
+        <span class="q">📱 某地只有兩家電信公司，兩家「有默契地」同時漲月租費，消費者無處可逃。</span>
+        <span class="a">寡占市場（操縱價格）<span class="why">競爭者太少，價格失去下降的力量。這種聯合行為是公平會取締的對象。</span></span>
+        <span class="tap">點我看答案</span>
+      </button>
+      <button class="flip" id="f4">
+        <span class="q">🛒 網拍上的二手手機，只有賣家知道是泡水機。買家怕被騙，只肯出低價，結果好手機反而沒人願意上架。</span>
+        <span class="a">資訊不對稱（逆向選擇）<span class="why">劣品把良品逐出市場。解法：賣家提供保固當「訊號」，證明自己的商品有品質。</span></span>
+        <span class="tap">點我看答案</span>
+      </button>
+    </div>
+    <div class="result ok" id="flipDone" style="display:none;">四種失靈全部破案！你已經懂為什麼政府必須存在了。</div>
+  </div>
+
+  <div class="card">
+    <h3>保護消費者</h3>
+    <p>資訊不對稱最常見的受害者就是消費者。所以法律給了你幾件武器：<span class="kw">猶豫期</span>（特定交易在期限內可無條件解約，冷靜期防衝動）、<span class="kw">商品責任</span>（產品有瑕疵造成損害，就算廠商「不是故意的」也要賠）、以及不公平的契約條款可以主張無效。買東西吃虧時，記得你不是孤軍奮戰。</p>
+  </div>
+</section>
+
+<!-- ============ UNIT 8 ============ -->
+<section class="unit" id="u8">
+  <div class="unit-head">
+    <span class="no">08</span>
+    <h2>台幣升值，是好事嗎？</h2>
+    <span class="done-badge" id="badge8">已點燈</span>
+    <span class="tag">貿易・匯率</span>
+  </div>
+
+  <div class="story">阿哲的雞蛋糕粉是進口的。新聞說「台幣升值」，隔天進貨居然變便宜了！但做外銷腳踏車的舅舅卻愁眉苦臉。同一件事，為什麼有人笑、有人哭？</div>
+
+  <div class="card">
+    <h3>為什麼要跟外國做生意？</h3>
+    <p>就算一個國家什麼都做得比別人好，<b>分工貿易仍然對雙方都有利</b>——這是經濟學家李嘉圖的<span class="kw">比較利益法則</span>。關鍵是比較<span class="kw">機會成本</span>：哥哥摺紙鶴又快、剪窗花也快，但他摺一隻紙鶴只需犧牲半張窗花，妹妹卻要犧牲兩張——那紙鶴就該全交給哥哥，窗花交給妹妹，兩人的總產量會比各做各的更多。國家也一樣：<b>專心做自己「犧牲最小」的事，再互相交換</b>。</p>
+  </div>
+
+  <div class="game">
+    <h4>匯率模擬器</h4>
+    <p class="hint">拉動匯率，觀察「進口的遊戲主機」和「出口的台灣腳踏車」價格怎麼變。數字變小 = 台幣升值（1 美元換到的台幣變少 = 台幣變強）。</p>
+    <div class="fx-rate">1 美元 = <span id="fxLabel">32</span> 元台幣 <span class="fx-tag mid" id="fxTag">基準</span></div>
+    <input type="range" id="fxSlider" min="25" max="40" step="1" value="32" aria-label="調整匯率">
+    <div class="fx-panels">
+      <div class="fx-panel">
+        <h5>🎮 進口：美國遊戲主機（499 美元）</h5>
+        <div>台灣消費者要付</div>
+        <div class="big" id="fxImport">15,968 元</div>
+        <div id="fxImportNote" style="color:var(--ink-soft);font-size:.8rem;">—</div>
+      </div>
+      <div class="fx-panel">
+        <h5>🚲 出口：台灣腳踏車（台幣 16,000 元）</h5>
+        <div>美國買家要付</div>
+        <div class="big" id="fxExport">500 美元</div>
+        <div id="fxExportNote" style="color:var(--ink-soft);font-size:.8rem;">—</div>
+      </div>
+    </div>
+    <div class="result info" id="fxNote">試著把匯率拉到最左（台幣大升值）和最右（大貶值），觀察誰受益、誰受害。</div>
+  </div>
+
+  <div class="card">
+    <h3>匯率是誰決定的？</h3>
+    <p>現在主要貨幣都採<span class="kw">浮動匯率制</span>：匯率由外匯市場的供需決定，就像商品價格一樣。外國人搶著買台灣的東西→需要台幣→台幣升值；台灣的利率比美國低→資金跑去美國賺利息→賣台幣買美元→台幣貶值。</p>
+    <p><b>升值</b>：進口變便宜（消費者開心）、出口變貴賣不動（外銷產業叫苦）。<b>貶值</b>則相反。所以匯率沒有絕對的好壞，只有<b>誰受益、誰受害</b>。當匯率劇烈波動傷害經濟時，央行會進場買賣外幣來「干預」，讓它穩定下來。</p>
+    <div class="def"><b>一段歷史</b>：二戰後全世界曾採用固定匯率（1 美元固定換 360 日圓），靠「美元可兌換黃金」撐腰。1971 年美國宣布停止兌換黃金（尼克森衝擊），固定制崩潰，1973 年起走向浮動匯率。之後各國靠 GATT → WTO 一步步拆掉關稅高牆，才有今天你網購全世界的自由貿易時代。</div>
+  </div>
+</section>
+
+<!-- ============ FINAL QUIZ ============ -->
+<section class="unit" id="final">
+  <div class="unit-head">
+    <span class="no">🏮</span>
+    <h2>期末夜市挑戰</h2>
+    <span class="done-badge" id="badge9">已點燈</span>
+    <span class="tag">10 題總測驗</span>
+  </div>
+  <div class="story">夜市收攤前的最後考驗。答對 7 題以上，阿哲請你吃雞蛋糕（口頭上的）。每題答完會立刻看到解析。</div>
+  <div id="quizArea"></div>
+  <div class="quiz-score" id="quizScore" style="display:none;">
+    <div>你的成績</div>
+    <div class="sc"><span id="scoreNum">0</span> / 10</div>
+    <div id="scoreMsg"></div>
+    <div style="margin-top:14px;"><button class="btn warm" id="quizRetry">再挑戰一次</button></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <b>夜市經濟學</b>｜為台灣國中生（13–15 歲）改編的互動教材<br>
+  知識架構改編自 吉田泰史《拯救人生的 2 小時經濟課》（原書以日本高中「政治・經濟」課程為底）<br>
+  例子與幣別已在地化為台灣情境；部分過時的時事內容（安倍經濟學、英國脫歐進度等）已省略
+</footer>
+
+<script>
+/* ================= 進度與燈籠 ================= */
+const UNITS = [
+  {id:1,label:"稀少性"},{id:2,label:"市場"},{id:3,label:"公司"},{id:4,label:"GDP"},
+  {id:5,label:"稅"},{id:6,label:"銀行"},{id:7,label:"失靈"},{id:8,label:"匯率"},{id:9,label:"期末"}
+];
+const progress = {};
+const lanternRow = document.getElementById("lanternRow");
+UNITS.forEach(u=>{
+  const b = document.createElement("button");
+  b.className = "lantern"; b.id = "lant"+u.id;
+  b.setAttribute("aria-label","前往單元："+u.label);
+  b.innerHTML = '<span class="bulb"></span><span class="lb">'+u.label+'</span>';
+  b.addEventListener("click",()=>{
+    const target = u.id===9 ? "final" : "u"+u.id;
+    document.getElementById(target).scrollIntoView({behavior:"smooth"});
+  });
+  lanternRow.appendChild(b);
+});
+function complete(n){
+  if(progress[n]) return;
+  progress[n] = true;
+  document.getElementById("lant"+n).classList.add("lit");
+  const badge = document.getElementById("badge"+n);
+  if(badge) badge.classList.add("show");
+}
+
+/* ================= U1 零用錢 ================= */
+const budgetItems = [
+  {emoji:"🧋",name:"手搖飲",price:60},
+  {emoji:"📚",name:"新出的漫畫",price:120},
+  {emoji:"🎮",name:"遊戲點數",price:150},
+  {emoji:"🥞",name:"雞蛋糕一份",price:50},
+  {emoji:"🎬",name:"電影票",price:240},
+  {emoji:"🧦",name:"聯名襪子",price:90}
+];
+const BUDGET = 300;
+const picked = new Set();
+const itemsEl = document.getElementById("budgetItems");
+budgetItems.forEach((it,i)=>{
+  const b = document.createElement("button");
+  b.className = "item";
+  b.innerHTML = '<span class="emoji">'+it.emoji+'</span>'+it.name+'<br><span class="price">'+it.price+' 元</span>';
+  b.addEventListener("click",()=>{
+    if(picked.has(i)){ picked.delete(i); b.classList.remove("picked"); }
+    else{
+      const cur = [...picked].reduce((s,j)=>s+budgetItems[j].price,0);
+      if(cur + it.price > BUDGET){
+        flashBudget("超出預算了！要買「"+it.name+"」，就得先放棄別的東西——這就是選擇的代價。");
+        return;
+      }
+      picked.add(i); b.classList.add("picked");
+    }
+    renderBudget();
+  });
+  itemsEl.appendChild(b);
+});
+const budgetFill = document.getElementById("budgetFill");
+const budgetNum = document.getElementById("budgetNum");
+const budgetResult = document.getElementById("budgetResult");
+function flashBudget(msg){
+  budgetResult.className = "result bad";
+  budgetResult.textContent = msg;
+}
+function renderBudget(){
+  const spent = [...picked].reduce((s,j)=>s+budgetItems[j].price,0);
+  budgetFill.style.width = Math.min(100, spent/BUDGET*100) + "%";
+  budgetFill.classList.toggle("over", spent > BUDGET*0.9);
+  budgetNum.textContent = "已花 "+spent+" / "+BUDGET+" 元";
+  if(picked.size===0){
+    budgetResult.className="result info";
+    budgetResult.textContent="還沒選任何東西。先挑挑看吧！";
+    return;
+  }
+  const unpicked = budgetItems.filter((_,j)=>!picked.has(j));
+  const priciest = unpicked.sort((a,b)=>b.price-a.price)[0];
+  budgetResult.className="result ok";
+  if(unpicked.length===0){
+    budgetResult.textContent="不可能全買——這正是重點：資源有限，選擇必然存在。";
+  }else{
+    budgetResult.innerHTML = "你選好了！剩餘 "+(BUDGET-spent)+" 元。在你放棄的東西中，最貴的是「"+priciest.name+"（"+priciest.price+" 元）」——如果那也是你最想要的，它就是這次選擇的<b>機會成本</b>。";
+    complete(1);
+  }
+}
+
+/* ================= U2 供需 ================= */
+const mkt = { base:{dA:160,dB:2,sA:3,sB:90}, demand:{dA:200,dB:2,sA:3,sB:90}, supply:{dA:160,dB:2,sA:3,sB:140} };
+const eqText = { base:"平常日的均衡：50 元、60 份", demand:"人潮變多 → 需求整體增加 → 新均衡：58 元、84 份（量價齊漲）", supply:"成本變高 → 供給整體減少 → 新均衡：60 元、40 份（變貴又變少）" };
+let sc = "base";
+const priceSlider = document.getElementById("priceSlider");
+const priceLabel = document.getElementById("priceLabel");
+const barD = document.getElementById("barD"), barS = document.getElementById("barS");
+const valD = document.getElementById("valD"), valS = document.getElementById("valS");
+const mktResult = document.getElementById("mktResult");
+document.getElementById("mktChips").addEventListener("click",e=>{
+  const c = e.target.closest(".chip"); if(!c) return;
+  document.querySelectorAll("#mktChips .chip").forEach(x=>x.classList.remove("active"));
+  c.classList.add("active");
+  sc = c.dataset.sc;
+  renderMkt();
+});
+priceSlider.addEventListener("input",renderMkt);
+function renderMkt(){
+  const p = +priceSlider.value;
+  priceLabel.textContent = p;
+  const m = mkt[sc];
+  const D = Math.max(0, m.dA - m.dB*p);
+  const S = Math.max(0, m.sA*p - m.sB);
+  const maxQ = 130;
+  barD.style.height = Math.max(3, D/maxQ*100) + "%";
+  barS.style.height = Math.max(3, S/maxQ*100) + "%";
+  valD.textContent = D + " 份";
+  valS.textContent = S + " 份";
+  const diff = D - S;
+  if(diff > 4){
+    mktResult.className = "result bad";
+    mktResult.textContent = "短缺 "+diff+" 份！想買的比想賣的多，排隊搶購——價格會被推高。試著調高價格。";
+  }else if(diff < -4){
+    mktResult.className = "result bad";
+    mktResult.textContent = "過剩 "+(-diff)+" 份！做太多賣不完，只能降價出清。試著調低價格。";
+  }else{
+    mktResult.className = "result ok";
+    mktResult.textContent = "均衡達成！"+eqText[sc]+"。這就是「看不見的手」找到的位置。";
+    complete(2);
+  }
+}
+renderMkt();
+
+/* ================= U3 有限責任 ================= */
+document.querySelectorAll("[data-llq]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = document.getElementById("llResult");
+    document.querySelectorAll("[data-llq]").forEach(b=>{
+      b.disabled = true;
+      if(b.dataset.ok) b.classList.add("correct");
+    });
+    box.style.display = "block";
+    if(btn.dataset.ok){
+      box.className = "result ok";
+      box.innerHTML = "答對了！這就是<b>股東有限責任</b>：最多損失自己出的 1 萬元，公司的 50 萬債務與你的個人財產無關。正因為賠有上限，大家才敢投資——這個制度是現代經濟能長出大企業的關鍵。";
+    }else{
+      btn.classList.add("wrong");
+      box.className = "result bad";
+      box.innerHTML = "不對喔。正確答案是「只損失 1 萬元」——<b>股東有限責任</b>保證你最多賠掉投入的錢。如果股東要無限扛債，沒有人敢投資任何公司了。";
+    }
+    complete(3);
+  });
+});
+
+/* ================= U4 GDP ================= */
+let gdpStep = 0;
+const gdpBtn = document.getElementById("gdpBtn");
+const gdpTotal = document.getElementById("gdpTotal");
+const gdpNote = document.getElementById("gdpNote");
+const gdpVals = [
+  {node:"g1",v:"g1v",text:"100 − 20 = 80 萬"},
+  {node:"g2",v:"g2v",text:"150 − 100 = 50 萬"},
+  {node:"g3",v:"g3v",text:"320 − 150 = 170 萬"}
+];
+gdpBtn.addEventListener("click",()=>{
+  if(gdpStep < 3){
+    const s = gdpVals[gdpStep];
+    document.getElementById(s.node).classList.add("on");
+    document.getElementById(s.v).textContent = "附加價值：" + s.text;
+    gdpStep++;
+    if(gdpStep === 3){
+      gdpBtn.textContent = "算出全島 GDP ▶";
+    }
+  }else{
+    gdpTotal.textContent = "🏝️ 福爾摩沙島 GDP = 80 + 50 + 170 = 300 萬元";
+    gdpNote.style.display = "block";
+    gdpNote.className = "result ok";
+    gdpNote.innerHTML = "注意：三家的<b>營業額總和</b>是 100＋150＋320＝570 萬，但那重複算了小麥和麵粉。GDP 只加「每一關新創造的價值」，所以是 300 萬。這 300 萬會化為島民的薪水與利潤（分配），再被花掉或投資（支出）——三面等價。";
+    gdpBtn.disabled = true;
+    complete(4);
+  }
+});
+
+/* ================= U5 消費稅 ================= */
+const taxSlider = document.getElementById("taxSlider");
+function renderTax(){
+  const r = +taxSlider.value/100;
+  document.getElementById("taxLabel").textContent = taxSlider.value;
+  const t1 = Math.round(20000*r), t2 = Math.round(80000*r);
+  const p1 = t1/25000*100, p2 = t2/250000*100;
+  document.getElementById("taxA1").textContent = t1.toLocaleString();
+  document.getElementById("taxA2").textContent = t2.toLocaleString();
+  document.getElementById("taxP1").textContent = p1.toFixed(1);
+  document.getElementById("taxP2").textContent = p2.toFixed(1);
+  document.getElementById("taxBar1").style.width = Math.min(100,p1*5)+"%";
+  document.getElementById("taxBar2").style.width = Math.min(100,p2*5)+"%";
+  const note = document.getElementById("taxNote");
+  if(+taxSlider.value === 0){
+    note.className="result info";
+    note.textContent="稅率 0%：沒人繳稅，但路燈也沒錢修了。拉高一點看看。";
+  }else{
+    note.className="result info";
+    note.innerHTML = "同樣的稅率，小美的負擔率（"+p1.toFixed(1)+"%）是王董（"+p2.toFixed(1)+"%）的好幾倍——因為低所得者的消費占所得比例本來就高。這就是消費稅的<b>累退性</b>。";
+    if(+taxSlider.value >= 10) complete(5);
+  }
+}
+taxSlider.addEventListener("input",renderTax);
+renderTax();
+
+/* ================= U6 信用創造 ================= */
+let ccRound = 1, ccDeposit = 100, ccSum = 100;
+const ccBody = document.getElementById("ccBody");
+const ccTotalEl = document.getElementById("ccTotal");
+const ccNote = document.getElementById("ccNote");
+document.getElementById("ccBtn").addEventListener("click",()=>{
+  ccRound++;
+  ccDeposit = ccDeposit*0.9;
+  ccSum += ccDeposit;
+  const tr = document.createElement("tr");
+  tr.innerHTML = "<td>第 "+ccRound+" 輪</td><td>"+ccDeposit.toFixed(1)+"</td><td>"+(ccDeposit*0.1).toFixed(1)+"</td><td>"+(ccDeposit*0.9).toFixed(1)+"</td>";
+  ccBody.appendChild(tr);
+  ccTotalEl.textContent = ccSum.toFixed(1);
+  if(ccRound >= 5){
+    ccNote.style.display = "block";
+    ccNote.className = "result ok";
+    ccNote.innerHTML = "看見了嗎？每一輪金額變成前一輪的 90%，存款總額不斷逼近 <b>100 ÷ 0.1 = 1000 萬</b>。你的 100 萬最終讓全社會「多出」900 萬的存款貨幣——這就是<b>信用創造</b>。銀行沒有印鈔票，卻創造了錢。";
+    complete(6);
+  }
+});
+document.getElementById("ccReset").addEventListener("click",()=>{
+  ccRound = 1; ccDeposit = 100; ccSum = 100;
+  ccBody.innerHTML = "<tr><td>第 1 輪（你的存款）</td><td>100.0</td><td>10.0</td><td>90.0</td></tr>";
+  ccTotalEl.textContent = "100.0";
+  ccNote.style.display = "none";
+});
+
+/* ================= U7 翻牌 ================= */
+const flips = ["f1","f2","f3","f4"];
+let flipCount = 0;
+flips.forEach(id=>{
+  const el = document.getElementById(id);
+  el.addEventListener("click",()=>{
+    if(el.classList.contains("revealed")) return;
+    el.classList.add("revealed");
+    flipCount++;
+    if(flipCount === 4){
+      document.getElementById("flipDone").style.display = "block";
+      complete(7);
+    }
+  });
+});
+
+/* ================= U8 匯率 ================= */
+const fxSlider = document.getElementById("fxSlider");
+function renderFx(){
+  const r = +fxSlider.value;
+  document.getElementById("fxLabel").textContent = r;
+  const tag = document.getElementById("fxTag");
+  if(r < 32){ tag.textContent="台幣升值"; tag.className="fx-tag up"; }
+  else if(r > 32){ tag.textContent="台幣貶值"; tag.className="fx-tag down"; }
+  else{ tag.textContent="基準"; tag.className="fx-tag mid"; }
+  const imp = 499*r, exp = 16000/r;
+  document.getElementById("fxImport").textContent = Math.round(imp).toLocaleString()+" 元";
+  document.getElementById("fxExport").textContent = exp.toFixed(0)+" 美元";
+  const impBase = 499*32, expBase = 16000/32;
+  document.getElementById("fxImportNote").textContent =
+    imp<impBase ? "比基準便宜 "+Math.round(impBase-imp).toLocaleString()+" 元 → 進口商、消費者開心"
+    : imp>impBase ? "比基準貴 "+Math.round(imp-impBase).toLocaleString()+" 元 → 進口成本上升"
+    : "基準價格";
+  document.getElementById("fxExportNote").textContent =
+    exp>expBase ? "對美國人變貴 → 台灣貨難賣，出口商叫苦"
+    : exp<expBase ? "對美國人變便宜 → 台灣貨好賣，出口暢旺"
+    : "基準價格";
+  const note = document.getElementById("fxNote");
+  if(r <= 27){
+    note.className="result info";
+    note.innerHTML="<b>台幣大升值</b>：買進口貨、出國玩超划算，但外銷產業（腳踏車、電子代工）訂單流失，可能裁員。";
+    complete(8);
+  }else if(r >= 38){
+    note.className="result info";
+    note.innerHTML="<b>台幣大貶值</b>：出口大賺，但進口原料、能源、iPhone 全變貴——輸入型通膨找上門。";
+    complete(8);
+  }else if(r !== 32){
+    note.className="result info";
+    note.textContent="繼續拉到兩端，看看極端情況會發生什麼事。";
+  }
+}
+fxSlider.addEventListener("input",renderFx);
+renderFx();
+
+/* ================= 期末測驗 ================= */
+const quizData = [
+  {q:"經濟問題的本質是什麼？",opts:["怎麼讓所有人變有錢","有限的資源該如何有效分配","怎麼消滅通貨膨脹","怎麼讓股票上漲"],ans:1,exp:"資源稀少、慾望無限，「分配」才是經濟學的核心問題。"},
+  {q:"雞蛋糕定價太高、賣不完時，市場會發生什麼事？",opts:["政府出面規定價格","價格自動下降，直到供需相等","攤販集體罷工","需求自動增加"],ans:1,exp:"超額供給（過剩）→ 降價出清 → 回到均衡。這就是價格的自動調節功能。"},
+  {q:"通貨膨脹時，下列誰「相對受益」？",opts:["靠固定年金生活的爺爺","欠了一大筆錢的人","把現金藏在床底下的人","領固定薪水的上班族"],ans:1,exp:"物價漲＝錢變薄，債務的「實質重量」跟著變輕，這叫債務者利得。"},
+  {q:"股東有限責任的意思是？",opts:["股東只能持有有限的股數","股東最多損失自己投入的資金","公司只能欠有限的債","股東的投票權有限"],ans:1,exp:"賠有上限，大家才敢投資。這是股份有限公司能募到大量資金的關鍵設計。"},
+  {q:"麵粉廠用 100 萬的小麥做出 150 萬的麵粉，它創造的附加價值是？",opts:["150 萬","100 萬","50 萬","250 萬"],ans:2,exp:"附加價值 = 賣出金額 − 原料成本 = 150 − 100 = 50 萬。GDP 就是全國附加價值的總和。"},
+  {q:"為什麼「路燈」得由政府提供？",opts:["因為路燈技術太難","因為無法向使用者個別收費，民間企業不會做","因為法律禁止民間裝路燈","因為政府比較會裝"],ans:1,exp:"公共財無法排除沒付錢的人使用（搭便車問題），市場不會供給，只能靠稅金。"},
+  {q:"消費稅的「累退性」指的是？",opts:["稅率會逐年下降","所得越低的人，實質負擔率越重","消費越多繳越少","只有企業要繳"],ans:1,exp:"低所得者的消費占所得比例高，同樣稅率下負擔感更重。"},
+  {q:"存款準備率 10% 時，100 萬的原始存款最多能讓全社會的存款膨脹到？",opts:["110 萬","190 萬","1000 萬","10 萬"],ans:2,exp:"100 ÷ 0.1 = 1000 萬。銀行反覆「收存款→放貸」創造出存款貨幣，這叫信用創造。"},
+  {q:"中央銀行想刺激不景氣的經濟，會怎麼做？",opts:["升息，讓大家多存錢","降息並向銀行買債券，讓借錢變便宜","直接印鈔票發給政府花","下令商店降價"],ans:1,exp:"降息＋公開市場操作（買入債券）→ 市場資金變多、利率變低 → 企業投資、個人買房 → 需求增加。直接印鈔給政府是引發惡性通膨的禁忌。"},
+  {q:"台幣升值時，下列敘述何者正確？",opts:["進口商品變貴","出口商品在國外變便宜","台灣人買外國資產變便宜","外銷產業會更好賺"],ans:2,exp:"升值＝台幣變強：進口變便宜、出國購物划算、買外國資產便宜；但出口貨對外國人變貴，外銷產業受害。"}
+];
+const quizArea = document.getElementById("quizArea");
+let quizAnswered = 0, quizCorrect = 0;
+function buildQuiz(){
+  quizArea.innerHTML = "";
+  quizAnswered = 0; quizCorrect = 0;
+  document.getElementById("quizScore").style.display = "none";
+  quizData.forEach((qd,qi)=>{
+    const div = document.createElement("div");
+    div.className = "quiz-q";
+    let optsHtml = qd.opts.map((o,oi)=>'<button class="opt" data-oi="'+oi+'">'+"ABCD"[oi]+". "+o+"</button>").join("");
+    div.innerHTML = '<div class="qt">Q'+(qi+1)+'. '+qd.q+'</div><div class="opts">'+optsHtml+'</div><div class="exp">💡 '+qd.exp+'</div>';
+    div.querySelectorAll(".opt").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        if(div.classList.contains("answered")) return;
+        div.classList.add("answered");
+        const chosen = +btn.dataset.oi;
+        div.querySelectorAll(".opt").forEach(b=>{
+          b.disabled = true;
+          if(+b.dataset.oi === qd.ans) b.classList.add("correct");
+        });
+        if(chosen === qd.ans){ quizCorrect++; }
+        else{ btn.classList.add("wrong"); }
+        quizAnswered++;
+        if(quizAnswered === quizData.length) showScore();
+      });
+    });
+    quizArea.appendChild(div);
+  });
+}
+function showScore(){
+  const scoreBox = document.getElementById("quizScore");
+  scoreBox.style.display = "block";
+  document.getElementById("scoreNum").textContent = quizCorrect;
+  const msg = document.getElementById("scoreMsg");
+  if(quizCorrect >= 9) msg.textContent = "太強了！你已經可以看懂大部分的經濟新聞了。阿哲的雞蛋糕加倍奉上！";
+  else if(quizCorrect >= 7) msg.textContent = "通過挑戰！雞蛋糕拿去。回頭複習一下答錯的觀念更完美。";
+  else msg.textContent = "差一點！回到答錯的單元玩一次小遊戲，觀念會更牢。";
+  if(quizCorrect >= 7) complete(9);
+  scoreBox.scrollIntoView({behavior:"smooth",block:"center"});
+}
+document.getElementById("quizRetry").addEventListener("click",buildQuiz);
+buildQuiz();
+</script>
+</body>
+</html>

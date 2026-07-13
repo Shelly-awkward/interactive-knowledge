@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>互動知識庫｜中學生的互動式學習教材</title>
+<style>
+:root{
+  --bg:#F4F6FA;
+  --card:#FFFFFF;
+  --ink:#1E2430;
+  --ink-soft:#5A6478;
+  --line:#DDE3EE;
+  --accent:#FCA311;
+  --night:#14213D;
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.7;
+}
+header{
+  background:linear-gradient(180deg,#0C1428 0%,var(--night) 100%);
+  color:#fff;
+  padding:44px 20px 32px;
+}
+.head-inner{max-width:960px;margin:0 auto;}
+header .eyebrow{
+  display:inline-block;color:var(--accent);font-weight:700;
+  letter-spacing:.3em;font-size:.78rem;
+  border:1px solid rgba(252,163,17,.5);
+  padding:3px 12px 3px 15px;border-radius:999px;margin-bottom:14px;
+}
+header h1{font-size:clamp(1.6rem,5vw,2.4rem);font-weight:900;letter-spacing:.06em;}
+header p{margin-top:10px;color:#C7D0E4;font-size:.95rem;max-width:560px;}
+main{max-width:960px;margin:0 auto;padding:24px 16px 80px;}
+.toolbar{
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+  margin:6px 0 22px;
+}
+.toolbar input[type=search]{
+  flex:1 1 220px;
+  padding:10px 14px;border:1px solid var(--line);border-radius:999px;
+  font:inherit;font-size:.92rem;background:var(--card);
+}
+.toolbar input[type=search]:focus{outline:2px solid var(--accent);border-color:transparent;}
+.filters{display:flex;flex-wrap:wrap;gap:6px;}
+.filters button{
+  font:inherit;font-size:.82rem;font-weight:600;
+  padding:6px 14px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--line);background:var(--card);color:var(--ink-soft);
+}
+.filters button.on{background:var(--night);border-color:var(--night);color:#fff;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
+.lesson{
+  display:flex;flex-direction:column;gap:8px;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 18px 16px;text-decoration:none;color:inherit;
+  transition:transform .15s,box-shadow .15s;
+}
+.lesson:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(20,33,61,.12);}
+.lesson .meta{display:flex;gap:6px;flex-wrap:wrap;font-size:.72rem;}
+.lesson .meta span{
+  background:#EAEEF6;color:var(--ink-soft);border-radius:999px;padding:2px 10px;
+}
+.lesson .meta span.subject{background:rgba(252,163,17,.18);color:#8A5A00;font-weight:700;}
+.lesson h2{font-size:1.15rem;font-weight:800;letter-spacing:.03em;}
+.lesson p{font-size:.88rem;color:var(--ink-soft);flex:1;}
+.lesson .date{font-size:.72rem;color:#9AA3B8;}
+.empty{color:var(--ink-soft);padding:30px 4px;font-size:.95rem;}
+footer{
+  max-width:960px;margin:0 auto;padding:0 16px 40px;
+  font-size:.78rem;color:#9AA3B8;
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#0F1524;--card:#1A2338;--ink:#E8ECF6;--ink-soft:#9AA6C2;--line:#2A3550;}
+  .filters button{background:var(--card);color:var(--ink-soft);}
+  .lesson .meta span{background:#243050;color:#9AA6C2;}
+  .lesson .meta span.subject{background:rgba(252,163,17,.2);color:var(--accent);}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="head-inner">
+    <span class="eyebrow">INTERACTIVE&nbsp;KNOWLEDGE</span>
+    <h1>互動知識庫</h1>
+    <p>給中學生的互動式學習教材。每份教材都是單一 HTML 檔，點開卡片就能開始。</p>
+  </div>
+</header>
+<main>
+  <div class="toolbar">
+    <input id="q" type="search" placeholder="搜尋標題、關鍵字…" aria-label="搜尋教材">
+    <div class="filters" id="filters"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty" hidden>沒有符合的教材。</p>
+</main>
+<footer>新增教材：把 HTML 檔放進 <code>lessons/</code>，並在 <code>lessons/lessons.js</code> 加一筆資料。詳見 README。</footer>
+<script src="lessons/lessons.js"></script>
+<script>
+(function(){
+  var lessons = (window.__LESSONS__ || []).slice();
+  var grid = document.getElementById("grid");
+  var empty = document.getElementById("empty");
+  var q = document.getElementById("q");
+  var filterBox = document.getElementById("filters");
+  var activeSubject = "全部";
+
+  var subjects = ["全部"];
+  lessons.forEach(function(l){
+    if (l.subject && subjects.indexOf(l.subject) === -1) subjects.push(l.subject);
+  });
+  subjects.forEach(function(s){
+    var b = document.createElement("button");
+    b.textContent = s;
+    if (s === activeSubject) b.className = "on";
+    b.addEventListener("click", function(){
+      activeSubject = s;
+      Array.prototype.forEach.call(filterBox.children, function(c){ c.className = c.textContent === s ? "on" : ""; });
+      render();
+    });
+    filterBox.appendChild(b);
+  });
+
+  function match(l, kw){
+    if (activeSubject !== "全部" && l.subject !== activeSubject) return false;
+    if (!kw) return true;
+    var hay = [l.title, l.subtitle, l.subject, l.level].concat(l.tags || []).join(" ").toLowerCase();
+    return hay.indexOf(kw) !== -1;
+  }
+
+  function render(){
+    var kw = q.value.trim().toLowerCase();
+    grid.innerHTML = "";
+    var shown = 0;
+    lessons.forEach(function(l){
+      if (!match(l, kw)) return;
+      shown++;
+      var a = document.createElement("a");
+      a.className = "lesson";
+      a.href = l.file;
+      a.innerHTML =
+        '<div class="meta"><span class="subject"></span><span class="level"></span></div>' +
+        '<h2></h2><p></p><div class="date"></div>';
+      a.querySelector(".subject").textContent = l.subject || "";
+      a.querySelector(".level").textContent = l.level || "";
+      a.querySelector("h2").textContent = l.title;
+      a.querySelector("p").textContent = l.subtitle || "";
+      a.querySelector(".date").textContent = l.added ? "加入於 " + l.added : "";
+      grid.appendChild(a);
+    });
+    empty.hidden = shown > 0;
+  }
+
+  q.addEventListener("input", render);
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+# 互動知識庫
+
+給中學生的互動式學習教材集。每份教材都是**單一 HTML 檔**（無外部相依），clone 或下載後雙擊 `index.html` 即可離線使用。
+
+## 使用方式
+
+- 開啟 `index.html`：目錄頁，可搜尋、依科目篩選，點卡片進入教材
+- 也可以直接開 `lessons/` 裡的任一 HTML 檔
+
+## 目前收錄
+
+| 教材 | 科目 | 對象 |
+|------|------|------|
+| 夜市經濟學 — 看懂世界怎麼運轉的 8 堂互動課 | 社會．經濟 | 國中 |
+
+## 新增教材（擴充方式）
+
+1. 把新的 HTML 檔放進 `lessons/`（單檔、自足、不要引用外部 CDN，才能離線用）
+2. 在 `lessons/lessons.js` 的 `window.__LESSONS__` 陣列**最前面**加一筆：
+
+   ```js
+   {
+     file: "lessons/檔名.html",
+     title: "標題",
+     subtitle: "一句話介紹",
+     subject: "科目領域",     // 目錄頁會自動長出對應的篩選按鈕
+     level: "適用對象",       // 例如：國中、國中～高中
+     added: "YYYY-MM-DD",
+     tags: ["搜尋關鍵字"]
+   }
+   ```
+
+3. 在上面的「目前收錄」表格補一列
+
+目錄頁會自動渲染卡片與科目篩選，**不需要改 `index.html`**。
+
+## 上線（可選）
+
+repo 設為 Public 後，到 Settings → Pages 選 `main` 分支根目錄，即可用
+`https://<帳號>.github.io/interactive-knowledge/` 直接分享給學生。
