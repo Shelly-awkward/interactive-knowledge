@@ -570,6 +570,48 @@
 </div>
 
 <script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "八上1 乘法公式與多項式";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 設定 Apps Script 網頁應用程式網址（/exec 結尾）後，每次念書時段與交卷自動上傳；留空則只記在本機。
+const CLOUD_URL = "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+// 離開頁面時，把這段念書時段的摘要上傳雲端（之後回到頁面再離開，會另記一段）
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return; // 開了不到半分鐘又沒做題，不上傳
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
 // 分頁切換
 document.querySelectorAll('nav.tabs button').forEach(btn=>{
   btn.addEventListener('click',()=>{
@@ -590,11 +632,14 @@ document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
     q.classList.remove('correct','wrong');
     if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
     const exp = fb.dataset.exp;
-    if(sel.value === q.dataset.ans){
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
       fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
     }else{
       fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
     }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
   });
 });
 
@@ -615,6 +660,10 @@ document.getElementById('submitQuiz').addEventListener('click',()=>{
       fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
     }
   });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "章末測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
   const r = document.getElementById('quizResult');
   if(answered < qs.length){
     r.className='bad'; r.style.display='block';
