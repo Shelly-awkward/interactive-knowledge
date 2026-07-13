@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國二數學｜八上 第1章 乘法公式與多項式</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.75;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#1e3a8a,#2563eb); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.2); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.9; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  sup{font-size:.72em;}
+  .svgbox{text-align:center; margin:14px 0;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國中八年級上學期 · 第1章</span>
+  <h1>乘法公式與多項式</h1>
+  <p>三個小節＋章末總測驗。每節先看觀念、再看例題（可展開詳解）、最後做練習題立即對答案。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1-1 乘法公式</button>
+  <button data-t="s2">1-2 多項式的加減</button>
+  <button data-t="s3">1-3 多項式的乘除</button>
+  <button data-t="s4">🏁 章末總測驗</button>
+</nav>
+
+<!-- ═══════════ 1-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會用分配律展開兩個式子相乘</li>
+      <li>熟記三個乘法公式：和的平方、差的平方、平方差</li>
+      <li>能利用乘法公式做速算</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：分配律</h2>
+    <p>乘法公式的根源就是<b>分配律</b>——括號外的數要「分」給括號裡的每一項：</p>
+    <div class="formula">a(b＋c) ＝ ab＋ac</div>
+    <p>兩個括號相乘時，第一個括號的每一項，都要乘到第二個括號的每一項（共 2×2＝4 項）：</p>
+    <div class="formula">(a＋b)(c＋d) ＝ ac＋ad＋bc＋bd</div>
+    <div class="note">💡 口訣：「前前、前後、後前、後後」，四項一項都不能漏。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：三大乘法公式</h2>
+    <div class="formula">① 和的平方：(a＋b)<sup>2</sup> ＝ a<sup>2</sup>＋2ab＋b<sup>2</sup></div>
+    <div class="formula">② 差的平方：(a−b)<sup>2</sup> ＝ a<sup>2</sup>−2ab＋b<sup>2</sup></div>
+    <div class="formula">③ 平方差：(a＋b)(a−b) ＝ a<sup>2</sup>−b<sup>2</sup></div>
+    <p>用面積圖理解「和的平方」：邊長 (a＋b) 的大正方形，可切成 4 塊——</p>
+    <div class="svgbox">
+      <svg viewBox="0 0 260 260" width="230" height="230" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="20" width="140" height="140" fill="#dbeafe" stroke="#2563eb"/>
+        <rect x="160" y="20" width="70" height="140" fill="#fef3c7" stroke="#d97706"/>
+        <rect x="20" y="160" width="140" height="70" fill="#fef3c7" stroke="#d97706"/>
+        <rect x="160" y="160" width="70" height="70" fill="#dcfce7" stroke="#16a34a"/>
+        <text x="90" y="95" text-anchor="middle" font-size="20" fill="#1e40af">a²</text>
+        <text x="195" y="95" text-anchor="middle" font-size="18" fill="#92400e">ab</text>
+        <text x="90" y="200" text-anchor="middle" font-size="18" fill="#92400e">ab</text>
+        <text x="195" y="200" text-anchor="middle" font-size="18" fill="#166534">b²</text>
+        <text x="90" y="14" text-anchor="middle" font-size="14">a</text>
+        <text x="195" y="14" text-anchor="middle" font-size="14">b</text>
+        <text x="10" y="95" text-anchor="middle" font-size="14">a</text>
+        <text x="10" y="200" text-anchor="middle" font-size="14">b</text>
+      </svg>
+      <p style="font-size:.88rem; color:var(--sub)">總面積 ＝ a<sup>2</sup>＋ab＋ab＋b<sup>2</sup> ＝ a<sup>2</sup>＋2ab＋b<sup>2</sup></p>
+    </div>
+    <div class="warn">⚠️ 最常見的錯誤：(a＋b)<sup>2</sup> ≠ a<sup>2</sup>＋b<sup>2</sup>！中間的 2ab 千萬不能忘。</div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜展開 (x＋3)<sup>2</sup></summary>
+      <div class="body">
+        <p class="step"><b>套公式①</b>　a＝x、b＝3</p>
+        <p class="step"><b>展開</b>　x<sup>2</sup>＋2·x·3＋3<sup>2</sup></p>
+        <p class="step"><b>答案</b>　x<sup>2</sup>＋6x＋9</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜展開 (2x−5)<sup>2</sup></summary>
+      <div class="body">
+        <p class="step"><b>套公式②</b>　a＝2x、b＝5</p>
+        <p class="step"><b>展開</b>　(2x)<sup>2</sup>−2·(2x)·5＋5<sup>2</sup></p>
+        <p class="step"><b>答案</b>　4x<sup>2</sup>−20x＋25</p>
+        <p class="step">⚠️ (2x)<sup>2</sup>＝4x<sup>2</sup>，係數也要平方！</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜展開 (3x＋4)(3x−4)</summary>
+      <div class="body">
+        <p class="step"><b>觀察</b>　兩括號「一加一減」、前後相同 → 用平方差公式③</p>
+        <p class="step"><b>展開</b>　(3x)<sup>2</sup>−4<sup>2</sup></p>
+        <p class="step"><b>答案</b>　9x<sup>2</sup>−16</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜速算 102<sup>2</sup> 和 97×103</summary>
+      <div class="body">
+        <p class="step"><b>102<sup>2</sup></b>　＝(100＋2)<sup>2</sup>＝10000＋400＋4＝<b>10404</b></p>
+        <p class="step"><b>97×103</b>　＝(100−3)(100＋3)＝10000−9＝<b>9991</b></p>
+      </div>
+    </details>
+    <details class="example"><summary>例 5｜已知 a＋b＝7、ab＝10，求 a<sup>2</sup>＋b<sup>2</sup></summary>
+      <div class="body">
+        <p class="step"><b>變形</b>　由公式① 得 a<sup>2</sup>＋b<sup>2</sup>＝(a＋b)<sup>2</sup>−2ab</p>
+        <p class="step"><b>代入</b>　＝7<sup>2</sup>−2×10＝49−20</p>
+        <p class="step"><b>答案</b>　29</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>📝 練習題</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 展開 (x＋5)<sup>2</sup> ＝ ?</div>
+      <label><input type="radio" name="p1q1" value="A">x<sup>2</sup>＋25</label>
+      <label><input type="radio" name="p1q1" value="B">x<sup>2</sup>＋10x＋25</label>
+      <label><input type="radio" name="p1q1" value="C">x<sup>2</sup>＋5x＋25</label>
+      <label><input type="radio" name="p1q1" value="D">x<sup>2</sup>＋10x＋10</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="套「和的平方」：x²＋2·x·5＋5²＝x²＋10x＋25。選 A 就是忘了中間項 2ab！"></div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 展開 (x−4)<sup>2</sup> ＝ ?</div>
+      <label><input type="radio" name="p1q2" value="A">x<sup>2</sup>−16</label>
+      <label><input type="radio" name="p1q2" value="B">x<sup>2</sup>＋8x＋16</label>
+      <label><input type="radio" name="p1q2" value="C">x<sup>2</sup>−8x＋16</label>
+      <label><input type="radio" name="p1q2" value="D">x<sup>2</sup>−8x−16</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="差的平方：x²−2·x·4＋4²＝x²−8x＋16。注意最後一項是「＋16」，因為 (−4)²＝＋16。"></div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 展開 (2x＋3)(2x−3) ＝ ?</div>
+      <label><input type="radio" name="p1q3" value="A">4x<sup>2</sup>−9</label>
+      <label><input type="radio" name="p1q3" value="B">4x<sup>2</sup>＋9</label>
+      <label><input type="radio" name="p1q3" value="C">2x<sup>2</sup>−9</label>
+      <label><input type="radio" name="p1q3" value="D">4x<sup>2</sup>−12x−9</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="平方差：(2x)²−3²＝4x²−9。"></div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. 用乘法公式速算 998×1002 ＝ ?</div>
+      <label><input type="radio" name="p1q4" value="A">999,996 以外的值</label>
+      <label><input type="radio" name="p1q4" value="B">1,000,004</label>
+      <label><input type="radio" name="p1q4" value="C">999,998</label>
+      <label><input type="radio" name="p1q4" value="D">999,996</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="(1000−2)(1000＋2)＝1000²−2²＝1,000,000−4＝999,996。"></div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. 用乘法公式速算 199<sup>2</sup> ＝ ?</div>
+      <label><input type="radio" name="p1q5" value="A">39,401</label>
+      <label><input type="radio" name="p1q5" value="B">39,601</label>
+      <label><input type="radio" name="p1q5" value="C">40,001</label>
+      <label><input type="radio" name="p1q5" value="D">39,600</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="(200−1)²＝40000−2·200·1＋1＝40000−400＋1＝39,601。"></div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">6. 已知 a＋b＝6、ab＝8，則 a<sup>2</sup>＋b<sup>2</sup> ＝ ?</div>
+      <label><input type="radio" name="p1q6" value="A">36</label>
+      <label><input type="radio" name="p1q6" value="B">28</label>
+      <label><input type="radio" name="p1q6" value="C">20</label>
+      <label><input type="radio" name="p1q6" value="D">44</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="a²＋b²＝(a＋b)²−2ab＝36−16＝20。"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>認識多項式的「項、係數、常數項、次數」</li>
+      <li>會把多項式按降冪（或升冪）排列</li>
+      <li>會做多項式的加法與減法（合併同類項）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：多項式的長相</h2>
+    <p>像 3x<sup>2</sup>−5x＋7 這樣，由「數字與 x 的自然數次方相乘」再相加減組成的式子，叫做<b>多項式</b>。</p>
+    <h3>以 3x<sup>2</sup>−5x＋7 為例：</h3>
+    <ul style="margin-left:1.4em">
+      <li><b>項</b>：3x<sup>2</sup>、−5x、7，共三項</li>
+      <li><b>二次項係數</b>：3；<b>一次項係數</b>：−5（符號要跟著走！）</li>
+      <li><b>常數項</b>：7</li>
+      <li><b>次數</b>：最高次方是 2，所以是「二次多項式」</li>
+    </ul>
+    <div class="note">💡 單獨一個數（如 7）也是多項式，稱為常數多項式，次數是 0。</div>
+    <h3>排列方式</h3>
+    <p><b>降冪排列</b>：次方由大到小，如 3x<sup>2</sup>−5x＋7（最常用）。<br>
+       <b>升冪排列</b>：次方由小到大，如 7−5x＋3x<sup>2</sup>。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：加減＝合併同類項</h2>
+    <p>x<sup>2</sup> 跟 x<sup>2</sup> 是同類（同文字、同次方）才能相加減；x<sup>2</sup> 跟 x 不能合併。</p>
+    <div class="formula">加法：同類項的係數相加。<br>減法：先把減號「分配」進括號（每一項都變號），再合併。</div>
+    <div class="warn">⚠️ 減法最容易錯：−(3x<sup>2</sup>＋x−6) ＝ −3x<sup>2</sup><b>−x＋6</b>，括號裡每一項都要變號！</div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜(2x<sup>2</sup>＋3x−1)＋(x<sup>2</sup>−5x＋4)</summary>
+      <div class="body">
+        <p class="step"><b>同類項分組</b>　(2x<sup>2</sup>＋x<sup>2</sup>)＋(3x−5x)＋(−1＋4)</p>
+        <p class="step"><b>合併</b>　3x<sup>2</sup>−2x＋3</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜(5x<sup>2</sup>−2x＋3)−(3x<sup>2</sup>＋x−6)</summary>
+      <div class="body">
+        <p class="step"><b>去括號變號</b>　5x<sup>2</sup>−2x＋3−3x<sup>2</sup>−x＋6</p>
+        <p class="step"><b>合併</b>　(5−3)x<sup>2</sup>＋(−2−1)x＋(3＋6)</p>
+        <p class="step"><b>答案</b>　2x<sup>2</sup>−3x＋9</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>📝 練習題</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 4x<sup>3</sup>−2x＋1 是幾次多項式？</div>
+      <label><input type="radio" name="p2q1" value="A">一次</label>
+      <label><input type="radio" name="p2q1" value="B">二次</label>
+      <label><input type="radio" name="p2q1" value="C">三次</label>
+      <label><input type="radio" name="p2q1" value="D">四次</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="次數看「最高次方」，最高是 x³，所以是三次多項式。"></div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. −x<sup>2</sup>＋5x−3 的一次項係數是？</div>
+      <label><input type="radio" name="p2q2" value="A">5</label>
+      <label><input type="radio" name="p2q2" value="B">−1</label>
+      <label><input type="radio" name="p2q2" value="C">−3</label>
+      <label><input type="radio" name="p2q2" value="D">1</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="一次項是 ＋5x，係數為 5。−1 是二次項係數、−3 是常數項。"></div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. (3x<sup>2</sup>＋x−2)＋(2x<sup>2</sup>−4x＋5) ＝ ?</div>
+      <label><input type="radio" name="p2q3" value="A">5x<sup>2</sup>＋3x＋3</label>
+      <label><input type="radio" name="p2q3" value="B">5x<sup>2</sup>−3x＋3</label>
+      <label><input type="radio" name="p2q3" value="C">5x<sup>2</sup>−3x−3</label>
+      <label><input type="radio" name="p2q3" value="D">6x<sup>2</sup>−3x＋3</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="(3＋2)x²＋(1−4)x＋(−2＋5)＝5x²−3x＋3。"></div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. (x<sup>2</sup>−3x＋2)−(2x<sup>2</sup>−x−1) ＝ ?</div>
+      <label><input type="radio" name="p2q4" value="A">−x<sup>2</sup>−4x＋1</label>
+      <label><input type="radio" name="p2q4" value="B">x<sup>2</sup>−2x＋3</label>
+      <label><input type="radio" name="p2q4" value="C">−x<sup>2</sup>−2x−3</label>
+      <label><input type="radio" name="p2q4" value="D">−x<sup>2</sup>−2x＋3</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="去括號變號：x²−3x＋2−2x²＋x＋1＝−x²−2x＋3。每一項都要變號！"></div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. 下列哪一個是「7」的正確描述？</div>
+      <label><input type="radio" name="p2q5" value="A">不是多項式</label>
+      <label><input type="radio" name="p2q5" value="B">是零次（常數）多項式</label>
+      <label><input type="radio" name="p2q5" value="C">是一次多項式</label>
+      <label><input type="radio" name="p2q5" value="D">次數無法判斷</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="單獨一個非零常數是「常數多項式」，次數為 0。"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會做多項式乘法（每一項互乘再合併）</li>
+      <li>會用長除法做多項式除法，找出商式與餘式</li>
+      <li>理解「被除式＝除式×商式＋餘式」的驗算關係</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：多項式乘法</h2>
+    <p>就是分配律的延伸：第一個多項式的<b>每一項</b>，乘上第二個多項式的<b>每一項</b>，最後合併同類項。</p>
+    <div class="note">💡 檢查小技巧：(2 項)×(3 項) 展開後合併前應該有 2×3＝6 項，可以用來確認沒漏乘。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：多項式除法（長除法）</h2>
+    <p>跟整數直式除法一樣的邏輯，每一步：</p>
+    <ol style="margin-left:1.4em">
+      <li>用「被除式最高次項 ÷ 除式最高次項」決定商的下一項</li>
+      <li>把商的這一項乘回除式，寫在下面對齊</li>
+      <li>相減、把下一項抄下來，重複到餘式次數小於除式為止</li>
+    </ol>
+    <div class="formula">驗算公式：被除式 ＝ 除式 × 商式 ＋ 餘式</div>
+    <div class="warn">⚠️ 被除式若缺項（例如沒有 x 項），直式要留空位或補 0x，否則會對錯位。</div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜(2x＋1)(3x−4)</summary>
+      <div class="body">
+        <p class="step"><b>四項互乘</b>　2x·3x＋2x·(−4)＋1·3x＋1·(−4)</p>
+        <p class="step"><b>展開</b>　6x<sup>2</sup>−8x＋3x−4</p>
+        <p class="step"><b>合併</b>　6x<sup>2</sup>−5x−4</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜(x＋2)(x<sup>2</sup>＋3x＋1)</summary>
+      <div class="body">
+        <p class="step"><b>x 乘進去</b>　x<sup>3</sup>＋3x<sup>2</sup>＋x</p>
+        <p class="step"><b>2 乘進去</b>　2x<sup>2</sup>＋6x＋2</p>
+        <p class="step"><b>合併</b>　x<sup>3</sup>＋5x<sup>2</sup>＋7x＋2</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜(x<sup>2</sup>＋5x＋7)÷(x＋2)，求商式與餘式</summary>
+      <div class="body">
+        <p class="step"><b>第一步</b>　x<sup>2</sup>÷x＝x → 商先寫 x；x·(x＋2)＝x<sup>2</sup>＋2x；相減得 3x＋7</p>
+        <p class="step"><b>第二步</b>　3x÷x＝3 → 商再寫＋3；3·(x＋2)＝3x＋6；相減得 1</p>
+        <p class="step"><b>答案</b>　商式 x＋3，餘式 1</p>
+        <p class="step"><b>驗算</b>　(x＋2)(x＋3)＋1＝x<sup>2</sup>＋5x＋6＋1 ✓</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜某多項式除以 (x−2)，得商式 x＋5、餘式 3，求此多項式</summary>
+      <div class="body">
+        <p class="step"><b>套驗算公式</b>　被除式＝(x−2)(x＋5)＋3</p>
+        <p class="step"><b>展開</b>　x<sup>2</sup>＋5x−2x−10＋3</p>
+        <p class="step"><b>答案</b>　x<sup>2</sup>＋3x−7</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>📝 練習題</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. (x＋4)(x−6) ＝ ?</div>
+      <label><input type="radio" name="p3q1" value="A">x<sup>2</sup>−2x−24</label>
+      <label><input type="radio" name="p3q1" value="B">x<sup>2</sup>＋2x−24</label>
+      <label><input type="radio" name="p3q1" value="C">x<sup>2</sup>−2x＋24</label>
+      <label><input type="radio" name="p3q1" value="D">x<sup>2</sup>−10x−24</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="x²−6x＋4x−24＝x²−2x−24。"></div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. (3x−2)(2x＋5) ＝ ?</div>
+      <label><input type="radio" name="p3q2" value="A">6x<sup>2</sup>−11x−10</label>
+      <label><input type="radio" name="p3q2" value="B">6x<sup>2</sup>＋19x−10</label>
+      <label><input type="radio" name="p3q2" value="C">6x<sup>2</sup>＋11x−10</label>
+      <label><input type="radio" name="p3q2" value="D">5x<sup>2</sup>＋11x−10</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="6x²＋15x−4x−10＝6x²＋11x−10。"></div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. (x<sup>2</sup>＋5x＋7)÷(x＋2) 的餘式是？</div>
+      <label><input type="radio" name="p3q3" value="A">0</label>
+      <label><input type="radio" name="p3q3" value="B">1</label>
+      <label><input type="radio" name="p3q3" value="C">3</label>
+      <label><input type="radio" name="p3q3" value="D">7</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="商式 x＋3、餘式 1。驗算：(x＋2)(x＋3)＋1＝x²＋5x＋7 ✓"></div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. (2x<sup>2</sup>−7x＋3)÷(2x−1) ＝ ?</div>
+      <label><input type="radio" name="p3q4" value="A">商 x＋3、餘 0</label>
+      <label><input type="radio" name="p3q4" value="B">商 x−3、餘 6</label>
+      <label><input type="radio" name="p3q4" value="C">商 x−4、餘 −1</label>
+      <label><input type="radio" name="p3q4" value="D">商 x−3、餘 0</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="驗算：(2x−1)(x−3)＝2x²−6x−x＋3＝2x²−7x＋3，整除、餘式 0。"></div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">5. 某多項式除以 (x−2) 得商式 x＋5、餘式 3，此多項式為？</div>
+      <label><input type="radio" name="p3q5" value="A">x<sup>2</sup>＋3x−7</label>
+      <label><input type="radio" name="p3q5" value="B">x<sup>2</sup>＋3x−13</label>
+      <label><input type="radio" name="p3q5" value="C">x<sup>2</sup>−3x−7</label>
+      <label><input type="radio" name="p3q5" value="D">x<sup>2</sup>＋7x−7</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="(x−2)(x＋5)＋3＝x²＋3x−10＋3＝x²＋3x−7。"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 章末總測驗（10 題）</h2>
+    <p>寫完全部再按最下面的「交卷」。目標：8 題以上過關！</p>
+  </div>
+
+  <div class="card" id="quizCard">
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. (x＋7)<sup>2</sup> ＝ ?</div>
+      <label><input type="radio" name="q1" value="A">x<sup>2</sup>＋49</label>
+      <label><input type="radio" name="q1" value="B">x<sup>2</sup>＋14x＋49</label>
+      <label><input type="radio" name="q1" value="C">x<sup>2</sup>＋7x＋49</label>
+      <label><input type="radio" name="q1" value="D">x<sup>2</sup>＋14x＋14</label>
+      <div class="fb" data-exp="和的平方：x²＋2·7·x＋49＝x²＋14x＋49。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">2. (5x−3)(5x＋3) ＝ ?</div>
+      <label><input type="radio" name="q2" value="A">25x<sup>2</sup>−9</label>
+      <label><input type="radio" name="q2" value="B">25x<sup>2</sup>＋9</label>
+      <label><input type="radio" name="q2" value="C">10x<sup>2</sup>−9</label>
+      <label><input type="radio" name="q2" value="D">25x<sup>2</sup>−30x−9</label>
+      <div class="fb" data-exp="平方差：(5x)²−3²＝25x²−9。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">3. 速算 1005×995 ＝ ?</div>
+      <label><input type="radio" name="q3" value="A">1,000,025</label>
+      <label><input type="radio" name="q3" value="B">999,925</label>
+      <label><input type="radio" name="q3" value="C">999,975</label>
+      <label><input type="radio" name="q3" value="D">1,000,005</label>
+      <div class="fb" data-exp="(1000＋5)(1000−5)＝1,000,000−25＝999,975。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. 已知 x−y＝4、xy＝5，則 x<sup>2</sup>＋y<sup>2</sup> ＝ ?</div>
+      <label><input type="radio" name="q4" value="A">16</label>
+      <label><input type="radio" name="q4" value="B">21</label>
+      <label><input type="radio" name="q4" value="C">6</label>
+      <label><input type="radio" name="q4" value="D">26</label>
+      <div class="fb" data-exp="x²＋y²＝(x−y)²＋2xy＝16＋10＝26。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">5. (4x<sup>2</sup>−x＋2)＋(x<sup>2</sup>＋3x−7) ＝ ?</div>
+      <label><input type="radio" name="q5" value="A">5x<sup>2</sup>＋2x−5</label>
+      <label><input type="radio" name="q5" value="B">5x<sup>2</sup>−2x−5</label>
+      <label><input type="radio" name="q5" value="C">4x<sup>2</sup>＋2x−5</label>
+      <label><input type="radio" name="q5" value="D">5x<sup>2</sup>＋2x＋5</label>
+      <div class="fb" data-exp="(4＋1)x²＋(−1＋3)x＋(2−7)＝5x²＋2x−5。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">6. (2x<sup>2</sup>＋x−5)−(x<sup>2</sup>−4x＋1) ＝ ?</div>
+      <label><input type="radio" name="q6" value="A">x<sup>2</sup>−3x−4</label>
+      <label><input type="radio" name="q6" value="B">x<sup>2</sup>＋5x−6</label>
+      <label><input type="radio" name="q6" value="C">x<sup>2</sup>−3x−6</label>
+      <label><input type="radio" name="q6" value="D">3x<sup>2</sup>＋5x−6</label>
+      <div class="fb" data-exp="去括號變號：2x²＋x−5−x²＋4x−1＝x²＋5x−6。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">7. (x−3)(x＋8) ＝ ?</div>
+      <label><input type="radio" name="q7" value="A">x<sup>2</sup>−5x−24</label>
+      <label><input type="radio" name="q7" value="B">x<sup>2</sup>＋11x−24</label>
+      <label><input type="radio" name="q7" value="C">x<sup>2</sup>＋5x−24</label>
+      <label><input type="radio" name="q7" value="D">x<sup>2</sup>＋5x＋24</label>
+      <div class="fb" data-exp="x²＋8x−3x−24＝x²＋5x−24。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">8. (2x＋3)(x<sup>2</sup>−x＋4) ＝ ?</div>
+      <label><input type="radio" name="q8" value="A">2x<sup>3</sup>−x<sup>2</sup>＋5x＋12</label>
+      <label><input type="radio" name="q8" value="B">2x<sup>3</sup>＋x<sup>2</sup>＋11x＋12</label>
+      <label><input type="radio" name="q8" value="C">2x<sup>3</sup>＋5x<sup>2</sup>＋5x＋12</label>
+      <label><input type="radio" name="q8" value="D">2x<sup>3</sup>＋x<sup>2</sup>＋5x＋12</label>
+      <div class="fb" data-exp="2x³−2x²＋8x＋3x²−3x＋12＝2x³＋x²＋5x＋12。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">9. (x<sup>2</sup>−2x−15)÷(x−5) ＝ ?</div>
+      <label><input type="radio" name="q9" value="A">商 x＋3、餘 0</label>
+      <label><input type="radio" name="q9" value="B">商 x−3、餘 0</label>
+      <label><input type="radio" name="q9" value="C">商 x＋3、餘 −30</label>
+      <label><input type="radio" name="q9" value="D">商 x−7、餘 20</label>
+      <div class="fb" data-exp="驗算：(x−5)(x＋3)＝x²−2x−15，整除。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">10. 已知 a＋b＝9、a−b＝5，則 a<sup>2</sup>−b<sup>2</sup> ＝ ?</div>
+      <label><input type="radio" name="q10" value="A">56</label>
+      <label><input type="radio" name="q10" value="B">45</label>
+      <label><input type="radio" name="q10" value="C">106</label>
+      <label><input type="radio" name="q10" value="D">14</label>
+      <div class="fb" data-exp="平方差反用：a²−b²＝(a＋b)(a−b)＝9×5＝45。"></div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">✅ 交卷看成績</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>國二數學自學教材（原創內容，依 108 課綱章節架構編寫）· 第 1 章 乘法公式與多項式</footer>
+</div>
+
+<script>
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    if(sel.value === q.dataset.ans){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+  });
+});
+
+// 章末測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，本章過關！可以前進第 2 章。`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，及格邊緣。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+</script>
+</body>
+</html>
