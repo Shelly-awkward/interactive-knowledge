@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>夜市英語劇場｜Ep.1–2 臭豆腐事件簿</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#faf7f2; --card:#ffffff;
+    --vio:#7c3aed; --vio-soft:#ede9fe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e7e2d8; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.75;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#312e81,#7c3aed 60%,#db2777); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.2); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--vio);}
+  nav.tabs button.active{background:var(--vio); border-color:var(--vio); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--vio); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--vio-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .note{background:var(--vio-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#5b21b6;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  /* ── 對話劇場 ── */
+  .stage-hint{font-size:.85rem; color:var(--sub); margin-bottom:12px;}
+  .line{display:flex; gap:10px; margin:10px 0; align-items:flex-start;}
+  .line.me{flex-direction:row-reverse;}
+  .ava{flex:0 0 42px; width:42px; height:42px; border-radius:50%; background:var(--vio-soft); display:flex; align-items:center; justify-content:center; font-size:1.4rem;}
+  .bub{max-width:82%; background:#fff; border:1px solid var(--border); border-radius:12px; padding:8px 14px; cursor:pointer; transition:.12s; box-shadow:0 1px 2px rgba(0,0,0,.04);}
+  .bub:hover{border-color:var(--vio);}
+  .bub .who{font-size:.75rem; color:var(--sub); margin-bottom:2px;}
+  .bub .en{font-size:1rem;}
+  .bub .en b.gw{background:var(--amber-soft); color:#92400e; padding:0 3px; border-radius:4px; font-weight:bold;}
+  .bub .zh{display:none; margin-top:6px; padding-top:6px; border-top:1px dashed var(--border); font-size:.88rem; color:var(--sub);}
+  .bub .gn{display:none; margin-top:4px; font-size:.82rem; color:#5b21b6; background:var(--vio-soft); border-radius:6px; padding:3px 8px;}
+  .line.open .zh{display:block;}
+  .line.open .gn{display:block;}
+  .line.nar{justify-content:center;}
+  .line.nar .bub{background:#f3f0e9; border-style:dashed; font-style:italic; text-align:center; max-width:92%;}
+
+  /* ── 文法秒懂：五感等號 ── */
+  .sense{display:flex; align-items:center; gap:8px; margin:8px 0; flex-wrap:wrap;}
+  .sense .box{border:2px solid var(--vio); border-radius:10px; padding:4px 14px; font-weight:bold; background:#fff;}
+  .sense .box.adj{border-color:var(--amber); background:var(--amber-soft);}
+  .sense .bridge{flex:0 0 auto; color:var(--vio); font-weight:bold; font-size:.92rem; background:var(--vio-soft); border-radius:99px; padding:2px 12px;}
+  .eq{font-size:1.2rem; color:var(--sub);}
+
+  /* ── 互動練習：克漏字 ── */
+  .cz{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .cz .czs{font-weight:bold; font-size:1.02rem;}
+  .cz .blank{display:inline-block; min-width:74px; border-bottom:2px solid var(--vio); text-align:center; color:var(--vio); font-weight:bold;}
+  .cz .hint{font-size:.85rem; color:var(--sub); margin-top:2px;}
+  .chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
+  .chips button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:6px 16px; font-size:.95rem; cursor:pointer; font-family:inherit; transition:.12s;}
+  .chips button:hover{border-color:var(--vio); background:var(--vio-soft);}
+  .chips button.good{background:var(--green-soft); border-color:var(--green); color:#166534; font-weight:bold;}
+  .chips button.bad{background:var(--red-soft); border-color:var(--red); color:#991b1b; animation:shake .3s;}
+  .chips button:disabled{opacity:.45; cursor:default;}
+  @keyframes shake{25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+
+  /* ── 互動練習：拼句子 ── */
+  .builder{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .builder .target{font-size:.9rem; color:var(--sub); margin-bottom:8px;}
+  .builder .slot{min-height:44px; background:#f8f6f1; border:2px dashed var(--border); border-radius:10px; padding:8px 10px; font-size:1.05rem; font-weight:bold; margin-bottom:8px;}
+  .builder .bbtn{background:var(--vio); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem; margin:8px 8px 0 0;}
+  .builder .bbtn.ghost{background:#fff; color:var(--ink); border:1px solid var(--border);}
+
+  .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+
+  /* ── 選台詞／測驗（單選題） ── */
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--vio); background:var(--vio-soft);}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--vio); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  /* ── 字彙池 ── */
+  .vgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px;}
+  .vcard{border:1px solid var(--border); border-radius:10px; padding:10px 12px; background:#fff; cursor:pointer; transition:.12s;}
+  .vcard:hover{border-color:var(--vio);}
+  .vcard .w{font-weight:bold; font-size:1.05rem;}
+  .vcard .z{font-size:.85rem; color:var(--sub);}
+  .vcard .eps{margin-top:4px; display:flex; gap:4px; flex-wrap:wrap;}
+  .vcard .ep{font-size:.7rem; border-radius:99px; padding:1px 8px; background:var(--vio-soft); color:#5b21b6;}
+  .vcard .ep.x{background:var(--amber-soft); color:#92400e;}
+  .vcard .ex{display:none; margin-top:6px; font-size:.82rem; color:#5b21b6; border-top:1px dashed var(--border); padding-top:5px;}
+  .vcard.open .ex{display:block;}
+
+  .svgbox{text-align:center; margin:14px 0;}
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--vio); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} .bub{max-width:88%;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">互動英語 · 連續劇式故事包 · 國二文法藏在劇情裡</span>
+  <h1>🌃 夜市英語劇場｜Ep.1–2 臭豆腐事件簿</h1>
+  <p>阿嬤的鹽酥雞攤＋美國交換學生 Emma＋嫌疑犯狗狗 Boba。點對話泡泡看中文和文法點，每集看完動手玩練習。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="ep1">Ep.1 聞起來很可怕</button>
+  <button data-t="ep2">Ep.2 雞排失蹤事件</button>
+  <button data-t="vocab">📦 字彙池</button>
+  <button data-t="quiz">🏁 兩集總測驗</button>
+</nav>
+
+<!-- ═══════════ Ep.1 ═══════════ -->
+<section id="ep1" class="panel show">
+  <div class="card goal">
+    <h2>🎬 Ep.1《It Smells Terrible!》</h2>
+    <ul>
+      <li>看完這集，你會自然用出<b>連綴動詞</b>：look／smell／taste／sound／feel ＋ 形容詞</li>
+      <li>登場人物：Kevin 😎（國二生）、阿嬤 👵（攤主）、Emma 👱‍♀️（美國交換學生）、Boba 🐶（狗）</li>
+      <li>💡 <b>點任何一句對話</b>可展開中文翻譯和文法小抄</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>💬 對話劇場</h2>
+    <p class="stage-hint">👆 點句子展開中文；<b style="background:var(--amber-soft);padding:0 4px;border-radius:4px;">黃色標記</b>就是這集的文法主角。</p>
+    <div id="stage1"></div>
+  </div>
+
+  <div class="card">
+    <h2>⚡ 文法秒懂：連綴動詞是「五感的等號」</h2>
+    <p>這五個動詞不是「做動作」，而是把<b>主詞</b>和<b>形容詞</b>用感官接起來——像一個「＝」號：</p>
+    <div class="sense"><span class="box">It</span><span class="bridge">👀 looks（看起來）</span><span class="eq">≈</span><span class="box adj">delicious</span></div>
+    <div class="sense"><span class="box">It</span><span class="bridge">👃 smells（聞起來）</span><span class="eq">≈</span><span class="box adj">terrible</span></div>
+    <div class="sense"><span class="box">It</span><span class="bridge">👅 tastes（嚐起來）</span><span class="eq">≈</span><span class="box adj">great</span></div>
+    <div class="sense"><span class="box">That</span><span class="bridge">👂 sounds（聽起來）</span><span class="eq">≈</span><span class="box adj">crazy</span></div>
+    <div class="sense"><span class="box">I</span><span class="bridge">🖐 feel（感覺）</span><span class="eq">≈</span><span class="box adj">brave</span></div>
+    <div class="warn">⚠️ 等號後面接<b>形容詞</b>，不是副詞：It tastes <b>good</b> ✅　It tastes <s>well</s> ❌</div>
+    <div class="note">💡 想接<b>名詞</b>就要加 <b>like</b>：It smells <b>like</b> old socks.（聞起來「像」舊襪子）／ I feel <b>like</b> a real Taiwanese.</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：五感選字</h2>
+    <p class="stage-hint">點一個字填進空格，馬上知道對不對。</p>
+
+    <div class="cz" data-q="e1c1" data-ans="sounds">
+      <div class="czs">This music <span class="blank">＿＿＿</span> beautiful.</div>
+      <div class="hint">（這音樂＿＿＿真美。）</div>
+      <div class="chips"><button>sounds</button><button>tastes</button><button>smells</button></div>
+      <div class="fb" data-exp="音樂是用「聽」的 → sounds beautiful。"></div>
+    </div>
+
+    <div class="cz" data-q="e1c2" data-ans="tastes">
+      <div class="czs">The cake <span class="blank">＿＿＿</span> sweet.</div>
+      <div class="hint">（這蛋糕＿＿＿甜甜的。）</div>
+      <div class="chips"><button>sounds</button><button>feels</button><button>tastes</button></div>
+      <div class="fb" data-exp="蛋糕甜不甜要用「嚐」的 → tastes sweet。"></div>
+    </div>
+
+    <div class="cz" data-q="e1c3" data-ans="look">
+      <div class="czs">Your new shoes <span class="blank">＿＿＿</span> cool!</div>
+      <div class="hint">（你的新鞋＿＿＿超帥！注意主詞是複數喔。）</div>
+      <div class="chips"><button>look</button><button>looks</button><button>taste</button></div>
+      <div class="fb" data-exp="鞋子用「看」的，而且 shoes 是複數 → look（不加 s）。"></div>
+    </div>
+
+    <div class="cz" data-q="e1c4" data-ans="like">
+      <div class="czs">It smells <span class="blank">＿＿＿</span> old socks!</div>
+      <div class="hint">（聞起來「像」舊襪子！後面是名詞喔。）</div>
+      <div class="chips"><button>so</button><button>like</button><button>very</button></div>
+      <div class="fb" data-exp="後面接名詞（old socks）要加 like：smell like＋名詞。"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 動手玩：把 Emma 的名台詞拼回來</h2>
+    <div class="builder" data-q="e1b1" data-ans="It smells terrible but it tastes great">
+      <div class="target">中文：它聞起來很可怕，但吃起來超讚！（點單字依序組句）</div>
+      <div class="slot"></div>
+      <div class="chips"><button>tastes</button><button>It</button><button>but</button><button>great</button><button>smells</button><button>it</button><button>terrible</button></div>
+      <button class="bbtn bcheck">對答案</button><button class="bbtn ghost bclear">清除重來</button>
+      <div class="fb" data-exp="It smells terrible but it tastes great!"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎭 動手玩：這時候該說哪句？</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">Emma 聞到臭豆腐，皺著眉摀住鼻子（她還沒吃喔）。她會說——</div>
+      <label><input type="radio" name="e1s1" value="A">It smells terrible!</label>
+      <label><input type="radio" name="e1s1" value="B">It tastes terrible!</label>
+      <label><input type="radio" name="e1s1" value="C">It sounds terrible!</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="她只有「聞到」還沒吃，所以是 smells，不是 tastes。"></div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">你咬了一口阿嬤的鹽酥雞，好吃到升天。正確的說法是——</div>
+      <label><input type="radio" name="e1s2" value="A">It tastes wonderful!</label>
+      <label><input type="radio" name="e1s2" value="B">It tastes wonderfully!</label>
+      <label><input type="radio" name="e1s2" value="C">It is tasting wonderful!</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="連綴動詞後面接「形容詞」wonderful，不是副詞 wonderfully；感官描述也不用進行式。"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ Ep.2 ═══════════ -->
+<section id="ep2" class="panel">
+  <div class="card goal">
+    <h2>🎬 Ep.2《Who Ate the Chicken?》</h2>
+    <ul>
+      <li>看完這集，你會用<b>過去進行式</b>問話和自保：What <b>were</b> you <b>doing</b>? I <b>was eating</b>...</li>
+      <li>雞排失蹤了！每個人的「不在場證明」都是一句過去進行式</li>
+      <li>💡 順便注意：Ep.1 的連綴動詞在這集<b>回收再登場</b>（smell like、look full、sound crazy）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>💬 對話劇場</h2>
+    <p class="stage-hint">👆 點句子展開中文；黃色標記是這集的文法主角。</p>
+    <div id="stage2"></div>
+  </div>
+
+  <div class="card">
+    <h2>⚡ 文法秒懂：過去進行式＝過去的「一條線」</h2>
+    <p>過去簡單式是一個「點」（發生了）；過去進行式是一條「線」——<b>過去某一刻，動作正在進行中</b>，那一刻剛好落在線上：</p>
+    <div class="svgbox">
+      <svg viewBox="0 0 560 170" width="100%" style="max-width:520px" xmlns="http://www.w3.org/2000/svg">
+        <line x1="20" y1="110" x2="540" y2="110" stroke="#9ca3af" stroke-width="2"/>
+        <polygon points="540,110 528,104 528,116" fill="#9ca3af"/>
+        <text x="500" y="140" font-size="13" fill="#6b7280">時間 →</text>
+        <rect x="140" y="60" width="240" height="34" rx="17" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+        <text x="260" y="83" font-size="14" text-anchor="middle" fill="#92400e" font-weight="bold">Boba was eating the chicken</text>
+        <circle cx="260" cy="110" r="7" fill="#dc2626"/>
+        <text x="260" y="140" font-size="13" text-anchor="middle" fill="#dc2626" font-weight="bold">8:50 雞排消失！</text>
+        <text x="260" y="40" font-size="13" text-anchor="middle" fill="#6b7280">那一刻，動作「正在」這條線上進行</text>
+      </svg>
+    </div>
+    <div class="sense"><span class="box">I / He / She / It / Boba</span><span class="bridge">was</span><span class="box adj">V-ing</span></div>
+    <div class="sense"><span class="box">You / We / They</span><span class="bridge">were</span><span class="box adj">V-ing</span></div>
+    <div class="note">💡 問句把 was／were 搬到前面：<b>What were you doing</b> at 8:50?　否定加 not：I <b>wasn't eating</b> chicken!</div>
+    <div class="warn">⚠️ 常跟「過去的時間點」連用：at nine last night、at that moment、ten minutes ago。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：不在場證明產生器</h2>
+    <p class="stage-hint">點一個字填進空格，完成每個人的證詞。</p>
+
+    <div class="cz" data-q="e2c1" data-ans="was">
+      <div class="czs">Emma: I <span class="blank">＿＿＿</span> eating stinky tofu at 8:50.</div>
+      <div class="hint">（主詞是 I。）</div>
+      <div class="chips"><button>was</button><button>were</button><button>am</button></div>
+      <div class="fb" data-exp="I → was；「過去」的 8:50，不能用現在式 am。"></div>
+    </div>
+
+    <div class="cz" data-q="e2c2" data-ans="were">
+      <div class="czs">The customers <span class="blank">＿＿＿</span> waiting for fried chicken.</div>
+      <div class="hint">（主詞是複數的客人們。）</div>
+      <div class="chips"><button>was</button><button>were</button><button>are</button></div>
+      <div class="fb" data-exp="The customers（複數）→ were。"></div>
+    </div>
+
+    <div class="cz" data-q="e2c3" data-ans="were">
+      <div class="czs">Kevin: What <span class="blank">＿＿＿</span> you doing ten minutes ago?</div>
+      <div class="hint">（質問句：把 be 動詞搬到主詞前面。）</div>
+      <div class="chips"><button>was</button><button>were</button><button>did</button></div>
+      <div class="fb" data-exp="you → were；後面已經有 doing，所以不能用 did（did 要配原形動詞 do）。"></div>
+    </div>
+
+    <div class="cz" data-q="e2c4" data-ans="enjoying">
+      <div class="czs">Boba was <span class="blank">＿＿＿</span> a big, delicious fried chicken.</div>
+      <div class="hint">（was／were 後面要接什麼形？）</div>
+      <div class="chips"><button>enjoy</button><button>enjoyed</button><button>enjoying</button></div>
+      <div class="fb" data-exp="was／were＋V-ing → enjoying。"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 動手玩：把 Kevin 的質問拼回來</h2>
+    <div class="builder" data-q="e2b1" data-ans="What were you doing at nine last night">
+      <div class="target">中文：你昨晚九點在做什麼？（點單字依序組句）</div>
+      <div class="slot"></div>
+      <div class="chips"><button>doing</button><button>last</button><button>What</button><button>at</button><button>you</button><button>night</button><button>were</button><button>nine</button></div>
+      <button class="bbtn bcheck">對答案</button><button class="bbtn ghost bclear">清除重來</button>
+      <div class="fb" data-exp="What were you doing at nine last night?"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎭 動手玩：這時候該說哪句？</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">Kevin 質問你昨晚九點在幹嘛。你昨晚九點其實在寫功課，你會說——</div>
+      <label><input type="radio" name="e2s1" value="A">I was doing my homework.</label>
+      <label><input type="radio" name="e2s1" value="B">I am doing my homework.</label>
+      <label><input type="radio" name="e2s1" value="C">I doing my homework.</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="過去的九點 → was doing；B 是現在進行式，C 少了 be 動詞。"></div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">🔁 Ep.1 回收題：Boba 吃飽睡死在桌下，肚子圓滾滾。你會說——</div>
+      <label><input type="radio" name="e2s2" value="A">Boba looks very full.</label>
+      <label><input type="radio" name="e2s2" value="B">Boba looks very fully.</label>
+      <label><input type="radio" name="e2s2" value="C">Boba is looking very full.</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="Ep.1 的連綴動詞回來了：look＋形容詞 full，不是副詞 fully，也不用進行式。"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 字彙池 ═══════════ -->
+<section id="vocab" class="panel">
+  <div class="card goal">
+    <h2>📦 本劇字彙池</h2>
+    <ul>
+      <li>這齣劇的單字是<b>共用</b>的：同一個字會在不同集、不同情境反覆出現——這就是「語感」長出來的方式</li>
+      <li>徽章代表這個字在哪幾集登場過；<b>點卡片</b>看它在劇中的原句</li>
+      <li>⭐ 是課本字表外的「加碼字」（因為劇情太需要它了）</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="vgrid" id="vgrid"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="quiz" class="panel">
+  <div class="card goal">
+    <h2>🏁 兩集總測驗（10 題）</h2>
+    <ul>
+      <li>混合 Ep.1 連綴動詞＋Ep.2 過去進行式，全部寫完再按「交卷」</li>
+      <li>交卷後每題都有解析，成績會記進學習紀錄</li>
+    </ul>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. The stinky tofu ___ terrible, but many people love it.</div>
+      <label><input type="radio" name="q1" value="A">smell</label>
+      <label><input type="radio" name="q1" value="B">smells</label>
+      <label><input type="radio" name="q1" value="C">is smelling</label>
+      <label><input type="radio" name="q1" value="D">smelled like</label>
+      <div class="fb" data-exp="主詞單數 → smells；感官描述不用進行式；terrible 是形容詞，不必加 like。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">2. Grandma's fried chicken tastes ___.</div>
+      <label><input type="radio" name="q2" value="A">wonderfully</label>
+      <label><input type="radio" name="q2" value="B">like wonderful</label>
+      <label><input type="radio" name="q2" value="C">wonderful</label>
+      <label><input type="radio" name="q2" value="D">well</label>
+      <div class="fb" data-exp="連綴動詞＋形容詞 → wonderful；like 後面要接名詞才對。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. Let's try pig's blood cake tomorrow! — That ___ interesting!</div>
+      <label><input type="radio" name="q3" value="A">sounds</label>
+      <label><input type="radio" name="q3" value="B">listens</label>
+      <label><input type="radio" name="q3" value="C">hears</label>
+      <label><input type="radio" name="q3" value="D">says</label>
+      <div class="fb" data-exp="「聽起來如何」用 sound＋形容詞；listen／hear 是「聽」的動作，不能這樣接形容詞。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. This soup smells ___ my grandma's beef noodles.</div>
+      <label><input type="radio" name="q4" value="A">so</label>
+      <label><input type="radio" name="q4" value="B">very</label>
+      <label><input type="radio" name="q4" value="C">to</label>
+      <label><input type="radio" name="q4" value="D">like</label>
+      <div class="fb" data-exp="後面是名詞（beef noodles）→ smell like＋名詞。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. A: What were you doing at 8:50? — B: I ___ stinky tofu at the next stand.</div>
+      <label><input type="radio" name="q5" value="A">am eating</label>
+      <label><input type="radio" name="q5" value="B">was eating</label>
+      <label><input type="radio" name="q5" value="C">were eating</label>
+      <label><input type="radio" name="q5" value="D">eat</label>
+      <div class="fb" data-exp="過去的 8:50、主詞 I → was eating。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">6. Boba ___ under the table when Grandma found him.</div>
+      <label><input type="radio" name="q6" value="A">was sleeping</label>
+      <label><input type="radio" name="q6" value="B">is sleeping</label>
+      <label><input type="radio" name="q6" value="C">were sleeping</label>
+      <label><input type="radio" name="q6" value="D">sleeps</label>
+      <div class="fb" data-exp="阿嬤「發現他」的那一刻，他「正在睡」→ was sleeping（Boba 單數）。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">7. What ___ Kevin doing ten minutes ago?</div>
+      <label><input type="radio" name="q7" value="A">did</label>
+      <label><input type="radio" name="q7" value="B">were</label>
+      <label><input type="radio" name="q7" value="C">was</label>
+      <label><input type="radio" name="q7" value="D">is</label>
+      <div class="fb" data-exp="Kevin 單數 → was；後面有 doing，不能配 did。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">8. We ___ TV at nine last night, so we didn't hear the phone.</div>
+      <label><input type="radio" name="q8" value="A">was watching</label>
+      <label><input type="radio" name="q8" value="B">were watching</label>
+      <label><input type="radio" name="q8" value="C">are watching</label>
+      <label><input type="radio" name="q8" value="D">watching</label>
+      <div class="fb" data-exp="We → were watching；last night 是過去。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">9. Emma tried the stinky tofu and now she ___ very happy.</div>
+      <label><input type="radio" name="q9" value="A">feels</label>
+      <label><input type="radio" name="q9" value="B">feels like</label>
+      <label><input type="radio" name="q9" value="C">is feeling like</label>
+      <label><input type="radio" name="q9" value="D">felt like</label>
+      <div class="fb" data-exp="happy 是形容詞 → feel happy 不加 like；now 表示現在 → feels。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">10. Kevin wasn't eating the chicken. He ___ a game on his phone!</div>
+      <label><input type="radio" name="q10" value="A">plays</label>
+      <label><input type="radio" name="q10" value="B">is playing</label>
+      <label><input type="radio" name="q10" value="C">were playing</label>
+      <label><input type="radio" name="q10" value="D">was playing</label>
+      <div class="fb" data-exp="跟前半句同一個過去時刻 → was playing（He 單數）。"></div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">✅ 交卷看成績</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>夜市英語劇場（原創內容）· Ep.1 連綴動詞 · Ep.2 過去進行式 · 字彙以教育部國中常用 2000 字為邊界</footer>
+</div>
+
+<script>
+// ═══════════ 劇本資料（series bible）═══════════
+// 對白存成資料陣列：{s:角色, en:英文, zh:中文, note:文法小抄}
+// en 裡的 *星號* 標記文法主角字，渲染成黃色高亮。
+// 未來要加語音朗讀（Web Speech API），只要對每筆 en 加一顆 🔊 即可，資料不用改。
+const CAST = {
+  N:{name:"旁白", ava:"🎬", nar:true},
+  K:{name:"Kevin", ava:"😎"},
+  A:{name:"阿嬤", ava:"👵"},
+  E:{name:"Emma", ava:"👱‍♀️", me:true},
+  B:{name:"Boba", ava:"🐶"}
+};
+
+const EP1 = [
+  {s:"N", en:"It is seven o'clock at the night market. Grandma's stand sells the best fried chicken here, and many customers are waiting.", zh:"晚上七點的夜市。阿嬤的攤位賣全夜市最好吃的鹽酥雞，很多客人在排隊。"},
+  {s:"K", en:"Emma, welcome to our night market! Are you hungry?", zh:"Emma，歡迎來到我們的夜市！妳餓了嗎？"},
+  {s:"E", en:"Yes! Wow, everything *looks* delicious. But... what is that smell?", zh:"餓了！哇，每樣東西看起來都好好吃。但是……那是什麼味道？", note:"look＋形容詞：看起來…"},
+  {s:"K", en:"Oh, that's stinky tofu. It *smells* terrible, but it *tastes* great!", zh:"喔，那是臭豆腐。聞起來很可怕，但吃起來超讚！", note:"smell／taste＋形容詞：聞起來／嚐起來…"},
+  {s:"E", en:"It *smells like* old socks! How can people eat it?", zh:"聞起來像舊襪子！人怎麼吃得下去啦？", note:"接名詞要加 like：smell like＋名詞"},
+  {s:"A", en:"Don't be afraid, young lady! Try my fried chicken first. It *tastes* sweet and a little hot.", zh:"小姐免驚啦！先試試我的鹽酥雞。嚐起來甜甜的，還帶一點辣。", note:"hot 用在食物上是「辣」"},
+  {s:"E", en:"Mmm! It *tastes* wonderful! And it *smells* so good!", zh:"嗯～！超好吃的！而且好香！"},
+  {s:"B", en:"Woof! Woof! (Boba *looks* very hungry.)", zh:"汪！汪！（Boba 看起來超餓。）"},
+  {s:"K", en:"No, Boba! This is not for you.", zh:"Boba 不行！這不是給你的。"},
+  {s:"E", en:"OK... now I want to try the stinky tofu. I *feel* brave!", zh:"好……現在我想挑戰臭豆腐了。我覺得自己很勇敢！", note:"feel＋形容詞：感覺…"},
+  {s:"N", en:"Emma takes a small bite. Everyone watches her.", zh:"Emma 咬了一小口。大家都盯著她看。"},
+  {s:"E", en:"Oh no. It *looks* bad. It *smells* bad. But it... it *tastes* AMAZING!", zh:"喔不。看起來很糟，聞起來很糟。但它……吃起來也太神了吧！", note:"amazing：太驚人了（⭐加碼字）"},
+  {s:"A", en:"See? Grandma is always right. You *look* happy now!", zh:"看吧？阿嬤永遠是對的。妳現在看起來很開心喔！"},
+  {s:"E", en:"I *feel like* a real Taiwanese now!", zh:"我現在覺得自己像個道地台灣人了！", note:"feel like＋名詞：感覺像…"},
+  {s:"K", en:"That *sounds* great! Tomorrow, let's try pig's blood cake!", zh:"聽起來讚喔！明天我們來挑戰豬血糕！", note:"sound＋形容詞：聽起來…"},
+  {s:"E", en:"...That *sounds* terrible.", zh:"……那聽起來就很可怕。"}
+];
+
+const EP2 = [
+  {s:"N", en:"Nine o'clock at the night market. Grandma is very angry. Her biggest fried chicken is gone!", zh:"晚上九點的夜市。阿嬤氣炸了。她最大塊的雞排不見了！"},
+  {s:"A", en:"My chicken! It was for a very important customer! He says my chicken *tastes* the best in the world!", zh:"我的雞排！那是要給一位超重要客人的！他說我的雞排是全世界最好吃的！", note:"🔁 回收 Ep.1：taste＋形容詞"},
+  {s:"K", en:"Don't be angry, Grandma. I will find the thief. I watch a lot of police shows!", zh:"阿嬤別生氣。我會找出小偷的。我可是看很多警察影集的人！"},
+  {s:"K", en:"Emma! Where *were* you at eight fifty?", zh:"Emma！八點五十分的時候妳在哪裡？", note:"過去的某個時間點：Where were you...?"},
+  {s:"E", en:"Me? I *was eating* stinky tofu at the next stand. Ask the boss there!", zh:"我？我那時正在隔壁攤吃臭豆腐。不信你去問老闆！", note:"was／were＋V-ing：那時正在…"},
+  {s:"K", en:"Hmm, OK. Grandma, what *were* you *doing*?", zh:"嗯，好吧。阿嬤，那妳當時在做什麼？", note:"疑問句：What were you doing?"},
+  {s:"A", en:"Are you joking? I *was selling* chicken to my customers. It's MY chicken!", zh:"你在開玩笑嗎？我那時正在賣雞排給客人欸。那可是「我的」雞排！"},
+  {s:"E", en:"Kevin, what *were* YOU *doing* at eight fifty?", zh:"Kevin，那「你」八點五十分在做什麼？"},
+  {s:"K", en:"I... I *was playing* a game on my phone. But I *wasn't eating* chicken!", zh:"我……我那時正在用手機打電動。但我沒有在吃雞排！", note:"否定：wasn't／weren't＋V-ing"},
+  {s:"N", en:"At that moment, Kevin smells something strange.", zh:"就在這時，Kevin 聞到一股奇怪的味道。"},
+  {s:"K", en:"Wait! Something *smells like* fried chicken... and the smell is coming from... BOBA!", zh:"等等！有東西聞起來像雞排……而且味道是從……BOBA 身上來的！", note:"🔁 回收 Ep.1：smell like＋名詞"},
+  {s:"E", en:"Look! Boba is sleeping under the table... and he *looks* very, very full.", zh:"你看！Boba 在桌子底下睡覺……而且他看起來超級、超級飽。", note:"🔁 回收 Ep.1：look＋形容詞"},
+  {s:"K", en:"Boba! What *were* you *doing* ten minutes ago?!", zh:"Boba！你十分鐘前在做什麼？！"},
+  {s:"N", en:"Boba *was not sleeping* ten minutes ago. He was hungry, and he *was enjoying* a big, delicious fried chicken.", zh:"十分鐘前的 Boba 可沒在睡覺。他那時餓了，正在享用一大塊美味的雞排。"},
+  {s:"K", en:"Oh, Boba. This *looks* terrible for you.", zh:"喔，Boba。這下情況對你很不利喔。（辦案劇口吻）"},
+  {s:"A", en:"BOBA! Tonight you are washing all the dishes!", zh:"BOBA！今晚你給我洗全部的碗！"},
+  {s:"K", en:"Grandma, dogs can't wash dishes...", zh:"阿嬤，狗不會洗碗啦……"},
+  {s:"E", en:"This family *sounds* crazy. I love it here!", zh:"這一家聽起來瘋瘋的。我好喜歡這裡！", note:"🔁 回收 Ep.1：sound＋形容詞"}
+];
+
+// 字彙池：{w:單字, zh:意思, eps:出現集數, ex:劇中原句, extra:課本字表外加碼字}
+const VOCAB = [
+  {w:"night market", zh:"夜市", eps:[1,2], ex:"Welcome to our night market!"},
+  {w:"hungry", zh:"餓的", eps:[1,2], ex:"He was hungry, and he was enjoying a big fried chicken."},
+  {w:"delicious", zh:"美味的", eps:[1,2], ex:"Everything looks delicious."},
+  {w:"smell", zh:"聞起來；氣味", eps:[1,2], ex:"It smells terrible, but it tastes great!"},
+  {w:"taste", zh:"嚐起來", eps:[1,2], ex:"He says my chicken tastes the best in the world!"},
+  {w:"look", zh:"看起來", eps:[1,2], ex:"He looks very, very full."},
+  {w:"sound", zh:"聽起來", eps:[1,2], ex:"This family sounds crazy."},
+  {w:"feel", zh:"感覺", eps:[1], ex:"I feel brave!"},
+  {w:"terrible", zh:"可怕的、很糟的", eps:[1,2], ex:"This looks terrible for you."},
+  {w:"sell", zh:"賣", eps:[1,2], ex:"I was selling chicken to my customers."},
+  {w:"customer", zh:"客人", eps:[1,2], ex:"It was for a very important customer!"},
+  {w:"chicken", zh:"雞肉；雞", eps:[1,2], ex:"Grandma's stand sells the best fried chicken here."},
+  {w:"try", zh:"嘗試", eps:[1], ex:"Now I want to try the stinky tofu."},
+  {w:"watch", zh:"看、盯著", eps:[1,2], ex:"I watch a lot of police shows!"},
+  {w:"sweet", zh:"甜的", eps:[1], ex:"It tastes sweet and a little hot."},
+  {w:"hot", zh:"辣的；熱的", eps:[1], ex:"It tastes sweet and a little hot."},
+  {w:"wonderful", zh:"很棒的", eps:[1], ex:"It tastes wonderful!"},
+  {w:"brave", zh:"勇敢的", eps:[1], ex:"I feel brave!"},
+  {w:"happy", zh:"開心的", eps:[1], ex:"You look happy now!"},
+  {w:"afraid", zh:"害怕的", eps:[1], ex:"Don't be afraid, young lady!"},
+  {w:"sock", zh:"襪子", eps:[1], ex:"It smells like old socks!"},
+  {w:"angry", zh:"生氣的", eps:[2], ex:"Grandma is very angry."},
+  {w:"important", zh:"重要的", eps:[2], ex:"It was for a very important customer!"},
+  {w:"thief", zh:"小偷", eps:[2], ex:"I will find the thief."},
+  {w:"joke", zh:"開玩笑", eps:[2], ex:"Are you joking?"},
+  {w:"strange", zh:"奇怪的", eps:[2], ex:"Kevin smells something strange."},
+  {w:"full", zh:"吃飽的；滿的", eps:[2], ex:"He looks very, very full."},
+  {w:"wash the dishes", zh:"洗碗", eps:[2], ex:"Tonight you are washing all the dishes!"},
+  {w:"enjoy", zh:"享受", eps:[2], ex:"He was enjoying a big, delicious fried chicken."},
+  {w:"moment", zh:"時刻", eps:[2], ex:"At that moment, Kevin smells something strange."},
+  {w:"crazy", zh:"瘋狂的", eps:[2], ex:"This family sounds crazy."},
+  {w:"boss", zh:"老闆", eps:[2], ex:"Ask the boss there!"},
+  {w:"stinky tofu", zh:"臭豆腐", eps:[1,2], ex:"That's stinky tofu.", extra:true},
+  {w:"amazing", zh:"太驚人的、超神的", eps:[1], ex:"It tastes AMAZING!", extra:true}
+];
+
+// ═══════════ 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）═══════════
+const LOG_KEY = "study_log_v1", CH = "英語劇場 Ep1-2 夜市篇";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ═══════════ 雲端上傳（家長的 Google 試算表）═══════════
+const CLOUD_URL = "https://script.google.com/macros/s/AKfycbzLyAZ7eRQXQmBBNTvMObNAD3wAHGDD_osBunEQEhUe9pItU6sph1qTeAr3FOWP6OmI5A/exec";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// ═══════════ 渲染對話劇場 ═══════════
+function hi(en){ return en.replace(/\*(.+?)\*/g, '<b class="gw">$1</b>'); }
+function renderStage(lines, mount){
+  const box = document.getElementById(mount);
+  lines.forEach(L=>{
+    const c = CAST[L.s];
+    const div = document.createElement("div");
+    div.className = "line" + (c.nar ? " nar" : "") + (c.me ? " me" : "");
+    div.innerHTML =
+      (c.nar ? "" : `<div class="ava">${c.ava}</div>`) +
+      `<div class="bub">` +
+        (c.nar ? "" : `<div class="who">${c.name}</div>`) +
+        `<div class="en">${hi(L.en)}</div>` +
+        `<div class="zh">${L.zh}</div>` +
+        (L.note ? `<div class="gn">📎 ${L.note}</div>` : "") +
+      `</div>`;
+    div.querySelector(".bub").addEventListener("click", ()=> div.classList.toggle("open"));
+    box.appendChild(div);
+  });
+}
+renderStage(EP1, "stage1");
+renderStage(EP2, "stage2");
+
+// ═══════════ 渲染字彙池 ═══════════
+(function(){
+  const g = document.getElementById("vgrid");
+  VOCAB.forEach(v=>{
+    const d = document.createElement("div");
+    d.className = "vcard";
+    d.innerHTML =
+      `<div class="w">${v.w}${v.extra ? " ⭐" : ""}</div><div class="z">${v.zh}</div>` +
+      `<div class="eps">${v.eps.map(n=>`<span class="ep">Ep.${n}</span>`).join("")}` +
+      (v.extra ? `<span class="ep x">加碼字</span>` : "") + `</div>` +
+      `<div class="ex">「${v.ex}」</div>`;
+    d.addEventListener("click", ()=> d.classList.toggle("open"));
+    g.appendChild(d);
+  });
+})();
+
+// ═══════════ 分頁切換 ═══════════
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ═══════════ 克漏字：點字填空 ═══════════
+document.querySelectorAll('.cz').forEach(cz=>{
+  const ans = cz.dataset.ans, blank = cz.querySelector('.blank'), fb = cz.querySelector('.fb');
+  let solved = false;
+  cz.querySelectorAll('.chips button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      if(solved) return;
+      const ok = btn.textContent === ans;
+      logEv({ type:"practice", q: cz.dataset.q, ok });
+      pracCount++; if(ok) pracOk++;
+      if(ok){
+        solved = true;
+        blank.textContent = ans;
+        btn.className = "good";
+        cz.querySelectorAll('.chips button').forEach(b=>{ if(b!==btn) b.disabled = true; });
+        fb.className = 'fb ok'; fb.textContent = '✔ 答對了！' + fb.dataset.exp;
+      }else{
+        btn.className = "bad";
+        setTimeout(()=>{ btn.className = ""; }, 500);
+        fb.className = 'fb no'; fb.textContent = '✘ 再想想。提示：' + fb.dataset.exp.split('→')[0];
+      }
+    });
+  });
+});
+
+// ═══════════ 拼句子 ═══════════
+document.querySelectorAll('.builder').forEach(bd=>{
+  const slot = bd.querySelector('.slot'), fb = bd.querySelector('.fb');
+  const chips = bd.querySelectorAll('.chips button');
+  let picked = [];
+  chips.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      if(btn.disabled) return;
+      picked.push(btn.textContent);
+      btn.disabled = true;
+      slot.textContent = picked.join(' ');
+    });
+  });
+  bd.querySelector('.bclear').addEventListener('click',()=>{
+    picked = []; slot.textContent = '';
+    chips.forEach(b=>{ b.disabled = false; });
+    fb.className = 'fb'; fb.textContent = '';
+  });
+  bd.querySelector('.bcheck').addEventListener('click',()=>{
+    const ok = picked.join(' ') === bd.dataset.ans;
+    logEv({ type:"practice", q: bd.dataset.q, ok });
+    pracCount++; if(ok) pracOk++;
+    if(ok){ fb.className = 'fb ok'; fb.textContent = '✔ 完美！' + fb.dataset.exp; }
+    else{ fb.className = 'fb no'; fb.textContent = '✘ 順序不太對，按「清除重來」再拼一次。正解：' + fb.dataset.exp; }
+  });
+});
+
+// ═══════════ 選台詞：逐題對答案 ═══════════
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// ═══════════ 總測驗交卷 ═══════════
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "章末測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太強了！${score} / ${qs.length}，Ep.3 已經在路上！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，回去點開答錯那幾題的解析，再交卷一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到兩集的「文法秒懂」重看一次，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+</script>
+</body>
+</html>
