@@ -40,3 +40,9 @@
 
 repo 設為 Public 後，到 Settings → Pages 選 `main` 分支根目錄，即可用
 `https://<帳號>.github.io/interactive-knowledge/` 直接分享給學生。
+
+## 雲端學習紀錄的安全設定
+
+公開 repo **不可**把 Apps Script 上傳網址寫進程式碼（會被外人拿去塞假紀錄）。
+教材改從瀏覽器 localStorage 讀網址：家長在「學習紀錄」頁的「☁️ 雲端上傳設定」貼一次即可。
+完整設定步驟、金鑰與後端加固程式碼見 [docs/雲端紀錄設定與安全.md](docs/雲端紀錄設定與安全.md)。

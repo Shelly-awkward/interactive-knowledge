@@ -75,6 +75,22 @@
   <div class="empty" id="weakEmpty" hidden>目前沒有答錯紀錄。</div>
 </div>
 
+<div class="card">
+  <h2>☁️ 雲端上傳設定</h2>
+  <p style="font-size:.88rem; color:var(--sub); margin-bottom:10px;">
+    把 Apps Script 網頁應用程式網址（<code>/exec</code> 結尾，建議含 <code>?k=金鑰</code>）貼在下面並儲存，
+    <b>這台裝置</b>的教材頁才會把紀錄上傳到 Google 試算表；未設定就只記在本機。
+    網址刻意不寫在教材程式碼裡——repo 是公開的，寫死會被外人拿去塞假紀錄。設定與換網址步驟見 <code>docs/雲端紀錄設定與安全.md</code>。
+  </p>
+  <div style="display:flex; gap:8px; flex-wrap:wrap;">
+    <input id="cloudUrlInput" type="url" placeholder="https://script.google.com/macros/s/…/exec?k=…"
+      style="flex:1 1 260px; padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:.85rem;">
+    <button id="cloudUrlSave" style="background:var(--blue); color:#fff; border:none; border-radius:8px; padding:8px 18px; cursor:pointer; font-family:inherit; font-size:.88rem;">儲存</button>
+    <button id="cloudUrlClear" style="background:#fff; color:var(--ink); border:1px solid var(--border); border-radius:8px; padding:8px 14px; cursor:pointer; font-family:inherit; font-size:.88rem;">清除</button>
+  </div>
+  <p id="cloudUrlStatus" style="font-size:.82rem; margin-top:8px;"></p>
+</div>
+
 <p class="note">※ 紀錄存在這個瀏覽器裡（localStorage）。清除瀏覽資料、換瀏覽器或換裝置，紀錄不會跟著走。</p>
 </div>
 
@@ -155,6 +171,30 @@ entries.forEach(([s,n])=>{
     `<div class="bar"><i style="width:${Math.round(n/maxW*100)}%"></i></div>`;
   weak.appendChild(div);
 });
+
+// 雲端上傳設定：網址存在 localStorage，教材頁（cloud_url_v1）讀取後才會上傳
+const CLOUD_KEY = "cloud_url_v1";
+function cloudStatus(){
+  const u = localStorage.getItem(CLOUD_KEY) || "";
+  const el = document.getElementById("cloudUrlStatus");
+  if(u){ el.textContent = "✅ 已設定（結尾：…" + u.slice(-14) + "）。這台裝置的教材紀錄會上傳。"; el.style.color = "#166534"; }
+  else { el.textContent = "⚪ 尚未設定：這台裝置只記本機，不上傳。"; el.style.color = "var(--sub)"; }
+}
+document.getElementById("cloudUrlSave").addEventListener("click", ()=>{
+  const v = document.getElementById("cloudUrlInput").value.trim();
+  const el = document.getElementById("cloudUrlStatus");
+  if(!/^https:\/\/script\.google\.com\/macros\//.test(v)){
+    el.textContent = "✘ 這不像 Apps Script 的網址（應以 https://script.google.com/macros/ 開頭）。"; el.style.color = "#991b1b"; return;
+  }
+  localStorage.setItem(CLOUD_KEY, v);
+  document.getElementById("cloudUrlInput").value = "";
+  cloudStatus();
+});
+document.getElementById("cloudUrlClear").addEventListener("click", ()=>{
+  localStorage.removeItem(CLOUD_KEY);
+  cloudStatus();
+});
+cloudStatus();
 </script>
 </body>
 </html>

@@ -580,8 +580,9 @@ function logEv(ev){
   }catch(e){}
 }
 // ===== 雲端上傳（家長的 Google 試算表）=====
-// 設定 Apps Script 網頁應用程式網址（/exec 結尾）後，每次念書時段與交卷自動上傳；留空則只記在本機。
-const CLOUD_URL = "https://script.google.com/macros/s/AKfycbzLyAZ7eRQXQmBBNTvMObNAD3wAHGDD_osBunEQEhUe9pItU6sph1qTeAr3FOWP6OmI5A/exec";
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
 function cloudSend(row){
   if(!CLOUD_URL) return;
   const body = JSON.stringify(Object.assign({ ch: CH }, row));
