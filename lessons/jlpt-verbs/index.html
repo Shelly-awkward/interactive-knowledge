@@ -1,0 +1,2549 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本語動詞カード小冊子｜互動知識庫</title>
+    <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif;
+        background: #f0ece4;
+    }
+
+    .top-nav {
+        position: sticky; top: 0; z-index: 10;
+        background: #2c3e6b; color: #fff;
+        padding: 10px 16px;
+        display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center;
+        font-size: 13px;
+    }
+    .top-nav .home { font-weight: bold; color: #fca311; text-decoration: none; margin-right: 8px; }
+    .top-nav a { color: #dde3ee; text-decoration: none; }
+    .top-nav a:hover { color: #fff; text-decoration: underline; }
+
+    @page { size: A4 portrait; margin: 8mm; }
+    @media print {
+        body { background: white; }
+        .top-nav { display: none; }
+        .verb-page { page-break-after: always; box-shadow: none; margin: 0; }
+    }
+
+    .verb-page {
+        max-width: 820px;
+        background: white;
+        margin: 20px auto;
+        padding: 20px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        scroll-margin-top: 60px;
+    }
+
+    .page-header { border-bottom: 2px solid #2c3e6b; padding-bottom: 10px; }
+    .verb-title { display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap; }
+    .dict { font-size: 28px; font-weight: bold; color: #2c3e6b; }
+    .kana { font-size: 17px; color: #555; }
+    .meaning { font-size: 15px; color: #c0392b; margin-left: 6px; }
+    .verb-meta { font-size: 12px; color: #666; margin-top: 4px; }
+    .hint { color: #888; }
+
+    .anchor-row { display: flex; gap: 14px; }
+    .anchor-card {
+        flex: 1; border: 1.5px solid #ddd; border-radius: 6px;
+        overflow: hidden; background: #fafaf7;
+    }
+    .anchor-card img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+    .anchor-label { padding: 8px 10px; text-align: center; border-top: 1px solid #eee; background: white; }
+    .anchor-label .jp { font-size: 16px; font-weight: bold; color: #2c3e6b; display: block; }
+    .anchor-label .romaji { font-size: 11px; color: #888; display: block; }
+    .anchor-label .en { font-size: 12px; color: #c0392b; display: block; }
+
+    .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
+    @media (max-width: 640px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
+    .grid-cell {
+        border: 1px solid #ddd; border-radius: 5px; overflow: hidden;
+        background: #fafaf7; display: flex; flex-direction: column;
+    }
+    .grid-cell img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+    .no-img {
+        width: 100%; aspect-ratio: 1; display: flex; align-items: center;
+        justify-content: center; background: #f5f5f5; color: #bbb; font-size: 20px;
+    }
+    .cell-label {
+        padding: 6px 7px; text-align: center; border-top: 1px solid #eee;
+        background: white; flex: 1; display: flex; flex-direction: column; justify-content: center;
+    }
+    .cell-label .jp { font-size: 12px; font-weight: bold; color: #2c3e6b; display: block; }
+    .cell-label .romaji { font-size: 9px; color: #999; display: block; }
+    .cell-label .en { font-size: 10px; color: #c0392b; display: block; }
+    </style>
+</head>
+<body>
+<nav class="top-nav"><a class="home" href="../../index.html">⌂ 互動知識庫</a><a href="#kaku">書く</a><a href="#hanasu">話す</a><a href="#kiku">聞く</a><a href="#iku">行く</a><a href="#kaeru">帰る</a><a href="#kau">買う</a><a href="#matsu">待つ</a><a href="#nomu">飲む</a><a href="#taberu">食べる</a><a href="#miru">見る</a><a href="#okiru">起きる</a><a href="#oshieru">教える</a><a href="#wasureru">忘れる</a><a href="#suru">する</a><a href="#kuru">来る</a></nav>
+
+    <div class="verb-page" id="kaku">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">書く</span>
+                <span class="kana">（かく）</span>
+                <span class="meaning">to write</span>
+            </div>
+            <div class="verb-meta">
+                一類動詞（五段） ／ ない形：書かない
+                <span class="hint">（ない前は「か」＝あ段 → 一類）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/kaku/hero.webp" alt="書く" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">書く</span>
+                    <span class="romaji">kaku</span>
+                    <span class="en">to write</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/kaku/nai.webp" alt="書かない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">書かない</span>
+                    <span class="romaji">かかない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/kaku/01.webp" alt="書いた" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書いた</span>
+                    <span class="romaji">kaita</span>
+                    <span class="en">wrote</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/02.webp" alt="書かなかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書かなかった</span>
+                    <span class="romaji">kakanakatta</span>
+                    <span class="en">did not write</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/03.webp" alt="書きます" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書きます</span>
+                    <span class="romaji">kakimasu</span>
+                    <span class="en">write (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/04.webp" alt="書きません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書きません</span>
+                    <span class="romaji">kakimasen</span>
+                    <span class="en">not write (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/05.webp" alt="書いて" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書いて</span>
+                    <span class="romaji">kaite</span>
+                    <span class="en">write, and...</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/06.webp" alt="書いてください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書いてください</span>
+                    <span class="romaji">kaite kudasai</span>
+                    <span class="en">please write</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/07.webp" alt="書いている" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書いている</span>
+                    <span class="romaji">kaite iru</span>
+                    <span class="en">is writing</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/08.webp" alt="書こう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書こう</span>
+                    <span class="romaji">kakou</span>
+                    <span class="en">let's write</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/09.webp" alt="書きましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書きましょう</span>
+                    <span class="romaji">kakimashou</span>
+                    <span class="en">let's write (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/10.webp" alt="書け" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書け</span>
+                    <span class="romaji">kake</span>
+                    <span class="en">write! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/11.webp" alt="書くな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書くな</span>
+                    <span class="romaji">kakuna</span>
+                    <span class="en">don't write</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/12.webp" alt="書けば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書けば</span>
+                    <span class="romaji">kakeba</span>
+                    <span class="en">if you write</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/13.webp" alt="書ける" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書ける</span>
+                    <span class="romaji">kakeru</span>
+                    <span class="en">can write</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/14.webp" alt="書かれる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書かれる</span>
+                    <span class="romaji">kakareru</span>
+                    <span class="en">be written</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/15.webp" alt="書かせる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書かせる</span>
+                    <span class="romaji">kakaseru</span>
+                    <span class="en">make/let write</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaku/16.webp" alt="書かされる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">書かされる</span>
+                    <span class="romaji">kakasareru</span>
+                    <span class="en">forced to write</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="hanasu">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">話す</span>
+                <span class="kana">（はなす）</span>
+                <span class="meaning">to speak</span>
+            </div>
+            <div class="verb-meta">
+                一類動詞（五段） ／ ない形：話さない
+                <span class="hint">（ない前は「さ」＝あ段 → 一類）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/hanasu/hero.webp" alt="話す" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">話す</span>
+                    <span class="romaji">hanasu</span>
+                    <span class="en">to speak</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/hanasu/nai.webp" alt="話さない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">話さない</span>
+                    <span class="romaji">はなさない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/hanasu/01.webp" alt="話した" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話した</span>
+                    <span class="romaji">hanashita</span>
+                    <span class="en">spoke</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/02.webp" alt="話さなかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話さなかった</span>
+                    <span class="romaji">hanasanakatta</span>
+                    <span class="en">did not speak</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/03.webp" alt="話します" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話します</span>
+                    <span class="romaji">hanashimasu</span>
+                    <span class="en">speak (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/04.webp" alt="話しません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話しません</span>
+                    <span class="romaji">hanashimasen</span>
+                    <span class="en">not speak (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/05.webp" alt="話して" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話して</span>
+                    <span class="romaji">hanashite</span>
+                    <span class="en">speak, and...</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/06.webp" alt="話してください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話してください</span>
+                    <span class="romaji">hanashite kudasai</span>
+                    <span class="en">please speak</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/07.webp" alt="話している" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話している</span>
+                    <span class="romaji">hanashite iru</span>
+                    <span class="en">is speaking</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/08.webp" alt="話そう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話そう</span>
+                    <span class="romaji">hanasou</span>
+                    <span class="en">let's talk</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/09.webp" alt="話しましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話しましょう</span>
+                    <span class="romaji">hanashimashou</span>
+                    <span class="en">let's talk (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/10.webp" alt="話せ" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話せ</span>
+                    <span class="romaji">hanase</span>
+                    <span class="en">speak! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/11.webp" alt="話すな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話すな</span>
+                    <span class="romaji">hanasuna</span>
+                    <span class="en">don't talk</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/12.webp" alt="話せば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話せば</span>
+                    <span class="romaji">hanaseba</span>
+                    <span class="en">if you talk</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/13.webp" alt="話せる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話せる</span>
+                    <span class="romaji">hanaseru</span>
+                    <span class="en">can speak</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/14.webp" alt="話される" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話される</span>
+                    <span class="romaji">hanasareru</span>
+                    <span class="en">be talked about</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/15.webp" alt="話させる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話させる</span>
+                    <span class="romaji">hanasaseru</span>
+                    <span class="en">make/let speak</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/hanasu/16.webp" alt="話させられる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">話させられる</span>
+                    <span class="romaji">hanasaserareru</span>
+                    <span class="en">forced to speak</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="kiku">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">聞く</span>
+                <span class="kana">（きく）</span>
+                <span class="meaning">to listen, to ask</span>
+            </div>
+            <div class="verb-meta">
+                一類動詞（五段） ／ ない形：聞かない
+                <span class="hint">（ない前は「か」＝あ段 → 一類）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/kiku/hero.webp" alt="聞く" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">聞く</span>
+                    <span class="romaji">kiku</span>
+                    <span class="en">to listen, to ask</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/kiku/nai.webp" alt="聞かない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">聞かない</span>
+                    <span class="romaji">きかない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/kiku/01.webp" alt="聞いた" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞いた</span>
+                    <span class="romaji">kiita</span>
+                    <span class="en">listened</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/02.webp" alt="聞かなかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞かなかった</span>
+                    <span class="romaji">kikanakatta</span>
+                    <span class="en">did not listen</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/03.webp" alt="聞きます" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞きます</span>
+                    <span class="romaji">kikimasu</span>
+                    <span class="en">listen (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/04.webp" alt="聞きません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞きません</span>
+                    <span class="romaji">kikimasen</span>
+                    <span class="en">not listen (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/05.webp" alt="聞いて" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞いて</span>
+                    <span class="romaji">kiite</span>
+                    <span class="en">listen!</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/06.webp" alt="聞いてください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞いてください</span>
+                    <span class="romaji">kiite kudasai</span>
+                    <span class="en">please listen</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/07.webp" alt="聞いている" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞いている</span>
+                    <span class="romaji">kiite iru</span>
+                    <span class="en">is listening</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/08.webp" alt="聞こう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞こう</span>
+                    <span class="romaji">kikou</span>
+                    <span class="en">let's ask</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/09.webp" alt="聞きましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞きましょう</span>
+                    <span class="romaji">kikimashou</span>
+                    <span class="en">let's ask (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/10.webp" alt="聞け" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞け</span>
+                    <span class="romaji">kike</span>
+                    <span class="en">listen! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/11.webp" alt="聞くな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞くな</span>
+                    <span class="romaji">kikuna</span>
+                    <span class="en">don't ask</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/12.webp" alt="聞けば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞けば</span>
+                    <span class="romaji">kikeba</span>
+                    <span class="en">if you ask</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/13.webp" alt="聞ける" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞ける</span>
+                    <span class="romaji">kikeru</span>
+                    <span class="en">can hear</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/14.webp" alt="聞かれる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞かれる</span>
+                    <span class="romaji">kikareru</span>
+                    <span class="en">be asked</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/15.webp" alt="聞かせる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞かせる</span>
+                    <span class="romaji">kikaseru</span>
+                    <span class="en">make/let hear</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kiku/16.webp" alt="聞かされる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">聞かされる</span>
+                    <span class="romaji">kikasareru</span>
+                    <span class="en">forced to listen</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="iku">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">行く</span>
+                <span class="kana">（いく）</span>
+                <span class="meaning">to go</span>
+            </div>
+            <div class="verb-meta">
+                一類動詞（五段）⚠て形例外 ／ ない形：行かない
+                <span class="hint">（ない前「か」＝あ段 → 一類｜た/て形不規則）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/iku/hero.webp" alt="行く" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">行く</span>
+                    <span class="romaji">iku</span>
+                    <span class="en">to go</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/iku/nai.webp" alt="行かない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">行かない</span>
+                    <span class="romaji">いかない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/iku/01.webp" alt="行った" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行った</span>
+                    <span class="romaji">itta</span>
+                    <span class="en">went</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/02.webp" alt="行かなかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行かなかった</span>
+                    <span class="romaji">ikanakatta</span>
+                    <span class="en">did not go</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/03.webp" alt="行きます" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行きます</span>
+                    <span class="romaji">ikimasu</span>
+                    <span class="en">will go (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/04.webp" alt="行きません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行きません</span>
+                    <span class="romaji">ikimasen</span>
+                    <span class="en">not go (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/05.webp" alt="行って" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行って</span>
+                    <span class="romaji">itte</span>
+                    <span class="en">go, and...</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/06.webp" alt="行ってください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行ってください</span>
+                    <span class="romaji">itte kudasai</span>
+                    <span class="en">please go</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/07.webp" alt="行っている" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行っている</span>
+                    <span class="romaji">itte iru</span>
+                    <span class="en">is going</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/08.webp" alt="行こう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行こう</span>
+                    <span class="romaji">ikou</span>
+                    <span class="en">let's go</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/09.webp" alt="行きましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行きましょう</span>
+                    <span class="romaji">ikimashou</span>
+                    <span class="en">let's go (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/10.webp" alt="行け" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行け</span>
+                    <span class="romaji">ike</span>
+                    <span class="en">go! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/11.webp" alt="行くな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行くな</span>
+                    <span class="romaji">ikuna</span>
+                    <span class="en">don't go</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/12.webp" alt="行けば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行けば</span>
+                    <span class="romaji">ikeba</span>
+                    <span class="en">if you go</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/13.webp" alt="行ける" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行ける</span>
+                    <span class="romaji">ikeru</span>
+                    <span class="en">can go</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/14.webp" alt="行かれる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行かれる</span>
+                    <span class="romaji">ikareru</span>
+                    <span class="en">be visited</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/15.webp" alt="行かせる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行かせる</span>
+                    <span class="romaji">ikaseru</span>
+                    <span class="en">make/let go</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/iku/16.webp" alt="行かされる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">行かされる</span>
+                    <span class="romaji">ikasareru</span>
+                    <span class="en">forced to go</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="kaeru">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">帰る</span>
+                <span class="kana">（かえる）</span>
+                <span class="meaning">to return home</span>
+            </div>
+            <div class="verb-meta">
+                一類動詞（五段）⚠陷阱字 ／ ない形：帰らない
+                <span class="hint">（ない前「ら」＝あ段 → 一類！看似二類但是一類）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/kaeru/hero.webp" alt="帰る" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">帰る</span>
+                    <span class="romaji">kaeru</span>
+                    <span class="en">to return home</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/kaeru/nai.webp" alt="帰らない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">帰らない</span>
+                    <span class="romaji">かえらない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/kaeru/01.webp" alt="帰った" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰った</span>
+                    <span class="romaji">kaetta</span>
+                    <span class="en">returned</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/02.webp" alt="帰らなかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰らなかった</span>
+                    <span class="romaji">kaeranakatta</span>
+                    <span class="en">did not return</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/03.webp" alt="帰ります" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰ります</span>
+                    <span class="romaji">kaerimasu</span>
+                    <span class="en">return (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/04.webp" alt="帰りません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰りません</span>
+                    <span class="romaji">kaerimasen</span>
+                    <span class="en">not return (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/05.webp" alt="帰って" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰って</span>
+                    <span class="romaji">kaette</span>
+                    <span class="en">go home!</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/06.webp" alt="帰ってください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰ってください</span>
+                    <span class="romaji">kaette kudasai</span>
+                    <span class="en">please go home</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/07.webp" alt="帰っている" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰っている</span>
+                    <span class="romaji">kaette iru</span>
+                    <span class="en">is returning home</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/08.webp" alt="帰ろう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰ろう</span>
+                    <span class="romaji">kaerou</span>
+                    <span class="en">let's go home</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/09.webp" alt="帰りましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰りましょう</span>
+                    <span class="romaji">kaerimashou</span>
+                    <span class="en">let's go home (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/10.webp" alt="帰れ" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰れ</span>
+                    <span class="romaji">kaere</span>
+                    <span class="en">go home! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/11.webp" alt="帰るな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰るな</span>
+                    <span class="romaji">kaeruna</span>
+                    <span class="en">don't go home</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/12.webp" alt="帰れば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰れば</span>
+                    <span class="romaji">kaereba</span>
+                    <span class="en">if you go home</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/13.webp" alt="帰れる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰れる</span>
+                    <span class="romaji">kaereru</span>
+                    <span class="en">can go home</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/14.webp" alt="帰られる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰られる</span>
+                    <span class="romaji">kaerareru</span>
+                    <span class="en">leaves (honorific)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/15.webp" alt="帰らせる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰らせる</span>
+                    <span class="romaji">kaeraseru</span>
+                    <span class="en">let go home</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kaeru/16.webp" alt="帰らされる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">帰らされる</span>
+                    <span class="romaji">kaerasareru</span>
+                    <span class="en">forced to go home</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="kau">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">買う</span>
+                <span class="kana">（かう）</span>
+                <span class="meaning">to buy</span>
+            </div>
+            <div class="verb-meta">
+                一類動詞（五段）⚠う→わ ／ ない形：買わない
+                <span class="hint">（う結尾→わ＋ない（特殊）→ 一類）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/kau/hero.webp" alt="買う" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">買う</span>
+                    <span class="romaji">kau</span>
+                    <span class="en">to buy</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/kau/nai.webp" alt="買わない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">買わない</span>
+                    <span class="romaji">かわない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/kau/01.webp" alt="買った" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買った</span>
+                    <span class="romaji">katta</span>
+                    <span class="en">bought</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/02.webp" alt="買わなかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買わなかった</span>
+                    <span class="romaji">kawanakatta</span>
+                    <span class="en">did not buy</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/03.webp" alt="買います" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買います</span>
+                    <span class="romaji">kaimasu</span>
+                    <span class="en">buy (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/04.webp" alt="買いません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買いません</span>
+                    <span class="romaji">kaimasen</span>
+                    <span class="en">not buy (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/05.webp" alt="買って" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買って</span>
+                    <span class="romaji">katte</span>
+                    <span class="en">buy!</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/06.webp" alt="買ってください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買ってください</span>
+                    <span class="romaji">katte kudasai</span>
+                    <span class="en">please buy</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/07.webp" alt="買っている" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買っている</span>
+                    <span class="romaji">katte iru</span>
+                    <span class="en">is buying</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/08.webp" alt="買おう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買おう</span>
+                    <span class="romaji">kaou</span>
+                    <span class="en">let's buy</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/09.webp" alt="買いましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買いましょう</span>
+                    <span class="romaji">kaimashou</span>
+                    <span class="en">let's buy (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/10.webp" alt="買え" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買え</span>
+                    <span class="romaji">kae</span>
+                    <span class="en">buy! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/11.webp" alt="買うな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買うな</span>
+                    <span class="romaji">kauna</span>
+                    <span class="en">don't buy</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/12.webp" alt="買えば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買えば</span>
+                    <span class="romaji">kaeba</span>
+                    <span class="en">if you buy</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/13.webp" alt="買える" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買える</span>
+                    <span class="romaji">kaeru</span>
+                    <span class="en">can afford</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/14.webp" alt="買われる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買われる</span>
+                    <span class="romaji">kawareru</span>
+                    <span class="en">be bought</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/15.webp" alt="買わせる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買わせる</span>
+                    <span class="romaji">kawaseru</span>
+                    <span class="en">make/let buy</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kau/16.webp" alt="買わされる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">買わされる</span>
+                    <span class="romaji">kawasareru</span>
+                    <span class="en">forced to buy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="matsu">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">待つ</span>
+                <span class="kana">（まつ）</span>
+                <span class="meaning">to wait</span>
+            </div>
+            <div class="verb-meta">
+                一類動詞（五段） ／ ない形：待たない
+                <span class="hint">（ない前「た」＝あ段 → 一類）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/matsu/hero.webp" alt="待つ" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">待つ</span>
+                    <span class="romaji">matsu</span>
+                    <span class="en">to wait</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/matsu/nai.webp" alt="待たない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">待たない</span>
+                    <span class="romaji">またない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/matsu/01.webp" alt="待った" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待った</span>
+                    <span class="romaji">matta</span>
+                    <span class="en">waited</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/02.webp" alt="待たなかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待たなかった</span>
+                    <span class="romaji">matanakatta</span>
+                    <span class="en">did not wait</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/03.webp" alt="待ちます" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待ちます</span>
+                    <span class="romaji">machimasu</span>
+                    <span class="en">wait (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/04.webp" alt="待ちません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待ちません</span>
+                    <span class="romaji">machimasen</span>
+                    <span class="en">not wait (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/05.webp" alt="待って" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待って</span>
+                    <span class="romaji">matte</span>
+                    <span class="en">wait!</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/06.webp" alt="待ってください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待ってください</span>
+                    <span class="romaji">matte kudasai</span>
+                    <span class="en">please wait</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/07.webp" alt="待っている" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待っている</span>
+                    <span class="romaji">matte iru</span>
+                    <span class="en">is waiting</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/08.webp" alt="待とう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待とう</span>
+                    <span class="romaji">matou</span>
+                    <span class="en">let's wait</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/09.webp" alt="待ちましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待ちましょう</span>
+                    <span class="romaji">machimashou</span>
+                    <span class="en">let's wait (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/10.webp" alt="待て" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待て</span>
+                    <span class="romaji">mate</span>
+                    <span class="en">wait! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/11.webp" alt="待つな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待つな</span>
+                    <span class="romaji">matsuna</span>
+                    <span class="en">don't wait</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/12.webp" alt="待てば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待てば</span>
+                    <span class="romaji">mateba</span>
+                    <span class="en">if you wait</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/13.webp" alt="待てる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待てる</span>
+                    <span class="romaji">materu</span>
+                    <span class="en">can wait</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/14.webp" alt="待たれる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待たれる</span>
+                    <span class="romaji">matareru</span>
+                    <span class="en">be awaited</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/15.webp" alt="待たせる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待たせる</span>
+                    <span class="romaji">mataseru</span>
+                    <span class="en">make wait</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/matsu/16.webp" alt="待たされる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">待たされる</span>
+                    <span class="romaji">matasareru</span>
+                    <span class="en">kept waiting</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="nomu">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">飲む</span>
+                <span class="kana">（のむ）</span>
+                <span class="meaning">to drink</span>
+            </div>
+            <div class="verb-meta">
+                一類動詞（五段） ／ ない形：飲まない
+                <span class="hint">（ない前「ま」＝あ段 → 一類）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/nomu/hero.webp" alt="飲む" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">飲む</span>
+                    <span class="romaji">nomu</span>
+                    <span class="en">to drink</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/nomu/nai.webp" alt="飲まない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">飲まない</span>
+                    <span class="romaji">のまない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/nomu/01.webp" alt="飲んだ" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲んだ</span>
+                    <span class="romaji">nonda</span>
+                    <span class="en">drank</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/02.webp" alt="飲まなかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲まなかった</span>
+                    <span class="romaji">nomanakatta</span>
+                    <span class="en">did not drink</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/03.webp" alt="飲みます" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲みます</span>
+                    <span class="romaji">nomimasu</span>
+                    <span class="en">drink (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/04.webp" alt="飲みません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲みません</span>
+                    <span class="romaji">nomimasen</span>
+                    <span class="en">not drink (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/05.webp" alt="飲んで" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲んで</span>
+                    <span class="romaji">nonde</span>
+                    <span class="en">drink!</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/06.webp" alt="飲んでください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲んでください</span>
+                    <span class="romaji">nonde kudasai</span>
+                    <span class="en">please drink</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/07.webp" alt="飲んでいる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲んでいる</span>
+                    <span class="romaji">nonde iru</span>
+                    <span class="en">is drinking</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/08.webp" alt="飲もう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲もう</span>
+                    <span class="romaji">nomou</span>
+                    <span class="en">let's drink</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/09.webp" alt="飲みましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲みましょう</span>
+                    <span class="romaji">nomimashou</span>
+                    <span class="en">let's drink (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/10.webp" alt="飲め" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲め</span>
+                    <span class="romaji">nome</span>
+                    <span class="en">drink! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/11.webp" alt="飲むな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲むな</span>
+                    <span class="romaji">nomuna</span>
+                    <span class="en">don't drink</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/12.webp" alt="飲めば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲めば</span>
+                    <span class="romaji">nomeba</span>
+                    <span class="en">if you drink</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/13.webp" alt="飲める" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲める</span>
+                    <span class="romaji">nomeru</span>
+                    <span class="en">can drink</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/14.webp" alt="飲まれる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲まれる</span>
+                    <span class="romaji">nomareru</span>
+                    <span class="en">be drunk</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/15.webp" alt="飲ませる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲ませる</span>
+                    <span class="romaji">nomaseru</span>
+                    <span class="en">make drink</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/nomu/16.webp" alt="飲まされる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">飲まされる</span>
+                    <span class="romaji">nomasareru</span>
+                    <span class="en">forced to drink</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="taberu">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">食べる</span>
+                <span class="kana">（たべる）</span>
+                <span class="meaning">to eat</span>
+            </div>
+            <div class="verb-meta">
+                二類動詞（一段） ／ ない形：食べない
+                <span class="hint">（ない前「べ」＝え段 → 二類）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/taberu/hero.webp" alt="食べる" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">食べる</span>
+                    <span class="romaji">taberu</span>
+                    <span class="en">to eat</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/taberu/nai.webp" alt="食べない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">食べない</span>
+                    <span class="romaji">たべない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/taberu/01.webp" alt="食べた" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べた</span>
+                    <span class="romaji">tabeta</span>
+                    <span class="en">ate</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/02.webp" alt="食べなかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べなかった</span>
+                    <span class="romaji">tabenakatta</span>
+                    <span class="en">did not eat</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/03.webp" alt="食べます" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べます</span>
+                    <span class="romaji">tabemasu</span>
+                    <span class="en">eat (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/04.webp" alt="食べません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べません</span>
+                    <span class="romaji">tabemasen</span>
+                    <span class="en">not eat (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/05.webp" alt="食べて" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べて</span>
+                    <span class="romaji">tabete</span>
+                    <span class="en">eat!</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/06.webp" alt="食べてください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べてください</span>
+                    <span class="romaji">tabete kudasai</span>
+                    <span class="en">please eat</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/07.webp" alt="食べている" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べている</span>
+                    <span class="romaji">tabete iru</span>
+                    <span class="en">is eating</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/08.webp" alt="食べよう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べよう</span>
+                    <span class="romaji">tabeyou</span>
+                    <span class="en">let's eat</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/09.webp" alt="食べましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べましょう</span>
+                    <span class="romaji">tabemashou</span>
+                    <span class="en">let's eat (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/10.webp" alt="食べろ" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べろ</span>
+                    <span class="romaji">tabero</span>
+                    <span class="en">eat! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/11.webp" alt="食べるな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べるな</span>
+                    <span class="romaji">taberuna</span>
+                    <span class="en">don't eat</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/12.webp" alt="食べれば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べれば</span>
+                    <span class="romaji">tabereba</span>
+                    <span class="en">if you eat</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/13.webp" alt="食べられる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べられる</span>
+                    <span class="romaji">taberareru</span>
+                    <span class="en">can eat</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/14.webp" alt="食べさせる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べさせる</span>
+                    <span class="romaji">tabesaseru</span>
+                    <span class="en">feed</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/15.webp" alt="食べさせられる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べさせられる</span>
+                    <span class="romaji">tabesaserareru</span>
+                    <span class="en">forced to eat</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/taberu/16.webp" alt="食べ過ぎた" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">食べ過ぎた</span>
+                    <span class="romaji">tabesugita</span>
+                    <span class="en">ate too much</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="miru">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">見る</span>
+                <span class="kana">（みる）</span>
+                <span class="meaning">to see, to watch</span>
+            </div>
+            <div class="verb-meta">
+                二類動詞（一段） ／ ない形：見ない
+                <span class="hint">（ない前「み」＝い段 → 二類）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/miru/hero.webp" alt="見る" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">見る</span>
+                    <span class="romaji">miru</span>
+                    <span class="en">to see, to watch</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/miru/nai.webp" alt="見ない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">見ない</span>
+                    <span class="romaji">みない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/miru/01.webp" alt="見た" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見た</span>
+                    <span class="romaji">mita</span>
+                    <span class="en">saw</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/02.webp" alt="見なかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見なかった</span>
+                    <span class="romaji">minakatta</span>
+                    <span class="en">did not see</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/03.webp" alt="見ます" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見ます</span>
+                    <span class="romaji">mimasu</span>
+                    <span class="en">watch (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/04.webp" alt="見ません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見ません</span>
+                    <span class="romaji">mimasen</span>
+                    <span class="en">not watch (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/05.webp" alt="見て" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見て</span>
+                    <span class="romaji">mite</span>
+                    <span class="en">look!</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/06.webp" alt="見てください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見てください</span>
+                    <span class="romaji">mite kudasai</span>
+                    <span class="en">please look</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/07.webp" alt="見ている" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見ている</span>
+                    <span class="romaji">mite iru</span>
+                    <span class="en">is watching</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/08.webp" alt="見よう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見よう</span>
+                    <span class="romaji">miyou</span>
+                    <span class="en">let's watch</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/09.webp" alt="見ましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見ましょう</span>
+                    <span class="romaji">mimashou</span>
+                    <span class="en">let's watch (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/10.webp" alt="見ろ" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見ろ</span>
+                    <span class="romaji">miro</span>
+                    <span class="en">look! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/11.webp" alt="見るな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見るな</span>
+                    <span class="romaji">miruna</span>
+                    <span class="en">don't look</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/12.webp" alt="見れば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見れば</span>
+                    <span class="romaji">mireba</span>
+                    <span class="en">if you look</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/13.webp" alt="見られる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見られる</span>
+                    <span class="romaji">mirareru</span>
+                    <span class="en">can see / be seen</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/14.webp" alt="見せる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見せる</span>
+                    <span class="romaji">miseru</span>
+                    <span class="en">show</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/15.webp" alt="見させる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見させる</span>
+                    <span class="romaji">misaseru</span>
+                    <span class="en">make see</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/miru/16.webp" alt="見させられる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">見させられる</span>
+                    <span class="romaji">misaserareru</span>
+                    <span class="en">forced to watch</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="okiru">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">起きる</span>
+                <span class="kana">（おきる）</span>
+                <span class="meaning">to wake up</span>
+            </div>
+            <div class="verb-meta">
+                二類動詞（一段） ／ ない形：起きない
+                <span class="hint">（ない前「き」＝い段 → 二類）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/okiru/hero.webp" alt="起きる" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">起きる</span>
+                    <span class="romaji">okiru</span>
+                    <span class="en">to wake up</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/okiru/nai.webp" alt="起きない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">起きない</span>
+                    <span class="romaji">おきない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/okiru/01.webp" alt="起きた" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きた</span>
+                    <span class="romaji">okita</span>
+                    <span class="en">woke up</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/02.webp" alt="起きなかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きなかった</span>
+                    <span class="romaji">okinakatta</span>
+                    <span class="en">did not wake up</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/03.webp" alt="起きます" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きます</span>
+                    <span class="romaji">okimasu</span>
+                    <span class="en">wake up (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/04.webp" alt="起きません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きません</span>
+                    <span class="romaji">okimasen</span>
+                    <span class="en">not wake (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/05.webp" alt="起きて" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きて</span>
+                    <span class="romaji">okite</span>
+                    <span class="en">wake up!</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/06.webp" alt="起きてください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きてください</span>
+                    <span class="romaji">okite kudasai</span>
+                    <span class="en">please wake up</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/07.webp" alt="起きている" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きている</span>
+                    <span class="romaji">okite iru</span>
+                    <span class="en">is awake</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/08.webp" alt="起きよう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きよう</span>
+                    <span class="romaji">okiyou</span>
+                    <span class="en">let's wake up</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/09.webp" alt="起きましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きましょう</span>
+                    <span class="romaji">okimashou</span>
+                    <span class="en">let's wake up (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/10.webp" alt="起きろ" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きろ</span>
+                    <span class="romaji">okiro</span>
+                    <span class="en">wake up! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/11.webp" alt="起きるな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きるな</span>
+                    <span class="romaji">okiruna</span>
+                    <span class="en">don't wake up</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/12.webp" alt="起きれば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きれば</span>
+                    <span class="romaji">okireba</span>
+                    <span class="en">if you wake up</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/13.webp" alt="起きられる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きられる</span>
+                    <span class="romaji">okirareru</span>
+                    <span class="en">can wake up</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/14.webp" alt="起こす" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起こす</span>
+                    <span class="romaji">okosu</span>
+                    <span class="en">wake someone</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/15.webp" alt="起きさせる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きさせる</span>
+                    <span class="romaji">okisaseru</span>
+                    <span class="en">make wake up</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/okiru/16.webp" alt="起きさせられる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">起きさせられる</span>
+                    <span class="romaji">okisaserareru</span>
+                    <span class="en">forced to wake</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="oshieru">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">教える</span>
+                <span class="kana">（おしえる）</span>
+                <span class="meaning">to teach</span>
+            </div>
+            <div class="verb-meta">
+                二類動詞（一段） ／ ない形：教えない
+                <span class="hint">（ない前「え」＝え段 → 二類）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/oshieru/hero.webp" alt="教える" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">教える</span>
+                    <span class="romaji">oshieru</span>
+                    <span class="en">to teach</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/oshieru/nai.webp" alt="教えない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">教えない</span>
+                    <span class="romaji">おしえない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/oshieru/01.webp" alt="教えた" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えた</span>
+                    <span class="romaji">oshieta</span>
+                    <span class="en">taught</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/02.webp" alt="教えなかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えなかった</span>
+                    <span class="romaji">oshienakatta</span>
+                    <span class="en">did not teach</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/03.webp" alt="教えます" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えます</span>
+                    <span class="romaji">oshiemasu</span>
+                    <span class="en">teach (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/04.webp" alt="教えません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えません</span>
+                    <span class="romaji">oshiemasen</span>
+                    <span class="en">not teach (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/05.webp" alt="教えて" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えて</span>
+                    <span class="romaji">oshiete</span>
+                    <span class="en">tell me!</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/06.webp" alt="教えてください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えてください</span>
+                    <span class="romaji">oshiete kudasai</span>
+                    <span class="en">please teach</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/07.webp" alt="教えている" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えている</span>
+                    <span class="romaji">oshiete iru</span>
+                    <span class="en">is teaching</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/08.webp" alt="教えよう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えよう</span>
+                    <span class="romaji">oshieyou</span>
+                    <span class="en">let me teach</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/09.webp" alt="教えましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えましょう</span>
+                    <span class="romaji">oshiemashou</span>
+                    <span class="en">let's teach (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/10.webp" alt="教えろ" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えろ</span>
+                    <span class="romaji">oshiero</span>
+                    <span class="en">tell! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/11.webp" alt="教えるな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えるな</span>
+                    <span class="romaji">oshieruna</span>
+                    <span class="en">don't tell</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/12.webp" alt="教えれば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えれば</span>
+                    <span class="romaji">oshiereba</span>
+                    <span class="en">if you teach</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/13.webp" alt="教えられる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えられる</span>
+                    <span class="romaji">oshierareru</span>
+                    <span class="en">can teach</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/14.webp" alt="教えさせる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えさせる</span>
+                    <span class="romaji">oshiesaseru</span>
+                    <span class="en">make/let teach</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/15.webp" alt="教えさせられる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教えさせられる</span>
+                    <span class="romaji">oshiesaserareru</span>
+                    <span class="en">forced to teach</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/oshieru/16.webp" alt="教わる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">教わる</span>
+                    <span class="romaji">osowaru</span>
+                    <span class="en">be taught</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="wasureru">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">忘れる</span>
+                <span class="kana">（わすれる）</span>
+                <span class="meaning">to forget</span>
+            </div>
+            <div class="verb-meta">
+                二類動詞（一段） ／ ない形：忘れない
+                <span class="hint">（ない前「れ」＝え段 → 二類）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/wasureru/hero.webp" alt="忘れる" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">忘れる</span>
+                    <span class="romaji">wasureru</span>
+                    <span class="en">to forget</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/wasureru/nai.webp" alt="忘れない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">忘れない</span>
+                    <span class="romaji">わすれない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/wasureru/01.webp" alt="忘れた" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れた</span>
+                    <span class="romaji">wasureta</span>
+                    <span class="en">forgot</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/02.webp" alt="忘れなかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れなかった</span>
+                    <span class="romaji">wasurenakatta</span>
+                    <span class="en">did not forget</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/03.webp" alt="忘れます" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れます</span>
+                    <span class="romaji">wasuremasu</span>
+                    <span class="en">will forget (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/04.webp" alt="忘れません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れません</span>
+                    <span class="romaji">wasuremasen</span>
+                    <span class="en">wont forget (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/05.webp" alt="忘れて" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れて</span>
+                    <span class="romaji">wasurete</span>
+                    <span class="en">forget it</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/06.webp" alt="忘れてください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れてください</span>
+                    <span class="romaji">wasurete kudasai</span>
+                    <span class="en">please forget</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/07.webp" alt="忘れている" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れている</span>
+                    <span class="romaji">wasurete iru</span>
+                    <span class="en">has forgotten</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/08.webp" alt="忘れよう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れよう</span>
+                    <span class="romaji">wasureyou</span>
+                    <span class="en">let's forget</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/09.webp" alt="忘れましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れましょう</span>
+                    <span class="romaji">wasuremashou</span>
+                    <span class="en">let's forget (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/10.webp" alt="忘れろ" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れろ</span>
+                    <span class="romaji">wasurero</span>
+                    <span class="en">forget! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/11.webp" alt="忘れるな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れるな</span>
+                    <span class="romaji">wasureruna</span>
+                    <span class="en">don't forget</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/12.webp" alt="忘れれば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れれば</span>
+                    <span class="romaji">wasurereba</span>
+                    <span class="en">if you forget</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/13.webp" alt="忘れられる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れられる</span>
+                    <span class="romaji">wasurerareru</span>
+                    <span class="en">can forget / be forgotten</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/14.webp" alt="忘れさせる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れさせる</span>
+                    <span class="romaji">wasuresaseru</span>
+                    <span class="en">make forget</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/15.webp" alt="忘れさせられる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れさせられる</span>
+                    <span class="romaji">wasuresaserareru</span>
+                    <span class="en">forced to forget</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/wasureru/16.webp" alt="忘れ物" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">忘れ物</span>
+                    <span class="romaji">wasuremono</span>
+                    <span class="en">lost item</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="suru">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">する</span>
+                <span class="kana">（する）</span>
+                <span class="meaning">to do</span>
+            </div>
+            <div class="verb-meta">
+                三類動詞（不規則） ／ ない形：しない
+                <span class="hint">（不規則動詞 — 直接背！）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/suru/hero.webp" alt="する" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">する</span>
+                    <span class="romaji">suru</span>
+                    <span class="en">to do</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/suru/nai.webp" alt="しない" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">しない</span>
+                    <span class="romaji">しない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/suru/01.webp" alt="した" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">した</span>
+                    <span class="romaji">shita</span>
+                    <span class="en">did</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/02.webp" alt="しなかった" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">しなかった</span>
+                    <span class="romaji">shinakatta</span>
+                    <span class="en">did not do</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/03.webp" alt="します" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">します</span>
+                    <span class="romaji">shimasu</span>
+                    <span class="en">do (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/04.webp" alt="しません" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">しません</span>
+                    <span class="romaji">shimasen</span>
+                    <span class="en">not do (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/05.webp" alt="して" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">して</span>
+                    <span class="romaji">shite</span>
+                    <span class="en">do it!</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/06.webp" alt="してください" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">してください</span>
+                    <span class="romaji">shite kudasai</span>
+                    <span class="en">please do</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/07.webp" alt="している" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">している</span>
+                    <span class="romaji">shite iru</span>
+                    <span class="en">is doing</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/08.webp" alt="しよう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">しよう</span>
+                    <span class="romaji">shiyou</span>
+                    <span class="en">let's do</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/09.webp" alt="しましょう" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">しましょう</span>
+                    <span class="romaji">shimashou</span>
+                    <span class="en">let's do (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/10.webp" alt="しろ" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">しろ</span>
+                    <span class="romaji">shiro</span>
+                    <span class="en">do it! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/11.webp" alt="するな" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">するな</span>
+                    <span class="romaji">suruna</span>
+                    <span class="en">don't do</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/12.webp" alt="すれば" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">すれば</span>
+                    <span class="romaji">sureba</span>
+                    <span class="en">if you do</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/13.webp" alt="できる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">できる</span>
+                    <span class="romaji">dekiru</span>
+                    <span class="en">can do</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/14.webp" alt="される" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">される</span>
+                    <span class="romaji">sareru</span>
+                    <span class="en">be done</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/15.webp" alt="させる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">させる</span>
+                    <span class="romaji">saseru</span>
+                    <span class="en">make/let do</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/suru/16.webp" alt="させられる" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">させられる</span>
+                    <span class="romaji">saserareru</span>
+                    <span class="en">forced to do</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="verb-page" id="kuru">
+        <div class="page-header">
+            <div class="verb-title">
+                <span class="dict">来る</span>
+                <span class="kana">（くる）</span>
+                <span class="meaning">to come</span>
+            </div>
+            <div class="verb-meta">
+                三類動詞（不規則）⚠讀音變化 ／ ない形：来ない（こない）
+                <span class="hint">（不規則動詞｜讀音在 こ/き/く 之間變化）</span>
+            </div>
+        </div>
+
+        <div class="anchor-row">
+            <div class="anchor-card">
+                <img src="images/kuru/hero.webp" alt="来る" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">来る</span>
+                    <span class="romaji">kuru</span>
+                    <span class="en">to come</span>
+                </div>
+            </div>
+            <div class="anchor-card">
+                <img src="images/kuru/nai.webp" alt="来ない（こない）" loading="lazy">
+                <div class="anchor-label">
+                    <span class="jp">来ない（こない）</span>
+                    <span class="romaji">こない</span>
+                    <span class="en">negative</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            
+            <div class="grid-cell">
+                <img src="images/kuru/01.webp" alt="来た（きた）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来た（きた）</span>
+                    <span class="romaji">kita</span>
+                    <span class="en">came</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/02.webp" alt="来なかった（こなかった）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来なかった（こなかった）</span>
+                    <span class="romaji">konakatta</span>
+                    <span class="en">did not come</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/03.webp" alt="来ます（きます）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来ます（きます）</span>
+                    <span class="romaji">kimasu</span>
+                    <span class="en">will come (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/04.webp" alt="来ません（きません）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来ません（きません）</span>
+                    <span class="romaji">kimasen</span>
+                    <span class="en">not come (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/05.webp" alt="来て（きて）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来て（きて）</span>
+                    <span class="romaji">kite</span>
+                    <span class="en">come here!</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/06.webp" alt="来てください（きてください）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来てください（きてください）</span>
+                    <span class="romaji">kite kudasai</span>
+                    <span class="en">please come</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/07.webp" alt="来ている（きている）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来ている（きている）</span>
+                    <span class="romaji">kite iru</span>
+                    <span class="en">has come</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/08.webp" alt="来よう（こよう）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来よう（こよう）</span>
+                    <span class="romaji">koyou</span>
+                    <span class="en">let's come</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/09.webp" alt="来ましょう（きましょう）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来ましょう（きましょう）</span>
+                    <span class="romaji">kimashou</span>
+                    <span class="en">let's come (polite)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/10.webp" alt="来い（こい）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来い（こい）</span>
+                    <span class="romaji">koi</span>
+                    <span class="en">come! (command)</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/11.webp" alt="来るな（くるな）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来るな（くるな）</span>
+                    <span class="romaji">kuruna</span>
+                    <span class="en">don't come</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/12.webp" alt="来れば（くれば）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来れば（くれば）</span>
+                    <span class="romaji">kureba</span>
+                    <span class="en">if you come</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/13.webp" alt="来られる（こられる）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来られる（こられる）</span>
+                    <span class="romaji">korareru</span>
+                    <span class="en">can come</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/14.webp" alt="来させる（こさせる）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来させる（こさせる）</span>
+                    <span class="romaji">kosaseru</span>
+                    <span class="en">make come</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/15.webp" alt="来させられる（こさせられる）" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">来させられる（こさせられる）</span>
+                    <span class="romaji">kosaserareru</span>
+                    <span class="en">forced to come</span>
+                </div>
+            </div>
+            <div class="grid-cell">
+                <img src="images/kuru/16.webp" alt="持って来る" loading="lazy">
+                <div class="cell-label">
+                    <span class="jp">持って来る</span>
+                    <span class="romaji">motte kuru</span>
+                    <span class="en">bring</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

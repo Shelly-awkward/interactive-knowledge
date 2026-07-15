@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>學習紀錄｜國二數學</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#fff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.7;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+  header.hero{background:linear-gradient(135deg,#14532d,#16a34a); color:#fff; border-radius:var(--radius); padding:26px; margin-bottom:20px;}
+  header.hero h1{font-size:1.4rem; margin-bottom:4px;}
+  header.hero p{opacity:.9; font-size:.88rem;}
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:18px;}
+  .stat{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; text-align:center;}
+  .stat .n{font-size:1.6rem; font-weight:bold; color:var(--blue);}
+  .stat .l{font-size:.82rem; color:var(--sub);}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:16px;}
+  .card h2{font-size:1.05rem; color:var(--blue); margin-bottom:10px;}
+  table{width:100%; border-collapse:collapse; font-size:.9rem;}
+  th,td{padding:8px 10px; border-bottom:1px solid var(--border); text-align:left;}
+  th{color:var(--sub); font-weight:normal; font-size:.82rem;}
+  .pill{display:inline-block; border-radius:99px; padding:1px 10px; font-size:.8rem;}
+  .pill.good{background:var(--green-soft); color:#166534;}
+  .pill.soso{background:var(--amber-soft); color:#92400e;}
+  .pill.bad{background:var(--red-soft); color:#991b1b;}
+  .empty{color:var(--sub); text-align:center; padding:20px 0;}
+  .note{font-size:.78rem; color:var(--sub); margin-top:18px;}
+  .bar{background:#eef2f7; border-radius:6px; height:10px; overflow:hidden;}
+  .bar i{display:block; height:100%; background:var(--red); border-radius:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>📊 學習紀錄</h1>
+  <p>國二數學課程的學習足跡（資料來自本瀏覽器，需在孩子平常使用的裝置上開啟）</p>
+</header>
+
+<div class="cards">
+  <div class="stat"><div class="n" id="days7">–</div><div class="l">近 7 天有念書的天數</div></div>
+  <div class="stat"><div class="n" id="mins">–</div><div class="l">累計學習分鐘</div></div>
+  <div class="stat"><div class="n" id="pracN">–</div><div class="l">練習題作答數（答對率）</div></div>
+  <div class="stat"><div class="n" id="lastAct">–</div><div class="l">最近一次活動</div></div>
+</div>
+
+<div class="card">
+  <h2>🗓️ 每日足跡</h2>
+  <table id="dayTable">
+    <thead><tr><th>日期</th><th>停留時間</th><th>練習題</th><th>章末測驗</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div class="empty" id="dayEmpty" hidden>還沒有任何紀錄。</div>
+</div>
+
+<div class="card">
+  <h2>🏁 測驗成績</h2>
+  <table id="quizTable">
+    <thead><tr><th>時間</th><th>章節</th><th>得分</th><th>錯的題號</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div class="empty" id="quizEmpty" hidden>還沒有交卷紀錄。</div>
+</div>
+
+<div class="card">
+  <h2>⚠️ 常錯觀念（練習題答錯統計）</h2>
+  <div id="weak"></div>
+  <div class="empty" id="weakEmpty" hidden>目前沒有答錯紀錄。</div>
+</div>
+
+<p class="note">※ 紀錄存在這個瀏覽器裡（localStorage）。清除瀏覽資料、換瀏覽器或換裝置，紀錄不會跟著走。</p>
+</div>
+
+<script>
+const SEC = {
+  "八上1 乘法公式與多項式": { p1:"1-1 乘法公式", p2:"1-2 多項式的加減", p3:"1-3 多項式的乘除" }
+};
+function secName(ch, qname){
+  const m = /^p(\d+)q(\d+)$/.exec(qname);
+  if(m && SEC[ch] && SEC[ch]["p"+m[1]]) return SEC[ch]["p"+m[1]];
+  return ch + "（總測驗）";
+}
+function fmtDate(t){ return new Date(t).toLocaleDateString("zh-TW",{month:"numeric",day:"numeric",weekday:"short"}); }
+function fmtTime(t){ return new Date(t).toLocaleString("zh-TW",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}); }
+function dayKey(t){ const d=new Date(t); return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(); }
+
+let log = [];
+try{ log = JSON.parse(localStorage.getItem("study_log_v1") || "[]"); }catch(e){}
+
+// 總覽
+const now = Date.now(), week = 7*24*3600*1000;
+const activeDays = new Set(log.filter(e=>now-e.t<week).map(e=>dayKey(e.t)));
+document.getElementById("days7").textContent = activeDays.size;
+const totalMin = log.filter(e=>e.type==="visit").reduce((s,e)=>s+(e.min||0),0);
+document.getElementById("mins").textContent = Math.round(totalMin);
+const prac = log.filter(e=>e.type==="practice");
+const okN = prac.filter(e=>e.ok).length;
+document.getElementById("pracN").textContent = prac.length ? `${prac.length}（${Math.round(okN/prac.length*100)}%）` : "0";
+document.getElementById("lastAct").textContent = log.length ? fmtDate(Math.max(...log.map(e=>e.t))) : "–";
+
+// 每日足跡
+const byDay = {};
+log.forEach(e=>{ (byDay[dayKey(e.t)] = byDay[dayKey(e.t)] || []).push(e); });
+const dayKeys = Object.keys(byDay).sort((a,b)=>new Date(b)-new Date(a));
+const dtb = document.querySelector("#dayTable tbody");
+if(!dayKeys.length){ document.getElementById("dayEmpty").hidden=false; document.getElementById("dayTable").hidden=true; }
+dayKeys.forEach(k=>{
+  const evs = byDay[k];
+  const min = Math.round(evs.filter(e=>e.type==="visit").reduce((s,e)=>s+(e.min||0),0));
+  const p = evs.filter(e=>e.type==="practice");
+  const pok = p.filter(e=>e.ok).length;
+  const qz = evs.filter(e=>e.type==="quiz");
+  const tr = document.createElement("tr");
+  tr.innerHTML = `<td>${fmtDate(evs[0].t)}</td><td>${min ? min+" 分鐘" : "－"}</td>`+
+    `<td>${p.length ? `${p.length} 題，對 ${pok}` : "－"}</td>`+
+    `<td>${qz.length ? qz.map(q=>`${q.score}/${q.total}`).join("、") : "－"}</td>`;
+  dtb.appendChild(tr);
+});
+
+// 測驗成績
+const quiz = log.filter(e=>e.type==="quiz").sort((a,b)=>b.t-a.t);
+const qtb = document.querySelector("#quizTable tbody");
+if(!quiz.length){ document.getElementById("quizEmpty").hidden=false; document.getElementById("quizTable").hidden=true; }
+quiz.forEach(q=>{
+  const rate = q.score/q.total;
+  const cls = rate>=0.8 ? "good" : rate>=0.5 ? "soso" : "bad";
+  const tr = document.createElement("tr");
+  tr.innerHTML = `<td>${fmtTime(q.t)}</td><td>${q.ch}</td>`+
+    `<td><span class="pill ${cls}">${q.score} / ${q.total}</span></td>`+
+    `<td>${(q.wrong&&q.wrong.length) ? "第 "+q.wrong.join("、")+" 題" : "全對 🎉"}</td>`;
+  qtb.appendChild(tr);
+});
+
+// 常錯觀念
+const wrongBySec = {};
+prac.filter(e=>!e.ok).forEach(e=>{
+  const s = secName(e.ch, e.q || "");
+  wrongBySec[s] = (wrongBySec[s]||0)+1;
+});
+const weak = document.getElementById("weak");
+const entries = Object.entries(wrongBySec).sort((a,b)=>b[1]-a[1]);
+if(!entries.length){ document.getElementById("weakEmpty").hidden=false; }
+const maxW = entries.length ? entries[0][1] : 1;
+entries.forEach(([s,n])=>{
+  const div = document.createElement("div");
+  div.style.margin = "8px 0";
+  div.innerHTML = `<div style="display:flex;justify-content:space-between;font-size:.88rem"><span>${s}</span><span>${n} 次</span></div>`+
+    `<div class="bar"><i style="width:${Math.round(n/maxW*100)}%"></i></div>`;
+  weak.appendChild(div);
+});
+</script>
+</body>
+</html>
