@@ -102,11 +102,47 @@ footer{
   <p class="empty" id="empty" hidden>沒有符合的教材。</p>
 </main>
 <footer>
-  <div class="visits" id="busuanzi_container_site_pv" style="display:none">
-    本站總瀏覽 <b id="busuanzi_value_site_pv"></b> 次 ・ 訪客 <b id="busuanzi_value_site_uv"></b> 人
+  <div class="visits" id="visits" hidden>
+    本站總瀏覽 <b id="visits-pv"></b> 次 ・ 訪客 <b id="visits-uv"></b> 人
   </div>
 </footer>
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+(function(){
+  // 訪客計數：貼上專用計數端點的 Apps Script 網址（部署方式見 docs/訪客計數器設定.md）。
+  // 這個網址只能「+1 並回傳次數」，可以公開；學習紀錄的上傳網址仍然不放進 repo。
+  // 留空時退回不蒜子（busuanzi）第三方計數服務。
+  var COUNTER_URL = "";
+
+  var box = document.getElementById("visits");
+  var pvEl = document.getElementById("visits-pv");
+  var uvEl = document.getElementById("visits-uv");
+
+  if (COUNTER_URL) {
+    var isNew = !localStorage.getItem("visited_v1");
+    var sep = COUNTER_URL.indexOf("?") === -1 ? "?" : "&";
+    fetch(COUNTER_URL + sep + "v=" + (isNew ? "1" : "0"))
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        localStorage.setItem("visited_v1", "1");
+        pvEl.textContent = d.pv;
+        uvEl.textContent = d.uv;
+        box.hidden = false;
+      })
+      .catch(function(){ /* 計數失敗就不顯示，不影響頁面 */ });
+  } else {
+    // 不蒜子透過固定 id 尋找元素：container 由它載入成功後顯示
+    box.id = "busuanzi_container_site_pv";
+    pvEl.id = "busuanzi_value_site_pv";
+    uvEl.id = "busuanzi_value_site_uv";
+    box.hidden = false;
+    box.style.display = "none";
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js";
+    document.body.appendChild(s);
+  }
+})();
+</script>
 <script src="lessons/lessons.js"></script>
 <script>
 (function(){
