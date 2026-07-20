@@ -71,12 +71,6 @@ main{max-width:960px;margin:0 auto;padding:24px 16px 80px;}
 .lesson p{font-size:.88rem;color:var(--ink-soft);flex:1;}
 .lesson .date{font-size:.72rem;color:#9AA3B8;}
 .empty{color:var(--ink-soft);padding:30px 4px;font-size:.95rem;}
-footer{
-  max-width:960px;margin:0 auto;padding:0 16px 40px;
-  font-size:.78rem;color:#9AA3B8;
-}
-.visits{margin-top:10px;}
-.visits b{color:var(--accent);font-weight:700;}
 @media (prefers-color-scheme: dark){
   :root{--bg:#0F1524;--card:#1A2338;--ink:#E8ECF6;--ink-soft:#9AA6C2;--line:#2A3550;}
   .filters button{background:var(--card);color:var(--ink-soft);}
@@ -101,12 +95,6 @@ footer{
   <div class="grid" id="grid"></div>
   <p class="empty" id="empty" hidden>沒有符合的教材。</p>
 </main>
-<footer>
-  <div class="visits" id="busuanzi_container_site_pv" style="display:none">
-    本站總瀏覽 <b id="busuanzi_value_site_pv"></b> 次 ・ 訪客 <b id="busuanzi_value_site_uv"></b> 人
-  </div>
-</footer>
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <script src="lessons/lessons.js"></script>
 <script>
 (function(){
