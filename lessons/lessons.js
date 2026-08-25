@@ -9,6 +9,15 @@
 //   tags     關鍵字（給搜尋用）
 window.__LESSONS__ = [
   {
+    file: "lessons/地球演化.html",
+    title: "地球演化：板塊漂移與生物",
+    subtitle: "會自轉的地球從冥古宙播到現在：陸塊聚合裂解、冰河期，配上各年代的代表生物",
+    subject: "自然科學",
+    level: "國中",
+    added: "2026-08-25",
+    tags: ["地球科學", "板塊構造", "盤古大陸", "地質年代", "演化", "冰河期", "台灣", "蓬萊造山運動"]
+  },
+  {
     file: "lessons/jlpt-verbs/index.html",
     title: "日本語動詞カード小冊子",
     subtitle: "15 個核心動詞 × 18 張情境圖，看圖記住動詞變化",
