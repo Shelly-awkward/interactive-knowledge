@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小四數學｜四上 第1單元 一億以內的數</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#0f766e,#14b8a6); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:520px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 4px;}
+  table.pv th{background:#f0fdfa; color:#0f766e; font-size:.85rem;}
+  table.pv td.dig{font-size:1.25rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .wan{background:#fef3c7;}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:#ecfeff; border:1px dashed #0891b2; border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool input[type=text]{width:100%; padding:10px 12px; font-size:1.15rem; font-family:"Courier New",monospace;
+    border:1px solid var(--border); border-radius:8px; letter-spacing:2px;}
+  .tool .out{margin-top:10px; font-size:1.05rem; font-weight:bold; color:#0f766e; min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國小四年級上學期 · 第1單元</span>
+  <h1>一億以內的數</h1>
+  <p>三個小節＋單元總測驗。每節先看觀念、再看例題（可以展開看詳細做法）、最後做練習題馬上對答案。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1-1 認識大數</button>
+  <button data-t="s2">1-2 換算與比大小</button>
+  <button data-t="s3">1-3 大數的計算</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 1-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>認識「十萬、百萬、千萬、一億」這幾個新的數位</li>
+      <li>會唸、也會寫出一億以內的數</li>
+      <li>知道一個數字站在不同位置，代表的大小不一樣（位值）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：比「萬」更大的數位</h2>
+    <p>三年級我們學到「萬」。四年級要往上再蓋四層樓：</p>
+    <div class="formula">10 個一萬 ＝ 十萬（100000）</div>
+    <div class="formula">10 個十萬 ＝ 一百萬（1000000）</div>
+    <div class="formula">10 個一百萬 ＝ 一千萬（10000000）</div>
+    <div class="formula">10 個一千萬 ＝ 一億（100000000）</div>
+    <div class="note">💡 每往左一位，就變成 10 倍，也就是「多一個 0」。<br>一億 ＝ 1 後面 8 個 0。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：數位表</h2>
+    <p>把 <span class="num">52370000</span> 排進數位表看看：</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr>
+          <th class="wan">千萬</th><th class="wan">百萬</th><th class="wan">十萬</th><th class="wan">萬</th>
+          <th>千</th><th>百</th><th>十</th><th>個</th>
+        </tr>
+        <tr>
+          <td class="dig wan">5</td><td class="dig wan">2</td><td class="dig wan">3</td><td class="dig wan">7</td>
+          <td class="dig">0</td><td class="dig">0</td><td class="dig">0</td><td class="dig">0</td>
+        </tr>
+      </table>
+    </div>
+    <p>黃色那四格叫做「<b>萬位家族</b>」。先把它們當成一組唸完，再加上「萬」字：</p>
+    <div class="formula">5237｜0000 → 五千二百三十七萬</div>
+    <div class="note">💡 唸大數的訣竅：<b>從右邊數四位切一刀</b>，左邊那半唸完加「萬」，右邊那半照原本唸。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：中間的 0 要唸「零」</h2>
+    <p>數字中間出現 0，要唸一個「零」；但是連續好幾個 0，只唸一個「零」就好。</p>
+    <div class="formula"><span class="num">40500000</span> → 4050｜0000 → 四千零五十萬</div>
+    <div class="formula"><span class="num">30070000</span> → 3007｜0000 → 三千零七萬</div>
+    <div class="warn">⚠️ 最常見的錯誤：把「四千零五十萬」寫成 <span class="num">4050</span> 就交卷了。<br>「萬」代表後面還要補 4 個 0，答案是 <span class="num">40500000</span>。</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 小工具：輸入數字，馬上看怎麼唸</h2>
+    <div class="tool">
+      <input type="text" id="numIn" inputmode="numeric" placeholder="輸入 0 ～ 99999999 的整數，例如 52370000">
+      <div class="out" id="numOut">（在上面輸入數字看看）</div>
+      <div class="tblbox" id="numTbl"></div>
+      <div class="hint">這個工具是拿來「檢查自己唸得對不對」的，先自己唸一次再輸入喔。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜<span class="num">36050000</span> 要怎麼唸？6 代表多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 從右邊數四位切一刀：3605｜0000。</p>
+        <p class="step"><b>②</b> 左半 3605 唸「三千六百零五」，加上「萬」。右半是 0000，不用再唸。</p>
+        <p class="step"><b>③</b> 答案：<b>三千六百零五萬</b>。</p>
+        <p class="step"><b>④</b> 6 站在「百萬位」，所以 6 代表 <b>6000000</b>（六百萬）。</p>
+      </div>
+    </details>
+
+    <details class="example"><summary>例 2｜把「八千零四萬」寫成數字</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 先寫「八千零四」＝ 8004。</p>
+        <p class="step"><b>②</b> 後面有「萬」，就再補 4 個 0。</p>
+        <p class="step"><b>③</b> 答案：<b>80040000</b>。</p>
+        <p class="step">檢查：8004｜0000，切回去唸就是八千零四萬，正確。</p>
+      </div>
+    </details>
+
+    <details class="example"><summary>例 3｜<span class="num">87654321</span> 裡的 7，站在哪一位？代表多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 從右邊排位名：1 個位、2 十位、3 百位、4 千位、5 萬位、6 十萬位、7 百萬位、8 千萬位。</p>
+        <p class="step"><b>②</b> 7 站在 <b>百萬位</b>。</p>
+        <p class="step"><b>③</b> 所以 7 代表 <b>7000000</b>（七百萬）。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. <span class="num">40500000</span> 唸作：</div>
+      <label><input type="radio" name="p1q1" value="A">四千零五十萬</label>
+      <label><input type="radio" name="p1q1" value="B">四千五百萬</label>
+      <label><input type="radio" name="p1q1" value="C">四十萬五千</label>
+      <label><input type="radio" name="p1q1" value="D">四百零五萬</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　切成 4050｜0000，左半唸「四千零五十」再加「萬」。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 「六千零八萬」寫成數字是：</div>
+      <label><input type="radio" name="p1q2" value="A">60080000</label>
+      <label><input type="radio" name="p1q2" value="B">6008000</label>
+      <label><input type="radio" name="p1q2" value="C">60008000</label>
+      <label><input type="radio" name="p1q2" value="D">600800000</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　六千零八＝6008，後面補 4 個 0 → 60080000（共 8 位數）。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. <span class="num">92150000</span> 裡的 2 代表多少？</div>
+      <label><input type="radio" name="p1q3" value="A">200000</label>
+      <label><input type="radio" name="p1q3" value="B">2000000</label>
+      <label><input type="radio" name="p1q3" value="C">20000000</label>
+      <label><input type="radio" name="p1q3" value="D">20000</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　9215｜0000，2 站在百萬位，代表二百萬＝2000000。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. 一億裡面有幾個一萬？</div>
+      <label><input type="radio" name="p1q4" value="A">一千個</label>
+      <label><input type="radio" name="p1q4" value="B">一萬個</label>
+      <label><input type="radio" name="p1q4" value="C">十萬個</label>
+      <label><input type="radio" name="p1q4" value="D">一百個</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　一億＝100000000，一萬＝10000。100000000 ÷ 10000 ＝ 10000，所以是一萬個。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會把「幾萬」和一般數字互相換算</li>
+      <li>知道一個數裡面有幾個一萬、幾個十萬</li>
+      <li>會比較兩個大數的大小</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：「幾萬」怎麼換成數字</h2>
+    <div class="formula">幾萬 → 把「萬」拿掉，後面補 <b>4 個 0</b></div>
+    <div class="formula">數字 → 把最後 <b>4 個 0</b> 蓋住，剩下的就是「幾萬」</div>
+    <p>例子：</p>
+    <div class="tblbox">
+      <table class="pv" style="min-width:360px">
+        <tr><th>幾萬</th><th></th><th>數字</th></tr>
+        <tr><td>73 萬</td><td>⇄</td><td class="num">730000</td></tr>
+        <tr><td>3600 萬</td><td>⇄</td><td class="num">36000000</td></tr>
+        <tr><td>25 萬</td><td>⇄</td><td class="num">250000</td></tr>
+      </table>
+    </div>
+    <div class="warn">⚠️ 只有<b>最後四位剛好都是 0</b> 的數，才可以整整齊齊說成「幾萬」。<br>例如 <span class="num">730500</span> 就不能說是 73 萬，它是 73 萬又 500。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：裡面有幾個十萬？</h2>
+    <p>問「有幾個十萬」，就是把數字裡的「十萬」當成一包一包來數：</p>
+    <div class="formula"><span class="num">8000000</span> ÷ <span class="num">100000</span> ＝ 80 → 有 <b>80 個十萬</b></div>
+    <div class="note">💡 偷懶法：問幾個一萬 → 蓋住末 4 個 0；問幾個十萬 → 蓋住末 5 個 0。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：比大小的兩個步驟</h2>
+    <div class="formula">① 先比「幾位數」——位數多的一定比較大</div>
+    <div class="formula">② 位數一樣，就從<b>最左邊</b>開始，一位一位比下去</div>
+    <p>例：<span class="num">8090000</span> 和 <span class="num">8900000</span> 誰大？</p>
+    <p class="step">兩個都是 7 位數 → 比第一位：8 ＝ 8，平手。</p>
+    <p class="step">比第二位：0 ＜ 9 → 所以 <span class="num">8090000</span> ＜ <span class="num">8900000</span>。</p>
+    <div class="warn">⚠️ 不要只看「哪個數字長得比較大」就決定。<span class="num">9008000</span> 開頭是 9，但它比 <span class="num">9880000</span> 小。</div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜<span class="num">730000</span> 是幾個一萬？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 蓋住最後 4 個 0：730000 → 73。</p>
+        <p class="step"><b>②</b> 答案：<b>73 個一萬</b>（也就是 73 萬）。</p>
+      </div>
+    </details>
+
+    <details class="example"><summary>例 2｜<span class="num">46000000</span> 是幾個十萬？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 一個十萬＝100000，後面有 5 個 0。</p>
+        <p class="step"><b>②</b> 蓋住 46000000 最後 5 個 0 → 460。</p>
+        <p class="step"><b>③</b> 答案：<b>460 個十萬</b>。</p>
+        <p class="step">驗算：460 × 100000 ＝ 46000000 ✔</p>
+      </div>
+    </details>
+
+    <details class="example"><summary>例 3｜把 <span class="num">4009000</span>、<span class="num">4090000</span>、<span class="num">4900000</span> 由小到大排</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 三個都是 7 位數，第一位都是 4，平手。</p>
+        <p class="step"><b>②</b> 比第二位：0、0、9 → 4900000 最大。</p>
+        <p class="step"><b>③</b> 剩下兩個比第三位：0 ＜ 9 → 4009000 ＜ 4090000。</p>
+        <p class="step"><b>④</b> 答案：<b>4009000 ＜ 4090000 ＜ 4900000</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. <span class="num">250000</span> 是幾個一萬？</div>
+      <label><input type="radio" name="p2q1" value="A">25 個</label>
+      <label><input type="radio" name="p2q1" value="B">250 個</label>
+      <label><input type="radio" name="p2q1" value="C">2500 個</label>
+      <label><input type="radio" name="p2q1" value="D">2 個半</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　蓋住最後 4 個 0：250000 → 25。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 下面哪一個數最大？</div>
+      <label><input type="radio" name="p2q2" value="A">9080000</label>
+      <label><input type="radio" name="p2q2" value="B">9800000</label>
+      <label><input type="radio" name="p2q2" value="C">9008000</label>
+      <label><input type="radio" name="p2q2" value="D">9880000</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　換成萬來看：908萬、980萬、900.8萬、988萬 → 9880000 最大。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 3600 萬 寫成數字是：</div>
+      <label><input type="radio" name="p2q3" value="A">36000000</label>
+      <label><input type="radio" name="p2q3" value="B">3600000</label>
+      <label><input type="radio" name="p2q3" value="C">360000000</label>
+      <label><input type="radio" name="p2q3" value="D">3060000</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　3600 後面補 4 個 0 → 36000000（8 位數）。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. <span class="num">8000000</span> 是幾個十萬？</div>
+      <label><input type="radio" name="p2q4" value="A">8 個</label>
+      <label><input type="radio" name="p2q4" value="B">80 個</label>
+      <label><input type="radio" name="p2q4" value="C">800 個</label>
+      <label><input type="radio" name="p2q4" value="D">8000 個</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　蓋住最後 5 個 0：8000000 → 80。驗算 80 × 100000 ＝ 8000000 ✔">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會用「萬」當單位做加減，算完再換回數字</li>
+      <li>會算大數乘以 10、100、1000</li>
+      <li>會解生活裡的大數應用題</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：同單位才能直接加減</h2>
+    <p>都以「萬」為單位時，可以把「萬」先放旁邊，算完再放回去：</p>
+    <div class="formula">25 萬 ＋ 13 萬 ＝ 38 萬 ＝ <span class="num">380000</span></div>
+    <div class="formula">125 萬 − 98 萬 ＝ 27 萬 ＝ <span class="num">270000</span></div>
+    <div class="note">💡 就像「25 顆蘋果＋13 顆蘋果＝38 顆蘋果」，單位一樣就直接加數字。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：乘以 10、100、1000</h2>
+    <div class="formula">× 10 → 後面加 1 個 0 ／ × 100 → 加 2 個 0 ／ × 1000 → 加 3 個 0</div>
+    <div class="formula"><span class="num">30000</span> × 100 ＝ <span class="num">3000000</span>（3 萬 × 100 ＝ 300 萬）</div>
+    <div class="warn">⚠️ 加 0 的招數只在乘以 10、100、1000 這種「整十整百」時才好用。<br>乘以 25、乘以 12 還是要乖乖直式計算。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：拆開來乘，比較不會算錯</h2>
+    <p>遇到 250 × 4000 這種題目，把 0 先抽出來：</p>
+    <p class="step"><b>①</b> 250 × 4000 ＝ (25 × 4) × (10 × 1000)</p>
+    <p class="step"><b>②</b> 25 × 4 ＝ 100，10 × 1000 ＝ 10000</p>
+    <p class="step"><b>③</b> 100 × 10000 ＝ <span class="num">1000000</span>（一百萬）</p>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜一台車 68 萬元，買 2 台要多少錢？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 68 萬 × 2 ＝ 136 萬。</p>
+        <p class="step"><b>②</b> 136 萬 ＝ <span class="num">1360000</span> 元。</p>
+        <p class="step"><b>③</b> 答：<b>1360000 元</b>（一百三十六萬元）。</p>
+      </div>
+    </details>
+
+    <details class="example"><summary>例 2｜甲縣 125 萬人，乙縣 98 萬人，差幾人？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 125 萬 − 98 萬 ＝ 27 萬。</p>
+        <p class="step"><b>②</b> 27 萬 ＝ <span class="num">270000</span> 人。</p>
+        <p class="step"><b>③</b> 答：<b>相差 270000 人</b>。</p>
+      </div>
+    </details>
+
+    <details class="example"><summary>例 3｜一本書 250 元，賣出 4000 本，總共收入多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 列式：250 × 4000。</p>
+        <p class="step"><b>②</b> 25 × 4 ＝ 100；剩下的 0 有 1＋3 ＝ 4 個。</p>
+        <p class="step"><b>③</b> 100 後面補 4 個 0 → <span class="num">1000000</span>。</p>
+        <p class="step"><b>④</b> 答：<b>1000000 元</b>（一百萬元）。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 47 萬 ＋ 25 萬 ＝ ？</div>
+      <label><input type="radio" name="p3q1" value="A">720000</label>
+      <label><input type="radio" name="p3q1" value="B">72000</label>
+      <label><input type="radio" name="p3q1" value="C">7200000</label>
+      <label><input type="radio" name="p3q1" value="D">620000</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　47＋25＝72，所以是 72 萬＝720000。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 300 萬 − 45 萬 ＝ ？</div>
+      <label><input type="radio" name="p3q2" value="A">2550000</label>
+      <label><input type="radio" name="p3q2" value="B">255000</label>
+      <label><input type="radio" name="p3q2" value="C">25500000</label>
+      <label><input type="radio" name="p3q2" value="D">2450000</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　300−45＝255，所以是 255 萬＝2550000。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 一箱口罩有 50 盒，一盒 200 片。80 箱總共幾片？</div>
+      <label><input type="radio" name="p3q3" value="A">800000 片</label>
+      <label><input type="radio" name="p3q3" value="B">80000 片</label>
+      <label><input type="radio" name="p3q3" value="C">8000000 片</label>
+      <label><input type="radio" name="p3q3" value="D">160000 片</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　一箱＝50×200＝10000 片；80 箱＝10000×80＝800000 片。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. 3 萬 × 100 ＝ ？</div>
+      <label><input type="radio" name="p3q4" value="A">3000000</label>
+      <label><input type="radio" name="p3q4" value="B">300000</label>
+      <label><input type="radio" name="p3q4" value="C">30000000</label>
+      <label><input type="radio" name="p3q4" value="D">3000</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　3 萬＝30000，再加 2 個 0 → 3000000（300 萬）。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <ul>
+      <li>全部作答完再按最下面的「交卷」，一次批改</li>
+      <li>答對 <b>8 題</b>以上就算過關</li>
+      <li>沒作答的題目會算成答錯</li>
+    </ul>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="A">
+      <div class="stem">1. <span class="num">70605000</span> 唸作：</div>
+      <label><input type="radio" name="qz1" value="A">七千零六十萬五千</label>
+      <label><input type="radio" name="qz1" value="B">七千六百零五萬</label>
+      <label><input type="radio" name="qz1" value="C">七百零六萬五千</label>
+      <label><input type="radio" name="qz1" value="D">七千零六萬五千</label>
+      <div class="fb" data-exp="　切成 7060｜5000：左半「七千零六十」加萬，右半「五千」。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">2. 「五千零三萬」寫成數字是：</div>
+      <label><input type="radio" name="qz2" value="A">50030000</label>
+      <label><input type="radio" name="qz2" value="B">5003000</label>
+      <label><input type="radio" name="qz2" value="C">500300000</label>
+      <label><input type="radio" name="qz2" value="D">50003000</label>
+      <div class="fb" data-exp="　五千零三＝5003，補 4 個 0 → 50030000。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. <span class="num">68420000</span> 裡的 8 代表多少？</div>
+      <label><input type="radio" name="qz3" value="A">8000000</label>
+      <label><input type="radio" name="qz3" value="B">800000</label>
+      <label><input type="radio" name="qz3" value="C">80000</label>
+      <label><input type="radio" name="qz3" value="D">80000000</label>
+      <div class="fb" data-exp="　6842｜0000，8 站在百萬位 → 八百萬＝8000000。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">4. 一億裡面有幾個一千萬？</div>
+      <label><input type="radio" name="qz4" value="A">10 個</label>
+      <label><input type="radio" name="qz4" value="B">100 個</label>
+      <label><input type="radio" name="qz4" value="C">1000 個</label>
+      <label><input type="radio" name="qz4" value="D">10000 個</label>
+      <div class="fb" data-exp="　100000000 ÷ 10000000 ＝ 10。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">5. 由小到大排列，正確的是：</div>
+      <label><input type="radio" name="qz5" value="A">4009000 ＜ 4090000 ＜ 4900000</label>
+      <label><input type="radio" name="qz5" value="B">4090000 ＜ 4009000 ＜ 4900000</label>
+      <label><input type="radio" name="qz5" value="C">4900000 ＜ 4090000 ＜ 4009000</label>
+      <label><input type="radio" name="qz5" value="D">4009000 ＜ 4900000 ＜ 4090000</label>
+      <div class="fb" data-exp="　換成萬：400.9萬、409萬、490萬，由小到大就是 A。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">6. <span class="num">5300000</span> 是幾個一萬？</div>
+      <label><input type="radio" name="qz6" value="A">530 個</label>
+      <label><input type="radio" name="qz6" value="B">53 個</label>
+      <label><input type="radio" name="qz6" value="C">5300 個</label>
+      <label><input type="radio" name="qz6" value="D">53000 個</label>
+      <div class="fb" data-exp="　蓋住最後 4 個 0：5300000 → 530。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">7. 86 萬 ＋ 74 萬 ＝ ？</div>
+      <label><input type="radio" name="qz7" value="A">1600000</label>
+      <label><input type="radio" name="qz7" value="B">160000</label>
+      <label><input type="radio" name="qz7" value="C">16000000</label>
+      <label><input type="radio" name="qz7" value="D">1500000</label>
+      <div class="fb" data-exp="　86＋74＝160，所以是 160 萬＝1600000。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">8. 500 萬 − 128 萬 ＝ ？</div>
+      <label><input type="radio" name="qz8" value="A">3720000</label>
+      <label><input type="radio" name="qz8" value="B">372000</label>
+      <label><input type="radio" name="qz8" value="C">37200000</label>
+      <label><input type="radio" name="qz8" value="D">3820000</label>
+      <div class="fb" data-exp="　500−128＝372，所以是 372 萬＝3720000。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">9. 一場演唱會賣出 25000 張票，每張 1200 元，總收入多少元？</div>
+      <label><input type="radio" name="qz9" value="A">30000000 元</label>
+      <label><input type="radio" name="qz9" value="B">3000000 元</label>
+      <label><input type="radio" name="qz9" value="C">300000000 元</label>
+      <label><input type="radio" name="qz9" value="D">3600000 元</label>
+      <div class="fb" data-exp="　25 × 12 ＝ 300，0 共有 3＋2 ＝ 5 個 → 30000000（三千萬元）。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">10. 下面哪一個數最接近「一億」？</div>
+      <label><input type="radio" name="qz10" value="A">99800000</label>
+      <label><input type="radio" name="qz10" value="B">99000000</label>
+      <label><input type="radio" name="qz10" value="C">98900000</label>
+      <label><input type="radio" name="qz10" value="D">90000000</label>
+      <div class="fb" data-exp="　跟一億的差距：A 差 20 萬、B 差 100 萬、C 差 110 萬、D 差 1000 萬 → A 最接近。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 小四數學 · 四上第 1 單元「一億以內的數」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "四上1 一億以內的數";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 小工具：把數字唸成中文 =====
+const CN = ["零","一","二","三","四","五","六","七","八","九"];
+const U4 = ["千","百","十",""];
+function read4(n){                      // 0 ～ 9999
+  if(n === 0) return "";
+  const d = [Math.floor(n/1000)%10, Math.floor(n/100)%10, Math.floor(n/10)%10, n%10];
+  let s = "", zero = false;
+  for(let i=0; i<4; i++){
+    if(d[i] === 0){ if(s !== "") zero = true; continue; }
+    if(zero){ s += "零"; zero = false; }
+    if(i === 2 && d[i] === 1 && s === "") s += "十";   // 十二，不唸「一十二」
+    else s += CN[d[i]] + U4[i];
+  }
+  return s;
+}
+function readNum(n){                     // 0 ～ 99999999
+  if(n === 0) return "零";
+  const w = Math.floor(n/10000), r = n % 10000;
+  if(w === 0) return read4(r);
+  let s = read4(w) + "萬";
+  if(r === 0) return s;
+  return s + (r < 1000 ? "零" : "") + read4(r);
+}
+const PV = ["千萬","百萬","十萬","萬","千","百","十","個"];
+const numIn = document.getElementById('numIn');
+const numOut = document.getElementById('numOut');
+const numTbl = document.getElementById('numTbl');
+numIn.addEventListener('input', ()=>{
+  const raw = numIn.value.replace(/[^0-9]/g, "");
+  numIn.value = raw;
+  if(raw === ""){ numOut.textContent = "（在上面輸入數字看看）"; numTbl.innerHTML = ""; return; }
+  if(raw.length > 8){ numOut.textContent = "這個工具只到一億以內（最多 8 位數）喔！"; numTbl.innerHTML = ""; return; }
+  const n = parseInt(raw, 10);
+  numOut.textContent = "唸作：" + readNum(n);
+  const pad = String(n).padStart(8, "0");
+  let head = "", body = "";
+  for(let i=0; i<8; i++){
+    const isWan = i < 4;
+    head += '<th class="' + (isWan ? 'wan' : '') + '">' + PV[i] + '</th>';
+    body += '<td class="dig ' + (isWan ? 'wan' : '') + '">' + pad[i] + '</td>';
+  }
+  numTbl.innerHTML = '<table class="pv"><tr>' + head + '</tr><tr>' + body + '</tr></table>';
+});
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+</script>
+</body>
+</html>
