@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>成語練習｜「一」字成語 80 題</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --plum:#7c3aed; --plum-soft:#ede9fe;
+    --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.8;}
+  .wrap{max-width:760px; margin:0 auto; padding:20px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#6d28d9,#a855f7); color:#fff; border-radius:var(--radius); padding:24px 24px; margin-bottom:18px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.45rem; margin-bottom:6px;}
+  header.hero p{opacity:.93; font-size:.9rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:104px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--plum);}
+  nav.tabs button.active{background:var(--plum); border-color:var(--plum); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .22s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:14px;}
+  .card h2{font-size:1.08rem; color:var(--plum); margin-bottom:10px;}
+  .card h3{font-size:.95rem; color:var(--sub); margin:14px 0 6px; font-weight:normal;}
+
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chips button{border:1px solid var(--border); background:#fff; color:var(--ink); padding:8px 15px;
+    border-radius:99px; font-size:.9rem; cursor:pointer; font-family:inherit; transition:.12s;}
+  .chips button:hover{border-color:var(--plum);}
+  .chips button.on{background:var(--plum-soft); border-color:var(--plum); color:#5b21b6; font-weight:bold;}
+
+  .bigbtn{display:block; width:100%; background:var(--plum); color:#fff; border:none; border-radius:10px;
+    padding:14px; font-size:1.02rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:14px;}
+  .bigbtn:disabled{background:#c4b5fd; cursor:not-allowed;}
+  .ghostbtn{display:block; width:100%; background:#fff; color:var(--plum); border:1px solid var(--plum);
+    border-radius:10px; padding:11px; font-size:.95rem; cursor:pointer; font-family:inherit; margin-top:10px;}
+
+  /* 出題區 */
+  .bar{height:8px; background:#e9e5f5; border-radius:99px; overflow:hidden; margin-bottom:6px;}
+  .bar > i{display:block; height:100%; background:var(--plum); width:0; transition:width .25s;}
+  .meta{display:flex; justify-content:space-between; font-size:.84rem; color:var(--sub); margin-bottom:12px;}
+  .tag{display:inline-block; background:var(--blue-soft); color:#1e40af; border-radius:99px;
+    padding:1px 11px; font-size:.78rem; margin-bottom:10px;}
+  .stem{font-size:1.12rem; line-height:2.1; margin-bottom:16px;}
+  .blank{display:inline-block; min-width:5.2em; border-bottom:2px solid var(--plum); text-align:center;
+    color:var(--plum); font-weight:bold; margin:0 2px;}
+
+  .opts button{display:block; width:100%; text-align:left; border:1px solid var(--border); background:#fff;
+    color:var(--ink); border-radius:10px; padding:12px 16px; margin:8px 0; font-size:1.05rem;
+    cursor:pointer; font-family:inherit; transition:.12s; letter-spacing:1px;}
+  .opts button:hover:not(:disabled){border-color:var(--plum); background:#faf5ff;}
+  .opts button:disabled{cursor:default;}
+  .opts button.ok{background:var(--green-soft); border-color:var(--green); color:#166534; font-weight:bold;}
+  .opts button.no{background:var(--red-soft); border-color:var(--red); color:#991b1b;}
+
+  .typerow{display:flex; gap:8px;}
+  .typerow input{flex:1; padding:12px 14px; font-size:1.15rem; letter-spacing:4px; text-align:center;
+    border:1px solid var(--border); border-radius:10px; font-family:inherit;}
+  .typerow button{background:var(--plum); color:#fff; border:none; border-radius:10px;
+    padding:0 20px; font-size:.95rem; cursor:pointer; font-family:inherit;}
+  .hintline{font-size:.85rem; color:var(--sub); margin-top:8px;}
+  .hintline a{color:var(--plum); cursor:pointer; text-decoration:underline;}
+
+  .fb{margin-top:14px; padding:12px 15px; border-radius:10px; font-size:.95rem; display:none;}
+  .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .fb b{font-size:1.1rem; letter-spacing:2px;}
+  .fb .mean{display:block; margin-top:5px; color:var(--ink); font-size:.9rem; opacity:.85;}
+
+  /* 結算 */
+  .score{text-align:center; padding:24px 16px;}
+  .score .big{font-size:2.6rem; font-weight:bold; color:var(--plum); line-height:1.2;}
+  .score .say{font-size:1.05rem; margin-top:6px;}
+  ul.wronglist{list-style:none; margin-top:12px;}
+  ul.wronglist li{border:1px solid var(--border); border-left:4px solid var(--red);
+    border-radius:8px; padding:9px 13px; margin:7px 0; font-size:.9rem;}
+  ul.wronglist li b{color:var(--red); letter-spacing:2px;}
+  ul.wronglist li span{display:block; color:var(--sub); font-size:.85rem;}
+
+  /* 辭典 */
+  .dictsearch{width:100%; padding:11px 14px; font-size:1rem; border:1px solid var(--border);
+    border-radius:10px; font-family:inherit; margin-bottom:12px;}
+  ul.dict{list-style:none;}
+  ul.dict li{border-bottom:1px solid var(--border); padding:11px 2px;}
+  ul.dict li:last-child{border-bottom:none;}
+  ul.dict .w{font-size:1.08rem; font-weight:bold; letter-spacing:2px; color:var(--plum);}
+  ul.dict .r{font-size:.75rem; color:var(--sub); border:1px solid var(--border); border-radius:99px; padding:0 8px; margin-left:6px;}
+  ul.dict .m{font-size:.9rem; color:var(--ink); opacity:.85;}
+  .empty{text-align:center; color:var(--sub); padding:26px 10px; font-size:.92rem;}
+
+  .note{background:var(--blue-soft); border-radius:8px; padding:9px 14px; margin:10px 0; font-size:.87rem; color:#1e40af;}
+  footer{text-align:center; color:var(--sub); font-size:.78rem; margin-top:26px; line-height:1.7;}
+  @media (max-width:520px){ nav.tabs button{min-width:46%;} .stem{font-size:1.05rem;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">國語文 · 成語 · 第一～四回</span>
+  <h1>「一」字成語 80 題</h1>
+  <p>看解釋寫成語 40 題 ＋ 讀例句填成語 40 題。可選「選擇題」快速複習，或「填空」真的動手寫。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="pStart">✏️ 開始練習</button>
+  <button data-t="pDict">📖 成語辭典</button>
+  <button data-t="pWrong">🔁 我的錯題</button>
+</nav>
+
+<!-- ══════ 設定 ══════ -->
+<section id="pStart" class="panel show">
+  <div class="card">
+    <h2>1. 要練哪幾回？</h2>
+    <div class="chips" id="selRound">
+      <button class="on" data-v="0">全部 4 回</button>
+      <button data-v="1">第一回</button>
+      <button data-v="2">第二回</button>
+      <button data-v="3">第三回</button>
+      <button data-v="4">第四回</button>
+    </div>
+
+    <h2 style="margin-top:18px">2. 練哪一種題型？</h2>
+    <div class="chips" id="selType">
+      <button class="on" data-v="all">兩種都要</button>
+      <button data-v="d">看解釋寫成語</button>
+      <button data-v="s">讀例句填成語</button>
+    </div>
+
+    <h2 style="margin-top:18px">3. 怎麼作答？</h2>
+    <div class="chips" id="selMode">
+      <button class="on" data-v="mc">選擇題（四選一）</button>
+      <button data-v="tp">填空（自己打字）</button>
+    </div>
+    <div class="note" id="modeNote">選擇題比較快，適合先熟悉成語。真的要記起來，建議切到「填空」。</div>
+
+    <h2 style="margin-top:18px">4. 這次做幾題？</h2>
+    <div class="chips" id="selCount">
+      <button class="on" data-v="10">10 題</button>
+      <button data-v="20">20 題</button>
+      <button data-v="0">全部</button>
+    </div>
+
+    <button class="bigbtn" id="btnStart">開始練習（共 <span id="poolN">80</span> 題可出）</button>
+  </div>
+</section>
+
+<!-- ══════ 出題 ══════ -->
+<section id="pQuiz" class="panel">
+  <div class="card">
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="meta">
+      <span id="mProg">第 1 / 10 題</span>
+      <span id="mScore">答對 0 題</span>
+    </div>
+    <div id="qTag" class="tag">看解釋寫成語</div>
+    <div class="stem" id="qStem"></div>
+
+    <div class="opts" id="qOpts"></div>
+
+    <div id="qType" style="display:none">
+      <div class="typerow">
+        <input type="text" id="typeIn" maxlength="8" placeholder="打出四個字" autocomplete="off">
+        <button id="btnTypeGo">確定</button>
+      </div>
+      <div class="hintline">想不出來？<a id="btnHint">看提示</a><span id="hintTxt"></span></div>
+    </div>
+
+    <div class="fb" id="qFb"></div>
+    <button class="bigbtn" id="btnNext" style="display:none">下一題 →</button>
+  </div>
+  <button class="ghostbtn" id="btnQuit">結束這次練習</button>
+</section>
+
+<!-- ══════ 結算 ══════ -->
+<section id="pDone" class="panel">
+  <div class="card">
+    <div class="score">
+      <div class="big" id="dScore">0 / 0</div>
+      <div class="say" id="dSay"></div>
+    </div>
+    <div id="dWrongBox"></div>
+    <button class="bigbtn" id="btnAgainWrong" style="display:none">只重做這次答錯的題</button>
+    <button class="ghostbtn" id="btnBackStart">回到設定，換一組再練</button>
+  </div>
+</section>
+
+<!-- ══════ 辭典 ══════ -->
+<section id="pDict" class="panel">
+  <div class="card">
+    <h2>成語辭典（共 <span id="dictN"></span> 條）</h2>
+    <input type="text" class="dictsearch" id="dictQ" placeholder="輸入成語或解釋裡的字來找，例如「吝嗇」">
+    <ul class="dict" id="dictList"></ul>
+  </div>
+</section>
+
+<!-- ══════ 錯題本 ══════ -->
+<section id="pWrong" class="panel">
+  <div class="card">
+    <h2>我的錯題本</h2>
+    <div class="note">答錯的題目會自動存進來（只存在這台電腦的瀏覽器）。答對兩次之後會自動移除。</div>
+    <div id="wrongBox"></div>
+    <button class="bigbtn" id="btnPracWrong" style="display:none">開始重練錯題</button>
+    <button class="ghostbtn" id="btnClearWrong" style="display:none">清空錯題本</button>
+  </div>
+</section>
+
+<footer>
+  互動知識庫 · 國語文成語練習<br>
+  題目依紙本學習單第一～四回整理成互動版；解釋文字為配合練習改寫。
+</footer>
+</div>
+
+<script>
+// ═══════════ 題庫 ═══════════
+// r=回次 t=題型(d 看解釋 / s 讀例句) q=題幹 a=標準答案 alt=也算對的寫法
+const BLANK = "◯◯◯◯";
+const QS = [
+  // ── 第一回：看解釋寫成語 ──
+  {r:1,t:"d",q:"比喻詩文精妙，價值極高。",a:"一字千金"},
+  {r:1,t:"d",q:"比喻彼此同樣低劣，沒什麼差別。多用於負面。",a:"半斤八兩"},
+  {r:1,t:"d",q:"比喻思念殷切。多用於朋友、情人之間。",a:"一日三秋"},
+  {r:1,t:"d",q:"比喻一點價值也沒有。",a:"一文不值"},
+  {r:1,t:"d",q:"比喻玩弄權術，混淆是非，欺下瞞上。",a:"一手遮天"},
+  {r:1,t:"d",q:"形容人的操守清廉，不應得的東西，雖極細微，也不貪取。",a:"一介不取"},
+  {r:1,t:"d",q:"比喻堅決地斷絕關係。",a:"一刀兩斷"},
+  {r:1,t:"d",q:"形容人十分吝嗇、自私。用於諷刺，含有貶義。",a:"一毛不拔"},
+  {r:1,t:"d",q:"形容人心意專一。",a:"一心一意"},
+  {r:1,t:"d",q:"說明觀察人、事或物能夠清楚了解。",a:"一目了然"},
+  // ── 第一回：讀例句填成語 ──
+  {r:1,t:"s",q:"小胖平日"+BLANK+"，今天竟然請大家吃牛排，可真難得！",a:"一毛不拔"},
+  {r:1,t:"s",q:"臺灣科技業發展"+BLANK+"，速度快得驚人。",a:"一日千里"},
+  {r:1,t:"s",q:"經過警方的連日偵訊，他終於"+BLANK+"地供出犯案過程。",a:"一五一十"},
+  {r:1,t:"s",q:"大家都稱讚李白的文章寫得很好，真是"+BLANK+"。",a:"一字千金"},
+  {r:1,t:"s",q:"他為人"+BLANK+"，由他來管理公司的帳務，老闆很放心。",a:"一介不取"},
+  {r:1,t:"s",q:"小華才出國沒幾天，小婷就感到"+BLANK+"，希望他快點回來。",a:"一日三秋"},
+  {r:1,t:"s",q:"李議員想要"+BLANK+"將罪過推給別人，真是膽大妄為。",a:"一手遮天"},
+  {r:1,t:"s",q:"在我看來，政客都是"+BLANK+"，能真正為百姓設想的不多。",a:"半斤八兩"},
+  {r:1,t:"s",q:"健身俱樂部無預警倒閉，所發行的貴賓卡變得"+BLANK+"。",a:"一文不值"},
+  {r:1,t:"s",q:"我決定跟吃零嘴的壞習慣"+BLANK+"，以維持標準體重。",a:"一刀兩斷"},
+
+  // ── 第二回：看解釋寫成語 ──
+  {r:2,t:"d",q:"比喻固守舊規矩，不知改變。",a:"一成不變"},
+  {r:2,t:"d",q:"只因一個念頭的差錯，導致嚴重後果。",a:"一念之差"},
+  {r:2,t:"d",q:"用以指人死亡。",a:"一命嗚呼"},
+  {r:2,t:"d",q:"多用來表示概括性的結論，或總結全文。",a:"一言蔽之",alt:["一言以蔽之"]},
+  {r:2,t:"d",q:"泛指一段時間。",a:"一年半載"},
+  {r:2,t:"d",q:"形容事情進行順利，沒有遇到任何阻礙。",a:"一帆風順"},
+  {r:2,t:"d",q:"形容人極有膽量，勇猛無比。",a:"一身是膽"},
+  {r:2,t:"d",q:"形容人初次見面就如同老朋友一樣，十分投緣。",a:"一見如故"},
+  {r:2,t:"d",q:"比喻事情未經努力，就輕易獲得大成功。",a:"一步登天"},
+  {r:2,t:"d",q:"形容說話算話，有信用。",a:"一言九鼎"},
+  // ── 第二回：讀例句填成語 ──
+  {r:2,t:"s",q:"做人做事一定要腳踏實地，不要老想著"+BLANK+"。",a:"一步登天"},
+  {r:2,t:"s",q:"他久病纏身，終於在幾天前"+BLANK+"。",a:"一命嗚呼"},
+  {r:2,t:"s",q:"李先生"+BLANK+"，他說的話，誰敢不從。",a:"一言九鼎"},
+  {r:2,t:"s",q:"他倆"+BLANK+"，才認識一個月就閃電結婚了。",a:"一見如故"},
+  {r:2,t:"s",q:"他因為"+BLANK+"誤入歧途，以致下半輩子都要在監牢裡度過。",a:"一念之差"},
+  {r:2,t:"s",q:"老師對你說的那番話，"+BLANK+"，就是勸你要用功讀書。",a:"一言蔽之",alt:["一言以蔽之"]},
+  {r:2,t:"s",q:"因為我們都是星光迷，所以初次見面就"+BLANK+"地聊了起來。",a:"一見如故"},
+  {r:2,t:"s",q:"我和雲舟已經有"+BLANK+"沒聯絡了，不知他們近況如何？",a:"一年半載"},
+  {r:2,t:"s",q:"整天遊手好閒的人，將來必定"+BLANK+"。",a:"一事無成"},
+  {r:2,t:"s",q:"老陳年輕時"+BLANK+"，曾經隻身潛入敵營，炸毀兩座彈藥庫。",a:"一身是膽"},
+
+  // ── 第三回：看解釋寫成語 ──
+  {r:3,t:"d",q:"比喻理解膚淺、不夠深透。",a:"一知半解"},
+  {r:3,t:"d",q:"比喻說話直截了當，切中要害。",a:"一針見血"},
+  {r:3,t:"d",q:"形容一無所有，貧窮到極點。",a:"一貧如洗"},
+  {r:3,t:"d",q:"比喻學習受到干擾，成效不佳。",a:"一傅眾咻"},
+  {r:3,t:"d",q:"比喻平時沒有特殊表現，一旦顯示才能，便成就驚人。",a:"一鳴驚人"},
+  {r:3,t:"d",q:"形容事情進行中的阻礙波折很多。",a:"一波三折"},
+  {r:3,t:"d",q:"比喻搶在眾人前面，起帶頭作用。",a:"一馬當先"},
+  {r:3,t:"d",q:"比喻事情進行得順暢、沒有間斷。",a:"一氣呵成"},
+  {r:3,t:"d",q:"比喻群聚吵鬧了一下子之後，各自散去。",a:"一哄而散"},
+  {r:3,t:"d",q:"形容文思敏捷、書畫作文迅速。",a:"一揮而就"},
+  // ── 第三回：讀例句填成語 ──
+  {r:3,t:"s",q:"他把責任推得"+BLANK+"，好像事不關己一樣。",a:"一乾二淨"},
+  {r:3,t:"s",q:"求知學習的時候，若"+BLANK+"，成效必定打折扣。",a:"一傅眾咻"},
+  {r:3,t:"s",q:"那位畫家執起筆，"+BLANK+"，三兩下就完成一幅畫。",a:"一揮而就"},
+  {r:3,t:"s",q:"那位名嘴對市政的評論"+BLANK+"，讓市長難以招架。",a:"一針見血"},
+  {r:3,t:"s",q:"哈利波特的故事情節"+BLANK+"，令人百看不厭。",a:"一波三折"},
+  {r:3,t:"s",q:"這篇文章雖然長達數頁，但結構"+BLANK+"，令人激賞。",a:"一氣呵成"},
+  {r:3,t:"s",q:"投資股市，可能一夜暴富，也可能頃刻間"+BLANK+"。",a:"一貧如洗"},
+  {r:3,t:"s",q:"非法的攤販，見警察前來取締，馬上"+BLANK+"。",a:"一哄而散"},
+  {r:3,t:"s",q:"我對羽球比賽規則"+BLANK+"，你能為我講解嗎？",a:"一知半解"},
+  {r:3,t:"s",q:"生活若是"+BLANK+"的大海，人便是大海上的一葉小舟。",a:"一望無際"},
+
+  // ── 第四回：看解釋寫成語 ──
+  {r:4,t:"d",q:"形容人做事認真、細心。",a:"一絲不苟"},
+  {r:4,t:"d",q:"指不聽從別人的意見，固執地依自己意思去辦事。",a:"一意孤行"},
+  {r:4,t:"d",q:"形容人貧苦窮困，身邊沒有任何財物。",a:"一無所有"},
+  {r:4,t:"d",q:"指對人平等看待，沒有親疏厚薄的差別。",a:"一視同仁"},
+  {r:4,t:"d",q:"比喻從細微的徵兆，可以推知事物的發展與變化。",a:"一葉知秋"},
+  {r:4,t:"d",q:"形容時間很短暫。",a:"一朝一夕"},
+  {r:4,t:"d",q:"比喻趁著幹勁最旺盛的時候，一舉將事情完成。",a:"一鼓作氣"},
+  {r:4,t:"d",q:"比喻極其細微，一點一點的意思。",a:"一絲一毫"},
+  {r:4,t:"d",q:"比喻受人一點恩惠，而給予厚重的回報。",a:"一飯千金"},
+  {r:4,t:"d",q:"比喻名聲、地位、境況、成績或勢力急速下降。",a:"一落千丈"},
+  // ── 第四回：讀例句填成語 ──
+  {r:4,t:"s",q:"要當一個國家領導人，必須具備"+BLANK+"的敏銳觀察力。",a:"一葉知秋"},
+  {r:4,t:"s",q:"韓信"+BLANK+"的故事，傳為千古美談。",a:"一飯千金"},
+  {r:4,t:"s",q:"許老師批改作業"+BLANK+"，連標點符號都看得很仔細。",a:"一絲不苟"},
+  {r:4,t:"s",q:"捷運開挖後，這條路上的店家，生意"+BLANK+"。",a:"一落千丈"},
+  {r:4,t:"s",q:"王先生"+BLANK+"吃了十五碗湯麵，打敗眾家高手，成為名副其實的大胃王。",a:"一鼓作氣"},
+  {r:4,t:"s",q:"連日的跟監埋伏，警方終於將詐騙集團的主要成員"+BLANK+"。",a:"一網打盡"},
+  {r:4,t:"s",q:"董事長說：「今年的年終獎金"+BLANK+"，一律發兩萬元。」",a:"一視同仁"},
+  {r:4,t:"s",q:"你再繼續揮霍下去，總有一天會落得"+BLANK+"的地步。",a:"一無所有"},
+  {r:4,t:"s",q:"每到夏天，就會有許多"+BLANK+"的小孩在這裡戲水。",a:"一絲不掛"},
+  {r:4,t:"s",q:"你在做這件事之前，最好先聽聽別人的意見，不要"+BLANK+"。",a:"一意孤行"}
+];
+
+// ═══════════ 成語辭典 ═══════════
+const DICT = [
+  {w:"一字千金",r:1,m:"比喻詩文精妙，價值極高。"},
+  {w:"半斤八兩",r:1,m:"比喻彼此同樣低劣，沒什麼差別。多用於負面。"},
+  {w:"一日三秋",r:1,m:"比喻思念殷切。多用於朋友、情人之間。"},
+  {w:"一文不值",r:1,m:"比喻一點價值也沒有。"},
+  {w:"一手遮天",r:1,m:"比喻玩弄權術，混淆是非，欺下瞞上。"},
+  {w:"一介不取",r:1,m:"形容人的操守清廉，不應得的東西，雖極細微，也不貪取。"},
+  {w:"一刀兩斷",r:1,m:"比喻堅決地斷絕關係。"},
+  {w:"一毛不拔",r:1,m:"形容人十分吝嗇、自私。用於諷刺，含有貶義。"},
+  {w:"一心一意",r:1,m:"形容人心意專一。"},
+  {w:"一目了然",r:1,m:"觀察人、事或物能夠清楚了解。"},
+  {w:"一日千里",r:1,m:"形容進步或發展的速度非常快。"},
+  {w:"一五一十",r:1,m:"比喻把事情從頭到尾、原原本本地說清楚。"},
+
+  {w:"一成不變",r:2,m:"比喻固守舊規矩，不知改變。"},
+  {w:"一念之差",r:2,m:"只因一個念頭的差錯，導致嚴重後果。"},
+  {w:"一命嗚呼",r:2,m:"用以指人死亡。"},
+  {w:"一言蔽之",r:2,m:"多用來表示概括性的結論，或總結全文。也寫作「一言以蔽之」。"},
+  {w:"一年半載",r:2,m:"泛指一段時間。"},
+  {w:"一帆風順",r:2,m:"形容事情進行順利，沒有遇到任何阻礙。"},
+  {w:"一身是膽",r:2,m:"形容人極有膽量，勇猛無比。"},
+  {w:"一見如故",r:2,m:"初次見面就如同老朋友一樣，十分投緣。"},
+  {w:"一步登天",r:2,m:"比喻事情未經努力，就輕易獲得大成功。"},
+  {w:"一言九鼎",r:2,m:"形容說話算話，有信用。"},
+  {w:"一事無成",r:2,m:"一件事情也沒有做成，形容毫無成就。"},
+
+  {w:"一知半解",r:3,m:"比喻理解膚淺、不夠深透。"},
+  {w:"一針見血",r:3,m:"比喻說話直截了當，切中要害。"},
+  {w:"一貧如洗",r:3,m:"形容一無所有，貧窮到極點。"},
+  {w:"一傅眾咻",r:3,m:"比喻學習受到干擾，成效不佳。"},
+  {w:"一鳴驚人",r:3,m:"比喻平時沒有特殊表現，一旦顯示才能，便成就驚人。"},
+  {w:"一波三折",r:3,m:"形容事情進行中的阻礙波折很多。"},
+  {w:"一馬當先",r:3,m:"比喻搶在眾人前面，起帶頭作用。"},
+  {w:"一氣呵成",r:3,m:"比喻事情進行得順暢、沒有間斷。"},
+  {w:"一哄而散",r:3,m:"比喻群聚吵鬧了一下子之後，各自散去。"},
+  {w:"一揮而就",r:3,m:"形容文思敏捷、書畫作文迅速。"},
+  {w:"一乾二淨",r:3,m:"形容清除得非常徹底，一點也不剩。"},
+  {w:"一望無際",r:3,m:"形容非常遼闊，一眼望不到邊。"},
+
+  {w:"一絲不苟",r:4,m:"形容人做事認真、細心。"},
+  {w:"一意孤行",r:4,m:"不聽從別人的意見，固執地依自己意思去辦事。"},
+  {w:"一無所有",r:4,m:"形容人貧苦窮困，身邊沒有任何財物。"},
+  {w:"一視同仁",r:4,m:"對人平等看待，沒有親疏厚薄的差別。"},
+  {w:"一葉知秋",r:4,m:"比喻從細微的徵兆，可以推知事物的發展與變化。"},
+  {w:"一朝一夕",r:4,m:"形容時間很短暫。"},
+  {w:"一鼓作氣",r:4,m:"比喻趁著幹勁最旺盛的時候，一舉將事情完成。"},
+  {w:"一絲一毫",r:4,m:"比喻極其細微，一點一點的意思。"},
+  {w:"一飯千金",r:4,m:"比喻受人一點恩惠，而給予厚重的回報。"},
+  {w:"一落千丈",r:4,m:"比喻名聲、地位、境況、成績或勢力急速下降。"},
+  {w:"一網打盡",r:4,m:"比喻全部捉住或徹底清除，沒有一個漏網。"},
+  {w:"一絲不掛",r:4,m:"形容全身赤裸，什麼也沒穿。"}
+];
+const MEAN = {}; DICT.forEach(d=>{ MEAN[d.w] = d.m; });
+const ALLWORDS = DICT.map(d=>d.w);
+
+// ═══════════ 學習紀錄 ═══════════
+const LOG_KEY = "study_log_v1", CH = "成語練習 一字成語80題";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, doneCount = 0, doneOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && doneCount === 0) return;
+  cloudSend({ type:"念書時段", detail:`停留 ${min} 分鐘、練習 ${doneCount} 題、答對 ${doneOk} 題`, score:"" });
+  studySec = 0; doneCount = 0; doneOk = 0;
+});
+
+// ═══════════ 錯題本 ═══════════
+const WKEY = "idiom_wrong_v1";
+function loadWrong(){ try{ return JSON.parse(localStorage.getItem(WKEY) || "{}"); }catch(e){ return {}; } }
+function saveWrong(o){ try{ localStorage.setItem(WKEY, JSON.stringify(o)); }catch(e){} }
+function qid(q){ return q.r + "|" + q.t + "|" + q.a + "|" + q.q.slice(0, 8); }
+function markWrong(q){ const w = loadWrong(); w[qid(q)] = { n:(w[qid(q)] ? w[qid(q)].n : 0) + 1, ok:0 }; saveWrong(w); }
+function markRight(q){
+  const w = loadWrong(), k = qid(q);
+  if(!w[k]) return;
+  w[k].ok = (w[k].ok || 0) + 1;
+  if(w[k].ok >= 2) delete w[k];
+  saveWrong(w);
+}
+
+// ═══════════ 工具 ═══════════
+const $ = id => document.getElementById(id);
+function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function stemHTML(q){
+  return esc(q.q).split(BLANK).join('<span class="blank">？？？？</span>');
+}
+// 打字比對：去掉空白與標點，並把常見異體對齊
+function norm(s){
+  return s.replace(/[\s,，。、！？!?（）()「」『』:：;；]/g, "")
+          .replace(/台/g, "臺");
+}
+function isRight(q, txt){
+  const t = norm(txt);
+  if(!t) return false;
+  const pool = [q.a].concat(q.alt || []);
+  return pool.some(x => norm(x) === t);
+}
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    ['pStart','pQuiz','pDone','pDict','pWrong'].forEach(id=>$(id).classList.remove('show'));
+    $(btn.dataset.t).classList.add('show');
+    if(btn.dataset.t === 'pWrong') renderWrong();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+});
+function goPanel(id){
+  ['pStart','pQuiz','pDone','pDict','pWrong'].forEach(x=>$(x).classList.remove('show'));
+  $(id).classList.add('show');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// ═══════════ 設定 ═══════════
+const cfg = { round:0, type:"all", mode:"mc", count:10 };
+function chipGroup(boxId, key, cast){
+  $(boxId).querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      $(boxId).querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      cfg[key] = cast ? cast(b.dataset.v) : b.dataset.v;
+      if(key === "mode"){
+        $("modeNote").textContent = cfg.mode === "mc"
+          ? "選擇題比較快，適合先熟悉成語。真的要記起來，建議切到「填空」。"
+          : "填空要自己打出四個字。打不出來可以按「看提示」，會先給你第一個字。";
+      }
+      refreshPool();
+    });
+  });
+}
+chipGroup("selRound", "round", Number);
+chipGroup("selType", "type");
+chipGroup("selMode", "mode");
+chipGroup("selCount", "count", Number);
+
+function poolOf(){
+  return QS.filter(q => (cfg.round === 0 || q.r === cfg.round) && (cfg.type === "all" || q.t === cfg.type));
+}
+function refreshPool(){
+  const n = poolOf().length;
+  $("poolN").textContent = n;
+  $("btnStart").disabled = n === 0;
+}
+refreshPool();
+
+// ═══════════ 出題流程 ═══════════
+let seq = [], idx = 0, score = 0, wrongThis = [], answered = false, hinted = false;
+
+function startWith(list){
+  seq = list; idx = 0; score = 0; wrongThis = []; 
+  if(!seq.length) return;
+  goPanel('pQuiz');
+  showQ();
+}
+$("btnStart").addEventListener('click', ()=>{
+  let p = shuffle(poolOf());
+  if(cfg.count > 0) p = p.slice(0, cfg.count);
+  startWith(p);
+});
+
+function showQ(){
+  answered = false; hinted = false;
+  const q = seq[idx];
+  $("barFill").style.width = (idx / seq.length * 100) + "%";
+  $("mProg").textContent = `第 ${idx+1} / ${seq.length} 題`;
+  $("mScore").textContent = `答對 ${score} 題`;
+  $("qTag").textContent = q.t === "d" ? "看解釋寫成語" : "讀例句填成語";
+  $("qStem").innerHTML = stemHTML(q);
+  $("qFb").className = "fb"; $("qFb").innerHTML = "";
+  $("btnNext").style.display = "none";
+  $("hintTxt").textContent = "";
+
+  if(cfg.mode === "mc"){
+    $("qType").style.display = "none";
+    $("qOpts").style.display = "block";
+    const others = shuffle(ALLWORDS.filter(w => w !== q.a)).slice(0, 3);
+    const opts = shuffle(others.concat([q.a]));
+    $("qOpts").innerHTML = "";
+    opts.forEach(o=>{
+      const b = document.createElement('button');
+      b.textContent = o;
+      b.addEventListener('click', ()=> answer(o, b));
+      $("qOpts").appendChild(b);
+    });
+  }else{
+    $("qOpts").style.display = "none";
+    $("qType").style.display = "block";
+    $("typeIn").value = "";
+    $("typeIn").disabled = false;
+    setTimeout(()=>$("typeIn").focus(), 60);
+  }
+}
+
+function answer(txt, btnEl){
+  if(answered) return;
+  answered = true;
+  const q = seq[idx];
+  const ok = (cfg.mode === "mc") ? (txt === q.a) : isRight(q, txt);
+  doneCount++;
+  if(ok){ score++; doneOk++; markRight(q); } else { wrongThis.push(q); markWrong(q); }
+
+  if(cfg.mode === "mc"){
+    $("qOpts").querySelectorAll('button').forEach(b=>{
+      b.disabled = true;
+      if(b.textContent === q.a) b.classList.add('ok');
+      else if(b === btnEl) b.classList.add('no');
+    });
+  }else{
+    $("typeIn").disabled = true;
+  }
+
+  const fb = $("qFb");
+  const mean = MEAN[q.a] ? '<span class="mean">' + esc(MEAN[q.a]) + '</span>' : "";
+  if(ok){
+    fb.className = "fb ok";
+    fb.innerHTML = (hinted ? "✔ 答對了（有看提示）　" : "✔ 答對了！　") + "<b>" + esc(q.a) + "</b>" + mean;
+  }else{
+    fb.className = "fb no";
+    fb.innerHTML = "✘ 正解是　<b>" + esc(q.a) + "</b>" + mean;
+  }
+  $("mScore").textContent = `答對 ${score} 題`;
+  $("btnNext").style.display = "block";
+  $("btnNext").textContent = (idx === seq.length - 1) ? "看結果 →" : "下一題 →";
+}
+
+$("btnTypeGo").addEventListener('click', ()=> answer($("typeIn").value, null));
+$("typeIn").addEventListener('keydown', e=>{ if(e.key === "Enter") answer($("typeIn").value, null); });
+$("btnHint").addEventListener('click', ()=>{
+  if(answered) return;
+  hinted = true;
+  const a = seq[idx].a;
+  $("hintTxt").textContent = "　→ 第一個字是「" + a[0] + "」，共 " + a.length + " 個字";
+});
+$("btnNext").addEventListener('click', ()=>{
+  if(idx < seq.length - 1){ idx++; showQ(); } else { finish(); }
+});
+$("btnQuit").addEventListener('click', ()=>{
+  if(idx === 0 && !answered){ goPanel('pStart'); return; }
+  seq = seq.slice(0, answered ? idx + 1 : idx);
+  finish();
+});
+
+function finish(){
+  $("barFill").style.width = "100%";
+  const total = seq.length;
+  $("dScore").textContent = score + " / " + total;
+  const pct = total ? score / total : 0;
+  $("dSay").textContent = pct === 1 ? "🎉 全對！這幾回你已經很熟了。"
+    : pct >= 0.8 ? "💪 很不錯，把下面錯的幾題再看一次就好。"
+    : pct >= 0.5 ? "📖 一半以上會了。建議先去「成語辭典」把錯的讀過，再重練一次。"
+    : "🌱 還在起步。先用「選擇題」模式把同一回多做幾次，熟了再切到填空。";
+
+  const box = $("dWrongBox");
+  if(wrongThis.length){
+    let html = '<h3 style="margin-top:16px">這次答錯的（' + wrongThis.length + ' 題）</h3><ul class="wronglist">';
+    wrongThis.forEach(q=>{
+      html += "<li><b>" + esc(q.a) + "</b>　" + esc(q.q.split(BLANK).join("＿＿＿＿"))
+            + "<span>" + esc(MEAN[q.a] || "") + "</span></li>";
+    });
+    box.innerHTML = html + "</ul>";
+    $("btnAgainWrong").style.display = "block";
+  }else{
+    box.innerHTML = '<div class="empty">這次沒有答錯的題目 👏</div>';
+    $("btnAgainWrong").style.display = "none";
+  }
+  logEv({ type:"quiz", score, total, wrong: wrongThis.map(q=>q.a) });
+  cloudSend({ type:"成語練習", detail: wrongThis.length ? "錯：" + wrongThis.map(q=>q.a).join("、") : "全對", score: score + "/" + total });
+  goPanel('pDone');
+}
+$("btnAgainWrong").addEventListener('click', ()=> startWith(shuffle(wrongThis)));
+$("btnBackStart").addEventListener('click', ()=>{
+  goPanel('pStart');
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.t === 'pStart'));
+});
+
+// ═══════════ 辭典 ═══════════
+$("dictN").textContent = DICT.length;
+function renderDict(){
+  const kw = $("dictQ").value.trim();
+  const list = kw ? DICT.filter(d => d.w.includes(kw) || d.m.includes(kw)) : DICT;
+  $("dictList").innerHTML = list.length
+    ? list.map(d => '<li><div class="w">' + esc(d.w) + '<span class="r">第' + "一二三四"[d.r-1] + '回</span></div><div class="m">' + esc(d.m) + '</div></li>').join("")
+    : '<li><div class="empty">找不到「' + esc(kw) + '」</div></li>';
+}
+$("dictQ").addEventListener('input', renderDict);
+renderDict();
+
+// ═══════════ 錯題本 ═══════════
+function wrongQuestions(){
+  const w = loadWrong();
+  return QS.filter(q => w[qid(q)]);
+}
+function renderWrong(){
+  const list = wrongQuestions();
+  const box = $("wrongBox");
+  if(!list.length){
+    box.innerHTML = '<div class="empty">目前沒有錯題。<br>做完一次練習之後，答錯的題目會出現在這裡。</div>';
+    $("btnPracWrong").style.display = "none";
+    $("btnClearWrong").style.display = "none";
+    return;
+  }
+  const w = loadWrong();
+  box.innerHTML = '<ul class="wronglist">' + list.map(q=>
+    "<li><b>" + esc(q.a) + "</b>　錯過 " + w[qid(q)].n + " 次"
+    + "<span>" + esc(q.q.split(BLANK).join("＿＿＿＿")) + "</span></li>"
+  ).join("") + "</ul>";
+  $("btnPracWrong").style.display = "block";
+  $("btnPracWrong").textContent = "開始重練錯題（" + list.length + " 題）";
+  $("btnClearWrong").style.display = "block";
+}
+$("btnPracWrong").addEventListener('click', ()=>{
+  const list = wrongQuestions();
+  if(!list.length) return;
+  startWith(shuffle(list));
+});
+$("btnClearWrong").addEventListener('click', ()=>{
+  if(!confirm("確定要清空錯題本嗎？清掉之後就救不回來了。")) return;
+  saveWrong({});
+  renderWrong();
+});
+</script>
+</body>
+</html>
