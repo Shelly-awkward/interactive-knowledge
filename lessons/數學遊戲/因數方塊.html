@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>因數方塊｜把數字拆成長方形的俄羅斯方塊</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; -webkit-tap-highlight-color:transparent;}
+  .wrap{max-width:820px; margin:0 auto; padding:16px 14px 40px;}
+  header.hero{background:linear-gradient(135deg,#312e81,#6d28d9); color:#fff; border-radius:var(--radius); padding:18px 20px; margin-bottom:14px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.2); border-radius:99px; padding:2px 12px; font-size:.78rem; margin-bottom:6px;}
+  header.hero h1{font-size:1.4rem;}
+  header.hero p{opacity:.92; font-size:.88rem; margin-top:4px;}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; margin-bottom:12px;}
+  .screen{display:none;} .screen.show{display:block; animation:fade .2s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  /* 開始畫面 */
+  .lv{display:flex; flex-direction:column; gap:10px;}
+  .lv button{border:2px solid var(--border); background:#fff; border-radius:12px; padding:12px 14px; text-align:left; cursor:pointer; font-family:inherit; font-size:1rem; transition:.15s;}
+  .lv button:hover{border-color:#6d28d9; background:#f5f3ff;}
+  .lv button b{display:block; font-size:1.05rem;}
+  .lv button small{color:var(--sub); font-size:.82rem;}
+  .lv button .best{float:right; color:#6d28d9; font-weight:bold; font-size:.85rem;}
+  .rules{font-size:.9rem; margin-top:12px;}
+  .rules li{margin-left:1.2em; margin-bottom:3px;}
+  .demo{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin:10px 0 4px;}
+  .demo div{text-align:center; font-size:.8rem; color:var(--sub);}
+  .demo svg{display:block; margin:0 auto 4px;}
+
+  /* 遊戲畫面 */
+  .game{display:flex; gap:14px; align-items:flex-start;}
+  .boardwrap{flex:0 0 auto; width:min(300px, 46vw);}
+  canvas{display:block; width:100%; height:auto; border:2px solid #c7d2fe; border-radius:8px; background:#fafaff; touch-action:none;}
+  .panel{flex:1 1 200px; min-width:0;}
+  .top{display:flex; justify-content:space-between; font-size:.85rem; margin-bottom:8px; color:var(--sub);}
+  .top b{color:var(--ink); font-size:1.1rem;}
+  .numcard{text-align:center; border-radius:12px; padding:10px 8px; background:#f5f3ff; border:2px solid #ddd6fe; margin-bottom:8px; transition:.15s;}
+  .numcard .lbl{font-size:.8rem; color:var(--sub);}
+  .numcard .n{font-size:3rem; font-weight:900; line-height:1.1; color:#4c1d95;}
+  .numcard .eq{font-size:1.4rem; font-weight:bold; margin-top:4px; min-height:1.6em;}
+  .numcard .eq .f{display:inline-block; min-width:1.3em; border-bottom:3px solid #c4b5fd; padding:0 4px;}
+  .numcard .eq .f.on{border-color:#6d28d9; background:#ede9fe;}
+  .numcard.ok{background:var(--green-soft); border-color:var(--green);}
+  .numcard.no{background:var(--red-soft); border-color:var(--red);}
+  .bar{height:8px; background:#e5e7eb; border-radius:99px; overflow:hidden; margin-bottom:8px;}
+  .bar i{display:block; height:100%; background:linear-gradient(90deg,#8b5cf6,#6d28d9); width:100%;}
+  .bar i.warn{background:linear-gradient(90deg,#dc2626,#991b1b);}
+  .msg{min-height:2.6em; font-size:.88rem; padding:6px 10px; border-radius:8px; background:#f9fafb; margin-bottom:8px;}
+  .msg.ok{background:var(--green-soft); color:#166534; font-weight:bold;}
+  .msg.no{background:var(--red-soft); color:#991b1b; font-weight:bold;}
+  .pad{display:grid; grid-template-columns:repeat(4,1fr); gap:6px;}
+  .pad button{font-family:inherit; font-size:1.2rem; font-weight:bold; padding:10px 0; border:1px solid var(--border); border-radius:10px; background:#fff; cursor:pointer; touch-action:manipulation; user-select:none;}
+  .pad button:active{background:#ede9fe;}
+  .pad button.x{background:#ede9fe; color:#4c1d95;}
+  .pad button.del{color:var(--red); font-size:1rem;}
+  .pad button.go{grid-column:span 2; background:#6d28d9; color:#fff; border-color:#6d28d9;}
+  .pad button.prime{grid-column:span 2; background:var(--amber-soft); color:#92400e; border-color:#fcd34d; font-size:1rem;}
+  .dpad{display:none; grid-template-columns:repeat(4,1fr); gap:6px;}
+  .dpad button{font-family:inherit; font-size:1.3rem; padding:14px 0; border:1px solid var(--border); border-radius:10px; background:#fff; cursor:pointer; touch-action:manipulation; user-select:none;}
+  .dpad button:active{background:#ede9fe;}
+  .dpad button.drop{background:#6d28d9; color:#fff; border-color:#6d28d9;}
+  .game.fall .pad{display:none;} .game.fall .dpad{display:grid;}
+  .hint{font-size:.78rem; color:var(--sub); margin-top:6px;}
+  .quit{margin-top:10px; width:100%; background:none; border:1px solid var(--border); border-radius:10px; padding:8px; color:var(--sub); cursor:pointer; font-family:inherit;}
+  @media (max-width:560px){ .game{flex-direction:column; align-items:stretch;} .boardwrap{width:100%; max-width:320px; margin:0 auto;} }
+
+  /* 結算畫面 */
+  .score{text-align:center; padding:10px 0;}
+  .score .big{font-size:3rem; font-weight:900; color:#6d28d9; line-height:1.1;}
+  .score .new{display:inline-block; background:var(--amber-soft); color:#92400e; border-radius:99px; padding:2px 12px; font-size:.85rem; margin-top:6px; font-weight:bold;}
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:12px 0;}
+  .stats div{background:#f9fafb; border-radius:10px; padding:10px 4px; text-align:center;}
+  .stats b{display:block; font-size:1.2rem;}
+  .stats span{font-size:.75rem; color:var(--sub);}
+  .review{font-size:.92rem;}
+  .review .chip{display:inline-block; background:var(--red-soft); color:#991b1b; border-radius:8px; padding:3px 10px; margin:4px 4px 0 0; font-weight:bold;}
+  .bigbtn{display:block; width:100%; background:#6d28d9; color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:10px;}
+  .bigbtn.ghost{background:#fff; color:var(--ink); border:1px solid var(--border);}
+  footer{text-align:center; color:var(--sub); font-size:.78rem; margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">數學遊戲 · 因數與質數</span>
+  <h1>因數方塊</h1>
+  <p>數字掉下來，把它拆成「幾 × 幾」，它就變成那個形狀的長方形。塞滿一整排就消掉。</p>
+</header>
+
+<!-- 開始畫面 -->
+<section id="scStart" class="screen show">
+  <div class="card">
+    <h2 style="font-size:1.05rem; margin-bottom:10px;">選一個等級開始</h2>
+    <div class="lv" id="lvList"></div>
+    <div class="demo">
+      <div><svg width="72" height="48" viewBox="0 0 72 48"><g fill="#c7d2fe" stroke="#4338ca"><rect x="1" y="1" width="16" height="16"/><rect x="19" y="1" width="16" height="16"/><rect x="37" y="1" width="16" height="16"/><rect x="55" y="1" width="16" height="16"/><rect x="1" y="19" width="16" height="16"/><rect x="19" y="19" width="16" height="16"/><rect x="37" y="19" width="16" height="16"/><rect x="55" y="19" width="16" height="16"/></g></svg>8＝2×4　長方形</div>
+      <div><svg width="54" height="54" viewBox="0 0 54 54"><g fill="#bfdbfe" stroke="#1d4ed8"><rect x="1" y="1" width="16" height="16"/><rect x="19" y="1" width="16" height="16"/><rect x="37" y="1" width="16" height="16"/><rect x="1" y="19" width="16" height="16"/><rect x="19" y="19" width="16" height="16"/><rect x="37" y="19" width="16" height="16"/><rect x="1" y="37" width="16" height="16"/><rect x="19" y="37" width="16" height="16"/><rect x="37" y="37" width="16" height="16"/></g></svg>9＝3×3　正方形，加分</div>
+      <div><svg width="90" height="30" viewBox="0 0 90 30"><g fill="#fde68a" stroke="#b45309"><rect x="1" y="6" width="16" height="16"/><rect x="19" y="6" width="16" height="16"/><rect x="37" y="6" width="16" height="16"/><rect x="55" y="6" width="16" height="16"/><rect x="73" y="6" width="16" height="16"/></g></svg>5＝質數　拆不開</div>
+    </div>
+    <ul class="rules">
+      <li>數字出現後，在倒數結束前填「幾 × 幾」（兩個都要 ≥ 2），按確定，方塊就掉下來。</li>
+      <li>方塊可以左右移、轉 90°、快速落下。塞滿一整排就消掉，一次消越多排分越高。</li>
+      <li>質數拆不開，按「質數！」直接消掉得分。</li>
+      <li>拆錯、把合數說成質數、或時間到，底下會多一排垃圾。堆到頂就結束。</li>
+      <li>秘訣：看板子上的缺口有幾格寬，找一個因數剛好等於它。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 遊戲畫面 -->
+<section id="scGame" class="screen">
+  <div class="card">
+    <div class="top"><span>分數 <b id="gScore">0</b></span><span>消排 <b id="gLines">0</b></span><span id="gLv"></span></div>
+    <div class="game" id="game">
+      <div class="boardwrap"><canvas id="cv"></canvas></div>
+      <div class="panel">
+        <div class="numcard" id="numcard">
+          <div class="lbl" id="ncLbl">把這個數拆成 幾 × 幾</div>
+          <div class="n" id="gN">24</div>
+          <div class="eq" id="gEq"><span class="f on" id="fP"></span> × <span class="f" id="fQ"></span></div>
+        </div>
+        <div class="bar"><i id="gBar"></i></div>
+        <div class="msg" id="gMsg"></div>
+        <div class="pad" id="pad"></div>
+        <div class="dpad" id="dpad">
+          <button data-k="left">◀</button>
+          <button data-k="rot">⟳</button>
+          <button data-k="right">▶</button>
+          <button data-k="drop" class="drop">⬇</button>
+        </div>
+        <div class="hint" id="gHint">鍵盤：數字、× 或空白鍵換到第二格、Enter 確定、P 質數</div>
+      </div>
+    </div>
+    <button class="quit" id="gQuit">提早結束</button>
+  </div>
+</section>
+
+<!-- 結算畫面 -->
+<section id="scEnd" class="screen">
+  <div class="card">
+    <div class="score">
+      <div style="color:var(--sub); font-size:.9rem;" id="eLevel"></div>
+      <div class="big" id="eScore">0</div>
+      <div id="eNew"></div>
+    </div>
+    <div class="stats">
+      <div><b id="eAsked">0</b><span>出題數</span></div>
+      <div><b id="ePairs">0</b><span>拆對</span></div>
+      <div><b id="ePrime">0</b><span>質數認對</span></div>
+      <div><b id="eLines">0</b><span>消排</span></div>
+    </div>
+    <div class="review" id="eReview"></div>
+    <button class="bigbtn" id="eAgain">再玩一次</button>
+    <button class="bigbtn ghost" id="eBack">換等級</button>
+  </div>
+</section>
+
+<footer>數學遊戲 · 因數方塊 · 成績存在這個瀏覽器</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（與教材頁共用 localStorage key，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", BEST_KEY = "factor_blocks_best_v1";
+let CH = "因數方塊";
+function logEv(ev){
+  try{ const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); a.push(Object.assign({ t: Date.now(), ch: CH }, ev)); localStorage.setItem(LOG_KEY, JSON.stringify(a)); }catch(e){}
+}
+const CLOUD_URL = (()=>{ try{ return localStorage.getItem("cloud_url_v1") || ""; }catch(e){ return ""; } })();
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+function getBest(){ try{ return JSON.parse(localStorage.getItem(BEST_KEY) || "{}"); }catch(e){ return {}; } }
+function setBest(o){ try{ localStorage.setItem(BEST_KEY, JSON.stringify(o)); }catch(e){} }
+
+// ===== 等級 =====
+const LEVELS = [
+  { id:"L1", name:"初級", min:2, max:30,  W:10, H:18, sec:12, grav:600, desc:"2～30，板子 10 格寬，每題 12 秒" },
+  { id:"L2", name:"中級", min:2, max:50,  W:12, H:20, sec:9,  grav:500, desc:"2～50，板子 12 格寬，每題 9 秒" },
+  { id:"L3", name:"高級", min:2, max:100, W:12, H:20, sec:7,  grav:400, desc:"2～100，板子 12 格寬，每題 7 秒" }
+];
+function isPrime(n){ if(n<2) return false; for(let i=2;i*i<=n;i++) if(n%i===0) return false; return true; }
+function smallestFactor(n){ for(let i=2;i*i<=n;i++) if(n%i===0) return i; return n; }
+function fits(lv,p,q){ return (p<=lv.H && q<=lv.W) || (q<=lv.H && p<=lv.W); }
+// 只出「至少有一種拆法放得進板子」的合數，以及質數
+function pool(lv){
+  const a=[];
+  for(let n=lv.min;n<=lv.max;n++){
+    if(isPrime(n)){ a.push(n); continue; }
+    let ok=false; for(let p=2;p*p<=n;p++) if(n%p===0 && fits(lv,p,n/p)) ok=true;
+    if(ok){ a.push(n); a.push(n); } // 合數放兩次，質數才不會太常出現
+  }
+  return a;
+}
+const PALETTE = [
+  ['#c7d2fe','#4338ca'], ['#bbf7d0','#15803d'], ['#fde68a','#b45309'], ['#fbcfe8','#be185d'],
+  ['#a5f3fc','#0e7490'], ['#fed7aa','#c2410c'], ['#ddd6fe','#6d28d9'], ['#fecaca','#b91c1c']
+];
+
+// ===== 畫面 =====
+const $ = id => document.getElementById(id);
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('show')); $(id).classList.add('show'); }
+function renderStart(){
+  const best = getBest(); const box = $('lvList'); box.innerHTML = '';
+  LEVELS.forEach(lv=>{
+    const b = document.createElement('button');
+    b.innerHTML = `<span class="best">${best[lv.id] ? '最佳 '+best[lv.id]+' 分' : ''}</span><b>${lv.name}</b><small>${lv.desc}</small>`;
+    b.addEventListener('click', ()=> start(lv));
+    box.appendChild(b);
+  });
+}
+renderStart();
+(function(){
+  const pad = $('pad');
+  [['1'],['2'],['3'],['×','x'],['4'],['5'],['6'],['⌫','del'],['7'],['8'],['9'],['0'],['確定','go'],['質數！','prime']].forEach(([k,cls])=>{
+    const b = document.createElement('button'); b.textContent = k; if(cls) b.className = cls;
+    b.addEventListener('pointerdown', e=>{ e.preventDefault(); askKey(k); });
+    pad.appendChild(b);
+  });
+  document.querySelectorAll('#dpad button').forEach(b=> b.addEventListener('pointerdown', e=>{ e.preventDefault(); fallKey(b.dataset.k); }));
+})();
+
+// ===== 遊戲狀態 =====
+const cv = $('cv'), ctx = cv.getContext('2d');
+const CS = 24; // 每格畫布像素
+let G = null;
+
+function start(lv){
+  CH = "因數方塊（" + lv.name + "）";
+  G = {
+    lv, board: Array.from({length:lv.H}, ()=> Array(lv.W).fill(null)),
+    pool: pool(lv), n: 0, last: 0, phase:'ask', cur:null, score:0, lines:0,
+    pStr:'', qStr:'', field:'p', askEnd:0, gravTimer:null, raf:null,
+    stats:{ asked:0, pairs:0, primes:0, wrong:0, review:[] }
+  };
+  cv.width = lv.W*CS; cv.height = lv.H*CS;
+  $('gScore').textContent = 0; $('gLines').textContent = 0; $('gLv').textContent = lv.name;
+  show('scGame');
+  nextNumber();
+  if(G.raf) cancelAnimationFrame(G.raf);
+  loop();
+}
+function setMsg(t, cls){ const m = $('gMsg'); m.textContent = t; m.className = 'msg' + (cls ? ' '+cls : ''); }
+function setCard(cls){ $('numcard').className = 'numcard' + (cls ? ' '+cls : ''); }
+function renderEq(){
+  $('fP').textContent = G.pStr; $('fQ').textContent = G.qStr;
+  $('fP').classList.toggle('on', G.field==='p'); $('fQ').classList.toggle('on', G.field==='q');
+}
+
+// ---- 出題 ----
+function nextNumber(){
+  if(!G || G.phase==='over') return;
+  let n; do{ n = G.pool[Math.floor(Math.random()*G.pool.length)]; }while(n === G.last && G.pool.length > 1);
+  G.last = n; G.n = n; G.phase = 'ask'; G.pStr = ''; G.qStr = ''; G.field = 'p';
+  G.stats.asked++;
+  G.askEnd = Date.now() + G.lv.sec*1000;
+  $('game').classList.remove('fall'); $('gN').textContent = n; $('ncLbl').textContent = '把這個數拆成 幾 × 幾';
+  $('gEq').style.visibility = 'visible'; setCard(''); renderEq();
+  setMsg('兩個數都要 ≥ 2。想想板子上的缺口有幾格寬。', '');
+  $('gHint').textContent = '鍵盤：數字、× 或空白鍵換到第二格、Enter 確定、P 質數';
+}
+function askKey(k){
+  if(!G || G.phase!=='ask') return;
+  if(/^\d$/.test(k)){ if(G.field==='p'){ if(G.pStr.length<2) G.pStr+=k; } else { if(G.qStr.length<2) G.qStr+=k; } }
+  else if(k==='×' || k==='x' || k==='*' || k===' ' || k==='Tab'){ G.field = G.field==='p' ? 'q' : 'p'; }
+  else if(k==='⌫' || k==='Backspace'){ if(G.field==='q' && G.qStr) G.qStr = G.qStr.slice(0,-1); else if(G.field==='q'){ G.field='p'; } else G.pStr = G.pStr.slice(0,-1); }
+  else if(k==='確定' || k==='Enter'){ confirmPair(); }
+  else if(k==='質數！' || k==='p' || k==='P'){ claimPrime(); }
+  renderEq();
+}
+function confirmPair(){
+  const n = G.n, p = parseInt(G.pStr,10), q = parseInt(G.qStr,10);
+  if(!p || !q){ setMsg('兩格都要填數字。', ''); return; }
+  if(p<2 || q<2){ setMsg('1 不算拆開，兩個都要 ≥ 2。如果它是質數，按「質數！」。', 'no'); return; }
+  if(p*q !== n){ penalty(`${p} × ${q} ＝ ${p*q}，不是 ${n}。`, n); return; }
+  let w = q, h = p;
+  if(!(w<=G.lv.W && h<=G.lv.H)){
+    if(h<=G.lv.W && w<=G.lv.H){ [w,h] = [h,w]; }
+    else { setMsg(`${p}×${q} 沒錯，但太長放不進板子，換一組拆法。`, ''); return; }
+  }
+  G.stats.pairs++;
+  let gain = 10, note = `✔ ${n} ＝ ${p} × ${q}　＋10`;
+  if(p===q){ gain += 40; note = `✔ ${n} ＝ ${p}²，正方形！　＋50`; }
+  G.score += gain; $('gScore').textContent = G.score;
+  setCard('ok'); setMsg(note, 'ok');
+  spawn(p, q, w, h);
+}
+function claimPrime(){
+  const n = G.n;
+  if(isPrime(n)){
+    G.stats.primes++; G.score += 30; $('gScore').textContent = G.score;
+    setCard('ok'); setMsg(`✔ ${n} 是質數，只能 1 × ${n}，拆不開。　＋30`, 'ok');
+    G.phase = 'wait'; setTimeout(nextNumber, 700);
+  } else {
+    const a = smallestFactor(n);
+    penalty(`${n} 不是質數：${n} ＝ ${a} × ${n/a}。`, n);
+  }
+}
+function timeout(){
+  const n = G.n;
+  penalty(isPrime(n) ? `時間到！${n} 是質數，該按「質數！」。` : `時間到！${n} ＝ ${smallestFactor(n)} × ${n/smallestFactor(n)}。`, n);
+}
+function penalty(msg, n){
+  G.stats.wrong++;
+  if(!G.stats.review.includes(n)) G.stats.review.push(n);
+  setCard('no'); setMsg('✘ ' + msg + '　底下多一排垃圾。', 'no');
+  G.phase = 'wait';
+  // 垃圾排：整排從底下推上來，留一個洞
+  if(G.board[0].some(c=>c)){ setTimeout(gameOver, 600); return; }
+  G.board.shift();
+  const row = Array(G.lv.W).fill(['#d1d5db','#6b7280']); row[Math.floor(Math.random()*G.lv.W)] = null;
+  G.board.push(row);
+  setTimeout(nextNumber, 1100);
+}
+
+// ---- 方塊掉落 ----
+function collides(x, y, w, h){
+  if(x<0 || x+w>G.lv.W || y+h>G.lv.H) return true;
+  for(let i=0;i<h;i++) for(let j=0;j<w;j++) if(y+i>=0 && G.board[y+i][x+j]) return true;
+  return false;
+}
+function spawn(p, q, w, h){
+  const color = p===q ? ['#bfdbfe','#1d4ed8'] : PALETTE[G.n % PALETTE.length];
+  const cur = { p, q, w, h, x: Math.floor((G.lv.W - w)/2), y: 0, color };
+  if(collides(cur.x, cur.y, cur.w, cur.h)){ G.cur = cur; setTimeout(gameOver, 300); return; }
+  G.cur = cur; G.phase = 'fall';
+  $('game').classList.add('fall'); $('ncLbl').textContent = '放到好位置'; $('gEq').style.visibility = 'hidden';
+  $('gHint').textContent = '鍵盤：← → 移動、↑ 轉、↓ 慢降、空白鍵直接落下';
+  G.gravTimer = setInterval(()=>{ if(G && G.phase==='fall') softDrop(); }, G.lv.grav);
+}
+function fallKey(k){
+  if(!G || G.phase!=='fall') return;
+  const c = G.cur;
+  if(k==='left'){ if(!collides(c.x-1,c.y,c.w,c.h)) c.x--; }
+  else if(k==='right'){ if(!collides(c.x+1,c.y,c.w,c.h)) c.x++; }
+  else if(k==='rot'){
+    const nw = c.h, nh = c.w; let nx = Math.min(c.x, G.lv.W - nw);
+    if(nx >= 0 && !collides(nx, c.y, nw, nh)){ c.w = nw; c.h = nh; c.x = nx; }
+  }
+  else if(k==='down'){ softDrop(); }
+  else if(k==='drop'){ while(!collides(c.x, c.y+1, c.w, c.h)) c.y++; lockBlock(); }
+}
+function softDrop(){ const c = G.cur; if(!collides(c.x, c.y+1, c.w, c.h)) c.y++; else lockBlock(); }
+function lockBlock(){
+  clearInterval(G.gravTimer); G.gravTimer = null;
+  const c = G.cur;
+  for(let i=0;i<c.h;i++) for(let j=0;j<c.w;j++) G.board[c.y+i][c.x+j] = c.color;
+  G.cur = null; G.phase = 'wait';
+  // 消排
+  const keep = G.board.filter(r => r.some(x=>!x));
+  const cleared = G.lv.H - keep.length;
+  if(cleared){
+    while(keep.length < G.lv.H) keep.unshift(Array(G.lv.W).fill(null));
+    G.board = keep; G.lines += cleared; $('gLines').textContent = G.lines;
+    const gain = [0,100,300,500][Math.min(cleared,3)] + (cleared>3 ? 300*(cleared-3) : 0);
+    G.score += gain; $('gScore').textContent = G.score;
+    setMsg(`🎉 消掉 ${cleared} 排！　＋${gain}`, 'ok');
+    setTimeout(nextNumber, 700);
+  } else {
+    setTimeout(nextNumber, 250);
+  }
+}
+function gameOver(){
+  if(!G || G.phase==='over') return;
+  G.phase = 'over'; clearInterval(G.gravTimer); cancelAnimationFrame(G.raf);
+  draw();
+  const s = G.stats, lv = G.lv, best = getBest(), isNew = G.score > (best[lv.id]||0);
+  if(isNew){ best[lv.id] = G.score; setBest(best); }
+  $('eLevel').textContent = lv.name; $('eScore').textContent = G.score;
+  $('eNew').innerHTML = isNew && G.score > 0 ? '<span class="new">🏆 新紀錄！</span>' : (best[lv.id] ? `<span style="color:var(--sub);font-size:.85rem">最佳 ${best[lv.id]} 分</span>` : '');
+  $('eAsked').textContent = s.asked; $('ePairs').textContent = s.pairs; $('ePrime').textContent = s.primes; $('eLines').textContent = G.lines;
+  $('eReview').innerHTML = s.review.length
+    ? '<b>這些數再看一次：</b>' + s.review.map(n => `<span class="chip">${n}${isPrime(n) ? '（質數）' : ' ＝ ' + smallestFactor(n) + ' × ' + (n/smallestFactor(n))}</span>`).join('')
+    : (s.asked ? '<b>沒有拆錯任何一個，太強了！</b>' : '');
+  logEv({ type:"quiz", score: s.pairs + s.primes, total: s.asked, wrong: [] });
+  cloudSend({ type:"因數方塊", detail:`${lv.name}：${s.asked} 題，拆對 ${s.pairs}、質數認對 ${s.primes}、消 ${G.lines} 排` + (s.review.length ? '，再看 ' + s.review.join('、') : ''), score: G.score + " 分" });
+  show('scEnd');
+}
+
+// ---- 畫面 ----
+function draw(){
+  const W = G.lv.W, H = G.lv.H;
+  ctx.clearRect(0,0,cv.width,cv.height);
+  ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 1;
+  for(let i=0;i<=W;i++){ ctx.beginPath(); ctx.moveTo(i*CS+.5,0); ctx.lineTo(i*CS+.5,H*CS); ctx.stroke(); }
+  for(let i=0;i<=H;i++){ ctx.beginPath(); ctx.moveTo(0,i*CS+.5); ctx.lineTo(W*CS,i*CS+.5); ctx.stroke(); }
+  for(let y=0;y<H;y++) for(let x=0;x<W;x++){ const c = G.board[y][x]; if(c) cell(x,y,c); }
+  const c = G.cur;
+  if(c){
+    for(let i=0;i<c.h;i++) for(let j=0;j<c.w;j++) cell(c.x+j, c.y+i, c.color);
+    ctx.strokeStyle = c.color[1]; ctx.lineWidth = 2.5; ctx.strokeRect(c.x*CS+1.5, c.y*CS+1.5, c.w*CS-3, c.h*CS-3);
+    ctx.fillStyle = c.color[1]; ctx.font = 'bold 14px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(`${c.h}×${c.w}`, (c.x + c.w/2)*CS, (c.y + c.h/2)*CS);
+  }
+}
+function cell(x,y,col){
+  ctx.fillStyle = col[0]; ctx.fillRect(x*CS+1, y*CS+1, CS-2, CS-2);
+  ctx.strokeStyle = col[1]; ctx.lineWidth = 1; ctx.strokeRect(x*CS+1.5, y*CS+1.5, CS-3, CS-3);
+}
+function loop(){
+  if(!G || G.phase==='over') return;
+  if(G.phase==='ask'){
+    const left = Math.max(0, G.askEnd - Date.now()), r = left/(G.lv.sec*1000);
+    const bar = $('gBar'); bar.style.width = (r*100)+'%'; bar.classList.toggle('warn', r < .3);
+    if(left <= 0) timeout();
+  } else { $('gBar').style.width = G.phase==='fall' ? '100%' : $('gBar').style.width; }
+  draw();
+  G.raf = requestAnimationFrame(loop);
+}
+
+// ---- 鍵盤 ----
+document.addEventListener('keydown', e=>{
+  if(!G || !$('scGame').classList.contains('show')) return;
+  if(G.phase==='ask'){
+    if(/^\d$/.test(e.key) || ['x','X','*',' ','Tab','Backspace','Enter','p','P'].includes(e.key)){ e.preventDefault(); askKey(e.key==='X'?'x':e.key); }
+  } else if(G.phase==='fall'){
+    const map = { ArrowLeft:'left', ArrowRight:'right', ArrowUp:'rot', ArrowDown:'down', ' ':'drop' };
+    if(map[e.key]){ e.preventDefault(); fallKey(map[e.key]); }
+  }
+});
+$('gQuit').addEventListener('click', gameOver);
+$('eAgain').addEventListener('click', ()=> start(G.lv));
+$('eBack').addEventListener('click', ()=>{ renderStart(); show('scStart'); });
+</script>
+</body>
+</html>
