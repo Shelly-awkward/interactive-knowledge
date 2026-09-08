@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小四數學｜四上 第5單元 三角形</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#be185d; --accent-soft:#fce7f3;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#be185d,#ec4899); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國小四年級上學期 · 第5單元</span>
+  <h1>三角形</h1>
+  <p>三個小節＋單元總測驗。三角形有兩套分類：看「角」分成銳角、直角、鈍角三角形；看「邊」分成正三角形、等腰三角形。有一個「三角形分類機」，拉滑桿改變形狀，馬上看它是哪一種。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">5-1 依角分類</button>
+  <button data-t="s2">5-2 依邊分類</button>
+  <button data-t="s3">5-3 畫三角形與綜合判斷</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 5-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>認識三角形的三個邊、三個角、三個頂點</li>
+      <li>分得出銳角三角形、直角三角形、鈍角三角形</li>
+      <li>知道一個三角形最多只能有一個直角或一個鈍角</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：三角形的三個部分</h2>
+    <p>三角形有 <b>3 個頂點</b>、<b>3 條邊</b>、<b>3 個角</b>。每個角都由兩條邊夾出來。</p>
+    <div class="svgbox" id="svgTri0"></div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：看「角」分三種</h2>
+    <div class="svgbox" id="svgTriAngle"></div>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>名稱</th><th>條件</th><th>怎麼記</th></tr>
+        <tr><td class="name">銳角三角形</td><td><b>三個角都是</b>銳角</td><td>三個都尖尖的</td></tr>
+        <tr class="hi"><td class="name">直角三角形</td><td>有<b>一個</b>直角</td><td>有一個角像牆角</td></tr>
+        <tr><td class="name">鈍角三角形</td><td>有<b>一個</b>鈍角</td><td>有一個角開開的</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 判斷技巧：只要找<b>最大的那個角</b>。它是銳角，全部都是銳角；它是直角就是直角三角形；它是鈍角就是鈍角三角形。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：為什麼最多只有一個直角或鈍角？</h2>
+    <p>想像底邊的兩端各畫一個直角往上延伸：兩條線會<b>平行</b>，永遠碰不到，圍不成三角形。鈍角更開，更不可能碰到。</p>
+    <div class="svgbox" id="svgNoTwo"></div>
+    <div class="warn">⚠️ 所以「有兩個直角的三角形」「有兩個鈍角的三角形」都<b>不存在</b>。一個三角形至少有兩個銳角。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜一個三角形的三個角是 50°、60°、70°，是哪一種三角形？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 找最大的角：70°。</p>
+        <p class="step"><b>②</b> 70° 是銳角，所以三個角都是銳角。</p>
+        <p class="step"><b>③</b> 答案：<b>銳角三角形</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜一個三角形有一個角是 90°，另一個角是 35°，是哪一種？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 有一個 90° 的角，就是直角三角形。</p>
+        <p class="step"><b>②</b> 不用管另外兩個角是多少（它們一定都是銳角）。</p>
+        <p class="step"><b>③</b> 答案：<b>直角三角形</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜小明說：「我畫了一個有兩個鈍角的三角形。」可能嗎？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 兩個鈍角合起來已經超過 180°，兩條邊會越張越開，永遠碰不到。</p>
+        <p class="step"><b>②</b> 答案：<b>不可能</b>。一個三角形最多只有一個鈍角。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 三個角是 40°、45°、95° 的三角形是：</div>
+      <label><input type="radio" name="p1q1" value="A">鈍角三角形</label>
+      <label><input type="radio" name="p1q1" value="B">直角三角形</label>
+      <label><input type="radio" name="p1q1" value="C">無法判斷</label>
+      <label><input type="radio" name="p1q1" value="D">銳角三角形</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　最大的角 95° 是鈍角，所以是鈍角三角形。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 下面哪一句話是<b>對</b>的？</div>
+      <label><input type="radio" name="p1q2" value="A">三角形可以有兩個直角</label>
+      <label><input type="radio" name="p1q2" value="B">銳角三角形只有一個銳角</label>
+      <label><input type="radio" name="p1q2" value="C">三角形至少有兩個銳角</label>
+      <label><input type="radio" name="p1q2" value="D">鈍角三角形有兩個鈍角</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　直角和鈍角最多只能有一個，剩下兩個一定是銳角。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 三角形的三個角分別是 30°、60°、90°，它是：</div>
+      <label><input type="radio" name="p1q3" value="A">直角三角形</label>
+      <label><input type="radio" name="p1q3" value="B">正三角形</label>
+      <label><input type="radio" name="p1q3" value="C">鈍角三角形</label>
+      <label><input type="radio" name="p1q3" value="D">銳角三角形</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　有一個 90° 的角就是直角三角形。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. 判斷一個三角形是哪一種，最快的方法是看：</div>
+      <label><input type="radio" name="p1q4" value="A">頂點的位置</label>
+      <label><input type="radio" name="p1q4" value="B">三條邊的長度</label>
+      <label><input type="radio" name="p1q4" value="C">最小的角</label>
+      <label><input type="radio" name="p1q4" value="D">最大的角</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　最大的角決定分類：它是銳角就全是銳角，它是直角或鈍角就以它命名。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">5. 一個三角形有一個角是 88°，另外兩個角的和是 92°。它<b>可能</b>是：</div>
+      <label><input type="radio" name="p1q5" value="A">直角三角形</label>
+      <label><input type="radio" name="p1q5" value="B">鈍角三角形</label>
+      <label><input type="radio" name="p1q5" value="C">銳角三角形</label>
+      <label><input type="radio" name="p1q5" value="D">以上都不可能</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　88° 是銳角。另外兩個角加起來 92°，都比 92° 小，也是銳角（例如 46° 和 46°）。三個角都是銳角。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 5-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>認識正三角形：三邊一樣長</li>
+      <li>認識等腰三角形：兩邊一樣長，並說得出腰、底邊、底角、頂角</li>
+      <li>知道正三角形也是等腰三角形</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：正三角形</h2>
+    <p><b>三條邊都一樣長</b>的三角形叫正三角形。它的三個角也都一樣大，每個都是 60°。</p>
+    <div class="svgbox" id="svgEqui"></div>
+    <div class="note">💡 三個角都是 60°（銳角），所以正三角形一定是銳角三角形。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：等腰三角形</h2>
+    <p><b>有兩條邊一樣長</b>的三角形叫等腰三角形。一樣長的兩邊叫「腰」，第三邊叫「底邊」。</p>
+    <div class="svgbox" id="svgIso"></div>
+    <ul>
+      <li>兩條<b>腰</b>夾出來的角叫<b>頂角</b></li>
+      <li>底邊兩端的角叫<b>底角</b>，<b>兩個底角一樣大</b></li>
+    </ul>
+    <div class="warn">⚠️ 等腰三角形不一定是「尖尖朝上」放的。轉個方向還是等腰三角形，找「兩條一樣長的邊」就對了。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：正三角形也是等腰三角形</h2>
+    <p>等腰三角形的條件是「有兩條邊一樣長」。正三角形三邊都一樣長，當然也有兩條一樣長，所以：</p>
+    <div class="formula">正三角形 是一種特別的等腰三角形（三邊都相等）</div>
+    <p>反過來不成立：等腰三角形不一定是正三角形。</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>名稱</th><th>一樣長的邊</th><th>一樣大的角</th></tr>
+        <tr><td class="name">正三角形</td><td>3 條</td><td>3 個（都 60°）</td></tr>
+        <tr><td class="name">等腰三角形</td><td>至少 2 條</td><td>2 個底角</td></tr>
+        <tr><td class="name">一般三角形</td><td>沒有</td><td>沒有</td></tr>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜三邊長是 5 公分、5 公分、8 公分的三角形是哪一種？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 有兩條邊都是 5 公分，一樣長。</p>
+        <p class="step"><b>②</b> 答案：<b>等腰三角形</b>。腰是 5 公分，底邊是 8 公分。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜等腰三角形的一個底角是 40°，另一個底角是幾度？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 等腰三角形的兩個底角一樣大。</p>
+        <p class="step"><b>②</b> 答案：<b>40°</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜三邊都是 6 公分的三角形，可以叫等腰三角形嗎？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 它是正三角形。</p>
+        <p class="step"><b>②</b> 正三角形有「兩條邊一樣長」，符合等腰三角形的條件。</p>
+        <p class="step"><b>③</b> 答案：<b>可以</b>。它既是正三角形，也是等腰三角形。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 三邊長 7、7、7 公分的三角形是：</div>
+      <label><input type="radio" name="p2q1" value="A">正三角形（也是等腰三角形）</label>
+      <label><input type="radio" name="p2q1" value="B">直角三角形</label>
+      <label><input type="radio" name="p2q1" value="C">一般三角形</label>
+      <label><input type="radio" name="p2q1" value="D">只是等腰三角形</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　三邊都相等是正三角形，它同時符合等腰的條件。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 等腰三角形中，兩條一樣長的邊叫做：</div>
+      <label><input type="radio" name="p2q2" value="A">頂角</label>
+      <label><input type="radio" name="p2q2" value="B">底邊</label>
+      <label><input type="radio" name="p2q2" value="C">底角</label>
+      <label><input type="radio" name="p2q2" value="D">腰</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　一樣長的兩邊叫腰，第三邊叫底邊。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">3. 等腰三角形一個底角是 65°，另一個底角是：</div>
+      <label><input type="radio" name="p2q3" value="A">50°</label>
+      <label><input type="radio" name="p2q3" value="B">115°</label>
+      <label><input type="radio" name="p2q3" value="C">25°</label>
+      <label><input type="radio" name="p2q3" value="D">65°</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　兩個底角一樣大。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. 正三角形的每一個角都是：</div>
+      <label><input type="radio" name="p2q4" value="A">45°</label>
+      <label><input type="radio" name="p2q4" value="B">30°</label>
+      <label><input type="radio" name="p2q4" value="C">60°</label>
+      <label><input type="radio" name="p2q4" value="D">90°</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　三個角一樣大，都是 60°。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. 下面哪一句話是<b>錯</b>的？</div>
+      <label><input type="radio" name="p2q5" value="A">正三角形是銳角三角形</label>
+      <label><input type="radio" name="p2q5" value="B">等腰三角形一定是正三角形</label>
+      <label><input type="radio" name="p2q5" value="C">等腰三角形的底角相等</label>
+      <label><input type="radio" name="p2q5" value="D">正三角形也是等腰三角形</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　等腰只要兩邊相等，不一定三邊都相等，所以不一定是正三角形。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 5-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會用圓規畫等腰三角形和正三角形</li>
+      <li>會用量角器畫直角三角形</li>
+      <li>知道一個三角形可以同時有「角」和「邊」兩個名字</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：用圓規畫等腰三角形</h2>
+    <ol>
+      <li>先畫底邊，例如 6 公分</li>
+      <li>圓規張開到腰長（例如 5 公分）</li>
+      <li>針尖放在底邊的<b>一端</b>畫一段弧，再放在<b>另一端</b>畫一段弧</li>
+      <li>兩段弧的交點就是頂點，把它和底邊兩端連起來</li>
+    </ol>
+    <div class="svgbox" id="svgCompass"></div>
+    <div class="note">💡 圓規張開多寬，畫出來的距離就多長。兩段弧的交點到底邊兩端一樣遠，所以兩腰一定相等。<br>把圓規張開跟底邊一樣長，畫出來就是<b>正三角形</b>。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：用量角器畫直角三角形</h2>
+    <ol>
+      <li>先畫一條邊</li>
+      <li>在一端用量角器量 90°，畫出第二條邊</li>
+      <li>把兩條邊的另一端連起來</li>
+    </ol>
+    <p>也可以直接用三角板的直角來畫，更快。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：一個三角形可以有兩個名字</h2>
+    <p>「角」的分類和「邊」的分類是<b>兩套不同的標準</b>，可以同時用：</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th></th><th>銳角</th><th>直角</th><th>鈍角</th></tr>
+        <tr><td class="name">等腰</td><td>等腰銳角三角形</td><td class="hi">等腰直角三角形<br><small>（45°、45°、90°）</small></td><td>等腰鈍角三角形</td></tr>
+        <tr><td class="name">正三角形</td><td>正三角形一定是銳角</td><td>—</td><td>—</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 <b>等腰直角三角形</b>就是三角板裡那塊等腰的：兩個底角各 45°，頂角 90°。</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 小工具：三角形分類機</h2>
+    <div class="tool">
+      <div class="svgbox" id="svgLab"></div>
+      <div>頂點左右移動</div>
+      <input type="range" id="triX" min="20" max="300" value="160">
+      <div>頂點上下移動</div>
+      <input type="range" id="triY" min="20" max="200" value="120">
+      <div class="out" id="triOut"></div>
+      <div class="hint">試著拉出：正三角形、等腰直角三角形、鈍角三角形。看看邊長和角度怎麼跟著變。</div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜要畫一個腰 4 公分、底邊 6 公分的等腰三角形，圓規要張開幾公分？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 圓規畫的是「腰」，所以張開 <b>4 公分</b>。</p>
+        <p class="step"><b>②</b> 底邊 6 公分用尺畫。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜一個三角形的三個角是 45°、45°、90°，兩個名字各是什麼？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 看角：有 90° → 直角三角形。</p>
+        <p class="step"><b>②</b> 看邊：兩個底角都是 45° 一樣大，所以兩腰一樣長 → 等腰三角形。</p>
+        <p class="step"><b>③</b> 答案：<b>等腰直角三角形</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜三邊長 5、5、9 公分，最大的角是鈍角。這個三角形叫什麼？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 兩邊一樣長 → 等腰。</p>
+        <p class="step"><b>②</b> 最大的角是鈍角 → 鈍角三角形。</p>
+        <p class="step"><b>③</b> 答案：<b>等腰鈍角三角形</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 用圓規畫等腰三角形時，圓規張開的寬度是：</div>
+      <label><input type="radio" name="p3q1" value="A">底邊的一半</label>
+      <label><input type="radio" name="p3q1" value="B">腰的長</label>
+      <label><input type="radio" name="p3q1" value="C">底邊的長</label>
+      <label><input type="radio" name="p3q1" value="D">隨便</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　圓規畫出來的兩段弧到底邊兩端一樣遠，那就是腰。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 圓規張開跟底邊一樣長來畫，畫出來的是：</div>
+      <label><input type="radio" name="p3q2" value="A">直角三角形</label>
+      <label><input type="radio" name="p3q2" value="B">鈍角三角形</label>
+      <label><input type="radio" name="p3q2" value="C">一般三角形</label>
+      <label><input type="radio" name="p3q2" value="D">正三角形</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　三邊都跟底邊一樣長，就是正三角形。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 三角板裡那塊有 45° 的三角形，正確的名字是：</div>
+      <label><input type="radio" name="p3q3" value="A">等腰銳角三角形</label>
+      <label><input type="radio" name="p3q3" value="B">等腰直角三角形</label>
+      <label><input type="radio" name="p3q3" value="C">正三角形</label>
+      <label><input type="radio" name="p3q3" value="D">等腰鈍角三角形</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　45°、45°、90°：有直角，且兩底角相等所以兩腰相等。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. 下面哪一種三角形<b>不存在</b>？</div>
+      <label><input type="radio" name="p3q4" value="A">等腰鈍角三角形</label>
+      <label><input type="radio" name="p3q4" value="B">等腰銳角三角形</label>
+      <label><input type="radio" name="p3q4" value="C">等腰直角三角形</label>
+      <label><input type="radio" name="p3q4" value="D">正直角三角形</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　正三角形的三個角都是 60°，不可能有直角。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">5. 要畫直角三角形，最方便的工具是：</div>
+      <label><input type="radio" name="p3q5" value="A">量角器或三角板</label>
+      <label><input type="radio" name="p3q5" value="B">圓規</label>
+      <label><input type="radio" name="p3q5" value="C">計算機</label>
+      <label><input type="radio" name="p3q5" value="D">只用尺</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　直角用量角器量 90°，或直接靠三角板的直角。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 三個角是 20°、30°、130° 的三角形是：</div>
+      <label><input type="radio" name="qz1" value="A">直角三角形</label>
+      <label><input type="radio" name="qz1" value="B">鈍角三角形</label>
+      <label><input type="radio" name="qz1" value="C">正三角形</label>
+      <label><input type="radio" name="qz1" value="D">銳角三角形</label>
+      <div class="fb" data-exp="　最大的角 130° 是鈍角。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">2. 三個角是 60°、60°、60° 的三角形是：</div>
+      <label><input type="radio" name="qz2" value="A">正三角形</label>
+      <label><input type="radio" name="qz2" value="B">鈍角三角形</label>
+      <label><input type="radio" name="qz2" value="C">一般三角形</label>
+      <label><input type="radio" name="qz2" value="D">直角三角形</label>
+      <div class="fb" data-exp="　三個角相等，三邊也相等，是正三角形。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 一個三角形最多有幾個直角？</div>
+      <label><input type="radio" name="qz3" value="A">1 個</label>
+      <label><input type="radio" name="qz3" value="B">2 個</label>
+      <label><input type="radio" name="qz3" value="C">0 個</label>
+      <label><input type="radio" name="qz3" value="D">3 個</label>
+      <div class="fb" data-exp="　兩個直角會讓兩邊平行，圍不起來。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">4. 三邊長 6、6、10 公分的三角形是：</div>
+      <label><input type="radio" name="qz4" value="A">直角三角形</label>
+      <label><input type="radio" name="qz4" value="B">一般三角形</label>
+      <label><input type="radio" name="qz4" value="C">等腰三角形</label>
+      <label><input type="radio" name="qz4" value="D">正三角形</label>
+      <div class="fb" data-exp="　有兩邊都是 6 公分。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 等腰三角形的兩個底角：</div>
+      <label><input type="radio" name="qz5" value="A">都是直角</label>
+      <label><input type="radio" name="qz5" value="B">一樣大</label>
+      <label><input type="radio" name="qz5" value="C">加起來 90°</label>
+      <label><input type="radio" name="qz5" value="D">一個大一個小</label>
+      <div class="fb" data-exp="　等腰三角形的兩個底角一定相等。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">6. 正三角形的每個角是幾度？</div>
+      <label><input type="radio" name="qz6" value="A">60°</label>
+      <label><input type="radio" name="qz6" value="B">30°</label>
+      <label><input type="radio" name="qz6" value="C">45°</label>
+      <label><input type="radio" name="qz6" value="D">90°</label>
+      <div class="fb" data-exp="　三個角一樣大，都是 60°。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">7. 下面哪一句是<b>對</b>的？</div>
+      <label><input type="radio" name="qz7" value="A">正三角形一定是等腰三角形</label>
+      <label><input type="radio" name="qz7" value="B">鈍角三角形有兩個鈍角</label>
+      <label><input type="radio" name="qz7" value="C">直角三角形一定是等腰三角形</label>
+      <label><input type="radio" name="qz7" value="D">等腰三角形一定是正三角形</label>
+      <div class="fb" data-exp="　正三角形三邊相等，當然符合「兩邊相等」。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">8. 三個角是 45°、45°、90° 的三角形叫：</div>
+      <label><input type="radio" name="qz8" value="A">正三角形</label>
+      <label><input type="radio" name="qz8" value="B">等腰鈍角三角形</label>
+      <label><input type="radio" name="qz8" value="C">等腰直角三角形</label>
+      <label><input type="radio" name="qz8" value="D">等腰銳角三角形</label>
+      <div class="fb" data-exp="　有直角，兩底角相等所以等腰。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">9. 用圓規畫底邊 5 公分、腰 7 公分的等腰三角形，圓規要張開：</div>
+      <label><input type="radio" name="qz9" value="A">7 公分</label>
+      <label><input type="radio" name="qz9" value="B">5 公分</label>
+      <label><input type="radio" name="qz9" value="C">2 公分</label>
+      <label><input type="radio" name="qz9" value="D">12 公分</label>
+      <div class="fb" data-exp="　圓規畫的是腰。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">10. 一個三角形有一個角是 91°，它：</div>
+      <label><input type="radio" name="qz10" value="A">不存在</label>
+      <label><input type="radio" name="qz10" value="B">是銳角三角形</label>
+      <label><input type="radio" name="qz10" value="C">是直角三角形</label>
+      <label><input type="radio" name="qz10" value="D">是鈍角三角形</label>
+      <div class="fb" data-exp="　91° 比 90° 大，是鈍角，所以是鈍角三角形。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 小四數學 · 四上第 5 單元「三角形」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "四上5 三角形";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// ---- 靜態圖 ----
+document.getElementById('svgTri0').innerHTML = svg(320,190,
+  poly([[40,160],[280,160],[120,30]],'#fce7f3','#be185d') +
+  txt(30,178,'頂點','#1f2937',13) + txt(290,178,'頂點','#1f2937',13) + txt(120,22,'頂點','#1f2937',13) +
+  txt(160,180,'邊','#be185d',13) + txt(60,95,'邊','#be185d',13) + txt(215,95,'邊','#be185d',13) +
+  txt(70,150,'角','#2563eb',13) + txt(245,150,'角','#2563eb',13) + txt(122,62,'角','#2563eb',13)
+);
+document.getElementById('svgTriAngle').innerHTML = svg(560,170,
+  poly([[20,140],[160,140],[90,30]],'#dbeafe','#2563eb') + txt(90,162,'銳角三角形','#2563eb',13) +
+  poly([[210,140],[350,140],[210,40]],'#dcfce7','#16a34a') + rect(210,124,16,16,'none','#16a34a',2) + txt(280,162,'直角三角形','#16a34a',13) +
+  poly([[400,140],[540,140],[380,70]],'#fee2e2','#dc2626') + txt(470,162,'鈍角三角形','#dc2626',13)
+);
+document.getElementById('svgNoTwo').innerHTML = svg(320,150,
+  line(60,120,260,120,'#1f2937',3) + line(60,120,60,20,'#dc2626',3) + line(260,120,260,20,'#dc2626',3) +
+  rect(60,104,16,16,'none','#dc2626',2) + rect(244,104,16,16,'none','#dc2626',2) +
+  txt(160,60,'兩條邊平行，永遠碰不到','#dc2626',13) + txt(160,140,'兩個直角 → 圍不成三角形','#6b7280',12)
+);
+document.getElementById('svgEqui').innerHTML = svg(260,170,
+  poly([[50,150],[210,150],[130,11]],'#fce7f3','#be185d') +
+  txt(130,166,'6 公分','#1f2937',12) + txt(68,80,'6 公分','#1f2937',12,'end') + txt(192,80,'6 公分','#1f2937',12,'start') +
+  txt(78,140,'60°','#2563eb',12) + txt(182,140,'60°','#2563eb',12) + txt(130,45,'60°','#2563eb',12)
+);
+document.getElementById('svgIso').innerHTML = svg(300,190,
+  poly([[50,160],[250,160],[150,30]],'#fce7f3','#be185d') +
+  txt(150,178,'底邊','#1f2937',13) + txt(80,90,'腰','#be185d',14) + txt(220,90,'腰','#be185d',14) +
+  txt(150,60,'頂角','#2563eb',12) + txt(85,150,'底角','#2563eb',12) + txt(215,150,'底角','#2563eb',12)
+);
+document.getElementById('svgCompass').innerHTML = svg(320,190,
+  line(60,160,260,160,'#1f2937',3) +
+  `<path d="M 120 40 A 130 130 0 0 1 190 60" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="5 4"/>` +
+  `<path d="M 200 40 A 130 130 0 0 0 130 60" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="5 4"/>` +
+  line(60,160,160,45,'#be185d',2,true) + line(260,160,160,45,'#be185d',2,true) +
+  `<circle cx="160" cy="45" r="5" fill="#dc2626"/>` + txt(160,30,'兩弧交點＝頂點','#dc2626',12) +
+  txt(160,180,'底邊','#6b7280',12)
+);
+
+// ---- 三角形分類機 ----
+const A = [40,240], B = [280,240], SC = 20;                    // 20px ＝ 1 公分
+function dist(p,q){ return Math.hypot(p[0]-q[0], p[1]-q[1]); }
+function angle(p, q, r){                                        // 頂點 p 的角
+  const a = dist(q,r), b = dist(p,r), c = dist(p,q);
+  return Math.acos((b*b + c*c - a*a) / (2*b*c)) * 180 / Math.PI;
+}
+function triLab(){
+  const C = [parseInt(triX.value,10), 250 - parseInt(triY.value,10)];
+  const ab = dist(A,B)/SC, bc = dist(B,C)/SC, ca = dist(C,A)/SC;
+  const angA = angle(A,B,C), angB = angle(B,A,C), angC = angle(C,A,B);
+  const mx = Math.max(angA, angB, angC);
+  const byAng = Math.abs(mx - 90) <= 1 ? '直角三角形' : (mx > 90 ? '鈍角三角形' : '銳角三角形');
+  const near = (x,y) => Math.abs(x - y) / Math.max(x, y) < 0.03;
+  let bySide = '一般三角形';
+  if(near(ab,bc) && near(bc,ca)) bySide = '正三角形（也是等腰三角形）';
+  else if(near(ab,bc) || near(bc,ca) || near(ca,ab)) bySide = '等腰三角形';
+  const f = x => x.toFixed(1);
+  document.getElementById('svgLab').innerHTML = svg(320,260,
+    poly([A,B,C],'#fce7f3','#be185d') +
+    `<circle cx="${C[0]}" cy="${C[1]}" r="6" fill="#dc2626"/>` +
+    txt(160,256,f(ab)+' 公分','#1f2937',12) +
+    txt((B[0]+C[0])/2+18,(B[1]+C[1])/2,f(bc)+' 公分','#1f2937',12,'start') +
+    txt((A[0]+C[0])/2-18,(A[1]+C[1])/2,f(ca)+' 公分','#1f2937',12,'end') +
+    txt(A[0]+22,A[1]-8,Math.round(angA)+'°','#2563eb',12) + txt(B[0]-22,B[1]-8,Math.round(angB)+'°','#2563eb',12) +
+    txt(C[0],C[1]-12,Math.round(angC)+'°','#2563eb',12)
+  );
+  document.getElementById('triOut').innerHTML = `看角：<b>${byAng}</b>（最大的角 ${Math.round(mx)}°）<br>看邊：<b>${bySide}</b>`;
+}
+const triX = document.getElementById('triX'), triY = document.getElementById('triY');
+triX.addEventListener('input', triLab); triY.addEventListener('input', triLab);
+triLab();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小四數學｜四上 第10單元 概數</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#5b21b6; --accent-soft:#ede9fe;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#5b21b6,#8b5cf6); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國小四年級上學期 · 第10單元</span>
+  <h1>概數</h1>
+  <p>三個小節＋單元總測驗。概數就是「大約多少」。三種取法：四捨五入、無條件進入、無條件捨去，差別只在「後面的尾巴怎麼處理」。有一個「概數機」，輸入數字、選位數和方法，看它怎麼變。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">10-1 概數是什麼</button>
+  <button data-t="s2">10-2 三種取法</button>
+  <button data-t="s3">10-3 概數的應用</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 10-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道概數是「大約的數」，和精確的數不一樣</li>
+      <li>看得懂「取到十位」「取到百位」是什麼意思</li>
+      <li>會用「約」或「≈」來表示概數</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：精確的數 vs 大約的數</h2>
+    <p>學校有 1287 人，這是<b>精確的數</b>。<br>跟別人說「我們學校大約 1300 人」，1300 就是<b>概數</b>。</p>
+    <div class="formula">1287 ≈ 1300　（讀作「1287 約等於 1300」）</div>
+    <div class="note">💡 什麼時候用概數？不需要那麼精確、或是根本沒辦法精確的時候。像「演唱會來了約 3 萬人」。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：「取到某一位」</h2>
+    <p>概數要說清楚「取到哪一位」，意思是<b>那一位以下全部變成 0</b>：</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>原數</th><th>取到十位</th><th>取到百位</th><th>取到千位</th></tr>
+        <tr><td class="dig">1287</td><td class="dig">1290</td><td class="dig">1300</td><td class="dig">1000</td></tr>
+      </table>
+    </div>
+    <p>取到十位 → 個位變 0；取到百位 → 十位和個位都變 0；取到千位 → 後面三位都變 0。</p>
+    <div class="warn">⚠️ 取到哪一位，那一位<b>自己可能會改變</b>（例如 1287 取到百位，百位的 2 變成 3），但後面的位數<b>一定都是 0</b>。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：三種取法先認識名字</h2>
+    <ul>
+      <li><b>四捨五入</b>：最常用。看要取的那一位的<b>下一位</b>，4 以下捨、5 以上進</li>
+      <li><b>無條件進入</b>：不管多少，只要後面不是全 0，就進 1</li>
+      <li><b>無條件捨去</b>：後面全部變 0，不管多少</li>
+    </ul>
+    <p>下一節會一個一個講清楚。</p>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜「某市人口 2,468,913 人」，用概數說會怎麼說？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 可以說「約 247 萬人」（取到萬位），或「約 250 萬人」（取到十萬位）。</p>
+        <p class="step"><b>②</b> 看場合決定要多精確。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜「3652 取到百位是 3700」。這句話裡，哪幾位變成 0？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 取到百位，百位以下（十位、個位）變 0。</p>
+        <p class="step"><b>②</b> 百位本來是 6，變成 7（因為十位是 5，進位了）。</p>
+        <p class="step"><b>③</b> 答案：<b>十位和個位</b>變 0。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜下面哪些是概數？「全班 28 人」「大約 30 人」「約 600 元」</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 「28 人」是精確的數。</p>
+        <p class="step"><b>②</b> 「大約 30 人」「約 600 元」是概數。</p>
+        <p class="step"><b>③</b> 關鍵字：<b>大約、約、左右、差不多</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 下面哪一個是概數？</div>
+      <label><input type="radio" name="p1q1" value="A">全班 32 人</label>
+      <label><input type="radio" name="p1q1" value="B">操場大約 200 公尺</label>
+      <label><input type="radio" name="p1q1" value="C">我有 3 枝筆</label>
+      <label><input type="radio" name="p1q1" value="D">這本書 248 頁</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　有「大約」就是概數。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 「4573 取到百位」，哪幾位會變成 0？</div>
+      <label><input type="radio" name="p1q2" value="A">百位、十位、個位</label>
+      <label><input type="radio" name="p1q2" value="B">只有個位</label>
+      <label><input type="radio" name="p1q2" value="C">十位和個位</label>
+      <label><input type="radio" name="p1q2" value="D">千位</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　取到百位，百位以下都變 0。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 「≈」這個符號的意思是：</div>
+      <label><input type="radio" name="p1q3" value="A">大於</label>
+      <label><input type="radio" name="p1q3" value="B">約等於</label>
+      <label><input type="radio" name="p1q3" value="C">小於</label>
+      <label><input type="radio" name="p1q3" value="D">等於</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　≈ 讀作約等於。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. 8046 取到千位，後面會有幾個 0？</div>
+      <label><input type="radio" name="p1q4" value="A">3 個</label>
+      <label><input type="radio" name="p1q4" value="B">2 個</label>
+      <label><input type="radio" name="p1q4" value="C">4 個</label>
+      <label><input type="radio" name="p1q4" value="D">1 個</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　千位以下三位（百、十、個）都變 0。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">5. 下面哪個情況<b>適合</b>用概數？</div>
+      <label><input type="radio" name="p1q5" value="A">考試的分數</label>
+      <label><input type="radio" name="p1q5" value="B">算找零要找幾元</label>
+      <label><input type="radio" name="p1q5" value="C">報導演唱會來了多少人</label>
+      <label><input type="radio" name="p1q5" value="D">藥要吃幾顆</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　找零、分數、吃藥都要精確；人數報導用概數就好。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 10-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會用四捨五入：只看下一位，5 以上進、4 以下捨</li>
+      <li>會用無條件進入和無條件捨去</li>
+      <li>同一個數用三種方法取，知道答案可能不一樣</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：四捨五入</h2>
+    <p>取到某一位，就看它的<b>下一位</b>：</p>
+    <div class="formula">下一位是 0、1、2、3、4 → 捨去（後面全變 0）<br>下一位是 5、6、7、8、9 → 進 1（那一位加 1，後面全變 0）</div>
+    <p>2463 取到百位：看十位是 6 → 進 1 → <b>2500</b><br>2463 取到十位：看個位是 3 → 捨 → <b>2460</b></p>
+    <div class="warn">⚠️ <b>只看下一位</b>，不要看更後面。2449 取到百位，看十位 4 → 捨 → 2400。不能因為個位是 9 先把十位進成 5 再進位。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：無條件進入、無條件捨去</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>方法</th><th>規則</th><th>2463 取到百位</th><th>2463 取到十位</th></tr>
+        <tr><td class="name">四捨五入</td><td>看下一位，≥5 進、&lt;5 捨</td><td class="dig">2500</td><td class="dig">2460</td></tr>
+        <tr><td class="name">無條件進入</td><td>後面只要不是全 0，就進 1</td><td class="dig">2500</td><td class="dig">2470</td></tr>
+        <tr><td class="name">無條件捨去</td><td>後面全部變 0</td><td class="dig">2400</td><td class="dig">2460</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 「無條件」就是「不用看下一位是多少」：進入一律往上，捨去一律往下。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：進位有時會連鎖</h2>
+    <div class="formula">1998 四捨五入到十位：看個位 8 → 進 1 → 199 ＋ 1 ＝ 200 → <b>2000</b></div>
+    <p>十位 9 進 1 變 10，再往百位進，百位 9 也變 10，再往千位進。跟加法的連續進位一樣。</p>
+    <div class="warn">⚠️ 已經是「剛好」的數（例如 2400 取到百位），三種方法答案都是 2400，無條件進入也<b>不用進</b>，因為後面本來就全是 0。</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 小工具：概數機</h2>
+    <div class="tool">
+      <div class="row">
+        <input type="number" id="rdN" min="0" max="99999999" value="2463">
+        <select id="rdP"><option value="1">取到十位</option><option value="2" selected>取到百位</option><option value="3">取到千位</option><option value="4">取到萬位</option></select>
+        <select id="rdM"><option value="round">四捨五入</option><option value="ceil">無條件進入</option><option value="floor">無條件捨去</option></select>
+        <button id="rdGo">取概數</button>
+      </div>
+      <div class="tblbox" id="rdTbl"></div>
+      <div class="out" id="rdOut"></div>
+      <div class="hint">黃色那一格是「要取的位」，紅色那一格是「要看的下一位」（四捨五入才需要看）。</div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜7385 四捨五入到百位</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 看十位：8 → 進 1。</p>
+        <p class="step"><b>②</b> 百位 3 ＋ 1 ＝ 4，後面變 0。</p>
+        <p class="step"><b>③</b> 答案：<b>7400</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜7385 無條件捨去到千位</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 千位以下全部變 0，不用看。</p>
+        <p class="step"><b>②</b> 答案：<b>7000</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜7385 無條件進入到千位</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 千位以下不是全 0（385），所以進 1。</p>
+        <p class="step"><b>②</b> 7 ＋ 1 ＝ 8。</p>
+        <p class="step"><b>③</b> 答案：<b>8000</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜49,972 四捨五入到百位</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 看十位：7 → 進 1。百位 9 ＋ 1 ＝ 10 → 往千位進，千位 9 也變 10 → 往萬位進，4 變 5。</p>
+        <p class="step"><b>②</b> 答案：<b>50,000</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 3641 四捨五入到百位是：</div>
+      <label><input type="radio" name="p2q1" value="A">4000</label>
+      <label><input type="radio" name="p2q1" value="B">3700</label>
+      <label><input type="radio" name="p2q1" value="C">3600</label>
+      <label><input type="radio" name="p2q1" value="D">3640</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　看十位 4 → 捨 → 3600。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 3641 無條件進入到百位是：</div>
+      <label><input type="radio" name="p2q2" value="A">3650</label>
+      <label><input type="radio" name="p2q2" value="B">3600</label>
+      <label><input type="radio" name="p2q2" value="C">4000</label>
+      <label><input type="radio" name="p2q2" value="D">3700</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　後面 41 不是全 0 → 進 → 3700。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 3641 無條件捨去到十位是：</div>
+      <label><input type="radio" name="p2q3" value="A">3641</label>
+      <label><input type="radio" name="p2q3" value="B">3640</label>
+      <label><input type="radio" name="p2q3" value="C">3650</label>
+      <label><input type="radio" name="p2q3" value="D">3600</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　個位變 0 → 3640。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. 2951 四捨五入到百位是：</div>
+      <label><input type="radio" name="p2q4" value="A">2000</label>
+      <label><input type="radio" name="p2q4" value="B">2900</label>
+      <label><input type="radio" name="p2q4" value="C">3000</label>
+      <label><input type="radio" name="p2q4" value="D">2950</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　看十位 5 → 進 1，9 ＋ 1 ＝ 10，連鎖進到千位 → 3000。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">5. 5849 四捨五入到百位，正確的做法是：</div>
+      <label><input type="radio" name="p2q5" value="A">看百位 8，進位得 6000</label>
+      <label><input type="radio" name="p2q5" value="B">看個位 9，先把十位變 5，再進位得 5900</label>
+      <label><input type="radio" name="p2q5" value="C">只看十位 4，捨去得 5800</label>
+      <label><input type="radio" name="p2q5" value="D">看個位 9，進位得 5850</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　只看下一位（十位）。4 → 捨 → 5800。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">6. 6000 無條件進入到千位是：</div>
+      <label><input type="radio" name="p2q6" value="A">5000</label>
+      <label><input type="radio" name="p2q6" value="B">6100</label>
+      <label><input type="radio" name="p2q6" value="C">7000</label>
+      <label><input type="radio" name="p2q6" value="D">6000</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　後面本來就全是 0，不用進。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 10-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會看情境選對方法：進入、捨去、還是四捨五入</li>
+      <li>會先取概數再估算和、差、積</li>
+      <li>知道估算是「檢查用」，不能代替正確答案</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：情境決定方法</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>情境</th><th>用哪種</th><th>為什麼</th></tr>
+        <tr><td>132 人坐車，每車 40 人，要幾輛？</td><td class="name">無條件進入</td><td>剩下的 12 人也要有車坐 → 4 輛</td></tr>
+        <tr><td>132 公分的繩子，每 40 公分剪一段，能剪幾段？</td><td class="name">無條件捨去</td><td>剩 12 公分不夠一段 → 3 段</td></tr>
+        <tr><td>報導「約有多少人參加」</td><td class="name">四捨五入</td><td>沒有特別要求，取最接近的</td></tr>
+        <tr><td>有 1350 元，每本書 400 元，最多買幾本？</td><td class="name">無條件捨去</td><td>錢不夠就不能買 → 3 本</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 「全部都要」「至少」→ 進入；「最多」「夠不夠」→ 捨去；沒特別說 → 四捨五入。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：先取概數，再估算</h2>
+    <div class="formula">498 ＋ 305 ≈ 500 ＋ 300 ＝ 800</div>
+    <div class="formula">812 − 389 ≈ 800 − 400 ＝ 400</div>
+    <div class="formula">39 × 21 ≈ 40 × 20 ＝ 800</div>
+    <p>估算的答案不是精確答案，但可以<b>快速抓大概</b>、<b>檢查算錯沒</b>。39 × 21 算出 8190 就一定錯了。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：買東西夠不夠，用估的就知道</h2>
+    <p>帶 1000 元，買 298 元、395 元、189 元的東西，夠嗎？</p>
+    <div class="formula">298 ≈ 300、395 ≈ 400、189 ≈ 200 → 300 ＋ 400 ＋ 200 ＝ 900 &lt; 1000 → 夠</div>
+    <div class="warn">⚠️ 這種「夠不夠」的問題，估算時把價錢<b>往上取</b>比較安全。往上取都夠，實際一定夠。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜275 個學生去露營，每頂帳篷睡 8 人，至少要幾頂？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 275 ÷ 8 ＝ 34 … 3。</p>
+        <p class="step"><b>②</b> 剩 3 人也要帳篷 → 無條件進入。</p>
+        <p class="step"><b>③</b> 答案：<b>35 頂</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜有 2000 元，每張門票 350 元，最多買幾張？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 2000 ÷ 350 ＝ 5 … 250。</p>
+        <p class="step"><b>②</b> 剩 250 元不夠一張 → 無條件捨去。</p>
+        <p class="step"><b>③</b> 答案：<b>5 張</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜估算 <span class='num'>612 × 48</span> 大約多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 612 ≈ 600，48 ≈ 50。</p>
+        <p class="step"><b>②</b> 600 × 50 ＝ <b>30000</b>。實際是 29376，很接近。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜小明算 <span class='num'>702 − 298</span> 得到 <span class='num'>604</span>，用估算檢查合理嗎？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 700 − 300 ＝ 400。</p>
+        <p class="step"><b>②</b> 604 離 400 太遠，<b>不合理</b>。正確答案是 404（他減錯了）。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 205 個人搭電梯，每次最多 12 人，至少要搭幾次？</div>
+      <label><input type="radio" name="p3q1" value="A">16 次</label>
+      <label><input type="radio" name="p3q1" value="B">17 次</label>
+      <label><input type="radio" name="p3q1" value="C">18 次</label>
+      <label><input type="radio" name="p3q1" value="D">12 次</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　205 ÷ 12 ＝ 17 … 1，剩 1 人也要一次 → 進入 → 18。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 有 950 元，每本漫畫 120 元，最多買幾本？</div>
+      <label><input type="radio" name="p3q2" value="A">7 本</label>
+      <label><input type="radio" name="p3q2" value="B">8 本</label>
+      <label><input type="radio" name="p3q2" value="C">10 本</label>
+      <label><input type="radio" name="p3q2" value="D">9 本</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　950 ÷ 120 ＝ 7 … 110，不夠再買一本 → 捨去 → 7。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. <span class='num'>589 ＋ 412</span> 大約是：</div>
+      <label><input type="radio" name="p3q3" value="A">1000</label>
+      <label><input type="radio" name="p3q3" value="B">1100</label>
+      <label><input type="radio" name="p3q3" value="C">900</label>
+      <label><input type="radio" name="p3q3" value="D">800</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　600 ＋ 400 ＝ 1000。實際 1001。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. <span class='num'>78 × 52</span> 大約是：</div>
+      <label><input type="radio" name="p3q4" value="A">4000</label>
+      <label><input type="radio" name="p3q4" value="B">40000</label>
+      <label><input type="radio" name="p3q4" value="C">350</label>
+      <label><input type="radio" name="p3q4" value="D">400</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　80 × 50 ＝ 4000。實際 4056。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">5. 帶 500 元，想買 198 元和 289 元的東西，用估算判斷：</div>
+      <label><input type="radio" name="p3q5" value="A">夠，因為 200 ＋ 300 ＝ 500</label>
+      <label><input type="radio" name="p3q5" value="B">無法判斷</label>
+      <label><input type="radio" name="p3q5" value="C">不夠，因為 200 ＋ 300 ＝ 500 剛好</label>
+      <label><input type="radio" name="p3q5" value="D">夠，實際 198 ＋ 289 ＝ 487 ＜ 500</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　往上估 200 ＋ 300 ＝ 500 剛好等於，這時要算精確：487 ＜ 500，夠。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 下面哪一個是概數？</div>
+      <label><input type="radio" name="qz1" value="A">教室有 30 張桌子</label>
+      <label><input type="radio" name="qz1" value="B">全校約 800 人</label>
+      <label><input type="radio" name="qz1" value="C">一盒 12 顆蛋</label>
+      <label><input type="radio" name="qz1" value="D">我 10 歲</label>
+      <div class="fb" data-exp="　「約」就是概數。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">2. 5382 四捨五入到百位是：</div>
+      <label><input type="radio" name="qz2" value="A">5300</label>
+      <label><input type="radio" name="qz2" value="B">5380</label>
+      <label><input type="radio" name="qz2" value="C">5400</label>
+      <label><input type="radio" name="qz2" value="D">5000</label>
+      <div class="fb" data-exp="　看十位 8 → 進 → 5400。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 5382 無條件捨去到百位是：</div>
+      <label><input type="radio" name="qz3" value="A">5300</label>
+      <label><input type="radio" name="qz3" value="B">5000</label>
+      <label><input type="radio" name="qz3" value="C">5380</label>
+      <label><input type="radio" name="qz3" value="D">5400</label>
+      <div class="fb" data-exp="　百位以下變 0。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. 5382 無條件進入到千位是：</div>
+      <label><input type="radio" name="qz4" value="A">5300</label>
+      <label><input type="radio" name="qz4" value="B">5000</label>
+      <label><input type="radio" name="qz4" value="C">5400</label>
+      <label><input type="radio" name="qz4" value="D">6000</label>
+      <div class="fb" data-exp="　後面 382 不是全 0 → 進 → 6000。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">5. 2449 四捨五入到百位是：</div>
+      <label><input type="radio" name="qz5" value="A">2500</label>
+      <label><input type="radio" name="qz5" value="B">2000</label>
+      <label><input type="radio" name="qz5" value="C">2400</label>
+      <label><input type="radio" name="qz5" value="D">2450</label>
+      <div class="fb" data-exp="　只看十位 4 → 捨 → 2400，不能先看個位。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">6. 9960 四捨五入到百位是：</div>
+      <label><input type="radio" name="qz6" value="A">9970</label>
+      <label><input type="radio" name="qz6" value="B">10000</label>
+      <label><input type="radio" name="qz6" value="C">9000</label>
+      <label><input type="radio" name="qz6" value="D">9900</label>
+      <div class="fb" data-exp="　看十位 6 → 進 1，連鎖進位 → 10000。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">7. 347 人搭船，每艘 25 人，至少要幾艘？</div>
+      <label><input type="radio" name="qz7" value="A">12 艘</label>
+      <label><input type="radio" name="qz7" value="B">14 艘</label>
+      <label><input type="radio" name="qz7" value="C">13 艘</label>
+      <label><input type="radio" name="qz7" value="D">15 艘</label>
+      <div class="fb" data-exp="　347 ÷ 25 ＝ 13 … 22 → 進入 → 14。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">8. 有 1000 元，每個蛋糕 180 元，最多買幾個？</div>
+      <label><input type="radio" name="qz8" value="A">7 個</label>
+      <label><input type="radio" name="qz8" value="B">4 個</label>
+      <label><input type="radio" name="qz8" value="C">5 個</label>
+      <label><input type="radio" name="qz8" value="D">6 個</label>
+      <div class="fb" data-exp="　1000 ÷ 180 ＝ 5 … 100 → 捨去 → 5。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">9. <span class='num'>398 × 31</span> 大約是：</div>
+      <label><input type="radio" name="qz9" value="A">9000</label>
+      <label><input type="radio" name="qz9" value="B">1200</label>
+      <label><input type="radio" name="qz9" value="C">12000</label>
+      <label><input type="radio" name="qz9" value="D">120000</label>
+      <div class="fb" data-exp="　400 × 30 ＝ 12000。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">10. 小華算 <span class='num'>503 ＋ 297</span> 得 <span class='num'>1800</span>，估算 500 ＋ 300 ＝ 800，所以：</div>
+      <label><input type="radio" name="qz10" value="A">答案不合理，差太多</label>
+      <label><input type="radio" name="qz10" value="B">答案合理</label>
+      <label><input type="radio" name="qz10" value="C">無法判斷</label>
+      <label><input type="radio" name="qz10" value="D">估算錯了</label>
+      <div class="fb" data-exp="　800 和 1800 差太多，一定算錯。正確是 800。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 小四數學 · 四上第 10 單元「概數」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "四上10 概數";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+const PN = ['個','十','百','千','萬','十萬','百萬','千萬'];
+function rd(){
+  const n = parseInt(document.getElementById('rdN').value, 10);
+  const p = parseInt(document.getElementById('rdP').value, 10);
+  const m = document.getElementById('rdM').value;
+  const out = document.getElementById('rdOut'), tbl = document.getElementById('rdTbl');
+  if(!(n >= 0 && n <= 99999999)){ out.textContent = '請輸入 0～99999999 的整數。'; tbl.innerHTML = ''; return; }
+  const base = Math.pow(10, p);
+  const tail = n % base, next = Math.floor(n / Math.pow(10, p - 1)) % 10;
+  let r, why;
+  if(m === 'round'){ r = next >= 5 ? (Math.floor(n / base) + 1) * base : Math.floor(n / base) * base; why = `四捨五入：看${PN[p-1]}位是 ${next}，${next >= 5 ? '5 以上 → 進 1' : '4 以下 → 捨去'}`; }
+  else if(m === 'ceil'){ r = tail === 0 ? n : (Math.floor(n / base) + 1) * base; why = `無條件進入：${PN[p]}位以下是 ${String(tail).padStart(p,'0')}，${tail === 0 ? '本來就全是 0，不用進' : '不是全 0 → 進 1'}`; }
+  else { r = Math.floor(n / base) * base; why = `無條件捨去：${PN[p]}位以下全部變 0`; }
+  const ds = String(n).split(''), L = ds.length;
+  let head = '', body = '';
+  for(let i = 0; i < L; i++){
+    const pos = L - 1 - i;
+    const cls = pos === p ? 'dig hi' : 'dig', sty = (pos === p - 1 && m === 'round') ? ' style="background:#fee2e2"' : '';
+    head += `<th>${PN[pos]}位</th>`; body += `<td class="${cls}"${sty}>${ds[i]}</td>`;
+  }
+  tbl.innerHTML = `<table class="pv" style="min-width:0"><tr>${head}</tr><tr>${body}</tr></table>`;
+  out.innerHTML = `${n} 取到${PN[p]}位 ≈ <b>${r}</b><br><span style="font-weight:normal;font-size:.92rem">${why}</span>`;
+}
+document.getElementById('rdGo').addEventListener('click', rd);
+['rdP','rdM'].forEach(id => document.getElementById(id).addEventListener('change', rd));
+rd();
+
+</script>
+</body>
+</html>
