@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>九九乘法衝刺｜60 秒速算遊戲</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; -webkit-tap-highlight-color:transparent;}
+  .wrap{max-width:520px; margin:0 auto; padding:16px 14px 40px;}
+  header.hero{background:linear-gradient(135deg,#7c2d12,#ea580c); color:#fff; border-radius:var(--radius); padding:18px 20px; margin-bottom:14px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.2); border-radius:99px; padding:2px 12px; font-size:.78rem; margin-bottom:6px;}
+  header.hero h1{font-size:1.4rem;}
+  header.hero p{opacity:.92; font-size:.88rem; margin-top:4px;}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; margin-bottom:12px;}
+  .screen{display:none;} .screen.show{display:block; animation:fade .2s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  /* 開始畫面 */
+  .lv{display:flex; flex-direction:column; gap:10px;}
+  .lv button{border:2px solid var(--border); background:#fff; border-radius:12px; padding:12px 14px; text-align:left; cursor:pointer; font-family:inherit; font-size:1rem; transition:.15s;}
+  .lv button:hover{border-color:var(--amber); background:#fffbeb;}
+  .lv button b{display:block; font-size:1.05rem;}
+  .lv button small{color:var(--sub); font-size:.82rem;}
+  .lv button .best{float:right; color:var(--amber); font-weight:bold; font-size:.85rem;}
+  .how{font-size:.86rem; color:var(--sub); margin-top:10px;}
+  .how li{margin-left:1.2em;}
+
+  /* 遊戲畫面 */
+  .top{display:flex; justify-content:space-between; align-items:center; font-size:.9rem; margin-bottom:6px;}
+  .top b{font-size:1.2rem;}
+  .combo{color:var(--amber); font-weight:bold;}
+  .bar{height:10px; background:#e5e7eb; border-radius:99px; overflow:hidden; margin-bottom:14px;}
+  .bar i{display:block; height:100%; background:linear-gradient(90deg,#f59e0b,#ea580c); width:100%; transition:width .25s linear;}
+  .bar i.warn{background:linear-gradient(90deg,#dc2626,#991b1b);}
+  .qbox{text-align:center; padding:18px 10px; border-radius:12px; background:#fff7ed; border:2px solid #fed7aa; margin-bottom:12px; transition:background .15s, border-color .15s;}
+  .qbox.ok{background:var(--green-soft); border-color:var(--green);}
+  .qbox.no{background:var(--red-soft); border-color:var(--red);}
+  .qbox .q{font-size:2.4rem; font-weight:900; letter-spacing:.04em; line-height:1.2;}
+  .qbox .q .blank{display:inline-block; min-width:1.4em; border-bottom:4px solid var(--amber); color:var(--blue);}
+  .qbox .fb{min-height:1.5em; font-size:.95rem; color:var(--sub); margin-top:6px;}
+  .qbox .fb.no{color:#991b1b; font-weight:bold;}
+  .pad{display:grid; grid-template-columns:repeat(3,1fr); gap:8px;}
+  .pad button{font-family:inherit; font-size:1.5rem; font-weight:bold; padding:14px 0; border:1px solid var(--border); border-radius:12px; background:#fff; cursor:pointer; touch-action:manipulation; user-select:none;}
+  .pad button:active{background:#fef3c7;}
+  .pad button.del{font-size:1.1rem; color:var(--red);}
+  .pad button.zero{}
+  .quit{margin-top:10px; width:100%; background:none; border:1px solid var(--border); border-radius:10px; padding:8px; color:var(--sub); cursor:pointer; font-family:inherit;}
+
+  /* 結算畫面 */
+  .score{text-align:center; padding:14px 0;}
+  .score .big{font-size:3rem; font-weight:900; color:#ea580c; line-height:1.1;}
+  .score .new{display:inline-block; background:var(--amber-soft); color:#92400e; border-radius:99px; padding:2px 12px; font-size:.85rem; margin-top:6px; font-weight:bold;}
+  .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:12px 0;}
+  .stats div{background:#f9fafb; border-radius:10px; padding:10px 6px; text-align:center;}
+  .stats b{display:block; font-size:1.25rem;}
+  .stats span{font-size:.78rem; color:var(--sub);}
+  .slow{margin-top:10px; font-size:.92rem;}
+  .slow .chip{display:inline-block; background:var(--red-soft); color:#991b1b; border-radius:8px; padding:3px 10px; margin:4px 4px 0 0; font-weight:bold;}
+  .bigbtn{display:block; width:100%; background:#ea580c; color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:10px;}
+  .bigbtn.ghost{background:#fff; color:var(--ink); border:1px solid var(--border);}
+  footer{text-align:center; color:var(--sub); font-size:.78rem; margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">數學遊戲 · 速算</span>
+  <h1>九九乘法衝刺</h1>
+  <p>60 秒內答越多越好。連續答對有加成，答錯歸零。</p>
+</header>
+
+<!-- 開始畫面 -->
+<section id="scStart" class="screen show">
+  <div class="card">
+    <h2 style="font-size:1.05rem; margin-bottom:10px;">選一個等級開始</h2>
+    <div class="lv" id="lvList"></div>
+    <ul class="how">
+      <li>答案用數字鍵或螢幕按鍵輸入，打對就自動跳下一題。</li>
+      <li>連續答對：第 2 題起每題加成，最高 5 倍。</li>
+      <li>答錯會顯示正解 1 秒，加成歸零。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 遊戲畫面 -->
+<section id="scGame" class="screen">
+  <div class="card">
+    <div class="top">
+      <span>分數 <b id="gScore">0</b></span>
+      <span class="combo" id="gCombo"></span>
+      <span>剩 <b id="gTime">60</b> 秒</span>
+    </div>
+    <div class="bar"><i id="gBar"></i></div>
+    <div class="qbox" id="qbox">
+      <div class="q" id="gQ"></div>
+      <div class="fb" id="gFb"></div>
+    </div>
+    <div class="pad" id="pad"></div>
+    <button class="quit" id="gQuit">提早結束</button>
+  </div>
+</section>
+
+<!-- 結算畫面 -->
+<section id="scEnd" class="screen">
+  <div class="card">
+    <div class="score">
+      <div style="color:var(--sub); font-size:.9rem;" id="eLevel"></div>
+      <div class="big" id="eScore">0</div>
+      <div id="eNew"></div>
+    </div>
+    <div class="stats">
+      <div><b id="eRight">0</b><span>答對</span></div>
+      <div><b id="eAcc">0%</b><span>正確率</span></div>
+      <div><b id="eAvg">0</b><span>平均秒／題</span></div>
+    </div>
+    <div class="slow" id="eSlow"></div>
+    <button class="bigbtn" id="eAgain">再玩一次</button>
+    <button class="bigbtn ghost" id="eBack">換等級</button>
+  </div>
+</section>
+
+<footer>數學遊戲 · 九九乘法衝刺 · 成績存在這個瀏覽器</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（與教材頁共用 localStorage key，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", BEST_KEY = "mult_sprint_best_v1";
+let CH = "九九乘法衝刺";
+function logEv(ev){
+  try{ const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); a.push(Object.assign({ t: Date.now(), ch: CH }, ev)); localStorage.setItem(LOG_KEY, JSON.stringify(a)); }catch(e){}
+}
+const CLOUD_URL = (()=>{ try{ return localStorage.getItem("cloud_url_v1") || ""; }catch(e){ return ""; } })();
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+function getBest(){ try{ return JSON.parse(localStorage.getItem(BEST_KEY) || "{}"); }catch(e){ return {}; } }
+function setBest(o){ try{ localStorage.setItem(BEST_KEY, JSON.stringify(o)); }catch(e){} }
+
+// ===== 等級 =====
+// gen() 回傳 { html: 題目顯示, ans: 正解字串, key: 題目代號 }
+const rnd = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+const LEVELS = [
+  { id:"L1", name:"初級", desc:"2～5 的乘法，先把前半段練熟",
+    gen(){ const a = rnd(2,5), b = rnd(1,9); return { html:`${a} × ${b} ＝ <span class="blank" id="blank"></span>`, ans:String(a*b), key:`${a}×${b}` }; } },
+  { id:"L2", name:"中級", desc:"2～9 全部乘法，隨機出題",
+    gen(){ const a = rnd(2,9), b = rnd(2,9); return { html:`${a} × ${b} ＝ <span class="blank" id="blank"></span>`, ans:String(a*b), key:`${a}×${b}` }; } },
+  { id:"L3", name:"高級", desc:"反過來想：缺數與除法（因式分解的暖身）",
+    gen(){
+      const a = rnd(2,9), b = rnd(2,9), t = rnd(0,2);
+      if(t===0) return { html:`<span class="blank" id="blank"></span> × ${b} ＝ ${a*b}`, ans:String(a), key:`□×${b}=${a*b}` };
+      if(t===1) return { html:`${a} × <span class="blank" id="blank"></span> ＝ ${a*b}`, ans:String(b), key:`${a}×□=${a*b}` };
+      return { html:`${a*b} ÷ ${a} ＝ <span class="blank" id="blank"></span>`, ans:String(b), key:`${a*b}÷${a}` };
+    } }
+];
+const DURATION = 60;
+
+// ===== 畫面切換 =====
+const $ = id => document.getElementById(id);
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('show')); $(id).classList.add('show'); }
+
+// 開始畫面：等級按鈕 + 最佳成績
+function renderStart(){
+  const best = getBest(); const box = $('lvList'); box.innerHTML = '';
+  LEVELS.forEach(lv=>{
+    const b = document.createElement('button');
+    b.innerHTML = `<span class="best">${best[lv.id] ? '最佳 '+best[lv.id]+' 分' : ''}</span><b>${lv.name}</b><small>${lv.desc}</small>`;
+    b.addEventListener('click', ()=> start(lv));
+    box.appendChild(b);
+  });
+}
+renderStart();
+
+// 數字鍵盤
+(function(){
+  const pad = $('pad');
+  ['1','2','3','4','5','6','7','8','9','⌫','0','清除'].forEach(k=>{
+    const b = document.createElement('button'); b.textContent = k;
+    if(k==='⌫' || k==='清除') b.className = 'del';
+    b.addEventListener('pointerdown', e=>{ e.preventDefault(); press(k); });
+    pad.appendChild(b);
+  });
+})();
+
+// ===== 遊戲狀態 =====
+let lv = null, timer = null, endAt = 0, score = 0, combo = 0, typed = '', cur = null, lock = false;
+let stats = { n:0, right:0, times:[], slow:{} }, qStart = 0, lastKey = '';
+
+function start(level){
+  lv = level; CH = "九九乘法衝刺（" + lv.name + "）";
+  score = 0; combo = 0; typed = ''; lock = false;
+  stats = { n:0, right:0, times:[], slow:{} };
+  $('gScore').textContent = 0; $('gCombo').textContent = '';
+  show('scGame');
+  endAt = Date.now() + DURATION*1000;
+  tick(); timer = setInterval(tick, 200);
+  next();
+}
+function tick(){
+  const left = Math.max(0, endAt - Date.now());
+  $('gTime').textContent = Math.ceil(left/1000);
+  const bar = $('gBar'); bar.style.width = (left/(DURATION*1000)*100) + '%';
+  bar.classList.toggle('warn', left < 10000);
+  if(left <= 0) finish();
+}
+function next(){
+  let q; do{ q = lv.gen(); }while(q.key === lastKey);
+  lastKey = q.key; cur = q; typed = '';
+  $('gQ').innerHTML = q.html; $('gFb').textContent = ''; $('gFb').className = 'fb';
+  $('qbox').className = 'qbox'; lock = false; qStart = Date.now();
+}
+function press(k){
+  if(lock || !cur) return;
+  if(k==='⌫' || k==='Backspace'){ typed = typed.slice(0,-1); }
+  else if(k==='清除'){ typed = ''; }
+  else if(/^\d$/.test(k)){ if(typed.length < 3) typed += k; }
+  else return;
+  $('blank').textContent = typed;
+  if(typed.length === 0) return;
+  if(typed === cur.ans) return judge(true);
+  if(typed.length >= cur.ans.length) return judge(false);
+}
+function judge(ok){
+  lock = true;
+  const sec = (Date.now() - qStart)/1000;
+  stats.n++; stats.times.push(sec);
+  const box = $('qbox'), fb = $('gFb');
+  if(ok){
+    stats.right++; combo++;
+    const mult = Math.min(combo, 5), gain = 10*mult;
+    score += gain; $('gScore').textContent = score;
+    $('gCombo').textContent = combo >= 2 ? `🔥 連對 ${combo}　×${mult}` : '';
+    box.classList.add('ok'); fb.textContent = `＋${gain}`;
+    if(sec > 4) stats.slow[cur.key] = Math.max(stats.slow[cur.key]||0, sec);
+    setTimeout(next, 220);
+  }else{
+    combo = 0; $('gCombo').textContent = '';
+    box.classList.add('no'); fb.className = 'fb no'; fb.textContent = `正解是 ${cur.ans}`;
+    $('blank').textContent = cur.ans;
+    stats.slow[cur.key] = Math.max(stats.slow[cur.key]||0, 99);
+    setTimeout(next, 1000);
+  }
+}
+document.addEventListener('keydown', e=>{
+  if(!$('scGame').classList.contains('show')) return;
+  if(/^\d$/.test(e.key) || e.key==='Backspace'){ e.preventDefault(); press(e.key); }
+  else if(e.key==='Escape'){ finish(); }
+});
+$('gQuit').addEventListener('click', finish);
+
+function finish(){
+  if(!timer) return;
+  clearInterval(timer); timer = null; cur = null;
+  const best = getBest(); const isNew = score > (best[lv.id]||0);
+  if(isNew){ best[lv.id] = score; setBest(best); }
+  $('eLevel').textContent = lv.name + '　60 秒';
+  $('eScore').textContent = score;
+  $('eNew').innerHTML = isNew && score > 0 ? '<span class="new">🏆 新紀錄！</span>' : (best[lv.id] ? `<span style="color:var(--sub);font-size:.85rem">最佳 ${best[lv.id]} 分</span>` : '');
+  $('eRight').textContent = stats.right + ' / ' + stats.n;
+  $('eAcc').textContent = stats.n ? Math.round(stats.right/stats.n*100) + '%' : '–';
+  $('eAvg').textContent = stats.times.length ? (stats.times.reduce((a,b)=>a+b,0)/stats.times.length).toFixed(1) : '–';
+  const slow = Object.entries(stats.slow).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  $('eSlow').innerHTML = slow.length
+    ? '<b>這幾題要多練：</b>' + slow.map(([k,s])=>`<span class="chip">${k}${s>=99?'（答錯）':''}</span>`).join('')
+    : (stats.n ? '<b>每題都又快又對，太強了！</b>' : '');
+  if(stats.n) logEv({ type:"quiz", score: stats.right, total: stats.n, wrong: [] });
+  if(stats.n) cloudSend({ type:"九九乘法衝刺", detail:`${lv.name}：答對 ${stats.right}／${stats.n} 題` + (slow.length ? '，要多練 ' + slow.map(s=>s[0]).join('、') : ''), score: score + " 分" });
+  show('scEnd');
+}
+$('eAgain').addEventListener('click', ()=> start(lv));
+$('eBack').addEventListener('click', ()=>{ renderStart(); show('scStart'); });
+</script>
+</body>
+</html>
