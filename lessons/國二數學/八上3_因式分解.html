@@ -112,6 +112,21 @@
   .status.ok{background:var(--green-soft); color:#166534; font-weight:bold;}
   .status.no{background:var(--red-soft); color:#991b1b;}
   .target{text-align:center; font-size:1.2rem; font-weight:bold; margin:6px 0;}
+  .split{border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin:10px 0; background:#fffdf5;}
+  .split-h{font-weight:bold; margin-bottom:8px;}
+  .split-h b{color:var(--blue);}
+  .split-row{display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
+  .split-row label{display:flex; align-items:center; gap:6px; font-size:1rem;}
+  .split-row input{width:58px; padding:6px 8px; border:1px solid var(--border); border-radius:8px; font:inherit; font-size:1rem; text-align:center;}
+  .split-row input.no{border-color:var(--red); background:var(--red-soft);}
+  .split-row input.ok{border-color:var(--green); background:var(--green-soft);}
+  .split-row button{border:none; background:var(--blue); color:#fff; border-radius:99px; padding:8px 20px; font-family:inherit; font-size:.95rem; font-weight:bold; cursor:pointer;}
+  .chip{display:inline-block; min-width:2.2em; text-align:center; padding:2px 8px; border-radius:6px; border:1.5px solid; font-weight:bold; font-size:.95rem;}
+  .chip.sq{background:#dbeafe; border-color:#2563eb; color:#1e40af;}
+  .chip.x{background:#fef3c7; border-color:#d97706; color:#92400e;}
+  .chip.u{background:#dcfce7; border-color:#16a34a; color:#166534;}
+  .step2-h{font-weight:bold; margin:14px 0 8px;}
+  .step2-h b{color:var(--blue);}
 
   /* 十字交乘檢查器 */
   .cross{display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start;}
@@ -578,23 +593,40 @@
 
   <div class="card">
     <h2>🧩 動手拼：代數磚拼盤</h2>
-    <p style="font-size:.9rem; color:var(--sub)">把右邊的積木全部拖到左邊格子板上，拼成一個<b>沒有缺口</b>的長方形。點一下 x 長條可以轉方向。拼對了會自動標出兩邊長。</p>
-    <div class="target">目標：<span id="tileTarget"></span></div>
-    <svg id="tileSvg" viewBox="0 0 620 290" xmlns="http://www.w3.org/2000/svg" aria-label="代數磚拼盤">
-      <rect class="board" x="40" y="30" width="240" height="240"/>
-      <g class="grid" id="tileGrid"></g>
-      <rect class="tray" x="292" y="22" width="322" height="256" rx="8"/>
-      <text class="traytxt" x="453" y="268" text-anchor="middle">積木區（把這裡的積木全部拖到左邊）</text>
-      <g id="tiles"></g>
-      <g id="sideLbl"></g>
-    </svg>
-    <div class="status" id="tileStatus"></div>
+    <p style="font-size:.9rem; color:var(--sub)">分兩步：<b>先拆</b>，再<b>放</b>。先數出這個式子要用幾塊積木，數對了積木才會出現；再把積木拖到格子板上，拼成一個<b>沒有缺口</b>的長方形。點一下 x 長條可以轉方向。拼對了會自動標出兩邊長。</p>
     <div class="ctl">
       <button class="tsel on" data-i="0">第 1 題</button>
       <button class="tsel" data-i="1">第 2 題</button>
       <button class="tsel" data-i="2">第 3 題</button>
-      <button id="tileReset">↺ 重來</button>
-      <button id="tileHint">💡 提示</button>
+    </div>
+    <div class="target">目標：<span id="tileTarget"></span></div>
+
+    <div class="split" id="tileSplit">
+      <div class="split-h"><b>第 1 步：先拆。</b>這個式子要用幾塊積木？</div>
+      <div class="split-row">
+        <label><span class="chip sq">x²</span><input id="spSq" type="number" inputmode="numeric" min="0" max="20" aria-label="幾個 x 平方"> 個</label>
+        <label><span class="chip x">x</span><input id="spX" type="number" inputmode="numeric" min="0" max="20" aria-label="幾條 x"> 條</label>
+        <label><span class="chip u">1</span><input id="spU" type="number" inputmode="numeric" min="0" max="20" aria-label="幾個 1"> 個</label>
+        <button id="spCheck">確定</button>
+      </div>
+      <div class="status" id="spStatus"></div>
+    </div>
+
+    <div id="tileStep2" hidden>
+      <div class="step2-h"><b>第 2 步：再放。</b>把右邊的積木全部拖到左邊，拼成沒有缺口的長方形。</div>
+      <svg id="tileSvg" viewBox="0 0 620 290" xmlns="http://www.w3.org/2000/svg" aria-label="代數磚拼盤">
+        <rect class="board" x="40" y="30" width="240" height="240"/>
+        <g class="grid" id="tileGrid"></g>
+        <rect class="tray" x="292" y="22" width="322" height="256" rx="8"/>
+        <text class="traytxt" x="453" y="268" text-anchor="middle">積木區（把這裡的積木全部拖到左邊）</text>
+        <g id="tiles"></g>
+        <g id="sideLbl"></g>
+      </svg>
+      <div class="status" id="tileStatus"></div>
+      <div class="ctl">
+        <button id="tileReset">↺ 積木歸位</button>
+        <button id="tileHint">💡 提示</button>
+      </div>
     </div>
     <div class="tip">✅ 拼完看兩邊：寬是 x＋幾、高是 x＋幾，兩個「幾」相乘就是 c、相加就是 b。這就是十字交乘在做的事。</div>
   </div>
@@ -1230,19 +1262,72 @@ document.getElementById('submitQuiz').addEventListener('click',()=>{
     const side = n => n ? `(x＋${n})` : 'x';
     fail(`拼成長方形了，但寬 ${side(b)}、高 ${side(d)} 乘起來不是目標。x 磚的方向和位置再想想。`);
   }
-  function build(idx){
-    cur = idx; tiles = []; solved = false; failLogged = false;
+  // ── 第 1 步：先拆（數出要幾塊積木）──
+  const step2 = document.getElementById('tileStep2'), spStatus = document.getElementById('tileSplit').querySelector('#spStatus');
+  const spSq = document.getElementById('spSq'), spX = document.getElementById('spX'), spU = document.getElementById('spU');
+  let splitDone = false, splitTries = 0, splitFailLogged = false;
+  function setSp(msg, cls){ spStatus.textContent = msg; spStatus.className = 'status' + (cls ? ' '+cls : ''); }
+  function spawnTiles(){
+    const P = PUZ[cur];
+    tiles = []; solved = false; failLogged = false;
     layer.innerHTML = ''; sideLbl.innerHTML = '';
-    const P = PUZ[idx];
     add('sq', 300, 30);
     for(let k=0;k<P.nx;k++) add('x', 410 + 26*k, 30);
     for(let k=0;k<P.nu;k++) add('u', 300 + 28*(k%6), 140 + 30*Math.floor(k/6));
+    step2.hidden = false;
+    setStatus(`右邊有 1 個 x²、${P.nx} 條 x、${P.nu} 個 1。全部拖到左邊拼成長方形。`, '');
+  }
+  function checkSplit(){
+    if(splitDone) return;
+    const P = PUZ[cur];
+    const vals = [spSq, spX, spU].map(el => el.value.trim() === '' ? null : parseInt(el.value, 10));
+    if(vals.some(v => v === null || isNaN(v))){ setSp('三格都要填數字。', 'no'); return; }
+    splitTries++;
+    const want = [1, P.nx, P.nu];
+    const hintWhere = [
+      'x² 前面沒有寫數字，就是 1 個。',
+      'x 有幾條，看 x 前面的數字（係數）。',
+      '1 有幾個，看最後面那個沒有 x 的數字（常數項）。'
+    ];
+    const hintNum = [
+      'x² 是 1 個。',
+      `x 前面寫 ${P.b}，就是 ${P.nx} 條 x。`,
+      `最後面是 ${P.c}，就是 ${P.nu} 個 1。`
+    ];
+    const errs = [];
+    [spSq, spX, spU].forEach((el, i) => {
+      const ok = vals[i] === want[i];
+      el.classList.toggle('ok', ok); el.classList.toggle('no', !ok);
+      if(!ok) errs.push(splitTries >= 2 ? hintNum[i] : hintWhere[i]);
+    });
+    if(errs.length){
+      setSp('✘ 再看一次。' + errs.join(' '), 'no');
+      if(!splitFailLogged){ splitFailLogged = true; logEv({ type:"practice", q:"p3q8"+cur, ok:false }); pracCount++; }
+      return;
+    }
+    splitDone = true;
+    [spSq, spX, spU].forEach(el => el.disabled = true);
+    setSp(`✔ 拆對了！x²＋${P.b}x＋${P.c} ＝ 1 個 x² ＋ ${P.nx} 條 x ＋ ${P.nu} 個 1。積木已經在下面，換你放。`, 'ok');
+    logEv({ type:"practice", q:"p3q8"+cur, ok:true }); pracCount++; pracOk++;
+    spawnTiles();
+    step2.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+  document.getElementById('spCheck').addEventListener('click', checkSplit);
+  [spSq, spX, spU].forEach(el => el.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); checkSplit(); } }));
+
+  function build(idx){
+    cur = idx; tiles = []; solved = false; failLogged = false;
+    splitDone = false; splitTries = 0; splitFailLogged = false;
+    layer.innerHTML = ''; sideLbl.innerHTML = '';
+    step2.hidden = true;
+    const P = PUZ[idx];
     document.getElementById('tileTarget').textContent = `x²＋${P.b}x＋${P.c}`;
-    setStatus(`需要：1 個 x²、${P.nx} 條 x、${P.nu} 個 1。全部拖到左邊拼成長方形。`, '');
+    [spSq, spX, spU].forEach(el => { el.value = ''; el.disabled = false; el.classList.remove('ok','no'); });
+    setSp('看式子裡的三個數字：x² 前面、x 前面、最後一個。填好按確定。', '');
     document.querySelectorAll('.tsel').forEach(btn => btn.classList.toggle('on', +btn.dataset.i === idx));
   }
   document.querySelectorAll('.tsel').forEach(btn => btn.addEventListener('click', ()=> build(+btn.dataset.i)));
-  document.getElementById('tileReset').addEventListener('click', ()=> build(cur));
+  document.getElementById('tileReset').addEventListener('click', ()=> { if(splitDone) spawnTiles(); });
   document.getElementById('tileHint').addEventListener('click', ()=>{
     const P = PUZ[cur];
     setStatus(`提示：這題要拼成 高 x＋${P.p}、寬 x＋${P.q} 的長方形。先放 x²，再把 x 磚貼在它的右邊和下面，最後用 1 補角落。`, '');
