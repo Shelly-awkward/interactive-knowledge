@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小四數學｜四上 第4單元 除法</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#b45309; --accent-soft:#fef3c7;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#b45309,#f59e0b); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國小四年級上學期 · 第4單元</span>
+  <h1>除法</h1>
+  <p>三個小節＋單元總測驗。除數變成二位數，最難的是「試商」：把除數看成整十來估，商太大就調小、餘數太大就調大。有一個「直式除法逐步器」，會把每一步的試商過程攤開來。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">4-1 除以整十數</button>
+  <button data-t="s2">4-2 除數是二位數的直式</button>
+  <button data-t="s3">4-3 驗算與應用</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 4-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會算除以 10、20、30 … 這種整十數</li>
+      <li>知道餘數一定要比除數小</li>
+      <li>知道商要寫在哪一位</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：除以整十，先把 0 遮起來想</h2>
+    <div class="formula">80 ÷ 20 → 想「8 ÷ 2 ＝ 4」→ 答案 4</div>
+    <div class="formula">150 ÷ 30 → 想「15 ÷ 3 ＝ 5」→ 答案 5</div>
+    <p>兩邊各遮掉一個 0，答案<b>不變</b>。這是因為「80 裡面有幾個 20」和「8 裡面有幾個 2」是同一個問題。</p>
+    <div class="warn">⚠️ 只有<b>除法</b>可以這樣兩邊同時遮 0。乘法不行（80 × 20 不等於 8 × 2）。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：有餘數的時候</h2>
+    <p>算 <span class="num">95 ÷ 20</span>：</p>
+    <div class="formula">20 × 4 ＝ 80，95 − 80 ＝ 15 → 商 4，餘 15</div>
+    <p>餘數 15 比除數 20 小，才算除完。如果餘數比除數大，代表商還可以再加 1。</p>
+    <div class="formula">餘數 一定 &lt; 除數</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：商要寫在哪一位</h2>
+    <p>算 <span class="num">240 ÷ 30</span>，商是 8，只有一位數，所以寫在<b>個位</b>：</p>
+    <div class="svgbox"><pre class="vert">           8
+     ┌──────
+3 0 │ 2 4 0
+      2 4 0
+      ─────
+          0</pre></div>
+    <p>判斷方法：先看被除數的前兩位「24」，比 30 小，不夠除；再看前三位「240」，夠除了，所以商從個位開始寫。</p>
+    <div class="note">💡 一句話：<b>被除數從左邊數，數到「夠除」為止，商就從那一位開始寫。</b></div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜<span class='num'>180 ÷ 30</span> ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 兩邊各遮一個 0：18 ÷ 3 ＝ 6。</p>
+        <p class="step"><b>②</b> 答案：<b>6</b>。檢查：30 × 6 ＝ 180，正確。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜<span class='num'>170 ÷ 40</span> ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 17 ÷ 4 → 商 4（4 × 4 ＝ 16）。</p>
+        <p class="step"><b>②</b> 40 × 4 ＝ 160，170 − 160 ＝ 10。</p>
+        <p class="step"><b>③</b> 答案：<b>商 4，餘 10</b>。餘數 10 &lt; 40，正確。</p>
+        <p class="step"><b>④</b> 注意：遮 0 之後算 17 ÷ 4 餘 1，但真正的餘數是 <b>10</b>，不是 1。餘數要用原本的數去減。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜<span class='num'>63 ÷ 20</span>，小明說商 2 餘 23，對嗎？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 餘數 23 比除數 20 大，代表還可以再分一次。</p>
+        <p class="step"><b>②</b> 商 3：20 × 3 ＝ 60，63 − 60 ＝ 3。</p>
+        <p class="step"><b>③</b> 正確答案：<b>商 3，餘 3</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. <span class='num'>120 ÷ 40</span> ＝ ？</div>
+      <label><input type="radio" name="p1q1" value="A">4</label>
+      <label><input type="radio" name="p1q1" value="B">80</label>
+      <label><input type="radio" name="p1q1" value="C">3</label>
+      <label><input type="radio" name="p1q1" value="D">30</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　12 ÷ 4 ＝ 3。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. <span class='num'>350 ÷ 50</span> ＝ ？</div>
+      <label><input type="radio" name="p1q2" value="A">6</label>
+      <label><input type="radio" name="p1q2" value="B">7</label>
+      <label><input type="radio" name="p1q2" value="C">5</label>
+      <label><input type="radio" name="p1q2" value="D">70</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　35 ÷ 5 ＝ 7。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. <span class='num'>130 ÷ 60</span> 的餘數是多少？</div>
+      <label><input type="radio" name="p1q3" value="A">10</label>
+      <label><input type="radio" name="p1q3" value="B">13</label>
+      <label><input type="radio" name="p1q3" value="C">70</label>
+      <label><input type="radio" name="p1q3" value="D">1</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　60 × 2 ＝ 120，130 − 120 ＝ 10。餘數要用原本的數去減，不是遮 0 後的 1。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. <span class='num'>92 ÷ 30</span>，下面哪個答案是對的？</div>
+      <label><input type="radio" name="p1q4" value="A">商 2 餘 3</label>
+      <label><input type="radio" name="p1q4" value="B">商 3 餘 2</label>
+      <label><input type="radio" name="p1q4" value="C">商 2 餘 32</label>
+      <label><input type="radio" name="p1q4" value="D">商 3 餘 20</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　30 × 3 ＝ 90，92 − 90 ＝ 2。「商 2 餘 32」的餘數比除數大，還沒除完。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">5. 下面哪一題的答案跟 <span class='num'>27 ÷ 3</span> 一樣？</div>
+      <label><input type="radio" name="p1q5" value="A">2700 ÷ 30</label>
+      <label><input type="radio" name="p1q5" value="B">27 ÷ 30</label>
+      <label><input type="radio" name="p1q5" value="C">270 ÷ 3</label>
+      <label><input type="radio" name="p1q5" value="D">270 ÷ 30</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　270 ÷ 30 兩邊各遮一個 0，就是 27 ÷ 3 ＝ 9。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會用「把除數看成整十」的方法試商</li>
+      <li>商太大或餘數太大時，知道怎麼調整</li>
+      <li>會算三位數 ÷ 二位數（商兩位數）</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：試商——把除數看成整十</h2>
+    <p>算 <span class="num">96 ÷ 23</span>，23 不好想，先把它<b>看成 20</b>：</p>
+    <div class="formula">96 ÷ 20 → 想 9 ÷ 2 → 商大約是 4</div>
+    <div class="formula">試試看：23 × 4 ＝ 92，96 − 92 ＝ 4 → 4 &lt; 23，剛好！</div>
+    <p>答案：商 4，餘 4。</p>
+    <div class="note">💡 除數的個位是 1～4 就看成小一點的整十（23 → 20）；個位是 5～9 就看成大一點的整十（37 → 40）。這樣估出來的商比較準。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：估錯了怎麼辦——調商</h2>
+    <p>試商只是「猜」，猜錯很正常，重點是<b>知道怎麼修</b>：</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>情況</th><th>怎麼看出來</th><th>怎麼修</th></tr>
+        <tr><td class="name">商太大</td><td>乘出來比被除數大，<b>減不夠</b></td><td>商減 1，再試</td></tr>
+        <tr><td class="name">商太小</td><td>減完的<b>餘數 ≥ 除數</b></td><td>商加 1，再試</td></tr>
+        <tr class="hi"><td class="name">剛剛好</td><td>減得夠，而且餘數 &lt; 除數</td><td>完成</td></tr>
+      </table>
+    </div>
+    <p>例：<span class="num">170 ÷ 28</span>，把 28 看成 30，17 ÷ 3 → 試商 5。28 × 5 ＝ 140，170 − 140 ＝ 30。餘數 30 ≥ 28，<b>商太小</b>，改成 6：28 × 6 ＝ 168，餘 2。答案商 6 餘 2。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：商是兩位數的直式</h2>
+    <p>算 <span class="num">375 ÷ 25</span>：</p>
+    <div class="svgbox"><pre class="vert">         1 5
+     ┌──────
+2 5 │ 3 7 5
+      2 5      <span class='g'>← 37 裡有 1 個 25，商的十位寫 1</span>
+      ────
+      1 2 5    <span class='g'>← 37 − 25 ＝ 12，把 5 拿下來變 125</span>
+      1 2 5    <span class='g'>← 125 裡有 5 個 25，商的個位寫 5</span>
+      ────
+          0</pre></div>
+    <ol>
+      <li>先看前兩位 37，夠除（37 ≥ 25），商從<b>十位</b>開始寫：37 ÷ 25 商 1，餘 12</li>
+      <li>把下一位 5 <b>拿下來</b>，變成 125</li>
+      <li>125 ÷ 25 商 5，餘 0</li>
+    </ol>
+    <div class="warn">⚠️ 拿下來一位之後，如果還是不夠除，商的那一位要<b>寫 0</b>，不能跳過。例如 612 ÷ 30 ＝ 20 餘 12，個位的 0 一定要寫。</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 小工具：直式除法逐步器</h2>
+    <div class="tool">
+      <div class="row">
+        <input type="number" id="divN" min="1" max="9999" placeholder="被除數" value="375">
+        <span style="font-size:1.2rem">÷</span>
+        <input type="number" id="divD" min="10" max="99" placeholder="除數" value="25">
+        <button id="divGo">一步一步看</button>
+      </div>
+      <div id="divOut"></div>
+      <div class="hint">被除數最多四位數、除數限二位數（10～99）。每一步都會寫出「看成整十估幾」和「實際是幾」，兩個不一樣就是要調商的地方。</div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜<span class='num'>87 ÷ 21</span></summary>
+      <div class="body">
+        <p class="step"><b>①</b> 21 看成 20：8 ÷ 2 → 試商 4。</p>
+        <p class="step"><b>②</b> 21 × 4 ＝ 84，87 − 84 ＝ 3，3 &lt; 21。</p>
+        <p class="step"><b>③</b> 答案：<b>商 4，餘 3</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜<span class='num'>250 ÷ 38</span></summary>
+      <div class="body">
+        <p class="step"><b>①</b> 38 看成 40：25 ÷ 4 → 試商 6。</p>
+        <p class="step"><b>②</b> 38 × 6 ＝ 228，250 − 228 ＝ 22，22 &lt; 38，可以。</p>
+        <p class="step"><b>③</b> 答案：<b>商 6，餘 22</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜<span class='num'>96 ÷ 16</span>，試商 5 對嗎？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 16 看成 20：9 ÷ 2 → 試商 4。16 × 4 ＝ 64，96 − 64 ＝ 32，餘數 32 ≥ 16，太小。</p>
+        <p class="step"><b>②</b> 改 5：16 × 5 ＝ 80，餘 16，還是 ≥ 16，還是太小。</p>
+        <p class="step"><b>③</b> 改 6：16 × 6 ＝ 96，餘 0。答案：<b>6</b>。</p>
+        <p class="step"><b>④</b> 看成整十只是起點，該調就調，有時要調兩次。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜<span class='num'>936 ÷ 24</span></summary>
+      <div class="body">
+        <p class="step"><b>①</b> 前兩位 93 ≥ 24，商從十位開始。93 ÷ 24：24 看成 20，9 ÷ 2 → 試 4。24 × 4 ＝ 96 &gt; 93，太大，改 3：24 × 3 ＝ 72，93 − 72 ＝ 21。</p>
+        <p class="step"><b>②</b> 拿下 6，變 216。216 ÷ 24：試 9，24 × 9 ＝ 216，餘 0。</p>
+        <p class="step"><b>③</b> 答案：<b>39</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 算 <span class='num'>174 ÷ 29</span>，把 29 看成幾來試商比較好？</div>
+      <label><input type="radio" name="p2q1" value="A">10</label>
+      <label><input type="radio" name="p2q1" value="B">25</label>
+      <label><input type="radio" name="p2q1" value="C">30</label>
+      <label><input type="radio" name="p2q1" value="D">20</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　個位是 9，看成大一點的整十 30。17 ÷ 3 → 試 5，29 × 5 ＝ 145，餘 29 ≥ 29 → 調成 6，29 × 6 ＝ 174，剛好。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. <span class='num'>91 ÷ 13</span> ＝ ？</div>
+      <label><input type="radio" name="p2q2" value="A">6</label>
+      <label><input type="radio" name="p2q2" value="B">7 餘 1</label>
+      <label><input type="radio" name="p2q2" value="C">8</label>
+      <label><input type="radio" name="p2q2" value="D">7</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　13 × 7 ＝ 91，餘 0。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 算 <span class='num'>200 ÷ 32</span>，試商 7 之後發現 32 × 7 ＝ 224，比 200 大。接下來要：</div>
+      <label><input type="radio" name="p2q3" value="A">商改 6</label>
+      <label><input type="radio" name="p2q3" value="B">餘數寫 24</label>
+      <label><input type="radio" name="p2q3" value="C">商改 8</label>
+      <label><input type="radio" name="p2q3" value="D">換除數</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　乘出來比被除數大就是商太大，減 1 改成 6：32 × 6 ＝ 192，餘 8。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. <span class='num'>612 ÷ 18</span> ＝ ？</div>
+      <label><input type="radio" name="p2q4" value="A">34</label>
+      <label><input type="radio" name="p2q4" value="B">43</label>
+      <label><input type="radio" name="p2q4" value="C">30 餘 12</label>
+      <label><input type="radio" name="p2q4" value="D">33</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　61 ÷ 18 商 3 餘 7，拿下 2 變 72，72 ÷ 18 ＝ 4。答案 34。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. <span class='num'>840 ÷ 42</span> ＝ ？</div>
+      <label><input type="radio" name="p2q5" value="A">2</label>
+      <label><input type="radio" name="p2q5" value="B">20</label>
+      <label><input type="radio" name="p2q5" value="C">21</label>
+      <label><input type="radio" name="p2q5" value="D">200</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　84 ÷ 42 ＝ 2，拿下 0 變 0，0 ÷ 42 ＝ 0，個位要寫 0。答案 20。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">6. <span class='num'>458 ÷ 15</span> 的餘數是多少？</div>
+      <label><input type="radio" name="p2q6" value="A">30</label>
+      <label><input type="radio" name="p2q6" value="B">8</label>
+      <label><input type="radio" name="p2q6" value="C">13</label>
+      <label><input type="radio" name="p2q6" value="D">3</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　15 × 30 ＝ 450，458 − 450 ＝ 8。商 30 餘 8。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會用「除數 × 商 ＋ 餘數 ＝ 被除數」驗算</li>
+      <li>看得懂「至少要幾個」要進位、「最多可以」要捨去</li>
+      <li>分得清楚題目問的是商還是餘數</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：驗算公式</h2>
+    <div class="formula">除數 × 商 ＋ 餘數 ＝ 被除數</div>
+    <p><span class="num">250 ÷ 38 ＝ 6 … 22</span> → 檢查：38 × 6 ＋ 22 ＝ 228 ＋ 22 ＝ 250 ✔</p>
+    <div class="note">💡 驗算兩件事都要看：① 乘回去加餘數有沒有等於被除數；② 餘數有沒有比除數小。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：餘數要「進位」還是「捨去」</h2>
+    <p>應用題除完有餘數時，答案不一定是商，要看題目問什麼：</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>題目問法</th><th>怎麼處理</th><th>例子（50 人，每車 12 人）</th></tr>
+        <tr><td class="name">至少要幾輛車？</td><td>商 <b>＋ 1</b>（進位）</td><td>50 ÷ 12 ＝ 4 … 2，剩 2 人也要一輛 → <b>5 輛</b></td></tr>
+        <tr><td class="name">最多可以坐滿幾輛？</td><td>只看<b>商</b>（捨去）</td><td>→ <b>4 輛</b></td></tr>
+        <tr><td class="name">還剩幾人？</td><td>只看<b>餘數</b></td><td>→ <b>2 人</b></td></tr>
+      </table>
+    </div>
+    <div class="warn">⚠️ 「至少」「全部都要」→ 有餘數就多一個。<br>「最多」「剛好裝滿」→ 餘數不算。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：平分和包含，都是除法</h2>
+    <ul>
+      <li><b>平分</b>：480 顆糖平分給 24 人，每人幾顆？→ 480 ÷ 24 ＝ 20（顆）</li>
+      <li><b>包含</b>：480 顆糖每 24 顆裝一包，可裝幾包？→ 480 ÷ 24 ＝ 20（包）</li>
+    </ul>
+    <p>算式一樣，但單位不一樣。寫答案時記得寫對單位。</p>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜<span class='num'>325 ÷ 24</span> 算出商 13 餘 13。驗算看看對不對。</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 24 × 13 ＝ 312，312 ＋ 13 ＝ 325 ✔</p>
+        <p class="step"><b>②</b> 餘數 13 &lt; 24 ✔</p>
+        <p class="step"><b>③</b> 兩個檢查都過，答案正確。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜163 本書，每箱裝 20 本，全部裝完至少要幾箱？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 163 ÷ 20 ＝ 8 … 3。</p>
+        <p class="step"><b>②</b> 8 箱裝了 160 本，還剩 3 本，也要一箱。</p>
+        <p class="step"><b>③</b> 答案：<b>9 箱</b>（進位）。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜一條 250 公分的緞帶，每 35 公分剪一段，最多剪幾段？剩幾公分？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 250 ÷ 35 ＝ 7 … 5。</p>
+        <p class="step"><b>②</b> 最多剪 <b>7 段</b>（餘數不夠一段，捨去），剩 <b>5 公分</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. <span class='num'>187 ÷ 15 ＝ 12 … 7</span>，驗算的算式是：</div>
+      <label><input type="radio" name="p3q1" value="A">12 × 7 ＋ 15</label>
+      <label><input type="radio" name="p3q1" value="B">15 × 7 ＋ 12</label>
+      <label><input type="radio" name="p3q1" value="C">15 × 12 ＋ 7</label>
+      <label><input type="radio" name="p3q1" value="D">187 × 15 ＋ 7</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　除數 × 商 ＋ 餘數：15 × 12 ＋ 7 ＝ 180 ＋ 7 ＝ 187。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 134 人搭船，每艘船限坐 16 人，至少要幾艘？</div>
+      <label><input type="radio" name="p3q2" value="A">10</label>
+      <label><input type="radio" name="p3q2" value="B">8</label>
+      <label><input type="radio" name="p3q2" value="C">9</label>
+      <label><input type="radio" name="p3q2" value="D">6</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　134 ÷ 16 ＝ 8 … 6，剩 6 人也要一艘 → 9 艘。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">3. 有 275 顆彈珠，每 30 顆裝一袋，最多能裝滿幾袋？</div>
+      <label><input type="radio" name="p3q3" value="A">8</label>
+      <label><input type="radio" name="p3q3" value="B">10</label>
+      <label><input type="radio" name="p3q3" value="C">5</label>
+      <label><input type="radio" name="p3q3" value="D">9</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　275 ÷ 30 ＝ 9 … 5，裝滿的只有 9 袋。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. 上一題還剩幾顆彈珠？</div>
+      <label><input type="radio" name="p3q4" value="A">9</label>
+      <label><input type="radio" name="p3q4" value="B">5</label>
+      <label><input type="radio" name="p3q4" value="C">30</label>
+      <label><input type="radio" name="p3q4" value="D">0</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　餘數就是 5 顆。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">5. 小華說「<span class='num'>500 ÷ 45 ＝ 10 … 50</span>」。這個答案錯在哪？</div>
+      <label><input type="radio" name="p3q5" value="A">驗算不對，是對的</label>
+      <label><input type="radio" name="p3q5" value="B">商太大</label>
+      <label><input type="radio" name="p3q5" value="C">餘數比除數大，商太小</label>
+      <label><input type="radio" name="p3q5" value="D">除數寫錯</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　餘數 50 ≥ 45，代表還能再分一次。正確：商 11 餘 5（45 × 11 ＝ 495）。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="C">
+      <div class="stem">1. <span class='num'>270 ÷ 30</span> ＝ ？</div>
+      <label><input type="radio" name="qz1" value="A">80</label>
+      <label><input type="radio" name="qz1" value="B">90</label>
+      <label><input type="radio" name="qz1" value="C">9</label>
+      <label><input type="radio" name="qz1" value="D">8</label>
+      <div class="fb" data-exp="　27 ÷ 3 ＝ 9。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">2. <span class='num'>150 ÷ 40</span> 的餘數是：</div>
+      <label><input type="radio" name="qz2" value="A">7</label>
+      <label><input type="radio" name="qz2" value="B">10</label>
+      <label><input type="radio" name="qz2" value="C">30</label>
+      <label><input type="radio" name="qz2" value="D">3</label>
+      <div class="fb" data-exp="　40 × 3 ＝ 120，150 − 120 ＝ 30。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 算 <span class='num'>190 ÷ 37</span>，把 37 看成幾來試商最好？</div>
+      <label><input type="radio" name="qz3" value="A">40</label>
+      <label><input type="radio" name="qz3" value="B">30</label>
+      <label><input type="radio" name="qz3" value="C">35</label>
+      <label><input type="radio" name="qz3" value="D">50</label>
+      <div class="fb" data-exp="　個位是 7，看成 40。19 ÷ 4 → 試 4，37 × 4 ＝ 148，餘 42 ≥ 37 → 調成 5，37 × 5 ＝ 185，餘 5。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. <span class='num'>84 ÷ 12</span> ＝ ？</div>
+      <label><input type="radio" name="qz4" value="A">8</label>
+      <label><input type="radio" name="qz4" value="B">9</label>
+      <label><input type="radio" name="qz4" value="C">6</label>
+      <label><input type="radio" name="qz4" value="D">7</label>
+      <div class="fb" data-exp="　12 × 7 ＝ 84。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">5. 試商 6 時發現乘出來的數比被除數大，代表：</div>
+      <label><input type="radio" name="qz5" value="A">商太大，要減 1</label>
+      <label><input type="radio" name="qz5" value="B">剛剛好</label>
+      <label><input type="radio" name="qz5" value="C">餘數算錯</label>
+      <label><input type="radio" name="qz5" value="D">商太小，要加 1</label>
+      <div class="fb" data-exp="　減不夠就是商太大，改成 5 再試。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">6. <span class='num'>756 ÷ 21</span> ＝ ？</div>
+      <label><input type="radio" name="qz6" value="A">36</label>
+      <label><input type="radio" name="qz6" value="B">35 餘 21</label>
+      <label><input type="radio" name="qz6" value="C">30 餘 6</label>
+      <label><input type="radio" name="qz6" value="D">34</label>
+      <div class="fb" data-exp="　75 ÷ 21 商 3 餘 12，拿下 6 變 126，126 ÷ 21 ＝ 6。答案 36。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">7. <span class='num'>630 ÷ 21</span> ＝ ？</div>
+      <label><input type="radio" name="qz7" value="A">3</label>
+      <label><input type="radio" name="qz7" value="B">30</label>
+      <label><input type="radio" name="qz7" value="C">33</label>
+      <label><input type="radio" name="qz7" value="D">300</label>
+      <div class="fb" data-exp="　63 ÷ 21 ＝ 3，拿下 0 後 0 ÷ 21 ＝ 0，個位寫 0 → 30。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">8. <span class='num'>413 ÷ 19 ＝ 21 … 14</span>，驗算：</div>
+      <label><input type="radio" name="qz8" value="A">21 × 14 ＋ 19 ＝ 413 ✔</label>
+      <label><input type="radio" name="qz8" value="B">19 × 14 ＋ 21 ＝ 413 ✔</label>
+      <label><input type="radio" name="qz8" value="C">無法驗算</label>
+      <label><input type="radio" name="qz8" value="D">19 × 21 ＋ 14 ＝ 413 ✔</label>
+      <div class="fb" data-exp="　19 × 21 ＝ 399，399 ＋ 14 ＝ 413。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">9. 245 個學生分組，每組 18 人，至少要分幾組才能讓每個人都有組？</div>
+      <label><input type="radio" name="qz9" value="A">13</label>
+      <label><input type="radio" name="qz9" value="B">12</label>
+      <label><input type="radio" name="qz9" value="C">15</label>
+      <label><input type="radio" name="qz9" value="D">14</label>
+      <div class="fb" data-exp="　245 ÷ 18 ＝ 13 … 11，剩下 11 人也要一組 → 14 組。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">10. 一捲 300 公分的繩子，每 45 公分剪一段，最多剪幾段？</div>
+      <label><input type="radio" name="qz10" value="A">7</label>
+      <label><input type="radio" name="qz10" value="B">8</label>
+      <label><input type="radio" name="qz10" value="C">5</label>
+      <label><input type="radio" name="qz10" value="D">6</label>
+      <div class="fb" data-exp="　300 ÷ 45 ＝ 6 … 30，餘 30 不夠一段，最多 6 段。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 小四數學 · 四上第 4 單元「除法」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "四上4 除法";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// 直式除法逐步器
+function nearTen(d){ return (d % 10 >= 5) ? Math.ceil(d / 10) * 10 : Math.floor(d / 10) * 10; }
+function divShow(){
+  const n = parseInt(document.getElementById('divN').value, 10);
+  const d = parseInt(document.getElementById('divD').value, 10);
+  const out = document.getElementById('divOut');
+  if(!(n >= 1 && n <= 9999 && d >= 10 && d <= 99)){ out.innerHTML = '<div class="warn">被除數請填 1～9999，除數請填 10～99。</div>'; return; }
+  const digits = String(n).split('').map(Number), L = digits.length;
+  const t = nearTen(d);
+  const sp = s => String(s).split('').join(' ');
+  const margin = ' '.repeat(6);                                          // 「2 5 │ 」的寬度
+  const rawAt = (raw, i) => margin + ' '.repeat(Math.max(0, 2 * i + 1 - raw.length)) + raw;   // raw 的最後一格對齊第 i 位
+  let cur = 0, qs = '', started = false, steps = [], lines = [];
+  for(let i = 0; i < L; i++){
+    cur = cur * 10 + digits[i];
+    if(!started && cur < d){ qs += ' '; continue; }
+    started = true;
+    const q = Math.floor(cur / d);
+    const guess = Math.min(9, Math.floor(cur / t));                    // 把除數看成整十估出來的商
+    const note = guess === q ? `看成 ${t} 估 ${guess}，剛好` :
+                 (guess > q ? `看成 ${t} 估 ${guess}，但 ${d} × ${guess} ＝ ${d * guess} 減不夠 → 調小成 ${q}` :
+                              `看成 ${t} 估 ${guess}，但餘數 ${cur - d * guess} ≥ ${d} → 調大成 ${q}`);
+    steps.push(`<li><b>${cur} ÷ ${d}</b>：${note}。${d} × ${q} ＝ ${d * q}，${cur} − ${d * q} ＝ ${cur - d * q}</li>`);
+    qs += String(q);
+    const prod = String(d * q);
+    lines.push(rawAt(sp(prod), i));
+    lines.push(rawAt('─'.repeat(2 * Math.max(prod.length, String(cur).length) - 1), i));
+    cur = cur - d * q;
+    if(i < L - 1) lines.push(rawAt(sp(String(cur * 10 + digits[i + 1])), i + 1) + '   <span class="g">← 把 ' + digits[i + 1] + ' 拿下來</span>');
+    else lines.push(rawAt(sp(String(cur)), i) + '   <span class="g">← 餘數</span>');
+  }
+  const quot = Math.floor(n / d), rem = n % d;
+  const head = margin + sp(qs);
+  const top = ' '.repeat(5) + '┌' + '─'.repeat(2 * L + 1);
+  const body = sp(String(d)) + ' │ ' + sp(String(n));
+  out.innerHTML = '<pre class="vert" style="text-align:left">' + [head, top, body].concat(lines).join('\n') + '</pre>' +
+    '<ol style="margin:8px 0 4px 1.3em">' + steps.join('') + '</ol>' +
+    `<div class="out">${n} ÷ ${d} ＝ ${quot}${rem ? ' … ' + rem : ''}</div>` +
+    `<div class="hint">驗算：${d} × ${quot} ＋ ${rem} ＝ ${d * quot + rem}，餘數 ${rem} &lt; ${d} ✔</div>`;
+}
+document.getElementById('divGo').addEventListener('click', divShow);
+divShow();
+
+</script>
+</body>
+</html>

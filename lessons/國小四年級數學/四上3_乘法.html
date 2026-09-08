@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小四數學｜四上 第3單元 乘法</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#0f766e; --accent-soft:#ccfbf1;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#0f766e,#14b8a6); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國小四年級上學期 · 第3單元</span>
+  <h1>乘法</h1>
+  <p>三個小節＋單元總測驗。重點只有一個：乘數是二位數時，要拆成「個位」和「十位」兩層來乘，第二層要往左移一格。有一個「直式乘法展示器」可以把任何題目一步一步攤開來看。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">3-1 二位數×二位數</button>
+  <button data-t="s2">3-2 三位數×二位數、末尾有 0</button>
+  <button data-t="s3">3-3 估算與應用</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 3-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道為什麼乘數是二位數時要「分兩層」算</li>
+      <li>會把第二層往左移一格，並說得出為什麼</li>
+      <li>能正確算出二位數 × 二位數</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：把乘數拆開，分兩層算</h2>
+    <p>算 <span class="num">34 × 26</span> 的時候，把 26 拆成 <b>20</b> 和 <b>6</b>，分成兩層：</p>
+    <div class="formula">34 × 6 ＝ 204　（第一層：乘個位）</div>
+    <div class="formula">34 × 20 ＝ 680　（第二層：乘十位）</div>
+    <div class="formula">204 ＋ 680 ＝ <b>884</b></div>
+    <div class="note">💡 為什麼可以拆？因為 26 個 34，就是「6 個 34」再加「20 個 34」。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：直式怎麼寫</h2>
+    <div class="svgbox"><pre class="vert">     3 4
+  ×  2 6
+  ──────
+   2 0 4   <span class='g'>← 34 × 6</span>
+   <span class='c'>6 8</span> <span class='g'>·</span>   <span class='g'>← 34 × 2（十位），往左移一格</span>
+  ──────
+   8 8 4</pre></div>
+    <p>第二層寫的 <b>68</b>，其實是 <b>680</b>。因為它是「34 × 2 個十」，所以要<b>從十位開始寫</b>，個位空著（或點一個點）。</p>
+    <div class="warn">⚠️ 最常見的錯誤：第二層沒有往左移，把 68 直接對齊寫在個位。這樣會算成 204 ＋ 68 ＝ 272，差很多。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：每一層裡面照舊要進位</h2>
+    <p>算 <span class="num">47 × 38</span>：</p>
+    <div class="svgbox"><pre class="vert">     4 7
+  ×  3 8
+  ──────
+   3 7 6   <span class='g'>← 47 × 8（7×8＝56 寫 6 進 5）</span>
+ 1 4 1 <span class='g'>·</span>   <span class='g'>← 47 × 3（十位）</span>
+  ──────
+ 1 7 8 6</pre></div>
+    <div class="note">💡 每一層都是一個「二位數 × 一位數」，三年級學過的進位規則完全一樣。</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 小工具：直式乘法展示器</h2>
+    <div class="tool">
+      <div class="row">
+        <input type="number" id="mulA" min="1" max="999" placeholder="被乘數" value="34">
+        <span style="font-size:1.2rem">×</span>
+        <input type="number" id="mulB" min="1" max="99" placeholder="乘數" value="26">
+        <button id="mulGo">攤開來看</button>
+      </div>
+      <div class="svgbox" id="mulOut"></div>
+      <div class="hint">被乘數最多三位數、乘數最多二位數。先自己算一次，再按按鈕對答案。</div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜算 <span class='num'>52 × 43</span></summary>
+      <div class="body">
+        <p class="step"><b>①</b> 第一層：52 × 3 ＝ 156。</p>
+        <p class="step"><b>②</b> 第二層：52 × 4 ＝ 208，它其實是 52 × 40 ＝ 2080，所以往左移一格寫。</p>
+        <p class="step"><b>③</b> 相加：156 ＋ 2080 ＝ <b>2236</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜小明把 <span class='num'>23 × 15</span> 算成 <span class='num'>138</span>，錯在哪？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 23 × 5 ＝ 115，23 × 1 ＝ 23。115 ＋ 23 ＝ 138 → 他把第二層的 23 <b>沒有往左移</b>。</p>
+        <p class="step"><b>②</b> 第二層是 23 × 10 ＝ 230，不是 23。</p>
+        <p class="step"><b>③</b> 正確：115 ＋ 230 ＝ <b>345</b>。</p>
+        <p class="step"><b>④</b> 檢查：23 × 15 大約是 20 × 15 ＝ 300，345 才合理，138 明顯太小。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜<span class='num'>69 × 21</span> 可以怎麼快速估？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 把 69 看成 70、21 看成 20。</p>
+        <p class="step"><b>②</b> 70 × 20 ＝ 1400，所以答案在 1400 附近。</p>
+        <p class="step"><b>③</b> 正確算：69 × 1 ＝ 69，69 × 20 ＝ 1380，合計 <b>1449</b>。和估的很接近，代表沒算錯層。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. <span class='num'>34 × 26</span> 的第二層（34 × 2）寫的 68，真正代表多少？</div>
+      <label><input type="radio" name="p1q1" value="A">68</label>
+      <label><input type="radio" name="p1q1" value="B">680</label>
+      <label><input type="radio" name="p1q1" value="C">6800</label>
+      <label><input type="radio" name="p1q1" value="D">34</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　第二層是乘「十位」，34 × 20 ＝ 680，所以要往左移一格寫。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. <span class='num'>45 × 32</span> ＝ ？</div>
+      <label><input type="radio" name="p1q2" value="A">1350</label>
+      <label><input type="radio" name="p1q2" value="B">225</label>
+      <label><input type="radio" name="p1q2" value="C">1440</label>
+      <label><input type="radio" name="p1q2" value="D">225</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　45 × 2 ＝ 90，45 × 30 ＝ 1350，合計 1440。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. <span class='num'>27 × 18</span> ＝ ？</div>
+      <label><input type="radio" name="p1q3" value="A">486</label>
+      <label><input type="radio" name="p1q3" value="B">270</label>
+      <label><input type="radio" name="p1q3" value="C">243</label>
+      <label><input type="radio" name="p1q3" value="D">459</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　27 × 8 ＝ 216，27 × 10 ＝ 270，合計 486。243 是第二層沒移位的錯誤答案。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. 哪一個算式跟 <span class='num'>56 × 24</span> 的答案一樣？</div>
+      <label><input type="radio" name="p1q4" value="A">56 × 4 ＋ 56 × 2</label>
+      <label><input type="radio" name="p1q4" value="B">56 ＋ 24</label>
+      <label><input type="radio" name="p1q4" value="C">56 × 20 ＋ 4</label>
+      <label><input type="radio" name="p1q4" value="D">56 × 4 ＋ 56 × 20</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　24 拆成 20 和 4，兩層都要乘 56 再相加。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. <span class='num'>63 × 49</span> 大約是多少？（用估的）</div>
+      <label><input type="radio" name="p1q5" value="A">600</label>
+      <label><input type="radio" name="p1q5" value="B">3000</label>
+      <label><input type="radio" name="p1q5" value="C">2400</label>
+      <label><input type="radio" name="p1q5" value="D">1500</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　63 看成 60、49 看成 50，60 × 50 ＝ 3000。實際是 3087。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會算三位數 × 二位數（一樣分兩層）</li>
+      <li>末尾有 0 的乘法，會先不看 0、最後再補回去</li>
+      <li>知道 ×10、×100 就是在後面加 0</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：三位數 × 二位數，一樣分兩層</h2>
+    <p>被乘數變成三位數，做法<b>完全一樣</b>，只是每一層要多乘一個位數。算 <span class="num">213 × 32</span>：</p>
+    <div class="svgbox"><pre class="vert">     2 1 3
+  ×    3 2
+  ────────
+     4 2 6   <span class='g'>← 213 × 2</span>
+   6 3 9 <span class='g'>·</span>   <span class='g'>← 213 × 3（十位）</span>
+  ────────
+   6 8 1 6</pre></div>
+    <div class="note">💡 一句話：<b>乘個位寫一層、乘十位寫一層（左移一格）、加起來。</b>被乘數幾位數都一樣。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：×10、×100 就是補 0</h2>
+    <div class="formula">36 × 10 ＝ 360　　36 × 100 ＝ 3600</div>
+    <div class="formula">36 × 20 ＝ 36 × 2 × 10 ＝ 72 × 10 ＝ 720</div>
+    <p>乘 10 補一個 0，乘 100 補兩個 0。乘 20 就是「先乘 2，再補一個 0」。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：末尾有 0，先不看 0</h2>
+    <p>算 <span class="num">250 × 40</span>：</p>
+    <div class="formula">先算 25 × 4 ＝ 100，兩個數一共藏了 2 個 0，補回去 → <b>10000</b></div>
+    <p>直式寫法：把 0 靠右邊寫，先算前面的部分，最後把 0 全部補到答案後面。</p>
+    <div class="svgbox"><pre class="vert">   2 5 <span class='r'>0</span>
+ ×   4 <span class='r'>0</span>
+ ────────
+ 1 0 0 <span class='r'>0 0</span>   <span class='g'>← 25 × 4 ＝ 100，再補 2 個 0</span></pre></div>
+    <div class="warn">⚠️ 數 0 的時候，<b>兩個數的 0 都要數</b>。250 × 40 一共藏了 2 個 0（250 一個、40 一個）。<br>另外 25 × 4 ＝ 100 本身的 0 是算出來的，不是藏的，不要重複補。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜算 <span class='num'>146 × 25</span></summary>
+      <div class="body">
+        <p class="step"><b>①</b> 第一層：146 × 5 ＝ 730。</p>
+        <p class="step"><b>②</b> 第二層：146 × 2 ＝ 292，代表 2920，往左移一格。</p>
+        <p class="step"><b>③</b> 相加：730 ＋ 2920 ＝ <b>3650</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜算 <span class='num'>320 × 30</span></summary>
+      <div class="body">
+        <p class="step"><b>①</b> 先不看 0：32 × 3 ＝ 96。</p>
+        <p class="step"><b>②</b> 藏了幾個 0？320 一個、30 一個，共 2 個。</p>
+        <p class="step"><b>③</b> 補回去：96 後面加兩個 0 → <b>9600</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜算 <span class='num'>405 × 60</span></summary>
+      <div class="body">
+        <p class="step"><b>①</b> 405 中間的 0 <b>不能</b>省略，它是位值的一部分；只有<b>末尾</b>的 0 可以先不看。</p>
+        <p class="step"><b>②</b> 405 × 6 ＝ 2430。</p>
+        <p class="step"><b>③</b> 60 藏了 1 個 0，補回去 → <b>24300</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="D">
+      <div class="stem">1. <span class='num'>312 × 23</span> ＝ ？</div>
+      <label><input type="radio" name="p2q1" value="A">1560</label>
+      <label><input type="radio" name="p2q1" value="B">7176</label>
+      <label><input type="radio" name="p2q1" value="C">6240</label>
+      <label><input type="radio" name="p2q1" value="D">7176</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　312 × 3 ＝ 936，312 × 20 ＝ 6240，合計 7176。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. <span class='num'>48 × 100</span> ＝ ？</div>
+      <label><input type="radio" name="p2q2" value="A">480</label>
+      <label><input type="radio" name="p2q2" value="B">148</label>
+      <label><input type="radio" name="p2q2" value="C">4800</label>
+      <label><input type="radio" name="p2q2" value="D">48000</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　乘 100 補兩個 0 → 4800。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. <span class='num'>150 × 60</span> ＝ ？</div>
+      <label><input type="radio" name="p2q3" value="A">90000</label>
+      <label><input type="radio" name="p2q3" value="B">900</label>
+      <label><input type="radio" name="p2q3" value="C">9000</label>
+      <label><input type="radio" name="p2q3" value="D">1500</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　15 × 6 ＝ 90，藏了 2 個 0（150 一個、60 一個），補回去 → 9000。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. <span class='num'>207 × 40</span> ＝ ？</div>
+      <label><input type="radio" name="p2q4" value="A">8028</label>
+      <label><input type="radio" name="p2q4" value="B">8280</label>
+      <label><input type="radio" name="p2q4" value="C">828</label>
+      <label><input type="radio" name="p2q4" value="D">2740</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　207 × 4 ＝ 828（中間的 0 要算進去），再補 40 的一個 0 → 8280。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">5. 下面哪一題的答案<b>不是</b> 2400？</div>
+      <label><input type="radio" name="p2q5" value="A">80 × 40</label>
+      <label><input type="radio" name="p2q5" value="B">24 × 100</label>
+      <label><input type="radio" name="p2q5" value="C">60 × 40</label>
+      <label><input type="radio" name="p2q5" value="D">120 × 20</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　80 × 40 ＝ 3200。其他三題都是 2400。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">6. <span class='num'>524 × 36</span> ＝ ？</div>
+      <label><input type="radio" name="p2q6" value="A">18864</label>
+      <label><input type="radio" name="p2q6" value="B">15720</label>
+      <label><input type="radio" name="p2q6" value="C">3144</label>
+      <label><input type="radio" name="p2q6" value="D">18684</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　524 × 6 ＝ 3144，524 × 30 ＝ 15720，合計 18864。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>拿到應用題，會先判斷「要用乘法嗎」</li>
+      <li>會用估算檢查答案合不合理</li>
+      <li>會處理要算兩步的題目（先乘再加、先加再乘）</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：什麼時候用乘法</h2>
+    <p>看到「<b>每</b>…有…，<b>共</b>幾個？」這種句型，就是乘法。</p>
+    <div class="formula">每盒 24 顆 × 15 盒 ＝ 360 顆</div>
+    <div class="formula">單價 × 數量 ＝ 總價　　每天 × 天數 ＝ 總共</div>
+    <div class="note">💡 乘法的兩個數可以交換，24 × 15 和 15 × 24 一樣。哪一個當被乘數不重要，算對就好。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：先估再算，答案才不會離譜</h2>
+    <p>估算就是把數字<b>看成整十、整百</b>，先抓一個大概。</p>
+    <div class="formula">198 × 31 → 看成 200 × 30 ＝ 6000 → 實際答案應該在 6000 附近</div>
+    <p>算完如果得到 600 或 60000，那一定哪裡錯了（通常是第二層沒移位，或 0 補錯）。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：兩步驟的題目</h2>
+    <p>有些題目要算兩次。先把題目<b>切成兩段</b>，每段各算一次：</p>
+    <div class="formula">「一箱 36 瓶，買 12 箱，再加 8 瓶散裝，共幾瓶？」<br>① 36 × 12 ＝ 432　② 432 ＋ 8 ＝ 440</div>
+    <div class="formula">「大人票 250 元、小孩票 150 元，各買 4 張，共多少元？」<br>① 250 ＋ 150 ＝ 400　② 400 × 4 ＝ 1600</div>
+    <div class="note">💡 第二題也可以 250 × 4 ＋ 150 × 4 ＝ 1000 ＋ 600 ＝ 1600，兩種做法答案一樣。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜一本書 185 元，全班 28 人每人買一本，共多少元？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 每人 185 元、28 人 → 乘法：185 × 28。</p>
+        <p class="step"><b>②</b> 先估：200 × 30 ＝ 6000 左右。</p>
+        <p class="step"><b>③</b> 算：185 × 8 ＝ 1480，185 × 20 ＝ 3700，合計 <b>5180</b> 元。跟估的接近，合理。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜遊覽車一輛坐 45 人，租 13 輛，有 12 人坐不下改開車。這次出遊共幾人？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 先算坐車的：45 × 13 ＝ 585 人。</p>
+        <p class="step"><b>②</b> 再加開車的：585 ＋ 12 ＝ <b>597</b> 人。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜小華算 <span class='num'>298 × 19</span> 得到 <span class='num'>56620</span>，合理嗎？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 估算：300 × 20 ＝ 6000。</p>
+        <p class="step"><b>②</b> 56620 比 6000 大了快十倍，一定錯了（很可能是 0 補太多或第二層移錯格）。</p>
+        <p class="step"><b>③</b> 正確答案：298 × 9 ＝ 2682，298 × 10 ＝ 2980，合計 <b>5662</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 每箱 24 瓶果汁，訂了 35 箱，共幾瓶？</div>
+      <label><input type="radio" name="p3q1" value="A">840</label>
+      <label><input type="radio" name="p3q1" value="B">59</label>
+      <label><input type="radio" name="p3q1" value="C">720</label>
+      <label><input type="radio" name="p3q1" value="D">960</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　24 × 35 ＝ 840 瓶。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. <span class='num'>389 × 21</span> 大約是多少？</div>
+      <label><input type="radio" name="p3q2" value="A">400</label>
+      <label><input type="radio" name="p3q2" value="B">8000</label>
+      <label><input type="radio" name="p3q2" value="C">80000</label>
+      <label><input type="radio" name="p3q2" value="D">800</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　389 看成 400、21 看成 20，400 × 20 ＝ 8000。實際是 8169。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 一本筆記本 45 元，買 16 本再加一枝 30 元的筆，共多少元？</div>
+      <label><input type="radio" name="p3q3" value="A">690</label>
+      <label><input type="radio" name="p3q3" value="B">750</label>
+      <label><input type="radio" name="p3q3" value="C">1200</label>
+      <label><input type="radio" name="p3q3" value="D">720</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　45 × 16 ＝ 720，再加 30 ＝ 750 元。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. 小明算 <span class='num'>52 × 48</span> 得到 <span class='num'>624</span>。用估算判斷，這個答案：</div>
+      <label><input type="radio" name="p3q4" value="A">合理</label>
+      <label><input type="radio" name="p3q4" value="B">太大了</label>
+      <label><input type="radio" name="p3q4" value="C">無法判斷</label>
+      <label><input type="radio" name="p3q4" value="D">太小了</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　50 × 50 ＝ 2500，624 差太多，太小了。正確是 2496（他第二層沒移位）。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">5. 大人票 120 元、小孩票 80 元，各買 6 張，共多少元？</div>
+      <label><input type="radio" name="p3q5" value="A">480</label>
+      <label><input type="radio" name="p3q5" value="B">200</label>
+      <label><input type="radio" name="p3q5" value="C">720</label>
+      <label><input type="radio" name="p3q5" value="D">1200</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　（120 ＋ 80）× 6 ＝ 200 × 6 ＝ 1200 元。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="D">
+      <div class="stem">1. <span class='num'>36 × 24</span> ＝ ？</div>
+      <label><input type="radio" name="qz1" value="A">1080</label>
+      <label><input type="radio" name="qz1" value="B">792</label>
+      <label><input type="radio" name="qz1" value="C">216</label>
+      <label><input type="radio" name="qz1" value="D">864</label>
+      <div class="fb" data-exp="　36 × 4 ＝ 144，36 × 20 ＝ 720，合計 864。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">2. 算 <span class='num'>58 × 37</span> 時，第二層寫的 174（58 × 3）真正代表：</div>
+      <label><input type="radio" name="qz2" value="A">1740</label>
+      <label><input type="radio" name="qz2" value="B">58</label>
+      <label><input type="radio" name="qz2" value="C">17400</label>
+      <label><input type="radio" name="qz2" value="D">174</label>
+      <div class="fb" data-exp="　3 在十位，58 × 30 ＝ 1740，所以往左移一格。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">3. <span class='num'>417 × 26</span> ＝ ？</div>
+      <label><input type="radio" name="qz3" value="A">2502</label>
+      <label><input type="radio" name="qz3" value="B">11842</label>
+      <label><input type="radio" name="qz3" value="C">8340</label>
+      <label><input type="radio" name="qz3" value="D">10842</label>
+      <div class="fb" data-exp="　417 × 6 ＝ 2502，417 × 20 ＝ 8340，合計 10842。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">4. <span class='num'>340 × 50</span> ＝ ？</div>
+      <label><input type="radio" name="qz4" value="A">17000</label>
+      <label><input type="radio" name="qz4" value="B">1700</label>
+      <label><input type="radio" name="qz4" value="C">1750</label>
+      <label><input type="radio" name="qz4" value="D">170000</label>
+      <div class="fb" data-exp="　34 × 5 ＝ 170，補 2 個 0 → 17000。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">5. <span class='num'>609 × 30</span> ＝ ？</div>
+      <label><input type="radio" name="qz5" value="A">1890</label>
+      <label><input type="radio" name="qz5" value="B">18900</label>
+      <label><input type="radio" name="qz5" value="C">18270</label>
+      <label><input type="radio" name="qz5" value="D">1827</label>
+      <div class="fb" data-exp="　609 × 3 ＝ 1827（中間的 0 要算），補 30 的一個 0 → 18270。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">6. <span class='num'>72 × 100</span> ＝ ？</div>
+      <label><input type="radio" name="qz6" value="A">172</label>
+      <label><input type="radio" name="qz6" value="B">7200</label>
+      <label><input type="radio" name="qz6" value="C">720</label>
+      <label><input type="radio" name="qz6" value="D">72000</label>
+      <div class="fb" data-exp="　乘 100 補兩個 0。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">7. <span class='num'>612 × 19</span> 大約是多少？</div>
+      <label><input type="radio" name="qz7" value="A">6000</label>
+      <label><input type="radio" name="qz7" value="B">60000</label>
+      <label><input type="radio" name="qz7" value="C">12000</label>
+      <label><input type="radio" name="qz7" value="D">1200</label>
+      <div class="fb" data-exp="　600 × 20 ＝ 12000。實際是 11628。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">8. 每袋 48 顆糖，買 25 袋，共幾顆？</div>
+      <label><input type="radio" name="qz8" value="A">1200</label>
+      <label><input type="radio" name="qz8" value="B">73</label>
+      <label><input type="radio" name="qz8" value="C">2400</label>
+      <label><input type="radio" name="qz8" value="D">1000</label>
+      <div class="fb" data-exp="　48 × 25 ＝ 1200 顆。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">9. 一箱牛奶 36 瓶，買 14 箱，再加 9 瓶散裝，共幾瓶？</div>
+      <label><input type="radio" name="qz9" value="A">513</label>
+      <label><input type="radio" name="qz9" value="B">504</label>
+      <label><input type="radio" name="qz9" value="C">59</label>
+      <label><input type="radio" name="qz9" value="D">495</label>
+      <div class="fb" data-exp="　36 × 14 ＝ 504，504 ＋ 9 ＝ 513 瓶。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">10. 小華算 <span class='num'>29 × 31</span> 得到 <span class='num'>116</span>。錯在哪裡？</div>
+      <label><input type="radio" name="qz10" value="A">第一層算錯</label>
+      <label><input type="radio" name="qz10" value="B">答案是對的</label>
+      <label><input type="radio" name="qz10" value="C">0 補太多</label>
+      <label><input type="radio" name="qz10" value="D">第二層沒有往左移一格</label>
+      <div class="fb" data-exp="　29 × 1 ＝ 29、29 × 3 ＝ 87；29 ＋ 87 ＝ 116 就是第二層沒移位。正確是 29 ＋ 870 ＝ 899。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 小四數學 · 四上第 3 單元「乘法」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "四上3 乘法";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// 直式乘法展示器
+function mulShow(){
+  const a = parseInt(document.getElementById('mulA').value, 10);
+  const b = parseInt(document.getElementById('mulB').value, 10);
+  const out = document.getElementById('mulOut');
+  if(!(a >= 1 && a <= 999 && b >= 1 && b <= 99)){ out.innerHTML = '<div class="warn">請輸入 1～999 的被乘數、1～99 的乘數。</div>'; return; }
+  const W = 8;                                        // 每行寬度（字元）
+  const pad = s => String(s).padStart(W, ' ');
+  const bo = b % 10, bt = Math.floor(b / 10);
+  const p1 = a * bo, p2 = a * bt;
+  let rows = [pad(a), '×' + pad(b).slice(1), '─'.repeat(W)];
+  let expl = [];
+  if(bt === 0){
+    rows.push(pad(p1)); expl.push(`${a} × ${bo} ＝ ${p1}`);
+  }else{
+    rows.push(pad(p1) + `   <span class="g">← ${a} × ${bo}（個位）</span>`);
+    const p2s = p2 === 0 ? '0' : String(p2);
+    rows.push((pad(p2s) + ' ').slice(1) + `<span class="g">·   ← ${a} × ${bt}（十位），往左移一格，其實是 ${p2 * 10}</span>`);
+    rows.push('─'.repeat(W));
+    rows.push(pad(a * b) + `   <span class="g">← ${p1} ＋ ${p2 * 10}</span>`);
+  }
+  const est = Math.round(a / Math.pow(10, String(a).length - 1)) * Math.pow(10, String(a).length - 1);
+  const estB = Math.round(b / Math.pow(10, String(b).length - 1)) * Math.pow(10, String(b).length - 1);
+  out.innerHTML = '<pre class="vert" style="text-align:left">' + rows.join('\n') + '</pre>' +
+    `<div class="out">${a} × ${b} ＝ ${a * b}</div>` +
+    `<div class="hint">估算檢查：${est} × ${estB} ＝ ${est * estB}，答案在這附近才合理。</div>`;
+}
+document.getElementById('mulGo').addEventListener('click', mulShow);
+mulShow();
+
+</script>
+</body>
+</html>

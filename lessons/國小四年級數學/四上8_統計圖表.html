@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小四數學｜四上 第8單元 統計圖表</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#15803d; --accent-soft:#dcfce7;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#15803d,#22c55e); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國小四年級上學期 · 第8單元</span>
+  <h1>統計圖表</h1>
+  <p>三個小節＋單元總測驗。看圖的關鍵只有一個：先看「一格代表多少」。畫圖的關鍵是選好刻度、長條一樣寬。折線圖用來看「變化」。有一個「畫圖機」，輸入資料就能畫長條圖或折線圖。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">8-1 讀長條圖</button>
+  <button data-t="s2">8-2 畫長條圖</button>
+  <button data-t="s3">8-3 折線圖</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 8-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>認識長條圖的四個部分：標題、橫軸、縱軸、刻度</li>
+      <li>讀圖之前先看「一格代表多少」</li>
+      <li>能從圖上讀出最多、最少、相差多少、一共多少</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：長條圖長什麼樣</h2>
+    <div class="svgbox" id="svgBar1"></div>
+    <ul>
+      <li><b>標題</b>：這張圖在說什麼</li>
+      <li><b>橫軸</b>：項目（水果名稱）</li>
+      <li><b>縱軸</b>：數量，要寫<b>單位</b>（人）</li>
+      <li><b>刻度</b>：縱軸上的數字，一格代表多少</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：一格不一定是 1</h2>
+    <p>上圖縱軸每一格是 <b>5 人</b>。芭樂的長條到第 3 格，所以是 <b>15 人</b>，不是 3 人。蘋果到第 4 格，是 20 人。</p>
+    <div class="warn">⚠️ 讀圖第一步永遠是：<b>看縱軸一格代表多少</b>。一格 5，長條到第 3 格就是 15，不是 3。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：從圖上讀出資訊</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>問題</th><th>怎麼看</th><th>上圖的答案</th></tr>
+        <tr><td class="name">最多／最少</td><td>最高／最矮的長條</td><td>蘋果最多 20 人，葡萄最少 5 人</td></tr>
+        <tr><td class="name">相差多少</td><td>兩個數相減</td><td>蘋果比葡萄多 20 − 5 ＝ 15 人</td></tr>
+        <tr><td class="name">一共多少</td><td>全部加起來</td><td>20 ＋ 10 ＋ 15 ＋ 5 ＝ 50 人</td></tr>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜縱軸一格代表 10 本，某個長條剛好到第 4 格，這個長條代表幾本？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 一格 10 本，4 格就是 4 × 10。</p>
+        <p class="step"><b>②</b> 答案：<b>40 本</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜圖上小明 35 分、小華 50 分，小華比小明多幾分？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 相差用減法：50 − 35。</p>
+        <p class="step"><b>②</b> 答案：<b>15 分</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜長條頂端落在 20 和 30 兩條格線的正中間，代表多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 一格 10，中間就是多半格 5。</p>
+        <p class="step"><b>②</b> 答案：<b>25</b>。（只有在題目允許時才會有這種情況）</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="D">
+      <div class="stem">1. 看長條圖的第一步是：</div>
+      <label><input type="radio" name="p1q1" value="A">找最高的長條</label>
+      <label><input type="radio" name="p1q1" value="B">看標題的顏色</label>
+      <label><input type="radio" name="p1q1" value="C">數有幾個長條</label>
+      <label><input type="radio" name="p1q1" value="D">看縱軸一格代表多少</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　刻度決定每個長條的數值，先看它才不會讀錯。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 縱軸一格代表 2 人，長條到第 6 格，代表幾人？</div>
+      <label><input type="radio" name="p1q2" value="A">12 人</label>
+      <label><input type="radio" name="p1q2" value="B">3 人</label>
+      <label><input type="radio" name="p1q2" value="C">6 人</label>
+      <label><input type="radio" name="p1q2" value="D">8 人</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　6 × 2 ＝ 12。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. 圖上 A 是 45、B 是 30，A 比 B 多多少？</div>
+      <label><input type="radio" name="p1q3" value="A">1.5</label>
+      <label><input type="radio" name="p1q3" value="B">25</label>
+      <label><input type="radio" name="p1q3" value="C">15</label>
+      <label><input type="radio" name="p1q3" value="D">75</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　45 − 30 ＝ 15。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. 長條圖的縱軸上通常要寫什麼，才知道數字的意思？</div>
+      <label><input type="radio" name="p1q4" value="A">顏色</label>
+      <label><input type="radio" name="p1q4" value="B">日期</label>
+      <label><input type="radio" name="p1q4" value="C">作者</label>
+      <label><input type="radio" name="p1q4" value="D">單位</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　沒有單位就不知道 20 是 20 人還是 20 本。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">5. 四個長條分別是 12、8、15、5，一共是：</div>
+      <label><input type="radio" name="p1q5" value="A">45</label>
+      <label><input type="radio" name="p1q5" value="B">30</label>
+      <label><input type="radio" name="p1q5" value="C">40</label>
+      <label><input type="radio" name="p1q5" value="D">35</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　12 ＋ 8 ＋ 15 ＋ 5 ＝ 40。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 8-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會照步驟把統計表畫成長條圖</li>
+      <li>會依最大的數字選刻度</li>
+      <li>知道長條要一樣寬、間隔要一樣</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：畫長條圖的步驟</h2>
+    <ol>
+      <li>先把資料整理成<b>統計表</b></li>
+      <li>寫<b>標題</b></li>
+      <li>橫軸寫<b>項目</b>，縱軸寫<b>數量和單位</b></li>
+      <li>看最大的數，決定<b>一格代表多少</b></li>
+      <li>畫長條：<b>一樣寬、間隔一樣</b>，高度對準刻度</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：怎麼選刻度</h2>
+    <p>看資料裡<b>最大的數</b>，讓它大約落在 5～10 格之間：</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>最大的數</th><th>一格代表</th><th>需要幾格</th></tr>
+        <tr><td>9</td><td>1</td><td>9 格</td></tr>
+        <tr><td>48</td><td>5 或 10</td><td>10 格或 5 格</td></tr>
+        <tr class="hi"><td>350</td><td>50</td><td>7 格</td></tr>
+        <tr><td>1200</td><td>200</td><td>6 格</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 一格太小，圖會拉很高；一格太大，長條差距看不出來。刻度必須<b>等距</b>，0、5、10、15… 不能跳。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：常見的錯誤</h2>
+    <div class="svgbox" id="svgBadBar"></div>
+    <ul>
+      <li>長條<b>寬窄不一</b>：看起來胖的好像比較多，其實只看高度</li>
+      <li>刻度<b>沒有等距</b>：0、5、10、20、50 → 圖就失真了</li>
+      <li>忘記寫<b>標題</b>或<b>單位</b></li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜資料是 8、15、23、30，一格代表多少比較好？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 最大 30。一格 5 → 6 格；一格 10 → 3 格（太少，差距不明顯）；一格 1 → 30 格（太多）。</p>
+        <p class="step"><b>②</b> 答案：一格代表 <b>5</b> 最合適。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜一格代表 20，要畫 70 的長條，畫到哪裡？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 70 ÷ 20 ＝ 3 … 10，也就是 3 格半。</p>
+        <p class="step"><b>②</b> 答案：畫到<b>第 3 格和第 4 格的正中間</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜小明畫的長條圖，每個長條寬度都不一樣。這樣有什麼問題？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 長條圖比的是<b>高度</b>，寬度不同會讓人誤會胖的比較多。</p>
+        <p class="step"><b>②</b> 要改成<b>一樣寬、間隔一樣</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 資料最大是 92，一格代表多少最合適？</div>
+      <label><input type="radio" name="p2q1" value="A">10</label>
+      <label><input type="radio" name="p2q1" value="B">1</label>
+      <label><input type="radio" name="p2q1" value="C">100</label>
+      <label><input type="radio" name="p2q1" value="D">2</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　92 ÷ 10 ≈ 9 格，剛好。一格 1 要 92 格，一格 100 只有不到 1 格。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 一格代表 5，要畫 35，畫到第幾格？</div>
+      <label><input type="radio" name="p2q2" value="A">6 格</label>
+      <label><input type="radio" name="p2q2" value="B">35 格</label>
+      <label><input type="radio" name="p2q2" value="C">7 格</label>
+      <label><input type="radio" name="p2q2" value="D">5 格</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　35 ÷ 5 ＝ 7。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 縱軸刻度寫成 0、10、20、40、80，錯在哪？</div>
+      <label><input type="radio" name="p2q3" value="A">沒錯</label>
+      <label><input type="radio" name="p2q3" value="B">刻度沒有等距</label>
+      <label><input type="radio" name="p2q3" value="C">數字太大</label>
+      <label><input type="radio" name="p2q3" value="D">沒有 5</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　刻度要每格一樣，0、10、20、30、40…。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. 畫長條圖的第一步是：</div>
+      <label><input type="radio" name="p2q4" value="A">先把資料整理成統計表</label>
+      <label><input type="radio" name="p2q4" value="B">先塗顏色</label>
+      <label><input type="radio" name="p2q4" value="C">先畫最高的長條</label>
+      <label><input type="radio" name="p2q4" value="D">先選刻度</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　資料整理好才知道最大值，才能選刻度。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">5. 長條圖中，每個長條的寬度應該：</div>
+      <label><input type="radio" name="p2q5" value="A">越少的越寬</label>
+      <label><input type="radio" name="p2q5" value="B">隨意</label>
+      <label><input type="radio" name="p2q5" value="C">一樣寬</label>
+      <label><input type="radio" name="p2q5" value="D">越多的越寬</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　長條圖只比高度，寬度必須一樣。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 8-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道折線圖用來看「隨時間怎麼變化」</li>
+      <li>看得出上升、下降、持平，還有哪一段變化最大</li>
+      <li>分得清楚什麼時候用長條圖、什麼時候用折線圖</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：折線圖長什麼樣</h2>
+    <div class="svgbox" id="svgLine1"></div>
+    <p>橫軸通常是<b>時間</b>（月份、星期、年齡），把每個時間點的數值點出來，再用線連起來。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：看線怎麼走</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>線的樣子</th><th>意思</th><th>上圖的例子</th></tr>
+        <tr><td class="name">往上</td><td>增加</td><td>1 月到 3 月體重增加</td></tr>
+        <tr><td class="name">往下</td><td>減少</td><td>4 月到 5 月減少</td></tr>
+        <tr><td class="name">平的</td><td>沒變</td><td>3 月到 4 月一樣</td></tr>
+        <tr class="hi"><td class="name">越陡</td><td>變化越大</td><td>1 → 2 月最陡，增加最多</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 「哪一段變化最大」就是找<b>最陡</b>的那一段，算法是兩點相減。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：長條圖還是折線圖？</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>想知道什麼</th><th>用哪種圖</th><th>例子</th></tr>
+        <tr><td class="name">比較各項目誰多誰少</td><td><b>長條圖</b></td><td>各班人數、最喜歡的水果</td></tr>
+        <tr><td class="name">看同一件事隨時間的變化</td><td><b>折線圖</b></td><td>每月體重、一天的氣溫</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 小工具：畫圖機</h2>
+    <div class="tool">
+      <div class="row" id="chartInputs"></div>
+      <div class="row">
+        <label class="opt"><input type="radio" name="ctype" value="bar" checked> 長條圖</label>
+        <label class="opt"><input type="radio" name="ctype" value="line"> 折線圖</label>
+        <button id="chartGo">畫圖</button>
+      </div>
+      <div class="svgbox" id="chartSvg"></div>
+      <div class="out" id="chartOut"></div>
+      <div class="hint">改改看數字，觀察「一格代表多少」怎麼自動跟著變。試著切換長條圖和折線圖，想想哪一種比較適合你的資料。</div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜氣溫 8 時 18°C、10 時 22°C、12 時 27°C、14 時 28°C。哪一段升最多？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 8→10：4 度；10→12：5 度；12→14：1 度。</p>
+        <p class="step"><b>②</b> 答案：<b>10 時到 12 時</b>升最多（線最陡）。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜要畫「全班最喜歡的運動」，用長條圖還是折線圖？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 這是比較「各項目誰多」，不是隨時間變化。</p>
+        <p class="step"><b>②</b> 答案：<b>長條圖</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜要畫「小明一年級到四年級每年的身高」，用哪種圖？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 這是同一件事（身高）隨時間（年級）的變化。</p>
+        <p class="step"><b>②</b> 答案：<b>折線圖</b>，可以看出長高的趨勢。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 折線圖最適合表示：</div>
+      <label><input type="radio" name="p3q1" value="A">各種水果誰最受歡迎</label>
+      <label><input type="radio" name="p3q1" value="B">各班的人數</label>
+      <label><input type="radio" name="p3q1" value="C">一週每天的氣溫變化</label>
+      <label><input type="radio" name="p3q1" value="D">書架上各類書的本數</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　隨時間變化用折線圖。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 折線圖中，線往下走代表：</div>
+      <label><input type="radio" name="p3q2" value="A">資料錯誤</label>
+      <label><input type="radio" name="p3q2" value="B">沒變</label>
+      <label><input type="radio" name="p3q2" value="C">增加</label>
+      <label><input type="radio" name="p3q2" value="D">減少</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　往下就是減少。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. 某段線是平的，代表：</div>
+      <label><input type="radio" name="p3q3" value="A">變化最大</label>
+      <label><input type="radio" name="p3q3" value="B">減少</label>
+      <label><input type="radio" name="p3q3" value="C">數量沒有變</label>
+      <label><input type="radio" name="p3q3" value="D">沒有資料</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　平的就是前後一樣。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. 存款：1 月 200、2 月 350、3 月 400、4 月 700。哪一段增加最多？</div>
+      <label><input type="radio" name="p3q4" value="A">3→4 月</label>
+      <label><input type="radio" name="p3q4" value="B">2→3 月</label>
+      <label><input type="radio" name="p3q4" value="C">1→2 月</label>
+      <label><input type="radio" name="p3q4" value="D">都一樣</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　3→4 月增加 300，最多，線也最陡。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">5. 要比較「四個班各有幾人戴眼鏡」，用哪種圖？</div>
+      <label><input type="radio" name="p3q5" value="A">隨便</label>
+      <label><input type="radio" name="p3q5" value="B">都不行</label>
+      <label><input type="radio" name="p3q5" value="C">長條圖</label>
+      <label><input type="radio" name="p3q5" value="D">折線圖</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　比較各項目多少用長條圖。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="D">
+      <div class="stem">1. 長條圖縱軸一格代表 4，長條到第 5 格，代表：</div>
+      <label><input type="radio" name="qz1" value="A">9</label>
+      <label><input type="radio" name="qz1" value="B">45</label>
+      <label><input type="radio" name="qz1" value="C">5</label>
+      <label><input type="radio" name="qz1" value="D">20</label>
+      <div class="fb" data-exp="　5 × 4 ＝ 20。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">2. 讀長條圖之前，最先要看：</div>
+      <label><input type="radio" name="qz2" value="A">一格代表多少</label>
+      <label><input type="radio" name="qz2" value="B">橫軸有幾項</label>
+      <label><input type="radio" name="qz2" value="C">最高的長條</label>
+      <label><input type="radio" name="qz2" value="D">顏色</label>
+      <div class="fb" data-exp="　刻度決定數值。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">3. 圖上甲 60、乙 25，甲比乙多：</div>
+      <label><input type="radio" name="qz3" value="A">85</label>
+      <label><input type="radio" name="qz3" value="B">25</label>
+      <label><input type="radio" name="qz3" value="C">45</label>
+      <label><input type="radio" name="qz3" value="D">35</label>
+      <div class="fb" data-exp="　60 − 25 ＝ 35。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">4. 資料最大是 480，一格代表多少最合適？</div>
+      <label><input type="radio" name="qz4" value="A">1</label>
+      <label><input type="radio" name="qz4" value="B">50</label>
+      <label><input type="radio" name="qz4" value="C">500</label>
+      <label><input type="radio" name="qz4" value="D">5</label>
+      <div class="fb" data-exp="　480 ÷ 50 ≈ 10 格。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">5. 長條圖的長條應該：</div>
+      <label><input type="radio" name="qz5" value="A">數字大的畫寬一點</label>
+      <label><input type="radio" name="qz5" value="B">顏色越多越好</label>
+      <label><input type="radio" name="qz5" value="C">貼在一起</label>
+      <label><input type="radio" name="qz5" value="D">一樣寬、間隔一樣</label>
+      <div class="fb" data-exp="　只比高度，寬度和間隔要一致。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">6. 刻度 0、10、20、30、50 有什麼問題？</div>
+      <label><input type="radio" name="qz6" value="A">沒有問題</label>
+      <label><input type="radio" name="qz6" value="B">沒有等距（少了 40）</label>
+      <label><input type="radio" name="qz6" value="C">數字太小</label>
+      <label><input type="radio" name="qz6" value="D">應該從 1 開始</label>
+      <div class="fb" data-exp="　刻度要等距。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">7. 表示「一天中每兩小時的氣溫」最適合用：</div>
+      <label><input type="radio" name="qz7" value="A">統計表就好</label>
+      <label><input type="radio" name="qz7" value="B">長條圖</label>
+      <label><input type="radio" name="qz7" value="C">折線圖</label>
+      <label><input type="radio" name="qz7" value="D">圓形圖</label>
+      <div class="fb" data-exp="　隨時間變化用折線圖。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">8. 折線圖中，哪一段變化最大？</div>
+      <label><input type="radio" name="qz8" value="A">最陡的一段</label>
+      <label><input type="radio" name="qz8" value="B">最長的一段</label>
+      <label><input type="radio" name="qz8" value="C">最平的一段</label>
+      <label><input type="radio" name="qz8" value="D">最後一段</label>
+      <div class="fb" data-exp="　越陡變化越大。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">9. 體重：1 月 30、2 月 31、3 月 31、4 月 33。哪一段沒有變？</div>
+      <label><input type="radio" name="qz9" value="A">3→4 月</label>
+      <label><input type="radio" name="qz9" value="B">都有變</label>
+      <label><input type="radio" name="qz9" value="C">2→3 月</label>
+      <label><input type="radio" name="qz9" value="D">1→2 月</label>
+      <div class="fb" data-exp="　2 月和 3 月都是 31。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">10. 要比較「五種飲料各賣出幾杯」，用：</div>
+      <label><input type="radio" name="qz10" value="A">折線圖</label>
+      <label><input type="radio" name="qz10" value="B">數線</label>
+      <label><input type="radio" name="qz10" value="C">長條圖</label>
+      <label><input type="radio" name="qz10" value="D">都不行</label>
+      <div class="fb" data-exp="　比較各項目多少用長條圖。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 小四數學 · 四上第 8 單元「統計圖表」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "四上8 統計圖表";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// 通用畫圖：labels、values、type('bar'|'line')
+function pickStep(max){
+  const cands = [1,2,5,10,20,50,100,200,500,1000,2000,5000];
+  for(const s of cands){ if(max / s <= 8) return s; }
+  return 10000;
+}
+function chart(labels, values, type, title, unit){
+  const W = 480, H = 300, L = 60, R = 20, T = 40, B = 50;
+  const max = Math.max(...values, 1), step = pickStep(max), rows = Math.ceil(max / step);
+  const ph = H - T - B, pw = W - L - R, unitH = ph / rows;
+  let s = txt(W / 2, 22, title, '#1f2937', 14, 'middle', 'font-weight="bold"');
+  for(let i = 0; i <= rows; i++){
+    const y = T + ph - i * unitH;
+    s += line(L, y, W - R, y, i === 0 ? '#1f2937' : '#e5e7eb', i === 0 ? 2 : 1);
+    s += txt(L - 8, y + 4, String(i * step), '#1f2937', 11, 'end');
+  }
+  s += txt(L - 8, T - 10, '（' + unit + '）', '#6b7280', 11, 'end');
+  s += line(L, T, L, T + ph, '#1f2937', 2);
+  const n = labels.length, slot = pw / n;
+  const ys = values.map(v => T + ph - v / step * unitH);
+  if(type === 'bar'){
+    const bw = slot * 0.5;
+    values.forEach((v, i) => {
+      const x = L + slot * i + (slot - bw) / 2;
+      s += rect(x, ys[i], bw, T + ph - ys[i], '#4ade80', '#15803d', 1.5);
+      s += txt(x + bw / 2, ys[i] - 6, String(v), '#15803d', 11);
+    });
+  }else{
+    let d = '';
+    values.forEach((v, i) => { const x = L + slot * i + slot / 2; d += (i ? ' L ' : 'M ') + x + ' ' + ys[i]; });
+    s += `<path d="${d}" fill="none" stroke="#15803d" stroke-width="2.5"/>`;
+    values.forEach((v, i) => {
+      const x = L + slot * i + slot / 2;
+      s += `<circle cx="${x}" cy="${ys[i]}" r="4" fill="#15803d"/>` + txt(x, ys[i] - 10, String(v), '#15803d', 11);
+    });
+  }
+  labels.forEach((lb, i) => s += txt(L + slot * i + slot / 2, T + ph + 20, lb, '#1f2937', 12));
+  s += txt(W / 2, H - 6, '一格代表 ' + step + ' ' + unit, '#6b7280', 11);
+  return svg(W, H, s);
+}
+document.getElementById('svgBar1').innerHTML = chart(['蘋果','香蕉','芭樂','葡萄'], [20,10,15,5], 'bar', '四年一班最喜歡的水果', '人');
+document.getElementById('svgLine1').innerHTML = chart(['1月','2月','3月','4月','5月'], [30,34,36,36,35], 'line', '小明每月的體重', '公斤');
+
+// 錯誤示範：長條寬窄不一
+(function(){
+  let s = line(40,140,300,140,'#1f2937',2) + line(40,20,40,140,'#1f2937',2);
+  s += rect(60,60,30,80,'#fecaca','#dc2626',1.5) + rect(120,60,70,80,'#fecaca','#dc2626',1.5) + rect(220,60,15,80,'#fecaca','#dc2626',1.5);
+  s += txt(170,165,'✘ 三個長條一樣高（一樣多），卻寬窄不一，看起來像中間最多','#991b1b',12);
+  document.getElementById('svgBadBar').innerHTML = svg(340,175,s);
+})();
+
+// 畫圖機
+const DEF = [['一月',12],['二月',18],['三月',25],['四月',22],['五月',30]];
+const box = document.getElementById('chartInputs');
+box.innerHTML = DEF.map((d, i) => `<span>項目 ${i+1}</span> <input type="text" id="cl${i}" value="${d[0]}" style="width:70px"> <input type="number" id="cv${i}" value="${d[1]}" min="0" max="99999" style="width:80px">`).join('<br>');
+function drawUser(){
+  const labels = [], values = [];
+  for(let i = 0; i < 5; i++){
+    const lb = document.getElementById('cl' + i).value.trim(), v = parseInt(document.getElementById('cv' + i).value, 10);
+    if(lb === '' || isNaN(v) || v < 0) continue;
+    labels.push(lb); values.push(v);
+  }
+  if(labels.length < 2){ document.getElementById('chartOut').textContent = '至少要兩個項目有名稱和數字。'; return; }
+  const type = document.querySelector('input[name=ctype]:checked').value;
+  document.getElementById('chartSvg').innerHTML = chart(labels, values, type, '我的資料', '');
+  const max = Math.max(...values), min = Math.min(...values);
+  document.getElementById('chartOut').innerHTML = `最多：${labels[values.indexOf(max)]}（${max}）、最少：${labels[values.indexOf(min)]}（${min}）、相差 ${max - min}、合計 ${values.reduce((a,b)=>a+b,0)}`;
+}
+document.getElementById('chartGo').addEventListener('click', drawUser);
+drawUser();
+
+</script>
+</body>
+</html>

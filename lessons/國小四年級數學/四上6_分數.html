@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小四數學｜四上 第6單元 分數</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#4338ca; --accent-soft:#e0e7ff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#4338ca,#6366f1); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國小四年級上學期 · 第6單元</span>
+  <h1>分數</h1>
+  <p>三個小節＋單元總測驗。這個單元的分數「分母都一樣」，重點是：認識真分數、假分數、帶分數，會互相換，加減時分母不變、只算分子。有一個「分數圖像機」，輸入分數就畫出來。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">6-1 真分數、假分數、帶分數</button>
+  <button data-t="s2">6-2 同分母加減</button>
+  <button data-t="s3">6-3 比大小與應用</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 6-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出分子、分母各代表什麼</li>
+      <li>分得出真分數、假分數、帶分數</li>
+      <li>會把假分數換成帶分數，也會換回來</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：分數在說什麼</h2>
+    <p><span class="frac"><span>3</span><span>4</span></span> 的意思是：把 1 平分成 <b>4</b> 份（分母），取其中 <b>3</b> 份（分子）。</p>
+    <div class="formula"><span class="frac"><span>3</span><span>4</span></span> ＝ 3 個 <span class="frac"><span>1</span><span>4</span></span></div>
+    <div class="svgbox" id="svgFrac34"></div>
+    <div class="note">💡 分母在下面，說「切成幾份」；分子在上面，說「拿幾份」。分子可以比分母大，代表拿超過一個完整的 1。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：三種分數</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>名稱</th><th>長什麼樣</th><th>大小</th><th>例子</th></tr>
+        <tr><td class="name">真分數</td><td>分子 <b>＜</b> 分母</td><td>比 1 小</td><td><span class="frac"><span>2</span><span>5</span></span>、<span class="frac"><span>7</span><span>8</span></span></td></tr>
+        <tr><td class="name">假分數</td><td>分子 <b>≥</b> 分母</td><td>等於 1 或比 1 大</td><td><span class="frac"><span>5</span><span>5</span></span>、<span class="frac"><span>9</span><span>4</span></span></td></tr>
+        <tr class="hi"><td class="name">帶分數</td><td>整數 ＋ 真分數</td><td>比 1 大</td><td><span class="mixed">2<span class="frac"><span>1</span><span>4</span></span></span>、<span class="mixed">1<span class="frac"><span>3</span><span>5</span></span></span></td></tr>
+      </table>
+    </div>
+    <div class="formula">分子 ＝ 分母 → 剛好是 1：<span class="frac"><span>5</span><span>5</span></span> ＝ 1，<span class="frac"><span>8</span><span>8</span></span> ＝ 1</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：假分數 ⇄ 帶分數</h2>
+    <p><b>假分數 → 帶分數</b>：分子 ÷ 分母，商是整數部分，餘數是新的分子，分母不變。</p>
+    <div class="formula"><span class="frac"><span>9</span><span>4</span></span> → 9 ÷ 4 ＝ 2 … 1 → <span class="mixed">2<span class="frac"><span>1</span><span>4</span></span></span></div>
+    <p><b>帶分數 → 假分數</b>：整數 × 分母 ＋ 分子，當新分子，分母不變。</p>
+    <div class="formula"><span class="mixed">2<span class="frac"><span>1</span><span>4</span></span></span> → 2 × 4 ＋ 1 ＝ 9 → <span class="frac"><span>9</span><span>4</span></span></div>
+    <div class="warn">⚠️ 換來換去，<b>分母永遠不變</b>。分母變了就一定錯。</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 小工具：分數圖像機</h2>
+    <div class="tool">
+      <div class="row">
+        分子 <input type="number" id="fzN" min="0" max="60" value="9">
+        分母 <input type="number" id="fzD" min="1" max="12" value="4">
+        <button id="fzGo">畫出來</button>
+      </div>
+      <div class="svgbox" id="fzSvg"></div>
+      <div class="out" id="fzOut"></div>
+      <div class="hint">分母 1～12、分子 0～60。每一條長條代表 1，被切成「分母」那麼多格。</div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜<span class="frac"><span>11</span><span>3</span></span> 是哪一種分數？換成帶分數是多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 分子 11 ≥ 分母 3，是<b>假分數</b>。</p>
+        <p class="step"><b>②</b> 11 ÷ 3 ＝ 3 … 2。</p>
+        <p class="step"><b>③</b> 答案：<span class="mixed">3<span class="frac"><span>2</span><span>3</span></span></span>。分母還是 3。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜<span class="mixed">4<span class="frac"><span>2</span><span>7</span></span></span> 換成假分數</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 整數 × 分母 ＋ 分子：4 × 7 ＋ 2 ＝ 30。</p>
+        <p class="step"><b>②</b> 答案：<span class="frac"><span>30</span><span>7</span></span>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜<span class="frac"><span>12</span><span>4</span></span> 換成帶分數</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 12 ÷ 4 ＝ 3，餘 0。</p>
+        <p class="step"><b>②</b> 餘數是 0，代表沒有分數部分，答案就是整數 <b>3</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. <span class="frac"><span>7</span><span>7</span></span> 等於多少？</div>
+      <label><input type="radio" name="p1q1" value="A">0</label>
+      <label><input type="radio" name="p1q1" value="B">1</label>
+      <label><input type="radio" name="p1q1" value="C"><span class="frac"><span>1</span><span>7</span></span></label>
+      <label><input type="radio" name="p1q1" value="D">7</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　分子等於分母就是 1。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 下面哪一個是<b>真分數</b>？</div>
+      <label><input type="radio" name="p1q2" value="A"><span class="mixed">1<span class="frac"><span>1</span><span>2</span></span></span></label>
+      <label><input type="radio" name="p1q2" value="B"><span class="frac"><span>4</span><span>4</span></span></label>
+      <label><input type="radio" name="p1q2" value="C"><span class="frac"><span>3</span><span>8</span></span></label>
+      <label><input type="radio" name="p1q2" value="D"><span class="frac"><span>6</span><span>5</span></span></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　真分數的分子要比分母小，只有 3/8 符合。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. <span class="frac"><span>13</span><span>5</span></span> 換成帶分數是：</div>
+      <label><input type="radio" name="p1q3" value="A"><span class="mixed">1<span class="frac"><span>8</span><span>5</span></span></span></label>
+      <label><input type="radio" name="p1q3" value="B"><span class="mixed">3<span class="frac"><span>2</span><span>5</span></span></span></label>
+      <label><input type="radio" name="p1q3" value="C"><span class="mixed">2<span class="frac"><span>3</span><span>5</span></span></span></label>
+      <label><input type="radio" name="p1q3" value="D"><span class="mixed">2<span class="frac"><span>3</span><span>13</span></span></span></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　13 ÷ 5 ＝ 2 … 3，所以是 2 又 3/5。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. <span class="mixed">3<span class="frac"><span>1</span><span>6</span></span></span> 換成假分數是：</div>
+      <label><input type="radio" name="p1q4" value="A"><span class="frac"><span>19</span><span>6</span></span></label>
+      <label><input type="radio" name="p1q4" value="B"><span class="frac"><span>18</span><span>6</span></span></label>
+      <label><input type="radio" name="p1q4" value="C"><span class="frac"><span>10</span><span>6</span></span></label>
+      <label><input type="radio" name="p1q4" value="D"><span class="frac"><span>19</span><span>3</span></span></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　3 × 6 ＋ 1 ＝ 19，分母不變 → 19/6。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">5. <span class="frac"><span>20</span><span>4</span></span> 等於多少？</div>
+      <label><input type="radio" name="p1q5" value="A">4</label>
+      <label><input type="radio" name="p1q5" value="B"><span class="mixed">5<span class="frac"><span>1</span><span>4</span></span></span></label>
+      <label><input type="radio" name="p1q5" value="C">5</label>
+      <label><input type="radio" name="p1q5" value="D"><span class="mixed">4<span class="frac"><span>4</span><span>4</span></span></span></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　20 ÷ 4 ＝ 5，剛好整除，就是整數 5。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 6-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會算同分母分數的加法和減法：分母不變，分子加減</li>
+      <li>算出假分數時會化成帶分數</li>
+      <li>帶分數相減，分數不夠減時會向整數借 1</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：分母不變，分子加減</h2>
+    <div class="formula"><span class="frac"><span>2</span><span>7</span></span> ＋ <span class="frac"><span>3</span><span>7</span></span> ＝ <span class="frac"><span>5</span><span>7</span></span></div>
+    <p>為什麼？因為 2 個 <span class="frac"><span>1</span><span>7</span></span> 加 3 個 <span class="frac"><span>1</span><span>7</span></span>，當然是 5 個 <span class="frac"><span>1</span><span>7</span></span>。份的大小沒變，只是數量變了。</p>
+    <div class="warn">⚠️ 最常見的錯誤：把分母也加起來，寫成 <span class="frac"><span>5</span><span>14</span></span>。分母是「切成幾份」，切法沒變，分母就不會變。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：加完變假分數，要化成帶分數</h2>
+    <div class="formula"><span class="frac"><span>4</span><span>5</span></span> ＋ <span class="frac"><span>3</span><span>5</span></span> ＝ <span class="frac"><span>7</span><span>5</span></span> ＝ <span class="mixed">1<span class="frac"><span>2</span><span>5</span></span></span></div>
+    <p>答案一般寫成帶分數（或整數），這樣一眼看得出「大概多大」。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：帶分數的加減</h2>
+    <p>整數跟整數算，分數跟分數算：</p>
+    <div class="formula"><span class="mixed">2<span class="frac"><span>1</span><span>4</span></span></span> ＋ <span class="mixed">1<span class="frac"><span>2</span><span>4</span></span></span> ＝ (2 ＋ 1) ＋ (<span class="frac"><span>1</span><span>4</span></span> ＋ <span class="frac"><span>2</span><span>4</span></span>) ＝ <span class="mixed">3<span class="frac"><span>3</span><span>4</span></span></span></div>
+    <p>相減時分數<b>不夠減</b>，就向整數<b>借 1</b>。借來的 1 要換成「分母分之分母」：</p>
+    <div class="formula"><span class="mixed">3<span class="frac"><span>1</span><span>4</span></span></span> − <span class="mixed">1<span class="frac"><span>3</span><span>4</span></span></span>：<span class="frac"><span>1</span><span>4</span></span> 不夠減 <span class="frac"><span>3</span><span>4</span></span>，向 3 借 1 → <span class="mixed">2<span class="frac"><span>5</span><span>4</span></span></span> − <span class="mixed">1<span class="frac"><span>3</span><span>4</span></span></span> ＝ <span class="mixed">1<span class="frac"><span>2</span><span>4</span></span></span></div>
+    <div class="note">💡 借 1 的時候，分子要<b>加上分母</b>：1/4 借 1 變成 (1＋4)/4 ＝ 5/4。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜<span class="frac"><span>5</span><span>9</span></span> ＋ <span class="frac"><span>2</span><span>9</span></span></summary>
+      <div class="body">
+        <p class="step"><b>①</b> 分母不變，分子 5 ＋ 2 ＝ 7。</p>
+        <p class="step"><b>②</b> 答案：<span class="frac"><span>7</span><span>9</span></span>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜<span class="frac"><span>5</span><span>6</span></span> ＋ <span class="frac"><span>4</span><span>6</span></span></summary>
+      <div class="body">
+        <p class="step"><b>①</b> 5 ＋ 4 ＝ 9 → <span class="frac"><span>9</span><span>6</span></span>。</p>
+        <p class="step"><b>②</b> 9 ÷ 6 ＝ 1 … 3 → 化成帶分數 <span class="mixed">1<span class="frac"><span>3</span><span>6</span></span></span>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜<span class="mixed">4<span class="frac"><span>1</span><span>5</span></span></span> − <span class="mixed">2<span class="frac"><span>3</span><span>5</span></span></span></summary>
+      <div class="body">
+        <p class="step"><b>①</b> 分數部分 1/5 不夠減 3/5，向整數借 1：4 又 1/5 ＝ 3 又 6/5。</p>
+        <p class="step"><b>②</b> 整數：3 − 2 ＝ 1；分數：6/5 − 3/5 ＝ 3/5。</p>
+        <p class="step"><b>③</b> 答案：<span class="mixed">1<span class="frac"><span>3</span><span>5</span></span></span>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜3 − <span class="frac"><span>2</span><span>7</span></span></summary>
+      <div class="body">
+        <p class="step"><b>①</b> 整數 3 沒有分數部分，借 1 變成 2 又 7/7。</p>
+        <p class="step"><b>②</b> 7/7 − 2/7 ＝ 5/7。</p>
+        <p class="step"><b>③</b> 答案：<span class="mixed">2<span class="frac"><span>5</span><span>7</span></span></span>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. <span class="frac"><span>3</span><span>8</span></span> ＋ <span class="frac"><span>4</span><span>8</span></span> ＝ ？</div>
+      <label><input type="radio" name="p2q1" value="A"><span class="frac"><span>7</span><span>16</span></span></label>
+      <label><input type="radio" name="p2q1" value="B"><span class="frac"><span>7</span><span>8</span></span></label>
+      <label><input type="radio" name="p2q1" value="C"><span class="frac"><span>1</span><span>8</span></span></label>
+      <label><input type="radio" name="p2q1" value="D"><span class="frac"><span>12</span><span>8</span></span></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　分母不變 8，分子 3 ＋ 4 ＝ 7。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. <span class="frac"><span>6</span><span>7</span></span> − <span class="frac"><span>2</span><span>7</span></span> ＝ ？</div>
+      <label><input type="radio" name="p2q2" value="A"><span class="frac"><span>8</span><span>7</span></span></label>
+      <label><input type="radio" name="p2q2" value="B"><span class="frac"><span>4</span><span>0</span></span></label>
+      <label><input type="radio" name="p2q2" value="C"><span class="frac"><span>4</span><span>14</span></span></label>
+      <label><input type="radio" name="p2q2" value="D"><span class="frac"><span>4</span><span>7</span></span></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　分子 6 − 2 ＝ 4，分母不變。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. <span class="frac"><span>5</span><span>6</span></span> ＋ <span class="frac"><span>5</span><span>6</span></span> ＝ ？</div>
+      <label><input type="radio" name="p2q3" value="A"><span class="mixed">1<span class="frac"><span>4</span><span>6</span></span></span></label>
+      <label><input type="radio" name="p2q3" value="B"><span class="frac"><span>10</span><span>12</span></span></label>
+      <label><input type="radio" name="p2q3" value="C"><span class="frac"><span>10</span><span>6</span></span>（不用再化）</label>
+      <label><input type="radio" name="p2q3" value="D"><span class="mixed">1<span class="frac"><span>5</span><span>6</span></span></span></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　10/6 → 10 ÷ 6 ＝ 1 … 4 → 1 又 4/6。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. <span class="mixed">2<span class="frac"><span>3</span><span>5</span></span></span> ＋ <span class="mixed">1<span class="frac"><span>1</span><span>5</span></span></span> ＝ ？</div>
+      <label><input type="radio" name="p2q4" value="A"><span class="mixed">3<span class="frac"><span>4</span><span>10</span></span></span></label>
+      <label><input type="radio" name="p2q4" value="B"><span class="mixed">3<span class="frac"><span>4</span><span>5</span></span></span></label>
+      <label><input type="radio" name="p2q4" value="C"><span class="mixed">3<span class="frac"><span>3</span><span>5</span></span></span></label>
+      <label><input type="radio" name="p2q4" value="D"><span class="mixed">4<span class="frac"><span>4</span><span>5</span></span></span></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　整數 2 ＋ 1 ＝ 3，分數 3/5 ＋ 1/5 ＝ 4/5。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. <span class="mixed">5<span class="frac"><span>1</span><span>3</span></span></span> − <span class="mixed">2<span class="frac"><span>2</span><span>3</span></span></span> ＝ ？</div>
+      <label><input type="radio" name="p2q5" value="A"><span class="mixed">3<span class="frac"><span>2</span><span>3</span></span></span></label>
+      <label><input type="radio" name="p2q5" value="B"><span class="mixed">2<span class="frac"><span>2</span><span>3</span></span></span></label>
+      <label><input type="radio" name="p2q5" value="C"><span class="mixed">2<span class="frac"><span>1</span><span>3</span></span></span></label>
+      <label><input type="radio" name="p2q5" value="D"><span class="mixed">3<span class="frac"><span>1</span><span>3</span></span></span></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1/3 不夠減 2/3，借 1 變 4 又 4/3；4 − 2 ＝ 2，4/3 − 2/3 ＝ 2/3。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">6. 2 − <span class="frac"><span>3</span><span>4</span></span> ＝ ？</div>
+      <label><input type="radio" name="p2q6" value="A"><span class="mixed">2<span class="frac"><span>1</span><span>4</span></span></span></label>
+      <label><input type="radio" name="p2q6" value="B"><span class="mixed">1<span class="frac"><span>1</span><span>4</span></span></span></label>
+      <label><input type="radio" name="p2q6" value="C"><span class="mixed">1<span class="frac"><span>3</span><span>4</span></span></span></label>
+      <label><input type="radio" name="p2q6" value="D"><span class="frac"><span>1</span><span>4</span></span></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　2 ＝ 1 又 4/4，4/4 − 3/4 ＝ 1/4，答案 1 又 1/4。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 6-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>同分母分數會比大小</li>
+      <li>帶分數和假分數放在一起時，會先換成同一種再比</li>
+      <li>看得懂應用題要用加還是減</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：同分母，分子大的就大</h2>
+    <div class="formula"><span class="frac"><span>5</span><span>8</span></span> ＞ <span class="frac"><span>3</span><span>8</span></span>　（都是切 8 份，拿 5 份比拿 3 份多）</div>
+    <p>帶分數先比<b>整數</b>，整數一樣再比分數：</p>
+    <div class="formula"><span class="mixed">3<span class="frac"><span>1</span><span>5</span></span></span> ＞ <span class="mixed">2<span class="frac"><span>4</span><span>5</span></span></span>　（3 ＞ 2，分數不用看）</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：假分數和帶分數放一起，先換成同一種</h2>
+    <div class="formula"><span class="frac"><span>11</span><span>4</span></span> 和 <span class="mixed">2<span class="frac"><span>3</span><span>4</span></span></span>：<span class="frac"><span>11</span><span>4</span></span> ＝ <span class="mixed">2<span class="frac"><span>3</span><span>4</span></span></span> → 兩個一樣大</div>
+    <div class="formula"><span class="frac"><span>9</span><span>5</span></span> 和 <span class="mixed">2<span class="frac"><span>1</span><span>5</span></span></span>：<span class="frac"><span>9</span><span>5</span></span> ＝ <span class="mixed">1<span class="frac"><span>4</span><span>5</span></span></span> ＜ <span class="mixed">2<span class="frac"><span>1</span><span>5</span></span></span></div>
+    <div class="note">💡 都換成帶分數比較好比，因為整數部分一眼就看出來。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：應用題，先問「合起來」還是「拿走」</h2>
+    <ul>
+      <li>「一共」「合起來」「再加」→ <b>加法</b></li>
+      <li>「剩下」「多多少」「用掉後」→ <b>減法</b></li>
+    </ul>
+    <div class="formula">一瓶果汁 <span class="mixed">1<span class="frac"><span>2</span><span>5</span></span></span> 公升，喝了 <span class="frac"><span>4</span><span>5</span></span> 公升，剩 <span class="mixed">1<span class="frac"><span>2</span><span>5</span></span></span> − <span class="frac"><span>4</span><span>5</span></span> ＝ <span class="frac"><span>7</span><span>5</span></span> − <span class="frac"><span>4</span><span>5</span></span> ＝ <span class="frac"><span>3</span><span>5</span></span> 公升</div>
+    <div class="note">💡 也可以用借位：1 又 2/5 ＝ 7/5（全部化成假分數再減），跟借 1 的結果一樣。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜<span class="frac"><span>7</span><span>9</span></span> 和 <span class="frac"><span>4</span><span>9</span></span>，哪個大？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 分母一樣，比分子：7 ＞ 4。</p>
+        <p class="step"><b>②</b> 答案：<span class="frac"><span>7</span><span>9</span></span> 比較大。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜<span class="frac"><span>13</span><span>6</span></span> 和 <span class="mixed">2<span class="frac"><span>5</span><span>6</span></span></span>，哪個大？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 13/6 ＝ 2 又 1/6。</p>
+        <p class="step"><b>②</b> 整數都是 2，比分數：1/6 ＜ 5/6。</p>
+        <p class="step"><b>③</b> 答案：<span class="mixed">2<span class="frac"><span>5</span><span>6</span></span></span> 比較大。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜小明吃了 <span class="frac"><span>3</span><span>8</span></span> 個披薩，小華吃了 <span class="frac"><span>4</span><span>8</span></span> 個，兩人一共吃了多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 一共 → 加法：3/8 ＋ 4/8 ＝ 7/8。</p>
+        <p class="step"><b>②</b> 答案：<span class="frac"><span>7</span><span>8</span></span> 個披薩。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜緞帶長 <span class="mixed">2<span class="frac"><span>1</span><span>4</span></span></span> 公尺，用掉 <span class="mixed">1<span class="frac"><span>3</span><span>4</span></span></span> 公尺，剩幾公尺？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 剩下 → 減法。1/4 不夠減 3/4，借 1：2 又 1/4 ＝ 1 又 5/4。</p>
+        <p class="step"><b>②</b> 1 − 1 ＝ 0，5/4 − 3/4 ＝ 2/4。</p>
+        <p class="step"><b>③</b> 答案：<span class="frac"><span>2</span><span>4</span></span> 公尺。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 哪一個最大？</div>
+      <label><input type="radio" name="p3q1" value="A"><span class="frac"><span>7</span><span>9</span></span></label>
+      <label><input type="radio" name="p3q1" value="B"><span class="frac"><span>4</span><span>9</span></span></label>
+      <label><input type="radio" name="p3q1" value="C"><span class="frac"><span>2</span><span>9</span></span></label>
+      <label><input type="radio" name="p3q1" value="D"><span class="frac"><span>5</span><span>9</span></span></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　同分母比分子，7 最大。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. <span class="mixed">3<span class="frac"><span>2</span><span>7</span></span></span> 和 <span class="mixed">3<span class="frac"><span>5</span><span>7</span></span></span>，哪個大？</div>
+      <label><input type="radio" name="p3q2" value="A"><span class="mixed">3<span class="frac"><span>5</span><span>7</span></span></span> 大</label>
+      <label><input type="radio" name="p3q2" value="B"><span class="mixed">3<span class="frac"><span>2</span><span>7</span></span></span> 大</label>
+      <label><input type="radio" name="p3q2" value="C">一樣大</label>
+      <label><input type="radio" name="p3q2" value="D">無法比較</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　整數一樣都是 3，比分數 5/7 ＞ 2/7。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. <span class="frac"><span>9</span><span>4</span></span> 和 <span class="mixed">2<span class="frac"><span>3</span><span>4</span></span></span>，哪個大？</div>
+      <label><input type="radio" name="p3q3" value="A"><span class="mixed">2<span class="frac"><span>3</span><span>4</span></span></span> 大</label>
+      <label><input type="radio" name="p3q3" value="B">無法比較</label>
+      <label><input type="radio" name="p3q3" value="C"><span class="frac"><span>9</span><span>4</span></span> 大</label>
+      <label><input type="radio" name="p3q3" value="D">一樣大</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　9/4 ＝ 2 又 1/4，1/4 ＜ 3/4。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. 水壺有 <span class="frac"><span>5</span><span>6</span></span> 公升的水，喝掉 <span class="frac"><span>2</span><span>6</span></span> 公升，剩多少？</div>
+      <label><input type="radio" name="p3q4" value="A"><span class="frac"><span>3</span><span>0</span></span> 公升</label>
+      <label><input type="radio" name="p3q4" value="B"><span class="frac"><span>3</span><span>6</span></span> 公升</label>
+      <label><input type="radio" name="p3q4" value="C"><span class="frac"><span>3</span><span>12</span></span> 公升</label>
+      <label><input type="radio" name="p3q4" value="D"><span class="frac"><span>7</span><span>6</span></span> 公升</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　剩下用減法：5/6 − 2/6 ＝ 3/6。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">5. 哥哥跑了 <span class="mixed">1<span class="frac"><span>3</span><span>5</span></span></span> 公里，弟弟跑了 <span class="frac"><span>4</span><span>5</span></span> 公里，兩人一共跑了幾公里？</div>
+      <label><input type="radio" name="p3q5" value="A"><span class="mixed">1<span class="frac"><span>7</span><span>10</span></span></span></label>
+      <label><input type="radio" name="p3q5" value="B"><span class="mixed">2<span class="frac"><span>4</span><span>5</span></span></span></label>
+      <label><input type="radio" name="p3q5" value="C"><span class="mixed">2<span class="frac"><span>2</span><span>5</span></span></span></label>
+      <label><input type="radio" name="p3q5" value="D"><span class="mixed">1<span class="frac"><span>7</span><span>5</span></span></span></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1 又 3/5 ＋ 4/5 ＝ 1 又 7/5 ＝ 2 又 2/5。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="A">
+      <div class="stem">1. 下面哪一個是<b>假分數</b>？</div>
+      <label><input type="radio" name="qz1" value="A"><span class="frac"><span>5</span><span>5</span></span></label>
+      <label><input type="radio" name="qz1" value="B"><span class="frac"><span>3</span><span>5</span></span></label>
+      <label><input type="radio" name="qz1" value="C"><span class="frac"><span>1</span><span>5</span></span></label>
+      <label><input type="radio" name="qz1" value="D"><span class="mixed">1<span class="frac"><span>2</span><span>5</span></span></span></label>
+      <div class="fb" data-exp="　分子 ≥ 分母就是假分數，5/5 符合。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">2. <span class="frac"><span>17</span><span>5</span></span> 換成帶分數是：</div>
+      <label><input type="radio" name="qz2" value="A"><span class="mixed">5<span class="frac"><span>2</span><span>3</span></span></span></label>
+      <label><input type="radio" name="qz2" value="B"><span class="mixed">3<span class="frac"><span>2</span><span>17</span></span></span></label>
+      <label><input type="radio" name="qz2" value="C"><span class="mixed">2<span class="frac"><span>7</span><span>5</span></span></span></label>
+      <label><input type="radio" name="qz2" value="D"><span class="mixed">3<span class="frac"><span>2</span><span>5</span></span></span></label>
+      <div class="fb" data-exp="　17 ÷ 5 ＝ 3 … 2。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">3. <span class="mixed">2<span class="frac"><span>5</span><span>8</span></span></span> 換成假分數是：</div>
+      <label><input type="radio" name="qz3" value="A"><span class="frac"><span>10</span><span>8</span></span></label>
+      <label><input type="radio" name="qz3" value="B"><span class="frac"><span>21</span><span>8</span></span></label>
+      <label><input type="radio" name="qz3" value="C"><span class="frac"><span>21</span><span>2</span></span></label>
+      <label><input type="radio" name="qz3" value="D"><span class="frac"><span>15</span><span>8</span></span></label>
+      <div class="fb" data-exp="　2 × 8 ＋ 5 ＝ 21。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">4. <span class="frac"><span>4</span><span>9</span></span> ＋ <span class="frac"><span>3</span><span>9</span></span> ＝ ？</div>
+      <label><input type="radio" name="qz4" value="A"><span class="frac"><span>12</span><span>9</span></span></label>
+      <label><input type="radio" name="qz4" value="B"><span class="frac"><span>7</span><span>9</span></span></label>
+      <label><input type="radio" name="qz4" value="C"><span class="frac"><span>7</span><span>18</span></span></label>
+      <label><input type="radio" name="qz4" value="D"><span class="frac"><span>1</span><span>9</span></span></label>
+      <div class="fb" data-exp="　分母不變，分子相加。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. <span class="frac"><span>7</span><span>10</span></span> − <span class="frac"><span>3</span><span>10</span></span> ＝ ？</div>
+      <label><input type="radio" name="qz5" value="A"><span class="frac"><span>10</span><span>10</span></span></label>
+      <label><input type="radio" name="qz5" value="B"><span class="frac"><span>4</span><span>10</span></span></label>
+      <label><input type="radio" name="qz5" value="C"><span class="frac"><span>4</span><span>20</span></span></label>
+      <label><input type="radio" name="qz5" value="D"><span class="frac"><span>4</span><span>0</span></span></label>
+      <div class="fb" data-exp="　分子 7 − 3 ＝ 4。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">6. <span class="frac"><span>5</span><span>7</span></span> ＋ <span class="frac"><span>6</span><span>7</span></span> ＝ ？</div>
+      <label><input type="radio" name="qz6" value="A"><span class="mixed">1<span class="frac"><span>5</span><span>7</span></span></span></label>
+      <label><input type="radio" name="qz6" value="B"><span class="frac"><span>11</span><span>14</span></span></label>
+      <label><input type="radio" name="qz6" value="C"><span class="frac"><span>11</span><span>7</span></span>（不用化）</label>
+      <label><input type="radio" name="qz6" value="D"><span class="mixed">1<span class="frac"><span>4</span><span>7</span></span></span></label>
+      <div class="fb" data-exp="　11/7 ＝ 1 又 4/7。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">7. <span class="mixed">4<span class="frac"><span>1</span><span>6</span></span></span> − <span class="mixed">1<span class="frac"><span>5</span><span>6</span></span></span> ＝ ？</div>
+      <label><input type="radio" name="qz7" value="A"><span class="mixed">2<span class="frac"><span>2</span><span>6</span></span></span></label>
+      <label><input type="radio" name="qz7" value="B"><span class="mixed">3<span class="frac"><span>2</span><span>6</span></span></span></label>
+      <label><input type="radio" name="qz7" value="C"><span class="mixed">3<span class="frac"><span>4</span><span>6</span></span></span></label>
+      <label><input type="radio" name="qz7" value="D"><span class="mixed">2<span class="frac"><span>4</span><span>6</span></span></span></label>
+      <div class="fb" data-exp="　借 1：3 又 7/6 − 1 又 5/6 ＝ 2 又 2/6。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">8. 3 − <span class="frac"><span>1</span><span>4</span></span> ＝ ？</div>
+      <label><input type="radio" name="qz8" value="A"><span class="mixed">2<span class="frac"><span>3</span><span>4</span></span></span></label>
+      <label><input type="radio" name="qz8" value="B"><span class="frac"><span>2</span><span>4</span></span></label>
+      <label><input type="radio" name="qz8" value="C"><span class="mixed">3<span class="frac"><span>1</span><span>4</span></span></span></label>
+      <label><input type="radio" name="qz8" value="D"><span class="mixed">2<span class="frac"><span>1</span><span>4</span></span></span></label>
+      <div class="fb" data-exp="　3 ＝ 2 又 4/4，4/4 − 1/4 ＝ 3/4。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">9. <span class="frac"><span>11</span><span>3</span></span> 和 <span class="mixed">3<span class="frac"><span>1</span><span>3</span></span></span>，哪個大？</div>
+      <label><input type="radio" name="qz9" value="A"><span class="frac"><span>11</span><span>3</span></span> 大</label>
+      <label><input type="radio" name="qz9" value="B">無法比較</label>
+      <label><input type="radio" name="qz9" value="C">一樣大</label>
+      <label><input type="radio" name="qz9" value="D"><span class="mixed">3<span class="frac"><span>1</span><span>3</span></span></span> 大</label>
+      <div class="fb" data-exp="　11/3 ＝ 3 又 2/3 ＞ 3 又 1/3。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">10. 蛋糕吃了 <span class="frac"><span>3</span><span>8</span></span>，再吃 <span class="frac"><span>2</span><span>8</span></span>，一共吃了多少？</div>
+      <label><input type="radio" name="qz10" value="A"><span class="frac"><span>6</span><span>8</span></span></label>
+      <label><input type="radio" name="qz10" value="B"><span class="frac"><span>1</span><span>8</span></span></label>
+      <label><input type="radio" name="qz10" value="C"><span class="frac"><span>5</span><span>8</span></span></label>
+      <label><input type="radio" name="qz10" value="D"><span class="frac"><span>5</span><span>16</span></span></label>
+      <div class="fb" data-exp="　一共用加法：3/8 ＋ 2/8 ＝ 5/8。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 小四數學 · 四上第 6 單元「分數」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "四上6 分數";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// 3/4 的圖
+function bars(n, d, W, unitW){
+  const wholes = Math.max(1, Math.ceil(n / d)), gap = 12, h = 44, cw = unitW / d;
+  let s = '';
+  for(let w = 0; w < wholes; w++){
+    const x0 = 10 + w * (unitW + gap);
+    for(let i = 0; i < d; i++){
+      const idx = w * d + i;
+      s += rect(x0 + i * cw, 10, cw, h, idx < n ? '#818cf8' : '#fff', '#4338ca', 1.5);
+    }
+    s += txt(x0 + unitW / 2, 72, '1', '#6b7280', 12);
+  }
+  return svg(10 + wholes * (unitW + gap), 82, s);
+}
+document.getElementById('svgFrac34').innerHTML = bars(3, 4, 0, 200);
+
+// 分數圖像機
+function fz(){
+  const n = parseInt(document.getElementById('fzN').value, 10), d = parseInt(document.getElementById('fzD').value, 10);
+  const out = document.getElementById('fzOut'), box = document.getElementById('fzSvg');
+  if(!(d >= 1 && d <= 12 && n >= 0 && n <= 60)){ out.textContent = '分母 1～12、分子 0～60。'; box.innerHTML = ''; return; }
+  const wholes = Math.ceil(n / d) || 1, unitW = wholes > 4 ? 120 : 180;
+  box.innerHTML = bars(n, d, 0, unitW);
+  const w = Math.floor(n / d), r = n % d;
+  let kind, conv;
+  if(n < d){ kind = '真分數（比 1 小）'; conv = ''; }
+  else if(r === 0){ kind = n === d ? '假分數，剛好等於 1' : '假分數，剛好是整數'; conv = `＝ ${w}`; }
+  else { kind = '假分數（比 1 大）'; conv = `＝ ${w} 又 ${r}/${d}（帶分數）`; }
+  out.innerHTML = `${n}/${d}：${kind} ${conv}<br><span style="font-weight:normal;font-size:.9rem">${n} 個 1/${d}${n >= d ? `，${d} 個 1/${d} 湊成一個 1，可以湊 ${w} 個，剩 ${r} 個` : ''}</span>`;
+}
+document.getElementById('fzGo').addEventListener('click', fz);
+fz();
+
+</script>
+</body>
+</html>
