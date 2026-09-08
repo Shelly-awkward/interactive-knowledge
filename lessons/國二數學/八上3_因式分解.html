@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國二數學｜八上 第3章 因式分解</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.75;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#1e3a8a,#2563eb); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.2); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.9; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .story{background:linear-gradient(135deg,#fffbeb,#fef3c7); border:none;}
+  .story h2{color:#92400e;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+  .tip{background:var(--green-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#166534;}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  sup{font-size:.72em;}
+  .svgbox{text-align:center; margin:14px 0;}
+  .svgbox svg{max-width:100%; height:auto;}
+
+  /* ── 互動元件共用 ── */
+  .ctl{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0;}
+  .ctl button{border:1px solid var(--border); background:var(--card); color:var(--ink); border-radius:99px; padding:7px 16px;
+    cursor:pointer; font-family:inherit; font-size:.9rem; transition:.15s;}
+  .ctl button:hover{border-color:var(--blue); color:var(--blue);}
+  .ctl button.primary{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+  .ctl button.on{background:var(--amber-soft); border-color:var(--amber); color:#92400e;}
+  .caption{min-height:3.2em; text-align:center; padding:10px 14px; border-radius:10px; background:#f9fafb; border:1px dashed var(--border); font-size:.95rem;}
+  .eqline{text-align:center; font-size:1.15rem; font-weight:bold; margin:6px 0; min-height:1.6em;}
+  .eqline .hi{color:var(--red);}
+  .stepind{text-align:center; color:var(--sub); font-size:.82rem;}
+
+  /* 面積翻轉動畫 */
+  #animSvg{width:100%; height:auto; display:block; margin:0 auto;}
+  #animSvg rect{fill:#bfdbfe; stroke:#bfdbfe; stroke-width:1.5; transition:fill .45s, stroke .45s;}
+  #animSvg.cut .pc-sq rect{fill:#dbeafe; stroke:#2563eb;}
+  #animSvg.cut .pc-x rect{fill:#fef3c7; stroke:#d97706;}
+  #animSvg.cut .pc-u rect{fill:#dcfce7; stroke:#16a34a;}
+  #animSvg text.pl{opacity:0; transition:opacity .4s; pointer-events:none; font-size:15px;}
+  #animSvg.cut text.pl{opacity:1;}
+  #animSvg .layer{transition:opacity .4s;}
+  #animSvg .layer.hide{opacity:0;}
+  #animSvg .side{font-size:15px; fill:#1e40af; font-weight:bold; transition:fill .3s, font-size .3s;}
+  #animSvg .side.hot{fill:#dc2626; font-size:18px;}
+  #animSvg .dim{font-size:13px; fill:#374151;}
+  #animSvg .grp{font-size:14px; fill:#374151; font-weight:bold;}
+
+  /* 代數磚拼盤 */
+  #tileSvg{width:100%; height:auto; display:block; touch-action:none; user-select:none; -webkit-user-select:none; border:1px solid var(--border); border-radius:10px; background:#fff;}
+  #tileSvg .tile{cursor:grab;}
+  #tileSvg .tile rect{stroke-width:1.5;}
+  #tileSvg .tile.sq rect{fill:#dbeafe; stroke:#2563eb;}
+  #tileSvg .tile.x rect{fill:#fef3c7; stroke:#d97706;}
+  #tileSvg .tile.u rect{fill:#dcfce7; stroke:#16a34a;}
+  #tileSvg .tile text{font-size:13px; pointer-events:none; fill:#374151;}
+  #tileSvg .tile.dragging rect{stroke-width:2.5; filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));}
+  #tileSvg .grid line{stroke:#e5e7eb; stroke-width:1;}
+  #tileSvg .board{fill:#f9fafb; stroke:#9ca3af; stroke-dasharray:4 3;}
+  #tileSvg .lbl{font-size:14px; fill:#dc2626; font-weight:bold;}
+  #tileSvg .tray{fill:#fffdf5; stroke:#fde68a;}
+  #tileSvg .traytxt{font-size:12px; fill:#92400e;}
+  .status{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; background:#f3f4f6; color:#374151;}
+  .status.ok{background:var(--green-soft); color:#166534; font-weight:bold;}
+  .status.no{background:var(--red-soft); color:#991b1b;}
+  .target{text-align:center; font-size:1.2rem; font-weight:bold; margin:6px 0;}
+
+  /* 十字交乘檢查器 */
+  .cross{display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start;}
+  .cross .left{flex:0 0 auto;}
+  .cross .right{flex:1 1 220px;}
+  .cross input{width:70px; padding:6px 8px; border:1px solid var(--border); border-radius:8px; font:inherit; font-size:1rem; text-align:center;}
+  .cross .row{margin:6px 0; font-size:1rem;}
+  .cross .row.ok{color:#166534;}
+  .cross .row.no{color:#991b1b;}
+  .cross .res{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:1.05rem; font-weight:bold; background:#f3f4f6; min-height:2.4em;}
+  .cross .res.ok{background:var(--green-soft); color:#166534;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國中八年級上學期 · 第3章</span>
+  <h1>因式分解</h1>
+  <p>一句話：因式分解就是「把積木拼回長方形，再讀出兩邊長」。先看動畫，再學三招，最後做章末總測驗。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">3-1 提公因式</button>
+  <button data-t="s2">3-2 乘法公式反用</button>
+  <button data-t="s3">3-3 十字交乘</button>
+  <button data-t="s4">🏁 章末總測驗</button>
+</nav>
+
+<!-- ═══════════ 3-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道「因式分解」就是乘法反過來走：把加減的式子改寫成相乘</li>
+      <li>會找出每一項共同的因式（公因式），把它提到括號外面</li>
+      <li>提完公因式，會用「乘回去」檢查答案</li>
+    </ul>
+  </div>
+
+  <div class="card story">
+    <h2>📜 先講一個故事：代數一開始是用「畫圖」做的</h2>
+    <p>兩千多年前的希臘人，還有九世紀巴格達的數學家花拉子米（al-Khwārizmī），做代數的時候手上沒有 x，他們是真的在畫正方形和長方形，用<b>面積</b>在算。</p>
+    <p style="margin-top:6px">所以 x<sup>2</sup> 唸作「x 平方」，英文是 square，意思就是<b>正方形</b>——這不是巧合。</p>
+    <div class="formula" style="margin-top:12px">
+      乘法　：知道兩個邊長 → 求面積<br>
+      因式分解：知道面積 → 反求兩個邊長
+    </div>
+    <p>整章要學的東西，就是這一件事。下面的動畫，用眼睛看一次。</p>
+  </div>
+
+  <div class="card">
+    <h2>🎬 動畫：一個長方形的兩種寫法</h2>
+    <p style="font-size:.9rem; color:var(--sub)">按「下一步」慢慢看，或按「自動播放」。由左往右看是<b>展開</b>，由右往左看就是<b>因式分解</b>。</p>
+    <div class="eqline" id="animEq"></div>
+    <svg id="animSvg" viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" aria-label="面積模型動畫">
+      <g id="animPieces"></g>
+      <g id="animSides" class="layer">
+        <text class="side" x="155" y="30" text-anchor="middle">寬 x＋3</text>
+        <text class="side" x="20" y="140" text-anchor="middle" transform="rotate(-90 20 140)">高 x＋2</text>
+      </g>
+      <g id="animDims" class="layer hide">
+        <text class="dim" x="110" y="44" text-anchor="middle">x</text>
+        <text class="dim" x="185" y="44" text-anchor="middle">1</text>
+        <text class="dim" x="215" y="44" text-anchor="middle">1</text>
+        <text class="dim" x="245" y="44" text-anchor="middle">1</text>
+        <text class="dim" x="42" y="115" text-anchor="end">x</text>
+        <text class="dim" x="42" y="190" text-anchor="end">1</text>
+        <text class="dim" x="42" y="220" text-anchor="end">1</text>
+      </g>
+      <g id="animGroups" class="layer hide">
+        <text class="grp" x="110" y="196" text-anchor="middle">1 個 x²</text>
+        <text class="grp" x="260" y="286" text-anchor="middle">5 條 x</text>
+        <text class="grp" x="420" y="160" text-anchor="middle">6 個 1</text>
+      </g>
+    </svg>
+    <div class="caption" id="animCap"></div>
+    <div class="stepind" id="animInd"></div>
+    <div class="ctl">
+      <button id="animReset">⏮ 重來</button>
+      <button id="animPrev">◀ 上一步</button>
+      <button id="animNext" class="primary">下一步 ▶</button>
+      <button id="animPlay">▶▶ 自動播放</button>
+    </div>
+    <div class="tip">💡 面積從頭到尾沒有變。(x＋2)(x＋3) 和 x<sup>2</sup>＋5x＋6 是<b>同一個長方形</b>的兩種寫法。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：什麼叫因式、因式分解</h2>
+    <p>先看數字：12＝3×4，我們說 3 和 4 是 12 的<b>因數</b>。</p>
+    <p>式子也一樣：x<sup>2</sup>＋5x＋6＝(x＋2)(x＋3)，我們說 (x＋2) 和 (x＋3) 是 x<sup>2</sup>＋5x＋6 的<b>因式</b>。</p>
+    <div class="formula">把一個多項式寫成「幾個多項式<b>相乘</b>」，就叫<b>因式分解</b>。</div>
+    <div class="formula" style="text-align:center">
+      (x＋2)(x＋3)　<span style="color:var(--blue)">──展開──▶</span>　x<sup>2</sup>＋5x＋6<br>
+      (x＋2)(x＋3)　<span style="color:var(--red)">◀──因式分解──</span>　x<sup>2</sup>＋5x＋6
+    </div>
+    <div class="note">💡 第 1 章學的「展開」是把括號拆掉；這一章的「因式分解」是把括號裝回去。方向相反，答案一定可以互相檢查。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：第一招——提公因式</h2>
+    <p>每一項都有的東西，叫<b>公因式</b>。把它「提」到括號外面，就是最基本的因式分解。</p>
+    <div class="formula">ma＋mb ＝ m(a＋b)</div>
+    <h3>怎麼做（四步）</h3>
+    <p class="step"><b>① 找數字</b>　各項係數的最大公因數</p>
+    <p class="step"><b>② 找字母</b>　每一項都有的字母，取最低的次方</p>
+    <p class="step"><b>③ 提出去</b>　括號裡每一項＝原本那一項 ÷ 公因式</p>
+    <p class="step"><b>④ 乘回去</b>　把答案展開，要跟原式一模一樣</p>
+    <div class="svgbox">
+      <svg viewBox="0 0 300 120" width="300" height="120" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="20" width="150" height="60" fill="#dbeafe" stroke="#2563eb"/>
+        <rect x="180" y="20" width="90" height="60" fill="#dcfce7" stroke="#16a34a"/>
+        <text x="105" y="56" text-anchor="middle" font-size="18" fill="#1e40af">ma</text>
+        <text x="225" y="56" text-anchor="middle" font-size="18" fill="#166534">mb</text>
+        <text x="105" y="14" text-anchor="middle" font-size="14">a</text>
+        <text x="225" y="14" text-anchor="middle" font-size="14">b</text>
+        <text x="18" y="56" text-anchor="middle" font-size="14">m</text>
+        <text x="150" y="108" text-anchor="middle" font-size="14" fill="#6b7280">兩塊高都是 m，併起來就是 m × (a＋b)</text>
+      </svg>
+    </div>
+    <div class="warn">⚠️ 最常錯：某一項<b>整個</b>被提走時，括號裡要留 <b>1</b>，不是留 0 也不是什麼都不留。<br>3x<sup>2</sup>＋3x ＝ 3x(x＋1)　✔　　3x<sup>2</sup>＋3x ＝ 3x(x)　✘</div>
+    <div class="note">💡 負號也可以一起提：−2x−4 ＝ −2(x＋2)。提負號時括號裡每一項符號都要反過來。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：公因式也可以是「一整個括號」</h2>
+    <p>把括號整個當成一團看，它也能當公因式：</p>
+    <div class="formula">3(x＋1)＋x(x＋1) ＝ (x＋1)(3＋x) ＝ (x＋1)(x＋3)</div>
+    <p>兩項都有 (x＋1)，就把 (x＋1) 提出來，剩下 3 和 x 放進另一個括號。</p>
+    <div class="note">💡 遇到 (2−x) 和 (x−2)，長得像但符號相反。記住：(2−x) ＝ −(x−2)，先把它翻成一樣的，再提。</div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜因式分解 6x＋9</summary>
+      <div class="body">
+        <p class="step"><b>找數字</b>　6 和 9 的最大公因數是 3；字母只有第一項有 x，不能提</p>
+        <p class="step"><b>提出去</b>　6x÷3＝2x、9÷3＝3</p>
+        <p class="step"><b>答案</b>　3(2x＋3)</p>
+        <p class="step"><b>乘回去</b>　3·2x＝6x、3·3＝9 ✔</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜因式分解 4x<sup>2</sup>−8x</summary>
+      <div class="body">
+        <p class="step"><b>找數字</b>　4 和 8 → 4</p>
+        <p class="step"><b>找字母</b>　x<sup>2</sup> 和 x 都有 x，取最低次 x</p>
+        <p class="step"><b>提出去</b>　公因式 4x；4x<sup>2</sup>÷4x＝x、−8x÷4x＝−2</p>
+        <p class="step"><b>答案</b>　4x(x−2)</p>
+        <p class="step"><b>乘回去</b>　4x·x＝4x<sup>2</sup>、4x·(−2)＝−8x ✔</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜因式分解 5a<sup>2</sup>b＋10ab<sup>2</sup></summary>
+      <div class="body">
+        <p class="step"><b>找數字</b>　5 和 10 → 5</p>
+        <p class="step"><b>找字母</b>　a 最低次是 a、b 最低次是 b → 公因式 5ab</p>
+        <p class="step"><b>提出去</b>　5a<sup>2</sup>b÷5ab＝a、10ab<sup>2</sup>÷5ab＝2b</p>
+        <p class="step"><b>答案</b>　5ab(a＋2b)</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜因式分解 x(x−3)＋2(x−3)</summary>
+      <div class="body">
+        <p class="step"><b>觀察</b>　兩項都有 (x−3)，把它當公因式</p>
+        <p class="step"><b>提出去</b>　剩下 x 和 2</p>
+        <p class="step"><b>答案</b>　(x−3)(x＋2)</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 5｜因式分解 2x(y−1)−3(1−y)</summary>
+      <div class="body">
+        <p class="step"><b>觀察</b>　(y−1) 和 (1−y) 差一個負號：(1−y)＝−(y−1)</p>
+        <p class="step"><b>改寫</b>　−3(1−y)＝−3·(−1)(y−1)＝＋3(y−1)</p>
+        <p class="step"><b>提出去</b>　2x(y−1)＋3(y−1)＝(y−1)(2x＋3)</p>
+        <p class="step"><b>答案</b>　(y−1)(2x＋3)</p>
+        <p class="step"><b>乘回去</b>　2xy＋3y−2x−3；原式展開也是 2xy−2x−3＋3y ✔</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>📝 練習題</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 因式分解 8x＋12 ＝ ?</div>
+      <label><input type="radio" name="p1q1" value="A">2(4x＋6)</label>
+      <label><input type="radio" name="p1q1" value="B">4(2x＋3)</label>
+      <label><input type="radio" name="p1q1" value="C">8(x＋12)</label>
+      <label><input type="radio" name="p1q1" value="D">4(2x＋12)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="8 和 12 的最大公因數是 4；8x÷4＝2x、12÷4＝3。選 A 沒提乾淨，括號裡 4x＋6 還有公因式 2。"></div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 因式分解 x<sup>2</sup>＋7x ＝ ?</div>
+      <label><input type="radio" name="p1q2" value="A">x(x＋7)</label>
+      <label><input type="radio" name="p1q2" value="B">x(7)</label>
+      <label><input type="radio" name="p1q2" value="C">7x(x＋1)</label>
+      <label><input type="radio" name="p1q2" value="D">x<sup>2</sup>(1＋7x)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="兩項都有 x，提出來：x²÷x＝x、7x÷x＝7，得 x(x＋7)。乘回去 x·x＋x·7＝x²＋7x ✔"></div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 因式分解 6a<sup>2</sup>−3a ＝ ?</div>
+      <label><input type="radio" name="p1q3" value="A">3a(2a)</label>
+      <label><input type="radio" name="p1q3" value="B">3a(2a−1)</label>
+      <label><input type="radio" name="p1q3" value="C">3(2a<sup>2</sup>−a)</label>
+      <label><input type="radio" name="p1q3" value="D">3a(2a−0)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="公因式 3a。−3a 整個被提走，括號裡要留 −1，不是 0。選 C 只提了數字，括號裡還有公因式 a，沒提乾淨。"></div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. 因式分解 12x<sup>2</sup>y＋18xy<sup>2</sup> ＝ ?</div>
+      <label><input type="radio" name="p1q4" value="A">6xy(2x＋3y)</label>
+      <label><input type="radio" name="p1q4" value="B">6(2x<sup>2</sup>y＋3xy<sup>2</sup>)</label>
+      <label><input type="radio" name="p1q4" value="C">6xy(2x＋3)</label>
+      <label><input type="radio" name="p1q4" value="D">2xy(6x＋9y)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="數字 12、18 → 6；字母 x、y 各取最低次 → 公因式 6xy。12x²y÷6xy＝2x、18xy²÷6xy＝3y。"></div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. 因式分解 (x＋5)·2＋(x＋5)·x ＝ ?</div>
+      <label><input type="radio" name="p1q5" value="A">(x＋5)(2x)</label>
+      <label><input type="radio" name="p1q5" value="B">(x＋5)(x＋2)</label>
+      <label><input type="radio" name="p1q5" value="C">2x(x＋5)<sup>2</sup></label>
+      <label><input type="radio" name="p1q5" value="D">(x＋5)<sup>2</sup>·2x</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="公因式是整個括號 (x＋5)，提出來後剩下 2 和 x，放進另一個括號相加：(x＋5)(2＋x)。選 A 把「加」寫成「乘」了。"></div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">6. 因式分解 a(b−2)−3(2−b) ＝ ?</div>
+      <label><input type="radio" name="p1q6" value="A">(b−2)(a−3)</label>
+      <label><input type="radio" name="p1q6" value="B">(b−2)(a＋3)</label>
+      <label><input type="radio" name="p1q6" value="C">(2−b)(a＋3)</label>
+      <label><input type="radio" name="p1q6" value="D">(b−2)(3−a)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="(2−b)＝−(b−2)，所以 −3(2−b)＝＋3(b−2)。原式＝a(b−2)＋3(b−2)＝(b−2)(a＋3)。"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會把平方差公式倒過來用：a<sup>2</sup>−b<sup>2</sup> ＝ (a＋b)(a−b)</li>
+      <li>會把完全平方公式倒過來用：a<sup>2</sup>±2ab＋b<sup>2</sup> ＝ (a±b)<sup>2</sup></li>
+      <li>養成習慣：先提公因式，再看能不能套公式</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：平方差反用</h2>
+    <p>第 1 章的平方差公式是 (a＋b)(a−b)＝a<sup>2</sup>−b<sup>2</sup>。這一章反過來：</p>
+    <div class="formula">a<sup>2</sup>−b<sup>2</sup> ＝ (a＋b)(a−b)</div>
+    <h3>怎麼認出來（三個條件都要符合）</h3>
+    <p class="step"><b>①</b> 只有<b>兩項</b></p>
+    <p class="step"><b>②</b> 中間是<b>減號</b></p>
+    <p class="step"><b>③</b> 兩項都是「某個東西的平方」</p>
+    <p>例：x<sup>2</sup>−9 ＝ x<sup>2</sup>−3<sup>2</sup> ＝ (x＋3)(x−3)</p>
+    <div class="note">💡 常見平方數要熟：1、4、9、16、25、36、49、64、81、100、121、144。<br>還有 4x<sup>2</sup>＝(2x)<sup>2</sup>、9y<sup>2</sup>＝(3y)<sup>2</sup>、25x<sup>2</sup>＝(5x)<sup>2</sup>。</div>
+    <h3>用圖看：為什麼 a<sup>2</sup>−b<sup>2</sup> 會變成長方形</h3>
+    <div class="svgbox">
+      <svg viewBox="0 0 340 130" width="340" height="130" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="60" height="40" fill="#dcfce7" stroke="#16a34a"/>
+        <rect x="10" y="50" width="100" height="60" fill="#fef3c7" stroke="#d97706"/>
+        <rect x="70" y="10" width="40" height="40" fill="#fff" stroke="#9ca3af" stroke-dasharray="4 3"/>
+        <text x="90" y="34" text-anchor="middle" font-size="12" fill="#6b7280">剪掉 b²</text>
+        <text x="60" y="6" text-anchor="middle" font-size="12">a</text>
+        <text x="118" y="34" font-size="12">b</text>
+        <text x="4" y="84" text-anchor="end" font-size="12" transform="translate(0 0)">a</text>
+        <text x="140" y="65" text-anchor="middle" font-size="18" fill="#6b7280">→</text>
+        <rect x="170" y="35" width="100" height="60" fill="#fef3c7" stroke="#d97706"/>
+        <rect x="270" y="35" width="40" height="60" fill="#dcfce7" stroke="#16a34a"/>
+        <text x="240" y="28" text-anchor="middle" font-size="12">a＋b</text>
+        <text x="164" y="69" text-anchor="end" font-size="12">a−b</text>
+        <text x="240" y="122" text-anchor="middle" font-size="12" fill="#6b7280">綠色那塊轉 90° 接到右邊</text>
+      </svg>
+    </div>
+    <p style="font-size:.9rem; color:var(--sub)">大正方形 a<sup>2</sup> 剪掉小正方形 b<sup>2</sup>，剩下的 L 形切一刀、轉一下，剛好拼成一個「寬 a＋b、高 a−b」的長方形。</p>
+    <div class="warn">⚠️ a<sup>2</sup>＋b<sup>2</sup>（中間是加號）<b>不能</b>分解。x<sup>2</sup>＋9 在國中範圍就是拆不開，不要硬拆。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：完全平方反用</h2>
+    <div class="formula">a<sup>2</sup>＋2ab＋b<sup>2</sup> ＝ (a＋b)<sup>2</sup><br>a<sup>2</sup>−2ab＋b<sup>2</sup> ＝ (a−b)<sup>2</sup></div>
+    <h3>怎麼認出來（三步檢查）</h3>
+    <p class="step"><b>① 頭</b>　第一項是平方 → 記下它的根 a</p>
+    <p class="step"><b>② 尾</b>　最後一項是平方 → 記下它的根 b</p>
+    <p class="step"><b>③ 中間</b>　中間項要剛好等於 <b>2×a×b</b>；是加就 (a＋b)<sup>2</sup>，是減就 (a−b)<sup>2</sup></p>
+    <p>例：x<sup>2</sup>＋6x＋9 → 頭 x、尾 3、中間 2·x·3＝6x ✔ → (x＋3)<sup>2</sup></p>
+    <p>例：x<sup>2</sup>−10x＋25 → 頭 x、尾 5、中間 2·x·5＝10x ✔、符號是減 → (x−5)<sup>2</sup></p>
+    <div class="warn">⚠️ 第 ③ 步一定要檢查！x<sup>2</sup>＋5x＋9 頭尾都是平方，但中間應該是 6x 不是 5x，所以它<b>不是</b>完全平方式。</div>
+    <div class="note">💡 頭尾的根有係數時也要算進去：4x<sup>2</sup>＋4x＋1 → 頭 2x、尾 1、中間 2·2x·1＝4x ✔ → (2x＋1)<sup>2</sup>。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：先提公因式，再套公式</h2>
+    <p>很多題目不能一眼套公式，要先把公因式提掉，括號裡才會露出公式的樣子。</p>
+    <div class="formula">2x<sup>2</sup>−18 ＝ 2(x<sup>2</sup>−9) ＝ 2(x＋3)(x−3)</div>
+    <div class="formula">3x<sup>2</sup>＋12x＋12 ＝ 3(x<sup>2</sup>＋4x＋4) ＝ 3(x＋2)<sup>2</sup></div>
+    <div class="tip">✅ 口訣：<b>一提、二套、三檢查</b>。先提公因式，再套公式，最後乘回去核對。分解要拆到不能再拆為止。</div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜因式分解 x<sup>2</sup>−16</summary>
+      <div class="body">
+        <p class="step"><b>認出</b>　兩項、減號、16＝4<sup>2</sup> → 平方差</p>
+        <p class="step"><b>答案</b>　(x＋4)(x−4)</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜因式分解 25x<sup>2</sup>−4</summary>
+      <div class="body">
+        <p class="step"><b>認出</b>　25x<sup>2</sup>＝(5x)<sup>2</sup>、4＝2<sup>2</sup></p>
+        <p class="step"><b>答案</b>　(5x＋2)(5x−2)</p>
+        <p class="step">⚠️ 不是 (25x＋4)(25x−4)，係數要開根號。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜因式分解 x<sup>2</sup>＋8x＋16</summary>
+      <div class="body">
+        <p class="step"><b>頭尾</b>　x<sup>2</sup> 的根是 x、16 的根是 4</p>
+        <p class="step"><b>中間</b>　2·x·4＝8x ✔ 符號是加</p>
+        <p class="step"><b>答案</b>　(x＋4)<sup>2</sup></p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜因式分解 9x<sup>2</sup>−12x＋4</summary>
+      <div class="body">
+        <p class="step"><b>頭尾</b>　9x<sup>2</sup>＝(3x)<sup>2</sup>、4＝2<sup>2</sup></p>
+        <p class="step"><b>中間</b>　2·3x·2＝12x ✔ 符號是減</p>
+        <p class="step"><b>答案</b>　(3x−2)<sup>2</sup></p>
+        <p class="step"><b>乘回去</b>　(3x)<sup>2</sup>−2·3x·2＋2<sup>2</sup>＝9x<sup>2</sup>−12x＋4 ✔</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 5｜因式分解 5x<sup>2</sup>−20</summary>
+      <div class="body">
+        <p class="step"><b>一提</b>　公因式 5：5(x<sup>2</sup>−4)</p>
+        <p class="step"><b>二套</b>　x<sup>2</sup>−4＝(x＋2)(x−2)</p>
+        <p class="step"><b>答案</b>　5(x＋2)(x−2)</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 6｜因式分解 (x＋1)<sup>2</sup>−9</summary>
+      <div class="body">
+        <p class="step"><b>認出</b>　把 (x＋1) 整個看成 a：a<sup>2</sup>−3<sup>2</sup></p>
+        <p class="step"><b>套公式</b>　(a＋3)(a−3)＝(x＋1＋3)(x＋1−3)</p>
+        <p class="step"><b>答案</b>　(x＋4)(x−2)</p>
+        <p class="step"><b>乘回去</b>　x<sup>2</sup>＋2x−8；原式＝x<sup>2</sup>＋2x＋1−9＝x<sup>2</sup>＋2x−8 ✔</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>📝 練習題</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 因式分解 x<sup>2</sup>−25 ＝ ?</div>
+      <label><input type="radio" name="p2q1" value="A">(x−5)<sup>2</sup></label>
+      <label><input type="radio" name="p2q1" value="B">(x＋5)(x−5)</label>
+      <label><input type="radio" name="p2q1" value="C">(x＋5)<sup>2</sup></label>
+      <label><input type="radio" name="p2q1" value="D">(x−25)(x＋1)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="兩項、減號、25＝5² → 平方差：(x＋5)(x−5)。選 A 展開會多出 −10x。"></div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 因式分解 4x<sup>2</sup>−9 ＝ ?</div>
+      <label><input type="radio" name="p2q2" value="A">(4x＋3)(4x−3)</label>
+      <label><input type="radio" name="p2q2" value="B">(2x−3)<sup>2</sup></label>
+      <label><input type="radio" name="p2q2" value="C">(2x＋3)(2x−3)</label>
+      <label><input type="radio" name="p2q2" value="D">(4x＋9)(x−1)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="4x²＝(2x)²、9＝3²，平方差得 (2x＋3)(2x−3)。選 A 忘了係數也要開根號。"></div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 因式分解 x<sup>2</sup>＋10x＋25 ＝ ?</div>
+      <label><input type="radio" name="p2q3" value="A">(x＋5)<sup>2</sup></label>
+      <label><input type="radio" name="p2q3" value="B">(x＋5)(x−5)</label>
+      <label><input type="radio" name="p2q3" value="C">(x−5)<sup>2</sup></label>
+      <label><input type="radio" name="p2q3" value="D">(x＋10)<sup>2</sup></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="頭 x、尾 5、中間 2·x·5＝10x ✔，符號是加 → (x＋5)²。"></div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. 因式分解 x<sup>2</sup>−12x＋36 ＝ ?</div>
+      <label><input type="radio" name="p2q4" value="A">(x＋6)<sup>2</sup></label>
+      <label><input type="radio" name="p2q4" value="B">(x−6)<sup>2</sup></label>
+      <label><input type="radio" name="p2q4" value="C">(x＋6)(x−6)</label>
+      <label><input type="radio" name="p2q4" value="D">(x−12)(x−3)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="頭 x、尾 6、中間 2·x·6＝12x ✔，符號是減 → (x−6)²。選 D 展開是 x²−15x＋36，中間不對。"></div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. 下面哪一個在國中範圍<b>不能</b>因式分解？</div>
+      <label><input type="radio" name="p2q5" value="A">x<sup>2</sup>−1</label>
+      <label><input type="radio" name="p2q5" value="B">x<sup>2</sup>＋1</label>
+      <label><input type="radio" name="p2q5" value="C">x<sup>2</sup>＋2x＋1</label>
+      <label><input type="radio" name="p2q5" value="D">x<sup>2</sup>−2x＋1</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="a²＋b² 沒有公式可套。A＝(x＋1)(x−1)、C＝(x＋1)²、D＝(x−1)²，都拆得開。"></div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">6. 因式分解 3x<sup>2</sup>−27，拆到不能再拆 ＝ ?</div>
+      <label><input type="radio" name="p2q6" value="A">3(x＋3)(x−3)</label>
+      <label><input type="radio" name="p2q6" value="B">3(x−3)<sup>2</sup></label>
+      <label><input type="radio" name="p2q6" value="C">(3x＋3)(x−9)</label>
+      <label><input type="radio" name="p2q6" value="D">3(x<sup>2</sup>−9)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="一提：3(x²−9)；二套：x²−9＝(x＋3)(x−3)。選 D 只做了一半，括號裡還能再拆。"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會分解 x<sup>2</sup>＋bx＋c：找兩個數，相乘是 c、相加是 b</li>
+      <li>會用十字交乘法排列、檢查</li>
+      <li>會判斷兩個數的正負號，也能處理首項係數不是 1 的簡單題</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：從長方形看 (x＋p)(x＋q)</h2>
+    <p>寬 x＋q、高 x＋p 的長方形，切開來有四塊：</p>
+    <div class="svgbox">
+      <svg viewBox="0 0 260 200" width="240" height="185" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="20" width="100" height="100" fill="#dbeafe" stroke="#2563eb"/>
+        <rect x="130" y="20" width="60" height="100" fill="#fef3c7" stroke="#d97706"/>
+        <rect x="30" y="120" width="100" height="40" fill="#fef3c7" stroke="#d97706"/>
+        <rect x="130" y="120" width="60" height="40" fill="#dcfce7" stroke="#16a34a"/>
+        <text x="80" y="76" text-anchor="middle" font-size="18" fill="#1e40af">x²</text>
+        <text x="160" y="76" text-anchor="middle" font-size="16" fill="#92400e">qx</text>
+        <text x="80" y="146" text-anchor="middle" font-size="16" fill="#92400e">px</text>
+        <text x="160" y="146" text-anchor="middle" font-size="16" fill="#166534">pq</text>
+        <text x="80" y="14" text-anchor="middle" font-size="13">x</text>
+        <text x="160" y="14" text-anchor="middle" font-size="13">q</text>
+        <text x="20" y="75" text-anchor="middle" font-size="13">x</text>
+        <text x="20" y="145" text-anchor="middle" font-size="13">p</text>
+        <text x="110" y="190" text-anchor="middle" font-size="13" fill="#6b7280">面積＝x²＋qx＋px＋pq</text>
+      </svg>
+    </div>
+    <div class="formula">(x＋p)(x＋q) ＝ x<sup>2</sup>＋(p＋q)x＋pq</div>
+    <p>所以要分解 x<sup>2</sup>＋<b>b</b>x＋<b>c</b>，就是要找兩個數 p、q：</p>
+    <div class="formula" style="text-align:center">p × q ＝ <b>c</b>　　而且　　p ＋ q ＝ <b>b</b></div>
+    <div class="note">💡 先看 c（相乘），把 c 的因數配對列出來；再看哪一對相加會等於 b。</div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 動手拼：代數磚拼盤</h2>
+    <p style="font-size:.9rem; color:var(--sub)">把右邊的積木全部拖到左邊格子板上，拼成一個<b>沒有缺口</b>的長方形。點一下 x 長條可以轉方向。拼對了會自動標出兩邊長。</p>
+    <div class="target">目標：<span id="tileTarget"></span></div>
+    <svg id="tileSvg" viewBox="0 0 620 290" xmlns="http://www.w3.org/2000/svg" aria-label="代數磚拼盤">
+      <rect class="board" x="40" y="30" width="240" height="240"/>
+      <g class="grid" id="tileGrid"></g>
+      <rect class="tray" x="292" y="22" width="322" height="256" rx="8"/>
+      <text class="traytxt" x="453" y="268" text-anchor="middle">積木區（把這裡的積木全部拖到左邊）</text>
+      <g id="tiles"></g>
+      <g id="sideLbl"></g>
+    </svg>
+    <div class="status" id="tileStatus"></div>
+    <div class="ctl">
+      <button class="tsel on" data-i="0">第 1 題</button>
+      <button class="tsel" data-i="1">第 2 題</button>
+      <button class="tsel" data-i="2">第 3 題</button>
+      <button id="tileReset">↺ 重來</button>
+      <button id="tileHint">💡 提示</button>
+    </div>
+    <div class="tip">✅ 拼完看兩邊：寬是 x＋幾、高是 x＋幾，兩個「幾」相乘就是 c、相加就是 b。這就是十字交乘在做的事。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：十字交乘怎麼寫</h2>
+    <p>以 x<sup>2</sup>＋5x＋6 為例，把兩個因式「直的」寫成兩列，然後交叉相乘：</p>
+    <div class="svgbox">
+      <svg viewBox="0 0 320 110" width="320" height="110" xmlns="http://www.w3.org/2000/svg">
+        <text x="40" y="38" font-size="20" text-anchor="middle">x</text>
+        <text x="130" y="38" font-size="20" text-anchor="middle">＋2</text>
+        <text x="40" y="88" font-size="20" text-anchor="middle">x</text>
+        <text x="130" y="88" font-size="20" text-anchor="middle">＋3</text>
+        <line x1="60" y1="36" x2="110" y2="80" stroke="#dc2626" stroke-width="2"/>
+        <line x1="60" y1="80" x2="110" y2="36" stroke="#2563eb" stroke-width="2"/>
+        <text x="220" y="44" font-size="15" text-anchor="middle" fill="#dc2626">x·3＝3x</text>
+        <text x="220" y="70" font-size="15" text-anchor="middle" fill="#2563eb">x·2＝2x</text>
+        <text x="220" y="98" font-size="15" text-anchor="middle" font-weight="bold">合計 5x ✔</text>
+      </svg>
+    </div>
+    <p class="step"><b>①</b> 左邊兩列都寫 x（因為 x·x＝x<sup>2</sup>）</p>
+    <p class="step"><b>②</b> 右邊寫 c 的一組因數（2 和 3，因為 2×3＝6）</p>
+    <p class="step"><b>③</b> 交叉相乘再相加：3x＋2x＝5x，跟中間項一樣 ✔</p>
+    <p class="step"><b>④</b> <b>橫著</b>讀答案：(x＋2)(x＋3)</p>
+    <div class="warn">⚠️ 如果交叉相加不等於中間項，換另一組因數再試。例如 6 也可以拆成 1×6，但 1x＋6x＝7x，不對，所以不能用。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：正負號怎麼判斷</h2>
+    <table style="width:100%; border-collapse:collapse; font-size:.95rem; margin:8px 0;">
+      <tr style="background:#f3f4f6"><th style="padding:8px; border:1px solid var(--border)">看 c</th><th style="padding:8px; border:1px solid var(--border)">兩個數的符號</th><th style="padding:8px; border:1px solid var(--border)">再看 b</th></tr>
+      <tr><td style="padding:8px; border:1px solid var(--border)">c 是正的</td><td style="padding:8px; border:1px solid var(--border)">同號（都正或都負）</td><td style="padding:8px; border:1px solid var(--border)">b 正 → 都正；b 負 → 都負</td></tr>
+      <tr><td style="padding:8px; border:1px solid var(--border)">c 是負的</td><td style="padding:8px; border:1px solid var(--border)">一正一負</td><td style="padding:8px; border:1px solid var(--border)">絕對值大的那個，跟 b 同號</td></tr>
+    </table>
+    <p>例：x<sup>2</sup>−5x＋6 → c＝6 正、b＝−5 負 → 兩個都負：(−2)(−3)＝6、(−2)＋(−3)＝−5 ✔ → (x−2)(x−3)</p>
+    <p>例：x<sup>2</sup>＋2x−15 → c＝−15 負 → 一正一負，相差 2 的因數對是 5 和 3；b 是正的，所以大的 5 拿正：(＋5)(−3)＝−15、5−3＝2 ✔ → (x＋5)(x−3)</p>
+    <p>例：x<sup>2</sup>−x−12 → c 負 → 一正一負，4 和 3；b＝−1 負，大的 4 拿負：(−4)(＋3)＝−12、−4＋3＝−1 ✔ → (x−4)(x＋3)</p>
+  </div>
+
+  <div class="card">
+    <h2>🔢 試試看：十字交乘檢查器</h2>
+    <p style="font-size:.9rem; color:var(--sub)">選一個目標，填兩個數字，馬上告訴你「相乘」和「相加」有沒有命中。</p>
+    <div class="ctl" id="crossTargets"></div>
+    <div class="target">目標：<span id="crossTarget"></span></div>
+    <div class="cross">
+      <div class="left">
+        <svg id="crossSvg" viewBox="0 0 170 110" width="170" height="110" xmlns="http://www.w3.org/2000/svg">
+          <text x="30" y="38" font-size="20" text-anchor="middle">x</text>
+          <text id="cP" x="120" y="38" font-size="20" text-anchor="middle">？</text>
+          <text x="30" y="88" font-size="20" text-anchor="middle">x</text>
+          <text id="cQ" x="120" y="88" font-size="20" text-anchor="middle">？</text>
+          <line x1="50" y1="36" x2="100" y2="80" stroke="#dc2626" stroke-width="2"/>
+          <line x1="50" y1="80" x2="100" y2="36" stroke="#2563eb" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="right">
+        <div class="row">第一個數 p：<input type="number" id="inP" placeholder="?">　第二個數 q：<input type="number" id="inQ" placeholder="?"></div>
+        <div class="row" id="rowMul">p × q ＝ ？</div>
+        <div class="row" id="rowAdd">p ＋ q ＝ ？</div>
+        <div class="res" id="crossRes">兩個都打勾，答案就出來了。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：首項係數不是 1（簡單版）</h2>
+    <p>像 2x<sup>2</sup>＋7x＋3，左邊那一欄不能都寫 x，要拆成 2x 和 x：</p>
+    <div class="svgbox">
+      <svg viewBox="0 0 320 110" width="320" height="110" xmlns="http://www.w3.org/2000/svg">
+        <text x="40" y="38" font-size="20" text-anchor="middle">2x</text>
+        <text x="130" y="38" font-size="20" text-anchor="middle">＋1</text>
+        <text x="40" y="88" font-size="20" text-anchor="middle">x</text>
+        <text x="130" y="88" font-size="20" text-anchor="middle">＋3</text>
+        <line x1="60" y1="36" x2="110" y2="80" stroke="#dc2626" stroke-width="2"/>
+        <line x1="60" y1="80" x2="110" y2="36" stroke="#2563eb" stroke-width="2"/>
+        <text x="220" y="44" font-size="15" text-anchor="middle" fill="#dc2626">2x·3＝6x</text>
+        <text x="220" y="70" font-size="15" text-anchor="middle" fill="#2563eb">x·1＝1x</text>
+        <text x="220" y="98" font-size="15" text-anchor="middle" font-weight="bold">合計 7x ✔</text>
+      </svg>
+    </div>
+    <p>橫著讀：(2x＋1)(x＋3)。乘回去：2x<sup>2</sup>＋6x＋x＋3＝2x<sup>2</sup>＋7x＋3 ✔</p>
+    <div class="warn">⚠️ 這種題目「上下對調」答案會不一樣：把 1 和 3 換位置變成 (2x＋3)(x＋1)，展開是 2x<sup>2</sup>＋5x＋3，就錯了。一定要乘回去檢查。</div>
+  </div>
+
+  <div class="card">
+    <h2>🧭 全章總策略</h2>
+    <div class="formula">
+      <b>一提</b>　先看有沒有公因式，有就先提<br>
+      <b>二套</b>　兩項看平方差；三項看完全平方<br>
+      <b>三交乘</b>　三項套不了公式，就用十字交乘<br>
+      <b>四檢查</b>　答案乘回去，要等於原式
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜因式分解 x<sup>2</sup>＋7x＋12</summary>
+      <div class="body">
+        <p class="step"><b>列 12 的因數對</b>　1×12、2×6、3×4</p>
+        <p class="step"><b>哪一對相加是 7</b>　3＋4＝7 ✔</p>
+        <p class="step"><b>答案</b>　(x＋3)(x＋4)</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜因式分解 x<sup>2</sup>−8x＋15</summary>
+      <div class="body">
+        <p class="step"><b>看符號</b>　c＝15 正、b＝−8 負 → 兩個都負</p>
+        <p class="step"><b>找數</b>　(−3)(−5)＝15、(−3)＋(−5)＝−8 ✔</p>
+        <p class="step"><b>答案</b>　(x−3)(x−5)</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜因式分解 x<sup>2</sup>＋3x−10</summary>
+      <div class="body">
+        <p class="step"><b>看符號</b>　c＝−10 負 → 一正一負；b＝3 正 → 大的拿正</p>
+        <p class="step"><b>找數</b>　(＋5)(−2)＝−10、5＋(−2)＝3 ✔</p>
+        <p class="step"><b>答案</b>　(x＋5)(x−2)</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜因式分解 x<sup>2</sup>−2x−8</summary>
+      <div class="body">
+        <p class="step"><b>看符號</b>　c＝−8 負 → 一正一負；b＝−2 負 → 大的拿負</p>
+        <p class="step"><b>找數</b>　(−4)(＋2)＝−8、−4＋2＝−2 ✔</p>
+        <p class="step"><b>答案</b>　(x−4)(x＋2)</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 5｜因式分解 2x<sup>2</sup>＋5x＋3</summary>
+      <div class="body">
+        <p class="step"><b>左欄</b>　2x、x</p>
+        <p class="step"><b>右欄</b>　3 的因數對：1、3。試 (2x＋3)(x＋1)：交叉 2x·1＋x·3＝5x ✔</p>
+        <p class="step"><b>答案</b>　(2x＋3)(x＋1)</p>
+        <p class="step"><b>乘回去</b>　2x<sup>2</sup>＋2x＋3x＋3＝2x<sup>2</sup>＋5x＋3 ✔</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 6｜因式分解 3x<sup>2</sup>−7x＋2</summary>
+      <div class="body">
+        <p class="step"><b>看符號</b>　c＝2 正、b＝−7 負 → 右欄兩個都負</p>
+        <p class="step"><b>試</b>　(3x−1)(x−2)：交叉 3x·(−2)＋x·(−1)＝−6x−x＝−7x ✔</p>
+        <p class="step"><b>答案</b>　(3x−1)(x−2)</p>
+        <p class="step"><b>乘回去</b>　3x<sup>2</sup>−6x−x＋2＝3x<sup>2</sup>−7x＋2 ✔</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>📝 練習題</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 因式分解 x<sup>2</sup>＋6x＋8 ＝ ?</div>
+      <label><input type="radio" name="p3q1" value="A">(x＋2)(x＋4)</label>
+      <label><input type="radio" name="p3q1" value="B">(x＋1)(x＋8)</label>
+      <label><input type="radio" name="p3q1" value="C">(x＋3)(x＋3)</label>
+      <label><input type="radio" name="p3q1" value="D">(x−2)(x−4)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="相乘 8、相加 6 → 2 和 4。選 C 展開是 x²＋6x＋9，常數項不對。"></div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. 因式分解 x<sup>2</sup>−9x＋20 ＝ ?</div>
+      <label><input type="radio" name="p3q2" value="A">(x＋4)(x＋5)</label>
+      <label><input type="radio" name="p3q2" value="B">(x−4)(x−5)</label>
+      <label><input type="radio" name="p3q2" value="C">(x−2)(x−10)</label>
+      <label><input type="radio" name="p3q2" value="D">(x＋4)(x−5)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="c 正、b 負 → 兩個都負。(−4)(−5)＝20、−4−5＝−9 ✔"></div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 因式分解 x<sup>2</sup>＋4x−12 ＝ ?</div>
+      <label><input type="radio" name="p3q3" value="A">(x＋6)(x−2)</label>
+      <label><input type="radio" name="p3q3" value="B">(x−6)(x＋2)</label>
+      <label><input type="radio" name="p3q3" value="C">(x＋4)(x−3)</label>
+      <label><input type="radio" name="p3q3" value="D">(x＋3)(x−4)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="c 負 → 一正一負；b 正 → 大的拿正。6·(−2)＝−12、6−2＝4 ✔。選 B 相加會變成 −4。"></div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. 因式分解 x<sup>2</sup>−3x−18 ＝ ?</div>
+      <label><input type="radio" name="p3q4" value="A">(x＋6)(x−3)</label>
+      <label><input type="radio" name="p3q4" value="B">(x−6)(x＋3)</label>
+      <label><input type="radio" name="p3q4" value="C">(x−9)(x＋2)</label>
+      <label><input type="radio" name="p3q4" value="D">(x−6)(x−3)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="(−6)(3)＝−18、−6＋3＝−3 ✔。選 A 相加是 ＋3，符號反了。"></div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. 因式分解 2x<sup>2</sup>＋7x＋3 ＝ ?</div>
+      <label><input type="radio" name="p3q5" value="A">(2x＋3)(x＋1)</label>
+      <label><input type="radio" name="p3q5" value="B">(2x＋1)(x＋3)</label>
+      <label><input type="radio" name="p3q5" value="C">(x＋1)(x＋3)</label>
+      <label><input type="radio" name="p3q5" value="D">(2x−1)(x−3)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="交叉：2x·3＋x·1＝7x ✔。選 A 展開是 2x²＋5x＋3，中間項不對。"></div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">6. 因式分解 x<sup>2</sup>＋x−6 ＝ ?</div>
+      <label><input type="radio" name="p3q6" value="A">(x−3)(x＋2)</label>
+      <label><input type="radio" name="p3q6" value="B">(x＋3)(x−2)</label>
+      <label><input type="radio" name="p3q6" value="C">(x＋6)(x−1)</label>
+      <label><input type="radio" name="p3q6" value="D">(x＋3)(x＋2)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="中間項是 ＋1x。3·(−2)＝−6、3−2＝1 ✔。選 A 相加是 −1。"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 章末總測驗</h2>
+    <p>共 10 題，答完按「交卷」。答對 8 題以上過關！記得每題都可以「乘回去」檢查。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 因式分解 6x<sup>2</sup>＋9x ＝ ?</div>
+      <label><input type="radio" name="q1" value="A">3(2x<sup>2</sup>＋3x)</label>
+      <label><input type="radio" name="q1" value="B">3x(2x＋3)</label>
+      <label><input type="radio" name="q1" value="C">6x(x＋9)</label>
+      <label><input type="radio" name="q1" value="D">3x(2x＋9)</label>
+      <div class="fb" data-exp="公因式 3x：6x²÷3x＝2x、9x÷3x＝3。A 沒提乾淨。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">2. 因式分解 x<sup>2</sup>−49 ＝ ?</div>
+      <label><input type="radio" name="q2" value="A">(x−7)<sup>2</sup></label>
+      <label><input type="radio" name="q2" value="B">(x＋7)<sup>2</sup></label>
+      <label><input type="radio" name="q2" value="C">(x＋7)(x−7)</label>
+      <label><input type="radio" name="q2" value="D">(x−49)(x＋1)</label>
+      <div class="fb" data-exp="平方差：49＝7²，得 (x＋7)(x−7)。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 因式分解 x<sup>2</sup>＋14x＋49 ＝ ?</div>
+      <label><input type="radio" name="q3" value="A">(x＋7)<sup>2</sup></label>
+      <label><input type="radio" name="q3" value="B">(x＋7)(x−7)</label>
+      <label><input type="radio" name="q3" value="C">(x−7)<sup>2</sup></label>
+      <label><input type="radio" name="q3" value="D">(x＋2)(x＋7)</label>
+      <div class="fb" data-exp="頭 x、尾 7、中間 2·x·7＝14x ✔ → (x＋7)²。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. 因式分解 x<sup>2</sup>＋5x＋4 ＝ ?</div>
+      <label><input type="radio" name="q4" value="A">(x＋2)(x＋3)</label>
+      <label><input type="radio" name="q4" value="B">(x−1)(x−4)</label>
+      <label><input type="radio" name="q4" value="C">(x＋5)(x＋4)</label>
+      <label><input type="radio" name="q4" value="D">(x＋1)(x＋4)</label>
+      <div class="fb" data-exp="相乘 4、相加 5 → 1 和 4。A 展開是 x²＋5x＋6，常數項不對。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 因式分解 x<sup>2</sup>−7x＋10 ＝ ?</div>
+      <label><input type="radio" name="q5" value="A">(x＋2)(x＋5)</label>
+      <label><input type="radio" name="q5" value="B">(x−2)(x−5)</label>
+      <label><input type="radio" name="q5" value="C">(x−1)(x−10)</label>
+      <label><input type="radio" name="q5" value="D">(x＋2)(x−5)</label>
+      <div class="fb" data-exp="c 正、b 負 → 兩個都負：(−2)(−5)＝10、−2−5＝−7 ✔"></div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">6. 因式分解 x<sup>2</sup>−x−20 ＝ ?</div>
+      <label><input type="radio" name="q6" value="A">(x＋5)(x−4)</label>
+      <label><input type="radio" name="q6" value="B">(x−5)(x−4)</label>
+      <label><input type="radio" name="q6" value="C">(x−5)(x＋4)</label>
+      <label><input type="radio" name="q6" value="D">(x−10)(x＋2)</label>
+      <div class="fb" data-exp="c 負 → 一正一負；b＝−1 負 → 大的 5 拿負：(−5)(4)＝−20、−5＋4＝−1 ✔"></div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">7. 因式分解 4x<sup>2</sup>−25 ＝ ?</div>
+      <label><input type="radio" name="q7" value="A">(2x＋5)(2x−5)</label>
+      <label><input type="radio" name="q7" value="B">(2x−5)<sup>2</sup></label>
+      <label><input type="radio" name="q7" value="C">(4x＋5)(x−5)</label>
+      <label><input type="radio" name="q7" value="D">(4x＋25)(x−1)</label>
+      <div class="fb" data-exp="4x²＝(2x)²、25＝5²，平方差得 (2x＋5)(2x−5)。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">8. 因式分解 2x<sup>2</sup>−8，拆到不能再拆 ＝ ?</div>
+      <label><input type="radio" name="q8" value="A">2(x−2)<sup>2</sup></label>
+      <label><input type="radio" name="q8" value="B">2(x<sup>2</sup>−4)</label>
+      <label><input type="radio" name="q8" value="C">(x＋4)(x−2)</label>
+      <label><input type="radio" name="q8" value="D">2(x＋2)(x−2)</label>
+      <div class="fb" data-exp="一提：2(x²−4)；二套：x²−4＝(x＋2)(x−2)。B 只做一半。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">9. 因式分解 3x<sup>2</sup>＋10x＋3 ＝ ?</div>
+      <label><input type="radio" name="q9" value="A">(3x＋1)(x＋3)</label>
+      <label><input type="radio" name="q9" value="B">(3x＋3)(x＋1)</label>
+      <label><input type="radio" name="q9" value="C">(3x−1)(x−3)</label>
+      <label><input type="radio" name="q9" value="D">(x＋1)(x＋3)</label>
+      <div class="fb" data-exp="交叉：3x·3＋x·1＝10x ✔。B 展開是 3x²＋6x＋3。"></div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">10. 已知 x<sup>2</sup>＋kx＋12 可以分解成 (x＋3)(x＋4)，則 k ＝ ?</div>
+      <label><input type="radio" name="q10" value="A">12</label>
+      <label><input type="radio" name="q10" value="B">1</label>
+      <label><input type="radio" name="q10" value="C">7</label>
+      <label><input type="radio" name="q10" value="D">−7</label>
+      <div class="fb" data-exp="(x＋3)(x＋4)＝x²＋7x＋12，所以 k＝3＋4＝7。"></div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">✅ 交卷看成績</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>國二數學自學教材（原創內容，依 108 課綱章節架構編寫）· 第 3 章 因式分解</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "八上3 因式分解";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+// 離開頁面時，把這段念書時段的摘要上傳雲端（之後回到頁面再離開，會另記一段）
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return; // 開了不到半分鐘又沒做題，不上傳
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 章末測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "章末測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，本章過關！可以前進第 4 章。`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，及格邊緣。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===================================================================
+// ① 面積翻轉動畫：(x＋2)(x＋3) ⇄ x²＋5x＋6
+//    x 畫成 120px、1 畫成 30px。每塊積木記住「在長方形裡的位置」與「拆開後的位置」，
+//    用 CSS transform 在兩者之間滑動。
+// ===================================================================
+(function(){
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.getElementById('animSvg');
+  const layer = document.getElementById('animPieces');
+  const pieces = [];
+  function mk(type, x, y, w, h, ax, ay, label){
+    const g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'pc-' + type);
+    g.style.transition = 'transform .7s ease';
+    const r = document.createElementNS(NS, 'rect');
+    r.setAttribute('x', x); r.setAttribute('y', y); r.setAttribute('width', w); r.setAttribute('height', h);
+    const t = document.createElementNS(NS, 'text');
+    t.setAttribute('class', 'pl'); t.setAttribute('x', x + w/2); t.setAttribute('y', y + h/2 + 5);
+    t.setAttribute('text-anchor', 'middle'); t.textContent = label;
+    g.appendChild(r); g.appendChild(t); layer.appendChild(g);
+    pieces.push({ g, home:{x,y}, apart:{x:ax,y:ay} });
+  }
+  // 在長方形裡的位置（左上角 50,50）：x² 一塊、直的 x 三條、橫的 x 兩條、1 六個
+  mk('sq', 50, 50, 120, 120, 50, 50, 'x²');
+  [0,1,2].forEach(i => mk('x', 170 + 30*i, 50, 30, 120, 200 + 40*i, 50, 'x'));
+  [0,1].forEach(j => mk('x', 50, 170 + 30*j, 120, 30, 200, 190 + 40*j, 'x'));
+  for(let j=0;j<2;j++) for(let i=0;i<3;i++) mk('u', 170 + 30*i, 170 + 30*j, 30, 30, 370 + 34*i, 60 + 34*j, '1');
+
+  const EQ = [
+    '(x＋2)(x＋3)',
+    '(x＋2)(x＋3) ＝ ？',
+    '(x＋2)(x＋3) ＝ x²＋5x＋6　<span style="color:var(--blue);font-size:.85rem">← 這個方向叫「展開」</span>',
+    'x²＋5x＋6 ＝ (x＋2)(x＋3)　<span style="color:var(--red);font-size:.85rem">← 這個方向叫「因式分解」</span>',
+    'x²＋5x＋6 ＝ <span class="hi">(x＋2)(x＋3)</span>'
+  ];
+  const CAP = [
+    '這是一個長方形：寬 x＋3、高 x＋2。它的面積寫成「兩邊相乘」就是 (x＋2)(x＋3)。',
+    '沿著 x 和 1 的分界線切開。你會切出 4 種形狀。',
+    '數一數：1 個 x²、5 條 x、6 個 1。把面積「一塊一塊加起來」就是 x²＋5x＋6。',
+    '同一堆積木，拼回去還是那個長方形。面積沒變，所以 x²＋5x＋6 和 (x＋2)(x＋3) 相等。',
+    '因式分解＝把積木拼回長方形，再讀出兩邊長。兩邊長就是答案裡的兩個括號。'
+  ];
+  const sides = document.getElementById('animSides'), dims = document.getElementById('animDims'), groups = document.getElementById('animGroups');
+  const eq = document.getElementById('animEq'), cap = document.getElementById('animCap'), ind = document.getElementById('animInd');
+  const playBtn = document.getElementById('animPlay');
+  let step = 0, timer = null;
+  function apply(){
+    const apart = step === 2;
+    svg.classList.toggle('cut', step >= 1);
+    pieces.forEach(p => {
+      p.g.style.transform = apart ? `translate(${p.apart.x - p.home.x}px, ${p.apart.y - p.home.y}px)` : 'translate(0px, 0px)';
+    });
+    sides.classList.toggle('hide', apart);
+    dims.classList.toggle('hide', !(step >= 1 && !apart));
+    groups.classList.toggle('hide', !apart);
+    sides.querySelectorAll('.side').forEach(t => t.classList.toggle('hot', step === 4));
+    eq.innerHTML = EQ[step]; cap.textContent = CAP[step]; ind.textContent = `步驟 ${step+1} / ${EQ.length}`;
+  }
+  function stopPlay(){ if(timer){ clearInterval(timer); timer = null; } playBtn.textContent = '▶▶ 自動播放'; playBtn.classList.remove('on'); }
+  document.getElementById('animNext').addEventListener('click', ()=>{ stopPlay(); if(step < EQ.length-1){ step++; apply(); } });
+  document.getElementById('animPrev').addEventListener('click', ()=>{ stopPlay(); if(step > 0){ step--; apply(); } });
+  document.getElementById('animReset').addEventListener('click', ()=>{ stopPlay(); step = 0; apply(); });
+  playBtn.addEventListener('click', ()=>{
+    if(timer){ stopPlay(); return; }
+    if(step >= EQ.length-1){ step = 0; apply(); }
+    playBtn.textContent = '⏸ 暫停'; playBtn.classList.add('on');
+    timer = setInterval(()=>{
+      if(step >= EQ.length-1){ stopPlay(); return; }
+      step++; apply();
+    }, 2200);
+  });
+  apply();
+})();
+
+// ===================================================================
+// ② 代數磚拼盤：拖積木拼成長方形，自動判斷是不是 (x＋p)(x＋q)
+//    格子單位 U＝24px，x 畫成 4 格。x 磚點一下可轉方向。
+// ===================================================================
+(function(){
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.getElementById('tileSvg');
+  const layer = document.getElementById('tiles'), gridG = document.getElementById('tileGrid');
+  const sideLbl = document.getElementById('sideLbl'), status = document.getElementById('tileStatus');
+  const U = 24, X = 4, BX = 40, BY = 30, BN = 10;
+  // 每題：目標 x²＋bx＋c、要幾條 x、幾個 1、以及提示用的 p、q
+  const PUZ = [
+    { b:5, c:6,  nx:5, nu:6,  p:2, q:3 },
+    { b:7, c:12, nx:7, nu:12, p:3, q:4 },
+    { b:4, c:4,  nx:4, nu:4,  p:2, q:2 }
+  ];
+  let cur = 0, tiles = [], solved = false, failLogged = false;
+
+  // 畫格線
+  for(let i=0;i<=BN;i++){
+    const v = document.createElementNS(NS,'line'); v.setAttribute('x1',BX+i*U); v.setAttribute('y1',BY); v.setAttribute('x2',BX+i*U); v.setAttribute('y2',BY+BN*U); gridG.appendChild(v);
+    const h = document.createElementNS(NS,'line'); h.setAttribute('x1',BX); h.setAttribute('y1',BY+i*U); h.setAttribute('x2',BX+BN*U); h.setAttribute('y2',BY+i*U); gridG.appendChild(h);
+  }
+
+  function dims(t){
+    if(t.type==='sq'){ t.w=X; t.h=X; }
+    else if(t.type==='u'){ t.w=1; t.h=1; }
+    else { t.w = t.orient==='v' ? 1 : X; t.h = t.orient==='v' ? X : 1; }
+  }
+  function setStatus(msg, cls){ status.textContent = msg; status.className = 'status' + (cls ? ' '+cls : ''); }
+  function svgPoint(e){
+    const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+  }
+  function render(t){
+    t.rect.setAttribute('x', t.px); t.rect.setAttribute('y', t.py);
+    t.rect.setAttribute('width', t.w*U); t.rect.setAttribute('height', t.h*U);
+    t.txt.setAttribute('x', t.px + t.w*U/2); t.txt.setAttribute('y', t.py + t.h*U/2 + 5);
+  }
+  function add(type, hx, hy){
+    const t = { type, orient:'v', hx, hy, px:hx, py:hy, gx:null, gy:null };
+    dims(t);
+    const g = document.createElementNS(NS,'g'); g.setAttribute('class','tile '+type); g.setAttribute('data-k', tiles.length);
+    const r = document.createElementNS(NS,'rect'); r.setAttribute('rx', 3);
+    const s = document.createElementNS(NS,'text'); s.setAttribute('text-anchor','middle');
+    s.textContent = type==='sq' ? 'x²' : type==='x' ? 'x' : '1';
+    g.appendChild(r); g.appendChild(s); layer.appendChild(g);
+    t.g = g; t.rect = r; t.txt = s; render(t);
+    attachDrag(t); tiles.push(t);
+  }
+  // 拖曳：capture 綁在 svg 根元素上（積木本身會被 appendChild 移到最上層，DOM 重插會讓 capture 失效）
+  let active = null;
+  function attachDrag(t){
+    t.g.addEventListener('pointerdown', e=>{
+      if(solved) return;
+      e.preventDefault();
+      layer.appendChild(t.g); t.g.classList.add('dragging');
+      active = { t, start: svgPoint(e), sx: t.px, sy: t.py, moved: false };
+      try{ svg.setPointerCapture(e.pointerId); }catch(_){}
+    });
+  }
+  svg.addEventListener('pointermove', e=>{
+    if(!active) return;
+    const t = active.t, p = svgPoint(e);
+    if(Math.abs(p.x-active.start.x) > 3 || Math.abs(p.y-active.start.y) > 3) active.moved = true;
+    t.px = active.sx + (p.x - active.start.x); t.py = active.sy + (p.y - active.start.y); render(t);
+  });
+  function finishDrag(e){
+    if(!active) return;
+    const { t, moved } = active; active = null;
+    t.g.classList.remove('dragging');
+    try{ svg.releasePointerCapture(e.pointerId); }catch(_){}
+    if(!moved && t.type==='x'){ rotate(t); return; }
+    drop(t);
+  }
+  svg.addEventListener('pointerup', finishDrag);
+  svg.addEventListener('pointercancel', finishDrag);
+  function rotate(t){
+    t.orient = t.orient==='v' ? 'h' : 'v'; dims(t);
+    if(t.gx !== null){ place(t, t.gx, t.gy); check(); } else { t.px = t.hx; t.py = t.hy; render(t); }
+  }
+  function place(t, gx, gy){
+    t.gx = Math.max(0, Math.min(BN - t.w, gx)); t.gy = Math.max(0, Math.min(BN - t.h, gy));
+    t.px = BX + t.gx*U; t.py = BY + t.gy*U; render(t);
+  }
+  function drop(t){
+    const cx = t.px + t.w*U/2, cy = t.py + t.h*U/2;
+    if(cx >= BX && cx <= BX+BN*U && cy >= BY && cy <= BY+BN*U){
+      place(t, Math.round((t.px-BX)/U), Math.round((t.py-BY)/U));
+    } else {
+      t.gx = null; t.gy = null; t.px = t.hx; t.py = t.hy; render(t);
+    }
+    check();
+  }
+  function fail(msg){
+    setStatus(msg, 'no');
+    if(!failLogged){ failLogged = true; logEv({ type:"practice", q:"p3q9"+cur, ok:false }); pracCount++; }
+  }
+  function check(){
+    sideLbl.innerHTML = '';
+    const P = PUZ[cur];
+    const placed = tiles.filter(t => t.gx !== null);
+    if(placed.length < tiles.length){ setStatus(`還有 ${tiles.length - placed.length} 塊積木沒放上去。`, ''); return; }
+    // 1. 有沒有疊在一起
+    const occ = new Map(); let overlap = false;
+    placed.forEach(t=>{
+      for(let i=0;i<t.w;i++) for(let j=0;j<t.h;j++){
+        const k = (t.gx+i)+','+(t.gy+j);
+        if(occ.has(k)) overlap = true; occ.set(k, t);
+      }
+    });
+    if(overlap){ fail('有積木疊在一起了，把它們拉開。'); return; }
+    // 2. 是不是填滿的長方形
+    let x0=BN, x1=0, y0=BN, y1=0;
+    placed.forEach(t=>{ x0=Math.min(x0,t.gx); x1=Math.max(x1,t.gx+t.w); y0=Math.min(y0,t.gy); y1=Math.max(y1,t.gy+t.h); });
+    if((x1-x0)*(y1-y0) !== occ.size){ fail('還有缺口，不是完整的長方形。想想缺口是什麼形狀。'); return; }
+    // 3. 讀出兩邊長：上邊從左走到右、左邊從上走到下，x² 和「順著這個方向躺的 x 磚」算 x，其他算 1
+    let a=0, b=0;
+    for(let col=x0; col<x1;){ const t = occ.get(col+','+y0); if(t.type==='sq' || (t.type==='x' && t.orient==='h')) a++; else b++; col += t.w; }
+    let c=0, d=0;
+    for(let row=y0; row<y1;){ const t = occ.get(x0+','+row); if(t.type==='sq' || (t.type==='x' && t.orient==='v')) c++; else d++; row += t.h; }
+    if(a===1 && c===1 && b+d===P.b && b*d===P.c){
+      solved = true;
+      const top = document.createElementNS(NS,'text'); top.setAttribute('class','lbl');
+      top.setAttribute('x', BX + (x0 + (x1-x0)/2)*U); top.setAttribute('y', BY + y0*U - 6); top.setAttribute('text-anchor','middle');
+      top.textContent = 'x＋' + b;
+      const left = document.createElementNS(NS,'text'); left.setAttribute('class','lbl');
+      left.setAttribute('x', BX + x0*U - 5); left.setAttribute('y', BY + (y0 + (y1-y0)/2)*U + 5); left.setAttribute('text-anchor','end');
+      left.textContent = 'x＋' + d;
+      sideLbl.appendChild(top); sideLbl.appendChild(left);
+      setStatus(`🎉 拼對了！寬 x＋${b}、高 x＋${d}。所以 x²＋${P.b}x＋${P.c} ＝ (x＋${d})(x＋${b})`, 'ok');
+      logEv({ type:"practice", q:"p3q9"+cur, ok:true }); pracCount++; pracOk++;
+      return;
+    }
+    const side = n => n ? `(x＋${n})` : 'x';
+    fail(`拼成長方形了，但寬 ${side(b)}、高 ${side(d)} 乘起來不是目標。x 磚的方向和位置再想想。`);
+  }
+  function build(idx){
+    cur = idx; tiles = []; solved = false; failLogged = false;
+    layer.innerHTML = ''; sideLbl.innerHTML = '';
+    const P = PUZ[idx];
+    add('sq', 300, 30);
+    for(let k=0;k<P.nx;k++) add('x', 410 + 26*k, 30);
+    for(let k=0;k<P.nu;k++) add('u', 300 + 28*(k%6), 140 + 30*Math.floor(k/6));
+    document.getElementById('tileTarget').textContent = `x²＋${P.b}x＋${P.c}`;
+    setStatus(`需要：1 個 x²、${P.nx} 條 x、${P.nu} 個 1。全部拖到左邊拼成長方形。`, '');
+    document.querySelectorAll('.tsel').forEach(btn => btn.classList.toggle('on', +btn.dataset.i === idx));
+  }
+  document.querySelectorAll('.tsel').forEach(btn => btn.addEventListener('click', ()=> build(+btn.dataset.i)));
+  document.getElementById('tileReset').addEventListener('click', ()=> build(cur));
+  document.getElementById('tileHint').addEventListener('click', ()=>{
+    const P = PUZ[cur];
+    setStatus(`提示：這題要拼成 高 x＋${P.p}、寬 x＋${P.q} 的長方形。先放 x²，再把 x 磚貼在它的右邊和下面，最後用 1 補角落。`, '');
+  });
+  build(0);
+})();
+
+// ===================================================================
+// ③ 十字交乘檢查器：填 p、q，即時檢查 p×q＝c、p＋q＝b
+// ===================================================================
+(function(){
+  const T = [ {b:7,c:12}, {b:-5,c:6}, {b:2,c:-15}, {b:-1,c:-12} ];
+  const term = (n, v) => n===0 ? '' : (n>0?'＋':'−') + ((Math.abs(n)===1 && v) ? '' : Math.abs(n)) + v;
+  const poly = t => 'x²' + term(t.b,'x') + term(t.c,'');
+  const fac = p => '(x' + (p>=0?'＋':'−') + Math.abs(p) + ')';
+  let cur = 0;
+  const inP = document.getElementById('inP'), inQ = document.getElementById('inQ');
+  const rowMul = document.getElementById('rowMul'), rowAdd = document.getElementById('rowAdd'), res = document.getElementById('crossRes');
+  const cP = document.getElementById('cP'), cQ = document.getElementById('cQ');
+  const box = document.getElementById('crossTargets');
+  T.forEach((t,i)=>{
+    const btn = document.createElement('button'); btn.textContent = poly(t); btn.dataset.i = i;
+    btn.addEventListener('click', ()=>{ cur = i; inP.value=''; inQ.value=''; update(); });
+    box.appendChild(btn);
+  });
+  function update(){
+    const t = T[cur];
+    box.querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.i === cur));
+    document.getElementById('crossTarget').textContent = poly(t);
+    const p = parseInt(inP.value, 10), q = parseInt(inQ.value, 10);
+    const has = !isNaN(p) && !isNaN(q);
+    cP.textContent = isNaN(p) ? '？' : (p>=0?'＋':'−') + Math.abs(p);
+    cQ.textContent = isNaN(q) ? '？' : (q>=0?'＋':'−') + Math.abs(q);
+    if(!has){
+      rowMul.textContent = `p × q ＝ ？　（要等於 c＝${t.c}）`; rowMul.className = 'row';
+      rowAdd.textContent = `p ＋ q ＝ ？　（要等於 b＝${t.b}）`; rowAdd.className = 'row';
+      res.textContent = '兩個都打勾，答案就出來了。'; res.className = 'res'; return;
+    }
+    const okM = p*q === t.c, okA = p+q === t.b;
+    const sh = n => n < 0 ? `(${n})` : `${n}`;
+    rowMul.textContent = `${sh(p)} × ${sh(q)} ＝ ${p*q}　` + (okM ? `✔ 等於 c＝${t.c}` : `✘ 要等於 c＝${t.c}`); rowMul.className = 'row ' + (okM?'ok':'no');
+    rowAdd.textContent = `${sh(p)} ＋ ${sh(q)} ＝ ${p+q}　` + (okA ? `✔ 等於 b＝${t.b}` : `✘ 要等於 b＝${t.b}`); rowAdd.className = 'row ' + (okA?'ok':'no');
+    if(okM && okA){ res.textContent = `🎉 ${poly(t)} ＝ ${fac(p)}${fac(q)}`; res.className = 'res ok'; }
+    else if(okM){ res.textContent = '相乘對了，但相加不對。換另一組因數，或調整正負號。'; res.className = 'res'; }
+    else { res.textContent = '先讓「相乘」等於 c，再看「相加」。'; res.className = 'res'; }
+  }
+  inP.addEventListener('input', update); inQ.addEventListener('input', update);
+  update();
+})();
+</script>
+</body>
+</html>
