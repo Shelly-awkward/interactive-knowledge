@@ -90,6 +90,8 @@
   .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
   .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
   .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
   .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
   .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
   .frac span:last-child{padding:0 4px;}
@@ -139,32 +141,20 @@
     <div class="formula">34 × 6 ＝ 204　（第一層：乘個位）</div>
     <div class="formula">34 × 20 ＝ 680　（第二層：乘十位）</div>
     <div class="formula">204 ＋ 680 ＝ <b>884</b></div>
-    <div class="note">💡 為什麼可以拆？因為 26 個 34，就是「6 個 34」再加「20 個 34」。</div>
+    <div class="note">💡 為什麼可以拆？因為 26 個 34，就是「6 個 34」再加「20 個 34」。<br>下面的圖會用<b>箭頭</b>畫給你看：哪一個數字乘哪一個、進位跑去哪裡。</div>
   </div>
 
   <div class="card">
     <h2>📖 觀念 2：直式怎麼寫</h2>
-    <div class="svgbox"><pre class="vert">     3 4
-  ×  2 6
-  ──────
-   2 0 4   <span class='g'>← 34 × 6</span>
-   <span class='c'>6 8</span> <span class='g'>·</span>   <span class='g'>← 34 × 2（十位），往左移一格</span>
-  ──────
-   8 8 4</pre></div>
-    <p>第二層寫的 <b>68</b>，其實是 <b>680</b>。因為它是「34 × 2 個十」，所以要<b>從十位開始寫</b>，個位空著（或點一個點）。</p>
+    <div id="mulFig1"></div>
+    <p>藍色圈圈是乘數的<b>個位 6</b>，箭頭 ① 指到第一層：34 × 6。紫色圈圈是乘數的<b>十位 2</b>，箭頭 ② 指到第二層：34 × 2。<br>第二層寫的 <b>68</b>，其實是 <b>680</b>。因為它是「34 × 2 個十」，所以要<b>從十位開始寫</b>，個位那格是淡淡的 0。</p>
     <div class="warn">⚠️ 最常見的錯誤：第二層沒有往左移，把 68 直接對齊寫在個位。這樣會算成 204 ＋ 68 ＝ 272，差很多。</div>
   </div>
 
   <div class="card">
     <h2>📖 觀念 3：每一層裡面照舊要進位</h2>
-    <p>算 <span class="num">47 × 38</span>：</p>
-    <div class="svgbox"><pre class="vert">     4 7
-  ×  3 8
-  ──────
-   3 7 6   <span class='g'>← 47 × 8（7×8＝56 寫 6 進 5）</span>
- 1 4 1 <span class='g'>·</span>   <span class='g'>← 47 × 3（十位）</span>
-  ──────
- 1 7 8 6</pre></div>
+    <p>算 <span class="num">47 × 38</span>。被乘數上面的<b>小字</b>就是進位：7 × 8 ＝ 56，寫 6、把 5 記在 4 的頭上；接著 4 × 8 ＝ 32，再加上頭上的 5 ＝ 37。</p>
+    <div id="mulFig2"></div>
     <div class="note">💡 每一層都是一個「二位數 × 一位數」，三年級學過的進位規則完全一樣。</div>
   </div>
 
@@ -175,10 +165,17 @@
         <input type="number" id="mulA" min="1" max="999" placeholder="被乘數" value="34">
         <span style="font-size:1.2rem">×</span>
         <input type="number" id="mulB" min="1" max="99" placeholder="乘數" value="26">
-        <button id="mulGo">攤開來看</button>
+        <button id="mulGo">出題</button>
       </div>
-      <div class="svgbox" id="mulOut"></div>
-      <div class="hint">被乘數最多三位數、乘數最多二位數。先自己算一次，再按按鈕對答案。</div>
+      <div class="row">
+        <button id="mulNext">下一步 ▶</button>
+        <button id="mulAll" class="ghost">全部顯示</button>
+        <button id="mulReset" class="ghost">重來</button>
+        <span id="mulStepLabel" class="hint"></span>
+      </div>
+      <div id="mulOut"></div>
+      <div class="out" id="mulEst"></div>
+      <div class="hint">被乘數最多三位數、乘數最多二位數。按「下一步」會一層一層出現：先圈乘數的個位、畫箭頭、算第一層（含進位），再圈十位算第二層，最後相加。</div>
     </div>
   </div>
 
@@ -279,13 +276,7 @@
   <div class="card">
     <h2>📖 觀念 1：三位數 × 二位數，一樣分兩層</h2>
     <p>被乘數變成三位數，做法<b>完全一樣</b>，只是每一層要多乘一個位數。算 <span class="num">213 × 32</span>：</p>
-    <div class="svgbox"><pre class="vert">     2 1 3
-  ×    3 2
-  ────────
-     4 2 6   <span class='g'>← 213 × 2</span>
-   6 3 9 <span class='g'>·</span>   <span class='g'>← 213 × 3（十位）</span>
-  ────────
-   6 8 1 6</pre></div>
+    <div id="mulFig3"></div>
     <div class="note">💡 一句話：<b>乘個位寫一層、乘十位寫一層（左移一格）、加起來。</b>被乘數幾位數都一樣。</div>
   </div>
 
@@ -301,10 +292,7 @@
     <p>算 <span class="num">250 × 40</span>：</p>
     <div class="formula">先算 25 × 4 ＝ 100，兩個數一共藏了 2 個 0，補回去 → <b>10000</b></div>
     <p>直式寫法：把 0 靠右邊寫，先算前面的部分，最後把 0 全部補到答案後面。</p>
-    <div class="svgbox"><pre class="vert">   2 5 <span class='r'>0</span>
- ×   4 <span class='r'>0</span>
- ────────
- 1 0 0 <span class='r'>0 0</span>   <span class='g'>← 25 × 4 ＝ 100，再補 2 個 0</span></pre></div>
+    <div id="mulFig4"></div>
     <div class="warn">⚠️ 數 0 的時候，<b>兩個數的 0 都要數</b>。250 × 40 一共藏了 2 個 0（250 一個、40 一個）。<br>另外 25 × 4 ＝ 100 本身的 0 是算出來的，不是藏的，不要重複補。</div>
   </div>
 
@@ -744,35 +732,158 @@ document.getElementById('submitQuiz').addEventListener('click',()=>{
 
 // ===== 本單元專屬：圖示與小工具 =====
 
-// 直式乘法展示器
-function mulShow(){
-  const a = parseInt(document.getElementById('mulA').value, 10);
-  const b = parseInt(document.getElementById('mulB').value, 10);
-  const out = document.getElementById('mulOut');
-  if(!(a >= 1 && a <= 999 && b >= 1 && b <= 99)){ out.innerHTML = '<div class="warn">請輸入 1～999 的被乘數、1～99 的乘數。</div>'; return; }
-  const W = 8;                                        // 每行寬度（字元）
-  const pad = s => String(s).padStart(W, ' ');
-  const bo = b % 10, bt = Math.floor(b / 10);
-  const p1 = a * bo, p2 = a * bt;
-  let rows = [pad(a), '×' + pad(b).slice(1), '─'.repeat(W)];
-  let expl = [];
-  if(bt === 0){
-    rows.push(pad(p1)); expl.push(`${a} × ${bo} ＝ ${p1}`);
-  }else{
-    rows.push(pad(p1) + `   <span class="g">← ${a} × ${bo}（個位）</span>`);
-    const p2s = p2 === 0 ? '0' : String(p2);
-    rows.push((pad(p2s) + ' ').slice(1) + `<span class="g">·   ← ${a} × ${bt}（十位），往左移一格，其實是 ${p2 * 10}</span>`);
-    rows.push('─'.repeat(W));
-    rows.push(pad(a * b) + `   <span class="g">← ${p1} ＋ ${p2 * 10}</span>`);
+// ===== 直式乘法：模型（純計算）＋ SVG 繪圖 =====
+const MC = { one: '#2563eb', ten: '#7c3aed', sum: '#16a34a', carry: '#dc2626', zero: '#dc2626', ink: '#1f2937', faint: '#cbd5e1' };
+const CW = 36, RH = 44;
+
+// 把 a 乘上一位數 d，回傳每一位的寫法與進位（給箭頭與步驟文字用）
+function mulDigit(a, d){
+  const ad = String(a).split('').map(Number).reverse();          // 個位在前
+  let carry = 0; const cells = [], notes = [];
+  for(let i = 0; i < ad.length; i++){
+    const p = ad[i] * d + carry, last = i === ad.length - 1;
+    const write = last ? p : p % 10, nc = last ? 0 : Math.floor(p / 10);
+    let t = `${ad[i]} × ${d} ＝ ${ad[i] * d}`;
+    if(carry) t += `，加進位 ${carry} ＝ ${p}`;
+    t += last ? `，寫 ${p}` : `，寫 ${p % 10}${nc ? `、進 ${nc}` : ''}`;
+    cells.push(write); notes.push(t);
+    if(nc) cells.carryAt = cells.carryAt || {}, cells.carryAt[i + 1] = nc;   // 進位寫在左邊那一位的上面
+    carry = nc;
   }
-  const est = Math.round(a / Math.pow(10, String(a).length - 1)) * Math.pow(10, String(a).length - 1);
-  const estB = Math.round(b / Math.pow(10, String(b).length - 1)) * Math.pow(10, String(b).length - 1);
-  out.innerHTML = '<pre class="vert" style="text-align:left">' + rows.join('\n') + '</pre>' +
-    `<div class="out">${a} × ${b} ＝ ${a * b}</div>` +
-    `<div class="hint">估算檢查：${est} × ${estB} ＝ ${est * estB}，答案在這附近才合理。</div>`;
+  return { value: a * d, carries: cells.carryAt || {}, notes };
 }
-document.getElementById('mulGo').addEventListener('click', mulShow);
-mulShow();
+
+// 模型：a（1～999）× b（1～99）。zeros：{a:1,b:1} 代表先把末尾 0 拿掉再補回去（250 × 40）
+function mulModel(a, b, zeros){
+  const za = zeros ? zeros.a : 0, zb = zeros ? zeros.b : 0;
+  const bo = b % 10, bt = Math.floor(b / 10);
+  const L1 = mulDigit(a, bo), L2 = bt ? mulDigit(a, bt) : null;
+  const stages = [];
+  stages.push({ key: 'q', color: MC.ink, text: `題目：${a}${'0'.repeat(za)} × ${b}${'0'.repeat(zb)}${zeros ? '，先把末尾的 0 遮起來，算 ' + a + ' × ' + b : ''}` });
+  stages.push({ key: 'l1', color: MC.one, title: `① 乘數的個位是 ${bo} → 算 ${a} × ${bo}`, lines: L1.notes, result: `第一層寫 ${L1.value}` });
+  if(L2){
+    stages.push({ key: 'l2', color: MC.ten, title: `② 乘數的十位是 ${bt} → 算 ${a} × ${bt}`, lines: L2.notes,
+      result: `第二層寫 ${L2.value}，但它其實是 ${a} × ${bt * 10} ＝ ${L2.value * 10}，所以要往左移一格（個位當作 0）` });
+    stages.push({ key: 'sum', color: MC.sum, title: `③ 兩層相加`, lines: [`${L1.value} ＋ ${L2.value * 10} ＝ ${a * b}`] });
+  }
+  if(zeros){
+    stages.push({ key: 'z', color: MC.zero, title: `補回末尾的 0`, lines: [`兩個數一共藏了 ${za + zb} 個 0，答案後面補 ${za + zb} 個 0 → ${a * b}${'0'.repeat(za + zb)}`] });
+  }
+  return { a, b, bo, bt, L1, L2, za, zb, stages, product: a * b };
+}
+
+function arrow(sx, sy, cx, cy, ex, ey, color){
+  return `<path d="M ${sx} ${sy} Q ${cx} ${cy} ${ex} ${ey}" fill="none" stroke="${color}" stroke-width="2.5" marker-end="url(#ah-${color.slice(1)})"/>`;
+}
+function markerDefs(){
+  return '<defs>' + [MC.one, MC.ten, MC.sum].map(c =>
+    `<marker id="ah-${c.slice(1)}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${c}"/></marker>`).join('') + '</defs>';
+}
+const DIG = 'font-family="Courier New,monospace" font-weight="bold"';
+
+// step：畫到第幾個 stage（含）。省略＝全部
+function mulSVG(m, step){
+  const upTo = step === undefined ? m.stages.length - 1 : step;
+  const has = key => m.stages.findIndex(s => s.key === key) <= upTo && m.stages.some(s => s.key === key);
+  const digitsA = String(m.a).length, sumStr = String(m.product);
+  const N = Math.max(sumStr.length, digitsA + 1, String(m.b).length + 1) + m.za + m.zb;   // 數字欄數（含末尾 0 的欄）
+  const X0 = 80, xCol = j => X0 + (N - 1 - j) * CW + CW / 2;                            // j：0 ＝ 最右欄
+  const Ya = 84, Yb = Ya + RH, Yp1 = Yb + RH + 6, Yp2 = Yp1 + RH, Ysum = (m.L2 ? Yp2 : Yp1) + RH + 6;
+  const W = X0 + N * CW + 170, H = (m.L2 ? Ysum : Yp1) + 24;
+  const zTot = m.za + m.zb;
+  let s = markerDefs();
+  const digit = (x, y, d, color, size) => txt(x, y, d, color || MC.ink, size || 24, 'middle', DIG);
+  const row = (val, y, shift, color, zeros) => {                    // shift：往左移幾欄；zeros：右邊補幾個紅 0
+    const ds = String(val).split('').reverse();
+    let out = '';
+    for(let i = 0; i < zeros; i++) out += digit(xCol(i), y, '0', MC.zero);
+    ds.forEach((d, i) => out += digit(xCol(i + shift + zeros), y, d, color));
+    return out;
+  };
+  // 被乘數、乘數
+  s += row(m.a, Ya, 0, MC.ink, m.za);
+  s += row(m.b, Yb, 0, MC.ink, m.zb);
+  s += txt(X0 - 28, Yb, '×', MC.ink, 22, 'middle', DIG);
+  s += line(X0 - 10, Yb + 14, X0 + N * CW, Yb + 14, MC.ink, 2);
+  // 個位、十位的圈圈（乘數的 0 不圈）
+  const xb0 = xCol(m.zb), xb1 = xCol(m.zb + 1);
+  if(has('l1')) s += `<circle cx="${xb0}" cy="${Yb - 8}" r="17" fill="none" stroke="${MC.one}" stroke-width="2.5"/>`;
+  if(m.L2 && has('l2')) s += `<circle cx="${xb1}" cy="${Yb - 8}" r="17" fill="none" stroke="${MC.ten}" stroke-width="2.5"/>`;
+  // 第一層
+  if(has('l1')){
+    s += row(m.L1.value, Yp1, 0, MC.one, (!m.L2 && has('z')) ? zTot : 0);   // 只有一層時，補的 0 直接接在第一層後面
+    Object.entries(m.L1.carries).forEach(([i, c]) => s += digit(xCol(+i + m.za), Ya - 24, c, MC.one, 13));   // 第一層的進位：被乘數正上方（藍）
+    const xr = xCol(0) + CW / 2;
+    s += arrow(xb0 + 18, Yb - 8, xr + 40, Yb + 10, xr + 6, Yp1 - 8, MC.one);
+    s += txt(xr + 46, Yb + 22, '①', MC.one, 15);
+  }
+  // 第二層（往左移一格，個位畫淡色 0）
+  if(m.L2 && has('l2')){
+    s += row(m.L2.value, Yp2, 1, MC.ten, 0);
+    s += `<rect x="${xCol(0) - 13}" y="${Yp2 - 22}" width="26" height="30" rx="6" fill="none" stroke="${MC.faint}" stroke-dasharray="4 3"/>`;
+    s += digit(xCol(0), Yp2, '0', MC.faint);
+    Object.entries(m.L2.carries).forEach(([i, c]) => s += digit(xCol(+i + m.za), Ya - 42, c, MC.ten, 13));   // 第二層的進位：再上一排（紫）
+    const xl = xCol(String(m.L2.value).length) - CW / 2;             // 第二層最左邊數字的左側
+    s += txt(X0 - 28, Yp2, '＋', MC.ink, 20, 'middle', DIG);
+    s += arrow(xb1 - 12, Yb + 8, X0 - 60, Yb + RH, xl - 4, Yp2 - 8, MC.ten);
+    s += txt(X0 - 66, Yb + RH + 6, '②', MC.ten, 15);
+    s += txt(W - 10, Yp2, '← 其實是 ' + m.L2.value * 10, MC.ten, 12, 'end');
+  }
+  // 相加
+  if(m.L2 && has('sum')){
+    s += line(X0 - 10, Yp2 + 14, X0 + N * CW, Yp2 + 14, MC.ink, 2);
+    s += row(m.product, Ysum, 0, MC.sum, has('z') ? zTot : 0);
+    s += txt(W - 10, Ysum, '③ ' + m.L1.value + ' ＋ ' + m.L2.value * 10, MC.sum, 12, 'end');
+  }
+  return svg(W, H, s);
+}
+
+// 把模型畫進容器：svg ＋ 下方步驟文字
+function renderMul(boxId, a, b, opts){
+  opts = opts || {};
+  const m = mulModel(a, b, opts.zeros);
+  const upTo = opts.step === undefined ? m.stages.length - 1 : opts.step;
+  const box = document.getElementById(boxId);
+  let html = '<div class="svgbox">' + mulSVG(m, upTo) + '</div><div class="steps">';
+  m.stages.slice(0, upTo + 1).forEach(st => {
+    if(st.key === 'q'){ html += `<p class="stp" style="color:${st.color}">${st.text}</p>`; return; }
+    html += `<p class="stp" style="color:${st.color}"><b>${st.title}</b>`;
+    if(st.lines) html += '<br>' + st.lines.map(l => '　' + l).join('<br>');
+    if(st.result) html += '<br>　→ ' + st.result;
+    html += '</p>';
+  });
+  html += '</div>';
+  box.innerHTML = html;
+  return m;
+}
+
+// 靜態圖
+renderMul('mulFig1', 34, 26);
+renderMul('mulFig2', 47, 38);
+renderMul('mulFig3', 213, 32);
+renderMul('mulFig4', 25, 4, { zeros: { a: 1, b: 1 } });
+
+// 小工具：逐步播放
+let toolStep = 0, toolModel = null;
+function toolDraw(){
+  const a = parseInt(document.getElementById('mulA').value, 10), b = parseInt(document.getElementById('mulB').value, 10);
+  const out = document.getElementById('mulOut'), est = document.getElementById('mulEst'), lab = document.getElementById('mulStepLabel');
+  if(!(a >= 1 && a <= 999 && b >= 1 && b <= 99)){ out.innerHTML = '<div class="warn">請輸入 1～999 的被乘數、1～99 的乘數。</div>'; est.textContent = ''; lab.textContent = ''; return; }
+  toolModel = mulModel(a, b);
+  const last = toolModel.stages.length - 1;
+  toolStep = Math.min(toolStep, last);
+  renderMul('mulOut', a, b, { step: toolStep });
+  lab.textContent = toolStep === 0 ? '（還沒開始，按「下一步」）' : `第 ${toolStep} 步／共 ${last} 步`;
+  if(toolStep >= last){
+    const r = x => { const p = Math.pow(10, String(x).length - 1); return Math.round(x / p) * p; };
+    est.innerHTML = `${a} × ${b} ＝ ${a * b}<br><span style="font-weight:normal;font-size:.9rem">估算檢查：${r(a)} × ${r(b)} ＝ ${r(a) * r(b)}，答案在這附近才合理。</span>`;
+  } else est.textContent = '';
+}
+document.getElementById('mulGo').addEventListener('click', ()=>{ toolStep = 0; toolDraw(); });
+document.getElementById('mulNext').addEventListener('click', ()=>{ if(toolModel && toolStep < toolModel.stages.length - 1){ toolStep++; toolDraw(); } });
+document.getElementById('mulAll').addEventListener('click', ()=>{ toolStep = 99; toolDraw(); });
+document.getElementById('mulReset').addEventListener('click', ()=>{ toolStep = 0; toolDraw(); });
+toolDraw();
 
 </script>
 </body>
