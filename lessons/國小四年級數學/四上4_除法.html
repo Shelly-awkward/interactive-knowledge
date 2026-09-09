@@ -54,6 +54,7 @@
   pre.vert .c{color:var(--accent); font-weight:bold;}
   pre.vert .r{color:var(--red); font-weight:bold;}
   pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px;}
 
   details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
   details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
@@ -155,8 +156,7 @@
     <h2>📖 觀念 3：商要寫在哪一位</h2>
     <p>算 <span class="num">240 ÷ 30</span>，商是 8，只有一位數，所以寫在<b>個位</b>：</p>
     <div class="svgbox"><pre class="vert">           8
-     ┌──────
-3 0 │ 2 4 0
+3 0 <span class='dvd'> 2 4 0</span>
       2 4 0
       ─────
           0</pre></div>
@@ -284,8 +284,7 @@
     <h2>📖 觀念 3：商是兩位數的直式</h2>
     <p>算 <span class="num">375 ÷ 25</span>：</p>
     <div class="svgbox"><pre class="vert">         1 5
-     ┌──────
-2 5 │ 3 7 5
+2 5 <span class='dvd'> 3 7 5</span>
       2 5      <span class='g'>← 37 裡有 1 個 25，商的十位寫 1</span>
       ────
       1 2 5    <span class='g'>← 37 − 25 ＝ 12，把 5 拿下來變 125</span>
@@ -798,9 +797,8 @@ function divShow(){
   }
   const quot = Math.floor(n / d), rem = n % d;
   const head = margin + sp(qs);
-  const top = ' '.repeat(5) + '┌' + '─'.repeat(2 * L + 1);
-  const body = sp(String(d)) + ' │ ' + sp(String(n));
-  out.innerHTML = '<pre class="vert" style="text-align:left">' + [head, top, body].concat(lines).join('\n') + '</pre>' +
+  const body = sp(String(d)) + ' <span class="dvd"> ' + sp(String(n)) + '</span>';   // 括號用邊框畫，才不會斷開
+  out.innerHTML = '<pre class="vert" style="text-align:left">' + [head, body].concat(lines).join('\n') + '</pre>' +
     '<ol style="margin:8px 0 4px 1.3em">' + steps.join('') + '</ol>' +
     `<div class="out">${n} ÷ ${d} ＝ ${quot}${rem ? ' … ' + rem : ''}</div>` +
     `<div class="hint">驗算：${d} × ${quot} ＋ ${rem} ＝ ${d * quot + rem}，餘數 ${rem} &lt; ${d} ✔</div>`;
