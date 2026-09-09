@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小四自然｜四上 第1單元 地表的靜與動</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#a16207; --accent-soft:#fef9c3;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#92400e,#d97706); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  .dnd-pool,.dnd-zone{border:2px dashed var(--border); border-radius:12px; padding:10px 12px; min-height:64px; margin:8px 0; background:#fff; transition:.15s;}
+  .dnd-pool{background:#f9fafb;}
+  .dnd-zone.over,.dnd-pool.over{border-color:var(--blue); background:#eff6ff;}
+  .dnd-zones{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px;}
+  .dnd-zone-title{font-weight:bold; margin-bottom:6px; color:var(--accent);}
+  .dnd-card{display:inline-block; background:#fff; border:1.5px solid var(--border); border-radius:99px; padding:6px 14px; margin:4px 6px 4px 0;
+    cursor:grab; user-select:none; touch-action:none; font-size:.95rem; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .1s;}
+  .dnd-card:hover{border-color:var(--blue);}
+  .dnd-card.sel{border-color:var(--blue); background:#dbeafe; transform:scale(1.04);}
+  .dnd-card.drag{position:fixed; z-index:99; pointer-events:none; opacity:.9; transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.2);}
+  .dnd-card.ok{border-color:var(--green); background:var(--green-soft);}
+  .dnd-card.no{border-color:var(--red); background:var(--red-soft);}
+  .dnd-bar{margin-top:8px;}
+  .dnd-bar button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem; margin-right:6px;}
+  .dnd-bar button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .dnd-msg{font-weight:bold; margin-left:8px;}
+  .dnd-msg.ok{color:#166534;} .dnd-msg.no{color:#991b1b;}
+  .dnd-hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .spot{cursor:pointer;} .spot:hover{filter:brightness(1.08);}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; min-height:2.4em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國小四年級上學期 · 自然 第1單元</span>
+  <h1>地表的靜與動</h1>
+  <p>三個小節＋單元總測驗。地表看起來不動，其實一直在慢慢改變，有時候還會突然大動（地震）。每一節都有可以動手玩的東西：點地形、倒水做實驗、拖卡片分類、把小朋友移到安全的地方。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1-1 地表有什麼</button>
+  <button data-t="s2">1-2 地表怎麼改變</button>
+  <button data-t="s3">1-3 地震防災</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 1-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出地表上有岩石、石礫、砂、土壤和水</li>
+      <li>知道岩石碎掉會變成石礫、砂、泥，越碎顆粒越小</li>
+      <li>會用顆粒大小分辨石礫、砂、泥</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：走到戶外，地表上有什麼？</h2>
+    <p>山上有大塊的<b>岩石</b>，河邊有<b>石礫</b>（小石子），沙灘有<b>砂</b>，田裡有<b>土壤</b>，河和海裡有<b>水</b>。</p>
+    <div class="tool">
+      <div class="svgbox" id="svgLand"></div>
+      <div class="infobox" id="landInfo">👆 點一點圖上的地方，看看那裡的地表是什麼做的。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：岩石會碎，越碎越小</h2>
+    <p>岩石經過很長很長的時間，被太陽曬、被雨淋、被風吹、被水沖，會慢慢裂開、碎掉，變成越來越小的顆粒：</p>
+    <div class="formula">岩石 → 石礫（小石子） → 砂 → 泥</div>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>名稱</th><th>顆粒大小</th><th>摸起來</th><th>哪裡看得到</th></tr>
+        <tr><td class="name">石礫</td><td>比米粒大，像彈珠、豆子</td><td>一顆一顆硬硬的</td><td>河邊、山路旁</td></tr>
+        <tr><td class="name">砂</td><td>比米粒小，看得到一粒一粒</td><td>粗粗的、沙沙的</td><td>沙灘、河邊</td></tr>
+        <tr class="hi"><td class="name">泥</td><td>很細，看不清楚顆粒</td><td>滑滑的、會黏手</td><td>田裡、池塘底</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 <b>土壤</b>是砂、泥再加上腐爛的樹葉、動物遺體（腐植質）混在一起，所以植物可以在土壤裡長大。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：摸一摸，這是什麼？</h2>
+    <p>下面每張卡片是一段「摸起來的感覺」，把它拖到正確的名稱下面。</p>
+    <div id="dndGrain"></div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜小明在河邊撿到一顆和彈珠差不多大的石頭，它是石礫還是砂？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 砂比米粒還小，一顆一顆要仔細看才看得到。</p>
+        <p class="step"><b>②</b> 彈珠大小的小石子是<b>石礫</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜為什麼山上的大岩石，過了很久會變成小石子？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 岩石被太陽曬、雨淋、風吹、水沖，會慢慢裂開。</p>
+        <p class="step"><b>②</b> 裂開的碎片再繼續被磨，就越來越小。</p>
+        <p class="step"><b>③</b> 這個過程很慢，要好幾百年、幾千年。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜田裡的土壤和沙灘的砂，哪一個比較適合種菜？為什麼？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 土壤裡面有<b>腐植質</b>（腐爛的樹葉等），能提供養分，也比較保水。</p>
+        <p class="step"><b>②</b> 砂的顆粒大、水一下就流掉，養分也少。</p>
+        <p class="step"><b>③</b> 答案：<b>土壤</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 下面哪一個顆粒<b>最小</b>？</div>
+      <label><input type="radio" name="p1q1" value="A">石礫</label>
+      <label><input type="radio" name="p1q1" value="B">泥</label>
+      <label><input type="radio" name="p1q1" value="C">岩石</label>
+      <label><input type="radio" name="p1q1" value="D">砂</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　岩石 → 石礫 → 砂 → 泥，越後面越小。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 沙灘上一粒一粒、摸起來粗粗的是：</div>
+      <label><input type="radio" name="p1q2" value="A">砂</label>
+      <label><input type="radio" name="p1q2" value="B">石礫</label>
+      <label><input type="radio" name="p1q2" value="C">泥</label>
+      <label><input type="radio" name="p1q2" value="D">腐植質</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　砂比米粒小，看得到顆粒，摸起來粗粗的。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 土壤裡面除了砂和泥，還有什麼讓植物能長大？</div>
+      <label><input type="radio" name="p1q3" value="A">玻璃</label>
+      <label><input type="radio" name="p1q3" value="B">腐爛的樹葉和動物遺體</label>
+      <label><input type="radio" name="p1q3" value="C">鹽</label>
+      <label><input type="radio" name="p1q3" value="D">塑膠</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　腐植質提供養分。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. 岩石變成小石子，主要是因為：</div>
+      <label><input type="radio" name="p1q4" value="A">有人用鐵鎚敲</label>
+      <label><input type="radio" name="p1q4" value="B">長時間被太陽曬、雨淋、風吹、水沖</label>
+      <label><input type="radio" name="p1q4" value="C">動物咬的</label>
+      <label><input type="radio" name="p1q4" value="D">一天就碎了</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　這是很慢的自然過程。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">5. 摸起來滑滑的、會黏手的是：</div>
+      <label><input type="radio" name="p1q5" value="A">泥</label>
+      <label><input type="radio" name="p1q5" value="B">砂</label>
+      <label><input type="radio" name="p1q5" value="C">石礫</label>
+      <label><input type="radio" name="p1q5" value="D">岩石</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　泥的顆粒很細，含水時會黏。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道流水會侵蝕、搬運、堆積，讓地表慢慢改變</li>
+      <li>知道水量越大、坡度越陡，侵蝕和搬運越厲害</li>
+      <li>分得出哪些改變很慢、哪些改變一下子就發生</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：流水的三個作用</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>作用</th><th>發生什麼事</th><th>常在哪裡</th></tr>
+        <tr><td class="name">侵蝕</td><td>水流把岩石、土壤<b>沖走、刮掉</b></td><td>上游，水流快、坡陡</td></tr>
+        <tr><td class="name">搬運</td><td>水流把砂石<b>帶著走</b></td><td>一路上都有</td></tr>
+        <tr class="hi"><td class="name">堆積</td><td>水流變慢，砂石<b>沉下來</b>堆在一起</td><td>下游、河口，水流慢、地平</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 一句話：<b>快的水會挖，慢的水會放。</b>河流上游把東西挖走，一路搬到下游放下來。</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 流水實驗台</h2>
+    <p>學校做過的實驗：把砂鋪在盤子裡、傾斜，從上面倒水。這裡可以自己調坡度和水量，看看會發生什麼。</p>
+    <div class="tool">
+      <div class="svgbox" id="svgFlow"></div>
+      <div>坡度：<span id="slopeLabel"></span></div>
+      <input type="range" id="slope" min="1" max="3" value="2">
+      <div>水量：<span id="waterLabel"></span></div>
+      <input type="range" id="water" min="1" max="3" value="2">
+      <div class="row"><button id="pour">倒水！</button><button id="pourReset" class="ghost">重鋪砂子</button></div>
+      <div class="out" id="flowOut">調好坡度和水量，按「倒水！」</div>
+      <div class="hint">試試看：坡度最陡＋水量最大，和坡度最緩＋水量最小，挖出來的溝和堆出來的砂差多少？</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：河流從上游到下游</h2>
+    <p>把三個作用拖到它<b>最主要</b>發生的地方。</p>
+    <div id="dndRiver"></div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：改變有快有慢</h2>
+    <p>流水、風把地表一點一點改變，要很久才看得出來。但有些改變<b>一下子</b>就發生：</p>
+    <ul>
+      <li><b>地震</b>：地面搖晃、裂開，山坡可能崩塌</li>
+      <li><b>山崩、土石流</b>：下大雨或地震後，整片山坡的土石一起滑下來</li>
+      <li><b>火山爆發</b>：岩漿、火山灰蓋住地表（台灣現在很少）</li>
+    </ul>
+    <div class="warn">⚠️ 山坡上樹木被砍光、蓋太多房子，下大雨時土石流更容易發生。保護山坡上的植物，就是保護地表。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：快還是慢？</h2>
+    <div id="dndSpeed"></div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜河流上游的石頭大又有稜角，下游的石頭小又圓，為什麼？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 上游的石頭剛被侵蝕下來，還沒被磨。</p>
+        <p class="step"><b>②</b> 被水搬運的路上一直互相碰撞、磨擦，越磨越小、越圓。</p>
+        <p class="step"><b>③</b> 所以下游看到的是<b>小圓石</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜河口常常出現一片平坦的沙地，是哪一種作用？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 河口地勢平、水流慢，帶來的砂石沉下來。</p>
+        <p class="step"><b>②</b> 答案：<b>堆積</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜實驗時把盤子傾斜得更陡，倒同樣的水，溝會變深還是變淺？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 越陡水流越快，侵蝕力越強。</p>
+        <p class="step"><b>②</b> 答案：溝<b>變深</b>，被沖到下面堆起來的砂也更多。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 水流把岩石、土壤沖走刮掉，叫做：</div>
+      <label><input type="radio" name="p2q1" value="A">侵蝕</label>
+      <label><input type="radio" name="p2q1" value="B">搬運</label>
+      <label><input type="radio" name="p2q1" value="C">堆積</label>
+      <label><input type="radio" name="p2q1" value="D">風化</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　侵蝕就是「挖走」。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 水流變慢，砂石沉下來堆在一起，叫做：</div>
+      <label><input type="radio" name="p2q2" value="A">侵蝕</label>
+      <label><input type="radio" name="p2q2" value="B">搬運</label>
+      <label><input type="radio" name="p2q2" value="C">蒸發</label>
+      <label><input type="radio" name="p2q2" value="D">堆積</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　慢的水會放下東西，就是堆積。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 哪裡最容易看到堆積作用？</div>
+      <label><input type="radio" name="p2q3" value="A">河口</label>
+      <label><input type="radio" name="p2q3" value="B">瀑布下方的岩壁</label>
+      <label><input type="radio" name="p2q3" value="C">河流上游</label>
+      <label><input type="radio" name="p2q3" value="D">山頂</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　河口水流慢、地平。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. 下面哪一個會讓侵蝕變得<b>更厲害</b>？</div>
+      <label><input type="radio" name="p2q4" value="A">水量變小</label>
+      <label><input type="radio" name="p2q4" value="B">把水停掉</label>
+      <label><input type="radio" name="p2q4" value="C">水量變大、坡度變陡</label>
+      <label><input type="radio" name="p2q4" value="D">坡度變緩</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　水多、坡陡，水流快，侵蝕搬運力就強。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">5. 下面哪一種地表改變是<b>一下子</b>發生的？</div>
+      <label><input type="radio" name="p2q5" value="A">岩石慢慢裂成砂</label>
+      <label><input type="radio" name="p2q5" value="B">流水慢慢挖出峽谷</label>
+      <label><input type="radio" name="p2q5" value="C">風把砂丘吹得慢慢移動</label>
+      <label><input type="radio" name="p2q5" value="D">土石流把山坡沖下來</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　土石流幾分鐘內就發生；其他都要很久。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道地震是地底下的岩層錯動造成的</li>
+      <li>地震來時會做「趴下、掩護、穩住」，知道哪裡安全、哪裡危險</li>
+      <li>會準備緊急避難包</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：地震怎麼來的</h2>
+    <p>地底下的岩層一直被推擠，推到受不了就<b>斷裂、錯動</b>，震動傳到地面，我們就感覺到地震。</p>
+    <div class="svgbox" id="svgQuake"></div>
+    <div class="note">💡 台灣位在兩個板塊擠在一起的地方，所以地震很多。地震<b>不能預測</b>，只能事先準備。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：地震來了，三個動作</h2>
+    <div class="formula">趴下 → 掩護 → 穩住</div>
+    <ol>
+      <li><b>趴下</b>：馬上蹲低，不要跑</li>
+      <li><b>掩護</b>：躲到桌子下，用手護住頭和脖子</li>
+      <li><b>穩住</b>：抓住桌腳，等搖晃停止</li>
+    </ol>
+    <div class="warn">⚠️ 不要做的事：衝出去、搭電梯、站在窗戶或書櫃旁邊、躲在吊燈下面。搖晃時掉下來的東西最危險。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：地震來了，躲哪裡？</h2>
+    <p>教室在搖！點一個地方，把小明移過去，看看安不安全。</p>
+    <div class="tool">
+      <div class="svgbox" id="svgRoom"></div>
+      <div class="infobox" id="roomInfo">👆 點圖上的地方（桌子下、窗邊、書櫃旁、門口、電梯）</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：平時就要準備</h2>
+    <ul>
+      <li>把高的家具<b>固定</b>在牆上，重的東西放低處</li>
+      <li>準備<b>緊急避難包</b>，放在拿得到的地方</li>
+      <li>和家人約好<b>集合地點</b>，記住避難路線</li>
+      <li>地震後：關瓦斯、檢查有沒有受傷、小心<b>餘震</b></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：避難包要放什麼？</h2>
+    <p>避難包要能讓你撐過兩三天。把該帶的拖進避難包，不該帶的放到另一邊。</p>
+    <div id="dndBag"></div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜上課時突然地震，小華想從三樓跑到操場。這樣對嗎？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 搖晃時跑動很容易跌倒，樓梯間和走廊可能有東西掉下來。</p>
+        <p class="step"><b>②</b> 正確做法：先<b>趴下、掩護、穩住</b>，等搖晃停了再依老師指示疏散。</p>
+        <p class="step"><b>③</b> 答案：<b>不對</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜在家裡地震時，剛好站在書櫃旁邊，該怎麼辦？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 書櫃可能倒下來壓到人。</p>
+        <p class="step"><b>②</b> 馬上離開書櫃，躲到附近的桌子下，護住頭頸。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜避難包裡為什麼要放哨子？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 如果被困住，吹哨子比大喊省力、聲音傳得遠。</p>
+        <p class="step"><b>②</b> 救難人員比較容易找到你。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 地震是因為：</div>
+      <label><input type="radio" name="p3q1" value="A">太陽太熱</label>
+      <label><input type="radio" name="p3q1" value="B">地底下的岩層斷裂錯動</label>
+      <label><input type="radio" name="p3q1" value="C">風太大</label>
+      <label><input type="radio" name="p3q1" value="D">下雨太多</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　岩層被推擠到斷裂、錯動，震動傳上來。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 地震來時，第一個動作是：</div>
+      <label><input type="radio" name="p3q2" value="A">打電話</label>
+      <label><input type="radio" name="p3q2" value="B">打開窗戶</label>
+      <label><input type="radio" name="p3q2" value="C">趴下</label>
+      <label><input type="radio" name="p3q2" value="D">往外跑</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　趴下 → 掩護 → 穩住。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. 地震時，下面哪裡<b>最安全</b>？</div>
+      <label><input type="radio" name="p3q3" value="A">窗戶旁邊</label>
+      <label><input type="radio" name="p3q3" value="B">書櫃旁邊</label>
+      <label><input type="radio" name="p3q3" value="C">堅固的桌子下</label>
+      <label><input type="radio" name="p3q3" value="D">電梯裡</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　桌子可以擋住掉下來的東西。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. 下面哪一樣<b>不需要</b>放進避難包？</div>
+      <label><input type="radio" name="p3q4" value="A">哨子</label>
+      <label><input type="radio" name="p3q4" value="B">手電筒</label>
+      <label><input type="radio" name="p3q4" value="C">遊戲機</label>
+      <label><input type="radio" name="p3q4" value="D">水</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　避難包只放維持安全和生存的東西。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">5. 地震後要注意：</div>
+      <label><input type="radio" name="p3q5" value="A">回去睡覺</label>
+      <label><input type="radio" name="p3q5" value="B">打開所有電器</label>
+      <label><input type="radio" name="p3q5" value="C">馬上搭電梯下樓</label>
+      <label><input type="radio" name="p3q5" value="D">關瓦斯、小心餘震</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　大地震後常有餘震，瓦斯漏氣會很危險。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="C">
+      <div class="stem">1. 岩石碎掉以後，顆粒從大到小的順序是：</div>
+      <label><input type="radio" name="qz1" value="A">砂 → 石礫 → 泥</label>
+      <label><input type="radio" name="qz1" value="B">泥 → 砂 → 石礫</label>
+      <label><input type="radio" name="qz1" value="C">石礫 → 砂 → 泥</label>
+      <label><input type="radio" name="qz1" value="D">泥 → 石礫 → 砂</label>
+      <div class="fb" data-exp="　越碎越小：石礫、砂、泥。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">2. 摸起來粗粗的、看得到一粒一粒的是：</div>
+      <label><input type="radio" name="qz2" value="A">腐植質</label>
+      <label><input type="radio" name="qz2" value="B">砂</label>
+      <label><input type="radio" name="qz2" value="C">泥</label>
+      <label><input type="radio" name="qz2" value="D">岩石</label>
+      <div class="fb" data-exp="　砂的顆粒比米粒小但看得到。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">3. 植物能在土壤裡長大，主要因為土壤裡有：</div>
+      <label><input type="radio" name="qz3" value="A">塑膠</label>
+      <label><input type="radio" name="qz3" value="B">玻璃</label>
+      <label><input type="radio" name="qz3" value="C">腐植質</label>
+      <label><input type="radio" name="qz3" value="D">鹽</label>
+      <div class="fb" data-exp="　腐爛的動植物提供養分。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">4. 水流把岩石土壤沖走、刮掉，是：</div>
+      <label><input type="radio" name="qz4" value="A">侵蝕</label>
+      <label><input type="radio" name="qz4" value="B">搬運</label>
+      <label><input type="radio" name="qz4" value="C">堆積</label>
+      <label><input type="radio" name="qz4" value="D">蒸發</label>
+      <div class="fb" data-exp="　侵蝕＝挖走。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 河口的平坦沙地是哪一種作用造成的？</div>
+      <label><input type="radio" name="qz5" value="A">侵蝕</label>
+      <label><input type="radio" name="qz5" value="B">堆積</label>
+      <label><input type="radio" name="qz5" value="C">地震</label>
+      <label><input type="radio" name="qz5" value="D">搬運</label>
+      <div class="fb" data-exp="　水流慢，砂石沉下來。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">6. 要讓流水實驗的溝挖得更深，可以：</div>
+      <label><input type="radio" name="qz6" value="A">水倒少一點</label>
+      <label><input type="radio" name="qz6" value="B">不倒水</label>
+      <label><input type="radio" name="qz6" value="C">把盤子放平</label>
+      <label><input type="radio" name="qz6" value="D">把盤子傾斜得更陡、水倒多一點</label>
+      <div class="fb" data-exp="　坡陡、水多，侵蝕力強。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">7. 下面哪一個是<b>慢慢</b>改變地表？</div>
+      <label><input type="radio" name="qz7" value="A">山崩</label>
+      <label><input type="radio" name="qz7" value="B">地震</label>
+      <label><input type="radio" name="qz7" value="C">流水侵蝕</label>
+      <label><input type="radio" name="qz7" value="D">土石流</label>
+      <div class="fb" data-exp="　侵蝕要很久才看得出來。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">8. 地震來時正確的順序是：</div>
+      <label><input type="radio" name="qz8" value="A">跑、叫、躲</label>
+      <label><input type="radio" name="qz8" value="B">趴下、掩護、穩住</label>
+      <label><input type="radio" name="qz8" value="C">搭電梯、下樓、集合</label>
+      <label><input type="radio" name="qz8" value="D">站好、看窗外、打電話</label>
+      <div class="fb" data-exp="　趴下、掩護、穩住。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">9. 地震時<b>不可以</b>：</div>
+      <label><input type="radio" name="qz9" value="A">搭電梯逃生</label>
+      <label><input type="radio" name="qz9" value="B">抓住桌腳</label>
+      <label><input type="radio" name="qz9" value="C">躲到桌子下</label>
+      <label><input type="radio" name="qz9" value="D">用手護頭</label>
+      <div class="fb" data-exp="　電梯可能停電被困。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">10. 下面哪一組<b>都是</b>避難包該放的？</div>
+      <label><input type="radio" name="qz10" value="A">水、遊戲機、漫畫</label>
+      <label><input type="radio" name="qz10" value="B">水、手電筒、哨子</label>
+      <label><input type="radio" name="qz10" value="C">漫畫、遊戲機、玩具</label>
+      <label><input type="radio" name="qz10" value="D">西瓜、花瓶、電視</label>
+      <div class="fb" data-exp="　只放維持生存和求救的東西。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 小四自然 · 四上第 1 單元「地表的靜與動」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "四上自然1 地表的靜與動";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 拖曳配對（滑鼠、觸控都可以；也可以先點卡片、再點要放的區域）=====
+function dndGame(opts){
+  const box = document.getElementById(opts.box);
+  const placed = {};                       // 卡片 id → 放在哪一區
+  let selected = null, dragging = null;
+  const el = (tag, cls) => { const e = document.createElement(tag); if(cls) e.className = cls; return e; };
+  function render(){
+    box.innerHTML = '';
+    const pool = el('div', 'dnd-pool'); pool.dataset.zone = '__pool__';
+    pool.innerHTML = `<div class="dnd-zone-title" style="color:#6b7280">${opts.poolLabel || '卡片區（拖到下面正確的位置）'}</div>`;
+    const zonesWrap = el('div', 'dnd-zones');
+    const zoneEls = {};
+    opts.zones.forEach(z => {
+      const ze = el('div', 'dnd-zone'); ze.dataset.zone = z.id;
+      ze.innerHTML = `<div class="dnd-zone-title">${z.label}</div>`;
+      zonesWrap.appendChild(ze); zoneEls[z.id] = ze;
+    });
+    opts.items.forEach(it => {
+      const c = el('div', 'dnd-card'); c.dataset.item = it.id; c.textContent = it.label;
+      (placed[it.id] && zoneEls[placed[it.id]] ? zoneEls[placed[it.id]] : pool).appendChild(c);
+      attach(c);
+    });
+    const bar = el('div', 'row dnd-bar');
+    bar.innerHTML = `<button class="dnd-check">檢查</button><button class="ghost dnd-reset">重來</button><span class="dnd-msg"></span>`;
+    box.append(pool, zonesWrap, bar);
+    if(opts.hint){ const h = el('div', 'dnd-hint'); h.textContent = opts.hint; box.appendChild(h); }
+    bar.querySelector('.dnd-check').addEventListener('click', check);
+    bar.querySelector('.dnd-reset').addEventListener('click', () => { Object.keys(placed).forEach(k => delete placed[k]); selected = null; render(); });
+    [pool, ...Object.values(zoneEls)].forEach(z => z.addEventListener('click', () => {
+      if(!selected) return;
+      if(z.dataset.zone === '__pool__') delete placed[selected]; else placed[selected] = z.dataset.zone;
+      selected = null; render();
+    }));
+  }
+  function zoneAt(x, y){
+    const t = document.elementFromPoint(x, y);
+    return t ? t.closest('.dnd-zone, .dnd-pool') : null;
+  }
+  function attach(card){
+    let sx = 0, sy = 0, moved = false, ghost = null;
+    card.addEventListener('pointerdown', e => {
+      sx = e.clientX; sy = e.clientY; moved = false; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e => {
+      if(!(e.buttons & 1)) return;
+      if(!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 6) return;
+      if(!moved){
+        moved = true; ghost = card.cloneNode(true); ghost.classList.add('drag');
+        document.body.appendChild(ghost); card.style.opacity = '.35';
+      }
+      ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + 'px'; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + 'px';
+      box.querySelectorAll('.over').forEach(z => z.classList.remove('over'));
+      const z = zoneAt(e.clientX, e.clientY); if(z && box.contains(z)) z.classList.add('over');
+    });
+    card.addEventListener('pointerup', e => {
+      if(moved){
+        const z = zoneAt(e.clientX, e.clientY);
+        if(ghost) ghost.remove(); card.style.opacity = '';
+        if(z && box.contains(z)){ if(z.dataset.zone === '__pool__') delete placed[card.dataset.item]; else placed[card.dataset.item] = z.dataset.zone; }
+        selected = null; render();
+      }else{
+        selected = (selected === card.dataset.item) ? null : card.dataset.item;
+        box.querySelectorAll('.dnd-card').forEach(c => c.classList.toggle('sel', c.dataset.item === selected));
+      }
+    });
+    card.addEventListener('pointercancel', () => { if(ghost) ghost.remove(); card.style.opacity = ''; moved = false; });
+  }
+  function check(){
+    let ok = 0, total = opts.items.length, unplaced = 0;
+    box.querySelectorAll('.dnd-card').forEach(c => {
+      const id = c.dataset.item, z = placed[id];
+      const zone = opts.zones.find(zz => zz.id === z);
+      c.classList.remove('ok', 'no');
+      if(!zone){ unplaced++; c.classList.add('no'); return; }
+      if(zone.accepts.includes(id)){ ok++; c.classList.add('ok'); } else c.classList.add('no');
+    });
+    const msg = box.querySelector('.dnd-msg');
+    if(ok === total){ msg.className = 'dnd-msg ok'; msg.textContent = '✔ 全部正確！'; }
+    else { msg.className = 'dnd-msg no'; msg.textContent = `✘ 對了 ${ok} / ${total}${unplaced ? '（還有 ' + unplaced + ' 張沒放）' : ''}，紅色的再想想。`; }
+    toolLog(opts.name || opts.box, ok === total);
+    if(opts.onResult) opts.onResult(ok, total, placed);
+  }
+  render();
+  return { placed };
+}
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// ---- 1-1 地表探索圖 ----
+const LAND = {
+  rock: { name: '山上的岩石', text: '一大塊硬硬的岩石，搬不動。它是地表最原始的材料，碎掉以後才變成石礫、砂、泥。' },
+  gravel: { name: '河邊的石礫', text: '像彈珠、豆子那麼大的小石子，通常被水磨得圓圓的。' },
+  sand: { name: '沙灘的砂', text: '比米粒小的顆粒，看得到一粒一粒、摸起來粗粗的。' },
+  soil: { name: '田裡的土壤', text: '砂、泥加上腐爛的樹葉（腐植質），有養分、會保水，植物長得好。' },
+  water: { name: '河裡的水', text: '水會流動，是改變地表最重要的力量：它會侵蝕、搬運、堆積。' },
+};
+(function(){
+  let s = rect(0,0,520,240,'#e0f2fe');
+  s += `<path d="M 0 150 L 90 60 L 170 130 L 240 90 L 320 150 L 520 150 L 520 240 L 0 240 Z" fill="#a3a3a3"/>`;   // 山
+  s += `<path d="M 0 240 L 0 165 L 520 165 L 520 240 Z" fill="#86efac"/>`;                                          // 平原
+  s += `<path d="M 200 165 Q 230 200 200 240 L 260 240 Q 290 200 260 165 Z" fill="#60a5fa"/>`;                       // 河
+  s += `<path d="M 380 165 L 520 165 L 520 240 L 380 240 Z" fill="#fde68a"/>`;                                       // 沙灘
+  s += `<g class="spot" data-k="rock">${rect(60,70,60,50,'#737373','#525252',2)}${txt(90,100,'岩石','#fff',13)}</g>`;
+  s += `<g class="spot" data-k="gravel">${[0,1,2,3,4].map(i=>`<circle cx="${150+i*12}" cy="${200+(i%2)*8}" r="6" fill="#9ca3af" stroke="#6b7280"/>`).join('')}${txt(175,228,'石礫','#374151',13)}</g>`;
+  s += `<g class="spot" data-k="sand">${rect(400,180,100,45,'#fcd34d','#f59e0b',2)}${txt(450,207,'砂','#78350f',13)}</g>`;
+  s += `<g class="spot" data-k="soil">${rect(40,180,90,45,'#92400e','#78350f',2)}${txt(85,207,'土壤','#fff',13)}</g>`;
+  s += `<g class="spot" data-k="water">${rect(212,178,36,50,'#3b82f6','#2563eb',2)}${txt(230,207,'水','#fff',13)}</g>`;
+  document.getElementById('svgLand').innerHTML = svg(520,240,s);
+  document.querySelectorAll('#svgLand .spot').forEach(g => g.addEventListener('click', () => {
+    const d = LAND[g.dataset.k];
+    document.getElementById('landInfo').innerHTML = `<b>${d.name}</b>：${d.text}`;
+  }));
+})();
+
+// ---- 1-1 顆粒分類 ----
+dndGame({ box: 'dndGrain', name: '顆粒分類', poolLabel: '摸起來的感覺',
+  items: [
+    { id: 'g1', label: '像彈珠那麼大的小石子' }, { id: 'g2', label: '比米粒小，一粒一粒粗粗的' },
+    { id: 'g3', label: '很細，滑滑的會黏手' }, { id: 'g4', label: '一大塊，搬不動' },
+    { id: 'g5', label: '河邊被磨得圓圓的小石頭' }, { id: 'g6', label: '沙灘上抓一把會從指縫漏掉' },
+  ],
+  zones: [
+    { id: 'rock', label: '岩石（最大）', accepts: ['g4'] }, { id: 'gravel', label: '石礫', accepts: ['g1', 'g5'] },
+    { id: 'sand', label: '砂', accepts: ['g2', 'g6'] }, { id: 'mud', label: '泥（最小）', accepts: ['g3'] },
+  ],
+  hint: '拖不動的話，先點卡片、再點要放的格子也可以。' });
+
+// ---- 1-2 流水實驗台 ----
+const slope = document.getElementById('slope'), water = document.getElementById('water');
+const SL = ['很緩', '普通', '很陡'], WL = ['很少', '普通', '很多'];
+let flowAnim = null, poured = false;
+function drawFlow(t){                       // t：0～1，倒水進度
+  const sv = +slope.value, wv = +water.value, k = (sv + wv - 2) / 4;   // 0～1，越大侵蝕越強
+  const tilt = 10 + sv * 8;                                              // 右邊比左邊低多少（畫面用）
+  let s = '';
+  // 盤子：左邊高、右邊低
+  s += `<polygon points="40,60 440,${60+tilt} 440,${190+tilt} 40,190" fill="#fde68a" stroke="#a16207" stroke-width="3"/>`;
+  s += txt(60, 48, '高', '#6b7280', 12) + txt(430, 48 + tilt, '低', '#6b7280', 12);
+  const y0 = 118, y1 = 118 + tilt * 0.9;                                 // 溝的起點、終點高度
+  const depth = 6 + 26 * k * t, len = 380 * t;
+  if(t > 0){
+    const yEnd = y0 + (y1 - y0) * t, xEnd = 60 + len;
+    const path = `M 60 ${y0} Q ${(60 + xEnd) / 2} ${(y0 + yEnd) / 2 + depth / 4} ${xEnd} ${yEnd}`;
+    s += `<path d="${path}" fill="none" stroke="#b45309" stroke-width="${depth}" stroke-linecap="round" opacity=".55"/>`;
+    s += `<path d="${path}" fill="none" stroke="#38bdf8" stroke-width="${3 + wv*2}" stroke-linecap="round"/>`;
+    for(let i = 0; i < 6 + wv * 4; i++){                                   // 搬運中的砂粒
+      const p = ((i * 37) % 100) / 100 * t, x = 60 + 380 * p, y = y0 + (y1 - y0) * p + ((i * 13) % 9) - 4;
+      s += `<circle cx="${x}" cy="${y}" r="2.5" fill="#92400e"/>`;
+    }
+    const fan = 20 + 70 * k * t;                                            // 底部堆積扇
+    s += `<ellipse cx="445" cy="${y1 + 6}" rx="${fan * 0.5}" ry="${fan * 0.35}" fill="#d97706" opacity=".8"/>`;
+    s += txt(66, y0 - 22, '侵蝕：挖出溝', '#b45309', 12, 'start') + txt(250, (y0 + y1) / 2 - 24, '搬運：砂被帶走', '#0369a1', 12) + txt(440, y1 + 48, '堆積：砂堆在下面', '#92400e', 12);
+  }
+  s += txt(240, 240, `坡度 ${SL[sv-1]}、水量 ${WL[wv-1]}`, '#6b7280', 12);
+  document.getElementById('svgFlow').innerHTML = svg(500, 250, s);
+}
+function flowLabels(){ document.getElementById('slopeLabel').textContent = SL[slope.value-1]; document.getElementById('waterLabel').textContent = WL[water.value-1]; }
+slope.addEventListener('input', () => { flowLabels(); if(!flowAnim) drawFlow(poured ? 1 : 0); });
+water.addEventListener('input', () => { flowLabels(); if(!flowAnim) drawFlow(poured ? 1 : 0); });
+document.getElementById('pour').addEventListener('click', () => {
+  if(flowAnim) return;
+  const t0 = performance.now();
+  flowAnim = requestAnimationFrame(function step(now){
+    const t = Math.min(1, (now - t0) / 1800); drawFlow(t);
+    if(t < 1) flowAnim = requestAnimationFrame(step);
+    else {
+      flowAnim = null; poured = true;
+      const k = (+slope.value + +water.value - 2) / 4;
+      document.getElementById('flowOut').textContent = k >= 0.75 ? '坡度陡、水量大：水流很快，溝挖得又深又長，很多砂被沖到下面堆成一大片。' :
+        k <= 0.25 ? '坡度緩、水量小：水流慢，只挖出淺淺的溝，沖下去堆積的砂也很少。' : '普通的坡度和水量：挖出中等的溝，下面堆了一些砂。試試看兩個極端比一比！';
+      toolLog('流水實驗台', true);
+    }
+  });
+});
+document.getElementById('pourReset').addEventListener('click', () => { if(flowAnim) cancelAnimationFrame(flowAnim); flowAnim = null; poured = false; drawFlow(0); document.getElementById('flowOut').textContent = '砂子鋪好了，再倒一次看看。'; });
+flowLabels(); drawFlow(0);
+
+// ---- 1-2 河流三段配對 ----
+dndGame({ box: 'dndRiver', name: '河流作用配對', poolLabel: '三個作用（拖到它最主要發生的地方）',
+  items: [
+    { id: 'e', label: '侵蝕：水流快，把岩石土壤沖走' }, { id: 't', label: '搬運：把砂石一路帶著走' }, { id: 'd', label: '堆積：水流慢，砂石沉下來' },
+    { id: 'e2', label: '石頭大又有稜角' }, { id: 'd2', label: '一片平坦的沙地' },
+  ],
+  zones: [
+    { id: 'up', label: '上游（山區，坡陡水急）', accepts: ['e', 'e2'] },
+    { id: 'mid', label: '中游（平原，河道變寬）', accepts: ['t'] },
+    { id: 'low', label: '下游、河口（地平水慢）', accepts: ['d', 'd2'] },
+  ] });
+
+// ---- 1-2 快慢分類 ----
+dndGame({ box: 'dndSpeed', name: '地表改變快慢', poolLabel: '這些改變，是慢慢的還是一下子？',
+  items: [
+    { id: 's1', label: '流水挖出深深的峽谷' }, { id: 's2', label: '岩石裂成砂' }, { id: 's3', label: '風把砂丘吹著移動' },
+    { id: 'f1', label: '地震讓地面裂開' }, { id: 'f2', label: '土石流沖下山坡' }, { id: 'f3', label: '山崩' },
+  ],
+  zones: [ { id: 'slow', label: '慢慢改變（要很多年）', accepts: ['s1', 's2', 's3'] }, { id: 'fast', label: '一下子改變（幾分鐘內）', accepts: ['f1', 'f2', 'f3'] } ] });
+
+// ---- 1-3 地震示意圖 ----
+(function(){
+  let s = rect(0,0,420,170,'#e0f2fe');
+  s += rect(0,70,420,100,'#a16207');
+  s += `<polygon points="0,70 200,70 200,170 0,170" fill="#b45309"/><polygon points="205,60 420,60 420,170 205,170" fill="#92400e"/>`;
+  s += line(200,70,205,170,'#dc2626',4);
+  s += txt(100,120,'岩層','#fff',14) + txt(312,120,'岩層','#fff',14);
+  s += `<path d="M 150 40 L 190 40" stroke="#1f2937" stroke-width="3" marker-end="url(#ar)"/><path d="M 270 40 L 230 40" stroke="#1f2937" stroke-width="3" marker-end="url(#ar)"/>`;
+  s += '<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1f2937"/></marker></defs>';
+  s += txt(210,25,'岩層互相推擠','#1f2937',13) + txt(210,160,'受不了 → 斷裂、錯動 → 地震','#fecaca',13);
+  document.getElementById('svgQuake').innerHTML = svg(420,170,s);
+})();
+
+// ---- 1-3 地震避難模擬 ----
+const ROOM = {
+  desk: { ok: true, text: '✔ 安全！桌子擋得住掉下來的東西。記得用手護住頭和脖子，抓住桌腳，等搖晃停止。' },
+  window: { ok: false, text: '✘ 危險！玻璃可能震碎噴出來。離開窗邊，躲到桌子下。' },
+  shelf: { ok: false, text: '✘ 危險！書櫃會倒下來壓到人，書也會掉下來。快離開，躲到桌子下。' },
+  door: { ok: false, text: '✘ 不好！搖晃時跑動容易跌倒，走廊可能有東西掉落。先趴下掩護，等停了再聽指示疏散。' },
+  lift: { ok: false, text: '✘ 危險！地震時電梯可能停電，人會被困在裡面。絕對不要搭電梯。' },
+};
+let kidAt = 'mid';
+const KID_POS = { mid: [230,150], desk: [150,165], window: [400,110], shelf: [60,120], door: [320,175], lift: [455,175] };
+function drawRoom(){
+  let s = rect(0,0,500,220,'#fff7ed');
+  s += rect(0,190,500,30,'#d6d3d1');                                  // 地板
+  s += `<g class="spot" data-k="window">${rect(370,50,70,60,'#bae6fd','#0ea5e9',3)}${line(405,50,405,110,'#0ea5e9',2)}${txt(405,130,'窗戶','#0369a1',12)}</g>`;
+  s += `<g class="spot" data-k="shelf">${rect(30,60,60,130,'#c2410c','#7c2d12',2)}${[0,1,2,3].map(i=>rect(34,66+i*30,52,24,'#fdba74')).join('')}${txt(60,52,'書櫃','#7c2d12',12)}</g>`;
+  s += `<g class="spot" data-k="desk">${rect(110,120,120,10,'#92400e')}${rect(116,130,8,60,'#92400e')}${rect(216,130,8,60,'#92400e')}${txt(170,112,'堅固的桌子','#92400e',12)}</g>`;
+  s += `<g class="spot" data-k="door">${rect(295,90,50,100,'#fde68a','#a16207',2)}${txt(320,80,'門口','#a16207',12)}</g>`;
+  s += `<g class="spot" data-k="lift">${rect(430,90,50,100,'#e5e7eb','#6b7280',2)}${line(455,90,455,190,'#6b7280',2)}${txt(455,80,'電梯','#6b7280',12)}</g>`;
+  const [kx, ky] = KID_POS[kidAt];
+  const under = kidAt === 'desk';
+  s += `<g><circle cx="${kx}" cy="${ky-18}" r="9" fill="#fcd34d" stroke="#92400e"/>${rect(kx-7, ky-9, 14, under ? 14 : 24, '#3b82f6')}${txt(kx, ky+26, '小明', '#1f2937', 11)}</g>`;
+  document.getElementById('svgRoom').innerHTML = svg(500,220,s);
+  document.querySelectorAll('#svgRoom .spot').forEach(g => g.addEventListener('click', () => {
+    kidAt = g.dataset.k; drawRoom();
+    const r = ROOM[kidAt];
+    const box = document.getElementById('roomInfo'); box.innerHTML = r.text; box.style.color = r.ok ? '#166534' : '#991b1b';
+    toolLog('地震避難', r.ok);
+  }));
+}
+drawRoom();
+
+// ---- 1-3 避難包 ----
+dndGame({ box: 'dndBag', name: '避難包打包', poolLabel: '桌上的東西',
+  items: [
+    { id: 'b1', label: '瓶裝水' }, { id: 'b2', label: '餅乾、乾糧' }, { id: 'b3', label: '手電筒' }, { id: 'b4', label: '哨子' },
+    { id: 'b5', label: '收音機' }, { id: 'b6', label: '急救藥品、OK繃' }, { id: 'b7', label: '保暖衣物、雨衣' }, { id: 'b8', label: '證件影本' },
+    { id: 'x1', label: '遊戲機' }, { id: 'x2', label: '一箱漫畫' }, { id: 'x3', label: '大西瓜' }, { id: 'x4', label: '玻璃花瓶' },
+  ],
+  zones: [ { id: 'bag', label: '🎒 放進避難包', accepts: ['b1','b2','b3','b4','b5','b6','b7','b8'] }, { id: 'no', label: '不用帶', accepts: ['x1','x2','x3','x4'] } ],
+  hint: '想一想：這樣東西能幫我活下來、或讓別人找到我嗎？' });
+
+</script>
+</body>
+</html>

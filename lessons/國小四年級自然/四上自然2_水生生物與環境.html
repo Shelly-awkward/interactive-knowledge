@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小四自然｜四上 第2單元 水生生物與環境</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#0e7490; --accent-soft:#cffafe;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#0e7490,#22d3ee); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  .dnd-pool,.dnd-zone{border:2px dashed var(--border); border-radius:12px; padding:10px 12px; min-height:64px; margin:8px 0; background:#fff; transition:.15s;}
+  .dnd-pool{background:#f9fafb;}
+  .dnd-zone.over,.dnd-pool.over{border-color:var(--blue); background:#eff6ff;}
+  .dnd-zones{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px;}
+  .dnd-zone-title{font-weight:bold; margin-bottom:6px; color:var(--accent);}
+  .dnd-card{display:inline-block; background:#fff; border:1.5px solid var(--border); border-radius:99px; padding:6px 14px; margin:4px 6px 4px 0;
+    cursor:grab; user-select:none; touch-action:none; font-size:.95rem; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .1s;}
+  .dnd-card:hover{border-color:var(--blue);}
+  .dnd-card.sel{border-color:var(--blue); background:#dbeafe; transform:scale(1.04);}
+  .dnd-card.drag{position:fixed; z-index:99; pointer-events:none; opacity:.9; transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.2);}
+  .dnd-card.ok{border-color:var(--green); background:var(--green-soft);}
+  .dnd-card.no{border-color:var(--red); background:var(--red-soft);}
+  .dnd-bar{margin-top:8px;}
+  .dnd-bar button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem; margin-right:6px;}
+  .dnd-bar button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .dnd-msg{font-weight:bold; margin-left:8px;}
+  .dnd-msg.ok{color:#166534;} .dnd-msg.no{color:#991b1b;}
+  .dnd-hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .spot{cursor:pointer;} .spot:hover{filter:brightness(1.08);}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; min-height:2.4em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國小四年級上學期 · 自然 第2單元</span>
+  <h1>水生生物與環境</h1>
+  <p>三個小節＋單元總測驗。水裡的動物和植物，身體都有特別的構造才能在水中生活；水域環境也需要我們保護。每一節都有拖曳配對：把構造配給動物、把植物放進池塘正確的位置、把做法分成幫助或傷害水域。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">2-1 水生動物的適應</button>
+  <button data-t="s2">2-2 水生植物的適應</button>
+  <button data-t="s3">2-3 保護水域環境</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 2-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道水生動物用鰓在水中呼吸，用鰭、蹼、特別的腳在水中移動</li>
+      <li>說得出魚、青蛙、水黽、螃蟹各有什麼適合水中生活的構造</li>
+      <li>知道青蛙小時候和長大後呼吸的方式不一樣</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：在水裡要解決兩件事——呼吸、移動</h2>
+    <p>陸地上的動物用<b>肺</b>呼吸空氣，在水裡不能這樣。水生動物有自己的辦法：</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>問題</th><th>水生動物的辦法</th><th>例子</th></tr>
+        <tr><td class="name">怎麼呼吸</td><td>用<b>鰓</b>吸收水中的氧氣</td><td>魚、蝦、螃蟹、蝌蚪</td></tr>
+        <tr><td class="name">怎麼移動</td><td><b>鰭</b>划水、<b>蹼</b>划水、身體<b>流線形</b>減少阻力</td><td>魚的鰭、青蛙的蹼</td></tr>
+        <tr class="hi"><td class="name">怎麼在水面上</td><td>腳細長、有細毛，撐在水面不會沉</td><td>水黽</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 點一點：魚的身體</h2>
+    <div class="tool">
+      <div class="svgbox" id="svgFish"></div>
+      <div class="infobox" id="fishInfo">👆 點魚身上的部位（鰓、鰭、尾巴、鱗片、身體）</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：青蛙會「換」呼吸方式</h2>
+    <div class="formula">蝌蚪：住在水裡，用<b>鰓</b>呼吸、用尾巴游　→　青蛙：水陸都能去，用<b>肺和皮膚</b>呼吸、後腳有<b>蹼</b></div>
+    <div class="note">💡 所以青蛙的皮膚要一直保持濕濕的，太乾就沒辦法呼吸。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：這是誰的本領？</h2>
+    <p>把每一張「構造或本領」的卡片，拖到正確的動物下面。有的卡片可能不只一種動物有喔！</p>
+    <div id="dndAnimal"></div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜魚離開水為什麼很快就會死？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 魚用鰓呼吸，鰓要泡在水裡才能吸到氧氣。</p>
+        <p class="step"><b>②</b> 離開水，鰓會黏在一起、變乾，就吸不到氧氣了。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜青蛙的後腳為什麼特別長、腳趾間有蹼？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 後腳長：可以用力蹬，跳得遠、游得快。</p>
+        <p class="step"><b>②</b> 蹼：像船槳一樣，划水面積大。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜水黽為什麼可以站在水面上不會沉？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 腳很細長，把身體重量分散開來。</p>
+        <p class="step"><b>②</b> 腳上有細毛，不會被水弄濕。</p>
+        <p class="step"><b>③</b> 所以牠能在水面上滑來滑去。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 魚在水中呼吸，用的是：</div>
+      <label><input type="radio" name="p1q1" value="A">鰓</label>
+      <label><input type="radio" name="p1q1" value="B">鼻子</label>
+      <label><input type="radio" name="p1q1" value="C">皮膚</label>
+      <label><input type="radio" name="p1q1" value="D">肺</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　鰓能從水中吸收氧氣。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 魚的身體是流線形，好處是：</div>
+      <label><input type="radio" name="p1q2" value="A">在水中游的時候阻力小</label>
+      <label><input type="radio" name="p1q2" value="B">可以在陸地上走</label>
+      <label><input type="radio" name="p1q2" value="C">可以飛</label>
+      <label><input type="radio" name="p1q2" value="D">比較好看</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　前尖後細的形狀最省力。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 蝌蚪用什麼呼吸？</div>
+      <label><input type="radio" name="p1q3" value="A">鰓</label>
+      <label><input type="radio" name="p1q3" value="B">腳</label>
+      <label><input type="radio" name="p1q3" value="C">肺</label>
+      <label><input type="radio" name="p1q3" value="D">翅膀</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　蝌蚪住在水裡，和魚一樣用鰓。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. 青蛙長大以後用什麼呼吸？</div>
+      <label><input type="radio" name="p1q4" value="A">只用尾巴</label>
+      <label><input type="radio" name="p1q4" value="B">只用鰓</label>
+      <label><input type="radio" name="p1q4" value="C">鰭</label>
+      <label><input type="radio" name="p1q4" value="D">肺和皮膚</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　所以皮膚要保持濕潤。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">5. 水黽能在水面上滑行，是因為：</div>
+      <label><input type="radio" name="p1q5" value="A">腳細長有細毛，不會沉</label>
+      <label><input type="radio" name="p1q5" value="B">有翅膀在飛</label>
+      <label><input type="radio" name="p1q5" value="C">有鰭</label>
+      <label><input type="radio" name="p1q5" value="D">會游泳</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　腳把重量分散，又不沾水。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>分得出挺水、浮葉、漂浮、沉水四種水生植物</li>
+      <li>說得出每一種植物住在池塘的哪個位置</li>
+      <li>知道它們身體上幫助浮起來或在水下生活的構造</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：四種水生植物，住在池塘的四個位置</h2>
+    <div class="svgbox" id="svgPond"></div>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>種類</th><th>住哪裡</th><th>特徵</th><th>例子</th></tr>
+        <tr><td class="name">挺水植物</td><td>岸邊淺水，根在泥裡</td><td>莖和葉<b>挺出</b>水面</td><td>荷花、香蒲、茭白筍</td></tr>
+        <tr><td class="name">浮葉植物</td><td>根固定在水底</td><td>葉子<b>平貼浮</b>在水面，葉柄長</td><td>睡蓮、菱角</td></tr>
+        <tr class="hi"><td class="name">漂浮植物</td><td>整株<b>漂</b>在水面，根不固定</td><td>身體裡有空氣，會隨水漂</td><td>布袋蓮、浮萍</td></tr>
+        <tr><td class="name">沉水植物</td><td>整株在水底下</td><td>葉子<b>細、薄、軟</b>，直接從水吸收養分</td><td>水蘊草、金魚藻</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 分辨技巧：先看<b>根有沒有固定在泥裡</b>，再看<b>葉子在水面上、水面、還是水面下</b>。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：它們怎麼做到的</h2>
+    <ul>
+      <li><b>布袋蓮</b>的葉柄胖胖的、裡面充滿空氣，像救生圈，所以能漂</li>
+      <li><b>睡蓮</b>的葉子大又平，葉柄很長，才能從水底一路伸到水面</li>
+      <li><b>荷花</b>的莖粗又硬，才能挺出水面不會倒</li>
+      <li><b>水蘊草</b>的葉子薄，泡在水裡就能直接吸收養分和氣體</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：把植物種回池塘</h2>
+    <p>把每一種植物拖到它應該生長的位置。</p>
+    <div id="dndPlant"></div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜一種植物的葉子平平地浮在水面，可是把它拉起來，發現根牢牢長在水底的泥裡。它是哪一種？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 葉子浮在水面，根固定在底：<b>浮葉植物</b>（例如睡蓮）。</p>
+        <p class="step"><b>②</b> 如果根沒有固定、整株可以撈起來，才是漂浮植物。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜布袋蓮長得很快，會把整個池塘蓋滿，對池塘裡的魚有什麼影響？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 水面被蓋住，陽光進不去，水裡的氧氣變少。</p>
+        <p class="step"><b>②</b> 魚會缺氧、其他水生植物也長不好。</p>
+        <p class="step"><b>③</b> 所以布袋蓮雖然漂亮，太多了會傷害池塘。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜水蘊草整株在水底，它怎麼呼吸、吸收養分？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 葉子很薄很細，泡在水裡就能直接吸收水中的氣體和養分。</p>
+        <p class="step"><b>②</b> 不需要伸出水面。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="D">
+      <div class="stem">1. 葉子和莖挺出水面，根在泥裡的是：</div>
+      <label><input type="radio" name="p2q1" value="A">浮葉植物</label>
+      <label><input type="radio" name="p2q1" value="B">沉水植物</label>
+      <label><input type="radio" name="p2q1" value="C">漂浮植物</label>
+      <label><input type="radio" name="p2q1" value="D">挺水植物</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　「挺」出水面。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. 睡蓮是哪一種水生植物？</div>
+      <label><input type="radio" name="p2q2" value="A">沉水</label>
+      <label><input type="radio" name="p2q2" value="B">浮葉</label>
+      <label><input type="radio" name="p2q2" value="C">漂浮</label>
+      <label><input type="radio" name="p2q2" value="D">挺水</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　葉子平浮在水面、根固定在底。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 布袋蓮能漂在水面上，是因為：</div>
+      <label><input type="radio" name="p2q3" value="A">葉子很重</label>
+      <label><input type="radio" name="p2q3" value="B">葉柄裡有空氣</label>
+      <label><input type="radio" name="p2q3" value="C">會游泳</label>
+      <label><input type="radio" name="p2q3" value="D">根很長</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　葉柄膨大、充滿空氣，像救生圈。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. 整株都在水面下的是：</div>
+      <label><input type="radio" name="p2q4" value="A">睡蓮</label>
+      <label><input type="radio" name="p2q4" value="B">布袋蓮</label>
+      <label><input type="radio" name="p2q4" value="C">水蘊草</label>
+      <label><input type="radio" name="p2q4" value="D">荷花</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　水蘊草是沉水植物。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. 要分辨漂浮植物和浮葉植物，最好看：</div>
+      <label><input type="radio" name="p2q5" value="A">花的顏色</label>
+      <label><input type="radio" name="p2q5" value="B">根有沒有固定在泥裡</label>
+      <label><input type="radio" name="p2q5" value="C">顏色</label>
+      <label><input type="radio" name="p2q5" value="D">葉子大小</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　漂浮植物的根不固定，整株會隨水漂。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道什麼會汙染水域：垃圾、廢水、清潔劑、農藥</li>
+      <li>知道外來種放到野外會傷害本土生物，所以不能隨便放生</li>
+      <li>分得出哪些做法在保護水域、哪些在傷害水域</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：水域是很多生物的家</h2>
+    <p>池塘、溪流、湖泊、海洋裡住著很多動植物。水髒了、被蓋住了、被外來的生物佔領了，牠們就活不下去。</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>傷害水域的事</th><th>會發生什麼</th></tr>
+        <tr><td class="name">垃圾丟進水裡</td><td>動物誤食、纏住，水變臭</td></tr>
+        <tr><td class="name">家庭廢水、清潔劑、工廠廢水</td><td>水質變差，魚蝦死亡</td></tr>
+        <tr><td class="name">農藥、肥料流進水裡</td><td>毒死生物，或讓水裡的藻類長太多、搶走氧氣</td></tr>
+        <tr class="hi"><td class="name">把外來種放到野外</td><td>牠們沒有天敵、長得快，把本土生物吃光或擠走</td></tr>
+        <tr><td class="name">河岸全部鋪水泥</td><td>植物長不出來，動物沒地方躲</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：認識外來種</h2>
+    <p><b>外來種</b>：本來不住在台灣，被人帶進來的生物。放到野外以後很難抓回來，會傷害<b>本土種</b>（台灣原本就有的生物）。</p>
+    <div class="formula">福壽螺（吃光水稻和水草）、吳郭魚、美國螯蝦、巴西龜（紅耳泡龜）</div>
+    <div class="warn">⚠️ 家裡養的魚、烏龜不想養了，<b>不可以放到池塘或河裡</b>。要送給願意養的人，或問水族館、動保單位。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：外來種還是本土種？</h2>
+    <div id="dndSpecies"></div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：這樣做，是幫助還是傷害？</h2>
+    <p>把每一個做法拖到正確的那一邊。放好以後看看下面的「水域健康計」。</p>
+    <div id="dndProtect"></div>
+    <div class="tool">
+      <div>水域健康計</div>
+      <div style="background:#e5e7eb;border-radius:99px;height:22px;overflow:hidden"><div id="healthBar" style="height:100%;width:50%;background:linear-gradient(90deg,#f87171,#facc15,#4ade80);transition:.4s"></div></div>
+      <div class="out" id="healthOut">按「檢查」之後，這裡會告訴你水域有多健康。</div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜小華家的巴西龜不想養了，媽媽說放到公園池塘讓牠自由。這樣好嗎？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 巴西龜是外來種，在池塘裡沒有天敵，會吃掉小魚、和本土烏龜搶地盤。</p>
+        <p class="step"><b>②</b> 答案：<b>不好</b>。應該送給願意養的人，或問動保單位怎麼處理。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜爸爸在河邊洗車，泡泡水流進河裡。有什麼問題？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 清潔劑會汙染水質，魚蝦會死。</p>
+        <p class="step"><b>②</b> 應該在洗車場或家裡洗，讓廢水進入下水道處理。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜我們可以為溪流做什麼？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 把自己的垃圾帶走、參加淨溪活動。</p>
+        <p class="step"><b>②</b> 不亂放生、不用太多清潔劑。</p>
+        <p class="step"><b>③</b> 看到有人倒廢水，告訴大人或通報環保單位。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 下面哪一種是<b>外來種</b>？</div>
+      <label><input type="radio" name="p3q1" value="A">福壽螺</label>
+      <label><input type="radio" name="p3q1" value="B">台灣萍蓬草</label>
+      <label><input type="radio" name="p3q1" value="C">蓋斑鬥魚</label>
+      <label><input type="radio" name="p3q1" value="D">澤蛙</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　福壽螺是從國外帶進來的，會吃光水稻。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. 家裡的魚不想養了，正確的做法是：</div>
+      <label><input type="radio" name="p3q2" value="A">丟進馬桶</label>
+      <label><input type="radio" name="p3q2" value="B">送給願意養的人或問水族館</label>
+      <label><input type="radio" name="p3q2" value="C">放到公園池塘</label>
+      <label><input type="radio" name="p3q2" value="D">放到河裡</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　放到野外可能變成外來種問題。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. 洗車的泡泡水直接流進河裡，會：</div>
+      <label><input type="radio" name="p3q3" value="A">讓水變乾淨</label>
+      <label><input type="radio" name="p3q3" value="B">沒有影響</label>
+      <label><input type="radio" name="p3q3" value="C">汙染水質</label>
+      <label><input type="radio" name="p3q3" value="D">讓魚長得更好</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　清潔劑會傷害水中生物。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. 外來種為什麼會傷害本土生物？</div>
+      <label><input type="radio" name="p3q4" value="A">牠們不吃東西</label>
+      <label><input type="radio" name="p3q4" value="B">牠們會飛</label>
+      <label><input type="radio" name="p3q4" value="C">牠們比較漂亮</label>
+      <label><input type="radio" name="p3q4" value="D">牠們沒有天敵、長得快，把本土生物擠走</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　沒有天敵就會越來越多。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. 下面哪一個是在<b>保護</b>水域？</div>
+      <label><input type="radio" name="p3q5" value="A">放生外來種</label>
+      <label><input type="radio" name="p3q5" value="B">把垃圾帶走</label>
+      <label><input type="radio" name="p3q5" value="C">餵池塘的魚吃很多麵包</label>
+      <label><input type="radio" name="p3q5" value="D">把河岸全部鋪水泥</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　餵太多食物會讓水質變差；水泥河岸讓生物沒地方住。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="A">
+      <div class="stem">1. 魚用什麼在水中呼吸？</div>
+      <label><input type="radio" name="qz1" value="A">鰓</label>
+      <label><input type="radio" name="qz1" value="B">肺</label>
+      <label><input type="radio" name="qz1" value="C">皮膚</label>
+      <label><input type="radio" name="qz1" value="D">鼻子</label>
+      <div class="fb" data-exp="　鰓吸收水中的氧氣。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">2. 青蛙的後腳趾間有蹼，是為了：</div>
+      <label><input type="radio" name="qz2" value="A">划水</label>
+      <label><input type="radio" name="qz2" value="B">走路</label>
+      <label><input type="radio" name="qz2" value="C">抓東西</label>
+      <label><input type="radio" name="qz2" value="D">呼吸</label>
+      <div class="fb" data-exp="　蹼像船槳。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">3. 蝌蚪變成青蛙以後，呼吸方式從鰓變成：</div>
+      <label><input type="radio" name="qz3" value="A">尾巴</label>
+      <label><input type="radio" name="qz3" value="B">翅膀</label>
+      <label><input type="radio" name="qz3" value="C">鰭</label>
+      <label><input type="radio" name="qz3" value="D">肺和皮膚</label>
+      <div class="fb" data-exp="　所以青蛙皮膚要保持濕潤。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">4. 水黽在水面滑行靠的是：</div>
+      <label><input type="radio" name="qz4" value="A">鰭</label>
+      <label><input type="radio" name="qz4" value="B">細長有毛的腳</label>
+      <label><input type="radio" name="qz4" value="C">蹼</label>
+      <label><input type="radio" name="qz4" value="D">翅膀</label>
+      <div class="fb" data-exp="　腳把重量分散、不沾水。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 荷花是哪一種水生植物？</div>
+      <label><input type="radio" name="qz5" value="A">漂浮</label>
+      <label><input type="radio" name="qz5" value="B">挺水</label>
+      <label><input type="radio" name="qz5" value="C">浮葉</label>
+      <label><input type="radio" name="qz5" value="D">沉水</label>
+      <div class="fb" data-exp="　莖葉挺出水面，根在泥裡。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">6. 整株漂在水面、根沒有固定的是：</div>
+      <label><input type="radio" name="qz6" value="A">睡蓮</label>
+      <label><input type="radio" name="qz6" value="B">水蘊草</label>
+      <label><input type="radio" name="qz6" value="C">布袋蓮</label>
+      <label><input type="radio" name="qz6" value="D">荷花</label>
+      <div class="fb" data-exp="　布袋蓮的葉柄有空氣，整株會漂。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">7. 葉子細薄、整株在水下的是：</div>
+      <label><input type="radio" name="qz7" value="A">挺水植物</label>
+      <label><input type="radio" name="qz7" value="B">漂浮植物</label>
+      <label><input type="radio" name="qz7" value="C">沉水植物</label>
+      <label><input type="radio" name="qz7" value="D">浮葉植物</label>
+      <div class="fb" data-exp="　例如水蘊草、金魚藻。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">8. 下面哪一種是<b>本土種</b>？</div>
+      <label><input type="radio" name="qz8" value="A">福壽螺</label>
+      <label><input type="radio" name="qz8" value="B">蓋斑鬥魚</label>
+      <label><input type="radio" name="qz8" value="C">吳郭魚</label>
+      <label><input type="radio" name="qz8" value="D">巴西龜</label>
+      <div class="fb" data-exp="　蓋斑鬥魚是台灣原本就有的魚。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">9. 下面哪一件事會<b>傷害</b>水域？</div>
+      <label><input type="radio" name="qz9" value="A">通報有人倒廢水</label>
+      <label><input type="radio" name="qz9" value="B">把家裡的烏龜放到池塘</label>
+      <label><input type="radio" name="qz9" value="C">把垃圾帶走</label>
+      <label><input type="radio" name="qz9" value="D">參加淨溪</label>
+      <div class="fb" data-exp="　隨意放生會造成外來種問題。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">10. 農藥、肥料流進池塘，可能讓：</div>
+      <label><input type="radio" name="qz10" value="A">魚變多</label>
+      <label><input type="radio" name="qz10" value="B">水變清</label>
+      <label><input type="radio" name="qz10" value="C">藻類長太多、水裡氧氣變少</label>
+      <label><input type="radio" name="qz10" value="D">植物都不見</label>
+      <div class="fb" data-exp="　這叫做水質變差、優養化。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 小四自然 · 四上第 2 單元「水生生物與環境」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "四上自然2 水生生物與環境";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 拖曳配對（滑鼠、觸控都可以；也可以先點卡片、再點要放的區域）=====
+function dndGame(opts){
+  const box = document.getElementById(opts.box);
+  const placed = {};                       // 卡片 id → 放在哪一區
+  let selected = null, dragging = null;
+  const el = (tag, cls) => { const e = document.createElement(tag); if(cls) e.className = cls; return e; };
+  function render(){
+    box.innerHTML = '';
+    const pool = el('div', 'dnd-pool'); pool.dataset.zone = '__pool__';
+    pool.innerHTML = `<div class="dnd-zone-title" style="color:#6b7280">${opts.poolLabel || '卡片區（拖到下面正確的位置）'}</div>`;
+    const zonesWrap = el('div', 'dnd-zones');
+    const zoneEls = {};
+    opts.zones.forEach(z => {
+      const ze = el('div', 'dnd-zone'); ze.dataset.zone = z.id;
+      ze.innerHTML = `<div class="dnd-zone-title">${z.label}</div>`;
+      zonesWrap.appendChild(ze); zoneEls[z.id] = ze;
+    });
+    opts.items.forEach(it => {
+      const c = el('div', 'dnd-card'); c.dataset.item = it.id; c.textContent = it.label;
+      (placed[it.id] && zoneEls[placed[it.id]] ? zoneEls[placed[it.id]] : pool).appendChild(c);
+      attach(c);
+    });
+    const bar = el('div', 'row dnd-bar');
+    bar.innerHTML = `<button class="dnd-check">檢查</button><button class="ghost dnd-reset">重來</button><span class="dnd-msg"></span>`;
+    box.append(pool, zonesWrap, bar);
+    if(opts.hint){ const h = el('div', 'dnd-hint'); h.textContent = opts.hint; box.appendChild(h); }
+    bar.querySelector('.dnd-check').addEventListener('click', check);
+    bar.querySelector('.dnd-reset').addEventListener('click', () => { Object.keys(placed).forEach(k => delete placed[k]); selected = null; render(); });
+    [pool, ...Object.values(zoneEls)].forEach(z => z.addEventListener('click', () => {
+      if(!selected) return;
+      if(z.dataset.zone === '__pool__') delete placed[selected]; else placed[selected] = z.dataset.zone;
+      selected = null; render();
+    }));
+  }
+  function zoneAt(x, y){
+    const t = document.elementFromPoint(x, y);
+    return t ? t.closest('.dnd-zone, .dnd-pool') : null;
+  }
+  function attach(card){
+    let sx = 0, sy = 0, moved = false, ghost = null;
+    card.addEventListener('pointerdown', e => {
+      sx = e.clientX; sy = e.clientY; moved = false; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e => {
+      if(!(e.buttons & 1)) return;
+      if(!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 6) return;
+      if(!moved){
+        moved = true; ghost = card.cloneNode(true); ghost.classList.add('drag');
+        document.body.appendChild(ghost); card.style.opacity = '.35';
+      }
+      ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + 'px'; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + 'px';
+      box.querySelectorAll('.over').forEach(z => z.classList.remove('over'));
+      const z = zoneAt(e.clientX, e.clientY); if(z && box.contains(z)) z.classList.add('over');
+    });
+    card.addEventListener('pointerup', e => {
+      if(moved){
+        const z = zoneAt(e.clientX, e.clientY);
+        if(ghost) ghost.remove(); card.style.opacity = '';
+        if(z && box.contains(z)){ if(z.dataset.zone === '__pool__') delete placed[card.dataset.item]; else placed[card.dataset.item] = z.dataset.zone; }
+        selected = null; render();
+      }else{
+        selected = (selected === card.dataset.item) ? null : card.dataset.item;
+        box.querySelectorAll('.dnd-card').forEach(c => c.classList.toggle('sel', c.dataset.item === selected));
+      }
+    });
+    card.addEventListener('pointercancel', () => { if(ghost) ghost.remove(); card.style.opacity = ''; moved = false; });
+  }
+  function check(){
+    let ok = 0, total = opts.items.length, unplaced = 0;
+    box.querySelectorAll('.dnd-card').forEach(c => {
+      const id = c.dataset.item, z = placed[id];
+      const zone = opts.zones.find(zz => zz.id === z);
+      c.classList.remove('ok', 'no');
+      if(!zone){ unplaced++; c.classList.add('no'); return; }
+      if(zone.accepts.includes(id)){ ok++; c.classList.add('ok'); } else c.classList.add('no');
+    });
+    const msg = box.querySelector('.dnd-msg');
+    if(ok === total){ msg.className = 'dnd-msg ok'; msg.textContent = '✔ 全部正確！'; }
+    else { msg.className = 'dnd-msg no'; msg.textContent = `✘ 對了 ${ok} / ${total}${unplaced ? '（還有 ' + unplaced + ' 張沒放）' : ''}，紅色的再想想。`; }
+    toolLog(opts.name || opts.box, ok === total);
+    if(opts.onResult) opts.onResult(ok, total, placed);
+  }
+  render();
+  return { placed };
+}
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// ---- 2-1 魚的身體 ----
+const FISH = {
+  gill: '<b>鰓</b>：在頭的兩側、鰓蓋下面。水從嘴巴進去、從鰓流出來，鰓就把水裡的氧氣吸走。',
+  fin: '<b>鰭</b>：像船槳，幫魚保持平衡、轉彎、前進。背上、肚子下、身體兩側都有。',
+  tail: '<b>尾鰭</b>：左右擺動，是魚往前游最主要的動力。',
+  scale: '<b>鱗片</b>：一片一片蓋在身上保護身體，外面還有黏液，游起來更滑順。',
+  body: '<b>流線形身體</b>：前面尖、中間胖、後面細，在水裡阻力最小，游起來省力。',
+};
+(function(){
+  let s = rect(0,0,460,220,'#ecfeff');
+  s += `<g class="spot" data-k="body"><ellipse cx="220" cy="120" rx="150" ry="55" fill="#67e8f9" stroke="#0e7490" stroke-width="3"/></g>`;
+  s += `<g class="spot" data-k="tail"><polygon points="360,120 430,70 420,120 430,170" fill="#22d3ee" stroke="#0e7490" stroke-width="3"/>${txt(415,195,'尾鰭','#0e7490',12)}</g>`;
+  s += `<g class="spot" data-k="fin"><polygon points="190,66 240,30 280,66" fill="#22d3ee" stroke="#0e7490" stroke-width="3"/><polygon points="200,174 230,205 260,174" fill="#22d3ee" stroke="#0e7490" stroke-width="3"/><polygon points="150,140 175,165 190,135" fill="#22d3ee" stroke="#0e7490" stroke-width="2"/>${txt(240,22,'鰭','#0e7490',12)}</g>`;
+  s += `<g class="spot" data-k="scale">${[0,1,2,3,4].map(i=>[0,1,2].map(j=>`<path d="M ${200+i*22+(j%2)*11} ${95+j*18} a 9 9 0 0 0 18 0" fill="none" stroke="#0e7490" stroke-width="1.5"/>`).join('')).join('')}${txt(255,130,'鱗片','#0e7490',12)}</g>`;
+  s += `<g class="spot" data-k="gill"><path d="M 118 90 Q 100 120 118 150" fill="none" stroke="#dc2626" stroke-width="4"/>${txt(112,170,'鰓','#dc2626',13)}</g>`;
+  s += `<circle cx="95" cy="105" r="7" fill="#fff" stroke="#0e7490" stroke-width="2"/><circle cx="97" cy="105" r="3" fill="#1f2937"/>`;
+  s += txt(220,215,'👆 點各部位','#6b7280',11);
+  document.getElementById('svgFish').innerHTML = svg(460,220,s);
+  document.querySelectorAll('#svgFish .spot').forEach(g => g.addEventListener('click', () => { document.getElementById('fishInfo').innerHTML = FISH[g.dataset.k]; }));
+})();
+
+// ---- 2-1 動物本領配對 ----
+dndGame({ box: 'dndAnimal', name: '動物構造配對', poolLabel: '構造與本領',
+  items: [
+    { id: 'a1', label: '用鰓呼吸' }, { id: 'a2', label: '有鰭幫忙游' }, { id: 'a3', label: '身體流線形' },
+    { id: 'a4', label: '後腳有蹼' }, { id: 'a5', label: '小時候用鰓、長大用肺和皮膚' },
+    { id: 'a6', label: '腳細長有毛，在水面滑行' }, { id: 'a7', label: '硬殼保護，腳能在水底爬' },
+  ],
+  zones: [
+    { id: 'fish', label: '🐟 魚', accepts: ['a1', 'a2', 'a3'] }, { id: 'frog', label: '🐸 青蛙', accepts: ['a4', 'a5'] },
+    { id: 'strider', label: '水黽', accepts: ['a6'] }, { id: 'crab', label: '🦀 螃蟹', accepts: ['a7', 'a1'] },
+  ],
+  hint: '「用鰓呼吸」放魚或螃蟹都算對。' });
+
+// ---- 2-2 池塘剖面 ----
+(function(){
+  let s = rect(0,0,520,230,'#e0f2fe');
+  s += `<path d="M 0 90 L 520 90 L 520 230 L 0 230 Z" fill="#7dd3fc"/>`;            // 水
+  s += `<path d="M 0 90 L 0 60 L 60 70 L 90 90 Z" fill="#92400e"/>`;                // 岸
+  s += `<path d="M 0 200 Q 260 250 520 200 L 520 230 L 0 230 Z" fill="#78350f"/>`;  // 泥底
+  // 挺水（荷花）
+  s += line(70,200,70,60,'#15803d',4) + `<ellipse cx="70" cy="55" rx="22" ry="10" fill="#4ade80" stroke="#15803d"/>` + txt(70,40,'挺水：荷花','#15803d',12);
+  // 浮葉（睡蓮）
+  s += `<path d="M 180 205 Q 170 150 180 92" fill="none" stroke="#15803d" stroke-width="3"/>` + `<ellipse cx="180" cy="90" rx="26" ry="7" fill="#4ade80" stroke="#15803d"/>` + txt(180,75,'浮葉：睡蓮','#15803d',12);
+  // 漂浮（布袋蓮）
+  s += `<ellipse cx="310" cy="88" rx="22" ry="8" fill="#86efac" stroke="#15803d"/><rect x="300" y="70" width="20" height="16" rx="8" fill="#86efac" stroke="#15803d"/>` + [0,1,2].map(i=>line(302+i*8,96,298+i*8,120,'#15803d',2)).join('') + txt(310,60,'漂浮：布袋蓮','#15803d',12);
+  // 沉水（水蘊草）
+  s += [0,1,2].map(i=>`<path d="M ${430+i*16} 205 Q ${425+i*16} 160 ${435+i*16} 120" fill="none" stroke="#16a34a" stroke-width="3"/>`).join('') + txt(445,110,'沉水：水蘊草','#15803d',12);
+  s += txt(30,110,'水面','#0369a1',11,'start');
+  document.getElementById('svgPond').innerHTML = svg(520,230,s);
+})();
+
+// ---- 2-2 植物歸位 ----
+dndGame({ box: 'dndPlant', name: '水生植物歸位', poolLabel: '植物卡片',
+  items: [
+    { id: 'p1', label: '荷花' }, { id: 'p2', label: '香蒲' }, { id: 'p3', label: '睡蓮' }, { id: 'p4', label: '菱角' },
+    { id: 'p5', label: '布袋蓮' }, { id: 'p6', label: '浮萍' }, { id: 'p7', label: '水蘊草' }, { id: 'p8', label: '金魚藻' },
+  ],
+  zones: [
+    { id: 'em', label: '挺水植物區（岸邊，莖葉挺出水面）', accepts: ['p1', 'p2'] },
+    { id: 'fl', label: '浮葉植物區（葉浮水面，根在底）', accepts: ['p3', 'p4'] },
+    { id: 'fr', label: '漂浮植物區（整株漂著，根不固定）', accepts: ['p5', 'p6'] },
+    { id: 'su', label: '沉水植物區（整株在水下）', accepts: ['p7', 'p8'] },
+  ] });
+
+// ---- 2-3 外來種／本土種 ----
+dndGame({ box: 'dndSpecies', name: '外來種本土種', poolLabel: '生物卡片',
+  items: [
+    { id: 'i1', label: '福壽螺' }, { id: 'i2', label: '吳郭魚' }, { id: 'i3', label: '美國螯蝦' }, { id: 'i4', label: '巴西龜' },
+    { id: 'n1', label: '蓋斑鬥魚' }, { id: 'n2', label: '台灣萍蓬草' }, { id: 'n3', label: '澤蛙' }, { id: 'n4', label: '田螺' },
+  ],
+  zones: [ { id: 'alien', label: '外來種（被人帶進台灣的）', accepts: ['i1','i2','i3','i4'] }, { id: 'native', label: '本土種（台灣原本就有的）', accepts: ['n1','n2','n3','n4'] } ] });
+
+// ---- 2-3 幫助或傷害 ＋ 水域健康計 ----
+const GOOD = ['h1','h2','h3','h4','h5'], BAD = ['w1','w2','w3','w4','w5'];
+dndGame({ box: 'dndProtect', name: '保護水域做法', poolLabel: '做法卡片',
+  items: [
+    { id: 'h1', label: '把自己的垃圾帶走' }, { id: 'h2', label: '參加淨溪、淨灘' }, { id: 'h3', label: '少用清潔劑' },
+    { id: 'h4', label: '不想養的魚龜送給別人，不放生' }, { id: 'h5', label: '看到倒廢水就通報' },
+    { id: 'w1', label: '洗車水直接流進河裡' }, { id: 'w2', label: '把家裡的巴西龜放到池塘' }, { id: 'w3', label: '餵池塘的魚一大袋麵包' },
+    { id: 'w4', label: '農藥噴很多，下雨流進水裡' }, { id: 'w5', label: '把河岸全部鋪成水泥' },
+  ],
+  zones: [ { id: 'good', label: '👍 幫助水域', accepts: GOOD }, { id: 'bad', label: '👎 傷害水域', accepts: BAD } ],
+  onResult: (ok, total, placed) => {
+    // 健康度：放對「幫助」加分、放錯（把傷害當幫助）扣分
+    let score = 50;
+    GOOD.forEach(id => { if(placed[id] === 'good') score += 8; });
+    BAD.forEach(id => { if(placed[id] === 'good') score -= 10; else if(placed[id] === 'bad') score += 2; });
+    score = Math.max(0, Math.min(100, score));
+    document.getElementById('healthBar').style.width = score + '%';
+    document.getElementById('healthOut').textContent = score >= 90 ? `水域健康度 ${score}：清澈見底，魚蝦青蛙都回來了！` :
+      score >= 60 ? `水域健康度 ${score}：還不錯，再檢查一下紅色的卡片。` : `水域健康度 ${score}：水變髒了，有些「傷害」被當成「幫助」了，再想想。`;
+  } });
+
+</script>
+</body>
+</html>
