@@ -54,7 +54,7 @@
   pre.vert .c{color:var(--accent); font-weight:bold;}
   pre.vert .r{color:var(--red); font-weight:bold;}
   pre.vert .g{color:var(--sub);}
-  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px;}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
 
   details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
   details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
@@ -155,7 +155,7 @@
   <div class="card">
     <h2>📖 觀念 3：商要寫在哪一位</h2>
     <p>算 <span class="num">240 ÷ 30</span>，商是 8，只有一位數，所以寫在<b>個位</b>：</p>
-    <div class="svgbox"><pre class="vert">           8
+    <div class="svgbox"><pre class="vert">          8
 3 0 <span class='dvd'> 2 4 0</span>
       2 4 0
       ─────
@@ -283,7 +283,7 @@
   <div class="card">
     <h2>📖 觀念 3：商是兩位數的直式</h2>
     <p>算 <span class="num">375 ÷ 25</span>：</p>
-    <div class="svgbox"><pre class="vert">         1 5
+    <div class="svgbox"><pre class="vert">        1 5
 2 5 <span class='dvd'> 3 7 5</span>
       2 5      <span class='g'>← 37 裡有 1 個 25，商的十位寫 1</span>
       ────
