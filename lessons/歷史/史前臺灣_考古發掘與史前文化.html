@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>臺灣史前文化｜考古發掘與史前文化</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#7c2d12; --accent-soft:#fef3c7;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#7c2d12,#c2410c); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  .dnd-pool,.dnd-zone{border:2px dashed var(--border); border-radius:12px; padding:10px 12px; min-height:64px; margin:8px 0; background:#fff; transition:.15s;}
+  .dnd-pool{background:#f9fafb;}
+  .dnd-zone.over,.dnd-pool.over{border-color:var(--blue); background:#eff6ff;}
+  .dnd-zones{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px;}
+  .dnd-zone-title{font-weight:bold; margin-bottom:6px; color:var(--accent);}
+  .dnd-card{display:inline-block; background:#fff; border:1.5px solid var(--border); border-radius:99px; padding:6px 14px; margin:4px 6px 4px 0;
+    cursor:grab; user-select:none; touch-action:none; font-size:.95rem; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .1s;}
+  .dnd-card:hover{border-color:var(--blue);}
+  .dnd-card.sel{border-color:var(--blue); background:#dbeafe; transform:scale(1.04);}
+  .dnd-card.drag{position:fixed; z-index:99; pointer-events:none; opacity:.9; transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.2);}
+  .dnd-card.ok{border-color:var(--green); background:var(--green-soft);}
+  .dnd-card.no{border-color:var(--red); background:var(--red-soft);}
+  .dnd-bar{margin-top:8px;}
+  .dnd-bar button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem; margin-right:6px;}
+  .dnd-bar button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .dnd-msg{font-weight:bold; margin-left:8px;}
+  .dnd-msg.ok{color:#166534;} .dnd-msg.no{color:#991b1b;}
+  .dnd-hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .spot{cursor:pointer;} .spot:hover{filter:brightness(1.08);}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; min-height:2.4em;}
+
+  .flip-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px;}
+  .flip{perspective:800px; cursor:pointer; height:120px;}
+  .flip .inner{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+  .flip.on .inner{transform:rotateY(180deg);}
+  .flip .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:12px; padding:12px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:.95rem; line-height:1.5;}
+  .flip .front{background:#fff; border:2px solid var(--accent); color:var(--accent); font-weight:bold;}
+  .flip .back{background:var(--accent); color:#fff; transform:rotateY(180deg);}
+  .era-tag{display:inline-block; border-radius:99px; padding:2px 10px; font-size:.85rem; color:#fff; margin-right:4px;}
+  .era-old{background:#7e22ce;} .era-new{background:#15803d;} .era-metal{background:#c2410c;}
+  .mapwrap{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;}
+  .mapwrap .svgbox{margin:0; flex:0 0 auto;}
+  .mapwrap .side{flex:1 1 220px;}
+  .site{cursor:pointer;} .site:hover circle{stroke-width:4;}
+  .site.hit circle{animation:pulse .6s ease 2;}
+  @keyframes pulse{0%{r:7} 50%{r:13} 100%{r:7}}
+  .dig-btns button{margin-right:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 臺灣的歷史（上） · 第1章 1-1</span>
+  <h1>考古發掘與史前文化</h1>
+  <p>三個小節＋總測驗。史前臺灣分成舊石器、新石器、金屬器三個時代。這份教材讓你「往下挖」文化層看時代怎麼疊、在地圖上找遺址、把文物和特色拖回正確的時代，最後用翻翻卡把重點記起來。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1 三個時代怎麼分</button>
+  <button data-t="s2">2 舊石器與新石器</button>
+  <button data-t="s3">3 金屬器時代與貿易</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 1-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道考古學家靠出土的遺物、遺跡了解史前人類的生活</li>
+      <li>說得出臺灣史前文化分成舊石器、新石器、金屬器三個時代，以及各自距今多久</li>
+      <li>知道文化層越下面越古老</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：史前時代沒有文字，靠「挖」來了解</h2>
+    <p><b>史前</b>就是「還沒有文字記錄」的時代。那時候的人沒留下書，但留下了用過的東西（<b>遺物</b>）和住過、埋葬的痕跡（<b>遺跡</b>）。考古學家把這些挖出來，推測當時的人怎麼生活。</p>
+    <div class="formula">依照史前人類使用器物的<b>種類</b>和<b>製作技術</b>，分成：舊石器時代 → 新石器時代 → 金屬器時代</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 動畫：往下挖，看文化層</h2>
+    <p>同一個地方，不同時代的人一層一層住過，形成<b>文化層</b>。越下面的層越早堆積，所以<b>越深越古老</b>。按「往下挖一層」看看每一層有什麼。</p>
+    <div class="tool">
+      <div class="svgbox" id="svgDig"></div>
+      <div class="row dig-btns"><button id="digDown">⛏️ 往下挖一層</button><button id="digReset" class="ghost">回到地面</button></div>
+      <div class="infobox" id="digInfo">現在在地面上，什麼都還看不到。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：三個時代一覽表</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>距今時間</th><th>分期</th><th>特色</th><th>代表文化</th></tr>
+        <tr><td>2 千 ～ 4 百年前</td><td class="name"><span class="era-tag era-metal">金屬器時代</span></td><td>鐵製工具、貿易頻繁</td><td>十三行文化</td></tr>
+        <tr><td>7 千 ～ 2 千年前</td><td class="name"><span class="era-tag era-new">新石器時代</span></td><td>磨製石器、農業出現、飼養家畜、燒製陶器</td><td>大坌坑文化、圓山文化、卑南文化</td></tr>
+        <tr><td>5 萬 ～ 5 千年前</td><td class="name"><span class="era-tag era-old">舊石器時代</span></td><td>已知用火、打製石器、採集漁獵</td><td>長濱文化</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 表格是從上往下、由近到遠排的，跟文化層一樣：<b>上面的比較新，下面的比較老</b>。注意舊石器和新石器有重疊的年代（7 千～5 千年前），因為不同地方進步的速度不一樣。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：把卡片放回正確的時代</h2>
+    <p>年代、特色、代表文化混在一起了，拖回它們所屬的時代。</p>
+    <div id="dndEra"></div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜挖到一層有鐵渣和玻璃珠，再往下一層有磨製的石斧和陶片。哪一層比較古老？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 文化層越下面越古老。</p>
+        <p class="step"><b>②</b> 鐵渣、玻璃珠是<b>金屬器時代</b>的東西；磨製石器、陶器是<b>新石器時代</b>的。</p>
+        <p class="step"><b>③</b> 答案：下面那層（新石器）比較古老，符合「越深越早」。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜為什麼用「器物的種類和製作技術」來分時代？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 史前沒有文字，能拿來比較的就是留下來的東西。</p>
+        <p class="step"><b>②</b> 石頭用「敲打」還是「磨」的、有沒有陶器、有沒有金屬，最能看出技術進步到哪裡。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜「距今 3000 年前」的臺灣是什麼時代？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 新石器時代是 7 千～2 千年前，3000 年前在這個範圍內。</p>
+        <p class="step"><b>②</b> 答案：<b>新石器時代</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 考古學家主要靠什麼了解史前人類的生活？</div>
+      <label><input type="radio" name="p1q1" value="A">照片</label>
+      <label><input type="radio" name="p1q1" value="B">出土的遺物和遺跡</label>
+      <label><input type="radio" name="p1q1" value="C">口耳相傳的故事</label>
+      <label><input type="radio" name="p1q1" value="D">古書</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　史前沒有文字，只能靠挖出來的東西。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. 臺灣史前文化分成三個時代，正確的先後順序是：</div>
+      <label><input type="radio" name="p1q2" value="A">金屬器 → 新石器 → 舊石器</label>
+      <label><input type="radio" name="p1q2" value="B">舊石器 → 新石器 → 金屬器</label>
+      <label><input type="radio" name="p1q2" value="C">舊石器 → 金屬器 → 新石器</label>
+      <label><input type="radio" name="p1q2" value="D">新石器 → 舊石器 → 金屬器</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　石頭敲打 → 石頭磨製 → 用金屬。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 文化層中，越下面的那一層：</div>
+      <label><input type="radio" name="p1q3" value="A">越古老</label>
+      <label><input type="radio" name="p1q3" value="B">跟上面一樣</label>
+      <label><input type="radio" name="p1q3" value="C">越新</label>
+      <label><input type="radio" name="p1q3" value="D">無法判斷</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　先住的人留下的東西被後來的蓋在下面。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. 金屬器時代距今大約：</div>
+      <label><input type="radio" name="p1q4" value="A">5 萬～5 千年前</label>
+      <label><input type="radio" name="p1q4" value="B">100 年前</label>
+      <label><input type="radio" name="p1q4" value="C">7 千～2 千年前</label>
+      <label><input type="radio" name="p1q4" value="D">2 千～4 百年前</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　最晚的一個時代。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. 「距今 6000 年前」有可能是哪個時代？</div>
+      <label><input type="radio" name="p1q5" value="A">金屬器</label>
+      <label><input type="radio" name="p1q5" value="B">舊石器或新石器都有可能</label>
+      <label><input type="radio" name="p1q5" value="C">只有新石器</label>
+      <label><input type="radio" name="p1q5" value="D">只有舊石器</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　舊石器到 5 千年前、新石器從 7 千年前開始，6000 年前兩者重疊。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出長濱文化在哪裡、人們怎麼生活</li>
+      <li>說得出新石器時代生活的四大改變，以及農業為什麼重要</li>
+      <li>認得大坌坑、圓山、卑南三個文化和它們的代表文物</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：舊石器時代——長濱文化</h2>
+    <p>臺灣目前發現<b>最早</b>的舊石器時代文化，在<b>臺東縣長濱鄉</b>，距今約 <b>5 萬～5 千年前</b>。</p>
+    <ul>
+      <li>已經<b>知道用火</b></li>
+      <li>用<b>打製</b>的石器（把石頭敲碎，用銳利的邊緣切割獵物）</li>
+      <li>靠<b>採集、漁獵</b>過活，完全仰賴大自然給什麼吃什麼</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：新石器時代——生活大改變</h2>
+    <p>距今約 <b>7 千～2 千年前</b>。人類的生活型態有四個重大改變：</p>
+    <div class="formula">① 磨製石器　② 開始農業　③ 飼養家畜　④ 燒製陶器</div>
+    <p>其中<b>農業</b>最重要：以前只能靠採集打獵，食物「有就有、沒有就沒有」；有了農業，人類可以<b>自己生產</b>食物。食物穩定了，人才有空發展文化。</p>
+    <div class="note">💡 為什麼種<b>稻米</b>？因為稻米的種子比較大、曬乾以後可以放很久，所以被當成主食。臺南科學園區的<b>南關里遺址</b>就挖到距今 5000 年前的炭化稻米。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：三個代表文化</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>文化</th><th>在哪裡</th><th>代表文物</th></tr>
+        <tr><td class="name">大坌坑文化</td><td>新北市八里區</td><td><b>繩紋陶片</b>（陶器上有繩子壓出來的花紋）</td></tr>
+        <tr><td class="name">圓山文化</td><td>臺北市</td><td><b>貝塚</b>：當時臺北盆地是湖泊，人們吃完貝肉把貝殼丟成一堆</td></tr>
+        <tr class="hi"><td class="name">卑南文化</td><td>臺東縣</td><td><b>石板棺</b>、<b>人獸形玉質耳飾</b></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 遺址地圖：先探索，再考考你</h2>
+    <div class="tool">
+      <div class="mapwrap">
+        <div class="svgbox" id="svgMap"></div>
+        <div class="side">
+          <div class="row"><button id="mapExplore" class="ghost">探索模式</button><button id="mapQuiz">考考你</button></div>
+          <div class="infobox" id="mapInfo">👆 點地圖上的圓點，看看是哪個遺址。</div>
+          <div class="hint">顏色：<span class="era-tag era-old">舊石器</span><span class="era-tag era-new">新石器</span><span class="era-tag era-metal">金屬器</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：文物是誰家的？</h2>
+    <p>把出土的文物拖到它所屬的遺址。</p>
+    <div id="dndRelic"></div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：他們怎麼過生活？</h2>
+    <p>把生活方式拖到正確的時代。</p>
+    <div id="dndLife"></div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜長濱文化的人怎麼取得食物？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 採集野果、打獵、捕魚，完全靠大自然。</p>
+        <p class="step"><b>②</b> 還不會種田，也不會養動物。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜圓山文化的貝塚說明了什麼？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 那時候臺北盆地是一個湖，人們常吃貝類。</p>
+        <p class="step"><b>②</b> 吃完的貝殼丟在一起，堆了很久就變成貝塚。</p>
+        <p class="step"><b>③</b> 考古學家從貝塚知道他們的食物和居住環境。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜農業出現以後，人類的生活為什麼會「更快速地發展文化」？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 食物可以自己生產，來源穩定。</p>
+        <p class="step"><b>②</b> 不用每天為了找食物奔波，就有時間做陶器、做裝飾、發展其他技術。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜卑南文化的人獸形玉質耳飾，說明當時的人會什麼？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 會把玉磨成精細的形狀（磨製技術）。</p>
+        <p class="step"><b>②</b> 有裝飾的需求，也有可能代表身分或信仰。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 長濱文化在哪裡？</div>
+      <label><input type="radio" name="p2q1" value="A">臺東縣長濱鄉</label>
+      <label><input type="radio" name="p2q1" value="B">臺南科學園區</label>
+      <label><input type="radio" name="p2q1" value="C">新北市八里區</label>
+      <label><input type="radio" name="p2q1" value="D">臺北市</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　臺東縣長濱鄉，臺灣最早的舊石器文化。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 下面哪一項<b>不是</b>舊石器時代的特色？</div>
+      <label><input type="radio" name="p2q2" value="A">打製石器</label>
+      <label><input type="radio" name="p2q2" value="B">已知用火</label>
+      <label><input type="radio" name="p2q2" value="C">燒製陶器</label>
+      <label><input type="radio" name="p2q2" value="D">採集漁獵</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　陶器是新石器時代才出現的。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">3. 新石器時代最重要的改變，讓人類可以自己生產食物的是：</div>
+      <label><input type="radio" name="p2q3" value="A">用火</label>
+      <label><input type="radio" name="p2q3" value="B">貿易</label>
+      <label><input type="radio" name="p2q3" value="C">磨製石器</label>
+      <label><input type="radio" name="p2q3" value="D">農業出現</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　從仰賴自然變成自主生產。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. 稻米被當成主食的原因是：</div>
+      <label><input type="radio" name="p2q4" value="A">很香</label>
+      <label><input type="radio" name="p2q4" value="B">種子大、曬乾可以放很久</label>
+      <label><input type="radio" name="p2q4" value="C">顏色漂亮</label>
+      <label><input type="radio" name="p2q4" value="D">長得快</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　能長期保存，食物才穩定。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">5. 繩紋陶片是哪個文化的代表？</div>
+      <label><input type="radio" name="p2q5" value="A">卑南文化</label>
+      <label><input type="radio" name="p2q5" value="B">長濱文化</label>
+      <label><input type="radio" name="p2q5" value="C">大坌坑文化</label>
+      <label><input type="radio" name="p2q5" value="D">十三行文化</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　大坌坑文化，新北市八里區。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">6. 石板棺和人獸形玉質耳飾出自：</div>
+      <label><input type="radio" name="p2q6" value="A">圓山文化</label>
+      <label><input type="radio" name="p2q6" value="B">卑南文化</label>
+      <label><input type="radio" name="p2q6" value="C">大坌坑文化</label>
+      <label><input type="radio" name="p2q6" value="D">長濱文化</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　卑南文化在臺東縣。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出十三行文化在哪裡、出土了什麼</li>
+      <li>知道玻璃珠、銅錢代表當時已經和外面貿易</li>
+      <li>知道金屬器、玻璃器取代了石器、玉器</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：十三行文化——臺灣人開始煉鐵</h2>
+    <p>距今約 <b>2 千～4 百年前</b>，臺灣進入金屬器時代，沿海地區開始出現<b>煉鐵</b>活動。</p>
+    <p>位於<b>新北市八里區</b>的<b>十三行文化遺址</b>，挖出<b>煉鐵爐</b>和<b>鐵渣</b>，證明當時的人已經懂得自己製作鐵器。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：從「外來物品」看出貿易</h2>
+    <p>十三行也挖出<b>玻璃珠、玻璃手環、瑪瑙珠飾、中國銅錢</b>。這些東西臺灣本地做不出來，一定是從外面來的，所以可以推論：</p>
+    <div class="formula">外來物品出土 → 當時先民和<b>東南亞</b>、<b>中國大陸</b>有貿易往來，而且很密切</div>
+    <div class="note">💡 這就是考古推理：不是看到「貿易」兩個字，而是從「不該出現在這裡的東西」推出來的。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：生活器物換了一批</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>用途</th><th>以前</th><th>金屬器時代以後</th></tr>
+        <tr><td class="name">工具</td><td>石器</td><td><b>金屬器</b>（鐵製工具）</td></tr>
+        <tr><td class="name">裝飾品</td><td>玉器</td><td><b>玻璃器</b></td></tr>
+      </table>
+    </div>
+    <div class="svgbox" id="svgTrade"></div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：這是本地做的，還是外面來的？</h2>
+    <p>十三行遺址挖到這些東西。哪些是本地製作，哪些是「外來物品」？</p>
+    <div id="dndTrade"></div>
+  </div>
+
+  <div class="card">
+    <h2>🃏 翻翻卡：考前 3 分鐘複習</h2>
+    <p>先想答案，再點卡片翻過來對。全部翻完再按「全部蓋回去」重來一次。</p>
+    <div class="flip-grid" id="flipGrid"></div>
+    <div class="row" style="margin-top:10px"><button class="dnd-check" id="flipReset" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:inherit">全部蓋回去</button></div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜十三行遺址出土煉鐵爐和鐵渣，可以推論什麼？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 煉鐵爐是煉鐵的設備，鐵渣是煉鐵剩下的殘渣。</p>
+        <p class="step"><b>②</b> 有這兩樣，代表當時的人<b>自己會煉鐵、做鐵器</b>，不是只從外面買。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜同樣在十三行挖到中國銅錢，可以推論什麼？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 銅錢是中國大陸做的，臺灣當時沒有。</p>
+        <p class="step"><b>②</b> 它出現在臺灣，代表有人把它帶來，也就是有<b>貿易往來</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜為什麼金屬器時代以後玻璃器取代玉器？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 玻璃是新來的材料，顏色多、容易做成珠子和手環。</p>
+        <p class="step"><b>②</b> 人們覺得新奇又漂亮，就漸漸不用玉器當裝飾了。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 十三行文化遺址在：</div>
+      <label><input type="radio" name="p3q1" value="A">臺東縣</label>
+      <label><input type="radio" name="p3q1" value="B">新北市八里區</label>
+      <label><input type="radio" name="p3q1" value="C">臺南市</label>
+      <label><input type="radio" name="p3q1" value="D">臺北市</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　和大坌坑一樣都在八里，但時代不同。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 十三行遺址出土煉鐵爐、鐵渣，說明當時人類：</div>
+      <label><input type="radio" name="p3q2" value="A">已懂得製作鐵器</label>
+      <label><input type="radio" name="p3q2" value="B">只靠買賣</label>
+      <label><input type="radio" name="p3q2" value="C">只會用石器</label>
+      <label><input type="radio" name="p3q2" value="D">不會用火</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　自己煉鐵。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">3. 玻璃珠、中國銅錢在臺灣出土，顯示當時：</div>
+      <label><input type="radio" name="p3q3" value="A">臺灣自己做玻璃和銅錢</label>
+      <label><input type="radio" name="p3q3" value="B">沒有人住</label>
+      <label><input type="radio" name="p3q3" value="C">還是舊石器時代</label>
+      <label><input type="radio" name="p3q3" value="D">先民與東南亞、中國大陸有貿易往來</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　外來物品＝有交流。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. 金屬器時代以後，裝飾品從玉器變成：</div>
+      <label><input type="radio" name="p3q4" value="A">石器</label>
+      <label><input type="radio" name="p3q4" value="B">陶器</label>
+      <label><input type="radio" name="p3q4" value="C">玻璃器</label>
+      <label><input type="radio" name="p3q4" value="D">鐵器</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　玻璃器逐漸取代玉器。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">5. 金屬器時代距今大約：</div>
+      <label><input type="radio" name="p3q5" value="A">2 千～4 百年前</label>
+      <label><input type="radio" name="p3q5" value="B">4 百年前到現在</label>
+      <label><input type="radio" name="p3q5" value="C">5 萬～5 千年前</label>
+      <label><input type="radio" name="p3q5" value="D">7 千～2 千年前</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　史前最後一個時代。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 臺灣史前文化的三個時代，由早到晚是：</div>
+      <label><input type="radio" name="qz1" value="A">金屬器、新石器、舊石器</label>
+      <label><input type="radio" name="qz1" value="B">舊石器、新石器、金屬器</label>
+      <label><input type="radio" name="qz1" value="C">新石器、舊石器、金屬器</label>
+      <label><input type="radio" name="qz1" value="D">舊石器、金屬器、新石器</label>
+      <div class="fb" data-exp="　石頭敲打 → 石頭磨製 → 金屬。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">2. 文化層裡最下面的一層是：</div>
+      <label><input type="radio" name="qz2" value="A">現代</label>
+      <label><input type="radio" name="qz2" value="B">金屬器時代</label>
+      <label><input type="radio" name="qz2" value="C">最古老的</label>
+      <label><input type="radio" name="qz2" value="D">最新的</label>
+      <div class="fb" data-exp="　越深越早。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">3. 臺灣最早的舊石器時代文化是：</div>
+      <label><input type="radio" name="qz3" value="A">卑南文化</label>
+      <label><input type="radio" name="qz3" value="B">大坌坑文化</label>
+      <label><input type="radio" name="qz3" value="C">長濱文化</label>
+      <label><input type="radio" name="qz3" value="D">十三行文化</label>
+      <div class="fb" data-exp="　臺東縣長濱鄉，5 萬～5 千年前。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">4. 舊石器時代的人取得食物的方式是：</div>
+      <label><input type="radio" name="qz4" value="A">買賣</label>
+      <label><input type="radio" name="qz4" value="B">採集、漁獵</label>
+      <label><input type="radio" name="qz4" value="C">種稻</label>
+      <label><input type="radio" name="qz4" value="D">養豬</label>
+      <div class="fb" data-exp="　完全仰賴自然。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">5. 新石器時代的四大改變<b>不包括</b>：</div>
+      <label><input type="radio" name="qz5" value="A">農業</label>
+      <label><input type="radio" name="qz5" value="B">燒製陶器</label>
+      <label><input type="radio" name="qz5" value="C">磨製石器</label>
+      <label><input type="radio" name="qz5" value="D">煉鐵</label>
+      <div class="fb" data-exp="　煉鐵是金屬器時代。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">6. 農業出現對人類最重要的意義是：</div>
+      <label><input type="radio" name="qz6" value="A">可以搬到山上住</label>
+      <label><input type="radio" name="qz6" value="B">食物變好吃</label>
+      <label><input type="radio" name="qz6" value="C">食物可以自主生產，來源穩定</label>
+      <label><input type="radio" name="qz6" value="D">不用再用火</label>
+      <div class="fb" data-exp="　從仰賴自然到自主生產。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">7. 圓山文化的貝塚，說明當時的臺北盆地是：</div>
+      <label><input type="radio" name="qz7" value="A">高山</label>
+      <label><input type="radio" name="qz7" value="B">沙漠</label>
+      <label><input type="radio" name="qz7" value="C">湖泊</label>
+      <label><input type="radio" name="qz7" value="D">冰原</label>
+      <div class="fb" data-exp="　人們吃貝肉、丟貝殼堆成貝塚。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">8. 卑南文化的代表文物是：</div>
+      <label><input type="radio" name="qz8" value="A">石板棺、人獸形玉質耳飾</label>
+      <label><input type="radio" name="qz8" value="B">繩紋陶片</label>
+      <label><input type="radio" name="qz8" value="C">貝塚</label>
+      <label><input type="radio" name="qz8" value="D">煉鐵爐</label>
+      <div class="fb" data-exp="　在臺東縣。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">9. 十三行文化遺址出土的<b>外來物品</b>是：</div>
+      <label><input type="radio" name="qz9" value="A">玻璃珠、中國銅錢</label>
+      <label><input type="radio" name="qz9" value="B">繩紋陶片</label>
+      <label><input type="radio" name="qz9" value="C">石板棺</label>
+      <label><input type="radio" name="qz9" value="D">打製石器</label>
+      <div class="fb" data-exp="　顯示與東南亞、中國大陸貿易往來。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">10. 南關里遺址發現距今 5000 年前的炭化稻米，證明當時：</div>
+      <label><input type="radio" name="qz10" value="A">已經煉鐵</label>
+      <label><input type="radio" name="qz10" value="B">還在打獵</label>
+      <label><input type="radio" name="qz10" value="C">已經有農業，種稻</label>
+      <label><input type="radio" name="qz10" value="D">有銅錢</label>
+      <div class="fb" data-exp="　新石器時代的農業證據。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 臺灣的歷史 · 1-1「考古發掘與史前文化」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "歷史1-1 考古發掘與史前文化";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 拖曳配對（滑鼠、觸控都可以；也可以先點卡片、再點要放的區域）=====
+function dndGame(opts){
+  const box = document.getElementById(opts.box);
+  const placed = {};                       // 卡片 id → 放在哪一區
+  let selected = null, dragging = null;
+  const el = (tag, cls) => { const e = document.createElement(tag); if(cls) e.className = cls; return e; };
+  function render(){
+    box.innerHTML = '';
+    const pool = el('div', 'dnd-pool'); pool.dataset.zone = '__pool__';
+    pool.innerHTML = `<div class="dnd-zone-title" style="color:#6b7280">${opts.poolLabel || '卡片區（拖到下面正確的位置）'}</div>`;
+    const zonesWrap = el('div', 'dnd-zones');
+    const zoneEls = {};
+    opts.zones.forEach(z => {
+      const ze = el('div', 'dnd-zone'); ze.dataset.zone = z.id;
+      ze.innerHTML = `<div class="dnd-zone-title">${z.label}</div>`;
+      zonesWrap.appendChild(ze); zoneEls[z.id] = ze;
+    });
+    opts.items.forEach(it => {
+      const c = el('div', 'dnd-card'); c.dataset.item = it.id; c.textContent = it.label;
+      (placed[it.id] && zoneEls[placed[it.id]] ? zoneEls[placed[it.id]] : pool).appendChild(c);
+      attach(c);
+    });
+    const bar = el('div', 'row dnd-bar');
+    bar.innerHTML = `<button class="dnd-check">檢查</button><button class="ghost dnd-reset">重來</button><span class="dnd-msg"></span>`;
+    box.append(pool, zonesWrap, bar);
+    if(opts.hint){ const h = el('div', 'dnd-hint'); h.textContent = opts.hint; box.appendChild(h); }
+    bar.querySelector('.dnd-check').addEventListener('click', check);
+    bar.querySelector('.dnd-reset').addEventListener('click', () => { Object.keys(placed).forEach(k => delete placed[k]); selected = null; render(); });
+    [pool, ...Object.values(zoneEls)].forEach(z => z.addEventListener('click', () => {
+      if(!selected) return;
+      if(z.dataset.zone === '__pool__') delete placed[selected]; else placed[selected] = z.dataset.zone;
+      selected = null; render();
+    }));
+  }
+  function zoneAt(x, y){
+    const t = document.elementFromPoint(x, y);
+    return t ? t.closest('.dnd-zone, .dnd-pool') : null;
+  }
+  function attach(card){
+    let sx = 0, sy = 0, moved = false, ghost = null;
+    card.addEventListener('pointerdown', e => {
+      sx = e.clientX; sy = e.clientY; moved = false; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e => {
+      if(!(e.buttons & 1)) return;
+      if(!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 6) return;
+      if(!moved){
+        moved = true; ghost = card.cloneNode(true); ghost.classList.add('drag');
+        document.body.appendChild(ghost); card.style.opacity = '.35';
+      }
+      ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + 'px'; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + 'px';
+      box.querySelectorAll('.over').forEach(z => z.classList.remove('over'));
+      const z = zoneAt(e.clientX, e.clientY); if(z && box.contains(z)) z.classList.add('over');
+    });
+    card.addEventListener('pointerup', e => {
+      if(moved){
+        const z = zoneAt(e.clientX, e.clientY);
+        if(ghost) ghost.remove(); card.style.opacity = '';
+        if(z && box.contains(z)){ if(z.dataset.zone === '__pool__') delete placed[card.dataset.item]; else placed[card.dataset.item] = z.dataset.zone; }
+        selected = null; render();
+      }else{
+        selected = (selected === card.dataset.item) ? null : card.dataset.item;
+        box.querySelectorAll('.dnd-card').forEach(c => c.classList.toggle('sel', c.dataset.item === selected));
+      }
+    });
+    card.addEventListener('pointercancel', () => { if(ghost) ghost.remove(); card.style.opacity = ''; moved = false; });
+  }
+  function check(){
+    let ok = 0, total = opts.items.length, unplaced = 0;
+    box.querySelectorAll('.dnd-card').forEach(c => {
+      const id = c.dataset.item, z = placed[id];
+      const zone = opts.zones.find(zz => zz.id === z);
+      c.classList.remove('ok', 'no');
+      if(!zone){ unplaced++; c.classList.add('no'); return; }
+      if(zone.accepts.includes(id)){ ok++; c.classList.add('ok'); } else c.classList.add('no');
+    });
+    const msg = box.querySelector('.dnd-msg');
+    if(ok === total){ msg.className = 'dnd-msg ok'; msg.textContent = '✔ 全部正確！'; }
+    else { msg.className = 'dnd-msg no'; msg.textContent = `✘ 對了 ${ok} / ${total}${unplaced ? '（還有 ' + unplaced + ' 張沒放）' : ''}，紅色的再想想。`; }
+    toolLog(opts.name || opts.box, ok === total);
+    if(opts.onResult) opts.onResult(ok, total, placed);
+  }
+  render();
+  return { placed };
+}
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+const ERA = { old: '#7e22ce', new: '#15803d', metal: '#c2410c' };
+
+// ---- 文化層挖掘動畫 ----
+const LAYERS = [
+  { key: 'top', y: 40, h: 40, fill: '#86efac', label: '現代地面', info: '現在在地面上，什麼都還看不到。往下挖！', items: [] },
+  { key: 'metal', y: 80, h: 70, fill: '#fdba74', label: '金屬器時代', years: '2 千～4 百年前', info: '<span class="era-tag era-metal">金屬器時代</span> 挖到<b>鐵渣、玻璃珠、銅錢</b>。這一層離地面最近，所以是最晚的時代。', items: ['🧲 鐵渣', '🔵 玻璃珠', '🪙 銅錢'] },
+  { key: 'new', y: 150, h: 80, fill: '#86efac', label: '新石器時代', years: '7 千～2 千年前', info: '<span class="era-tag era-new">新石器時代</span> 挖到<b>繩紋陶片、磨製石斧、炭化稻米</b>。比上面那層更早。', items: ['🏺 陶片', '🪓 磨製石斧', '🌾 稻米'] },
+  { key: 'old', y: 230, h: 80, fill: '#c4b5fd', label: '舊石器時代', years: '5 萬～5 千年前', info: '<span class="era-tag era-old">舊石器時代</span> 挖到<b>打製石器</b>和<b>用火的痕跡</b>。最下面＝最古老。已經到底了！', items: ['🪨 打製石器', '🔥 火堆痕跡'] },
+];
+let digLevel = 0;
+function drawDig(){
+  let s = rect(0,0,480,330,'#e0f2fe');
+  LAYERS.forEach((L, i) => {
+    s += rect(0, L.y, 480, L.h, L.fill, '#1f2937', 1);
+    s += txt(14, L.y + 22, L.label + (L.years ? '　' + L.years : ''), '#1f2937', 13, 'start', 'font-weight="bold"');
+    if(i > 0 && i <= digLevel){
+      L.items.forEach((it, j) => s += txt(210 + j * 90, L.y + L.h / 2 + 8, it, '#1f2937', 16));
+    }else if(i > 0){
+      s += txt(330, L.y + L.h / 2 + 6, '？？？', '#6b7280', 16);
+    }
+  });
+  // 挖出來的坑（從地面挖到目前的層）
+  const bottom = LAYERS[digLevel].y + LAYERS[digLevel].h;
+  s += `<path d="M 415 40 L 430 ${bottom} L 470 ${bottom} L 455 40 Z" fill="#78350f" opacity=".85"/>`;
+  s += txt(443, bottom - 10, '⛏️', '#fff', 22);
+  s += txt(470, 322, '越下面 → 越古老', '#1f2937', 12, 'end');
+  document.getElementById('svgDig').innerHTML = svg(480, 330, s);
+  document.getElementById('digInfo').innerHTML = LAYERS[digLevel].info;
+}
+document.getElementById('digDown').addEventListener('click', () => { if(digLevel < LAYERS.length - 1){ digLevel++; drawDig(); if(digLevel === LAYERS.length - 1) toolLog('文化層挖掘', true); } });
+document.getElementById('digReset').addEventListener('click', () => { digLevel = 0; drawDig(); });
+drawDig();
+
+// ---- 時代卡片分類 ----
+dndGame({ box: 'dndEra', name: '時代分類', poolLabel: '年代、特色、代表文化',
+  items: [
+    { id: 'y1', label: '距今 5 萬～5 千年前' }, { id: 'y2', label: '距今 7 千～2 千年前' }, { id: 'y3', label: '距今 2 千～4 百年前' },
+    { id: 'f1', label: '打製石器' }, { id: 'f2', label: '已知用火' }, { id: 'f3', label: '採集、漁獵' },
+    { id: 'f4', label: '磨製石器' }, { id: 'f5', label: '農業出現' }, { id: 'f6', label: '燒製陶器' }, { id: 'f7', label: '飼養家畜' },
+    { id: 'f8', label: '鐵製工具' }, { id: 'f9', label: '貿易頻繁' },
+    { id: 'c1', label: '長濱文化' }, { id: 'c2', label: '大坌坑文化' }, { id: 'c3', label: '卑南文化' }, { id: 'c4', label: '十三行文化' },
+  ],
+  zones: [
+    { id: 'old', label: '舊石器時代', accepts: ['y1', 'f1', 'f2', 'f3', 'c1'] },
+    { id: 'new', label: '新石器時代', accepts: ['y2', 'f4', 'f5', 'f6', 'f7', 'c2', 'c3'] },
+    { id: 'metal', label: '金屬器時代', accepts: ['y3', 'f8', 'f9', 'c4'] },
+  ] });
+
+// ---- 遺址地圖 ----
+const SITES = [
+  { id: 'changbin', name: '長濱文化遺址', era: 'old', x: 226, y: 215, where: '臺東縣長濱鄉', text: '臺灣最早的舊石器時代文化，5 萬～5 千年前。已知用火、打製石器、採集漁獵。' },
+  { id: 'dabenkeng', name: '大坌坑文化遺址', era: 'new', x: 134, y: 62, where: '新北市八里區', text: '新石器時代早期。代表文物：繩紋陶片。' },
+  { id: 'yuanshan', name: '圓山文化遺址', era: 'new', x: 162, y: 66, where: '臺北市', text: '新石器時代。代表文物：貝塚（當時臺北盆地是湖泊）。' },
+  { id: 'beinan', name: '卑南文化遺址', era: 'new', x: 208, y: 300, where: '臺東縣', text: '新石器時代。代表文物：石板棺、人獸形玉質耳飾。' },
+  { id: 'nanguanli', name: '南關里遺址', era: 'new', x: 106, y: 298, where: '臺南科學園區', text: '發現距今 5000 年前的炭化稻米，證明新石器時代已經種稻。' },
+  { id: 'shisanhang', name: '十三行文化遺址', era: 'metal', x: 140, y: 44, where: '新北市八里區', text: '金屬器時代，2 千～4 百年前。出土煉鐵爐、鐵渣、玻璃珠、中國銅錢。' },
+];
+const TW = 'M 150,28 L 186,24 L 206,46 L 216,82 L 226,122 L 231,170 L 224,232 L 212,290 L 196,340 L 182,384 L 170,420 L 152,406 L 132,372 L 118,338 L 106,300 L 95,252 L 100,200 L 110,140 L 124,90 L 138,50 Z';
+let mapMode = 'explore', quizOrder = [], quizIdx = 0, quizScore = 0;
+function drawMap(){
+  let s = rect(0,0,300,440,'#e0f2fe');
+  s += `<path d="${TW}" fill="#fef3c7" stroke="#a16207" stroke-width="2"/>`;
+  s += txt(60, 380, '澎湖', '#6b7280', 10) + `<circle cx="52" cy="352" r="4" fill="#fef3c7" stroke="#a16207"/>`;
+  SITES.forEach(st => {
+    s += `<g class="site" data-id="${st.id}"><circle cx="${st.x}" cy="${st.y}" r="7" fill="${ERA[st.era]}" stroke="#fff" stroke-width="2"/>`;
+    if(mapMode === 'explore') s += txt(st.x + (st.x > 180 ? -12 : 12), st.y + 4, st.name.replace('文化遺址','').replace('遺址',''), '#1f2937', 11, st.x > 180 ? 'end' : 'start');
+    s += '</g>';
+  });
+  document.getElementById('svgMap').innerHTML = svg(300, 440, s);
+  document.querySelectorAll('#svgMap .site').forEach(g => g.addEventListener('click', () => onSite(g)));
+}
+function onSite(g){
+  const st = SITES.find(x => x.id === g.dataset.id), info = document.getElementById('mapInfo');
+  g.classList.add('hit'); setTimeout(() => g.classList.remove('hit'), 1300);
+  if(mapMode === 'explore'){
+    info.style.color = ''; info.innerHTML = `<span class="era-tag era-${st.era}">${st.era === 'old' ? '舊石器' : st.era === 'new' ? '新石器' : '金屬器'}</span><b>${st.name}</b>（${st.where}）<br>${st.text}`;
+    return;
+  }
+  const want = SITES[quizOrder[quizIdx]];
+  const ok = st.id === want.id;
+  if(ok) quizScore++;
+  toolLog('遺址地圖', ok);
+  quizIdx++;
+  const fb = ok ? `✔ 答對！${want.name}就在${want.where}。` : `✘ 那是${st.name}。${want.name}在${want.where}。`;
+  if(quizIdx >= quizOrder.length){
+    info.style.color = ''; info.innerHTML = fb + `<br><b>全部完成：答對 ${quizScore} / ${quizOrder.length}</b>。按「考考你」再來一次。`;
+    mapMode = 'explore'; drawMap(); return;
+  }
+  info.style.color = ok ? '#166534' : '#991b1b';
+  info.innerHTML = fb + `<br><br>下一題：請點出 <b>${SITES[quizOrder[quizIdx]].name}</b>`;
+}
+document.getElementById('mapExplore').addEventListener('click', () => { mapMode = 'explore'; drawMap(); const i = document.getElementById('mapInfo'); i.style.color = ''; i.textContent = '👆 點地圖上的圓點，看看是哪個遺址。'; });
+document.getElementById('mapQuiz').addEventListener('click', () => {
+  mapMode = 'quiz'; quizOrder = SITES.map((_, i) => i).sort(() => Math.random() - .5); quizIdx = 0; quizScore = 0; drawMap();
+  const i = document.getElementById('mapInfo'); i.style.color = ''; i.innerHTML = `名字被藏起來了。請點出 <b>${SITES[quizOrder[0]].name}</b>`;
+});
+drawMap();
+
+// ---- 文物配對 ----
+dndGame({ box: 'dndRelic', name: '文物配對', poolLabel: '出土文物',
+  items: [
+    { id: 'r1', label: '打製石器' }, { id: 'r2', label: '繩紋陶片' }, { id: 'r3', label: '貝塚' },
+    { id: 'r4', label: '石板棺' }, { id: 'r5', label: '人獸形玉質耳飾' }, { id: 'r6', label: '炭化稻米' },
+    { id: 'r7', label: '煉鐵爐、鐵渣' }, { id: 'r8', label: '玻璃手環' }, { id: 'r9', label: '中國銅錢' },
+  ],
+  zones: [
+    { id: 'cb', label: '長濱文化（臺東）', accepts: ['r1'] }, { id: 'db', label: '大坌坑文化（八里）', accepts: ['r2'] },
+    { id: 'ys', label: '圓山文化（臺北）', accepts: ['r3'] }, { id: 'bn', label: '卑南文化（臺東）', accepts: ['r4', 'r5'] },
+    { id: 'ng', label: '南關里遺址（臺南）', accepts: ['r6'] }, { id: 'sh', label: '十三行文化（八里）', accepts: ['r7', 'r8', 'r9'] },
+  ] });
+
+// ---- 生活方式分類 ----
+dndGame({ box: 'dndLife', name: '生活方式分類', poolLabel: '生活方式',
+  items: [
+    { id: 'l1', label: '把石頭敲碎當工具' }, { id: 'l2', label: '採野果、打獵、捕魚' }, { id: 'l3', label: '學會用火' },
+    { id: 'l4', label: '把石頭磨得光滑鋒利' }, { id: 'l5', label: '種稻米' }, { id: 'l6', label: '養豬、養狗' }, { id: 'l7', label: '用泥土燒成陶器' },
+    { id: 'l8', label: '煉鐵做工具' }, { id: 'l9', label: '用玻璃珠、銅錢和外地人交易' },
+  ],
+  zones: [
+    { id: 'old', label: '舊石器時代', accepts: ['l1', 'l2', 'l3'] },
+    { id: 'new', label: '新石器時代', accepts: ['l4', 'l5', 'l6', 'l7'] },
+    { id: 'metal', label: '金屬器時代', accepts: ['l8', 'l9'] },
+  ],
+  hint: '提示：舊石器「敲」、新石器「磨」＋種田養動物做陶器、金屬器「煉鐵」＋貿易。' });
+
+// ---- 貿易示意圖 ----
+(function(){
+  let s = rect(0,0,480,180,'#e0f2fe');
+  s += `<path d="M 300 30 L 330 40 L 340 80 L 330 130 L 310 160 L 290 130 L 285 80 Z" fill="#fef3c7" stroke="#a16207" stroke-width="2"/>`;
+  s += txt(312, 95, '臺灣', '#7c2d12', 13) + `<circle cx="296" cy="42" r="6" fill="${ERA.metal}"/>` + txt(296, 30, '十三行', '#c2410c', 11);
+  s += rect(20, 30, 120, 50, '#fde68a', '#a16207', 2) + txt(80, 60, '中國大陸', '#78350f', 13);
+  s += rect(20, 110, 120, 50, '#bbf7d0', '#15803d', 2) + txt(80, 140, '東南亞', '#14532d', 13);
+  s += `<defs><marker id="tr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0369a1"/></marker></defs>`;
+  s += `<path d="M 145 55 Q 220 40 285 48" fill="none" stroke="#0369a1" stroke-width="3" marker-end="url(#tr)"/>` + txt(215, 36, '銅錢', '#0369a1', 12);
+  s += `<path d="M 145 135 Q 220 110 288 70" fill="none" stroke="#0369a1" stroke-width="3" marker-end="url(#tr)"/>` + txt(215, 125, '玻璃珠、瑪瑙珠', '#0369a1', 12);
+  s += txt(400, 170, '外來物品 → 貿易往來', '#1f2937', 12);
+  document.getElementById('svgTrade').innerHTML = svg(480, 180, s);
+})();
+
+// ---- 本地／外來 ----
+dndGame({ box: 'dndTrade', name: '本地或外來', poolLabel: '十三行出土的東西',
+  items: [
+    { id: 't1', label: '煉鐵爐' }, { id: 't2', label: '鐵渣' }, { id: 't3', label: '鐵製工具' },
+    { id: 't4', label: '玻璃珠' }, { id: 't5', label: '玻璃手環' }, { id: 't6', label: '瑪瑙珠飾' }, { id: 't7', label: '中國銅錢' },
+  ],
+  zones: [ { id: 'local', label: '本地製作（證明會煉鐵）', accepts: ['t1', 't2', 't3'] }, { id: 'foreign', label: '外來物品（證明有貿易）', accepts: ['t4', 't5', 't6', 't7'] } ] });
+
+// ---- 翻翻卡 ----
+const FLIP = [
+  ['臺灣最早的舊石器文化？', '長濱文化（臺東縣長濱鄉）'], ['舊石器時代距今？', '5 萬～5 千年前'], ['舊石器時代三個特色', '已知用火、打製石器、採集漁獵'],
+  ['新石器時代距今？', '7 千～2 千年前'], ['新石器時代四大改變', '磨製石器、農業、飼養家畜、燒製陶器'], ['為什麼稻米當主食？', '種子大、乾燥後能長期保存'],
+  ['繩紋陶片是誰的？', '大坌坑文化（新北市八里區）'], ['貝塚是誰的？', '圓山文化（臺北市，當時是湖泊）'], ['石板棺、人獸形玉耳飾', '卑南文化（臺東縣）'],
+  ['金屬器時代距今？', '2 千～4 百年前'], ['十三行出土什麼證明會煉鐵？', '煉鐵爐、鐵渣'], ['玻璃珠、銅錢代表什麼？', '與東南亞、中國大陸貿易往來'],
+];
+const grid = document.getElementById('flipGrid');
+grid.innerHTML = FLIP.map(([q, a]) => `<div class="flip"><div class="inner"><div class="face front">${q}</div><div class="face back">${a}</div></div></div>`).join('');
+grid.querySelectorAll('.flip').forEach(f => f.addEventListener('click', () => f.classList.toggle('on')));
+document.getElementById('flipReset').addEventListener('click', () => grid.querySelectorAll('.flip').forEach(f => f.classList.remove('on')));
+
+</script>
+</body>
+</html>
