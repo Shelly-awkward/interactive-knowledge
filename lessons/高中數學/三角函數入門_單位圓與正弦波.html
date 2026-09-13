@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三角函數入門｜單位圓與正弦波</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#4338ca; --accent-soft:#e0e7ff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#312e81,#6366f1); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  .dnd-pool,.dnd-zone{border:2px dashed var(--border); border-radius:12px; padding:10px 12px; min-height:64px; margin:8px 0; background:#fff; transition:.15s;}
+  .dnd-pool{background:#f9fafb;}
+  .dnd-zone.over,.dnd-pool.over{border-color:var(--blue); background:#eff6ff;}
+  .dnd-zones{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px;}
+  .dnd-zone-title{font-weight:bold; margin-bottom:6px; color:var(--accent);}
+  .dnd-card{display:inline-block; background:#fff; border:1.5px solid var(--border); border-radius:99px; padding:6px 14px; margin:4px 6px 4px 0;
+    cursor:grab; user-select:none; touch-action:none; font-size:.95rem; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .1s;}
+  .dnd-card:hover{border-color:var(--blue);}
+  .dnd-card.sel{border-color:var(--blue); background:#dbeafe; transform:scale(1.04);}
+  .dnd-card.drag{position:fixed; z-index:99; pointer-events:none; opacity:.9; transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.2);}
+  .dnd-card.ok{border-color:var(--green); background:var(--green-soft);}
+  .dnd-card.no{border-color:var(--red); background:var(--red-soft);}
+  .dnd-bar{margin-top:8px;}
+  .dnd-bar button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem; margin-right:6px;}
+  .dnd-bar button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .dnd-msg{font-weight:bold; margin-left:8px;}
+  .dnd-msg.ok{color:#166534;} .dnd-msg.no{color:#991b1b;}
+  .dnd-hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .spot{cursor:pointer;} .spot:hover{filter:brightness(1.08);}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; min-height:2.4em;}
+
+  .pills{display:flex; flex-wrap:wrap; gap:8px; margin:8px 0;}
+  .tool .pills button{border:2px solid var(--border); background:#fff; color:var(--ink); border-radius:99px; padding:8px 16px; font-family:inherit; font-size:1rem; cursor:pointer; font-weight:bold; margin:0;}
+  .tool .pills button.ghost{color:var(--ink); border-color:var(--border);}
+  .tool .pills button.ghost.on{background:var(--blue); color:#fff;}
+  .tool .pills button.on{color:#fff; border-color:transparent;}
+  .tool .pills button.sin.on{background:#dc2626;} .tool .pills button.cos.on{background:#2563eb;} .tool .pills button.tan.on{background:#16a34a;}
+  .two{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;}
+  .two .svgbox{margin:0; flex:0 0 auto;}
+  .two .side{flex:1 1 240px;}
+  .val{display:inline-block; font-family:"Courier New",monospace; font-weight:bold; font-size:1.05rem; padding:2px 10px; border-radius:8px; margin:2px 4px 2px 0;}
+  .val.s{background:#fee2e2; color:#991b1b;} .val.c{background:#dbeafe; color:#1e40af;} .val.t{background:#dcfce7; color:#166534;} .val.a{background:#f3f4f6; color:#1f2937;}
+  .ucircle{touch-action:none; cursor:grab;}
+  .guess-opts button{margin:4px 6px 4px 0;}
+  .guess-opts button.ok{background:var(--green);} .guess-opts button.no{background:var(--red);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">從零開始 · 給從來沒學會三角函數的人 · 高中數學A 第三冊第1章的前置觀念</span>
+  <h1>三角函數入門：單位圓與正弦波</h1>
+  <p>三個小節＋總測驗。不背公式，先搞懂三件事：三角函數是拿來做什麼的、sin／cos／tan 三個名字各對應哪一條邊、為什麼跟圓形有關。每一節都有可以拖的東西：拉仰角量樹高、點名字看邊、拖著圓上的點看波浪線長出來。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1 它是拿來做什麼的</button>
+  <button data-t="s2">2 三個名字對應哪條邊</button>
+  <button data-t="s3">3 圓形與波浪線</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 1-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道三角函數是為了「量量不到的距離」發明的</li>
+      <li>知道關鍵原理：角度固定，直角三角形的邊長比例就固定</li>
+      <li>會用仰角和距離算出高度（先感受，不用背）</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：量不到的東西，用角度算</h2>
+    <p>幾千年前的人想知道金字塔多高、船離岸多遠、山有多高，但這些都<b>直接量不到</b>。他們發現一件事：</p>
+    <div class="formula">只要角度固定，直角三角形三邊的<b>比例</b>就固定，跟三角形畫多大沒有關係。</div>
+    <p>所以只要量一個<b>角度</b>和一條<b>量得到的邊</b>，就能算出<b>量不到的邊</b>。三角函數就是這些「比例」的名字。</p>
+  </div>
+
+  <div class="card">
+    <h2>🔧 動手玩：用仰角量樹高</h2>
+    <p>站在樹前面，量「離樹多遠」和「抬頭看樹頂的角度（仰角）」。拉拉看，樹高怎麼跟著變。</p>
+    <div class="tool">
+      <div class="svgbox" id="svgTree"></div>
+      <div>離樹距離：<span id="distLabel"></span> 公尺</div>
+      <input type="range" id="dist" min="5" max="30" value="12">
+      <div>仰角：<span id="elevLabel"></span>°</div>
+      <input type="range" id="elev" min="10" max="70" value="35">
+      <div class="out" id="treeOut"></div>
+      <div class="hint">試試：距離不變、仰角變大 → 樹越高。仰角不變、距離變兩倍 → 樹高也變兩倍（比例固定）。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：為什麼比例會固定？</h2>
+    <p>把一個直角三角形放大、縮小，形狀不變（相似三角形），所以「這條邊 ÷ 那條邊」永遠是同一個數。</p>
+    <div class="tool">
+      <div class="svgbox" id="svgSimilar"></div>
+      <div>把三角形放大縮小：</div>
+      <input type="range" id="scale" min="4" max="14" value="8">
+      <div class="out" id="simOut"></div>
+      <div class="hint">邊長一直在變，但右邊的比例一直是同一個數。這個數只跟角度有關，所以可以先算好、查表用。</div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜離大樓 40 公尺，抬頭看樓頂仰角 45°，大樓多高？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 45° 時，對邊和鄰邊一樣長（等腰直角三角形）。</p>
+        <p class="step"><b>②</b> 鄰邊是 40 公尺 → 對邊（大樓高）也是 <b>40 公尺</b>。</p>
+        <p class="step"><b>③</b> 不用任何公式，只要知道 45° 的三角形長什麼樣。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜同樣站在 40 公尺外，仰角變成 60°，大樓變高還是變矮？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 仰角越大，代表要抬頭抬得更高，樓頂更高。</p>
+        <p class="step"><b>②</b> 答案：<b>變高</b>。60° 時大約是 40 × 1.73 ≈ 69 公尺。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜為什麼古人要先「算好一張表」？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 因為比例只跟角度有關。</p>
+        <p class="step"><b>②</b> 把 1°、2°、3°…每個角度的比例先算好，之後量到角度就直接查，不用每次重畫三角形。</p>
+        <p class="step"><b>③</b> 這張表就是三角函數表，現在計算機裡的 sin、cos 就是它。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 三角函數最早是為了什麼發明的？</div>
+      <label><input type="radio" name="p1q1" value="A">畫畫</label>
+      <label><input type="radio" name="p1q1" value="B">算錢</label>
+      <label><input type="radio" name="p1q1" value="C">量量不到的距離和高度</label>
+      <label><input type="radio" name="p1q1" value="D">做音樂</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　金字塔多高、船離岸多遠，都靠角度算。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 角度固定時，直角三角形三邊的比例：</div>
+      <label><input type="radio" name="p1q2" value="A">固定不變</label>
+      <label><input type="radio" name="p1q2" value="B">無法判斷</label>
+      <label><input type="radio" name="p1q2" value="C">會隨大小改變</label>
+      <label><input type="radio" name="p1q2" value="D">只有斜邊固定</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　相似三角形，形狀一樣比例就一樣。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">3. 仰角 45°、離樹 10 公尺，樹高大約：</div>
+      <label><input type="radio" name="p1q3" value="A">20 公尺</label>
+      <label><input type="radio" name="p1q3" value="B">5 公尺</label>
+      <label><input type="radio" name="p1q3" value="C">45 公尺</label>
+      <label><input type="radio" name="p1q3" value="D">10 公尺</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　45° 時對邊等於鄰邊。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. 距離不變，仰角變大，算出來的高度會：</div>
+      <label><input type="radio" name="p1q4" value="A">變小</label>
+      <label><input type="radio" name="p1q4" value="B">變大</label>
+      <label><input type="radio" name="p1q4" value="C">不變</label>
+      <label><input type="radio" name="p1q4" value="D">變成 0</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　抬頭抬得越高，東西越高。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">5. 同一個仰角，距離變成兩倍，高度會：</div>
+      <label><input type="radio" name="p1q5" value="A">變兩倍</label>
+      <label><input type="radio" name="p1q5" value="B">變四倍</label>
+      <label><input type="radio" name="p1q5" value="C">不變</label>
+      <label><input type="radio" name="p1q5" value="D">變一半</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　比例固定，一邊變兩倍另一邊也變兩倍。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>分得清楚對邊、鄰邊、斜邊，而且知道「對邊」是相對於哪個角</li>
+      <li>記住 sin＝對邊÷斜邊、cos＝鄰邊÷斜邊、tan＝對邊÷鄰邊</li>
+      <li>會算 30°、45°、60° 的 sin、cos、tan</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：先站好位置，再認邊</h2>
+    <p>三條邊的名字是<b>相對於你看的那個角</b>來說的：</p>
+    <ul>
+      <li><b>斜邊</b>：直角對面那條，永遠是最長的，不管你看哪個角</li>
+      <li><b>對邊</b>：你看的那個角<b>對面</b>的邊</li>
+      <li><b>鄰邊</b>：靠著你看的那個角、但不是斜邊的那條</li>
+    </ul>
+    <div class="warn">⚠️ 換一個角來看，對邊和鄰邊就<b>互換</b>。這是最常搞混的地方，下面的圖可以切換看看。</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 點一點：sin、cos、tan 各用哪兩條邊</h2>
+    <div class="tool">
+      <div class="two">
+        <div class="svgbox" id="svgSides"></div>
+        <div class="side">
+          <div>我站在哪個角：</div>
+          <div class="pills"><button id="atA" class="ghost on">角 A（左下）</button><button id="atB" class="ghost">角 B（右上）</button></div>
+          <div>看哪一個：</div>
+          <div class="pills"><button class="sin" data-f="sin">sin 正弦</button><button class="cos" data-f="cos">cos 餘弦</button><button class="tan" data-f="tan">tan 正切</button></div>
+          <div class="infobox" id="sidesInfo">先選一個角，再點 sin、cos 或 tan，圖上會亮起它用到的兩條邊。</div>
+        </div>
+      </div>
+      <div class="hint">口訣：<b>sin 對斜、cos 鄰斜、tan 對鄰</b>。念的順序就是「上面那條 ÷ 下面那條」。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：三個特殊角，值得記起來</h2>
+    <p>考試和生活最常出現 30°、45°、60°。它們來自兩個很好畫的三角形：</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>角度</th><th>sin（對÷斜）</th><th>cos（鄰÷斜）</th><th>tan（對÷鄰）</th><th>怎麼來的</th></tr>
+        <tr><td class="name">30°</td><td>1/2</td><td>√3/2</td><td>√3/3（＝1/√3）</td><td rowspan="2">正三角形對半切：邊 2、1、√3</td></tr>
+        <tr><td class="name">60°</td><td>√3/2</td><td>1/2</td><td>√3</td></tr>
+        <tr class="hi"><td class="name">45°</td><td>√2/2</td><td>√2/2</td><td>1</td><td>正方形對角切：邊 1、1、√2</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 30° 和 60° 的 sin、cos 剛好<b>互換</b>，因為換一個角看，對邊鄰邊就互換了（觀念 1）。這就是「餘弦」的「餘」：餘角（加起來 90°）的正弦。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：口訣配對</h2>
+    <div id="dndName"></div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：特殊角的值放回去</h2>
+    <div id="dndSpecial"></div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜直角三角形三邊 3、4、5，站在 3 對面的那個角，sin 是多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 斜邊是最長的 5。對邊是 3（角對面）。</p>
+        <p class="step"><b>②</b> sin ＝ 對邊 ÷ 斜邊 ＝ <b>3/5</b>。</p>
+        <p class="step"><b>③</b> 順便：cos ＝ 4/5，tan ＝ 3/4。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜同一個三角形，換站到另一個銳角，sin 變多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 換角以後，對邊變成 4、鄰邊變成 3，斜邊還是 5。</p>
+        <p class="step"><b>②</b> sin ＝ <b>4/5</b>。剛好是原本的 cos。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜為什麼 tan 45° ＝ 1？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 45° 的直角三角形是等腰的，對邊 ＝ 鄰邊。</p>
+        <p class="step"><b>②</b> tan ＝ 對邊 ÷ 鄰邊 ＝ 一樣的數相除 ＝ <b>1</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 斜邊是：</div>
+      <label><input type="radio" name="p2q1" value="A">你看的角對面的邊</label>
+      <label><input type="radio" name="p2q1" value="B">直角對面、最長的邊</label>
+      <label><input type="radio" name="p2q1" value="C">靠著你看的角的邊</label>
+      <label><input type="radio" name="p2q1" value="D">最短的邊</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　直角對面那條，永遠最長。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. sin 是：</div>
+      <label><input type="radio" name="p2q2" value="A">斜邊 ÷ 對邊</label>
+      <label><input type="radio" name="p2q2" value="B">對邊 ÷ 鄰邊</label>
+      <label><input type="radio" name="p2q2" value="C">對邊 ÷ 斜邊</label>
+      <label><input type="radio" name="p2q2" value="D">鄰邊 ÷ 斜邊</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　sin 對斜。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. tan 是：</div>
+      <label><input type="radio" name="p2q3" value="A">鄰邊 ÷ 對邊</label>
+      <label><input type="radio" name="p2q3" value="B">對邊 ÷ 斜邊</label>
+      <label><input type="radio" name="p2q3" value="C">對邊 ÷ 鄰邊</label>
+      <label><input type="radio" name="p2q3" value="D">鄰邊 ÷ 斜邊</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　tan 對鄰。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. 三邊 5、12、13，站在 5 對面的角，cos 是：</div>
+      <label><input type="radio" name="p2q4" value="A">5/13</label>
+      <label><input type="radio" name="p2q4" value="B">5/12</label>
+      <label><input type="radio" name="p2q4" value="C">12/13</label>
+      <label><input type="radio" name="p2q4" value="D">13/12</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　cos ＝ 鄰邊 12 ÷ 斜邊 13。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">5. sin 30° ＝ ？</div>
+      <label><input type="radio" name="p2q5" value="A">1</label>
+      <label><input type="radio" name="p2q5" value="B">√3/2</label>
+      <label><input type="radio" name="p2q5" value="C">√2/2</label>
+      <label><input type="radio" name="p2q5" value="D">1/2</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　正三角形對半切，對邊 1、斜邊 2。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">6. cos 60° ＝ ？</div>
+      <label><input type="radio" name="p2q6" value="A">1/2</label>
+      <label><input type="radio" name="p2q6" value="B">√3</label>
+      <label><input type="radio" name="p2q6" value="C">1</label>
+      <label><input type="radio" name="p2q6" value="D">√3/2</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　和 sin 30° 一樣，因為 30° 和 60° 互為餘角。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道單位圓上一點的「高度」就是 sin、「橫向位置」就是 cos</li>
+      <li>看得懂 sin 為什麼會變成波浪線，以及它為什麼會有負值</li>
+      <li>認識弧度：180° ＝ π</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：把三角形放進圓裡</h2>
+    <p>畫一個半徑 1 的圓（<b>單位圓</b>）。圓上任何一點和圓心連線，都會和橫軸夾出一個直角三角形，而且<b>斜邊剛好是 1</b>。</p>
+    <div class="formula">斜邊 ＝ 1 → sin ＝ 對邊 ÷ 1 ＝ 那個點的<b>高度</b>，cos ＝ 鄰邊 ÷ 1 ＝ 那個點的<b>橫向位置</b></div>
+    <p>所以在單位圓上，sin 和 cos 不再是「比例」，直接就是一個點的<b>座標</b>。這就是三角函數跟圓形的關係。</p>
+  </div>
+
+  <div class="card">
+    <h2>🔧 動手玩：拖著圓上的點，看波浪線長出來</h2>
+    <div class="tool">
+      <div class="two">
+        <div class="svgbox" id="svgUnit"></div>
+        <div class="side">
+          <div>角度 θ：<span id="thetaLabel"></span></div>
+          <input type="range" id="theta" min="0" max="360" value="40">
+          <div class="pills"><button id="play" class="ghost">▶ 自動轉</button><button id="showCos" class="ghost">顯示 cos 曲線</button></div>
+          <div class="infobox" id="unitInfo"></div>
+        </div>
+      </div>
+      <div class="svgbox" id="svgWave"></div>
+      <div class="hint">拖圓上的點（或拉滑桿）。紅色直線的長度＝sin，藍色橫線的長度＝cos。點轉到下半圓時高度是負的，所以 sin 變負。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：為什麼會有負值、為什麼會重複</h2>
+    <ul>
+      <li>點在圓的<b>上半部</b>，高度是正的 → sin 正；在<b>下半部</b>→ sin 負</li>
+      <li>點在圓的<b>右半部</b>，橫向是正的 → cos 正；在<b>左半部</b>→ cos 負</li>
+      <li>轉一圈 360° 回到原點，所以 sin、cos 每 360° <b>重複一次</b>（週期）</li>
+      <li>sin 最大是 1（點在正上方 90°）、最小是 −1（正下方 270°）</li>
+    </ul>
+    <div class="note">💡 這就是為什麼三角函數能描述<b>波</b>：聲音、潮汐、彈簧、交流電，都是「繞圈圈」投影出來的上下起伏。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：弧度——用「走了多長的弧」來說角度</h2>
+    <p>單位圓的周長是 2π。轉一整圈走了 2π 的弧長，所以數學上常用<b>弧長</b>來代替度數：</p>
+    <div class="formula">360° ＝ 2π　180° ＝ π　90° ＝ π/2　60° ＝ π/3　45° ＝ π/4　30° ＝ π/6</div>
+    <div class="note">💡 換算：度數 × π ÷ 180 ＝ 弧度。看到 π 不要怕，它只是「半圈」的意思。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 猜猜看：sin 大概是多少？</h2>
+    <p>圓上出現一個點，先看它的高度，猜 sin 值再對答案。</p>
+    <div class="tool">
+      <div class="two">
+        <div class="svgbox" id="svgGuess"></div>
+        <div class="side">
+          <div id="guessQ" class="out"></div>
+          <div class="guess-opts" id="guessOpts"></div>
+          <div class="infobox" id="guessInfo">看點的高度，選一個最接近的值。</div>
+          <div class="row"><button id="guessNext" class="ghost">換一題</button><span id="guessScore" class="hint"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜單位圓上的點轉到 90°，sin 和 cos 各是多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 90° 的點在正上方，高度 1、橫向 0。</p>
+        <p class="step"><b>②</b> sin 90° ＝ <b>1</b>，cos 90° ＝ <b>0</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜轉到 180°，sin 和 cos？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 180° 的點在正左方，高度 0、橫向 −1。</p>
+        <p class="step"><b>②</b> sin 180° ＝ <b>0</b>，cos 180° ＝ <b>−1</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜sin 210° 是正的還是負的？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 210° 在下半圓（180°～360°），高度是負的。</p>
+        <p class="step"><b>②</b> 答案：<b>負的</b>。而且 210° ＝ 180° ＋ 30°，所以 sin 210° ＝ −sin 30° ＝ −1/2。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜把 120° 換成弧度</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 120 × π ÷ 180 ＝ 2π/3。</p>
+        <p class="step"><b>②</b> 答案：<b>2π/3</b>，也就是「三分之二個半圈」。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="D">
+      <div class="stem">1. 在單位圓上，一個點的高度就是它的：</div>
+      <label><input type="radio" name="p3q1" value="A">tan</label>
+      <label><input type="radio" name="p3q1" value="B">cos</label>
+      <label><input type="radio" name="p3q1" value="C">角度</label>
+      <label><input type="radio" name="p3q1" value="D">sin</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　斜邊是 1，對邊 ÷ 1 ＝ 對邊 ＝ 高度。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. sin 的最大值是：</div>
+      <label><input type="radio" name="p3q2" value="A">0</label>
+      <label><input type="radio" name="p3q2" value="B">1</label>
+      <label><input type="radio" name="p3q2" value="C">90</label>
+      <label><input type="radio" name="p3q2" value="D">360</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　點在正上方時高度 1。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. 點在下半圓時，sin 是：</div>
+      <label><input type="radio" name="p3q3" value="A">0</label>
+      <label><input type="radio" name="p3q3" value="B">無法判斷</label>
+      <label><input type="radio" name="p3q3" value="C">負的</label>
+      <label><input type="radio" name="p3q3" value="D">正的</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　高度在橫軸下面是負的。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. cos 270° ＝ ？</div>
+      <label><input type="radio" name="p3q4" value="A">1/2</label>
+      <label><input type="radio" name="p3q4" value="B">1</label>
+      <label><input type="radio" name="p3q4" value="C">0</label>
+      <label><input type="radio" name="p3q4" value="D">−1</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　270° 在正下方，橫向位置 0。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. sin 每幾度重複一次？</div>
+      <label><input type="radio" name="p3q5" value="A">90°</label>
+      <label><input type="radio" name="p3q5" value="B">360°</label>
+      <label><input type="radio" name="p3q5" value="C">720°</label>
+      <label><input type="radio" name="p3q5" value="D">180°</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　轉一圈回到原點。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">6. 90° 換成弧度是：</div>
+      <label><input type="radio" name="p3q6" value="A">π/2</label>
+      <label><input type="radio" name="p3q6" value="B">2π</label>
+      <label><input type="radio" name="p3q6" value="C">π/4</label>
+      <label><input type="radio" name="p3q6" value="D">π</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　90 × π ÷ 180 ＝ π/2。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="D">
+      <div class="stem">1. 三角函數的原理是：</div>
+      <label><input type="radio" name="qz1" value="A">只能用在圓形</label>
+      <label><input type="radio" name="qz1" value="B">所有三角形都一樣</label>
+      <label><input type="radio" name="qz1" value="C">邊長固定，角度就固定</label>
+      <label><input type="radio" name="qz1" value="D">角度固定，直角三角形三邊的比例就固定</label>
+      <div class="fb" data-exp="　相似三角形比例相同。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">2. cos 是：</div>
+      <label><input type="radio" name="qz2" value="A">鄰邊 ÷ 斜邊</label>
+      <label><input type="radio" name="qz2" value="B">對邊 ÷ 斜邊</label>
+      <label><input type="radio" name="qz2" value="C">對邊 ÷ 鄰邊</label>
+      <label><input type="radio" name="qz2" value="D">斜邊 ÷ 鄰邊</label>
+      <div class="fb" data-exp="　cos 鄰斜。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 三邊 6、8、10，站在 6 對面的角，tan 是：</div>
+      <label><input type="radio" name="qz3" value="A">6/8</label>
+      <label><input type="radio" name="qz3" value="B">6/10</label>
+      <label><input type="radio" name="qz3" value="C">8/10</label>
+      <label><input type="radio" name="qz3" value="D">8/6</label>
+      <div class="fb" data-exp="　tan ＝ 對邊 6 ÷ 鄰邊 8。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">4. sin 45° ＝ ？</div>
+      <label><input type="radio" name="qz4" value="A">1</label>
+      <label><input type="radio" name="qz4" value="B">√2/2</label>
+      <label><input type="radio" name="qz4" value="C">√3/2</label>
+      <label><input type="radio" name="qz4" value="D">1/2</label>
+      <div class="fb" data-exp="　等腰直角三角形，邊 1、1、√2。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">5. tan 60° ＝ ？</div>
+      <label><input type="radio" name="qz5" value="A">1</label>
+      <label><input type="radio" name="qz5" value="B">1/2</label>
+      <label><input type="radio" name="qz5" value="C">√3/3</label>
+      <label><input type="radio" name="qz5" value="D">√3</label>
+      <div class="fb" data-exp="　對邊 √3 ÷ 鄰邊 1。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">6. 換一個銳角來看同一個直角三角形，會發生什麼事？</div>
+      <label><input type="radio" name="qz6" value="A">三角形變大</label>
+      <label><input type="radio" name="qz6" value="B">什麼都不變</label>
+      <label><input type="radio" name="qz6" value="C">斜邊改變</label>
+      <label><input type="radio" name="qz6" value="D">對邊和鄰邊互換</label>
+      <div class="fb" data-exp="　所以 sin 30° ＝ cos 60°。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">7. 單位圓上，一個點的橫向位置是它的：</div>
+      <label><input type="radio" name="qz7" value="A">tan</label>
+      <label><input type="radio" name="qz7" value="B">cos</label>
+      <label><input type="radio" name="qz7" value="C">半徑</label>
+      <label><input type="radio" name="qz7" value="D">sin</label>
+      <div class="fb" data-exp="　鄰邊 ÷ 1 ＝ 橫向位置。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">8. sin 180° ＝ ？</div>
+      <label><input type="radio" name="qz8" value="A">1/2</label>
+      <label><input type="radio" name="qz8" value="B">1</label>
+      <label><input type="radio" name="qz8" value="C">0</label>
+      <label><input type="radio" name="qz8" value="D">−1</label>
+      <div class="fb" data-exp="　180° 在正左方，高度 0。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">9. sin 為什麼會畫成波浪線？</div>
+      <label><input type="radio" name="qz9" value="A">因為它只有正值</label>
+      <label><input type="radio" name="qz9" value="B">因為它一直變大</label>
+      <label><input type="radio" name="qz9" value="C">因為它是隨便畫的</label>
+      <label><input type="radio" name="qz9" value="D">因為點繞圓轉，高度上上下下重複</label>
+      <div class="fb" data-exp="　繞圈的投影就是波。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">10. 180° 等於幾弧度？</div>
+      <label><input type="radio" name="qz10" value="A">π/2</label>
+      <label><input type="radio" name="qz10" value="B">π</label>
+      <label><input type="radio" name="qz10" value="C">2π</label>
+      <label><input type="radio" name="qz10" value="D">180π</label>
+      <div class="fb" data-exp="　半圈的弧長是 π。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 高中數學 · 三角函數入門「單位圓與正弦波」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "高中數學 三角函數入門";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 拖曳配對（滑鼠、觸控都可以；也可以先點卡片、再點要放的區域）=====
+function dndGame(opts){
+  const box = document.getElementById(opts.box);
+  const placed = {};                       // 卡片 id → 放在哪一區
+  let selected = null, dragging = null;
+  const el = (tag, cls) => { const e = document.createElement(tag); if(cls) e.className = cls; return e; };
+  function render(){
+    box.innerHTML = '';
+    const pool = el('div', 'dnd-pool'); pool.dataset.zone = '__pool__';
+    pool.innerHTML = `<div class="dnd-zone-title" style="color:#6b7280">${opts.poolLabel || '卡片區（拖到下面正確的位置）'}</div>`;
+    const zonesWrap = el('div', 'dnd-zones');
+    const zoneEls = {};
+    opts.zones.forEach(z => {
+      const ze = el('div', 'dnd-zone'); ze.dataset.zone = z.id;
+      ze.innerHTML = `<div class="dnd-zone-title">${z.label}</div>`;
+      zonesWrap.appendChild(ze); zoneEls[z.id] = ze;
+    });
+    opts.items.forEach(it => {
+      const c = el('div', 'dnd-card'); c.dataset.item = it.id; c.textContent = it.label;
+      (placed[it.id] && zoneEls[placed[it.id]] ? zoneEls[placed[it.id]] : pool).appendChild(c);
+      attach(c);
+    });
+    const bar = el('div', 'row dnd-bar');
+    bar.innerHTML = `<button class="dnd-check">檢查</button><button class="ghost dnd-reset">重來</button><span class="dnd-msg"></span>`;
+    box.append(pool, zonesWrap, bar);
+    if(opts.hint){ const h = el('div', 'dnd-hint'); h.textContent = opts.hint; box.appendChild(h); }
+    bar.querySelector('.dnd-check').addEventListener('click', check);
+    bar.querySelector('.dnd-reset').addEventListener('click', () => { Object.keys(placed).forEach(k => delete placed[k]); selected = null; render(); });
+    [pool, ...Object.values(zoneEls)].forEach(z => z.addEventListener('click', () => {
+      if(!selected) return;
+      if(z.dataset.zone === '__pool__') delete placed[selected]; else placed[selected] = z.dataset.zone;
+      selected = null; render();
+    }));
+  }
+  function zoneAt(x, y){
+    const t = document.elementFromPoint(x, y);
+    return t ? t.closest('.dnd-zone, .dnd-pool') : null;
+  }
+  function attach(card){
+    let sx = 0, sy = 0, moved = false, ghost = null;
+    card.addEventListener('pointerdown', e => {
+      sx = e.clientX; sy = e.clientY; moved = false; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e => {
+      if(!(e.buttons & 1)) return;
+      if(!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 6) return;
+      if(!moved){
+        moved = true; ghost = card.cloneNode(true); ghost.classList.add('drag');
+        document.body.appendChild(ghost); card.style.opacity = '.35';
+      }
+      ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + 'px'; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + 'px';
+      box.querySelectorAll('.over').forEach(z => z.classList.remove('over'));
+      const z = zoneAt(e.clientX, e.clientY); if(z && box.contains(z)) z.classList.add('over');
+    });
+    card.addEventListener('pointerup', e => {
+      if(moved){
+        const z = zoneAt(e.clientX, e.clientY);
+        if(ghost) ghost.remove(); card.style.opacity = '';
+        if(z && box.contains(z)){ if(z.dataset.zone === '__pool__') delete placed[card.dataset.item]; else placed[card.dataset.item] = z.dataset.zone; }
+        selected = null; render();
+      }else{
+        selected = (selected === card.dataset.item) ? null : card.dataset.item;
+        box.querySelectorAll('.dnd-card').forEach(c => c.classList.toggle('sel', c.dataset.item === selected));
+      }
+    });
+    card.addEventListener('pointercancel', () => { if(ghost) ghost.remove(); card.style.opacity = ''; moved = false; });
+  }
+  function check(){
+    let ok = 0, total = opts.items.length, unplaced = 0;
+    box.querySelectorAll('.dnd-card').forEach(c => {
+      const id = c.dataset.item, z = placed[id];
+      const zone = opts.zones.find(zz => zz.id === z);
+      c.classList.remove('ok', 'no');
+      if(!zone){ unplaced++; c.classList.add('no'); return; }
+      if(zone.accepts.includes(id)){ ok++; c.classList.add('ok'); } else c.classList.add('no');
+    });
+    const msg = box.querySelector('.dnd-msg');
+    if(ok === total){ msg.className = 'dnd-msg ok'; msg.textContent = '✔ 全部正確！'; }
+    else { msg.className = 'dnd-msg no'; msg.textContent = `✘ 對了 ${ok} / ${total}${unplaced ? '（還有 ' + unplaced + ' 張沒放）' : ''}，紅色的再想想。`; }
+    toolLog(opts.name || opts.box, ok === total);
+    if(opts.onResult) opts.onResult(ok, total, placed);
+  }
+  render();
+  return { placed };
+}
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+const D2R = Math.PI / 180;
+const C = { sin: '#dc2626', cos: '#2563eb', tan: '#16a34a', ink: '#1f2937', sub: '#6b7280', hyp: '#7c3aed' };
+
+// ---- 1 量樹高 ----
+const dist = document.getElementById('dist'), elev = document.getElementById('elev');
+function drawTree(){
+  const d = +dist.value, a = +elev.value, h = d * Math.tan(a * D2R);
+  document.getElementById('distLabel').textContent = d; document.getElementById('elevLabel').textContent = a;
+  const scale = 300 / 34, x0 = 40, y0 = 200, xt = x0 + d * scale, yt = y0 - Math.min(h, 40) * scale;
+  let s = rect(0,0,420,230,'#f0f9ff') + rect(0,200,420,30,'#bbf7d0');
+  s += line(xt, y0, xt, yt, '#92400e', 8) + `<circle cx="${xt}" cy="${yt}" r="18" fill="#22c55e"/>`;
+  s += `<circle cx="${x0}" cy="${y0-12}" r="6" fill="#fcd34d" stroke="#92400e"/>` + rect(x0-5, y0-6, 10, 6, '#3b82f6');
+  s += line(x0, y0, xt, y0, C.cos, 3) + line(x0, y0, xt, yt, C.hyp, 2, true) + line(xt, y0, xt, yt, C.sin, 3);
+  const [ax, ay] = P(x0, y0, a / 2, 40);
+  s += `<path d="M ${x0+34} ${y0} A 34 34 0 0 0 ${x0 + 34*Math.cos(a*D2R)} ${y0 - 34*Math.sin(a*D2R)}" fill="none" stroke="#f59e0b" stroke-width="2"/>` + txt(ax + 8, ay + 4, a + '°', '#b45309', 12, 'start');
+  s += txt((x0 + xt) / 2, y0 + 18, '距離 ' + d + ' m（鄰邊）', C.cos, 12) + txt(xt + 8, (y0 + yt) / 2, '樹高（對邊）', C.sin, 12, 'start');
+  document.getElementById('svgTree').innerHTML = svg(420, 230, s);
+  document.getElementById('treeOut').innerHTML = `樹高 ＝ 距離 × tan(${a}°) ＝ ${d} × ${Math.tan(a*D2R).toFixed(2)} ＝ <b>${h.toFixed(1)} 公尺</b>`;
+}
+dist.addEventListener('input', drawTree); elev.addEventListener('input', drawTree); drawTree();
+
+// ---- 1 相似三角形 ----
+const scaleIn = document.getElementById('scale');
+function drawSimilar(){
+  const k = +scaleIn.value, ang = 35, adj = k * 20, opp = adj * Math.tan(ang * D2R), hyp = Math.hypot(adj, opp);
+  const x0 = 30, y0 = 210;
+  let s = rect(0,0,420,230,'#fff');
+  s += poly([[x0,y0],[x0+adj,y0],[x0+adj,y0-opp]], '#e0e7ff', '#4338ca', 2);
+  s += txt(x0 + adj/2, y0 + 16, '鄰邊 ' + adj.toFixed(0), C.cos, 12) + txt(x0 + adj + 6, y0 - opp/2, '對邊 ' + opp.toFixed(0), C.sin, 12, 'start') + txt(x0 + adj/2 - 20, y0 - opp/2 - 10, '斜邊 ' + hyp.toFixed(0), C.hyp, 12);
+  s += txt(x0 + 30, y0 - 6, ang + '°', '#b45309', 12);
+  document.getElementById('svgSimilar').innerHTML = svg(420, 230, s);
+  document.getElementById('simOut').innerHTML = `對邊 ÷ 鄰邊 ＝ ${opp.toFixed(0)} ÷ ${adj.toFixed(0)} ＝ <b>${(opp/adj).toFixed(2)}</b>　對邊 ÷ 斜邊 ＝ <b>${(opp/hyp).toFixed(2)}</b>　鄰邊 ÷ 斜邊 ＝ <b>${(adj/hyp).toFixed(2)}</b>`;
+}
+scaleIn.addEventListener('input', drawSimilar); drawSimilar();
+
+// ---- 2 三邊與三個名字 ----
+let atAngle = 'A', fn = null;
+const TRI = { A: [40, 220], B: [340, 60], Cc: [340, 220] };   // 直角在 Cc
+function drawSides(){
+  const [ax, ay] = TRI.A, [bx, by] = TRI.B, [cx, cy] = TRI.Cc;
+  const sides = { AC: [TRI.A, TRI.Cc], BC: [TRI.B, TRI.Cc], AB: [TRI.A, TRI.B] };
+  // 以目前站的角決定名字
+  const names = atAngle === 'A' ? { AC: '鄰邊', BC: '對邊', AB: '斜邊' } : { AC: '對邊', BC: '鄰邊', AB: '斜邊' };
+  const use = fn === 'sin' ? ['對邊', '斜邊'] : fn === 'cos' ? ['鄰邊', '斜邊'] : fn === 'tan' ? ['對邊', '鄰邊'] : [];
+  let s = rect(0,0,400,250,'#fff');
+  Object.entries(sides).forEach(([k, [p, q]]) => {
+    const hot = use.includes(names[k]);
+    const col = names[k] === '對邊' ? C.sin : names[k] === '鄰邊' ? C.cos : C.hyp;
+    s += line(p[0], p[1], q[0], q[1], hot ? col : '#cbd5e1', hot ? 7 : 3);
+    const mx = (p[0] + q[0]) / 2, my = (p[1] + q[1]) / 2;
+    const off = k === 'AC' ? [0, 20] : k === 'BC' ? [26, 4] : [-28, -10];
+    s += txt(mx + off[0], my + off[1], names[k], hot ? col : C.sub, 14, 'middle', hot ? 'font-weight="bold"' : '');
+  });
+  s += rect(cx - 16, cy - 16, 16, 16, 'none', C.ink, 2);
+  s += `<circle cx="${atAngle === 'A' ? ax : bx}" cy="${atAngle === 'A' ? ay : by}" r="14" fill="#fde68a" stroke="#b45309" stroke-width="2"/>`;
+  s += txt(ax - 18, ay + 6, 'A', C.ink, 15) + txt(bx + 16, by - 2, 'B', C.ink, 15);
+  document.getElementById('svgSides').innerHTML = svg(400, 250, s);
+  const info = document.getElementById('sidesInfo');
+  if(!fn) info.innerHTML = `你站在<b>角 ${atAngle}</b>。對邊是角 ${atAngle} 對面那條（紅字），鄰邊是靠著角 ${atAngle} 的那條（藍字），斜邊永遠是最長的（紫字）。點 sin、cos 或 tan 看它用哪兩條。`;
+  else {
+    const m = { sin: ['sin 正弦', '對邊 ÷ 斜邊', '對斜'], cos: ['cos 餘弦', '鄰邊 ÷ 斜邊', '鄰斜'], tan: ['tan 正切', '對邊 ÷ 鄰邊', '對鄰'] }[fn];
+    info.innerHTML = `<b>${m[0]}</b> ＝ ${m[1]}（口訣：${fn} <b>${m[2]}</b>）。亮起來的兩條邊，上面那條除以下面那條。換到另一個角，對邊鄰邊會互換，sin 和 cos 的值就互換。`;
+  }
+}
+document.getElementById('atA').addEventListener('click', () => { atAngle = 'A'; document.getElementById('atA').classList.add('on'); document.getElementById('atB').classList.remove('on'); drawSides(); });
+document.getElementById('atB').addEventListener('click', () => { atAngle = 'B'; document.getElementById('atB').classList.add('on'); document.getElementById('atA').classList.remove('on'); drawSides(); });
+document.querySelectorAll('.pills button[data-f]').forEach(b => b.addEventListener('click', () => {
+  fn = (fn === b.dataset.f) ? null : b.dataset.f;
+  document.querySelectorAll('.pills button[data-f]').forEach(x => x.classList.toggle('on', x.dataset.f === fn));
+  drawSides(); toolLog('三邊對應', true);
+}));
+drawSides();
+
+dndGame({ box: 'dndName', name: '口訣配對', poolLabel: '定義',
+  items: [ { id: 'n1', label: '對邊 ÷ 斜邊' }, { id: 'n2', label: '鄰邊 ÷ 斜邊' }, { id: 'n3', label: '對邊 ÷ 鄰邊' }, { id: 'n4', label: '口訣「對斜」' }, { id: 'n5', label: '口訣「鄰斜」' }, { id: 'n6', label: '口訣「對鄰」' } ],
+  zones: [ { id: 'sin', label: 'sin 正弦', accepts: ['n1', 'n4'] }, { id: 'cos', label: 'cos 餘弦', accepts: ['n2', 'n5'] }, { id: 'tan', label: 'tan 正切', accepts: ['n3', 'n6'] } ] });
+
+dndGame({ box: 'dndSpecial', name: '特殊角', poolLabel: '值（每個值可能用到不只一次，所以有重複的卡片）',
+  items: [ { id: 'v1', label: '1/2' }, { id: 'v2', label: '√3/2' }, { id: 'v3', label: '√3/3' }, { id: 'v4', label: '√2/2' }, { id: 'v5', label: '√2/2 ' }, { id: 'v6', label: '1' }, { id: 'v7', label: '√3/2 ' }, { id: 'v8', label: '1/2 ' }, { id: 'v9', label: '√3' } ],
+  zones: [
+    { id: 's30', label: 'sin 30°', accepts: ['v1', 'v8'] }, { id: 'c30', label: 'cos 30°', accepts: ['v2', 'v7'] }, { id: 't30', label: 'tan 30°', accepts: ['v3'] },
+    { id: 's45', label: 'sin 45°', accepts: ['v4', 'v5'] }, { id: 'c45', label: 'cos 45°', accepts: ['v4', 'v5'] }, { id: 't45', label: 'tan 45°', accepts: ['v6'] },
+    { id: 's60', label: 'sin 60°', accepts: ['v2', 'v7'] }, { id: 'c60', label: 'cos 60°', accepts: ['v1', 'v8'] }, { id: 't60', label: 'tan 60°', accepts: ['v9'] },
+  ],
+  hint: '提示：30° 和 60° 的 sin、cos 互換；45° 的 sin、cos 一樣。' });
+
+// ---- 3 單位圓 ----
+const thetaIn = document.getElementById('theta');
+const UC = { cx: 160, cy: 160, r: 120 };
+let showCos = false, playing = false, playTimer = null;
+function fmtRad(deg){
+  const table = { 0: '0', 30: 'π/6', 45: 'π/4', 60: 'π/3', 90: 'π/2', 120: '2π/3', 135: '3π/4', 150: '5π/6', 180: 'π', 210: '7π/6', 225: '5π/4', 240: '4π/3', 270: '3π/2', 300: '5π/3', 315: '7π/4', 330: '11π/6', 360: '2π' };
+  return table[deg] !== undefined ? table[deg] : (deg / 180).toFixed(2) + 'π';
+}
+function drawUnit(){
+  const th = +thetaIn.value, x = Math.cos(th * D2R), y = Math.sin(th * D2R);
+  const px = UC.cx + UC.r * x, py = UC.cy - UC.r * y;
+  let s = rect(0,0,320,320,'#fff');
+  s += line(20, UC.cy, 300, UC.cy, '#cbd5e1', 1) + line(UC.cx, 20, UC.cx, 300, '#cbd5e1', 1);
+  s += `<circle cx="${UC.cx}" cy="${UC.cy}" r="${UC.r}" fill="none" stroke="#4338ca" stroke-width="2"/>`;
+  s += txt(UC.cx + UC.r + 8, UC.cy + 4, '1', C.sub, 11, 'start') + txt(UC.cx - 6, UC.cy - UC.r - 6, '1', C.sub, 11, 'end') + txt(UC.cx - UC.r - 8, UC.cy + 4, '−1', C.sub, 11, 'end') + txt(UC.cx - 6, UC.cy + UC.r + 14, '−1', C.sub, 11, 'end');
+  // 角度弧
+  const arcR = 28, big = th > 180 ? 1 : 0;
+  s += `<path d="M ${UC.cx + arcR} ${UC.cy} A ${arcR} ${arcR} 0 ${big} 0 ${UC.cx + arcR * x} ${UC.cy - arcR * y}" fill="none" stroke="#f59e0b" stroke-width="2"/>`;
+  // 三角形：斜邊、cos（橫）、sin（直）
+  s += line(UC.cx, UC.cy, px, UC.cy, C.cos, 5) + line(px, UC.cy, px, py, C.sin, 5) + line(UC.cx, UC.cy, px, py, C.hyp, 2);
+  s += txt(px, UC.cy + (y >= 0 ? 16 : -8), 'cos', C.cos, 12) + txt(px + (x >= 0 ? 10 : -10), (UC.cy + py) / 2 + 4, 'sin', C.sin, 12, x >= 0 ? 'start' : 'end');
+  s += `<circle cx="${px}" cy="${py}" r="9" fill="#4338ca" stroke="#fff" stroke-width="2"/>`;
+  s += txt(UC.cx + 36 * Math.cos(th * D2R / 2), UC.cy - 36 * Math.sin(th * D2R / 2) + 4, 'θ', '#b45309', 12);
+  document.getElementById('svgUnit').innerHTML = `<svg viewBox="0 0 320 320" width="320" class="ucircle" id="ucSvg">${s}</svg>`;
+  document.getElementById('thetaLabel').textContent = `${th}°（${fmtRad(th)}）`;
+  const t = Math.abs(x) < 1e-9 ? '不存在（鄰邊是 0）' : (y / x).toFixed(2);
+  document.getElementById('unitInfo').innerHTML = `<span class="val s">sin θ ＝ 高度 ＝ ${y.toFixed(2)}</span><span class="val c">cos θ ＝ 橫向 ＝ ${x.toFixed(2)}</span><span class="val t">tan θ ＝ sin ÷ cos ＝ ${t}</span><br><span style="font-weight:normal;font-size:.9rem">${y >= 0 ? '點在上半圓，sin 是正的' : '點在下半圓，sin 是負的'}；${x >= 0 ? '點在右半圓，cos 是正的' : '點在左半圓，cos 是負的'}。</span>`;
+  drawWave(th);
+  // 拖曳
+  const sv = document.getElementById('ucSvg');
+  const setFromPointer = e => {
+    const r = sv.getBoundingClientRect(), k = 320 / r.width;
+    const mx = (e.clientX - r.left) * k - UC.cx, my = UC.cy - (e.clientY - r.top) * k;
+    let deg = Math.round(Math.atan2(my, mx) / D2R); if(deg < 0) deg += 360;
+    thetaIn.value = deg; drawUnit();
+  };
+  let down = false;
+  sv.addEventListener('pointerdown', e => { down = true; sv.setPointerCapture(e.pointerId); setFromPointer(e); });
+  sv.addEventListener('pointermove', e => { if(down) setFromPointer(e); });
+  sv.addEventListener('pointerup', () => { down = false; toolLog('單位圓', true); });
+}
+function drawWave(th){
+  const W = 460, H = 200, L = 40, R = 20, T = 20, B = 30, pw = W - L - R, ph = H - T - B, mid = T + ph / 2, amp = ph / 2 - 6;
+  const X = d => L + pw * d / 360, Y = v => mid - amp * v;
+  let s = rect(0,0,W,H,'#fff') + line(L, mid, W - R, mid, '#94a3b8', 1) + line(L, T, L, H - B, '#94a3b8', 1);
+  [[0,'0'],[90,'π/2'],[180,'π'],[270,'3π/2'],[360,'2π']].forEach(([d, l]) => s += line(X(d), mid - 4, X(d), mid + 4, '#64748b', 1) + txt(X(d), H - 10, l + (d ? '（' + d + '°）' : ''), C.sub, 10));
+  s += txt(L - 6, Y(1) + 4, '1', C.sub, 10, 'end') + txt(L - 6, Y(-1) + 4, '−1', C.sub, 10, 'end');
+  const path = f => { let d = ''; for(let a = 0; a <= 360; a += 3) d += (a ? ' L ' : 'M ') + X(a).toFixed(1) + ' ' + Y(f(a * D2R)).toFixed(1); return d; };
+  if(showCos) s += `<path d="${path(Math.cos)}" fill="none" stroke="${C.cos}" stroke-width="2" opacity=".7"/>`;
+  s += `<path d="${path(Math.sin)}" fill="none" stroke="${C.sin}" stroke-width="2.5"/>`;
+  // 已走過的部分加粗
+  let d2 = ''; for(let a = 0; a <= th; a += 3) d2 += (a ? ' L ' : 'M ') + X(a).toFixed(1) + ' ' + Y(Math.sin(a * D2R)).toFixed(1);
+  if(th > 0) s += `<path d="${d2}" fill="none" stroke="${C.sin}" stroke-width="4"/>`;
+  s += line(X(th), T, X(th), H - B, '#f59e0b', 1, true);
+  s += line(X(th), mid, X(th), Y(Math.sin(th * D2R)), C.sin, 4) + `<circle cx="${X(th)}" cy="${Y(Math.sin(th * D2R))}" r="6" fill="#4338ca" stroke="#fff" stroke-width="2"/>`;
+  s += txt(W - R, T + 8, 'sin θ 的波浪線' + (showCos ? '（藍：cos）' : ''), C.sub, 11, 'end');
+  document.getElementById('svgWave').innerHTML = svg(W, H, s);
+}
+thetaIn.addEventListener('input', drawUnit);
+document.getElementById('showCos').addEventListener('click', e => { showCos = !showCos; e.target.classList.toggle('on', showCos); e.target.style.background = showCos ? C.cos : ''; drawUnit(); });
+document.getElementById('play').addEventListener('click', e => {
+  playing = !playing; e.target.textContent = playing ? '⏸ 停' : '▶ 自動轉';
+  if(playing) playTimer = setInterval(() => { thetaIn.value = (+thetaIn.value + 2) % 361; drawUnit(); }, 40); else clearInterval(playTimer);
+});
+drawUnit();
+
+// ---- 3 猜猜看 ----
+const GA = [0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330];
+const GOPT = [[-1, '−1'], [-0.87, '−0.87'], [-0.71, '−0.71'], [-0.5, '−0.5'], [0, '0'], [0.5, '0.5'], [0.71, '0.71'], [0.87, '0.87'], [1, '1']];
+let gAng = 0, gDone = false, gRight = 0, gTotal = 0;
+function newGuess(){
+  gAng = GA[Math.floor(Math.random() * GA.length)]; gDone = false;
+  const x = Math.cos(gAng * D2R), y = Math.sin(gAng * D2R), r = 100, cx = 130, cy = 130;
+  let s = rect(0,0,260,260,'#fff') + line(20, cy, 240, cy, '#cbd5e1', 1) + line(cx, 20, cx, 240, '#cbd5e1', 1);
+  s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#4338ca" stroke-width="2"/>`;
+  s += line(cx + r * x, cy, cx + r * x, cy - r * y, C.sin, 4) + `<circle cx="${cx + r * x}" cy="${cy - r * y}" r="8" fill="#4338ca"/>`;
+  s += txt(cx + r + 6, cy + 4, '1', C.sub, 10, 'start') + txt(cx - 4, cy - r - 4, '1', C.sub, 10, 'end') + txt(cx - 4, cy + r + 12, '−1', C.sub, 10, 'end');
+  document.getElementById('svgGuess').innerHTML = svg(260, 260, s);
+  document.getElementById('guessQ').textContent = `θ ＝ ${gAng}°，sin θ 大約是多少？`;
+  const exact = Math.sin(gAng * D2R);
+  const opts = [...GOPT].sort(() => Math.random() - .5).slice(0, 4);
+  if(!opts.some(o => Math.abs(o[0] - exact) < 0.02)) opts[0] = GOPT.find(o => Math.abs(o[0] - exact) < 0.02);
+  opts.sort((a, b) => a[0] - b[0]);
+  document.getElementById('guessOpts').innerHTML = opts.map(o => `<button data-v="${o[0]}">${o[1]}</button>`).join('');
+  document.getElementById('guessInfo').textContent = '看紅色線的長度和方向（在橫軸上面是正、下面是負）。';
+  document.querySelectorAll('#guessOpts button').forEach(b => b.addEventListener('click', () => {
+    if(gDone) return; gDone = true; gTotal++;
+    const ok = Math.abs(+b.dataset.v - exact) < 0.02; if(ok) gRight++;
+    b.classList.add(ok ? 'ok' : 'no');
+    const ex = { 0: '0', 30: '1/2', 45: '√2/2', 60: '√3/2', 90: '1', 120: '√3/2', 135: '√2/2', 150: '1/2', 180: '0', 210: '−1/2', 225: '−√2/2', 240: '−√3/2', 270: '−1', 300: '−√3/2', 315: '−√2/2', 330: '−1/2' }[gAng];
+    document.getElementById('guessInfo').innerHTML = (ok ? '✔ 答對！' : '✘ 再看一次。') + `sin ${gAng}° ＝ <b>${ex}</b> ≈ ${exact.toFixed(2)}。${gAng > 180 ? '點在下半圓，所以是負的。' : gAng === 0 || gAng === 180 ? '點在橫軸上，高度是 0。' : '點在上半圓，是正的。'}`;
+    document.getElementById('guessScore').textContent = `答對 ${gRight} / ${gTotal}`;
+    toolLog('猜 sin', ok);
+  }));
+}
+document.getElementById('guessNext').addEventListener('click', newGuess);
+newGuess();
+
+</script>
+</body>
+</html>
