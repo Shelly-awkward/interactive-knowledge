@@ -150,14 +150,15 @@
 <header class="hero">
   <span class="badge">從零開始 · 給從來沒學會三角函數的人 · 高中數學A 第三冊第1章的前置觀念</span>
   <h1>三角函數入門：單位圓與正弦波</h1>
-  <p>三個小節＋總測驗。不背公式，先搞懂三件事：三角函數是拿來做什麼的、sin／cos／tan 三個名字各對應哪一條邊、為什麼跟圓形有關。每一節都有可以拖的東西：拉仰角量樹高、點名字看邊、拖著圓上的點看波浪線長出來。</p>
+  <p>四個小節＋總測驗。不背公式，先搞懂三件事：三角函數是拿來做什麼的、sin／cos／tan 三個名字各對應哪一條邊、為什麼跟圓形有關。每一節都有可以拖的東西：拉仰角量樹高、點名字看邊、拖著圓上的點看波浪線長出來。</p>
 </header>
 
 <nav class="tabs">
   <button class="active" data-t="s1">1 它是拿來做什麼的</button>
   <button data-t="s2">2 三個名字對應哪條邊</button>
-  <button data-t="s3">3 圓形與波浪線</button>
-  <button data-t="s4">🏁 單元總測驗</button>
+  <button data-t="s3">3 弧度：為什麼 2π 是一圈</button>
+  <button data-t="s4">4 圓形與波浪線</button>
+  <button data-t="s5">🏁 單元總測驗</button>
 </nav>
 
 <!-- ═══════════ 1-1 ═══════════ -->
@@ -443,9 +444,182 @@
   <div class="card goal">
     <h2>🎯 學習目標</h2>
     <ul>
+      <li>知道「度」和「弧度」是講角度的兩種方式，弧度是用「走過的弧長」來說</li>
+      <li>知道 π 是什麼：圓周長 ÷ 直徑，大約 3.14</li>
+      <li>說得出為什麼一圈是 2π、半圈是 π、四分之一圈是 π/2</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：角度有兩種說法</h2>
+    <p>「度」是把一圈切成 360 格，一格叫 1°。這是古人定的，360 只是因為好切。</p>
+    <p>「弧度」是另一種說法：<b>不數格子，改量你沿著圓走了多長</b>。用半徑 1 的圓，走過的弧長是多少，角度就是多少弧度。</p>
+    <div class="formula">1 弧度 ＝ 沿著圓走了「一個半徑那麼長」的角度 ≈ 57.3°</div>
+    <div class="note">💡 為什麼要有弧度？因為在圓上「走多遠」比「切幾格」自然，後面算波、算速度都用它。你先把它當成「另一種單位」就好，像公分和英吋。</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 動手玩：把半徑貼在圓周上</h2>
+    <p>拿一條和半徑一樣長的線，貼著圓周貼一段，就是 1 弧度。一直貼，看繞一圈要貼幾段。</p>
+    <div class="tool">
+      <div class="svgbox" id="svgLay"></div>
+      <div class="row"><button id="layOne">再貼一段半徑</button><button id="layReset" class="ghost">重來</button></div>
+      <div class="out" id="layOut"></div>
+      <div class="hint">貼 6 段之後還差一小截才滿一圈。那一小截是 0.28 個半徑。6 ＋ 0.28 ＝ 6.28，就是 2π。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：π 是什麼，2π 為什麼是一圈</h2>
+    <p><b>π</b>（唸 pài）是圓周長 ÷ 直徑，任何圓算出來都一樣，大約 <b>3.14</b>。</p>
+    <div class="formula">圓周長 ＝ π × 直徑 ＝ 2 × π × 半徑</div>
+    <p>半徑是 1 的時候，圓周長就是 2 × π × 1 ＝ <b>2π ≈ 6.28</b>。繞一整圈走了 6.28 個半徑長，所以：</p>
+    <div class="formula">一圈 ＝ 2π 弧度　→　半圈 ＝ π　→　四分之一圈 ＝ π/2</div>
+    <div class="warn">⚠️ 看到「2π」不要想成兩個什麼東西。它就是一個數字 6.28，意思是「繞一圈走的長度」。π 前面的數字越大，代表繞得越多。</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 動手玩：走多少角度，弧就多長</h2>
+    <div class="tool">
+      <div class="svgbox" id="svgArc"></div>
+      <div>角度：<span id="arcDegLabel"></span></div>
+      <input type="range" id="arcDeg" min="0" max="360" value="90">
+      <div class="out" id="arcOut"></div>
+      <div class="hint">下面那條直線是把弧「拉直」的長度，旁邊的短線是一個半徑。看弧長是半徑的幾倍，那就是幾弧度。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：換算就是比例</h2>
+    <div class="formula">一圈：360° ＝ 2π　→　180° ＝ π　→　弧度 ＝ 度數 × π ÷ 180</div>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>度</th><th>是一圈的幾分之幾</th><th>弧度</th><th>大約</th></tr>
+        <tr><td>30°</td><td>1/12 圈</td><td>π/6</td><td>0.52</td></tr>
+        <tr><td>45°</td><td>1/8 圈</td><td>π/4</td><td>0.79</td></tr>
+        <tr><td>60°</td><td>1/6 圈</td><td>π/3</td><td>1.05</td></tr>
+        <tr class="hi"><td>90°</td><td>1/4 圈</td><td>π/2</td><td>1.57</td></tr>
+        <tr><td>180°</td><td>半圈</td><td>π</td><td>3.14</td></tr>
+        <tr><td>270°</td><td>3/4 圈</td><td>3π/2</td><td>4.71</td></tr>
+        <tr><td>360°</td><td>一圈</td><td>2π</td><td>6.28</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 想法：先問「這是一圈的幾分之幾」，再拿 2π 去乘。90° 是 1/4 圈，2π × 1/4 ＝ π/2。</div>
+    <div class="tool">
+      <div class="row">度 <input type="number" id="cvDeg" value="120" style="width:100px"> <button id="cvGo">換成弧度</button></div>
+      <div class="out" id="cvOut"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：度和弧度配對</h2>
+    <div id="dndRad"></div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜為什麼 180° 是 π？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 180° 是半圈。一圈的弧長是 2π，半圈就是一半。</p>
+        <p class="step"><b>②</b> 2π ÷ 2 ＝ <b>π</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜1 弧度是幾度？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 一圈 ＝ 2π 弧度 ＝ 360°。</p>
+        <p class="step"><b>②</b> 1 弧度 ＝ 360 ÷ 6.28 ≈ <b>57.3°</b>。比 60° 小一點點。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜把 120° 換成弧度</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 120° 是一圈的 1/3（360 ÷ 120 ＝ 3）。</p>
+        <p class="step"><b>②</b> 2π × 1/3 ＝ <b>2π/3</b>。</p>
+        <p class="step"><b>③</b> 或用公式：120 × π ÷ 180 ＝ 2π/3，一樣。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜3π/2 是幾度？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> π 是 180°，3π/2 就是 180° × 3 ÷ 2。</p>
+        <p class="step"><b>②</b> 答案：<b>270°</b>，四分之三圈。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 1 弧度的意思是：</div>
+      <label><input type="radio" name="p3q1" value="A">一個直角</label>
+      <label><input type="radio" name="p3q1" value="B">沿著圓走了一個半徑那麼長</label>
+      <label><input type="radio" name="p3q1" value="C">圓的直徑</label>
+      <label><input type="radio" name="p3q1" value="D">一圈切 360 格的一格</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　弧長等於半徑時的角度。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. π 大約是：</div>
+      <label><input type="radio" name="p3q2" value="A">1.57</label>
+      <label><input type="radio" name="p3q2" value="B">3.14</label>
+      <label><input type="radio" name="p3q2" value="C">360</label>
+      <label><input type="radio" name="p3q2" value="D">6.28</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　圓周長 ÷ 直徑。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 繞一圈是 2π，因為：</div>
+      <label><input type="radio" name="p3q3" value="A">半徑 1 的圓周長是 2 × π × 1</label>
+      <label><input type="radio" name="p3q3" value="B">一圈有兩個半圓形</label>
+      <label><input type="radio" name="p3q3" value="C">2 是兩圈</label>
+      <label><input type="radio" name="p3q3" value="D">π 是一圈</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　圓周長 ＝ 2πr，r ＝ 1。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. 90° 等於幾弧度？</div>
+      <label><input type="radio" name="p3q4" value="A">π/2</label>
+      <label><input type="radio" name="p3q4" value="B">π</label>
+      <label><input type="radio" name="p3q4" value="C">π/4</label>
+      <label><input type="radio" name="p3q4" value="D">2π</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　四分之一圈：2π ÷ 4。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">5. π/6 是幾度？</div>
+      <label><input type="radio" name="p3q5" value="A">90°</label>
+      <label><input type="radio" name="p3q5" value="B">60°</label>
+      <label><input type="radio" name="p3q5" value="C">30°</label>
+      <label><input type="radio" name="p3q5" value="D">45°</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　半圈 180° 的六分之一。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">6. 哪一個角度<b>最大</b>？</div>
+      <label><input type="radio" name="p3q6" value="A">2</label>
+      <label><input type="radio" name="p3q6" value="B">π/2</label>
+      <label><input type="radio" name="p3q6" value="C">π</label>
+      <label><input type="radio" name="p3q6" value="D">3π/4</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　π ≈ 3.14 最大；2 弧度 ≈ 115°，介於 π/2 和 3π/4 之間。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-4 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
       <li>知道單位圓上一點的「高度」就是 sin、「橫向位置」就是 cos</li>
       <li>看得懂 sin 為什麼會變成波浪線，以及它為什麼會有負值</li>
-      <li>認識弧度：180° ＝ π</li>
+      <li>看得懂波浪線橫軸上的 π/2、π、2π</li>
     </ul>
   </div>
 
@@ -486,10 +660,10 @@
   </div>
 
   <div class="card">
-    <h2>📖 觀念 3：弧度——用「走了多長的弧」來說角度</h2>
-    <p>單位圓的周長是 2π。轉一整圈走了 2π 的弧長，所以數學上常用<b>弧長</b>來代替度數：</p>
+    <h2>📖 觀念 3：波浪線的橫軸為什麼寫 π</h2>
+    <p>上面波浪線的橫軸標的是弧度（第 3 節講過）：π/2 是四分之一圈、π 是半圈、2π 是一圈。</p>
     <div class="formula">360° ＝ 2π　180° ＝ π　90° ＝ π/2　60° ＝ π/3　45° ＝ π/4　30° ＝ π/6</div>
-    <div class="note">💡 換算：度數 × π ÷ 180 ＝ 弧度。看到 π 不要怕，它只是「半圈」的意思。</div>
+    <div class="note">💡 所以「sin 每 2π 重複一次」和「sin 每 360° 重複一次」是同一句話。</div>
   </div>
 
   <div class="card">
@@ -540,62 +714,62 @@
   <div class="card">
     <h2>🧩 練習題（做完按「對答案」）</h2>
 
-    <div class="q" data-ans="D">
+    <div class="q" data-ans="B">
       <div class="stem">1. 在單位圓上，一個點的高度就是它的：</div>
-      <label><input type="radio" name="p3q1" value="A">tan</label>
-      <label><input type="radio" name="p3q1" value="B">cos</label>
-      <label><input type="radio" name="p3q1" value="C">角度</label>
-      <label><input type="radio" name="p3q1" value="D">sin</label>
+      <label><input type="radio" name="p4q1" value="A">tan</label>
+      <label><input type="radio" name="p4q1" value="B">sin</label>
+      <label><input type="radio" name="p4q1" value="C">角度</label>
+      <label><input type="radio" name="p4q1" value="D">cos</label>
       <button class="check">對答案</button>
       <div class="fb" data-exp="　斜邊是 1，對邊 ÷ 1 ＝ 對邊 ＝ 高度。">　</div>
     </div>
 
-    <div class="q" data-ans="B">
+    <div class="q" data-ans="A">
       <div class="stem">2. sin 的最大值是：</div>
-      <label><input type="radio" name="p3q2" value="A">0</label>
-      <label><input type="radio" name="p3q2" value="B">1</label>
-      <label><input type="radio" name="p3q2" value="C">90</label>
-      <label><input type="radio" name="p3q2" value="D">360</label>
+      <label><input type="radio" name="p4q2" value="A">1</label>
+      <label><input type="radio" name="p4q2" value="B">360</label>
+      <label><input type="radio" name="p4q2" value="C">90</label>
+      <label><input type="radio" name="p4q2" value="D">0</label>
       <button class="check">對答案</button>
       <div class="fb" data-exp="　點在正上方時高度 1。">　</div>
     </div>
 
-    <div class="q" data-ans="C">
+    <div class="q" data-ans="D">
       <div class="stem">3. 點在下半圓時，sin 是：</div>
-      <label><input type="radio" name="p3q3" value="A">0</label>
-      <label><input type="radio" name="p3q3" value="B">無法判斷</label>
-      <label><input type="radio" name="p3q3" value="C">負的</label>
-      <label><input type="radio" name="p3q3" value="D">正的</label>
+      <label><input type="radio" name="p4q3" value="A">0</label>
+      <label><input type="radio" name="p4q3" value="B">正的</label>
+      <label><input type="radio" name="p4q3" value="C">無法判斷</label>
+      <label><input type="radio" name="p4q3" value="D">負的</label>
       <button class="check">對答案</button>
       <div class="fb" data-exp="　高度在橫軸下面是負的。">　</div>
     </div>
 
-    <div class="q" data-ans="C">
+    <div class="q" data-ans="B">
       <div class="stem">4. cos 270° ＝ ？</div>
-      <label><input type="radio" name="p3q4" value="A">1/2</label>
-      <label><input type="radio" name="p3q4" value="B">1</label>
-      <label><input type="radio" name="p3q4" value="C">0</label>
-      <label><input type="radio" name="p3q4" value="D">−1</label>
+      <label><input type="radio" name="p4q4" value="A">−1</label>
+      <label><input type="radio" name="p4q4" value="B">0</label>
+      <label><input type="radio" name="p4q4" value="C">1</label>
+      <label><input type="radio" name="p4q4" value="D">1/2</label>
       <button class="check">對答案</button>
       <div class="fb" data-exp="　270° 在正下方，橫向位置 0。">　</div>
     </div>
 
-    <div class="q" data-ans="B">
+    <div class="q" data-ans="D">
       <div class="stem">5. sin 每幾度重複一次？</div>
-      <label><input type="radio" name="p3q5" value="A">90°</label>
-      <label><input type="radio" name="p3q5" value="B">360°</label>
-      <label><input type="radio" name="p3q5" value="C">720°</label>
-      <label><input type="radio" name="p3q5" value="D">180°</label>
+      <label><input type="radio" name="p4q5" value="A">180°</label>
+      <label><input type="radio" name="p4q5" value="B">90°</label>
+      <label><input type="radio" name="p4q5" value="C">720°</label>
+      <label><input type="radio" name="p4q5" value="D">360°</label>
       <button class="check">對答案</button>
       <div class="fb" data-exp="　轉一圈回到原點。">　</div>
     </div>
 
     <div class="q" data-ans="A">
       <div class="stem">6. 90° 換成弧度是：</div>
-      <label><input type="radio" name="p3q6" value="A">π/2</label>
-      <label><input type="radio" name="p3q6" value="B">2π</label>
-      <label><input type="radio" name="p3q6" value="C">π/4</label>
-      <label><input type="radio" name="p3q6" value="D">π</label>
+      <label><input type="radio" name="p4q6" value="A">π/2</label>
+      <label><input type="radio" name="p4q6" value="B">π</label>
+      <label><input type="radio" name="p4q6" value="C">2π</label>
+      <label><input type="radio" name="p4q6" value="D">π/4</label>
       <button class="check">對答案</button>
       <div class="fb" data-exp="　90 × π ÷ 180 ＝ π/2。">　</div>
     </div>
@@ -603,7 +777,7 @@
 </section>
 
 <!-- ═══════════ 總測驗 ═══════════ -->
-<section id="s4" class="panel">
+<section id="s5" class="panel">
   <div class="card goal">
     <h2>🏁 單元總測驗（10 題）</h2>
     <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
@@ -1101,6 +1275,75 @@ function newGuess(){
 }
 document.getElementById('guessNext').addEventListener('click', newGuess);
 newGuess();
+
+// ---- 3 弧度：貼半徑 ----
+let laid = 0;
+const LC = { cx: 150, cy: 150, r: 100 };
+function drawLay(){
+  let s = rect(0,0,300,300,'#fff');
+  s += `<circle cx="${LC.cx}" cy="${LC.cy}" r="${LC.r}" fill="none" stroke="#cbd5e1" stroke-width="2"/>`;
+  s += line(LC.cx, LC.cy, LC.cx + LC.r, LC.cy, '#4338ca', 4) + txt(LC.cx + LC.r / 2, LC.cy + 16, '半徑', '#4338ca', 12);
+  const full = Math.min(laid, 6), extra = laid > 6;
+  for(let i = 0; i < full; i++){
+    const a0 = i, a1 = i + 1;      // 弧度
+    const [x0, y0] = [LC.cx + LC.r * Math.cos(a0), LC.cy - LC.r * Math.sin(a0)], [x1, y1] = [LC.cx + LC.r * Math.cos(a1), LC.cy - LC.r * Math.sin(a1)];
+    s += `<path d="M ${x0} ${y0} A ${LC.r} ${LC.r} 0 0 0 ${x1} ${y1}" fill="none" stroke="${i % 2 ? '#dc2626' : '#f59e0b'}" stroke-width="8" stroke-linecap="butt"/>`;
+    const [lx, ly] = [LC.cx + (LC.r + 18) * Math.cos(a0 + .5), LC.cy - (LC.r + 18) * Math.sin(a0 + .5)];
+    s += txt(lx, ly + 4, String(i + 1), '#1f2937', 12);
+  }
+  if(extra){
+    const [x0, y0] = [LC.cx + LC.r * Math.cos(6), LC.cy - LC.r * Math.sin(6)];
+    s += `<path d="M ${x0} ${y0} A ${LC.r} ${LC.r} 0 0 0 ${LC.cx + LC.r} ${LC.cy}" fill="none" stroke="#16a34a" stroke-width="8"/>`;
+    s += txt(LC.cx + LC.r + 30, LC.cy - 22, '0.28', '#16a34a', 12);
+  }
+  document.getElementById('svgLay').innerHTML = svg(300, 300, s);
+  const o = document.getElementById('layOut');
+  if(laid === 0) o.textContent = '還沒貼。按一下，貼一段和半徑一樣長的弧。';
+  else if(laid < 6) o.innerHTML = `貼了 <b>${laid}</b> 段 ＝ ${laid} 弧度 ≈ ${(laid * 57.3).toFixed(1)}°`;
+  else if(laid === 6) o.innerHTML = `貼了 <b>6</b> 段 ＝ 6 弧度 ≈ 343.8°。快一圈了，但還差一小截！`;
+  else o.innerHTML = `6 段 ＋ 一小截 0.28 ＝ <b>6.28 個半徑 ＝ 2π</b>，剛好一圈。這就是「一圈 ＝ 2π」的意思。`;
+}
+document.getElementById('layOne').addEventListener('click', () => { if(laid < 7){ laid++; drawLay(); if(laid === 7) toolLog('貼半徑', true); } });
+document.getElementById('layReset').addEventListener('click', () => { laid = 0; drawLay(); });
+drawLay();
+
+// ---- 3 弧度：弧長拉直 ----
+const arcDeg = document.getElementById('arcDeg');
+function drawArc(){
+  const d = +arcDeg.value, rad = d * D2R, cx = 130, cy = 120, r = 90;
+  let s = rect(0,0,460,250,'#fff');
+  s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#cbd5e1" stroke-width="2"/>`;
+  s += line(cx, cy, cx + r, cy, '#4338ca', 3);
+  if(d > 0){
+    const big = d > 180 ? 1 : 0, ex = cx + r * Math.cos(rad), ey = cy - r * Math.sin(rad);
+    s += `<path d="M ${cx + r} ${cy} A ${r} ${r} 0 ${big} 0 ${ex} ${ey}" fill="none" stroke="#dc2626" stroke-width="7"/>`;
+    s += line(cx, cy, ex, ey, '#4338ca', 3);
+  }
+  s += txt(cx, cy + r + 22, d + '°', '#1f2937', 13);
+  // 拉直
+  const unit = 35, L = rad * unit;
+  s += txt(250, 60, '弧拉直：', '#6b7280', 12, 'start') + line(250, 80, 250 + L, 80, '#dc2626', 7) + txt(250 + L + 8, 84, rad.toFixed(2), '#dc2626', 12, 'start');
+  s += txt(250, 120, '一個半徑：', '#6b7280', 12, 'start') + line(250, 140, 250 + unit, 140, '#4338ca', 7) + txt(250 + unit + 8, 144, '1', '#4338ca', 12, 'start');
+  for(let k = 1; k <= Math.floor(rad); k++) s += line(250 + k * unit, 72, 250 + k * unit, 88, '#fff', 2);
+  document.getElementById('svgArc').innerHTML = svg(460, 250, s);
+  document.getElementById('arcDegLabel').textContent = d + '°';
+  document.getElementById('arcOut').innerHTML = `弧長是半徑的 <b>${rad.toFixed(2)}</b> 倍 → <b>${rad.toFixed(2)} 弧度</b> ＝ ${(d / 180).toFixed(2)}π${fmtRad(d) !== (d/180).toFixed(2)+'π' ? '（＝ ' + fmtRad(d) + '）' : ''}`;
+}
+arcDeg.addEventListener('input', drawArc); drawArc();
+
+// ---- 3 弧度：換算機 ----
+document.getElementById('cvGo').addEventListener('click', () => {
+  const d = parseFloat(document.getElementById('cvDeg').value);
+  if(isNaN(d)){ document.getElementById('cvOut').textContent = '請輸入度數。'; return; }
+  const frac = d / 360, rad = d * D2R;
+  document.getElementById('cvOut').innerHTML = `${d}° 是一圈的 ${frac.toFixed(3)} → ${d} × π ÷ 180 ＝ <b>${(d/180).toFixed(3).replace(/\.?0+$/, '')}π</b> ≈ ${rad.toFixed(2)} 弧度`;
+});
+
+dndGame({ box: 'dndRad', name: '度與弧度配對', poolLabel: '弧度',
+  items: [ { id: 'a1', label: 'π/6' }, { id: 'a2', label: 'π/4' }, { id: 'a3', label: 'π/3' }, { id: 'a4', label: 'π/2' }, { id: 'a5', label: 'π' }, { id: 'a6', label: '3π/2' }, { id: 'a7', label: '2π' }, { id: 'a8', label: '2π/3' } ],
+  zones: [ { id: 'd30', label: '30°', accepts: ['a1'] }, { id: 'd45', label: '45°', accepts: ['a2'] }, { id: 'd60', label: '60°', accepts: ['a3'] }, { id: 'd90', label: '90°', accepts: ['a4'] },
+           { id: 'd120', label: '120°', accepts: ['a8'] }, { id: 'd180', label: '180°', accepts: ['a5'] }, { id: 'd270', label: '270°', accepts: ['a6'] }, { id: 'd360', label: '360°', accepts: ['a7'] } ],
+  hint: '先想它是一圈的幾分之幾，再拿 2π 去乘。' });
 
 </script>
 </body>
