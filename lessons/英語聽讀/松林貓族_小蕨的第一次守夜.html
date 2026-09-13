@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>松林貓族｜Fern's First Night</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#faf7f2; --card:#ffffff;
+    --main:#15803d; --main-soft:#dcfce7; --main-deep:#166534;
+    --green:#16a34a; --green-soft:#dcfce7; --red:#dc2626; --red-soft:#fee2e2;
+    --amber:#d97706; --amber-soft:#fef3c7; --border:#e7e2d8; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.75;}
+  .wrap{max-width:820px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#052e16,#15803d 60%,#65a30d); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.2); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:100px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--main);}
+  nav.tabs button.active{background:var(--main); border-color:var(--main); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--main-deep); margin-bottom:10px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--main-soft); border:none;}
+  .goal ul, .goal ol{margin-left:1.2em;}
+  .goal li{margin:4px 0;}
+  .note{background:var(--main-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:var(--main-deep);}
+  .warn{background:var(--amber-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#92400e;}
+  .muted{color:var(--sub); font-size:.85rem;}
+
+  /* ── 播放控制列 ── */
+  .ctrl{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:8px 0 14px;}
+  .ctrl button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:8px 16px; font-size:.95rem; cursor:pointer; font-family:inherit; transition:.12s;}
+  .ctrl button:hover{border-color:var(--main);}
+  .ctrl button.primary{background:var(--main); border-color:var(--main); color:#fff; font-weight:bold;}
+  .ctrl button.on{background:var(--main-soft); border-color:var(--main); color:var(--main-deep); font-weight:bold;}
+  .ctrl .sp{display:flex; align-items:center; gap:6px; font-size:.85rem; color:var(--sub);}
+  .ctrl input[type=range]{width:110px;}
+  .ctrl select{font-family:inherit; font-size:.85rem; padding:6px 8px; border:1px solid var(--border); border-radius:8px; max-width:200px; background:#fff;}
+  .counter{font-size:.85rem; color:var(--sub); margin-left:auto;}
+  .counter b{color:var(--main-deep);}
+
+  /* ── 故事本文 ── */
+  .story{font-size:1.12rem; line-height:1.95;}
+  .story p{margin:0 0 14px;}
+  .story .s{cursor:pointer; border-radius:6px; padding:1px 2px; transition:background .15s;}
+  .story .s:hover{background:var(--main-soft);}
+  .story .s.now{background:var(--amber-soft); box-shadow:0 0 0 2px var(--amber-soft);}
+  .story .g{border-bottom:2px dotted var(--main); cursor:pointer;}
+  .story .g.known{border-bottom-color:transparent;}
+  .story .zh{display:none; font-size:.9rem; color:var(--sub); margin:-8px 0 14px; padding:6px 12px; border-left:3px solid var(--main-soft);}
+  .story.showzh .zh{display:block;}
+  .story.blind .s{filter:blur(7px); user-select:none;}
+  .story.blind .s.now, .story.blind .s.peek{filter:none;}
+  .story .who{display:block; font-size:.8rem; color:var(--sub); margin-bottom:-6px;}
+
+  .hook{margin-top:18px; background:linear-gradient(135deg,var(--main-soft),#fff); border:1px dashed var(--main); border-radius:12px; padding:12px 16px;}
+  .hook .lab{font-size:.78rem; font-weight:bold; color:var(--main-deep); letter-spacing:.1em;}
+  .hook .txt{font-size:1rem; margin-top:2px;}
+  .hook .txtzh{font-size:.88rem; color:var(--sub);}
+  .nextbtn{display:inline-block; margin-top:10px; background:var(--main); color:#fff; border:none; border-radius:99px; padding:8px 20px; cursor:pointer; font-family:inherit; font-size:.95rem; font-weight:bold;}
+
+  /* ── 聽懂了嗎 ── */
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q .opts{display:flex; flex-direction:column; gap:6px;}
+  .q .opts button{text-align:left; border:1px solid var(--border); background:#fff; border-radius:8px; padding:8px 12px; cursor:pointer; font-family:inherit; font-size:.95rem; transition:.12s;}
+  .q .opts button:hover{border-color:var(--main); background:var(--main-soft);}
+  .q .opts button.good{background:var(--green-soft); border-color:var(--green); color:#166534; font-weight:bold;}
+  .q .opts button.bad{background:var(--red-soft); border-color:var(--red); color:#991b1b; animation:shake .3s;}
+  .q .opts button:disabled{cursor:default;}
+  @keyframes shake{25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+  .q .why{display:none; margin-top:8px; font-size:.88rem; color:var(--main-deep); background:var(--main-soft); border-radius:8px; padding:6px 10px;}
+  .q .why.show{display:block;}
+  .think{background:var(--amber-soft); border-radius:10px; padding:12px 16px; font-size:.95rem; color:#92400e;}
+
+  /* ── 字彙池 ── */
+  .vtop{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:12px;}
+  .vtop .cnt{font-weight:bold; color:var(--main-deep);}
+  .vtop button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 14px; font-size:.85rem; cursor:pointer; font-family:inherit;}
+  .vtop button.on{background:var(--main); border-color:var(--main); color:#fff;}
+  .vgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px;}
+  .vcard{border:1px solid var(--border); border-radius:10px; padding:10px 12px; background:#fff; transition:.12s;}
+  .vcard.known{background:var(--green-soft); border-color:#bbf7d0;}
+  .vcard .w{font-weight:bold; font-size:1.05rem; cursor:pointer;}
+  .vcard .w:hover{color:var(--main-deep);}
+  .vcard .z{font-size:.85rem; color:var(--sub);}
+  .vcard .eps{margin-top:4px; display:flex; gap:4px; flex-wrap:wrap;}
+  .vcard .ep{font-size:.7rem; border-radius:99px; padding:1px 8px; background:var(--main-soft); color:var(--main-deep);}
+  .vcard .ex{margin-top:6px; font-size:.82rem; color:var(--main-deep); border-top:1px dashed var(--border); padding-top:5px; cursor:pointer;}
+  .vcard .kb{margin-top:6px; width:100%; border:1px solid var(--border); background:#fff; border-radius:8px; padding:5px; cursor:pointer; font-family:inherit; font-size:.82rem;}
+  .vcard.known .kb{background:#fff; color:#166534; border-color:#bbf7d0;}
+
+  /* ── 單字小卡（點字彈出）── */
+  .tip{position:absolute; display:none; z-index:50; background:#fff; border:1px solid var(--main); border-radius:12px; padding:10px 14px; box-shadow:0 8px 24px rgba(0,0,0,.15); max-width:260px; font-size:.95rem;}
+  .tip .tw{font-weight:bold; font-size:1.1rem; color:var(--main-deep);}
+  .tip .tz{margin:2px 0 8px;}
+  .tip button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:4px 12px; cursor:pointer; font-family:inherit; font-size:.85rem; margin-right:6px;}
+  .tip button.kn{background:var(--green-soft); border-color:var(--green); color:#166534;}
+
+  .steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-top:10px;}
+  .step{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 12px; font-size:.9rem;}
+  .step b{display:block; color:var(--main-deep); margin-bottom:2px;}
+  table.plan{width:100%; border-collapse:collapse; font-size:.9rem; margin-top:8px;}
+  table.plan th, table.plan td{border:1px solid var(--border); padding:6px 10px; text-align:left; vertical-align:top;}
+  table.plan th{background:var(--main-soft); color:var(--main-deep);}
+  .novoice{display:none; background:var(--red-soft); color:#991b1b; border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem;}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:30%; font-size:.85rem;} .story{font-size:1.05rem;} .counter{margin-left:0;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">英語聽讀 · 三集 · 讀完約 5 分鐘 · 每集結尾有下集預告</span>
+  <h1>🐾 松林貓族｜Fern's First Night</h1>
+  <p>小蕨 Fern 六個月大，今晚第一次守夜。老師說：聞到狐狸就叫醒我。可是黑暗裡出現的，不是狐狸的味道，是兩顆綠色的眼睛。原創的野貓故事，三集。</p>
+</header>
+
+<nav class="tabs" id="tabs"></nav>
+
+<!-- ═══════════ 怎麼用 ═══════════ -->
+<section id="guide" class="panel show">
+  <div class="card goal">
+    <h2>🎧 這份教材怎麼玩</h2>
+    <ol>
+      <li>按「▶ 聽整集」，眼睛跟著亮起來的那一句走。一集大約 2 分鐘。</li>
+      <li>看到底下有點點的字，不懂就點一下看意思。看完就好，<b>不用背</b>。</li>
+      <li>聽完一次，按「只聽不看」，同一集再聽一次。聽不清楚的句子點一下，它會現出來。</li>
+      <li>每集結尾有「下集預告」。想知道後面發生什麼，就按下一集。</li>
+      <li>不用全部聽懂。大概懂七成，就往下走。</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h2>📖 給爸媽：為什麼這樣學（Steve Kaufmann 的方法）</h2>
+    <p class="muted">Kaufmann 是加拿大的語言學家，會 20 幾種語言。他的做法很簡單：語言是「聽和讀」堆出來的，不是背出來的。</p>
+    <div class="steps">
+      <div class="step"><b>1. 內容要有興趣</b>孩子喜歡什麼，就用什麼當材料。有興趣才聽得下去，聽得下去才學得到。</div>
+      <div class="step"><b>2. 同一篇多聽幾次</b>一篇聽五次，比五篇各聽一次有用。每次都會多聽懂一點。</div>
+      <div class="step"><b>3. 字在句子裡認識</b>點字看意思就好，不用抄、不用背。同一個字在故事裡會重複出現，自然就記得。</div>
+      <div class="step"><b>4. 容忍「聽不懂」</b>不需要每個字都懂。懂七成就往下走，剩下的下次再懂。</div>
+      <div class="step"><b>5. 不考試</b>「聽懂了嗎」只有兩題，是幫孩子確認有跟上，不是考試。進步看「字彙池」裡認識的字有沒有變多。</div>
+      <div class="step"><b>6. 每天一點點</b>一天 5 分鐘，比一週一次 1 小時有效。</div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>🗓️ 建議的 5 分鐘流程</h2>
+    <table class="plan">
+      <tr><th>第幾天</th><th>做什麼</th></tr>
+      <tr><td>第 1 天</td><td>Ep.1 邊聽邊讀 → 再用「只聽不看」聽一次</td></tr>
+      <tr><td>第 2 天</td><td>Ep.1 只聽一次（複習）→ Ep.2 邊聽邊讀</td></tr>
+      <tr><td>第 3 天</td><td>Ep.2 只聽一次 → Ep.3 邊聽邊讀</td></tr>
+      <tr><td>第 4 天起</td><td>三集連著只聽，約 5 分鐘。到「字彙池」把認識的字按「認識了」</td></tr>
+    </table>
+    <div class="warn" style="margin-top:12px;">聲音是用瀏覽器內建的英語語音唸的，不用網路。如果按了沒聲音，換一個語音（控制列的下拉選單）；手機請先把靜音關掉。</div>
+  </div>
+</section>
+
+<div id="eps"></div>
+
+<!-- ═══════════ 字彙池 ═══════════ -->
+<section id="vocab" class="panel">
+  <div class="card goal">
+    <h2>📦 字彙池</h2>
+    <ul>
+      <li>這裡是故事裡有點點的字。點字可以聽發音，點例句可以聽整句。</li>
+      <li>覺得這個字已經認識了，按「認識了」。<b>認識的字變多，就是進步。</b></li>
+      <li>不確定的就先放著，下次聽故事再說。</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="vtop">
+      <span class="cnt" id="vcnt"></span>
+      <button class="on" data-f="all">全部</button>
+      <button data-f="new">還不認識</button>
+      <button data-f="known">已認識</button>
+    </div>
+    <div class="vgrid" id="vgrid"></div>
+  </div>
+</section>
+
+<div id="tip" class="tip"></div>
+<footer>互動知識庫 · 英語聽讀系列 · 故事為原創，人物與情節皆為虛構</footer>
+</div>
+
+<script>
+const DATA = {"id": "pinecats", "ch": "英語聽讀 松林貓族", "episodes": [{"title": "Two Green Eyes", "zhtitle": "兩顆綠眼睛", "short": "綠眼睛", "min": 2, "words": 113, "lead": "松林貓族住在松樹林裡。年輕的貓要學打獵、學守夜。今晚輪到 Fern。", "paras": [[["Fern was six moons old.", "Fern 六個月大。"], ["Tonight was her first night watch.", "今晚是她第一次守夜。"]], [["\"Stay by the big rock,\" said Bramble, her teacher.", "「待在大石頭旁邊。」她的老師 Bramble 說。"], ["\"Watch the trees. Listen. If you smell a fox, wake me.\"", "「看著樹。仔細聽。聞到狐狸，就來叫醒我。」"]], [["\"What does a fox smell like?\"", "「狐狸聞起來像什麼？」"]], [["\"Like a wet dog and rotten leaves.\"", "「像濕掉的狗，加上爛掉的葉子。」"]], [["Bramble went back to the camp.", "Bramble 回營地去了。"], ["Fern sat alone under the moon.", "Fern 一個人坐在月亮下面。"], ["The pine trees were tall and black.", "松樹又高又黑。"], ["The wind moved the needles. Shhh. Shhh.", "風吹動松針。沙……沙……"]], [["Fern was not scared.", "Fern 不害怕。"], ["Well, only a little.", "嗯，只有一點點。"]], [["Then a stick cracked.", "然後，一根樹枝「啪」地斷了。"]], [["Fern stood up.", "Fern 站起來。"], ["Her fur stood up too.", "她的毛也站起來了。"], ["She sniffed the air.", "她聞了聞空氣。"], ["No wet dog. No rotten leaves.", "沒有濕狗。沒有爛葉子。"], ["But something was there.", "可是有東西在那裡。"]], [["Two green eyes looked at her from the dark.", "兩顆綠色的眼睛，從黑暗裡看著她。"]]], "hook": ["It does not smell like a fox. So what is it?", "聞起來不像狐狸。那它是什麼？"], "quiz": [{"q": "Bramble 說，狐狸聞起來像什麼？", "o": ["濕狗和爛葉子", "魚和青蛙", "松樹"], "a": 0, "why": "Like a wet dog and rotten leaves. 濕狗＋爛葉子。記住這個味道，後面會用到。"}, {"q": "故事最後，Fern 看到什麼？", "o": ["一隻狐狸", "兩顆綠色的眼睛", "月亮"], "a": 1, "why": "Two green eyes looked at her from the dark. 兩顆綠眼睛，從黑暗裡看她。"}], "think": "如果你一個人在黑黑的地方聽到「啪」一聲，你會做什麼？"}, {"title": "The Wrong Smell", "zhtitle": "不對的味道", "short": "不對的味道", "min": 2, "words": 125, "lead": "綠眼睛走近了。它很小、很濕、一直發抖。然後風向變了，Fern 聞到她最不想聞到的味道。", "paras": [[["Fern did not run.", "Fern 沒有跑。"], ["Her paws were shaking, but she stayed.", "她的腳掌在發抖，可是她留在原地。"]], [["\"Who's there?\" she said. \"This is Pine Cat land.\"", "「誰在那裡？」她說。「這裡是松林貓的地盤。」"]], [["The green eyes came closer.", "綠眼睛靠近了。"], ["Then a tiny voice said, \"I'm lost.\"", "然後一個很小的聲音說：「我迷路了。」"]], [["It was not a fox.", "那不是狐狸。"], ["It was a kit, smaller than Fern.", "是一隻小貓，比 Fern 還小。"], ["Grey, wet, and shivering.", "灰色的，濕濕的，一直發抖。"]], [["\"My name is Pebble,\" the kit said.", "「我叫 Pebble。」小貓說。"], ["\"I'm a River Cat. I followed a frog. Then it was dark.\"", "「我是河貓。我跟著一隻青蛙走。然後天就黑了。」"]], [["Fern licked the kit's wet ears.", "Fern 舔了舔小貓濕濕的耳朵。"], ["\"You're safe now.\"", "「你現在安全了。」"]], [["But then the wind changed.", "可是這時候，風向變了。"], ["Fern sniffed.", "Fern 聞了聞。"], ["Wet dog. Rotten leaves.", "濕狗。爛葉子。"]], [["Fox.", "狐狸。"]], [["It was following Pebble's trail.", "牠正沿著 Pebble 走過的路跟過來。"], ["And it was close.", "而且很近了。"]], [["Bramble said: if you smell a fox, wake me.", "Bramble 說過：聞到狐狸，就來叫醒我。"], ["But if Fern left the rock, Pebble would be alone.", "可是如果 Fern 離開石頭，Pebble 就會一個人。"]], [["Fern took a deep breath and opened her mouth.", "Fern 深深吸了一口氣，張開嘴巴。"]]], "hook": ["The fox is close. Fern cannot leave. What is she going to do with that big breath?", "狐狸很近了。Fern 不能離開。她吸那一大口氣，要做什麼？"], "quiz": [{"q": "綠眼睛是誰？", "o": ["狐狸", "迷路的小貓 Pebble", "老師 Bramble"], "a": 1, "why": "It was a kit, smaller than Fern. 是一隻迷路的小貓，叫 Pebble。"}, {"q": "Fern 為什麼不跑回去叫醒 Bramble？", "o": ["她忘記了", "她離開的話，Pebble 就會一個人", "她太累了"], "a": 1, "why": "If Fern left the rock, Pebble would be alone. 她不能丟下小貓。"}], "think": "Fern 有兩個選擇：去叫人，或留下來。你覺得還有第三個方法嗎？"}, {"title": "The Loudest Cat", "zhtitle": "最大聲的貓", "short": "最大聲的貓", "min": 2, "words": 165, "lead": "Fern 用了她這輩子最大的聲音。狐狸看到的，是八隻生氣的貓。", "paras": [[["\"FOX!\" Fern yowled.", "「狐狸！」Fern 大聲嚎叫。"], ["It was the loudest sound she had ever made.", "那是她這輩子發出過最大的聲音。"]], [["The camp woke up at once.", "營地一下子全醒了。"], ["Bramble ran out first, then Old Ash, then five more cats.", "Bramble 第一個衝出來，然後是老灰 Old Ash，然後又有五隻貓。"], ["Their claws were out.", "牠們的爪子都伸出來了。"]], [["The fox came out of the trees.", "狐狸從樹林裡走出來。"], ["It was big and red, with a long nose.", "牠又大又紅，鼻子很長。"], ["It saw eight angry cats and one small kit.", "牠看到八隻生氣的貓，和一隻小小貓。"]], [["It stopped. It turned. It ran.", "牠停下來。牠轉身。牠跑了。"]], [["Old Ash looked at Fern.", "Old Ash 看著 Fern。"], ["Then she looked at Pebble.", "然後看著 Pebble。"]], [["\"You found a lost kit, and you did not leave your place,\" Old Ash said.", "「你找到一隻迷路的小貓，而且你沒有離開你的位置。」Old Ash 說。"], ["\"That was clever. And brave.\"", "「這很聰明。也很勇敢。」"]], [["Fern's ears got hot.", "Fern 的耳朵熱起來了。"]], [["In the morning, the Pine Cats walked Pebble to the river.", "早上，松林貓們送 Pebble 到河邊。"], ["The River Cats were waiting.", "河貓們在等。"], ["Pebble's mother ran to him and licked him everywhere.", "Pebble 的媽媽跑過來，把他全身舔了一遍。"]], [["\"Thank you,\" she said to Fern.", "「謝謝你。」她對 Fern 說。"]], [["Pebble looked back one more time. \"I'll come and visit!\"", "Pebble 又回頭看了一次。「我會來找你玩！」"]], [["\"River Cats don't cross the river,\" Old Ash said.", "「河貓不會過河的。」Old Ash 說。"]], [["But Fern saw Pebble's tail twitch.", "可是 Fern 看到 Pebble 的尾巴抖了一下。"], ["And she knew the little kit was already making a plan.", "她知道，那隻小貓已經在打主意了。"]]], "hook": ["Will Pebble cross the river? That is a story for another night. Now listen to all three episodes again, without looking.", "Pebble 會不會過河？那是另一個晚上的故事了。現在把三集再聽一次，這次不要看字。"], "quiz": [{"q": "狐狸為什麼跑掉？", "o": ["看到八隻生氣的貓", "下雨了", "牠找到青蛙了"], "a": 0, "why": "It saw eight angry cats and one small kit. It stopped. It turned. It ran. 一隻狐狸打不過八隻貓。"}, {"q": "Old Ash 稱讚 Fern 什麼？", "o": ["跑得快", "又聰明又勇敢", "聲音好聽"], "a": 1, "why": "That was clever. And brave. 沒有離開位置，又保護了小貓。"}], "think": "你覺得 Pebble 下次真的會過河嗎？如果會，會發生什麼事？"}], "vocab": [{"w": "moon", "zh": "月亮；（貓的算法）一個月", "eps": [1], "ex": "Fern was six moons old."}, {"w": "night watch", "zh": "守夜", "eps": [1], "ex": "Tonight was her first night watch."}, {"w": "rock", "zh": "石頭", "eps": [1, 2], "ex": "Stay by the big rock."}, {"w": "fox", "zh": "狐狸", "eps": [1, 2, 3], "ex": "If you smell a fox, wake me."}, {"w": "smell", "zh": "聞；聞起來", "eps": [1, 2], "ex": "What does a fox smell like?", "forms": ["smelled", "smelt"]}, {"w": "wake", "zh": "叫醒；醒來", "eps": [1, 3], "ex": "If you smell a fox, wake me.", "forms": ["woke", "woken"]}, {"w": "wet", "zh": "濕的", "eps": [1, 2], "ex": "Like a wet dog and rotten leaves."}, {"w": "rotten", "zh": "爛掉的", "eps": [1, 2], "ex": "Like a wet dog and rotten leaves."}, {"w": "leaves", "zh": "葉子（很多片）", "eps": [1, 2], "ex": "Like a wet dog and rotten leaves.", "forms": ["leaf"]}, {"w": "camp", "zh": "營地", "eps": [1, 3], "ex": "Bramble went back to the camp."}, {"w": "alone", "zh": "一個人、單獨", "eps": [1, 2], "ex": "Fern sat alone under the moon."}, {"w": "pine", "zh": "松樹", "eps": [1, 2, 3], "ex": "The pine trees were tall and black."}, {"w": "needle", "zh": "針；松針", "eps": [1], "ex": "The wind moved the needles."}, {"w": "scared", "zh": "害怕的", "eps": [1], "ex": "Fern was not scared."}, {"w": "stick", "zh": "樹枝、棍子", "eps": [1], "ex": "Then a stick cracked."}, {"w": "crack", "zh": "啪一聲斷掉", "eps": [1], "ex": "Then a stick cracked."}, {"w": "fur", "zh": "（動物的）毛", "eps": [1], "ex": "Her fur stood up too."}, {"w": "sniff", "zh": "用鼻子聞", "eps": [1, 2], "ex": "She sniffed the air."}, {"w": "dark", "zh": "黑暗", "eps": [1, 2], "ex": "Two green eyes looked at her from the dark."}, {"w": "paw", "zh": "（貓狗的）腳掌", "eps": [2], "ex": "Her paws were shaking."}, {"w": "shake", "zh": "發抖", "eps": [2], "ex": "Her paws were shaking.", "forms": ["shook", "shaken"]}, {"w": "land", "zh": "地盤、土地", "eps": [2], "ex": "This is Pine Cat land."}, {"w": "closer", "zh": "更近", "eps": [2], "ex": "The green eyes came closer."}, {"w": "tiny", "zh": "很小很小的", "eps": [2], "ex": "A tiny voice said, \"I'm lost.\""}, {"w": "lost", "zh": "迷路的", "eps": [2, 3], "ex": "I'm lost."}, {"w": "kit", "zh": "小貓（幼貓）", "eps": [2, 3], "ex": "It was a kit, smaller than Fern."}, {"w": "shiver", "zh": "發抖（因為冷或怕）", "eps": [2], "ex": "Grey, wet, and shivering."}, {"w": "follow", "zh": "跟著", "eps": [2], "ex": "I followed a frog."}, {"w": "frog", "zh": "青蛙", "eps": [2], "ex": "I followed a frog."}, {"w": "lick", "zh": "舔", "eps": [2, 3], "ex": "Fern licked the kit's wet ears."}, {"w": "safe", "zh": "安全的", "eps": [2], "ex": "You're safe now."}, {"w": "trail", "zh": "走過的路、足跡", "eps": [2], "ex": "It was following Pebble's trail."}, {"w": "close", "zh": "很近的", "eps": [2], "ex": "And it was close."}, {"w": "deep breath", "zh": "深呼吸", "eps": [2], "ex": "Fern took a deep breath."}, {"w": "yowl", "zh": "（貓）大聲嚎叫", "eps": [3], "ex": "\"FOX!\" Fern yowled."}, {"w": "loud", "zh": "大聲的", "eps": [3], "ex": "It was the loudest sound she had ever made.", "forms": ["loudest", "louder"]}, {"w": "at once", "zh": "一下子、馬上", "eps": [3], "ex": "The camp woke up at once."}, {"w": "claw", "zh": "爪子", "eps": [3], "ex": "Their claws were out."}, {"w": "angry", "zh": "生氣的", "eps": [3], "ex": "It saw eight angry cats."}, {"w": "clever", "zh": "聰明的", "eps": [3], "ex": "That was clever."}, {"w": "brave", "zh": "勇敢的", "eps": [3], "ex": "And brave."}, {"w": "river", "zh": "河", "eps": [2, 3], "ex": "The Pine Cats walked Pebble to the river."}, {"w": "cross", "zh": "越過、渡過", "eps": [3], "ex": "River Cats don't cross the river."}, {"w": "twitch", "zh": "抖一下、抽動", "eps": [3], "ex": "Fern saw Pebble's tail twitch."}, {"w": "plan", "zh": "計畫", "eps": [3], "ex": "The little kit was already making a plan."}]};
+
+// ═══════════ 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）═══════════
+const LOG_KEY = "study_log_v1", CH = DATA.ch;
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// 雲端上傳網址不寫在教材裡（repo 公開）；家長在「學習紀錄」頁設定一次，存在此瀏覽器
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, pracCount = 0, pracOk = 0, listenDone = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0 && listenDone === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、聽完 ${listenDone} 集、聽懂了嗎 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0; listenDone = 0;
+});
+
+// ═══════════ 本機狀態（認識的字、聽的次數）═══════════
+const ST_KEY = "listen_" + DATA.id + "_v1";
+let ST = { known: {}, listens: {} };
+try{ ST = Object.assign(ST, JSON.parse(localStorage.getItem(ST_KEY) || "{}")); }catch(e){}
+function saveST(){ try{ localStorage.setItem(ST_KEY, JSON.stringify(ST)); }catch(e){} }
+
+// ═══════════ 字彙查表（含簡單變化形）═══════════
+const LOOK = {};
+DATA.vocab.forEach((v, i)=>{
+  const base = v.w.toLowerCase();
+  const forms = [base].concat(v.forms || []);
+  if(!v.noauto && base.indexOf(" ") < 0){
+    forms.push(base + "s", base + "es", base + "ed", base + "d", base + "ing");
+    if(/e$/.test(base)) forms.push(base.slice(0, -1) + "ing");
+    if(/y$/.test(base)) forms.push(base.slice(0, -1) + "ies", base.slice(0, -1) + "ied");
+  }
+  forms.forEach(f => { if(!(f in LOOK)) LOOK[f] = i; });
+});
+const MAXLEN = Math.max.apply(null, DATA.vocab.map(v => v.w.split(" ").length));
+function norm(t){ return t.toLowerCase().replace(/[’']/g, "'").replace(/'s?$/, ""); }
+
+// 把一句英文切成 token，查得到的字包成 .g
+function markup(en){
+  const parts = en.split(/([A-Za-z][A-Za-z'’-]*)/);
+  const out = [];
+  for(let i = 0; i < parts.length; i++){
+    if(i % 2 === 0){ out.push(esc(parts[i])); continue; }
+    let hit = -1, span = 1;
+    for(let L = MAXLEN; L >= 1; L--){
+      const idx = [];
+      for(let k = 0; k < L; k++) idx.push(i + 2 * k);
+      if(idx[idx.length - 1] >= parts.length) continue;
+      let ok = true;
+      for(let k = 1; k < L; k++){ if(!/^\s$/.test(parts[idx[k] - 1])){ ok = false; break; } }
+      if(!ok) continue;
+      const key = idx.map(j => norm(parts[j])).join(" ");
+      if(key in LOOK){ hit = LOOK[key]; span = L; break; }
+    }
+    if(hit < 0){ out.push(esc(parts[i])); continue; }
+    const text = [];
+    for(let k = 0; k < span; k++){ text.push(parts[i + 2 * k]); if(k < span - 1) text.push(parts[i + 2 * k + 1]); }
+    const v = DATA.vocab[hit];
+    out.push(`<span class="g${ST.known[v.w] ? " known" : ""}" data-v="${hit}">${esc(text.join(""))}</span>`);
+    i += 2 * (span - 1);
+  }
+  return out.join("");
+}
+function esc(s){ return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function attr(s){ return esc(s).replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+
+// ═══════════ 語音（瀏覽器內建 TTS）═══════════
+const synth = window.speechSynthesis;
+let VOICES = [], curVoice = null;
+let rate = parseFloat(localStorage.getItem("tts_rate_v1") || "0.9");
+function loadVoices(){
+  if(!synth) return;
+  const all = synth.getVoices().filter(v => /^en/i.test(v.lang));
+  if(!all.length) return;
+  const score = v => (/Google US English|Samantha|Aria|Jenny|Ava|Zira|Allison/i.test(v.name) ? 3 : 0) + (/en-US/i.test(v.lang) ? 2 : /en-GB/i.test(v.lang) ? 1 : 0) + (v.localService ? 0.5 : 0);
+  all.sort((a, b) => score(b) - score(a));
+  VOICES = all;
+  const want = localStorage.getItem("tts_voice_v1");
+  curVoice = all.find(v => v.name === want) || all[0];
+  document.querySelectorAll("select.voice").forEach(sel=>{
+    sel.innerHTML = all.map(v => `<option value="${esc(v.name)}"${v === curVoice ? " selected" : ""}>${esc(v.name.replace(/^Microsoft |^Google /, ""))} (${v.lang})</option>`).join("");
+  });
+  document.querySelectorAll(".novoice").forEach(n => n.style.display = "none");
+}
+if(synth){ loadVoices(); synth.onvoiceschanged = loadVoices; }
+setTimeout(()=>{ if(!VOICES.length) document.querySelectorAll(".novoice").forEach(n => n.style.display = "block"); }, 1500);
+
+let queue = null; // {items:[{el,text}], i, done}
+function stopAll(){
+  queue = null;
+  if(synth) synth.cancel();
+  document.querySelectorAll(".s.now").forEach(e => e.classList.remove("now"));
+  document.querySelectorAll(".playbtn").forEach(b => { b.textContent = "▶ 聽整集"; b.classList.remove("on"); });
+}
+function say(text, onend){
+  if(!synth){ if(onend) onend(); return; }
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = curVoice ? curVoice.lang : "en-US";
+  if(curVoice) u.voice = curVoice;
+  u.rate = rate;
+  u.onend = ()=>{ if(onend) onend(); };
+  u.onerror = ()=>{ if(onend) onend(); };
+  synth.speak(u);
+}
+function playOne(el){
+  stopAll();
+  el.classList.add("now");
+  setTimeout(()=> say(el.dataset.en, ()=> el.classList.remove("now")), 60);
+}
+function playAll(ep){
+  stopAll();
+  const els = Array.from(document.querySelectorAll(`#ep${ep} .s`));
+  const btn = document.querySelector(`#ep${ep} .playbtn`);
+  btn.textContent = "⏹ 停止"; btn.classList.add("on");
+  const q = { i: 0 };
+  queue = q;
+  function next(){
+    if(queue !== q) return;
+    if(q.i > 0) els[q.i - 1].classList.remove("now");
+    if(q.i >= els.length){
+      queue = null; btn.textContent = "▶ 聽整集"; btn.classList.remove("on");
+      ST.listens[ep] = (ST.listens[ep] || 0) + 1; saveST(); listenDone++;
+      document.getElementById("cnt" + ep).textContent = ST.listens[ep];
+      logEv({ type: "listen", ep, n: ST.listens[ep] });
+      return;
+    }
+    const el = els[q.i++];
+    el.classList.add("now");
+    const r = el.getBoundingClientRect();
+    if(r.top < 90 || r.bottom > window.innerHeight - 40) el.scrollIntoView({ block: "center", behavior: "smooth" });
+    say(el.dataset.en, next);
+  }
+  setTimeout(next, 60);
+}
+
+// ═══════════ 分頁 ═══════════
+const tabs = document.getElementById("tabs");
+const tabDefs = [["guide", "🎧 怎麼用"]].concat(DATA.episodes.map((e, i) => ["ep" + (i + 1), `Ep.${i + 1} ${e.short}`])).concat([["vocab", "📦 字彙池"]]);
+tabDefs.forEach(([id, label], i)=>{
+  const b = document.createElement("button");
+  b.textContent = label; b.dataset.t = id; if(i === 0) b.classList.add("active");
+  b.onclick = ()=> showTab(id);
+  tabs.appendChild(b);
+});
+function showTab(id){
+  stopAll(); hideTip();
+  document.querySelectorAll("nav.tabs button").forEach(b => b.classList.toggle("active", b.dataset.t === id));
+  document.querySelectorAll("section.panel").forEach(s => s.classList.toggle("show", s.id === id));
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  if(id === "vocab") renderVocab();
+}
+
+// ═══════════ 渲染每一集 ═══════════
+const epsBox = document.getElementById("eps");
+DATA.episodes.forEach((E, idx)=>{
+  const n = idx + 1;
+  const sec = document.createElement("section");
+  sec.className = "panel"; sec.id = "ep" + n;
+  let paras = E.paras.map(P => {
+    const en = P.map(s => `<span class="s" data-en="${attr(s[0])}">${markup(s[0])}</span>`).join(" ");
+    const zh = P.map(s => s[1]).join("");
+    return `<p>${en}</p><div class="zh">${zh}</div>`;
+  }).join("");
+  const qs = E.quiz.map((Q, qi) => `
+    <div class="q" data-q="${n}-${qi}">
+      <div class="stem">${qi + 1}. ${Q.q}</div>
+      <div class="opts">${Q.o.map((o, oi) => `<button data-i="${oi}">${o}</button>`).join("")}</div>
+      <div class="why">${Q.why}</div>
+    </div>`).join("");
+  const hook = E.hook ? `
+    <div class="hook">
+      <div class="lab">${n < DATA.episodes.length ? "▶ 下集預告 · NEXT EPISODE" : "▶ 故事結束 · THE END"}</div>
+      <div class="txt">${E.hook[0]}</div>
+      <div class="txtzh">${E.hook[1]}</div>
+      ${n < DATA.episodes.length ? `<button class="nextbtn" onclick="showTab('ep${n + 1}')">看 Ep.${n + 1} →</button>` : `<button class="nextbtn" onclick="showTab('vocab')">去字彙池，把認識的字按一按 →</button>`}
+    </div>` : "";
+  sec.innerHTML = `
+    <div class="card goal">
+      <h2>🎬 Ep.${n}《${E.title}》<span class="muted">${E.zhtitle} · 約 ${E.min} 分鐘 · ${E.words} 字</span></h2>
+      <p>${E.lead}</p>
+    </div>
+    <div class="card">
+      <div class="ctrl">
+        <button class="primary playbtn" onclick="togglePlay(${n})">▶ 聽整集</button>
+        <button class="blindbtn" onclick="toggleBlind(${n}, this)">🙈 只聽不看</button>
+        <button class="zhbtn" onclick="toggleZh(${n}, this)">中文</button>
+        <span class="sp">速度 <input type="range" min="0.6" max="1.2" step="0.05" value="${rate}" oninput="setRate(this.value)"> <span class="rateval">${rate}</span>x</span>
+        <select class="voice" onchange="setVoice(this.value)"><option>語音載入中…</option></select>
+        <span class="counter">這集已聽完 <b id="cnt${n}">${ST.listens[n] || 0}</b> 次</span>
+      </div>
+      <div class="novoice">這個瀏覽器找不到英語語音。電腦請用 Chrome 或 Edge；iPhone 請到「設定 → 輔助使用 → 語音內容」下載一個英語語音。</div>
+      <p class="muted" style="margin-bottom:10px;">點任何一句，會唸那一句。點有點點的字，看意思。</p>
+      <div class="story" id="story${n}">${paras}</div>
+      ${hook}
+    </div>
+    <div class="card">
+      <h2>👂 聽懂了嗎？<span class="muted">兩題就好，不是考試</span></h2>
+      ${qs}
+      <div class="think">💭 想一想（不用寫）：${E.think}</div>
+    </div>`;
+  epsBox.appendChild(sec);
+});
+function togglePlay(n){ if(queue) stopAll(); else playAll(n); }
+function toggleBlind(n, b){ const s = document.getElementById("story" + n); s.classList.toggle("blind"); b.classList.toggle("on", s.classList.contains("blind")); b.textContent = s.classList.contains("blind") ? "👀 顯示文字" : "🙈 只聽不看"; }
+function toggleZh(n, b){ const s = document.getElementById("story" + n); s.classList.toggle("showzh"); b.classList.toggle("on", s.classList.contains("showzh")); }
+function setRate(v){ rate = parseFloat(v); localStorage.setItem("tts_rate_v1", v); document.querySelectorAll(".rateval").forEach(e => e.textContent = v); document.querySelectorAll(".ctrl input[type=range]").forEach(r => r.value = v); }
+function setVoice(name){ const v = VOICES.find(x => x.name === name); if(v){ curVoice = v; localStorage.setItem("tts_voice_v1", name); document.querySelectorAll("select.voice").forEach(s => s.value = name); } }
+
+// 點句子 → 唸那句；點字 → 小卡；只聽模式下點句子 → 先現出來
+document.addEventListener("click", ev=>{
+  const g = ev.target.closest(".g");
+  if(g){ ev.stopPropagation(); showTip(g); return; }
+  const s = ev.target.closest(".s");
+  if(s){
+    const story = s.closest(".story");
+    if(story && story.classList.contains("blind") && !s.classList.contains("peek")){ s.classList.add("peek"); }
+    playOne(s); return;
+  }
+  const opt = ev.target.closest(".q .opts button");
+  if(opt){ answer(opt); return; }
+  if(!ev.target.closest("#tip")) hideTip();
+});
+
+// ═══════════ 單字小卡 ═══════════
+const tip = document.getElementById("tip");
+function showTip(g){
+  const v = DATA.vocab[+g.dataset.v];
+  const known = !!ST.known[v.w];
+  tip.innerHTML = `<div class="tw">${esc(v.w)}</div><div class="tz">${v.zh}${v.note ? `<div class="muted">${v.note}</div>` : ""}</div>
+    <button data-w="${attr(v.w)}" onclick="say(this.dataset.w)">🔊 唸</button>
+    <button class="${known ? "kn" : ""}" data-w="${attr(v.w)}" onclick="toggleKnown(this.dataset.w, this)">${known ? "✓ 認識了" : "認識了"}</button>`;
+  tip.style.display = "block";
+  const r = g.getBoundingClientRect();
+  let left = r.left + window.scrollX, top = r.bottom + window.scrollY + 6;
+  if(left + 270 > window.innerWidth) left = Math.max(8, window.innerWidth - 275);
+  tip.style.left = left + "px"; tip.style.top = top + "px";
+}
+function hideTip(){ tip.style.display = "none"; }
+function toggleKnown(w, btn){
+  if(ST.known[w]) delete ST.known[w]; else ST.known[w] = 1;
+  saveST();
+  const known = !!ST.known[w];
+  if(btn){ btn.classList.toggle("kn", known); btn.textContent = known ? "✓ 認識了" : "認識了"; }
+  document.querySelectorAll(".g").forEach(g => { if(DATA.vocab[+g.dataset.v].w === w) g.classList.toggle("known", known); });
+  if(document.getElementById("vocab").classList.contains("show")) renderVocab();
+}
+
+// ═══════════ 聽懂了嗎 ═══════════
+function answer(btn){
+  const q = btn.closest(".q"); if(q.classList.contains("done")) return;
+  const [n, qi] = q.dataset.q.split("-").map(Number);
+  const Q = DATA.episodes[n - 1].quiz[qi];
+  const ok = +btn.dataset.i === Q.a;
+  btn.classList.add(ok ? "good" : "bad");
+  pracCount++; if(ok) pracOk++;
+  logEv({ type: "practice", q: `ep${n}q${qi + 1}`, ok });
+  if(ok){
+    q.classList.add("done");
+    q.querySelectorAll(".opts button").forEach(b => b.disabled = true);
+    q.querySelector(".why").classList.add("show");
+  } else {
+    setTimeout(()=> btn.classList.remove("bad"), 600);
+  }
+}
+
+// ═══════════ 字彙池 ═══════════
+let vfilter = "all";
+document.querySelectorAll(".vtop button").forEach(b => b.onclick = ()=>{ vfilter = b.dataset.f; document.querySelectorAll(".vtop button").forEach(x => x.classList.toggle("on", x === b)); renderVocab(); });
+function renderVocab(){
+  const grid = document.getElementById("vgrid");
+  const total = DATA.vocab.length, kn = DATA.vocab.filter(v => ST.known[v.w]).length;
+  document.getElementById("vcnt").textContent = `已認識 ${kn} / ${total} 個字`;
+  grid.innerHTML = DATA.vocab.filter(v => vfilter === "all" || (vfilter === "known") === !!ST.known[v.w]).map(v => {
+    const eps = (v.eps || []).map(e => `<span class="ep">Ep.${e}</span>`).join("");
+    return `<div class="vcard${ST.known[v.w] ? " known" : ""}">
+      <div class="w" data-w="${attr(v.w)}" onclick="say(this.dataset.w)">🔊 ${esc(v.w)}</div>
+      <div class="z">${v.zh}</div>
+      <div class="eps">${eps}</div>
+      ${v.ex ? `<div class="ex" data-w="${attr(v.ex)}" onclick="say(this.dataset.w)">${esc(v.ex)}</div>` : ""}
+      <button class="kb" data-w="${attr(v.w)}" onclick="toggleKnown(this.dataset.w)">${ST.known[v.w] ? "✓ 認識了（再按一次取消）" : "認識了"}</button>
+    </div>`;
+  }).join("") || `<p class="muted">這裡還沒有字。</p>`;
+}
+</script>
+</body>
+</html>
