@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一秒八張畫｜Eight Drawings a Second</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#faf7f2; --card:#ffffff;
+    --main:#7c3aed; --main-soft:#ede9fe; --main-deep:#5b21b6;
+    --green:#16a34a; --green-soft:#dcfce7; --red:#dc2626; --red-soft:#fee2e2;
+    --amber:#d97706; --amber-soft:#fef3c7; --border:#e7e2d8; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.75;}
+  .wrap{max-width:820px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#312e81,#7c3aed 60%,#db2777); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.2); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:100px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--main);}
+  nav.tabs button.active{background:var(--main); border-color:var(--main); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--main-deep); margin-bottom:10px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--main-soft); border:none;}
+  .goal ul, .goal ol{margin-left:1.2em;}
+  .goal li{margin:4px 0;}
+  .note{background:var(--main-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:var(--main-deep);}
+  .warn{background:var(--amber-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#92400e;}
+  .muted{color:var(--sub); font-size:.85rem;}
+
+  /* ── 播放控制列 ── */
+  .ctrl{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:8px 0 14px;}
+  .ctrl button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:8px 16px; font-size:.95rem; cursor:pointer; font-family:inherit; transition:.12s;}
+  .ctrl button:hover{border-color:var(--main);}
+  .ctrl button.primary{background:var(--main); border-color:var(--main); color:#fff; font-weight:bold;}
+  .ctrl button.on{background:var(--main-soft); border-color:var(--main); color:var(--main-deep); font-weight:bold;}
+  .ctrl .sp{display:flex; align-items:center; gap:6px; font-size:.85rem; color:var(--sub);}
+  .ctrl input[type=range]{width:110px;}
+  .ctrl select{font-family:inherit; font-size:.85rem; padding:6px 8px; border:1px solid var(--border); border-radius:8px; max-width:200px; background:#fff;}
+  .counter{font-size:.85rem; color:var(--sub); margin-left:auto;}
+  .counter b{color:var(--main-deep);}
+
+  /* ── 故事本文 ── */
+  .story{font-size:1.12rem; line-height:1.95;}
+  .story p{margin:0 0 14px;}
+  .story .s{cursor:pointer; border-radius:6px; padding:1px 2px; transition:background .15s;}
+  .story .s:hover{background:var(--main-soft);}
+  .story .s.now{background:var(--amber-soft); box-shadow:0 0 0 2px var(--amber-soft);}
+  .story .g{border-bottom:2px dotted var(--main); cursor:pointer;}
+  .story .g.known{border-bottom-color:transparent;}
+  .story .zh{display:none; font-size:.9rem; color:var(--sub); margin:-8px 0 14px; padding:6px 12px; border-left:3px solid var(--main-soft);}
+  .story.showzh .zh{display:block;}
+  .story.blind .s{filter:blur(7px); user-select:none;}
+  .story.blind .s.now, .story.blind .s.peek{filter:none;}
+  .story .who{display:block; font-size:.8rem; color:var(--sub); margin-bottom:-6px;}
+
+  .hook{margin-top:18px; background:linear-gradient(135deg,var(--main-soft),#fff); border:1px dashed var(--main); border-radius:12px; padding:12px 16px;}
+  .hook .lab{font-size:.78rem; font-weight:bold; color:var(--main-deep); letter-spacing:.1em;}
+  .hook .txt{font-size:1rem; margin-top:2px;}
+  .hook .txtzh{font-size:.88rem; color:var(--sub);}
+  .nextbtn{display:inline-block; margin-top:10px; background:var(--main); color:#fff; border:none; border-radius:99px; padding:8px 20px; cursor:pointer; font-family:inherit; font-size:.95rem; font-weight:bold;}
+
+  /* ── 聽懂了嗎 ── */
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q .opts{display:flex; flex-direction:column; gap:6px;}
+  .q .opts button{text-align:left; border:1px solid var(--border); background:#fff; border-radius:8px; padding:8px 12px; cursor:pointer; font-family:inherit; font-size:.95rem; transition:.12s;}
+  .q .opts button:hover{border-color:var(--main); background:var(--main-soft);}
+  .q .opts button.good{background:var(--green-soft); border-color:var(--green); color:#166534; font-weight:bold;}
+  .q .opts button.bad{background:var(--red-soft); border-color:var(--red); color:#991b1b; animation:shake .3s;}
+  .q .opts button:disabled{cursor:default;}
+  @keyframes shake{25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+  .q .why{display:none; margin-top:8px; font-size:.88rem; color:var(--main-deep); background:var(--main-soft); border-radius:8px; padding:6px 10px;}
+  .q .why.show{display:block;}
+  .think{background:var(--amber-soft); border-radius:10px; padding:12px 16px; font-size:.95rem; color:#92400e;}
+
+  /* ── 字彙池 ── */
+  .vtop{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:12px;}
+  .vtop .cnt{font-weight:bold; color:var(--main-deep);}
+  .vtop button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 14px; font-size:.85rem; cursor:pointer; font-family:inherit;}
+  .vtop button.on{background:var(--main); border-color:var(--main); color:#fff;}
+  .vgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px;}
+  .vcard{border:1px solid var(--border); border-radius:10px; padding:10px 12px; background:#fff; transition:.12s;}
+  .vcard.known{background:var(--green-soft); border-color:#bbf7d0;}
+  .vcard .w{font-weight:bold; font-size:1.05rem; cursor:pointer;}
+  .vcard .w:hover{color:var(--main-deep);}
+  .vcard .z{font-size:.85rem; color:var(--sub);}
+  .vcard .eps{margin-top:4px; display:flex; gap:4px; flex-wrap:wrap;}
+  .vcard .ep{font-size:.7rem; border-radius:99px; padding:1px 8px; background:var(--main-soft); color:var(--main-deep);}
+  .vcard .ex{margin-top:6px; font-size:.82rem; color:var(--main-deep); border-top:1px dashed var(--border); padding-top:5px; cursor:pointer;}
+  .vcard .kb{margin-top:6px; width:100%; border:1px solid var(--border); background:#fff; border-radius:8px; padding:5px; cursor:pointer; font-family:inherit; font-size:.82rem;}
+  .vcard.known .kb{background:#fff; color:#166534; border-color:#bbf7d0;}
+
+  /* ── 單字小卡（點字彈出）── */
+  .tip{position:absolute; display:none; z-index:50; background:#fff; border:1px solid var(--main); border-radius:12px; padding:10px 14px; box-shadow:0 8px 24px rgba(0,0,0,.15); max-width:260px; font-size:.95rem;}
+  .tip .tw{font-weight:bold; font-size:1.1rem; color:var(--main-deep);}
+  .tip .tz{margin:2px 0 8px;}
+  .tip button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:4px 12px; cursor:pointer; font-family:inherit; font-size:.85rem; margin-right:6px;}
+  .tip button.kn{background:var(--green-soft); border-color:var(--green); color:#166534;}
+
+  .steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-top:10px;}
+  .step{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 12px; font-size:.9rem;}
+  .step b{display:block; color:var(--main-deep); margin-bottom:2px;}
+  table.plan{width:100%; border-collapse:collapse; font-size:.9rem; margin-top:8px;}
+  table.plan th, table.plan td{border:1px solid var(--border); padding:6px 10px; text-align:left; vertical-align:top;}
+  table.plan th{background:var(--main-soft); color:var(--main-deep);}
+  .novoice{display:none; background:var(--red-soft); color:#991b1b; border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem;}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:30%; font-size:.85rem;} .story{font-size:1.05rem;} .counter{margin-left:0;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">英語聽讀 · 三集 · 讀完約 5 分鐘 · 每集結尾有下集預告</span>
+  <h1>✏️ 一秒八張畫｜Eight Drawings a Second</h1>
+  <p>Yuki 每天都在畫，可是校內漫畫比賽剩三天，她把唯一那頁撕了。在東京動畫公司上班的表哥 Kaito 說：「你的畫很好，只是它不會動。」動畫怎麼做出來的，這三集講的是真的。</p>
+</header>
+
+<nav class="tabs" id="tabs"></nav>
+
+<!-- ═══════════ 怎麼用 ═══════════ -->
+<section id="guide" class="panel show">
+  <div class="card goal">
+    <h2>🎧 這份教材怎麼玩</h2>
+    <ol>
+      <li>按「▶ 聽整集」，眼睛跟著亮起來的那一句走。一集大約 2 分鐘。</li>
+      <li>看到底下有點點的字，不懂就點一下看意思。看完就好，<b>不用背</b>。</li>
+      <li>聽完一次，按「只聽不看」，同一集再聽一次。聽不清楚的句子點一下，它會現出來。</li>
+      <li>每集結尾有「下集預告」。想知道後面發生什麼，就按下一集。</li>
+      <li>不用全部聽懂。大概懂七成，就往下走。</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h2>📖 給爸媽：為什麼這樣學（Steve Kaufmann 的方法）</h2>
+    <p class="muted">Kaufmann 是加拿大的語言學家，會 20 幾種語言。他的做法很簡單：語言是「聽和讀」堆出來的，不是背出來的。</p>
+    <div class="steps">
+      <div class="step"><b>1. 內容要有興趣</b>孩子喜歡什麼，就用什麼當材料。有興趣才聽得下去，聽得下去才學得到。</div>
+      <div class="step"><b>2. 同一篇多聽幾次</b>一篇聽五次，比五篇各聽一次有用。每次都會多聽懂一點。</div>
+      <div class="step"><b>3. 字在句子裡認識</b>點字看意思就好，不用抄、不用背。同一個字在故事裡會重複出現，自然就記得。</div>
+      <div class="step"><b>4. 容忍「聽不懂」</b>不需要每個字都懂。懂七成就往下走，剩下的下次再懂。</div>
+      <div class="step"><b>5. 不考試</b>「聽懂了嗎」只有兩題，是幫孩子確認有跟上，不是考試。進步看「字彙池」裡認識的字有沒有變多。</div>
+      <div class="step"><b>6. 每天一點點</b>一天 5 分鐘，比一週一次 1 小時有效。</div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>🗓️ 建議的 5 分鐘流程</h2>
+    <table class="plan">
+      <tr><th>第幾天</th><th>做什麼</th></tr>
+      <tr><td>第 1 天</td><td>Ep.1 邊聽邊讀 → 再用「只聽不看」聽一次</td></tr>
+      <tr><td>第 2 天</td><td>Ep.1 只聽一次（複習）→ Ep.2 邊聽邊讀</td></tr>
+      <tr><td>第 3 天</td><td>Ep.2 只聽一次 → Ep.3 邊聽邊讀</td></tr>
+      <tr><td>第 4 天起</td><td>三集連著只聽，約 5 分鐘。到「字彙池」把認識的字按「認識了」</td></tr>
+    </table>
+    <div class="warn" style="margin-top:12px;">聲音是用瀏覽器內建的英語語音唸的，不用網路。如果按了沒聲音，換一個語音（控制列的下拉選單）；手機請先把靜音關掉。</div>
+  </div>
+</section>
+
+<div id="eps"></div>
+
+<!-- ═══════════ 字彙池 ═══════════ -->
+<section id="vocab" class="panel">
+  <div class="card goal">
+    <h2>📦 字彙池</h2>
+    <ul>
+      <li>這裡是故事裡有點點的字。點字可以聽發音，點例句可以聽整句。</li>
+      <li>覺得這個字已經認識了，按「認識了」。<b>認識的字變多，就是進步。</b></li>
+      <li>不確定的就先放著，下次聽故事再說。</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="vtop">
+      <span class="cnt" id="vcnt"></span>
+      <button class="on" data-f="all">全部</button>
+      <button data-f="new">還不認識</button>
+      <button data-f="known">已認識</button>
+    </div>
+    <div class="vgrid" id="vgrid"></div>
+  </div>
+</section>
+
+<div id="tip" class="tip"></div>
+<footer>互動知識庫 · 英語聽讀系列 · 故事為原創，人物與情節皆為虛構</footer>
+</div>
+
+<script>
+const DATA = {"id": "eightdrawings", "ch": "英語聽讀 一秒八張畫", "episodes": [{"title": "It Doesn't Move", "zhtitle": "它不會動", "short": "它不會動", "min": 2, "words": 159, "lead": "Yuki 是國一生，畫畫是她的全部。比賽剩三天，她卻覺得自己的畫很無聊。表哥 Kaito 從東京回來了，包包裡有一疊三百張的紙。", "paras": [[["Yuki drew every day.", "Yuki 每天都在畫畫。"], ["On the bus, in class, under the table at dinner.", "在公車上、在課堂上、在晚餐的桌子底下。"], ["Her sketchbook was full of girls with big eyes and boys with spiky hair.", "她的素描本裡全是大眼睛的女生和頭髮尖尖的男生。"]], [["The school manga contest was in three days.", "學校的漫畫比賽三天後就到了。"], ["Yuki had one page done.", "Yuki 只完成了一頁。"], ["She looked at it for a long time.", "她盯著那一頁看了很久。"]], [["\"It's boring,\" she said, and tore it in half.", "「好無聊。」她說，然後把它撕成兩半。"]], [["\"Whoa,\" said a voice at the door.", "「哇。」門口有個聲音說。"], ["It was her cousin Kaito.", "是她的表哥 Kaito。"], ["He worked in Tokyo, at an anime studio.", "他在東京的一家動畫工作室上班。"], ["He was home for the weekend.", "他週末回家。"]], [["He picked up the two pieces and held them together.", "他撿起那兩片，把它們拼在一起。"], ["\"Your drawing is good. The face is good. The hands are good.\"", "「你的畫很好。臉很好。手也很好。」"]], [["\"Then why is it boring?\"", "「那為什麼會無聊？」"]], [["Kaito was quiet for a second.", "Kaito 安靜了一秒。"], ["\"Because it doesn't move.\"", "「因為它不會動。」"]], [["\"It's a drawing. Drawings don't move.\"", "「這是一張畫。畫本來就不會動。」"]], [["\"Mine do.\"", "「我的會。」"], ["He put his bag on the table.", "他把包包放到桌上。"], ["Inside was a thick stack of paper.", "裡面是厚厚的一疊紙。"], ["Three hundred sheets, all the same size.", "三百張，大小都一樣。"]], [["\"What is that?\"", "「那是什麼？」"]], [["\"That,\" Kaito said, \"is two seconds.\"", "「那個，」Kaito 說，「是兩秒鐘。」"]]], "hook": ["Three hundred sheets of paper is two seconds? What is inside the bag, and what does Kaito draw all day?", "三百張紙等於兩秒？包包裡到底是什麼？Kaito 整天都在畫什麼？"], "quiz": [{"q": "Yuki 把畫撕掉，是因為她覺得那張畫怎樣？", "o": ["畫得很醜", "很無聊", "紙太小"], "a": 1, "why": "\"It's boring,\" she said, and tore it in half. 她說「好無聊」，然後撕了。"}, {"q": "Kaito 說 Yuki 的畫少了什麼？", "o": ["顏色", "「會動」的感覺", "背景"], "a": 1, "why": "Because it doesn't move. 臉好、手好，但它不會動。"}], "think": "你有沒有把自己做的東西丟掉或撕掉過？後來後悔嗎？"}, {"title": "Two Seconds", "zhtitle": "兩秒鐘", "short": "兩秒鐘", "min": 2, "words": 193, "lead": "動畫一秒鐘有 24 張畫面，可是動畫師不用畫 24 張。這一集講的數字都是真的：一秒八張、一集好幾千張、有名的電影超過十萬張。", "paras": [[["Kaito held the stack at one corner and let the pages fly under his thumb.", "Kaito 捏著那疊紙的一角，讓紙頁在大拇指下面飛過去。"], ["A boy on the paper turned his head and smiled.", "紙上的男生轉過頭，笑了。"]], [["\"Anime is a trick,\" Kaito said.", "「動畫是一種把戲。」Kaito 說。"], ["\"Your eyes see 24 pictures every second, and your brain thinks it's moving.\"", "「你的眼睛每秒看到 24 張圖，你的大腦就以為它在動。」"]], [["\"You drew 24 pictures for every second?\"", "「你每一秒都畫 24 張？」"]], [["\"No. That's too many.", "「不是。那太多了。"], ["We draw eight, and show each one three times.", "我們畫八張，每一張連放三次。"], ["Eight drawings, one second.\"", "八張畫，一秒鐘。」"]], [["Yuki did the math. \"So one episode is...\"", "Yuki 算了一下。「所以一集就是……」"]], [["\"Thousands of drawings.", "「好幾千張畫。"], ["A famous movie used more than a hundred thousand.\"", "有一部有名的電影用了超過十萬張。」"]], [["Kaito explained his job.", "Kaito 解釋他的工作。"], ["The best artists draw the key pictures: the start of a jump, the top, the landing.", "最厲害的畫家畫關鍵的那幾張：跳起來的開始、最高點、落地。"], ["Then people like Kaito draw all the pictures in between.", "然後像 Kaito 這樣的人，畫中間所有的圖。"]], [["\"I draw the boring middle,\" he laughed.", "「我畫的是無聊的中間。」他笑著說。"], ["\"But without the middle, nothing moves.\"", "「可是沒有中間，什麼都不會動。」"]], [["He gave Yuki a small notebook.", "他給了 Yuki 一本小筆記本。"], ["\"Draw a cat jumping. Twenty pages. Change it a little each page.\"", "「畫一隻跳起來的貓。二十頁。每一頁改一點點。」"]], [["Yuki drew until midnight.", "Yuki 畫到半夜。"], ["When she flipped the notebook, the cat jumped.", "她快速翻筆記本的時候，貓跳了起來。"]], [["\"Now,\" Kaito said, \"do that on your manga page.", "「現在，」Kaito 說，「把這個用在你的漫畫頁上。"], ["Don't draw the pose. Draw the moment before it.\"", "不要畫那個姿勢。畫姿勢之前的那一刻。」"]], [["Yuki looked at the clock.", "Yuki 看了看時鐘。"], ["Two days left. And she had to start again.", "剩兩天。而她得重新開始。"]]], "hook": ["Two days. One page. \"Draw the moment before.\" What does that even mean?", "兩天。一頁。「畫之前的那一刻。」這到底是什麼意思？"], "quiz": [{"q": "動畫一秒有 24 張畫面，動畫師其實畫幾張？", "o": ["24 張", "8 張", "3 張"], "a": 1, "why": "We draw eight, and show each one three times. 八張，每張連放三格，8 × 3 = 24。日本電視動畫很多真的這樣做。"}, {"q": "Kaito 在工作室的工作是畫什麼？", "o": ["最重要的關鍵動作", "關鍵動作中間的那些畫", "背景"], "a": 1, "why": "People like Kaito draw all the pictures in between. 他自嘲畫的是「無聊的中間」，但沒有中間就不會動。"}], "think": "你最喜歡的動漫，一集大概 20 分鐘。用「一秒八張」算算看，那一集要畫幾張？"}, {"title": "The Moment Before", "zhtitle": "之前的那一刻", "short": "之前的那一刻", "min": 2, "words": 174, "lead": "先畫十個郵票大小的草稿，再畫正式的那一頁。比賽的結果不是第一名，但評審在她的畫底下寫了三個字。", "paras": [[["Yuki did not start with the big page.", "Yuki 沒有從那張大頁開始。"], ["She started small.", "她從小的開始。"], ["She drew tiny boxes, the size of a stamp, and filled each one with a rough idea.", "她畫了很多郵票大小的小格子，每一格塞一個粗略的想法。"], ["Kaito called them thumbnails.", "Kaito 說這叫縮圖草稿。"]], [["\"Ten bad thumbnails are better than one careful page,\" he said.", "「十張爛草稿，比一張仔細的正式頁好。」他說。"], ["\"You can throw them away. That's the point.\"", "「你可以把它們丟掉。重點就在這裡。」"]], [["In the tenth box, she found it.", "在第十格，她找到了。"], ["Not a girl standing.", "不是一個站著的女生。"], ["A girl one second before she falls off her bike.", "是一個女生，在她從腳踏車上摔下來的前一秒。"]], [["Yuki drew the page in one night.", "Yuki 一個晚上就把那頁畫完了。"], ["The girl's hair flew back.", "女生的頭髮往後飛。"], ["Her hand reached for a bag in the air.", "她的手伸向空中的一個包包。"], ["The bike was already tilting.", "腳踏車已經在傾斜了。"]], [["On contest day, Yuki did not win first prize.", "比賽那天，Yuki 沒有得第一名。"], ["A boy from grade nine won with a beautiful, quiet picture of a shrine.", "一個九年級的男生，用一張又美又安靜的神社畫得了第一。"]], [["But under her page, the judge had written three words:", "但在她那頁的下面，評審寫了三個字："], ["\"This one moves.\"", "「這張會動。」"]], [["That night, her phone buzzed.", "那天晚上，她的手機震了一下。"], ["Kaito had sent a photo.", "Kaito 傳來一張照片。"], ["On the wall of his studio, next to the real animators' work, was a small notebook.", "在他工作室的牆上，真正的動畫師的作品旁邊，貼著一本小筆記本。"], ["Her cat.", "她的貓。"]], [["\"Summer vacation,\" his message said.", "「暑假，」他的訊息說。"], ["\"Come to the studio. Bring a pencil.\"", "「來工作室。帶一支鉛筆。」"]]], "hook": ["Everything Kaito said about anime is real: 24 pictures a second, eight drawings, thumbnails first. Try the twenty-page cat. It works.", "Kaito 講的動畫知識都是真的：一秒 24 格、畫八張、先畫縮圖草稿。試試看二十頁的貓，真的會動。"], "quiz": [{"q": "Kaito 說「十張爛草稿比一張仔細的畫好」，為什麼？", "o": ["因為畫得比較快", "因為可以隨便丟掉，敢試各種想法", "因為評審喜歡小張的"], "a": 1, "why": "You can throw them away. That's the point. 草稿可以丟，所以敢亂試，才找得到好點子。"}, {"q": "比賽的結果是什麼？", "o": ["Yuki 得了第一名", "別人第一名，但評審在她的畫下寫「這張會動」", "Yuki 沒有交件"], "a": 1, "why": "Yuki did not win first prize... The judge had written: \"This one moves.\" 沒得獎，但拿到了她最想要的那句話。"}], "think": "「畫姿勢之前的那一刻」，如果換成拍照或寫作文，可以怎麼用？"}], "vocab": [{"w": "sketchbook", "zh": "素描本", "eps": [1], "ex": "Her sketchbook was full of girls with big eyes."}, {"w": "spiky", "zh": "尖尖的、刺刺的", "eps": [1], "ex": "Boys with spiky hair."}, {"w": "contest", "zh": "比賽", "eps": [1, 3], "ex": "The school manga contest was in three days."}, {"w": "boring", "zh": "無聊的", "eps": [1, 2], "ex": "\"It's boring,\" she said."}, {"w": "tear", "zh": "撕", "eps": [1], "ex": "She tore it in half.", "forms": ["tore", "torn"]}, {"w": "in half", "zh": "成兩半", "eps": [1], "ex": "She tore it in half."}, {"w": "cousin", "zh": "表哥、表姊、堂弟…（表／堂親）", "eps": [1], "ex": "It was her cousin Kaito."}, {"w": "studio", "zh": "工作室", "eps": [1, 3], "ex": "He worked in Tokyo, at an anime studio."}, {"w": "weekend", "zh": "週末", "eps": [1], "ex": "He was home for the weekend."}, {"w": "piece", "zh": "一片、一塊", "eps": [1], "ex": "He picked up the two pieces."}, {"w": "quiet", "zh": "安靜的", "eps": [1, 3], "ex": "Kaito was quiet for a second."}, {"w": "move", "zh": "動", "eps": [1, 2, 3], "ex": "Because it doesn't move."}, {"w": "thick", "zh": "厚的", "eps": [1], "ex": "Inside was a thick stack of paper."}, {"w": "stack", "zh": "一疊", "eps": [1, 2], "ex": "A thick stack of paper."}, {"w": "sheet", "zh": "一張（紙）", "eps": [1], "ex": "Three hundred sheets, all the same size."}, {"w": "corner", "zh": "角落、角", "eps": [2], "ex": "Kaito held the stack at one corner."}, {"w": "thumb", "zh": "大拇指", "eps": [2], "ex": "Let the pages fly under his thumb."}, {"w": "trick", "zh": "把戲、花招", "eps": [2], "ex": "Anime is a trick."}, {"w": "brain", "zh": "大腦", "eps": [2], "ex": "Your brain thinks it's moving."}, {"w": "episode", "zh": "（影集的）一集", "eps": [2], "ex": "So one episode is..."}, {"w": "thousand", "zh": "千", "eps": [2], "ex": "Thousands of drawings."}, {"w": "famous", "zh": "有名的", "eps": [2], "ex": "A famous movie used more than a hundred thousand."}, {"w": "explain", "zh": "解釋", "eps": [2], "ex": "Kaito explained his job."}, {"w": "artist", "zh": "畫家、藝術家", "eps": [2], "ex": "The best artists draw the key pictures."}, {"w": "key", "zh": "關鍵的（也有「鑰匙」的意思）", "eps": [2], "ex": "The best artists draw the key pictures."}, {"w": "landing", "zh": "落地", "eps": [2], "ex": "The start of a jump, the top, the landing."}, {"w": "in between", "zh": "在中間", "eps": [2], "ex": "Draw all the pictures in between."}, {"w": "middle", "zh": "中間", "eps": [2], "ex": "I draw the boring middle."}, {"w": "notebook", "zh": "筆記本", "eps": [2, 3], "ex": "He gave Yuki a small notebook."}, {"w": "midnight", "zh": "半夜十二點", "eps": [2], "ex": "Yuki drew until midnight."}, {"w": "flip", "zh": "快速翻（頁）", "eps": [2], "ex": "When she flipped the notebook, the cat jumped.", "forms": ["flipped", "flipping"]}, {"w": "pose", "zh": "姿勢", "eps": [2], "ex": "Don't draw the pose."}, {"w": "moment", "zh": "那一刻、瞬間", "eps": [2, 3], "ex": "Draw the moment before it."}, {"w": "tiny", "zh": "很小的", "eps": [3], "ex": "She drew tiny boxes."}, {"w": "stamp", "zh": "郵票", "eps": [3], "ex": "The size of a stamp."}, {"w": "rough", "zh": "粗略的、草的", "eps": [3], "ex": "Filled each one with a rough idea."}, {"w": "thumbnail", "zh": "縮圖草稿（畫漫畫、做設計的第一步）", "eps": [3], "ex": "Kaito called them thumbnails."}, {"w": "careful", "zh": "仔細的", "eps": [3], "ex": "Better than one careful page."}, {"w": "throw", "zh": "丟；throw … away＝丟掉", "eps": [3], "ex": "You can throw them away.", "forms": ["threw", "thrown"]}, {"w": "point", "zh": "重點", "eps": [3], "ex": "That's the point."}, {"w": "fall off", "zh": "從…摔下來", "eps": [3], "ex": "One second before she falls off her bike.", "forms": ["fell off", "falls off", "falling off"]}, {"w": "reach", "zh": "伸手去拿", "eps": [3], "ex": "Her hand reached for a bag in the air."}, {"w": "tilt", "zh": "傾斜", "eps": [3], "ex": "The bike was already tilting."}, {"w": "prize", "zh": "獎", "eps": [3], "ex": "Yuki did not win first prize."}, {"w": "shrine", "zh": "神社", "eps": [3], "ex": "A beautiful, quiet picture of a shrine."}, {"w": "judge", "zh": "評審", "eps": [3], "ex": "The judge had written three words."}, {"w": "buzz", "zh": "（手機）嗡嗡震動", "eps": [3], "ex": "Her phone buzzed."}, {"w": "wall", "zh": "牆", "eps": [3], "ex": "On the wall of his studio."}, {"w": "animator", "zh": "動畫師", "eps": [3], "ex": "Next to the real animators' work."}, {"w": "vacation", "zh": "假期", "eps": [3], "ex": "Summer vacation."}]};
+
+// ═══════════ 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）═══════════
+const LOG_KEY = "study_log_v1", CH = DATA.ch;
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// 雲端上傳網址不寫在教材裡（repo 公開）；家長在「學習紀錄」頁設定一次，存在此瀏覽器
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, pracCount = 0, pracOk = 0, listenDone = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0 && listenDone === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、聽完 ${listenDone} 集、聽懂了嗎 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0; listenDone = 0;
+});
+
+// ═══════════ 本機狀態（認識的字、聽的次數）═══════════
+const ST_KEY = "listen_" + DATA.id + "_v1";
+let ST = { known: {}, listens: {} };
+try{ ST = Object.assign(ST, JSON.parse(localStorage.getItem(ST_KEY) || "{}")); }catch(e){}
+function saveST(){ try{ localStorage.setItem(ST_KEY, JSON.stringify(ST)); }catch(e){} }
+
+// ═══════════ 字彙查表（含簡單變化形）═══════════
+const LOOK = {};
+DATA.vocab.forEach((v, i)=>{
+  const base = v.w.toLowerCase();
+  const forms = [base].concat(v.forms || []);
+  if(!v.noauto && base.indexOf(" ") < 0){
+    forms.push(base + "s", base + "es", base + "ed", base + "d", base + "ing");
+    if(/e$/.test(base)) forms.push(base.slice(0, -1) + "ing");
+    if(/y$/.test(base)) forms.push(base.slice(0, -1) + "ies", base.slice(0, -1) + "ied");
+  }
+  forms.forEach(f => { if(!(f in LOOK)) LOOK[f] = i; });
+});
+const MAXLEN = Math.max.apply(null, DATA.vocab.map(v => v.w.split(" ").length));
+function norm(t){ return t.toLowerCase().replace(/[’']/g, "'").replace(/'s?$/, ""); }
+
+// 把一句英文切成 token，查得到的字包成 .g
+function markup(en){
+  const parts = en.split(/([A-Za-z][A-Za-z'’-]*)/);
+  const out = [];
+  for(let i = 0; i < parts.length; i++){
+    if(i % 2 === 0){ out.push(esc(parts[i])); continue; }
+    let hit = -1, span = 1;
+    for(let L = MAXLEN; L >= 1; L--){
+      const idx = [];
+      for(let k = 0; k < L; k++) idx.push(i + 2 * k);
+      if(idx[idx.length - 1] >= parts.length) continue;
+      let ok = true;
+      for(let k = 1; k < L; k++){ if(!/^\s$/.test(parts[idx[k] - 1])){ ok = false; break; } }
+      if(!ok) continue;
+      const key = idx.map(j => norm(parts[j])).join(" ");
+      if(key in LOOK){ hit = LOOK[key]; span = L; break; }
+    }
+    if(hit < 0){ out.push(esc(parts[i])); continue; }
+    const text = [];
+    for(let k = 0; k < span; k++){ text.push(parts[i + 2 * k]); if(k < span - 1) text.push(parts[i + 2 * k + 1]); }
+    const v = DATA.vocab[hit];
+    out.push(`<span class="g${ST.known[v.w] ? " known" : ""}" data-v="${hit}">${esc(text.join(""))}</span>`);
+    i += 2 * (span - 1);
+  }
+  return out.join("");
+}
+function esc(s){ return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function attr(s){ return esc(s).replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+
+// ═══════════ 語音（瀏覽器內建 TTS）═══════════
+const synth = window.speechSynthesis;
+let VOICES = [], curVoice = null;
+let rate = parseFloat(localStorage.getItem("tts_rate_v1") || "0.9");
+function loadVoices(){
+  if(!synth) return;
+  const all = synth.getVoices().filter(v => /^en/i.test(v.lang));
+  if(!all.length) return;
+  const score = v => (/Google US English|Samantha|Aria|Jenny|Ava|Zira|Allison/i.test(v.name) ? 3 : 0) + (/en-US/i.test(v.lang) ? 2 : /en-GB/i.test(v.lang) ? 1 : 0) + (v.localService ? 0.5 : 0);
+  all.sort((a, b) => score(b) - score(a));
+  VOICES = all;
+  const want = localStorage.getItem("tts_voice_v1");
+  curVoice = all.find(v => v.name === want) || all[0];
+  document.querySelectorAll("select.voice").forEach(sel=>{
+    sel.innerHTML = all.map(v => `<option value="${esc(v.name)}"${v === curVoice ? " selected" : ""}>${esc(v.name.replace(/^Microsoft |^Google /, ""))} (${v.lang})</option>`).join("");
+  });
+  document.querySelectorAll(".novoice").forEach(n => n.style.display = "none");
+}
+if(synth){ loadVoices(); synth.onvoiceschanged = loadVoices; }
+setTimeout(()=>{ if(!VOICES.length) document.querySelectorAll(".novoice").forEach(n => n.style.display = "block"); }, 1500);
+
+let queue = null; // {items:[{el,text}], i, done}
+function stopAll(){
+  queue = null;
+  if(synth) synth.cancel();
+  document.querySelectorAll(".s.now").forEach(e => e.classList.remove("now"));
+  document.querySelectorAll(".playbtn").forEach(b => { b.textContent = "▶ 聽整集"; b.classList.remove("on"); });
+}
+function say(text, onend){
+  if(!synth){ if(onend) onend(); return; }
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = curVoice ? curVoice.lang : "en-US";
+  if(curVoice) u.voice = curVoice;
+  u.rate = rate;
+  u.onend = ()=>{ if(onend) onend(); };
+  u.onerror = ()=>{ if(onend) onend(); };
+  synth.speak(u);
+}
+function playOne(el){
+  stopAll();
+  el.classList.add("now");
+  setTimeout(()=> say(el.dataset.en, ()=> el.classList.remove("now")), 60);
+}
+function playAll(ep){
+  stopAll();
+  const els = Array.from(document.querySelectorAll(`#ep${ep} .s`));
+  const btn = document.querySelector(`#ep${ep} .playbtn`);
+  btn.textContent = "⏹ 停止"; btn.classList.add("on");
+  const q = { i: 0 };
+  queue = q;
+  function next(){
+    if(queue !== q) return;
+    if(q.i > 0) els[q.i - 1].classList.remove("now");
+    if(q.i >= els.length){
+      queue = null; btn.textContent = "▶ 聽整集"; btn.classList.remove("on");
+      ST.listens[ep] = (ST.listens[ep] || 0) + 1; saveST(); listenDone++;
+      document.getElementById("cnt" + ep).textContent = ST.listens[ep];
+      logEv({ type: "listen", ep, n: ST.listens[ep] });
+      return;
+    }
+    const el = els[q.i++];
+    el.classList.add("now");
+    const r = el.getBoundingClientRect();
+    if(r.top < 90 || r.bottom > window.innerHeight - 40) el.scrollIntoView({ block: "center", behavior: "smooth" });
+    say(el.dataset.en, next);
+  }
+  setTimeout(next, 60);
+}
+
+// ═══════════ 分頁 ═══════════
+const tabs = document.getElementById("tabs");
+const tabDefs = [["guide", "🎧 怎麼用"]].concat(DATA.episodes.map((e, i) => ["ep" + (i + 1), `Ep.${i + 1} ${e.short}`])).concat([["vocab", "📦 字彙池"]]);
+tabDefs.forEach(([id, label], i)=>{
+  const b = document.createElement("button");
+  b.textContent = label; b.dataset.t = id; if(i === 0) b.classList.add("active");
+  b.onclick = ()=> showTab(id);
+  tabs.appendChild(b);
+});
+function showTab(id){
+  stopAll(); hideTip();
+  document.querySelectorAll("nav.tabs button").forEach(b => b.classList.toggle("active", b.dataset.t === id));
+  document.querySelectorAll("section.panel").forEach(s => s.classList.toggle("show", s.id === id));
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  if(id === "vocab") renderVocab();
+}
+
+// ═══════════ 渲染每一集 ═══════════
+const epsBox = document.getElementById("eps");
+DATA.episodes.forEach((E, idx)=>{
+  const n = idx + 1;
+  const sec = document.createElement("section");
+  sec.className = "panel"; sec.id = "ep" + n;
+  let paras = E.paras.map(P => {
+    const en = P.map(s => `<span class="s" data-en="${attr(s[0])}">${markup(s[0])}</span>`).join(" ");
+    const zh = P.map(s => s[1]).join("");
+    return `<p>${en}</p><div class="zh">${zh}</div>`;
+  }).join("");
+  const qs = E.quiz.map((Q, qi) => `
+    <div class="q" data-q="${n}-${qi}">
+      <div class="stem">${qi + 1}. ${Q.q}</div>
+      <div class="opts">${Q.o.map((o, oi) => `<button data-i="${oi}">${o}</button>`).join("")}</div>
+      <div class="why">${Q.why}</div>
+    </div>`).join("");
+  const hook = E.hook ? `
+    <div class="hook">
+      <div class="lab">${n < DATA.episodes.length ? "▶ 下集預告 · NEXT EPISODE" : "▶ 故事結束 · THE END"}</div>
+      <div class="txt">${E.hook[0]}</div>
+      <div class="txtzh">${E.hook[1]}</div>
+      ${n < DATA.episodes.length ? `<button class="nextbtn" onclick="showTab('ep${n + 1}')">看 Ep.${n + 1} →</button>` : `<button class="nextbtn" onclick="showTab('vocab')">去字彙池，把認識的字按一按 →</button>`}
+    </div>` : "";
+  sec.innerHTML = `
+    <div class="card goal">
+      <h2>🎬 Ep.${n}《${E.title}》<span class="muted">${E.zhtitle} · 約 ${E.min} 分鐘 · ${E.words} 字</span></h2>
+      <p>${E.lead}</p>
+    </div>
+    <div class="card">
+      <div class="ctrl">
+        <button class="primary playbtn" onclick="togglePlay(${n})">▶ 聽整集</button>
+        <button class="blindbtn" onclick="toggleBlind(${n}, this)">🙈 只聽不看</button>
+        <button class="zhbtn" onclick="toggleZh(${n}, this)">中文</button>
+        <span class="sp">速度 <input type="range" min="0.6" max="1.2" step="0.05" value="${rate}" oninput="setRate(this.value)"> <span class="rateval">${rate}</span>x</span>
+        <select class="voice" onchange="setVoice(this.value)"><option>語音載入中…</option></select>
+        <span class="counter">這集已聽完 <b id="cnt${n}">${ST.listens[n] || 0}</b> 次</span>
+      </div>
+      <div class="novoice">這個瀏覽器找不到英語語音。電腦請用 Chrome 或 Edge；iPhone 請到「設定 → 輔助使用 → 語音內容」下載一個英語語音。</div>
+      <p class="muted" style="margin-bottom:10px;">點任何一句，會唸那一句。點有點點的字，看意思。</p>
+      <div class="story" id="story${n}">${paras}</div>
+      ${hook}
+    </div>
+    <div class="card">
+      <h2>👂 聽懂了嗎？<span class="muted">兩題就好，不是考試</span></h2>
+      ${qs}
+      <div class="think">💭 想一想（不用寫）：${E.think}</div>
+    </div>`;
+  epsBox.appendChild(sec);
+});
+function togglePlay(n){ if(queue) stopAll(); else playAll(n); }
+function toggleBlind(n, b){ const s = document.getElementById("story" + n); s.classList.toggle("blind"); b.classList.toggle("on", s.classList.contains("blind")); b.textContent = s.classList.contains("blind") ? "👀 顯示文字" : "🙈 只聽不看"; }
+function toggleZh(n, b){ const s = document.getElementById("story" + n); s.classList.toggle("showzh"); b.classList.toggle("on", s.classList.contains("showzh")); }
+function setRate(v){ rate = parseFloat(v); localStorage.setItem("tts_rate_v1", v); document.querySelectorAll(".rateval").forEach(e => e.textContent = v); document.querySelectorAll(".ctrl input[type=range]").forEach(r => r.value = v); }
+function setVoice(name){ const v = VOICES.find(x => x.name === name); if(v){ curVoice = v; localStorage.setItem("tts_voice_v1", name); document.querySelectorAll("select.voice").forEach(s => s.value = name); } }
+
+// 點句子 → 唸那句；點字 → 小卡；只聽模式下點句子 → 先現出來
+document.addEventListener("click", ev=>{
+  const g = ev.target.closest(".g");
+  if(g){ ev.stopPropagation(); showTip(g); return; }
+  const s = ev.target.closest(".s");
+  if(s){
+    const story = s.closest(".story");
+    if(story && story.classList.contains("blind") && !s.classList.contains("peek")){ s.classList.add("peek"); }
+    playOne(s); return;
+  }
+  const opt = ev.target.closest(".q .opts button");
+  if(opt){ answer(opt); return; }
+  if(!ev.target.closest("#tip")) hideTip();
+});
+
+// ═══════════ 單字小卡 ═══════════
+const tip = document.getElementById("tip");
+function showTip(g){
+  const v = DATA.vocab[+g.dataset.v];
+  const known = !!ST.known[v.w];
+  tip.innerHTML = `<div class="tw">${esc(v.w)}</div><div class="tz">${v.zh}${v.note ? `<div class="muted">${v.note}</div>` : ""}</div>
+    <button data-w="${attr(v.w)}" onclick="say(this.dataset.w)">🔊 唸</button>
+    <button class="${known ? "kn" : ""}" data-w="${attr(v.w)}" onclick="toggleKnown(this.dataset.w, this)">${known ? "✓ 認識了" : "認識了"}</button>`;
+  tip.style.display = "block";
+  const r = g.getBoundingClientRect();
+  let left = r.left + window.scrollX, top = r.bottom + window.scrollY + 6;
+  if(left + 270 > window.innerWidth) left = Math.max(8, window.innerWidth - 275);
+  tip.style.left = left + "px"; tip.style.top = top + "px";
+}
+function hideTip(){ tip.style.display = "none"; }
+function toggleKnown(w, btn){
+  if(ST.known[w]) delete ST.known[w]; else ST.known[w] = 1;
+  saveST();
+  const known = !!ST.known[w];
+  if(btn){ btn.classList.toggle("kn", known); btn.textContent = known ? "✓ 認識了" : "認識了"; }
+  document.querySelectorAll(".g").forEach(g => { if(DATA.vocab[+g.dataset.v].w === w) g.classList.toggle("known", known); });
+  if(document.getElementById("vocab").classList.contains("show")) renderVocab();
+}
+
+// ═══════════ 聽懂了嗎 ═══════════
+function answer(btn){
+  const q = btn.closest(".q"); if(q.classList.contains("done")) return;
+  const [n, qi] = q.dataset.q.split("-").map(Number);
+  const Q = DATA.episodes[n - 1].quiz[qi];
+  const ok = +btn.dataset.i === Q.a;
+  btn.classList.add(ok ? "good" : "bad");
+  pracCount++; if(ok) pracOk++;
+  logEv({ type: "practice", q: `ep${n}q${qi + 1}`, ok });
+  if(ok){
+    q.classList.add("done");
+    q.querySelectorAll(".opts button").forEach(b => b.disabled = true);
+    q.querySelector(".why").classList.add("show");
+  } else {
+    setTimeout(()=> btn.classList.remove("bad"), 600);
+  }
+}
+
+// ═══════════ 字彙池 ═══════════
+let vfilter = "all";
+document.querySelectorAll(".vtop button").forEach(b => b.onclick = ()=>{ vfilter = b.dataset.f; document.querySelectorAll(".vtop button").forEach(x => x.classList.toggle("on", x === b)); renderVocab(); });
+function renderVocab(){
+  const grid = document.getElementById("vgrid");
+  const total = DATA.vocab.length, kn = DATA.vocab.filter(v => ST.known[v.w]).length;
+  document.getElementById("vcnt").textContent = `已認識 ${kn} / ${total} 個字`;
+  grid.innerHTML = DATA.vocab.filter(v => vfilter === "all" || (vfilter === "known") === !!ST.known[v.w]).map(v => {
+    const eps = (v.eps || []).map(e => `<span class="ep">Ep.${e}</span>`).join("");
+    return `<div class="vcard${ST.known[v.w] ? " known" : ""}">
+      <div class="w" data-w="${attr(v.w)}" onclick="say(this.dataset.w)">🔊 ${esc(v.w)}</div>
+      <div class="z">${v.zh}</div>
+      <div class="eps">${eps}</div>
+      ${v.ex ? `<div class="ex" data-w="${attr(v.ex)}" onclick="say(this.dataset.w)">${esc(v.ex)}</div>` : ""}
+      <button class="kb" data-w="${attr(v.w)}" onclick="toggleKnown(this.dataset.w)">${ST.known[v.w] ? "✓ 認識了（再按一次取消）" : "認識了"}</button>
+    </div>`;
+  }).join("") || `<p class="muted">這裡還沒有字。</p>`;
+}
+</script>
+</body>
+</html>
