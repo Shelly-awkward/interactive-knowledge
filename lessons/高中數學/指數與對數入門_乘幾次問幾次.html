@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>指數與對數入門｜乘幾次、問幾次、e 從哪來</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#0f766e; --accent-soft:#ccfbf1;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#134e4a,#14b8a6); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  .dnd-pool,.dnd-zone{border:2px dashed var(--border); border-radius:12px; padding:10px 12px; min-height:64px; margin:8px 0; background:#fff; transition:.15s;}
+  .dnd-pool{background:#f9fafb;}
+  .dnd-zone.over,.dnd-pool.over{border-color:var(--blue); background:#eff6ff;}
+  .dnd-zones{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px;}
+  .dnd-zone-title{font-weight:bold; margin-bottom:6px; color:var(--accent);}
+  .dnd-card{display:inline-block; background:#fff; border:1.5px solid var(--border); border-radius:99px; padding:6px 14px; margin:4px 6px 4px 0;
+    cursor:grab; user-select:none; touch-action:none; font-size:.95rem; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .1s;}
+  .dnd-card:hover{border-color:var(--blue);}
+  .dnd-card.sel{border-color:var(--blue); background:#dbeafe; transform:scale(1.04);}
+  .dnd-card.drag{position:fixed; z-index:99; pointer-events:none; opacity:.9; transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.2);}
+  .dnd-card.ok{border-color:var(--green); background:var(--green-soft);}
+  .dnd-card.no{border-color:var(--red); background:var(--red-soft);}
+  .dnd-bar{margin-top:8px;}
+  .dnd-bar button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem; margin-right:6px;}
+  .dnd-bar button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .dnd-msg{font-weight:bold; margin-left:8px;}
+  .dnd-msg.ok{color:#166534;} .dnd-msg.no{color:#991b1b;}
+  .dnd-hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .spot{cursor:pointer;} .spot:hover{filter:brightness(1.08);}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; min-height:2.4em;}
+
+  .two{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;}
+  .two .svgbox{margin:0; flex:0 0 auto;}
+  .two .side{flex:1 1 240px;}
+  .val{display:inline-block; font-family:"Courier New",monospace; font-weight:bold; font-size:1.05rem; padding:2px 10px; border-radius:8px; margin:2px 4px 2px 0;}
+  .val.a{background:#ccfbf1; color:#134e4a;} .val.b{background:#fee2e2; color:#991b1b;} .val.c{background:#dbeafe; color:#1e40af;}
+  .steps-line{font-family:"Courier New",monospace; font-size:1.05rem; line-height:1.9; word-break:break-all;}
+  .steps-line b{color:#0f766e;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">從零開始 · 給從來沒學會指數對數的人 · 高中數學A 第三冊第2章的前置觀念</span>
+  <h1>指數與對數入門：乘幾次、問幾次、e 從哪來</h1>
+  <p>四個小節＋總測驗。只要記兩句話：指數是「連續乘幾次」，對數是反過來問「要乘幾次才會到」。每一節都有可以拉的東西：拉細菌翻倍、用對數機數次數、拉點看指數和對數互為鏡子、拉複利次數看 e 冒出來。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1 指數：連續乘幾次</button>
+  <button data-t="s2">2 對數：反過來問要乘幾次</button>
+  <button data-t="s3">3 兩條曲線互為鏡子</button>
+  <button data-t="s4">4 e 與自然對數</button>
+  <button data-t="s5">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 2-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>看到 2³ 就知道是「2 連續乘 3 次」，上面的小數字是次數</li>
+      <li>知道指數成長是前面慢、後面爆衝</li>
+      <li>知道 0 次方是 1、負次方是「除」，以及為什麼</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：上面的小數字是「乘幾次」</h2>
+    <div class="formula">2³ ＝ 2 × 2 × 2 ＝ 8　　「3」就是乘了幾次</div>
+    <p>下面的數叫<b>底數</b>（拿什麼來乘），上面的小數叫<b>指數</b>（乘幾次）。這是全部的定義，沒有別的了。</p>
+    <div class="note">💡 讀法：2³ 唸「2 的 3 次方」。10² 唸「10 的 2 次方」，也叫「10 的平方」。</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 動手玩：細菌翻倍</h2>
+    <p>一隻細菌，每小時分裂成 2 隻（或你選的倍數）。拉時間，看數量怎麼長。</p>
+    <div class="tool">
+      <div class="row">每小時變成
+        <select id="bBase"><option value="2" selected>2 倍</option><option value="3">3 倍</option><option value="10">10 倍</option></select>
+      </div>
+      <div>經過 <span id="bHourLabel"></span> 小時</div>
+      <input type="range" id="bHour" min="0" max="10" value="3">
+      <div class="svgbox" id="svgBact"></div>
+      <div class="steps-line" id="bactLine"></div>
+      <div class="out" id="bactOut"></div>
+      <div class="hint">注意柱子的形狀：前面幾小時幾乎看不出來在長，後面突然爆衝。這就是「指數成長」。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：三個看起來奇怪、其實很合理的規則</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>規則</th><th>例子</th><th>為什麼</th></tr>
+        <tr><td class="name">乘在一起 → 次數相加</td><td>2³ × 2² ＝ 2⁵</td><td>乘 3 次再乘 2 次，總共乘了 5 次</td></tr>
+        <tr><td class="name">0 次方 ＝ 1</td><td>2⁰ ＝ 1</td><td>一次都沒乘，就是原本的 1（起點）</td></tr>
+        <tr class="hi"><td class="name">負次方 ＝ 除</td><td>2⁻¹ ＝ 1/2，2⁻² ＝ 1/4</td><td>往回走：從 8 → 4 → 2 → 1 → 1/2，每退一步就除以 2</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 把它想成一條數線：往右一步「× 2」，往左一步「÷ 2」。0 在起點（＝1），右邊是正次方，左邊是負次方。上面細菌工具拉到 0 小時，數量就是 1。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜3⁴ 是多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 3 連續乘 4 次：3 × 3 × 3 × 3。</p>
+        <p class="step"><b>②</b> 3 × 3 ＝ 9，9 × 3 ＝ 27，27 × 3 ＝ <b>81</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜2¹⁰ 大概多少？為什麼電腦常出現 1024？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 2 乘 10 次：2、4、8、16、32、64、128、256、512、<b>1024</b>。</p>
+        <p class="step"><b>②</b> 電腦用二進位，一切都是「2 乘幾次」，所以 1024 到處出現。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜10⁻³ 是多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 負次方是除：從 1 開始，除以 10 三次。</p>
+        <p class="step"><b>②</b> 1 → 0.1 → 0.01 → <b>0.001</b>，也就是 1/1000。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜為什麼 5⁰ ＝ 1，不是 0？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 看規律：5³ ＝ 125，5² ＝ 25，5¹ ＝ 5，每退一步除以 5。</p>
+        <p class="step"><b>②</b> 再退一步：5 ÷ 5 ＝ <b>1</b>。所以 0 次方是 1。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 2⁵ ＝ ？</div>
+      <label><input type="radio" name="p1q1" value="A">25</label>
+      <label><input type="radio" name="p1q1" value="B">64</label>
+      <label><input type="radio" name="p1q1" value="C">32</label>
+      <label><input type="radio" name="p1q1" value="D">10</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　2 × 2 × 2 × 2 × 2 ＝ 32。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 在 7³ 裡面，3 的意思是：</div>
+      <label><input type="radio" name="p1q2" value="A">7 乘 3</label>
+      <label><input type="radio" name="p1q2" value="B">3 連續乘 7 次</label>
+      <label><input type="radio" name="p1q2" value="C">7 加 3</label>
+      <label><input type="radio" name="p1q2" value="D">7 連續乘 3 次</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　上面的小數字是乘幾次。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 10⁰ ＝ ？</div>
+      <label><input type="radio" name="p1q3" value="A">0</label>
+      <label><input type="radio" name="p1q3" value="B">1</label>
+      <label><input type="radio" name="p1q3" value="C">10</label>
+      <label><input type="radio" name="p1q3" value="D">100</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　一次都沒乘，就是起點 1。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. 2⁻³ ＝ ？</div>
+      <label><input type="radio" name="p1q4" value="A">−8</label>
+      <label><input type="radio" name="p1q4" value="B">−6</label>
+      <label><input type="radio" name="p1q4" value="C">1/8</label>
+      <label><input type="radio" name="p1q4" value="D">1/6</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　負次方是除：1 ÷ 2 ÷ 2 ÷ 2 ＝ 1/8。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">5. 2³ × 2⁴ ＝ ？</div>
+      <label><input type="radio" name="p1q5" value="A">4⁷</label>
+      <label><input type="radio" name="p1q5" value="B">2¹²</label>
+      <label><input type="radio" name="p1q5" value="C">2¹</label>
+      <label><input type="radio" name="p1q5" value="D">2⁷</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　乘 3 次再乘 4 次，共 7 次。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">6. 細菌每小時翻倍，從 1 隻開始，哪一段增加的「隻數」最多？</div>
+      <label><input type="radio" name="p1q6" value="A">第 5 到第 6 小時</label>
+      <label><input type="radio" name="p1q6" value="B">第 9 到第 10 小時</label>
+      <label><input type="radio" name="p1q6" value="C">每一段都一樣</label>
+      <label><input type="radio" name="p1q6" value="D">第 1 到第 2 小時</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　越後面翻倍的基數越大，增加得越多。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>看到 log₂8 就知道是在問「2 要乘幾次才會變 8」，答案是次數</li>
+      <li>會把指數式和對數式互相翻譯：2³＝8 和 log₂8＝3 是同一句話</li>
+      <li>知道對數的答案可以不是整數，也知道為什麼地震規模、分貝用對數</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：對數在問「次數」</h2>
+    <div class="formula">log₂ 8 ＝ 3　　意思：「2 要乘幾次才會變 8？」→ 3 次</div>
+    <p>指數是「給你次數，問結果」；對數是「給你結果，問次數」。<b>對數的答案是次數，不是大小</b>。這一句記住，大部分卡關都解開了。</p>
+    <div class="warn">⚠️ 最常見的錯：把 log₂8 想成 8 ÷ 2 ＝ 4。不對，它是問「乘幾次」，2 × 2 × 2 ＝ 8，答案 3。</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 動手玩：對數機</h2>
+    <p>選底數、填一個目標數，機器會一次一次乘給你看，數到超過目標為止。</p>
+    <div class="tool">
+      <div class="row">底數
+        <select id="lBase"><option value="2" selected>2</option><option value="3">3</option><option value="10">10</option></select>
+        目標 <input type="number" id="lTarget" value="50" min="1" max="1000000" style="width:120px">
+        <button id="lGo">開始乘</button>
+      </div>
+      <div class="steps-line" id="logLine"></div>
+      <div class="out" id="logOut"></div>
+      <div class="hint">試試 8、64、1000（底數 10）這種剛好的數，再試 50 這種不剛好的，看答案怎麼「卡在兩個整數中間」。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：同一句話的兩種寫法</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>指數式（問結果）</th><th>對數式（問次數）</th><th>白話</th></tr>
+        <tr><td>2³ ＝ 8</td><td>log₂ 8 ＝ 3</td><td>2 乘 3 次是 8；2 要乘 3 次才到 8</td></tr>
+        <tr><td>10² ＝ 100</td><td>log₁₀ 100 ＝ 2</td><td>10 乘 2 次是 100</td></tr>
+        <tr class="hi"><td>5⁰ ＝ 1</td><td>log₅ 1 ＝ 0</td><td>一次都不用乘就是 1，所以 log 任何數 1 都是 0</td></tr>
+        <tr><td>2⁻¹ ＝ 1/2</td><td>log₂ (1/2) ＝ −1</td><td>往回除一次，次數是負的</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 翻譯口訣：底數不動，「結果」和「次數」交換位置。log 後面跟的是結果，等號右邊是次數。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：同一句話配對</h2>
+    <div id="dndPair"></div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：對數的超能力——把「乘」變成「加」</h2>
+    <p>乘 3 次再乘 2 次，總共 5 次。所以兩個數相乘，它們的<b>次數相加</b>：</p>
+    <div class="formula">log(8 × 4) ＝ log 8 ＋ log 4　（底數 2：3 ＋ 2 ＝ 5，而 32 ＝ 2⁵ ✔）</div>
+    <p>以前沒有計算機，大數相乘很痛苦，先查對數表變成加法再查回去，省很多力。</p>
+    <p>另一個用途：<b>把差很多倍的數壓在同一張圖上</b>。</p>
+    <ul>
+      <li>地震規模 6 比規模 5，地震波振幅大 <b>10 倍</b>；規模 7 又大 10 倍。規模就是「翻了幾次 10 倍」</li>
+      <li>pH 值 5 比 pH 6 酸 10 倍；分貝也是同一個道理</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜log₃ 81 ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 問：3 要乘幾次才變 81？</p>
+        <p class="step"><b>②</b> 3 → 9 → 27 → 81，乘了 4 次。</p>
+        <p class="step"><b>③</b> 答案：<b>4</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜log₁₀ 1000 ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 10 → 100 → 1000，3 次。</p>
+        <p class="step"><b>②</b> 答案：<b>3</b>。底數 10 的對數常省略不寫，寫成 log 1000 ＝ 3。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜log₂ 50 大約是多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 2 乘 5 次是 32（不夠），乘 6 次是 64（超過）。</p>
+        <p class="step"><b>②</b> 所以答案在 5 和 6 之間，精確值約 <b>5.64</b>。</p>
+        <p class="step"><b>③</b> 對數的答案不一定是整數，但一定可以先用「夾在哪兩個整數中間」估出來。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜為什麼 log 1 永遠是 0？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 不管底數是幾，「要乘幾次才會是 1？」</p>
+        <p class="step"><b>②</b> 一次都不用乘，起點就是 1。所以答案 <b>0</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. log₂ 16 ＝ ？</div>
+      <label><input type="radio" name="p2q1" value="A">32</label>
+      <label><input type="radio" name="p2q1" value="B">4</label>
+      <label><input type="radio" name="p2q1" value="C">2</label>
+      <label><input type="radio" name="p2q1" value="D">8</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　2 → 4 → 8 → 16，4 次。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. log₂ 8 在問什麼？</div>
+      <label><input type="radio" name="p2q2" value="A">8 − 2 是多少</label>
+      <label><input type="radio" name="p2q2" value="B">8 ÷ 2 是多少</label>
+      <label><input type="radio" name="p2q2" value="C">8 要乘幾次才會變 2</label>
+      <label><input type="radio" name="p2q2" value="D">2 要乘幾次才會變 8</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　對數問的是次數。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 10³ ＝ 1000 翻成對數式是：</div>
+      <label><input type="radio" name="p2q3" value="A">log₁₀ 1000 ＝ 3</label>
+      <label><input type="radio" name="p2q3" value="B">log₁₀ 3 ＝ 1000</label>
+      <label><input type="radio" name="p2q3" value="C">log₁₀₀₀ 10 ＝ 3</label>
+      <label><input type="radio" name="p2q3" value="D">log₃ 1000 ＝ 10</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　底數不動，結果和次數交換。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. log₇ 1 ＝ ？</div>
+      <label><input type="radio" name="p2q4" value="A">7</label>
+      <label><input type="radio" name="p2q4" value="B">無法計算</label>
+      <label><input type="radio" name="p2q4" value="C">1</label>
+      <label><input type="radio" name="p2q4" value="D">0</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　一次都不用乘就是 1。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. log₂ 20 大約在哪兩個整數之間？</div>
+      <label><input type="radio" name="p2q5" value="A">10 和 11</label>
+      <label><input type="radio" name="p2q5" value="B">4 和 5</label>
+      <label><input type="radio" name="p2q5" value="C">2 和 3</label>
+      <label><input type="radio" name="p2q5" value="D">3 和 4</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　2⁴ ＝ 16 不夠，2⁵ ＝ 32 超過。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">6. 地震規模 7 和規模 5 相比，地震波振幅大幾倍？</div>
+      <label><input type="radio" name="p2q6" value="A">1000 倍</label>
+      <label><input type="radio" name="p2q6" value="B">2 倍</label>
+      <label><input type="radio" name="p2q6" value="C">10 倍</label>
+      <label><input type="radio" name="p2q6" value="D">100 倍</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　差 2 級就是翻了兩次 10 倍，10 × 10 ＝ 100。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>看得出指數函數的圖形前面平、後面陡；對數函數剛好相反</li>
+      <li>知道兩條曲線是沿著 y ＝ x 這條線對摺的鏡像，因為它們是同一句話的兩個方向</li>
+      <li>知道對數函數只能吃正數</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：把「同一句話」畫成圖</h2>
+    <p>指數函數 y ＝ 2ˣ：橫軸是次數，縱軸是結果。對數函數 y ＝ log₂x：橫軸是結果，縱軸是次數。</p>
+    <p>兩張圖只是把橫軸和縱軸<b>交換</b>，所以圖形會沿著對角線 y ＝ x 對摺重合，像照鏡子。</p>
+  </div>
+
+  <div class="card">
+    <h2>🔧 動手玩：拉一個點，看它的鏡子</h2>
+    <div class="tool">
+      <div class="two">
+        <div class="svgbox" id="svgMirror"></div>
+        <div class="side">
+          <div>次數 x：<span id="mxLabel"></span></div>
+          <input type="range" id="mx" min="-2" max="3" step="0.1" value="1.5">
+          <div class="infobox" id="mirrorInfo"></div>
+        </div>
+      </div>
+      <div class="hint">綠點在指數曲線上（次數 → 結果），紅點是它照鏡子（結果 → 次數）在對數曲線上。兩個點永遠對稱於灰色斜線。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：從圖看出來的三件事</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th></th><th>指數函數 y ＝ 2ˣ</th><th>對數函數 y ＝ log₂x</th></tr>
+        <tr><td class="name">形狀</td><td>左邊貼著橫軸，右邊爆衝</td><td>右邊越來越平，左邊掉到負無限</td></tr>
+        <tr><td class="name">一定經過</td><td>(0, 1)：0 次方是 1</td><td>(1, 0)：log 1 是 0</td></tr>
+        <tr class="hi"><td class="name">能吃什麼數</td><td>x 可以是任何數，結果永遠是正的</td><td>x <b>只能是正數</b>，因為「乘幾次」的結果不可能是 0 或負的</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 底數比 1 大就是遞增（越乘越大）；底數在 0 和 1 之間就是遞減（例如 0.5ˣ，越乘越小，像藥效衰退）。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜指數曲線上有一個點 (3, 8)。它在對數曲線上的鏡子點是哪裡？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 交換座標：(8, 3)。</p>
+        <p class="step"><b>②</b> 意思：2³ ＝ 8，所以 log₂ 8 ＝ 3。同一句話。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜為什麼 log₂ 0 沒有答案？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 問：2 要乘幾次才會變 0？</p>
+        <p class="step"><b>②</b> 2 不管乘幾次、除幾次，都不會是 0，只會越來越接近。</p>
+        <p class="step"><b>③</b> 所以沒有答案，對數函數只吃正數。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜0.5ˣ 的圖長什麼樣？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 每乘一次變一半：1 → 0.5 → 0.25 → …</p>
+        <p class="step"><b>②</b> 所以是<b>往下掉</b>的曲線，越來越貼近 0 但不會碰到。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="D">
+      <div class="stem">1. 指數函數 y ＝ 2ˣ 一定經過哪個點？</div>
+      <label><input type="radio" name="p3q1" value="A">(1, 1)</label>
+      <label><input type="radio" name="p3q1" value="B">(1, 0)</label>
+      <label><input type="radio" name="p3q1" value="C">(0, 0)</label>
+      <label><input type="radio" name="p3q1" value="D">(0, 1)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　0 次方是 1。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 對數函數 y ＝ log₂x 一定經過哪個點？</div>
+      <label><input type="radio" name="p3q2" value="A">(0, 0)</label>
+      <label><input type="radio" name="p3q2" value="B">(2, 2)</label>
+      <label><input type="radio" name="p3q2" value="C">(1, 0)</label>
+      <label><input type="radio" name="p3q2" value="D">(0, 1)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　log 1 ＝ 0。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 指數曲線和對數曲線是沿著哪條線對稱？</div>
+      <label><input type="radio" name="p3q3" value="A">y ＝ −x</label>
+      <label><input type="radio" name="p3q3" value="B">y ＝ x</label>
+      <label><input type="radio" name="p3q3" value="C">x 軸</label>
+      <label><input type="radio" name="p3q3" value="D">y 軸</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　橫軸縱軸交換就是沿 y ＝ x 對摺。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. 下面哪一個<b>算不出來</b>？</div>
+      <label><input type="radio" name="p3q4" value="A">log₂ (−4)</label>
+      <label><input type="radio" name="p3q4" value="B">log₂ 0.5</label>
+      <label><input type="radio" name="p3q4" value="C">log₂ 1</label>
+      <label><input type="radio" name="p3q4" value="D">log₂ 8</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　乘幾次都不會是負的。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">5. y ＝ 0.5ˣ 的圖形是：</div>
+      <label><input type="radio" name="p3q5" value="A">一條直線</label>
+      <label><input type="radio" name="p3q5" value="B">越來越低、貼近 0</label>
+      <label><input type="radio" name="p3q5" value="C">越來越高</label>
+      <label><input type="radio" name="p3q5" value="D">上下波動</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　底數小於 1，每乘一次變一半。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-4 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道 e ≈ 2.718 是「利息不停地滾」滾出來的數</li>
+      <li>知道 ln x 就是 log 底數 e 的 x，其他規則跟一般對數一樣</li>
+      <li>知道為什麼叫「自然」：連續成長、連續衰退的東西用它最順</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：e 是怎麼冒出來的</h2>
+    <p>存 1 元，年利率 100%（誇張一點比較好看）。</p>
+    <ul>
+      <li>一年結算一次：年底 1 × 2 ＝ <b>2 元</b></li>
+      <li>半年結算一次（每次 50%）：1 × 1.5 × 1.5 ＝ <b>2.25 元</b></li>
+      <li>每季一次（每次 25%）：1.25⁴ ≈ <b>2.44 元</b></li>
+      <li>每天一次：≈ <b>2.7146 元</b></li>
+      <li>不停地滾（無限多次）：≈ <b>2.71828…</b>，不會再多了</li>
+    </ul>
+    <div class="formula">這個「滾到極限」的數就是 e ≈ 2.718</div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 動手玩：把利息滾得越來越細</h2>
+    <div class="tool">
+      <div>一年結算 <span id="nLabel"></span> 次</div>
+      <input type="range" id="nIdx" min="0" max="7" value="0">
+      <div class="svgbox" id="svgComp"></div>
+      <div class="out" id="compOut"></div>
+      <div class="hint">結算次數越多，錢越多，但增加得越來越少，最後卡在 2.718 上不去。那條虛線就是 e。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：ln 只是換了底數的 log</h2>
+    <div class="formula">ln x ＝ log<sub>e</sub> x　　意思：「e 要乘幾次才會變 x？」</div>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>寫法</th><th>問什麼</th><th>值</th></tr>
+        <tr><td>ln 1</td><td>e 要乘幾次變 1？</td><td>0（一次都不用）</td></tr>
+        <tr class="hi"><td>ln e</td><td>e 要乘幾次變 e？</td><td>1</td></tr>
+        <tr><td>ln e²</td><td>e 要乘幾次變 e²？</td><td>2</td></tr>
+        <tr><td>ln 10</td><td>e 要乘幾次變 10？</td><td>約 2.30（介於 2 和 3 之間）</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 所有對數的規則，ln 全部適用。它沒有比較難，只是底數是個小數點很長的數，所以要靠計算機。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：為什麼叫「自然」</h2>
+    <p>細菌、人口、放射性衰變、咖啡變涼，這些都不是「一年結算一次」，而是<b>每一瞬間都在變</b>。這種「連續地變」用 e 來寫最乾淨：</p>
+    <div class="formula">連續成長：現在的量 ＝ 起始量 × e^(成長率 × 時間)</div>
+    <p>所以大自然裡的成長和衰退，公式裡幾乎都有 e。這就是它叫「自然對數」的原因。</p>
+    <div class="tool">
+      <div class="row">起始 100 隻，每小時連續成長率
+        <select id="gRate"><option value="0.1">10%</option><option value="0.3" selected>30%</option><option value="0.7">70%</option><option value="-0.3">−30%（衰退）</option></select>
+        經過 <input type="number" id="gTime" value="5" min="0" max="24" style="width:80px"> 小時
+        <button id="gGo">算</button>
+      </div>
+      <div class="out" id="gOut"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：這句話是對的還是錯的？</h2>
+    <div id="dndTF"></div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜ln e³ ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 問：e 要乘幾次變 e³？</p>
+        <p class="step"><b>②</b> 3 次。答案 <b>3</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜ln 20 大約多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> e² ≈ 7.4（不夠），e³ ≈ 20.1（剛好超過一點點）。</p>
+        <p class="step"><b>②</b> 所以 ln 20 略小於 3，約 <b>2.996</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 3｜一年結算一次和每天結算，利率 100%，差多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 一次：2 元。每天：約 2.7146 元。</p>
+        <p class="step"><b>②</b> 差不到 1 元，而且再切細也不會超過 2.718。「滾得越細賺越多」有上限，這個上限就是 e。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 4｜為什麼細菌成長要用 e，不用 2？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 用 2 也可以寫（2ˣ 就是每小時翻倍）。</p>
+        <p class="step"><b>②</b> 但細菌不是「整點才分裂」，是隨時都在分裂。描述「隨時都在變」的東西，用 e 的公式算微小變化最方便。</p>
+        <p class="step"><b>③</b> 兩種寫法可以互換，只是底數不同。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. e 大約是：</div>
+      <label><input type="radio" name="p4q1" value="A">3.14</label>
+      <label><input type="radio" name="p4q1" value="B">2.718</label>
+      <label><input type="radio" name="p4q1" value="C">1.414</label>
+      <label><input type="radio" name="p4q1" value="D">10</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　利息不停地滾的極限。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. ln x 的意思是：</div>
+      <label><input type="radio" name="p4q2" value="A">e 要乘幾次才會變 x</label>
+      <label><input type="radio" name="p4q2" value="B">x 乘 e</label>
+      <label><input type="radio" name="p4q2" value="C">x 除以 e</label>
+      <label><input type="radio" name="p4q2" value="D">x 要乘幾次才會變 e</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　ln 是底數 e 的對數。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. ln e ＝ ？</div>
+      <label><input type="radio" name="p4q3" value="A">1</label>
+      <label><input type="radio" name="p4q3" value="B">e</label>
+      <label><input type="radio" name="p4q3" value="C">2.718</label>
+      <label><input type="radio" name="p4q3" value="D">0</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　e 乘 1 次就是 e。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. ln 1 ＝ ？</div>
+      <label><input type="radio" name="p4q4" value="A">0</label>
+      <label><input type="radio" name="p4q4" value="B">e</label>
+      <label><input type="radio" name="p4q4" value="C">1</label>
+      <label><input type="radio" name="p4q4" value="D">無法計算</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　任何底數，log 1 都是 0。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">5. 1 元、年利率 100%，結算次數越多，年底的錢：</div>
+      <label><input type="radio" name="p4q5" value="A">越來越少</label>
+      <label><input type="radio" name="p4q5" value="B">無限變多</label>
+      <label><input type="radio" name="p4q5" value="C">都是 2 元</label>
+      <label><input type="radio" name="p4q5" value="D">越來越多但不超過 2.718</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　上限就是 e。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">6. ln 10 大約在哪兩個整數之間？</div>
+      <label><input type="radio" name="p4q6" value="A">1 和 2</label>
+      <label><input type="radio" name="p4q6" value="B">2 和 3</label>
+      <label><input type="radio" name="p4q6" value="C">9 和 10</label>
+      <label><input type="radio" name="p4q6" value="D">0 和 1</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　e² ≈ 7.4 不夠，e³ ≈ 20 超過。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="A">
+      <div class="stem">1. 3⁴ ＝ ？</div>
+      <label><input type="radio" name="qz1" value="A">81</label>
+      <label><input type="radio" name="qz1" value="B">64</label>
+      <label><input type="radio" name="qz1" value="C">34</label>
+      <label><input type="radio" name="qz1" value="D">12</label>
+      <div class="fb" data-exp="　3 × 3 × 3 × 3。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">2. 2⁰ ＝ ？</div>
+      <label><input type="radio" name="qz2" value="A">1</label>
+      <label><input type="radio" name="qz2" value="B">無法計算</label>
+      <label><input type="radio" name="qz2" value="C">0</label>
+      <label><input type="radio" name="qz2" value="D">2</label>
+      <div class="fb" data-exp="　一次都沒乘，是起點 1。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">3. 5⁻² ＝ ？</div>
+      <label><input type="radio" name="qz3" value="A">−10</label>
+      <label><input type="radio" name="qz3" value="B">1/25</label>
+      <label><input type="radio" name="qz3" value="C">−25</label>
+      <label><input type="radio" name="qz3" value="D">1/10</label>
+      <div class="fb" data-exp="　負次方是除：1 ÷ 5 ÷ 5。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">4. log₂ 32 ＝ ？</div>
+      <label><input type="radio" name="qz4" value="A">5</label>
+      <label><input type="radio" name="qz4" value="B">4</label>
+      <label><input type="radio" name="qz4" value="C">16</label>
+      <label><input type="radio" name="qz4" value="D">64</label>
+      <div class="fb" data-exp="　2 乘 5 次是 32。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">5. log₁₀ 1000 ＝ ？</div>
+      <label><input type="radio" name="qz5" value="A">10</label>
+      <label><input type="radio" name="qz5" value="B">1000</label>
+      <label><input type="radio" name="qz5" value="C">100</label>
+      <label><input type="radio" name="qz5" value="D">3</label>
+      <div class="fb" data-exp="　10 乘 3 次。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">6. 2⁴ ＝ 16 翻成對數式是：</div>
+      <label><input type="radio" name="qz6" value="A">log₂ 16 ＝ 4</label>
+      <label><input type="radio" name="qz6" value="B">log₂ 4 ＝ 16</label>
+      <label><input type="radio" name="qz6" value="C">log₄ 2 ＝ 16</label>
+      <label><input type="radio" name="qz6" value="D">log₁₆ 2 ＝ 4</label>
+      <div class="fb" data-exp="　底數不動，結果和次數交換。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">7. log₂ 100 大約在哪兩個整數之間？</div>
+      <label><input type="radio" name="qz7" value="A">9 和 10</label>
+      <label><input type="radio" name="qz7" value="B">6 和 7</label>
+      <label><input type="radio" name="qz7" value="C">49 和 50</label>
+      <label><input type="radio" name="qz7" value="D">5 和 6</label>
+      <div class="fb" data-exp="　2⁶ ＝ 64 不夠，2⁷ ＝ 128 超過。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">8. 指數曲線和對數曲線互為鏡子，是沿著：</div>
+      <label><input type="radio" name="qz8" value="A">原點</label>
+      <label><input type="radio" name="qz8" value="B">x 軸</label>
+      <label><input type="radio" name="qz8" value="C">y 軸</label>
+      <label><input type="radio" name="qz8" value="D">y ＝ x</label>
+      <div class="fb" data-exp="　橫軸縱軸交換。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">9. e 是怎麼來的？</div>
+      <label><input type="radio" name="qz9" value="A">利息不停地滾的極限</label>
+      <label><input type="radio" name="qz9" value="B">2 的平方根</label>
+      <label><input type="radio" name="qz9" value="C">圓周長除以直徑</label>
+      <label><input type="radio" name="qz9" value="D">隨便定的</label>
+      <div class="fb" data-exp="　(1 ＋ 1/n)ⁿ 在 n 很大時趨近 2.718。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">10. ln e² ＝ ？</div>
+      <label><input type="radio" name="qz10" value="A">2</label>
+      <label><input type="radio" name="qz10" value="B">2e</label>
+      <label><input type="radio" name="qz10" value="C">e</label>
+      <label><input type="radio" name="qz10" value="D">e²</label>
+      <div class="fb" data-exp="　e 乘 2 次變 e²。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 高中數學 · 指數與對數入門「乘幾次、問幾次、e 從哪來」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "高中數學 指數與對數入門";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 拖曳配對（滑鼠、觸控都可以；也可以先點卡片、再點要放的區域）=====
+function dndGame(opts){
+  const box = document.getElementById(opts.box);
+  const placed = {};                       // 卡片 id → 放在哪一區
+  let selected = null, dragging = null;
+  const el = (tag, cls) => { const e = document.createElement(tag); if(cls) e.className = cls; return e; };
+  function render(){
+    box.innerHTML = '';
+    const pool = el('div', 'dnd-pool'); pool.dataset.zone = '__pool__';
+    pool.innerHTML = `<div class="dnd-zone-title" style="color:#6b7280">${opts.poolLabel || '卡片區（拖到下面正確的位置）'}</div>`;
+    const zonesWrap = el('div', 'dnd-zones');
+    const zoneEls = {};
+    opts.zones.forEach(z => {
+      const ze = el('div', 'dnd-zone'); ze.dataset.zone = z.id;
+      ze.innerHTML = `<div class="dnd-zone-title">${z.label}</div>`;
+      zonesWrap.appendChild(ze); zoneEls[z.id] = ze;
+    });
+    opts.items.forEach(it => {
+      const c = el('div', 'dnd-card'); c.dataset.item = it.id; c.textContent = it.label;
+      (placed[it.id] && zoneEls[placed[it.id]] ? zoneEls[placed[it.id]] : pool).appendChild(c);
+      attach(c);
+    });
+    const bar = el('div', 'row dnd-bar');
+    bar.innerHTML = `<button class="dnd-check">檢查</button><button class="ghost dnd-reset">重來</button><span class="dnd-msg"></span>`;
+    box.append(pool, zonesWrap, bar);
+    if(opts.hint){ const h = el('div', 'dnd-hint'); h.textContent = opts.hint; box.appendChild(h); }
+    bar.querySelector('.dnd-check').addEventListener('click', check);
+    bar.querySelector('.dnd-reset').addEventListener('click', () => { Object.keys(placed).forEach(k => delete placed[k]); selected = null; render(); });
+    [pool, ...Object.values(zoneEls)].forEach(z => z.addEventListener('click', () => {
+      if(!selected) return;
+      if(z.dataset.zone === '__pool__') delete placed[selected]; else placed[selected] = z.dataset.zone;
+      selected = null; render();
+    }));
+  }
+  function zoneAt(x, y){
+    const t = document.elementFromPoint(x, y);
+    return t ? t.closest('.dnd-zone, .dnd-pool') : null;
+  }
+  function attach(card){
+    let sx = 0, sy = 0, moved = false, ghost = null;
+    card.addEventListener('pointerdown', e => {
+      sx = e.clientX; sy = e.clientY; moved = false; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e => {
+      if(!(e.buttons & 1)) return;
+      if(!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 6) return;
+      if(!moved){
+        moved = true; ghost = card.cloneNode(true); ghost.classList.add('drag');
+        document.body.appendChild(ghost); card.style.opacity = '.35';
+      }
+      ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + 'px'; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + 'px';
+      box.querySelectorAll('.over').forEach(z => z.classList.remove('over'));
+      const z = zoneAt(e.clientX, e.clientY); if(z && box.contains(z)) z.classList.add('over');
+    });
+    card.addEventListener('pointerup', e => {
+      if(moved){
+        const z = zoneAt(e.clientX, e.clientY);
+        if(ghost) ghost.remove(); card.style.opacity = '';
+        if(z && box.contains(z)){ if(z.dataset.zone === '__pool__') delete placed[card.dataset.item]; else placed[card.dataset.item] = z.dataset.zone; }
+        selected = null; render();
+      }else{
+        selected = (selected === card.dataset.item) ? null : card.dataset.item;
+        box.querySelectorAll('.dnd-card').forEach(c => c.classList.toggle('sel', c.dataset.item === selected));
+      }
+    });
+    card.addEventListener('pointercancel', () => { if(ghost) ghost.remove(); card.style.opacity = ''; moved = false; });
+  }
+  function check(){
+    let ok = 0, total = opts.items.length, unplaced = 0;
+    box.querySelectorAll('.dnd-card').forEach(c => {
+      const id = c.dataset.item, z = placed[id];
+      const zone = opts.zones.find(zz => zz.id === z);
+      c.classList.remove('ok', 'no');
+      if(!zone){ unplaced++; c.classList.add('no'); return; }
+      if(zone.accepts.includes(id)){ ok++; c.classList.add('ok'); } else c.classList.add('no');
+    });
+    const msg = box.querySelector('.dnd-msg');
+    if(ok === total){ msg.className = 'dnd-msg ok'; msg.textContent = '✔ 全部正確！'; }
+    else { msg.className = 'dnd-msg no'; msg.textContent = `✘ 對了 ${ok} / ${total}${unplaced ? '（還有 ' + unplaced + ' 張沒放）' : ''}，紅色的再想想。`; }
+    toolLog(opts.name || opts.box, ok === total);
+    if(opts.onResult) opts.onResult(ok, total, placed);
+  }
+  render();
+  return { placed };
+}
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// ---- 1 細菌翻倍 ----
+const bBase = document.getElementById('bBase'), bHour = document.getElementById('bHour');
+function drawBact(){
+  const b = +bBase.value, n = +bHour.value, W = 480, H = 220, L = 40, B = 30;
+  const maxN = 10, vals = []; for(let i = 0; i <= maxN; i++) vals.push(Math.pow(b, i));
+  const maxV = vals[maxN], bw = (W - L - 20) / (maxN + 1);
+  let s = rect(0,0,W,H,'#fff') + line(L, H - B, W - 10, H - B, '#94a3b8', 1);
+  vals.forEach((v, i) => {
+    const h = Math.max(2, (H - B - 20) * v / maxV), x = L + i * bw + 4;
+    s += rect(x, H - B - h, bw - 8, h, i <= n ? '#14b8a6' : '#e5e7eb', i === n ? '#0f766e' : 'none', 2);
+    s += txt(x + (bw - 8) / 2, H - B + 14, i, '#6b7280', 11);
+  });
+  s += txt(W / 2, H - 4, '小時', '#6b7280', 11);
+  document.getElementById('svgBact').innerHTML = svg(W, H, s);
+  document.getElementById('bHourLabel').textContent = n;
+  const cnt = Math.pow(b, n);
+  const chain = n === 0 ? '一次都沒乘' : Array(n).fill(b).join(' × ');
+  document.getElementById('bactLine').innerHTML = `${b}<sup>${n}</sup> ＝ ${chain} ＝ <b>${cnt.toLocaleString()}</b>`;
+  document.getElementById('bactOut').innerHTML = `${n} 小時後有 <b>${cnt.toLocaleString()}</b> 隻。${n > 0 ? `比前一小時多了 ${(cnt - Math.pow(b, n - 1)).toLocaleString()} 隻。` : '起點 1 隻，這就是為什麼 0 次方是 1。'}`;
+}
+bBase.addEventListener('change', drawBact); bHour.addEventListener('input', drawBact); drawBact();
+
+// ---- 2 對數機 ----
+document.getElementById('lGo').addEventListener('click', () => {
+  const b = +document.getElementById('lBase').value, t = parseFloat(document.getElementById('lTarget').value);
+  const line_ = document.getElementById('logLine'), out = document.getElementById('logOut');
+  if(!(t >= 1)){ out.textContent = '目標請填 1 以上的數（對數只吃正數，而且這台機器從 1 開始往上乘）。'; line_.textContent = ''; return; }
+  const steps = [1]; let v = 1, k = 0;
+  while(v < t && k < 30){ v *= b; k++; steps.push(v); }
+  const exact = Math.log(t) / Math.log(b);
+  line_.innerHTML = steps.map((x, i) => (i === 0 ? '1' : `<span style="color:#6b7280">×${b}→</span> ${x.toLocaleString()}`)).join(' ');
+  if(Math.abs(v - t) < 1e-9) out.innerHTML = `乘了 <b>${k}</b> 次剛好到 ${t.toLocaleString()} → log<sub>${b}</sub> ${t.toLocaleString()} ＝ <b>${k}</b>`;
+  else if(k === 0) out.innerHTML = `目標是 1，一次都不用乘 → log<sub>${b}</sub> 1 ＝ <b>0</b>`;
+  else out.innerHTML = `乘 ${k - 1} 次是 ${steps[k - 1].toLocaleString()}（不夠），乘 ${k} 次是 ${v.toLocaleString()}（超過）→ log<sub>${b}</sub> ${t.toLocaleString()} 在 <b>${k - 1} 和 ${k} 之間</b>，精確值約 <b>${exact.toFixed(2)}</b>`;
+  toolLog('對數機', true);
+});
+document.getElementById('lGo').click();
+
+dndGame({ box: 'dndPair', name: '指數對數配對', poolLabel: '對數式（拖到同一句話的指數式下面）',
+  items: [ { id: 'p1', label: 'log₂ 8 ＝ 3' }, { id: 'p2', label: 'log₁₀ 100 ＝ 2' }, { id: 'p3', label: 'log₃ 81 ＝ 4' }, { id: 'p4', label: 'log₅ 1 ＝ 0' }, { id: 'p5', label: 'log₂ (1/2) ＝ −1' }, { id: 'p6', label: 'log₂ 1024 ＝ 10' } ],
+  zones: [ { id: 'z1', label: '2³ ＝ 8', accepts: ['p1'] }, { id: 'z2', label: '10² ＝ 100', accepts: ['p2'] }, { id: 'z3', label: '3⁴ ＝ 81', accepts: ['p3'] }, { id: 'z4', label: '5⁰ ＝ 1', accepts: ['p4'] }, { id: 'z5', label: '2⁻¹ ＝ 1/2', accepts: ['p5'] }, { id: 'z6', label: '2¹⁰ ＝ 1024', accepts: ['p6'] } ],
+  hint: '底數不動，log 後面是結果，等號右邊是次數。' });
+
+// ---- 3 鏡子 ----
+const mx = document.getElementById('mx');
+function drawMirror(){
+  const x = +mx.value, W = 340, H = 340, o = 60, sc = 32;   // 座標：-2..8 → 每單位 32px，原點在 (o+2*sc, H-o-2*sc)
+  const ox = o + 2 * sc - 30, oy = H - o - 2 * sc + 30;
+  const X = v => ox + v * sc, Y = v => oy - v * sc;
+  let s = rect(0,0,W,H,'#fff');
+  for(let g = -2; g <= 8; g++){ s += line(X(g), 10, X(g), H - 10, '#f1f5f9', 1) + line(10, Y(g), W - 10, Y(g), '#f1f5f9', 1); }
+  s += line(X(-2), Y(0), X(8), Y(0), '#94a3b8', 1.5) + line(X(0), Y(-2), X(0), Y(8), '#94a3b8', 1.5);
+  s += line(X(-2), Y(-2), X(8), Y(8), '#cbd5e1', 1.5, true) + txt(X(7.6), Y(7.2), 'y = x', '#94a3b8', 11);
+  const path = (f, a, b, step) => { let d = ''; for(let t = a; t <= b + 1e-9; t += step){ const v = f(t); if(v < -2.2 || v > 8.2) continue; d += (d ? ' L ' : 'M ') + X(t).toFixed(1) + ' ' + Y(v).toFixed(1); } return d; };
+  s += `<path d="${path(t => Math.pow(2, t), -2, 3, 0.05)}" fill="none" stroke="#16a34a" stroke-width="2.5"/>`;
+  s += `<path d="${path(t => Math.log2(t), 0.25, 8, 0.05)}" fill="none" stroke="#dc2626" stroke-width="2.5"/>`;
+  s += txt(X(2.2), Y(6.5), 'y = 2ˣ', '#16a34a', 12, 'start') + txt(X(6.2), Y(2.2), 'y = log₂x', '#dc2626', 12, 'start');
+  const y = Math.pow(2, x);
+  if(y <= 8.2){
+    s += line(X(x), Y(y), X(y), Y(x), '#a3a3a3', 1, true);
+    s += `<circle cx="${X(x)}" cy="${Y(y)}" r="7" fill="#16a34a" stroke="#fff" stroke-width="2"/>`;
+    if(y >= 0.25) s += `<circle cx="${X(y)}" cy="${Y(x)}" r="7" fill="#dc2626" stroke="#fff" stroke-width="2"/>`;
+  }
+  [0, 1, 2, 4, 8].forEach(g => { s += txt(X(g), Y(0) + 14, g, '#6b7280', 10); if(g) s += txt(X(0) - 8, Y(g) + 4, g, '#6b7280', 10, 'end'); });
+  document.getElementById('svgMirror').innerHTML = svg(W, H, s);
+  document.getElementById('mxLabel').textContent = x.toFixed(1);
+  document.getElementById('mirrorInfo').innerHTML = `<span class="val a">綠點 (${x.toFixed(1)}, ${y.toFixed(2)})</span>：2 乘 ${x.toFixed(1)} 次 ＝ ${y.toFixed(2)}<br><span class="val b">紅點 (${y.toFixed(2)}, ${x.toFixed(1)})</span>：log₂ ${y.toFixed(2)} ＝ ${x.toFixed(1)}<br><span style="font-weight:normal;font-size:.9rem">座標交換，就是同一句話換個方向問。</span>`;
+}
+mx.addEventListener('input', drawMirror); drawMirror();
+
+// ---- 4 複利 ----
+const NS = [1, 2, 4, 12, 52, 365, 8760, 1000000], NL = ['1（一年一次）', '2（半年一次）', '4（每季）', '12（每月）', '52（每週）', '365（每天）', '8760（每小時）', '1,000,000（幾乎不停地滾）'];
+const nIdx = document.getElementById('nIdx');
+function drawComp(){
+  const i = +nIdx.value, W = 480, H = 200, L = 50, B = 30;
+  const E = Math.E, Y = v => H - B - (H - B - 20) * (v - 1.9) / (2.8 - 1.9);
+  let s = rect(0,0,W,H,'#fff') + line(L, H - B, W - 10, H - B, '#94a3b8', 1);
+  s += line(L, Y(E), W - 10, Y(E), '#dc2626', 1.5, true) + txt(L + 6, Y(E) - 6, 'e ≈ 2.718（上限）', '#dc2626', 11, 'start');
+  [2, 2.2, 2.4, 2.6, 2.8].forEach(v => s += txt(L - 6, Y(v) + 4, v.toFixed(1), '#6b7280', 10, 'end') + line(L - 3, Y(v), L, Y(v), '#94a3b8', 1));
+  const bw = (W - L - 20) / NS.length;
+  NS.forEach((n, k) => {
+    const v = Math.pow(1 + 1 / n, n), x = L + k * bw + 6;
+    s += rect(x, Y(v), bw - 12, H - B - Y(v), k <= i ? '#14b8a6' : '#e5e7eb', k === i ? '#0f766e' : 'none', 2);
+    s += txt(x + (bw - 12) / 2, H - B + 13, n >= 1000000 ? '百萬' : n, '#6b7280', 10);
+    if(k <= i) s += txt(x + (bw - 12) / 2, Y(v) - 5, v.toFixed(3), '#0f766e', 10);
+  });
+  document.getElementById('svgComp').innerHTML = svg(W, H, s);
+  const n = NS[i], v = Math.pow(1 + 1 / n, n);
+  document.getElementById('nLabel').textContent = NL[i];
+  document.getElementById('compOut').innerHTML = `每次加 ${(100 / n).toPrecision(3).replace(/\.?0+$/, '')}%，加 ${n.toLocaleString()} 次：(1 ＋ 1/${n.toLocaleString()})<sup>${n.toLocaleString()}</sup> ＝ <b>${v.toFixed(5)}</b> 元${i === NS.length - 1 ? '，幾乎就是 e 了' : ''}`;
+}
+nIdx.addEventListener('input', drawComp); drawComp();
+
+document.getElementById('gGo').addEventListener('click', () => {
+  const r = +document.getElementById('gRate').value, t = parseFloat(document.getElementById('gTime').value) || 0;
+  const v = 100 * Math.exp(r * t);
+  document.getElementById('gOut').innerHTML = `100 × e<sup>${r} × ${t}</sup> ＝ 100 × e<sup>${(r * t).toFixed(2)}</sup> ≈ <b>${v.toFixed(1)} 隻</b>${r < 0 ? '（越來越少，像藥效、放射性衰變）' : ''}`;
+  toolLog('連續成長', true);
+});
+document.getElementById('gGo').click();
+
+dndGame({ box: 'dndTF', name: '對錯判斷', poolLabel: '句子',
+  items: [
+    { id: 't1', label: '對數的答案是「次數」' }, { id: 't2', label: 'log 1 一定是 0' }, { id: 't3', label: 'ln 是底數 e 的對數' }, { id: 't4', label: '2⁰ ＝ 1' },
+    { id: 'f1', label: 'log₂ 8 ＝ 8 ÷ 2 ＝ 4' }, { id: 'f2', label: '負次方會得到負數' }, { id: 'f3', label: '利息滾越細，錢可以無限多' }, { id: 'f4', label: 'log 可以吃負數' },
+  ],
+  zones: [ { id: 'true', label: '✔ 對的', accepts: ['t1', 't2', 't3', 't4'] }, { id: 'false', label: '✘ 錯的', accepts: ['f1', 'f2', 'f3', 'f4'] } ],
+  hint: '錯的那幾句，想想為什麼錯：負次方是「除」、對數只吃正數、複利有上限 e。' });
+
+</script>
+</body>
+</html>
