@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>首爾視訊日記｜Video Call from Seoul</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#faf7f2; --card:#ffffff;
+    --main:#be123c; --main-soft:#ffe4e6; --main-deep:#9f1239;
+    --green:#16a34a; --green-soft:#dcfce7; --red:#dc2626; --red-soft:#fee2e2;
+    --amber:#d97706; --amber-soft:#fef3c7; --border:#e7e2d8; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.75;}
+  .wrap{max-width:820px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#1e3a8a,#be123c 55%,#f43f5e); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.2); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:100px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--main);}
+  nav.tabs button.active{background:var(--main); border-color:var(--main); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--main-deep); margin-bottom:10px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--main-soft); border:none;}
+  .goal ul, .goal ol{margin-left:1.2em;}
+  .goal li{margin:4px 0;}
+  .note{background:var(--main-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:var(--main-deep);}
+  .warn{background:var(--amber-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#92400e;}
+  .muted{color:var(--sub); font-size:.85rem;}
+
+  /* ── 播放控制列 ── */
+  .ctrl{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:8px 0 14px;}
+  .ctrl button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:8px 16px; font-size:.95rem; cursor:pointer; font-family:inherit; transition:.12s;}
+  .ctrl button:hover{border-color:var(--main);}
+  .ctrl button.primary{background:var(--main); border-color:var(--main); color:#fff; font-weight:bold;}
+  .ctrl button.on{background:var(--main-soft); border-color:var(--main); color:var(--main-deep); font-weight:bold;}
+  .ctrl button.shadow{background:var(--amber); border-color:var(--amber); color:#fff; font-weight:bold;}
+  .story .s.mic{background:var(--green-soft); box-shadow:0 0 0 2px var(--green-soft);}
+  .mic-prompt{display:none; text-align:center; margin:-6px 0 14px; font-size:.95rem; color:#166534; font-weight:bold; animation:pulse 1s infinite;}
+  .mic-prompt.show{display:block;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.5;}}
+  .ctrl .sp{display:flex; align-items:center; gap:6px; font-size:.85rem; color:var(--sub);}
+  .ctrl input[type=range]{width:110px;}
+  .ctrl select{font-family:inherit; font-size:.85rem; padding:6px 8px; border:1px solid var(--border); border-radius:8px; max-width:200px; background:#fff;}
+  .counter{font-size:.85rem; color:var(--sub); margin-left:auto;}
+  .counter b{color:var(--main-deep);}
+
+  /* ── 故事本文 ── */
+  .story{font-size:1.12rem; line-height:1.95;}
+  .story p{margin:0 0 14px;}
+  .story .s{cursor:pointer; border-radius:6px; padding:1px 2px; transition:background .15s;}
+  .story .s:hover{background:var(--main-soft);}
+  .story .s.now{background:var(--amber-soft); box-shadow:0 0 0 2px var(--amber-soft);}
+  .story .g{border-bottom:2px dotted var(--main); cursor:pointer;}
+  .story .g.known{border-bottom-color:transparent;}
+  .story .zh{display:none; font-size:.9rem; color:var(--sub); margin:-8px 0 14px; padding:6px 12px; border-left:3px solid var(--main-soft);}
+  .story.showzh .zh{display:block;}
+  .story.blind .s{filter:blur(7px); user-select:none;}
+  .story.blind .s.now, .story.blind .s.peek{filter:none;}
+  .story .who{display:block; font-size:.8rem; color:var(--sub); margin-bottom:-6px;}
+
+  .hook{margin-top:18px; background:linear-gradient(135deg,var(--main-soft),#fff); border:1px dashed var(--main); border-radius:12px; padding:12px 16px;}
+  .hook .lab{font-size:.78rem; font-weight:bold; color:var(--main-deep); letter-spacing:.1em;}
+  .hook .txt{font-size:1rem; margin-top:2px;}
+  .hook .txtzh{font-size:.88rem; color:var(--sub);}
+  .nextbtn{display:inline-block; margin-top:10px; background:var(--main); color:#fff; border:none; border-radius:99px; padding:8px 20px; cursor:pointer; font-family:inherit; font-size:.95rem; font-weight:bold;}
+
+  /* ── 聽懂了嗎 ── */
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q .opts{display:flex; flex-direction:column; gap:6px;}
+  .q .opts button{text-align:left; border:1px solid var(--border); background:#fff; border-radius:8px; padding:8px 12px; cursor:pointer; font-family:inherit; font-size:.95rem; transition:.12s;}
+  .q .opts button:hover{border-color:var(--main); background:var(--main-soft);}
+  .q .opts button.good{background:var(--green-soft); border-color:var(--green); color:#166534; font-weight:bold;}
+  .q .opts button.bad{background:var(--red-soft); border-color:var(--red); color:#991b1b; animation:shake .3s;}
+  .q .opts button:disabled{cursor:default;}
+  @keyframes shake{25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+  .q .why{display:none; margin-top:8px; font-size:.88rem; color:var(--main-deep); background:var(--main-soft); border-radius:8px; padding:6px 10px;}
+  .q .why.show{display:block;}
+  .think{background:var(--amber-soft); border-radius:10px; padding:12px 16px; font-size:.95rem; color:#92400e;}
+
+  /* ── 字彙池 ── */
+  .vtop{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:12px;}
+  .vtop .cnt{font-weight:bold; color:var(--main-deep);}
+  .vtop button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 14px; font-size:.85rem; cursor:pointer; font-family:inherit;}
+  .vtop button.on{background:var(--main); border-color:var(--main); color:#fff;}
+  .vgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px;}
+  .vcard{border:1px solid var(--border); border-radius:10px; padding:10px 12px; background:#fff; transition:.12s;}
+  .vcard.known{background:var(--green-soft); border-color:#bbf7d0;}
+  .vcard .w{font-weight:bold; font-size:1.05rem; cursor:pointer;}
+  .vcard .w:hover{color:var(--main-deep);}
+  .vcard .z{font-size:.85rem; color:var(--sub);}
+  .vcard .eps{margin-top:4px; display:flex; gap:4px; flex-wrap:wrap;}
+  .vcard .ep{font-size:.7rem; border-radius:99px; padding:1px 8px; background:var(--main-soft); color:var(--main-deep);}
+  .vcard .ex{margin-top:6px; font-size:.82rem; color:var(--main-deep); border-top:1px dashed var(--border); padding-top:5px; cursor:pointer;}
+  .vcard .kb{margin-top:6px; width:100%; border:1px solid var(--border); background:#fff; border-radius:8px; padding:5px; cursor:pointer; font-family:inherit; font-size:.82rem;}
+  .vcard.known .kb{background:#fff; color:#166534; border-color:#bbf7d0;}
+
+  /* ── 句型精選 ── */
+  .pat{border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin:14px 0;}
+  .pat .frame{font-size:1.05rem; font-weight:bold; color:var(--main-deep); background:var(--main-soft); border-radius:8px; padding:8px 14px; display:inline-block; margin-bottom:8px;}
+  .pat .exp{font-size:.9rem; color:var(--sub); margin-bottom:10px;}
+  .pat .ex{display:flex; align-items:center; gap:8px; margin:6px 0; padding:8px 12px; background:#faf9f6; border-radius:8px; cursor:pointer;}
+  .pat .ex:hover{background:var(--main-soft);}
+  .pat .ex .icon{flex:0 0 auto; color:var(--main);}
+  .pat .ex .en{font-weight:600;}
+  .pat .ex .zh{font-size:.85rem; color:var(--sub); margin-top:2px;}
+  .pat .from{font-size:.72rem; color:var(--main-deep); background:var(--main-soft); border-radius:99px; padding:1px 8px; margin-left:6px; white-space:nowrap;}
+  .pat .say{margin-top:10px; border-top:1px dashed var(--border); padding-top:10px;}
+  .pat .say .blank{background:#fff; border:1px solid var(--border); border-radius:8px; padding:8px 12px; font-size:.95rem; color:var(--sub); margin-bottom:8px;}
+  .pat .say button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:6px 16px; font-size:.85rem; cursor:pointer; font-family:inherit;}
+  .pat .say button.done{background:var(--green-soft); border-color:var(--green); color:#166534; font-weight:bold;}
+
+  /* ── 單字小卡（點字彈出）── */
+  .tip{position:absolute; display:none; z-index:50; background:#fff; border:1px solid var(--main); border-radius:12px; padding:10px 14px; box-shadow:0 8px 24px rgba(0,0,0,.15); max-width:260px; font-size:.95rem;}
+  .tip .tw{font-weight:bold; font-size:1.1rem; color:var(--main-deep);}
+  .tip .tz{margin:2px 0 8px;}
+  .tip button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:4px 12px; cursor:pointer; font-family:inherit; font-size:.85rem; margin-right:6px;}
+  .tip button.kn{background:var(--green-soft); border-color:var(--green); color:#166534;}
+
+  .steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-top:10px;}
+  .step{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 12px; font-size:.9rem;}
+  .step b{display:block; color:var(--main-deep); margin-bottom:2px;}
+  table.plan{width:100%; border-collapse:collapse; font-size:.9rem; margin-top:8px;}
+  table.plan th, table.plan td{border:1px solid var(--border); padding:6px 10px; text-align:left; vertical-align:top;}
+  table.plan th{background:var(--main-soft); color:var(--main-deep);}
+  .novoice{display:none; background:var(--red-soft); color:#991b1b; border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem;}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:30%; font-size:.85rem;} .story{font-size:1.05rem;} .counter{margin-left:0;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">英語跟讀單元 · 4 回 · 每回約 2-3 分鐘 · 依課本句型字彙改寫</span>
+  <h1>📹 首爾視訊日記｜Video Call from Seoul</h1>
+  <p>依課本《Let's Talk in English》首爾旅遊單元（Seeing Seoul）的句型和字彙改寫的原創故事：Mia 視訊跟朋友 Leo 報告首爾之旅，分成 4 回，每回約 2-3 分鐘可以跟讀。同樣的句型和字會在不同回反覆出現，跟讀久了自然就記得。</p>
+  <div style="opacity:.8;font-size:.78rem;margin-top:8px;border-top:1px solid rgba(255,255,255,.25);padding-top:8px;">取材自：《Let's Talk in English》TRAVEL 單元 Seeing Seoul（Gangnam／COEX Mall／Starfield Library）Key Words 與 Language Tip 句型</div>
+</header>
+
+<nav class="tabs" id="tabs"></nav>
+
+<!-- ═══════════ 怎麼用 ═══════════ -->
+<section id="guide" class="panel show">
+  <div class="card goal">
+    <h2>🎧 這份教材怎麼玩</h2>
+    <ol>
+      <li>先按「▶ 整段用聽的」聽一次，看中文對照，大概抓意思就好。</li>
+      <li>按「🎙️ 跟讀模式」：每句唸完會停一下，燈號變綠色就是換你開口唸一次。</li>
+      <li>看到底下有點點的字，不懂就點一下看意思。看完就好，<b>不用背</b>。</li>
+      <li>覺得太簡單了，按「只聽不看」，蓋住字光靠耳朵跟讀。</li>
+      <li>每回結尾有「下一回預告」，聽完想知道後面就按下一回。</li>
+      <li>「句型精選」把整個單元最重要的句型抓出來，每個都可以多聽幾次、最後開口說一句自己的。</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h2>📖 給爸媽：為什麼這樣學（Steve Kaufmann 的方法）</h2>
+    <p class="muted">Kaufmann 是加拿大的語言學家，會 20 幾種語言。他的核心主張：語言是「聽和讀」大量堆出來的，不是背單字表、背句型公式背出來的。跟讀（shadowing）是在這個基礎上，多加一步「跟著開口說」，把聽懂的變成自己講得出來的。</p>
+    <div class="steps">
+      <div class="step"><b>1. 先輸入，再輸出</b>不要一開始就要求講對。先聽懂、聽熟，開口自然會順。</div>
+      <div class="step"><b>2. 同一篇多聽幾次</b>一回聽五次，比五回各聽一次有用。跟讀幾次，句子會自己黏在嘴巴上。</div>
+      <div class="step"><b>3. 字在句子裡認識</b>點字看意思就好，不用抄、不用背。同一個字、同一個句型會在不同回反覆出現，自然就記得。</div>
+      <div class="step"><b>4. 容忍「聽不懂」</b>不需要每個字都懂。懂七成就往下走，剩下的下次再懂。</div>
+      <div class="step"><b>5. 不考試</b>「聽懂了嗎」只有兩題，是確認有跟上，不是考試；跟讀完也不用逐字檢查發音對不對。</div>
+      <div class="step"><b>6. 輸出是最後一步</b>句型卡最後的「開口說一句」，是聽了好幾次之後才做，不是一開始就要求造句。</div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>🗓️ 建議的 3 分鐘流程</h2>
+    <table class="plan">
+      <tr><th>第幾天</th><th>做什麼</th></tr>
+      <tr><td>第 1 天</td><td>第 1 回邊聽邊看中文 → 再用「跟讀模式」跟一次</td></tr>
+      <tr><td>第 2 天</td><td>第 1 回只聽不看跟讀一次（複習）→ 第 2 回邊聽邊看</td></tr>
+      <tr><td>第 3～4 天</td><td>照進度往下一回，前面聽過的回也可以再跟讀一次</td></tr>
+      <tr><td>全部聽完後</td><td>到「句型精選」，每天挑一兩個句型開口說一句自己的</td></tr>
+    </table>
+    <div class="warn" style="margin-top:12px;">聲音是用瀏覽器內建的英語語音唸的，不用網路。如果按了沒聲音，換一個語音（控制列的下拉選單）；手機請先把靜音關掉。</div>
+  </div>
+</section>
+
+<div id="eps"></div>
+
+<!-- ═══════════ 句型精選 ═══════════ -->
+<section id="pattern" class="panel">
+  <div class="card goal">
+    <h2>🧩 這個單元最重要的句型</h2>
+    <p>都是各回短文裡出現過的句型，額外多配了例句方便反覆跟讀。每張卡片最後按「開口說一句」，講一句自己的句子——講出來就好，不檢查對不對，也不用打字。</p>
+  </div>
+  <div id="patternsBox"></div>
+</section>
+
+<!-- ═══════════ 字彙池 ═══════════ -->
+<section id="vocab" class="panel">
+  <div class="card goal">
+    <h2>📦 字彙池</h2>
+    <ul>
+      <li>這裡是故事裡有點點的字。點字可以聽發音，點例句可以聽整句。</li>
+      <li>覺得這個字已經認識了，按「認識了」。<b>認識的字變多，就是進步。</b></li>
+      <li>不確定的就先放著，下次聽故事再說。</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="vtop">
+      <span class="cnt" id="vcnt"></span>
+      <button class="on" data-f="all">全部</button>
+      <button data-f="new">還不認識</button>
+      <button data-f="known">已認識</button>
+    </div>
+    <div class="vgrid" id="vgrid"></div>
+  </div>
+</section>
+
+<div id="tip" class="tip"></div>
+<footer>互動知識庫 · 英語聽讀系列 · 故事為原創，人物與情節皆為虛構</footer>
+</div>
+
+<script>
+const DATA = {"id": "seeingseoul", "ch": "英語跟讀 首爾視訊日記", "episodes": [{"title": "Gangnam, Here We Come", "zhtitle": "江南，我們來了", "short": "江南初體驗", "min": "2-3", "words": 105, "lead": "Mia 剛從首爾回來，第一件事就是打視訊給好朋友 Leo，從江南（Gangnam）開始講起。", "paras": [[["Leo, are you there? I have so much to tell you about Seoul!", "Leo，你在嗎？我有好多首爾的事要跟你說！"]], [["There's a super cool area called Gangnam, and I spent my whole first day there.", "有一個超酷的地方叫江南，我第一天整天都待在那裡。"]], [["First, we walked down K-Star Road and saw statues of famous K-pop stars.", "我們先走了 K-Star Road，看到很多有名 K-pop 明星的雕像。"]], [["Some fans even brought their own costumes to match their favorite star!", "有些粉絲甚至自己帶戲服，打扮成跟偶像一樣！"]], [["After that, we decided to visit a real K-pop dance studio.", "之後，我們決定去參觀一間真的 K-pop 舞蹈教室。"]], [["\"Look at that mirror wall,\" my friend Zoe said.", "「你看那面鏡子牆。」我朋友 Zoe 說。"], ["\"The one with the pink lights?\" I asked.", "「有粉紅色燈光的那面嗎？」我問。"], ["\"Yes, that one!\"", "「對，就是那面！」"]], [["We finished our first dance move in about ten minutes.", "我們大概十分鐘就學完第一個舞步了。"]], [["Tomorrow we're doing something totally different: we're getting dressed up first.", "明天我們要做完全不一樣的事：要先打扮一番。"]]], "hook": ["We put on something you've never worn before. Guess what it is?", "我們穿了一種你從來沒穿過的衣服。猜猜是什麼？"], "quiz": [{"q": "Gangnam（江南）是什麼？", "o": ["首爾裡一個很酷的地區", "整個南韓的別名", "一種韓式食物"], "a": 0, "why": "There's a super cool area called Gangnam. 江南是首爾裡的一個地區，不是整個國家。"}, {"q": "Zoe 說的「The one with the pink lights」是指哪一面牆？", "o": ["有粉紅色燈光的鏡子牆", "貼滿海報的牆", "畫著地圖的牆"], "a": 0, "why": "\"Look at that mirror wall,\" ... \"The one with the pink lights?\" 用 the one with 確認是「有粉紅燈光的那面鏡子牆」。"}], "think": "如果你也可以在 K-pop 舞蹈教室學一支舞，你想學哪一首歌？"}, {"title": "Hanbok Day", "zhtitle": "韓服日", "short": "穿韓服進宮", "min": "2-3", "words": 93, "lead": "第二天，Mia 和朋友換上韓國傳統服裝，走進景福宮。", "paras": [[["Guess what we did next? We put on hanboks, traditional Korean costumes, just for fun.", "猜猜我們接下來做了什麼？我們穿上韓服，韓國的傳統服裝，純粹好玩而已。"]], [["After we finished putting them on, we walked straight into Gyeongbokgung Palace.", "穿好之後，我們就直接走進景福宮。"]], [["Because we wore hanboks, we got in for free!", "因為我們穿了韓服，所以免費入場！"]], [["The palace gates are so tall that they made me feel like a tiny doll.", "宮殿的大門高到讓我覺得自己像個小娃娃。"]], [["Zoe took about a hundred photos in total—hanboks are perfect for pictures.", "Zoe 一共拍了大概一百張照片——韓服真的超適合拍照。"]], [["An old man visiting the palace smiled and said our costumes were beautiful.", "一位來參觀的老爺爺笑著說我們的衣服很漂亮。"]], [["Tomorrow, we're going somewhere with a library that doesn't look like any library you've ever seen.", "明天，我們要去一個有圖書館的地方，那間圖書館你絕對沒看過。"]]], "hook": ["A mall, with a library inside it? What does that even look like?", "購物中心裡面有圖書館？那到底長什麼樣子？"], "quiz": [{"q": "他們為什麼可以免費進景福宮？", "o": ["因為穿了韓服", "因為是學生", "因為一大早去"], "a": 0, "why": "Because we wore hanboks, we got in for free! 穿韓服參觀某些古蹟可以免費入場，是真的韓國旅遊優惠。"}, {"q": "「The palace gates are so tall that they made me feel like a tiny doll」是在說什麼？", "o": ["宮門高到讓人覺得自己很渺小", "衣服尺寸太大件", "石獅子雕像很高"], "a": 0, "why": "so...that they... 表示「高到造成的結果」：宮門太高，讓 Mia 覺得自己像個小娃娃。"}], "think": "台灣有沒有「穿特定服裝就能免費入場」的地方？你知道哪裡嗎？"}, {"title": "The Mall with a Library Inside", "zhtitle": "有圖書館的購物中心", "short": "COEX與書牆", "min": "2-3", "words": 93, "lead": "第三天，行程換到全首爾最有名的購物中心之一，裡面藏著一座書牆圖書館。", "paras": [[["The next stop was the huge COEX Mall—it's one of the biggest malls in Korea.", "下一站是巨大的 COEX Mall——南韓最大的購物中心之一。"]], [["Inside, there's a famous library called Starfield Library.", "裡面有一座有名的圖書館，叫做 Starfield 圖書館。"]], [["\"The one with the tall bookshelves?\" you're probably asking.", "「有高書架的那間嗎？」你大概會這樣問。"], ["Yes, that one!", "對，就是那間！"]], [["The shelves are so tall that they look like walls made of books.", "書架高到看起來就像用書堆成的牆。"]], [["Nobody could tell us exactly how many books there are in total, but it must be thousands.", "沒有人能準確告訴我們總共有多少本書，但一定有好幾千本。"]], [["We didn't finish reading even one page—we were too busy taking photos.", "我們連一頁都沒讀完——因為忙著拍照。"]], [["Tomorrow's plan? Dessert. I'm going to need a sugar break after all this walking.", "明天的計畫？甜點。走了這麼多路，我需要來點糖分了。"]]], "hook": ["Dessert cafés in Seoul don't just serve dessert. What else do they sell?", "首爾的甜點咖啡廳不只賣甜點，還賣什麼？"], "quiz": [{"q": "Starfield 圖書館最特別的地方是什麼？", "o": ["書架高到像書牆", "免費入場", "裡面有電影院"], "a": 0, "why": "The shelves are so tall that they look like walls made of books. 高聳的書架是它最有名的特色。"}, {"q": "COEX Mall 是什麼樣的地方？", "o": ["南韓最大的購物中心之一", "一座古老的宮殿", "一間舞蹈教室"], "a": 0, "why": "It's one of the biggest malls in Korea. COEX Mall 是購物中心，裡面還藏了圖書館。"}], "think": "你去過最特別的書店或圖書館是哪一間？特別在哪裡？"}, {"title": "Dessert, and a Promise", "zhtitle": "甜點，和一個約定", "short": "甜點約定", "min": "2-3", "words": 98, "lead": "最後一天，兩人窩進一家甜點咖啡廳，Mia 也對 Leo 許下一個約定。", "paras": [[["Last stop: a small café with unique desserts near the mall.", "最後一站：一間在購物中心附近、賣著獨特甜點的小咖啡廳。"]], [["My drink looked like a tiny cloud floating in a cup.", "我的飲料看起來就像一朵飄在杯子裡的小雲。"]], [["It was almost too cute to drink, but it's perfect for a photo.", "它可愛到讓人捨不得喝，但超適合拍照。"]], [["The café also sold K-beauty skincare next to the desserts, which was a little strange.", "咖啡廳還在甜點旁邊賣韓系護膚品，感覺有點奇怪。"]], [["\"The one with the cloud drinks?\" Zoe asked a stranger for directions.", "「就是那間有雲朵飲料的嗎？」Zoe 向一個陌生人問路。"], ["\"Yes, that café!\" the stranger laughed.", "「對，就是那間！」那個陌生人笑著說。"]], [["I'm going to bring my whole family to Seoul someday, and we're going to visit every single place again.", "我以後要帶我全家人一起來首爾，把每個地方都再去一次。"]], [["So, Leo, are you thinking what I'm thinking? Gangnam, next summer?", "所以，Leo，你想的跟我一樣嗎？明年夏天，江南見？"]]], "hook": null, "quiz": [{"q": "Mia 說她的飲料看起來像什麼？", "o": ["飄在杯子裡的一朵雲", "一隻小貓", "一顆星星"], "a": 0, "why": "My drink looked like a tiny cloud floating in a cup. 飲料被形容成飄在杯子裡的雲。"}, {"q": "Mia 說她以後想做什麼？", "o": ["帶全家人再去一次首爾", "搬去首爾住", "開一間咖啡廳"], "a": 0, "why": "I'm going to bring my whole family to Seoul someday. 用 I'm going to ... someday 講一個以後想做的事。"}], "think": "如果你也要去首爾玩，你最想吃或最想買的東西是什麼？"}], "vocab": [{"w": "star", "zh": "明星", "eps": [1], "ex": "We saw statues of famous K-pop stars."}, {"w": "statue", "zh": "雕像", "eps": [1], "ex": "We saw statues of famous K-pop stars."}, {"w": "costume", "zh": "服裝、戲服", "eps": [1, 2], "ex": "Some fans brought their own costumes."}, {"w": "studio", "zh": "工作室、（舞蹈）教室", "eps": [1], "ex": "We decided to visit a real K-pop dance studio."}, {"w": "mirror", "zh": "鏡子", "eps": [1], "ex": "Look at that mirror wall."}, {"w": "visit", "zh": "參觀、拜訪", "eps": [1, 2, 4], "ex": "We decided to visit a real K-pop dance studio.", "forms": ["visited", "visits", "visiting"]}, {"w": "finish", "zh": "完成", "eps": [1, 2, 3], "ex": "We finished our first dance move in about ten minutes.", "forms": ["finished", "finishes", "finishing"]}, {"w": "hanbok", "zh": "韓服（韓國傳統服裝）", "eps": [2], "ex": "We put on hanboks, traditional Korean costumes."}, {"w": "palace", "zh": "皇宮、宮殿", "eps": [2], "ex": "We walked straight into Gyeongbokgung Palace."}, {"w": "for free", "zh": "免費", "eps": [2], "ex": "We got in for free!", "noauto": true}, {"w": "gate", "zh": "大門、城門", "eps": [2], "ex": "The palace gates are so tall."}, {"w": "tiny", "zh": "極小的", "eps": [2, 4], "ex": "They made me feel like a tiny doll."}, {"w": "total", "zh": "總數；in total＝總共", "eps": [2, 3], "ex": "Zoe took about a hundred photos in total."}, {"w": "mall", "zh": "購物中心", "eps": [3], "ex": "The huge COEX Mall."}, {"w": "library", "zh": "圖書館", "eps": [3], "ex": "There's a famous library called Starfield Library."}, {"w": "bookshelf", "zh": "書架", "eps": [3], "ex": "The one with the tall bookshelves?", "forms": ["bookshelves"]}, {"w": "café", "zh": "咖啡廳", "eps": [4], "ex": "A small café with unique desserts."}, {"w": "unique", "zh": "獨特的", "eps": [4], "ex": "A small café with unique desserts."}, {"w": "dessert", "zh": "甜點", "eps": [4], "ex": "A small café with unique desserts."}, {"w": "skincare", "zh": "護膚品", "eps": [4], "ex": "The café also sold K-beauty skincare."}], "patterns": [{"frame": "There's a ___ called ___.", "exp": "用來介紹一個「有名字」的地方或東西。原本是 There's a ... that is called ...，把 that is 省略，直接用 called 接名字，句子更簡潔。", "prompt": "There's a ___ called ___. 換你想一個地方或店名說說看。", "ex": [{"en": "There's a super cool area called Gangnam.", "zh": "有一個超酷的地方叫江南。", "from": "第1回"}, {"en": "There's a famous library called Starfield Library.", "zh": "有一座有名的圖書館叫 Starfield 圖書館。", "from": "第3回"}, {"en": "An island called Hainan has beautiful beaches.", "zh": "一個叫做海南的島有美麗的海灘。", "from": "課本例句"}]}, {"frame": "The one with ___?", "exp": "用來確認「你說的是不是這個」，「有……特徵的那個」。", "prompt": "The one with ___? 換你形容一個東西的特徵問問看。", "ex": [{"en": "The one with the pink lights?", "zh": "有粉紅色燈光的那面嗎？", "from": "第1回"}, {"en": "The one with the tall bookshelves?", "zh": "有高書架的那間嗎？", "from": "第3回"}, {"en": "The little one with big eyes?", "zh": "那個大眼睛的小的嗎？", "from": "課本例句"}]}, {"frame": "The ___ are so ___ that they ___.", "exp": "講「程度大到造成某個結果」。so + 形容詞 + that + 子句。", "prompt": "The ___ are so ___ that they ___. 換你講一句誇張一點的句子。", "ex": [{"en": "The palace gates are so tall that they made me feel like a tiny doll.", "zh": "宮門高到讓我覺得自己像個小娃娃。", "from": "第2回"}, {"en": "The shelves are so tall that they look like walls made of books.", "zh": "書架高到看起來像書牆。", "from": "第3回"}, {"en": "The lights are so bright that they hurt my eyes.", "zh": "燈亮到刺眼。", "from": "課本例句"}]}, {"frame": "I'm going to ___ someday.", "exp": "講一件「以後想做」的事，不是馬上，是「總有一天」。", "prompt": "I'm going to ___ someday. 換你講一件以後想做的事。", "ex": [{"en": "I'm going to bring my whole family to Seoul someday.", "zh": "我以後要帶我全家去首爾。", "from": "第4回"}, {"en": "I'm going to write a book someday.", "zh": "我以後要寫一本書。", "from": "課本例句"}, {"en": "I'm going to meet my favorite singer someday.", "zh": "我以後要見到我最喜歡的歌手。", "from": "課本例句"}]}, {"frame": "___ is perfect for ___.", "exp": "講「某個東西或時機再適合不過了」。", "prompt": "___ is perfect for ___. 換你講一句「再適合不過了」的句子。", "ex": [{"en": "It's perfect for a photo.", "zh": "這超適合拍照的。", "from": "第4回"}, {"en": "Today's weather is perfect for a walk.", "zh": "今天的天氣超適合散步。", "from": "課本例句"}, {"en": "That job is perfect for you.", "zh": "那份工作對你再適合不過了。", "from": "課本例句"}]}]};
+
+// ═══════════ 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）═══════════
+const LOG_KEY = "study_log_v1", CH = DATA.ch;
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// 雲端上傳網址不寫在教材裡（repo 公開）；家長在「學習紀錄」頁設定一次，存在此瀏覽器
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, pracCount = 0, pracOk = 0, listenDone = 0, saySaid = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0 && listenDone === 0 && saySaid === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、跟讀完 ${listenDone} 回、開口說 ${saySaid} 句、聽懂了嗎 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0; listenDone = 0; saySaid = 0;
+});
+
+// ═══════════ 本機狀態（認識的字、聽的次數）═══════════
+const ST_KEY = "listen_" + DATA.id + "_v1";
+let ST = { known: {}, listens: {} };
+try{ ST = Object.assign(ST, JSON.parse(localStorage.getItem(ST_KEY) || "{}")); }catch(e){}
+function saveST(){ try{ localStorage.setItem(ST_KEY, JSON.stringify(ST)); }catch(e){} }
+
+// ═══════════ 字彙查表（含簡單變化形）═══════════
+const LOOK = {};
+DATA.vocab.forEach((v, i)=>{
+  const base = v.w.toLowerCase();
+  const forms = [base].concat(v.forms || []);
+  if(!v.noauto && base.indexOf(" ") < 0){
+    forms.push(base + "s", base + "es", base + "ed", base + "d", base + "ing");
+    if(/e$/.test(base)) forms.push(base.slice(0, -1) + "ing");
+    if(/y$/.test(base)) forms.push(base.slice(0, -1) + "ies", base.slice(0, -1) + "ied");
+  }
+  forms.forEach(f => { if(!(f in LOOK)) LOOK[f] = i; });
+});
+const MAXLEN = Math.max.apply(null, DATA.vocab.map(v => v.w.split(" ").length));
+function norm(t){ return t.toLowerCase().replace(/[’']/g, "'").replace(/'s?$/, ""); }
+
+// 把一句英文切成 token，查得到的字包成 .g
+const WORDRE = /([A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ'’-]*)/;
+function markup(en){
+  const parts = en.split(WORDRE);
+  const out = [];
+  for(let i = 0; i < parts.length; i++){
+    if(i % 2 === 0){ out.push(esc(parts[i])); continue; }
+    let hit = -1, span = 1;
+    for(let L = MAXLEN; L >= 1; L--){
+      const idx = [];
+      for(let k = 0; k < L; k++) idx.push(i + 2 * k);
+      if(idx[idx.length - 1] >= parts.length) continue;
+      let ok = true;
+      for(let k = 1; k < L; k++){ if(!/^\s$/.test(parts[idx[k] - 1])){ ok = false; break; } }
+      if(!ok) continue;
+      const key = idx.map(j => norm(parts[j])).join(" ");
+      if(key in LOOK){ hit = LOOK[key]; span = L; break; }
+    }
+    if(hit < 0){ out.push(esc(parts[i])); continue; }
+    const text = [];
+    for(let k = 0; k < span; k++){ text.push(parts[i + 2 * k]); if(k < span - 1) text.push(parts[i + 2 * k + 1]); }
+    const v = DATA.vocab[hit];
+    out.push(`<span class="g${ST.known[v.w] ? " known" : ""}" data-v="${hit}">${esc(text.join(""))}</span>`);
+    i += 2 * (span - 1);
+  }
+  return out.join("");
+}
+function esc(s){ return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function attr(s){ return esc(s).replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+
+// ═══════════ 語音（瀏覽器內建 TTS）═══════════
+const synth = window.speechSynthesis;
+let VOICES = [], curVoice = null;
+let rate = parseFloat(localStorage.getItem("tts_rate_v1") || "0.9");
+function loadVoices(){
+  if(!synth) return;
+  const all = synth.getVoices().filter(v => /^en/i.test(v.lang));
+  if(!all.length) return;
+  const score = v => (/Google US English|Samantha|Aria|Jenny|Ava|Zira|Allison/i.test(v.name) ? 3 : 0) + (/en-US/i.test(v.lang) ? 2 : /en-GB/i.test(v.lang) ? 1 : 0) + (v.localService ? 0.5 : 0);
+  all.sort((a, b) => score(b) - score(a));
+  VOICES = all;
+  const want = localStorage.getItem("tts_voice_v1");
+  curVoice = all.find(v => v.name === want) || all[0];
+  document.querySelectorAll("select.voice").forEach(sel=>{
+    sel.innerHTML = all.map(v => `<option value="${esc(v.name)}"${v === curVoice ? " selected" : ""}>${esc(v.name.replace(/^Microsoft |^Google /, ""))} (${v.lang})</option>`).join("");
+  });
+  document.querySelectorAll(".novoice").forEach(n => n.style.display = "none");
+}
+if(synth){ loadVoices(); synth.onvoiceschanged = loadVoices; }
+setTimeout(()=>{ if(!VOICES.length) document.querySelectorAll(".novoice").forEach(n => n.style.display = "block"); }, 1500);
+
+let queue = null; // {items:[{el,text}], i, done}
+function stopAll(){
+  queue = null;
+  if(synth) synth.cancel();
+  document.querySelectorAll(".s.now, .s.mic").forEach(e => e.classList.remove("now", "mic"));
+  document.querySelectorAll(".mic-prompt").forEach(m => m.classList.remove("show"));
+  document.querySelectorAll(".playbtn").forEach(b => { b.textContent = "▶ 整段用聽的"; b.classList.remove("on"); });
+  document.querySelectorAll(".shadowbtn").forEach(b => { b.textContent = "🎙️ 跟讀模式"; b.classList.remove("on"); });
+}
+function say(text, onend){
+  if(!synth){ if(onend) onend(); return; }
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = curVoice ? curVoice.lang : "en-US";
+  if(curVoice) u.voice = curVoice;
+  u.rate = rate;
+  u.onend = ()=>{ if(onend) onend(); };
+  u.onerror = ()=>{ if(onend) onend(); };
+  synth.speak(u);
+}
+function playOne(el){
+  stopAll();
+  el.classList.add("now");
+  setTimeout(()=> say(el.dataset.en, ()=> el.classList.remove("now")), 60);
+}
+function playAll(ep, withGap){
+  stopAll();
+  const els = Array.from(document.querySelectorAll(`#ep${ep} .s`));
+  const btn = document.querySelector(`#ep${ep} .${withGap ? "shadowbtn" : "playbtn"}`);
+  const mic = document.getElementById("mic" + ep);
+  btn.textContent = "⏹ 停止"; btn.classList.add("on");
+  const q = { i: 0 };
+  queue = q;
+  function next(){
+    if(queue !== q) return;
+    if(q.i > 0) els[q.i - 1].classList.remove("now", "mic");
+    if(mic) mic.classList.remove("show");
+    if(q.i >= els.length){
+      queue = null; btn.textContent = withGap ? "🎙️ 跟讀模式" : "▶ 整段用聽的"; btn.classList.remove("on");
+      ST.listens[ep] = (ST.listens[ep] || 0) + 1; saveST(); listenDone++;
+      document.getElementById("cnt" + ep).textContent = ST.listens[ep];
+      logEv({ type: "listen", ep, n: ST.listens[ep], withGap: !!withGap });
+      return;
+    }
+    const el = els[q.i++];
+    el.classList.add("now");
+    const r = el.getBoundingClientRect();
+    if(r.top < 90 || r.bottom > window.innerHeight - 40) el.scrollIntoView({ block: "center", behavior: "smooth" });
+    say(el.dataset.en, ()=>{
+      if(queue !== q) return;
+      if(!withGap){ next(); return; }
+      el.classList.remove("now"); el.classList.add("mic");
+      if(mic) mic.classList.add("show");
+      const words = el.dataset.en.split(/\s+/).length;
+      const gap = Math.min(4000, Math.max(1400, words * 260));
+      setTimeout(next, gap);
+    });
+  }
+  setTimeout(next, 60);
+}
+
+// ═══════════ 分頁 ═══════════
+const tabs = document.getElementById("tabs");
+const tabDefs = [["guide", "🎧 怎麼用"]].concat(DATA.episodes.map((e, i) => ["ep" + (i + 1), `第${i + 1}回 ${e.short}`])).concat([["pattern", "🧩 句型精選"], ["vocab", "📦 字彙池"]]);
+tabDefs.forEach(([id, label], i)=>{
+  const b = document.createElement("button");
+  b.textContent = label; b.dataset.t = id; if(i === 0) b.classList.add("active");
+  b.onclick = ()=> showTab(id);
+  tabs.appendChild(b);
+});
+function showTab(id){
+  stopAll(); hideTip();
+  document.querySelectorAll("nav.tabs button").forEach(b => b.classList.toggle("active", b.dataset.t === id));
+  document.querySelectorAll("section.panel").forEach(s => s.classList.toggle("show", s.id === id));
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  if(id === "vocab") renderVocab();
+  if(id === "pattern") renderPatterns();
+}
+
+// ═══════════ 渲染每一集 ═══════════
+const epsBox = document.getElementById("eps");
+DATA.episodes.forEach((E, idx)=>{
+  const n = idx + 1;
+  const sec = document.createElement("section");
+  sec.className = "panel"; sec.id = "ep" + n;
+  let paras = E.paras.map(P => {
+    const en = P.map(s => `<span class="s" data-en="${attr(s[0])}">${markup(s[0])}</span>`).join(" ");
+    const zh = P.map(s => s[1]).join("");
+    return `<p>${en}</p><div class="zh">${zh}</div>`;
+  }).join("");
+  const qs = E.quiz.map((Q, qi) => `
+    <div class="q" data-q="${n}-${qi}">
+      <div class="stem">${qi + 1}. ${Q.q}</div>
+      <div class="opts">${Q.o.map((o, oi) => `<button data-i="${oi}">${o}</button>`).join("")}</div>
+      <div class="why">${Q.why}</div>
+    </div>`).join("");
+  const hook = E.hook ? `
+    <div class="hook">
+      <div class="lab">${n < DATA.episodes.length ? "▶ 下一回預告 · NEXT UP" : "▶ 單元結束 · THE END"}</div>
+      <div class="txt">${E.hook[0]}</div>
+      <div class="txtzh">${E.hook[1]}</div>
+      ${n < DATA.episodes.length ? `<button class="nextbtn" onclick="showTab('ep${n + 1}')">看第${n + 1}回 →</button>` : `<button class="nextbtn" onclick="showTab('pattern')">去句型精選，開口說一句 →</button>`}
+    </div>` : "";
+  sec.innerHTML = `
+    <div class="card goal">
+      <h2>🎬 第${n}回《${E.title}》<span class="muted">${E.zhtitle} · 約 ${E.min} 分鐘 · ${E.words} 字</span></h2>
+      <p>${E.lead}</p>
+    </div>
+    <div class="card">
+      <div class="ctrl">
+        <button class="primary playbtn" onclick="togglePlay(${n})">▶ 整段用聽的</button>
+        <button class="shadow shadowbtn" onclick="toggleShadow(${n})">🎙️ 跟讀模式</button>
+        <button class="blindbtn" onclick="toggleBlind(${n}, this)">🙈 只聽不看</button>
+        <button class="zhbtn" onclick="toggleZh(${n}, this)">中文</button>
+        <span class="sp">速度 <input type="range" min="0.6" max="1.2" step="0.05" value="${rate}" oninput="setRate(this.value)"> <span class="rateval">${rate}</span>x</span>
+        <select class="voice" onchange="setVoice(this.value)"><option>語音載入中…</option></select>
+        <span class="counter">這回已跟讀 <b id="cnt${n}">${ST.listens[n] || 0}</b> 次</span>
+      </div>
+      <div class="novoice">這個瀏覽器找不到英語語音。電腦請用 Chrome 或 Edge；iPhone 請到「設定 → 輔助使用 → 語音內容」下載一個英語語音。</div>
+      <p class="muted" style="margin-bottom:10px;">點任何一句，會唸那一句。點有點點的字，看意思。</p>
+      <div class="mic-prompt" id="mic${n}">🎤 換你說一次……</div>
+      <div class="story" id="story${n}">${paras}</div>
+      ${hook}
+    </div>
+    <div class="card">
+      <h2>👂 聽懂了嗎？<span class="muted">兩題就好，不是考試</span></h2>
+      ${qs}
+      <div class="think">💭 想一想（不用寫）：${E.think}</div>
+    </div>`;
+  epsBox.appendChild(sec);
+});
+function togglePlay(n){ if(queue) stopAll(); else playAll(n, false); }
+function toggleShadow(n){ if(queue) stopAll(); else playAll(n, true); }
+function toggleBlind(n, b){ const s = document.getElementById("story" + n); s.classList.toggle("blind"); b.classList.toggle("on", s.classList.contains("blind")); b.textContent = s.classList.contains("blind") ? "👀 顯示文字" : "🙈 只聽不看"; }
+function toggleZh(n, b){ const s = document.getElementById("story" + n); s.classList.toggle("showzh"); b.classList.toggle("on", s.classList.contains("showzh")); }
+function setRate(v){ rate = parseFloat(v); localStorage.setItem("tts_rate_v1", v); document.querySelectorAll(".rateval").forEach(e => e.textContent = v); document.querySelectorAll(".ctrl input[type=range]").forEach(r => r.value = v); }
+function setVoice(name){ const v = VOICES.find(x => x.name === name); if(v){ curVoice = v; localStorage.setItem("tts_voice_v1", name); document.querySelectorAll("select.voice").forEach(s => s.value = name); } }
+
+// 點句子 → 唸那句；點字 → 小卡；只聽模式下點句子 → 先現出來
+document.addEventListener("click", ev=>{
+  const g = ev.target.closest(".g");
+  if(g){ ev.stopPropagation(); showTip(g); return; }
+  const s = ev.target.closest(".s");
+  if(s){
+    const story = s.closest(".story");
+    if(story && story.classList.contains("blind") && !s.classList.contains("peek")){ s.classList.add("peek"); }
+    playOne(s); return;
+  }
+  const opt = ev.target.closest(".q .opts button");
+  if(opt){ answer(opt); return; }
+  const pex = ev.target.closest(".pat .ex");
+  if(pex){ say(pex.dataset.en); return; }
+  const sayBtn = ev.target.closest(".pat .say button");
+  if(sayBtn){ saySaid++; sayBtn.classList.add("done"); sayBtn.textContent = "✓ 說過了（可以再說一次）"; logEv({ type: "say", pat: sayBtn.closest(".pat").dataset.pat }); return; }
+  if(!ev.target.closest("#tip")) hideTip();
+});
+
+// ═══════════ 句型精選 ═══════════
+let patternsRendered = false;
+function renderPatterns(){
+  if(patternsRendered) return;
+  patternsRendered = true;
+  document.getElementById("patternsBox").innerHTML = DATA.patterns.map((P, pi)=>{
+    const exs = P.ex.map(e => `<div class="ex" data-en="${attr(e.en)}"><span class="icon">🔊</span><div><div class="en">${esc(e.en)}</div><div class="zh">${e.zh}</div></div>${e.from ? `<span class="from">${e.from}</span>` : ""}</div>`).join("");
+    return `<div class="pat card" data-pat="${pi}">
+      <div class="frame">${esc(P.frame)}</div>
+      <div class="exp">${P.exp}</div>
+      ${exs}
+      <div class="say">
+        <div class="blank">💬 ${P.prompt}</div>
+        <button>開口說一句</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+// ═══════════ 單字小卡 ═══════════
+const tip = document.getElementById("tip");
+function showTip(g){
+  const v = DATA.vocab[+g.dataset.v];
+  const known = !!ST.known[v.w];
+  tip.innerHTML = `<div class="tw">${esc(v.w)}</div><div class="tz">${v.zh}${v.note ? `<div class="muted">${v.note}</div>` : ""}</div>
+    <button data-w="${attr(v.w)}" onclick="say(this.dataset.w)">🔊 唸</button>
+    <button class="${known ? "kn" : ""}" data-w="${attr(v.w)}" onclick="toggleKnown(this.dataset.w, this)">${known ? "✓ 認識了" : "認識了"}</button>`;
+  tip.style.display = "block";
+  const r = g.getBoundingClientRect();
+  let left = r.left + window.scrollX, top = r.bottom + window.scrollY + 6;
+  if(left + 270 > window.innerWidth) left = Math.max(8, window.innerWidth - 275);
+  tip.style.left = left + "px"; tip.style.top = top + "px";
+}
+function hideTip(){ tip.style.display = "none"; }
+function toggleKnown(w, btn){
+  if(ST.known[w]) delete ST.known[w]; else ST.known[w] = 1;
+  saveST();
+  const known = !!ST.known[w];
+  if(btn){ btn.classList.toggle("kn", known); btn.textContent = known ? "✓ 認識了" : "認識了"; }
+  document.querySelectorAll(".g").forEach(g => { if(DATA.vocab[+g.dataset.v].w === w) g.classList.toggle("known", known); });
+  if(document.getElementById("vocab").classList.contains("show")) renderVocab();
+}
+
+// ═══════════ 聽懂了嗎 ═══════════
+function answer(btn){
+  const q = btn.closest(".q"); if(q.classList.contains("done")) return;
+  const [n, qi] = q.dataset.q.split("-").map(Number);
+  const Q = DATA.episodes[n - 1].quiz[qi];
+  const ok = +btn.dataset.i === Q.a;
+  btn.classList.add(ok ? "good" : "bad");
+  pracCount++; if(ok) pracOk++;
+  logEv({ type: "practice", q: `ep${n}q${qi + 1}`, ok });
+  if(ok){
+    q.classList.add("done");
+    q.querySelectorAll(".opts button").forEach(b => b.disabled = true);
+    q.querySelector(".why").classList.add("show");
+  } else {
+    setTimeout(()=> btn.classList.remove("bad"), 600);
+  }
+}
+
+// ═══════════ 字彙池 ═══════════
+let vfilter = "all";
+document.querySelectorAll(".vtop button").forEach(b => b.onclick = ()=>{ vfilter = b.dataset.f; document.querySelectorAll(".vtop button").forEach(x => x.classList.toggle("on", x === b)); renderVocab(); });
+function renderVocab(){
+  const grid = document.getElementById("vgrid");
+  const total = DATA.vocab.length, kn = DATA.vocab.filter(v => ST.known[v.w]).length;
+  document.getElementById("vcnt").textContent = `已認識 ${kn} / ${total} 個字`;
+  grid.innerHTML = DATA.vocab.filter(v => vfilter === "all" || (vfilter === "known") === !!ST.known[v.w]).map(v => {
+    const eps = (v.eps || []).map(e => `<span class="ep">第${e}回</span>`).join("");
+    return `<div class="vcard${ST.known[v.w] ? " known" : ""}">
+      <div class="w" data-w="${attr(v.w)}" onclick="say(this.dataset.w)">🔊 ${esc(v.w)}</div>
+      <div class="z">${v.zh}</div>
+      <div class="eps">${eps}</div>
+      ${v.ex ? `<div class="ex" data-w="${attr(v.ex)}" onclick="say(this.dataset.w)">${esc(v.ex)}</div>` : ""}
+      <button class="kb" data-w="${attr(v.w)}" onclick="toggleKnown(this.dataset.w)">${ST.known[v.w] ? "✓ 認識了（再按一次取消）" : "認識了"}</button>
+    </div>`;
+  }).join("") || `<p class="muted">這裡還沒有字。</p>`;
+}
+</script>
+</body>
+</html>
