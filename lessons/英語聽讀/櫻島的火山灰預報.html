@@ -292,10 +292,11 @@ const synth = window.speechSynthesis;
 let VOICES = [], curVoice = null;
 let rate = parseFloat(localStorage.getItem("tts_rate_v1") || "0.9");
 function loadVoices(){
-  if(!synth) return;
-  const all = synth.getVoices().filter(v => /^en/i.test(v.lang));
-  if(!all.length) return;
-  const score = v => (/Google US English|Samantha|Aria|Jenny|Ava|Zira|Allison/i.test(v.name) ? 3 : 0) + (/en-US/i.test(v.lang) ? 2 : /en-GB/i.test(v.lang) ? 1 : 0) + (v.localService ? 0.5 : 0);
+  if(!synth) return false;
+  const NOVELTY_RE = /^(Albert|Bad News|Bahh|Bells|Boing|Bruce|Bubbles|Cellos|Deranged|Eddy|Fred|Flo|Good News|Grandma|Grandpa|Hysterical|Jester|Junior|Kathy|Organ|Pipe Organ|Princess|Ralph|Reed|Rocko|Sandy|Shelley|Trinoids|Vicki|Victoria|Whisper|Wobble|Zarvox|Agnes)$/i;
+  const all = synth.getVoices().filter(v => /^en/i.test(v.lang) && !NOVELTY_RE.test(v.name.trim()));
+  if(!all.length) return false;
+  const score = v => (/Google US English|Samantha|Aria|Jenny|Ava|Zira|Allison|Evan/i.test(v.name) ? 3 : /Nicky|Zoe|Susan|Karen|Daniel|Moira|Tessa|Rishi|Kate|Serena|Martha|Stephanie/i.test(v.name) ? 2 : 0) + (/en-US/i.test(v.lang) ? 2 : /en-GB/i.test(v.lang) ? 1 : 0) + (v.localService ? 0.5 : 0);
   all.sort((a, b) => score(b) - score(a));
   VOICES = all;
   const want = localStorage.getItem("tts_voice_v1");
@@ -304,9 +305,34 @@ function loadVoices(){
     sel.innerHTML = all.map(v => `<option value="${esc(v.name)}"${v === curVoice ? " selected" : ""}>${esc(v.name.replace(/^Microsoft |^Google /, ""))} (${v.lang})</option>`).join("");
   });
   document.querySelectorAll(".novoice").forEach(n => n.style.display = "none");
+  return true;
 }
-if(synth){ loadVoices(); synth.onvoiceschanged = loadVoices; }
-setTimeout(()=>{ if(!VOICES.length) document.querySelectorAll(".novoice").forEach(n => n.style.display = "block"); }, 1500);
+// iOS／iPadOS 的 Safari 常常要「戳」好幾次、甚至要先講一句空白才會把語音清單交出來，
+// 光靠 onvoiceschanged 常常永遠等不到，所以這裡改成：先輪詢一陣子，
+// 使用者第一次點畫面時再「暖機」一次，暖機後再多確認幾次。
+if(synth){
+  synth.onvoiceschanged = loadVoices;
+  let voiceTries = 0;
+  (function pollVoices(){
+    if(loadVoices()) return;
+    if(voiceTries++ < 24) setTimeout(pollVoices, 300);
+  })();
+}
+let voicesWarmed = false;
+function warmVoices(){
+  if(voicesWarmed || !synth || VOICES.length) return;
+  voicesWarmed = true;
+  try{
+    const u = new SpeechSynthesisUtterance(" ");
+    u.volume = 0;
+    synth.speak(u);
+    synth.cancel();
+  }catch(e){}
+  [200, 600, 1500, 3000].forEach(ms => setTimeout(loadVoices, ms));
+}
+document.addEventListener("pointerdown", warmVoices, { once: true, passive: true });
+document.addEventListener("touchstart", warmVoices, { once: true, passive: true });
+setTimeout(()=>{ if(!VOICES.length) document.querySelectorAll(".novoice").forEach(n => n.style.display = "block"); }, 8000);
 
 let queue = null; // {items:[{el,text}], i, done}
 function stopAll(){
