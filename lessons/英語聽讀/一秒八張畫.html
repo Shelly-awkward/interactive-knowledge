@@ -293,9 +293,10 @@ let VOICES = [], curVoice = null;
 let rate = parseFloat(localStorage.getItem("tts_rate_v1") || "0.9");
 function loadVoices(){
   if(!synth) return false;
-  const all = synth.getVoices().filter(v => /^en/i.test(v.lang));
+  const NOVELTY_RE = /^(Albert|Bad News|Bahh|Bells|Boing|Bruce|Bubbles|Cellos|Deranged|Eddy|Fred|Flo|Good News|Grandma|Grandpa|Hysterical|Jester|Junior|Kathy|Organ|Pipe Organ|Princess|Ralph|Reed|Rocko|Sandy|Shelley|Trinoids|Vicki|Victoria|Whisper|Wobble|Zarvox|Agnes)$/i;
+  const all = synth.getVoices().filter(v => /^en/i.test(v.lang) && !NOVELTY_RE.test(v.name.trim()));
   if(!all.length) return false;
-  const score = v => (/Google US English|Samantha|Aria|Jenny|Ava|Zira|Allison/i.test(v.name) ? 3 : 0) + (/en-US/i.test(v.lang) ? 2 : /en-GB/i.test(v.lang) ? 1 : 0) + (v.localService ? 0.5 : 0);
+  const score = v => (/Google US English|Samantha|Aria|Jenny|Ava|Zira|Allison|Evan/i.test(v.name) ? 3 : /Nicky|Zoe|Susan|Karen|Daniel|Moira|Tessa|Rishi|Kate|Serena|Martha|Stephanie/i.test(v.name) ? 2 : 0) + (/en-US/i.test(v.lang) ? 2 : /en-GB/i.test(v.lang) ? 1 : 0) + (v.localService ? 0.5 : 0);
   all.sort((a, b) => score(b) - score(a));
   VOICES = all;
   const want = localStorage.getItem("tts_voice_v1");
