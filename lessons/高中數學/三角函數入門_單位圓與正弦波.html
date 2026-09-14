@@ -96,6 +96,7 @@
   .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
   .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
   .frac span:last-child{padding:0 4px;}
+  .rt{white-space:nowrap;} .rt .rad{border-top:1.5px solid currentColor; padding:0 2px 0 1px;}
   .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
 
   #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
@@ -332,9 +333,9 @@
     <div class="tblbox">
       <table class="pv">
         <tr><th>角度</th><th>sin（對÷斜）</th><th>cos（鄰÷斜）</th><th>tan（對÷鄰）</th><th>怎麼來的</th></tr>
-        <tr><td class="name">30°</td><td><span class="frac"><span>1</span><span>2</span></span></td><td><span class="frac"><span>√3</span><span>2</span></span></td><td><span class="frac"><span>√3</span><span>3</span></span>（＝<span class="frac"><span>1</span><span>√3</span></span>）</td><td rowspan="2">正三角形對半切：邊 2、1、√3</td></tr>
-        <tr><td class="name">60°</td><td><span class="frac"><span>√3</span><span>2</span></span></td><td><span class="frac"><span>1</span><span>2</span></span></td><td>√3</td></tr>
-        <tr class="hi"><td class="name">45°</td><td><span class="frac"><span>√2</span><span>2</span></span></td><td><span class="frac"><span>√2</span><span>2</span></span></td><td>1</td><td>正方形對角切：邊 1、1、√2</td></tr>
+        <tr><td class="name">30°</td><td><span class="frac"><span>1</span><span>2</span></span></td><td><span class="frac"><span><span class=rt>√<span class=rad>3</span></span></span><span>2</span></span></td><td><span class="frac"><span><span class=rt>√<span class=rad>3</span></span></span><span>3</span></span>（＝<span class="frac"><span>1</span><span><span class=rt>√<span class=rad>3</span></span></span></span>）</td><td rowspan="2">正三角形對半切：邊 2、1、<span class=rt>√<span class=rad>3</span></span></td></tr>
+        <tr><td class="name">60°</td><td><span class="frac"><span><span class=rt>√<span class=rad>3</span></span></span><span>2</span></span></td><td><span class="frac"><span>1</span><span>2</span></span></td><td><span class=rt>√<span class=rad>3</span></span></td></tr>
+        <tr class="hi"><td class="name">45°</td><td><span class="frac"><span><span class=rt>√<span class=rad>2</span></span></span><span>2</span></span></td><td><span class="frac"><span><span class=rt>√<span class=rad>2</span></span></span><span>2</span></span></td><td>1</td><td>正方形對角切：邊 1、1、<span class=rt>√<span class=rad>2</span></span></td></tr>
       </table>
     </div>
     <div class="note">💡 30° 和 60° 的 sin、cos 剛好<b>互換</b>，因為換一個角看，對邊鄰邊就互換了（觀念 1）。這就是「餘弦」的「餘」：餘角（加起來 90°）的正弦。</div>
@@ -420,8 +421,8 @@
     <div class="q" data-ans="D">
       <div class="stem">5. sin 30° ＝ ？</div>
       <label><input type="radio" name="p2q5" value="A">1</label>
-      <label><input type="radio" name="p2q5" value="B"><span class='frac'><span>√3</span><span>2</span></span></label>
-      <label><input type="radio" name="p2q5" value="C"><span class='frac'><span>√2</span><span>2</span></span></label>
+      <label><input type="radio" name="p2q5" value="B"><span class='frac'><span><span class=rt>√<span class=rad>3</span></span></span><span>2</span></span></label>
+      <label><input type="radio" name="p2q5" value="C"><span class='frac'><span><span class=rt>√<span class=rad>2</span></span></span><span>2</span></span></label>
       <label><input type="radio" name="p2q5" value="D"><span class='frac'><span>1</span><span>2</span></span></label>
       <button class="check">對答案</button>
       <div class="fb" data-exp="　正三角形對半切，對邊 1、斜邊 2。">　</div>
@@ -430,9 +431,9 @@
     <div class="q" data-ans="A">
       <div class="stem">6. cos 60° ＝ ？</div>
       <label><input type="radio" name="p2q6" value="A"><span class='frac'><span>1</span><span>2</span></span></label>
-      <label><input type="radio" name="p2q6" value="B">√3</label>
+      <label><input type="radio" name="p2q6" value="B"><span class=rt>√<span class=rad>3</span></span></label>
       <label><input type="radio" name="p2q6" value="C">1</label>
-      <label><input type="radio" name="p2q6" value="D"><span class='frac'><span>√3</span><span>2</span></span></label>
+      <label><input type="radio" name="p2q6" value="D"><span class='frac'><span><span class=rt>√<span class=rad>3</span></span></span><span>2</span></span></label>
       <button class="check">對答案</button>
       <div class="fb" data-exp="　和 sin 30° 一樣，因為 30° 和 60° 互為餘角。">　</div>
     </div>
@@ -814,19 +815,19 @@
     <div class="q quiz" data-ans="B">
       <div class="stem">4. sin 45° ＝ ？</div>
       <label><input type="radio" name="qz4" value="A">1</label>
-      <label><input type="radio" name="qz4" value="B"><span class='frac'><span>√2</span><span>2</span></span></label>
-      <label><input type="radio" name="qz4" value="C"><span class='frac'><span>√3</span><span>2</span></span></label>
+      <label><input type="radio" name="qz4" value="B"><span class='frac'><span><span class=rt>√<span class=rad>2</span></span></span><span>2</span></span></label>
+      <label><input type="radio" name="qz4" value="C"><span class='frac'><span><span class=rt>√<span class=rad>3</span></span></span><span>2</span></span></label>
       <label><input type="radio" name="qz4" value="D"><span class='frac'><span>1</span><span>2</span></span></label>
-      <div class="fb" data-exp="　等腰直角三角形，邊 1、1、√2。">　</div>
+      <div class="fb" data-exp="　等腰直角三角形，邊 1、1、&lt;span class=rt&gt;√&lt;span class=rad&gt;2&lt;/span&gt;&lt;/span&gt;。">　</div>
     </div>
 
     <div class="q quiz" data-ans="D">
       <div class="stem">5. tan 60° ＝ ？</div>
       <label><input type="radio" name="qz5" value="A">1</label>
       <label><input type="radio" name="qz5" value="B"><span class='frac'><span>1</span><span>2</span></span></label>
-      <label><input type="radio" name="qz5" value="C"><span class='frac'><span>√3</span><span>3</span></span></label>
-      <label><input type="radio" name="qz5" value="D">√3</label>
-      <div class="fb" data-exp="　對邊 √3 ÷ 鄰邊 1。">　</div>
+      <label><input type="radio" name="qz5" value="C"><span class='frac'><span><span class=rt>√<span class=rad>3</span></span></span><span>3</span></span></label>
+      <label><input type="radio" name="qz5" value="D"><span class=rt>√<span class=rad>3</span></span></label>
+      <div class="fb" data-exp="　對邊 &lt;span class=rt&gt;√&lt;span class=rad&gt;3&lt;/span&gt;&lt;/span&gt; ÷ 鄰邊 1。">　</div>
     </div>
 
     <div class="q quiz" data-ans="D">
@@ -960,9 +961,9 @@ document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
     const exp = fb.dataset.exp;
     const ok = sel.value === q.dataset.ans;
     if(ok){
-      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+      fb.className='fb ok'; fb.innerHTML='✔ 答對了！'+exp; q.classList.add('correct');
     }else{
-      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+      fb.className='fb no'; fb.innerHTML='✘ 再想想。'+exp; q.classList.add('wrong');
     }
     logEv({ type:"practice", q: sel.name, ok });
     pracCount++; if(ok) pracOk++;
@@ -980,10 +981,10 @@ document.getElementById('submitQuiz').addEventListener('click',()=>{
     if(sel) answered++;
     if(sel && sel.value === q.dataset.ans){
       score++; q.classList.add('correct');
-      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+      fb.className='fb ok'; fb.innerHTML='✔ 正確！'+fb.dataset.exp;
     }else{
       q.classList.add('wrong');
-      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+      fb.className='fb no'; fb.innerHTML='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
     }
   });
   const wrong = [];
@@ -1170,7 +1171,7 @@ dndGame({ box: 'dndName', name: '口訣配對', poolLabel: '定義',
   zones: [ { id: 'sin', label: 'sin 正弦', accepts: ['n1', 'n4'] }, { id: 'cos', label: 'cos 餘弦', accepts: ['n2', 'n5'] }, { id: 'tan', label: 'tan 正切', accepts: ['n3', 'n6'] } ] });
 
 dndGame({ box: 'dndSpecial', name: '特殊角', poolLabel: '值（每個值可能用到不只一次，所以有重複的卡片）',
-  items: [ { id: 'v1', label: '<span class="frac"><span>1</span><span>2</span></span>' }, { id: 'v2', label: '<span class="frac"><span>√3</span><span>2</span></span>' }, { id: 'v3', label: '<span class="frac"><span>√3</span><span>3</span></span>' }, { id: 'v4', label: '<span class="frac"><span>√2</span><span>2</span></span>' }, { id: 'v5', label: '<span class="frac"><span>√2</span><span>2</span></span>' }, { id: 'v6', label: '1' }, { id: 'v7', label: '<span class="frac"><span>√3</span><span>2</span></span>' }, { id: 'v8', label: '<span class="frac"><span>1</span><span>2</span></span>' }, { id: 'v9', label: '√3' } ],
+  items: [ { id: 'v1', label: '<span class="frac"><span>1</span><span>2</span></span>' }, { id: 'v2', label: '<span class="frac"><span><span class=rt>√<span class=rad>3</span></span></span><span>2</span></span>' }, { id: 'v3', label: '<span class="frac"><span><span class=rt>√<span class=rad>3</span></span></span><span>3</span></span>' }, { id: 'v4', label: '<span class="frac"><span><span class=rt>√<span class=rad>2</span></span></span><span>2</span></span>' }, { id: 'v5', label: '<span class="frac"><span><span class=rt>√<span class=rad>2</span></span></span><span>2</span></span>' }, { id: 'v6', label: '1' }, { id: 'v7', label: '<span class="frac"><span><span class=rt>√<span class=rad>3</span></span></span><span>2</span></span>' }, { id: 'v8', label: '<span class="frac"><span>1</span><span>2</span></span>' }, { id: 'v9', label: '<span class=rt>√<span class=rad>3</span></span>' } ],
   zones: [
     { id: 's30', label: 'sin 30°', accepts: ['v1', 'v8'] }, { id: 'c30', label: 'cos 30°', accepts: ['v2', 'v7'] }, { id: 't30', label: 'tan 30°', accepts: ['v3'] },
     { id: 's45', label: 'sin 45°', accepts: ['v4', 'v5'] }, { id: 'c45', label: 'cos 45°', accepts: ['v4', 'v5'] }, { id: 't45', label: 'tan 45°', accepts: ['v6'] },
@@ -1268,7 +1269,7 @@ function newGuess(){
     const ok = Math.abs(+b.dataset.v - exact) < 0.02; if(ok) gRight++;
     b.classList.add(ok ? 'ok' : 'no');
     const F = (n, d) => `<span class="frac"><span>${n}</span><span>${d}</span></span>`;
-    const ex = { 0: '0', 30: F(1,2), 45: F('√2',2), 60: F('√3',2), 90: '1', 120: F('√3',2), 135: F('√2',2), 150: F(1,2), 180: '0', 210: '−' + F(1,2), 225: '−' + F('√2',2), 240: '−' + F('√3',2), 270: '−1', 300: '−' + F('√3',2), 315: '−' + F('√2',2), 330: '−' + F(1,2) }[gAng];
+    const ex = { 0: '0', 30: F(1,2), 45: F('<span class=rt>√<span class=rad>2</span></span>',2), 60: F('<span class=rt>√<span class=rad>3</span></span>',2), 90: '1', 120: F('<span class=rt>√<span class=rad>3</span></span>',2), 135: F('<span class=rt>√<span class=rad>2</span></span>',2), 150: F(1,2), 180: '0', 210: '−' + F(1,2), 225: '−' + F('<span class=rt>√<span class=rad>2</span></span>',2), 240: '−' + F('<span class=rt>√<span class=rad>3</span></span>',2), 270: '−1', 300: '−' + F('<span class=rt>√<span class=rad>3</span></span>',2), 315: '−' + F('<span class=rt>√<span class=rad>2</span></span>',2), 330: '−' + F(1,2) }[gAng];
     document.getElementById('guessInfo').innerHTML = (ok ? '✔ 答對！' : '✘ 再看一次。') + `sin ${gAng}° ＝ <b>${ex}</b> ≈ ${exact.toFixed(2)}。${gAng > 180 ? '點在下半圓，所以是負的。' : gAng === 0 || gAng === 180 ? '點在橫軸上，高度是 0。' : '點在上半圓，是正的。'}`;
     document.getElementById('guessScore').textContent = `答對 ${gRight} / ${gTotal}`;
     toolLog('猜 sin', ok);
