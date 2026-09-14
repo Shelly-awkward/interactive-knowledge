@@ -9,6 +9,15 @@
 //   tags     關鍵字（給搜尋用）
 window.__LESSONS__ = [
   {
+    file: "lessons/英語聽讀/首爾視訊日記_Seeing Seoul.html",
+    title: "英語跟讀｜首爾視訊日記",
+    subtitle: "依課本《Let's Talk in English》首爾旅遊單元（Gangnam／COEX Mall／Starfield Library）句型字彙改寫的原創跟讀教材，4 回、每回 2-3 分鐘：整段聽、跟讀模式（逐句停頓換你說）、只聽不看、句型精選卡（There's a...called.../The one with.../so...that they.../I'm going to...someday/perfect for...）、字彙池",
+    subject: "英語",
+    level: "國中",
+    added: "2026-09-14",
+    tags: ["英語", "聽力", "口說", "跟讀", "shadowing", "Kaufmann", "可理解輸入", "首爾", "江南", "Gangnam", "句型", "課本補充", "國二", "國三", "TTS", "朗讀"]
+  },
+  {
     file: "lessons/高中數學/指數與對數入門_乘幾次問幾次.html",
     title: "指數與對數入門｜乘幾次、問幾次、e 從哪來",
     subtitle: "從零開始：細菌翻倍看指數、對數機數「要乘幾次」、指數與對數曲線互為鏡子、複利滾出 e 與自然對數 ln，含拖曳配對與練習",
