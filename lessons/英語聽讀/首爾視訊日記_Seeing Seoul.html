@@ -187,7 +187,7 @@
       <tr><td>第 3～4 天</td><td>照進度往下一回，前面聽過的回也可以再跟讀一次</td></tr>
       <tr><td>全部聽完後</td><td>到「句型精選」，每天挑一兩個句型開口說一句自己的</td></tr>
     </table>
-    <div class="warn" style="margin-top:12px;">聲音是用瀏覽器內建的英語語音唸的，不用網路。如果按了沒聲音，換一個語音（控制列的下拉選單）；手機請先把靜音關掉。</div>
+    <div class="warn" style="margin-top:12px;">聲音是預先錄好的自然語音，第一次播放需要網路載入，聽過一次瀏覽器就會存起來，之後不用網路也能再聽。萬一某一句聲音檔一時載入不了，會自動改用裝置內建的語音頂著，不會沒聲音；手機請先把靜音關掉。</div>
   </div>
 </section>
 
@@ -364,19 +364,30 @@ function warmVoices(){
 }
 document.addEventListener("pointerdown", warmVoices, { once: true, passive: true });
 document.addEventListener("touchstart", warmVoices, { once: true, passive: true });
-setTimeout(()=>{ if(!VOICES.length) document.querySelectorAll(".novoice").forEach(n => n.style.display = "block"); }, 8000);
+// novoice 警告改成只在真的要用瀏覽器語音、且抓不到語音清單時才顯示（見 speakBrowser）
 
 let queue = null; // {items:[{el,text}], i, done}
+let curAudio = null; // 目前正在播放的雲端聲音檔 <audio>
+function fnv1a(str){
+  let h = 0x811c9dc5;
+  const bytes = new TextEncoder().encode(str);
+  for (let i = 0; i < bytes.length; i++){ h ^= bytes[i]; h = Math.imul(h, 0x01000193) >>> 0; }
+  return h.toString(16).padStart(8, "0");
+}
+const AUDIO_BASE = "audio/";
+let audioFailed = false; // 雲端聲音檔整體失敗過一次，之後就不用再一直嘗試抓檔案，直接走瀏覽器語音
 function stopAll(){
   queue = null;
   if(synth) synth.cancel();
+  if(curAudio){ try{ curAudio.pause(); }catch(e){} curAudio = null; }
   document.querySelectorAll(".s.now, .s.mic").forEach(e => e.classList.remove("now", "mic"));
   document.querySelectorAll(".mic-prompt").forEach(m => m.classList.remove("show"));
   document.querySelectorAll(".playbtn").forEach(b => { b.textContent = "▶ 整段用聽的"; b.classList.remove("on"); });
   document.querySelectorAll(".shadowbtn").forEach(b => { b.textContent = "🎙️ 跟讀模式"; b.classList.remove("on"); });
 }
-function say(text, onend){
+function speakBrowser(text, onend){
   if(!synth){ if(onend) onend(); return; }
+  if(!VOICES.length) document.querySelectorAll(".novoice").forEach(n => n.style.display = "block");
   const u = new SpeechSynthesisUtterance(text);
   u.lang = curVoice ? curVoice.lang : "en-US";
   if(curVoice) u.voice = curVoice;
@@ -384,6 +395,25 @@ function say(text, onend){
   u.onend = ()=>{ if(onend) onend(); };
   u.onerror = ()=>{ if(onend) onend(); };
   synth.speak(u);
+}
+function say(text, onend){
+  if(audioFailed){ speakBrowser(text, onend); return; }
+  const a = new Audio(AUDIO_BASE + fnv1a(text) + ".mp3");
+  a.playbackRate = rate;
+  curAudio = a;
+  let done = false;
+  const finish = ()=>{ if(done) return; done = true; if(curAudio === a) curAudio = null; if(onend) onend(); };
+  a.addEventListener("ended", finish);
+  a.addEventListener("error", ()=>{
+    if(curAudio === a) curAudio = null;
+    done = true; // 這句交給瀏覽器語音接手，不算「說完」，由它自己回報 onend
+    speakBrowser(text, onend);
+  });
+  a.play().catch(()=>{
+    if(curAudio === a) curAudio = null;
+    done = true;
+    speakBrowser(text, onend);
+  });
 }
 function playOne(el){
   stopAll();
