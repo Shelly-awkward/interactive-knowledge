@@ -9,6 +9,15 @@
 //   tags     關鍵字（給搜尋用）
 window.__LESSONS__ = [
   {
+    file: "lessons/會計準則/IFRS S2 跨行業指標.html",
+    title: "IFRS S2 跨行業指標｜中英對照互動導讀",
+    subtitle: "永續揭露準則 IFRS S2 第29段七項跨行業指標（溫室氣體、轉型／實體風險、機會、資本配置、內部碳價格、薪酬）中英對照，白話說明＋具體例子，另附內部碳價格三個公開企業案例（Microsoft／Unilever／Disney）",
+    subject: "會計．永續揭露",
+    level: "會計師／財務／ESG從業人員",
+    added: "2026-09-16",
+    tags: ["IFRS", "IFRS S2", "永續揭露", "ESG", "跨行業指標", "溫室氣體", "碳定價", "內部碳價格", "TCFD", "會計準則", "cross-industry metrics"]
+  },
+  {
     file: "lessons/英語聽讀/首爾視訊日記_Seeing Seoul.html",
     title: "英語跟讀｜首爾視訊日記",
     subtitle: "依課本《Let's Talk in English》首爾旅遊單元（Gangnam／COEX Mall／Starfield Library）句型字彙改寫的原創跟讀教材，4 回、每回 2-3 分鐘：整段聽、跟讀模式（逐句停頓換你說）、只聽不看、句型精選卡（There's a...called.../The one with.../so...that they.../I'm going to...someday/perfect for...）、字彙池",

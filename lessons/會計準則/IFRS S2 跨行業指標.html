@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFRS S2 跨行業指標</title>
+<style>
+  :root{
+    --bg:#f5f6fa; --card:#ffffff; --ink:#151b2e; --mut:#5b6478; --bd:#e1e4ee;
+    --chip:#eef0f7;
+    --teal:#0d9488; --teal-soft:#e3f5f2;
+    --violet:#7c5cff; --violet-soft:#efeaff;
+    --amber:#d9720a; --amber-soft:#fdf0e0;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0f1626; --card:#161f36; --ink:#e7eaf5; --mut:#93a1c4; --bd:#2a3654; --chip:#1c2740;
+      --teal-soft:#0e2a28; --violet-soft:#241c47; --amber-soft:#3a2510;
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif;
+    padding:32px 16px 60px; line-height:1.7;
+  }
+  .page{max-width:760px;margin:0 auto}
+  .mono{font-family:"Consolas","Menlo",monospace}
+  header{margin-bottom:22px}
+  h1{
+    font-weight:700; font-size:clamp(1.4rem,4vw,1.8rem);
+    margin:0 0 6px;
+  }
+  .lede{color:var(--mut); font-size:.95rem; margin:0}
+  .lede .mono{font-size:.82rem}
+  .why{
+    background:var(--violet-soft); border:1px solid var(--bd); border-radius:14px;
+    padding:16px 20px; margin:20px 0 26px; font-size:.95rem;
+  }
+  .why b{color:var(--violet)}
+  .legend{display:flex; gap:10px; flex-wrap:wrap; margin:0 0 14px}
+  .lg{
+    display:flex; align-items:center; gap:6px; font-size:.78rem; color:var(--mut);
+    background:var(--chip); border-radius:999px; padding:4px 10px;
+  }
+  .lg i{width:8px;height:8px;border-radius:50%;display:inline-block}
+  .cards{display:flex; flex-direction:column; gap:10px}
+  .card{
+    background:var(--card); border:1px solid var(--bd); border-radius:16px; overflow:hidden;
+  }
+  .head{
+    display:flex; align-items:center; gap:14px; padding:15px 18px; cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .head:hover{background:var(--chip)}
+  .head:focus-visible{outline:2px solid var(--violet); outline-offset:-2px}
+  .tag{
+    font-weight:700; font-size:.8rem; color:#fff;
+    border-radius:8px; width:26px; height:26px; display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .names{display:flex; flex-direction:column; gap:1px; min-width:0}
+  .en{font-weight:700; font-size:1rem}
+  .zh{color:var(--mut); font-size:.85rem}
+  .kind{
+    margin-left:auto; font-size:.72rem; color:var(--mut); background:var(--chip);
+    border-radius:999px; padding:3px 10px; flex-shrink:0; white-space:nowrap;
+  }
+  .arrow{color:var(--mut); transition:transform .18s; flex-shrink:0}
+  .card.open .arrow{transform:rotate(90deg)}
+  .body{max-height:0; overflow:hidden; transition:max-height .22s ease}
+  .card.open .body{max-height:600px}
+  .body-in{padding:2px 18px 18px; border-top:1px solid var(--bd)}
+  .plain{margin:14px 0 10px; font-size:.95rem}
+  .ex{
+    background:var(--teal-soft); border-radius:10px; padding:12px 16px; font-size:.88rem; margin:10px 0;
+  }
+  .ex b{color:var(--teal)}
+  .detail{
+    margin-top:10px; padding-left:14px; border-left:2px solid var(--bd);
+    font-size:.86rem; color:var(--mut);
+  }
+  .anchor{font-size:.76rem; color:var(--mut); margin-top:10px}
+  .recall{
+    margin-top:26px; background:var(--amber-soft); border:1px dashed var(--amber);
+    border-radius:14px; padding:16px 20px; font-size:.92rem;
+  }
+  .recall b{color:var(--amber)}
+  .cases{margin-top:28px}
+  .cases h2{
+    font-weight:700; font-size:1.08rem; margin:0 0 4px;
+  }
+  .cases .lede2{color:var(--mut); font-size:.86rem; margin:0 0 14px}
+  .case-cards{display:flex; flex-direction:column; gap:10px}
+  .case{
+    background:var(--card); border:1px solid var(--bd); border-radius:14px; padding:14px 18px;
+  }
+  .case-top{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px}
+  .case-co{font-weight:700; font-size:.98rem}
+  .mech{
+    font-size:.72rem; font-weight:500; border-radius:999px; padding:3px 10px; white-space:nowrap;
+  }
+  .mech.shadow{background:var(--violet-soft); color:var(--violet)}
+  .mech.fee{background:var(--amber-soft); color:var(--amber)}
+  .case-rate{margin-left:auto; font-size:.78rem; color:var(--mut)}
+  .case p{margin:0; font-size:.88rem}
+  .case-src{font-size:.74rem; color:var(--mut); margin-top:12px}
+  .case-src a{color:var(--mut)}
+  footer{margin-top:22px; font-size:.74rem; color:var(--mut)}
+  @media (max-width:480px){
+    .kind{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header>
+    <h1>IFRS S2 跨行業指標</h1>
+    <p class="lede">Cross-industry Metric Categories ｜永續揭露準則 IFRS S2 第29段規定的 7 項共通指標，中英對照＋白話說明＋公開企業案例</p>
+  </header>
+
+  <div class="why">
+    <b>為什麼中文詞讀起來跟內容對不上：</b>這 7 類不是 IFRS S2 自己推導出來的邏輯鏈，是整包從 TCFD（氣候相關財務揭露工作小組）的舊指引搬過來的清單，目的是讓不同公司互相比較，不是要說一個故事——7 張卡片彼此獨立，別在它們之間找因果。其中 3 個詞（轉型風險／實體風險／機會）在準則更前面的策略章節已先定義，這裡直接沿用沒再解釋，也是卡住的原因之一。
+  </div>
+
+  <div class="legend">
+    <span class="lg"><i style="background:var(--teal)"></i>溫室氣體</span>
+    <span class="lg"><i style="background:var(--violet)"></i>風險與機會（暴險占比）</span>
+    <span class="lg"><i style="background:var(--amber)"></i>資源與治理（錢與人）</span>
+  </div>
+
+  <div class="cards" id="cards"></div>
+
+  <section class="cases">
+    <h2>內部碳價格怎麼影響決策：三個公開案例</h2>
+    <p class="lede2">這三個不是準則裡的例子，是企業自己揭露的實際作法——用來對照「影子價格」跟「內部稅費」實際上怎麼運作。</p>
+    <div class="case-cards" id="cases"></div>
+    <div class="case-src">資料來源：
+      <a href="https://www.microsoft.com/en-us/industry/blog/sustainability/2022/03/24/how-microsoft-is-using-an-internal-carbon-fee-to-reach-its-carbon-negative-goal/" target="_blank" rel="noopener">Microsoft — How Microsoft is using an internal carbon fee</a>、
+      <a href="https://www.wbcsd.org/news/how-internal-carbon-pricing-can-support-capital-allocation-and-risk-management/" target="_blank" rel="noopener">WBCSD — Internal carbon pricing &amp; capital allocation（Unilever）</a>、
+      <a href="https://trellis.net/article/disney-ante-carbon-offsets/" target="_blank" rel="noopener">Trellis — Disney's Climate Solutions Fund</a>
+    </div>
+  </section>
+
+  <div class="recall">
+    <b>主動回想：</b>闔上這頁，試著用一句話說出「溫室氣體」這一項要揭露什麼——不是背定義，是講給自己聽。卡住的地方，回頭點開那張卡片再看一次。
+  </div>
+
+  <footer>內容為改寫整理與公開資訊之教學摘要，非準則原文逐字重製；IFRS S2 準則本身版權屬 IFRS Foundation／會研基金會所有。</footer>
+</div>
+
+<script>
+const DATA = [
+  {
+    tag:'a', color:'#0d9488', en:'Greenhouse Gases', zh:'溫室氣體', kind:'量化＋方法說明',
+    plain:'揭露自己排了多少溫室氣體，分三個範疇報，還要說清楚怎麼算出來的。',
+    example:'某公司揭露：範疇1（自己燒油燒煤直接排的）＋範疇2（用電間接排的）＋範疇3（供應商、客戶等價值鏈排的）各多少公噸二氧化碳當量，並註明用「溫室氣體盤查議定書」2004年版方法計算。',
+    detail:'範疇1/2 要再拆成「合併會計集團」與「其他被投資者（關聯企業、合資等）」兩塊；範疇2 要同時揭露地點基礎排放；範疇3 要說明採用哪些 GHG Protocol 價值鏈類別，資產管理／銀行／保險業還要多揭露投融資排放。',
+    anchor:'IFRS S2 第29段(a)｜衡量方法見隨附指引B19-B29｜範疇3細節B32-B57｜金融業投融資排放B58-B63'
+  },
+  {
+    tag:'b', color:'#7c5cff', en:'Climate-related Transition Risks', zh:'氣候相關轉型風險', kind:'量化（占比）',
+    plain:'因為社會要「轉向低碳」而給公司帶來的風險（政策、技術、市場、名譽變化），不是天災。',
+    example:'某公司揭露：全部資產中有 12% 屬於容易受碳稅、燃油車禁售令等政策衝擊的資產或營運活動。',
+    detail:'揭露內容很單純：一個金額或百分比，說明「易受轉型風險影響的資產／活動」占多少。定義本身在準則策略章節已經先出現過。',
+    anchor:'IFRS S2 第29段(b)｜定義見附錄A名詞定義'
+  },
+  {
+    tag:'c', color:'#7c5cff', en:'Climate-related Physical Risks', zh:'氣候相關實體風險', kind:'量化（占比）',
+    plain:'因為氣候變遷本身（極端天氣、海平面上升等）直接造成的實體損害風險。',
+    example:'某公司揭露：位於淹水高風險區的廠房資產帳面金額占總資產 8%。',
+    detail:'跟轉型風險結構完全一樣，只是風險來源換成「氣候本身」而不是「社會轉型」。這兩項常被要求區分揭露。',
+    anchor:'IFRS S2 第29段(c)｜定義見附錄A名詞定義'
+  },
+  {
+    tag:'d', color:'#7c5cff', en:'Climate-related Opportunities', zh:'氣候相關機會', kind:'量化（占比）',
+    plain:'氣候變遷也可能對公司有正面影響（新產品、新市場），要揭露對應的資產或活動規模。',
+    example:'某公司揭露：低碳產品線（如太陽能板）帶來之資產或營運活動金額占比。',
+    detail:'跟前兩項同一個模子：金額或百分比，只是這次是「正面對應」而非「暴險」。',
+    anchor:'IFRS S2 第29段(d)'
+  },
+  {
+    tag:'e', color:'#d9720a', en:'Capital Deployment', zh:'資本配置', kind:'量化（金額）',
+    plain:'公司花了多少錢（資本支出、籌資、投資）去因應氣候風險或把握氣候機會。',
+    example:'某公司揭露：本期資本支出中有 5 億元投入節能設備汰換與再生能源電廠興建。',
+    detail:'這是唯一一項問「錢花去哪」而不是「暴險多少」的指標——是資源配置的證據，不是風險衡量。',
+    anchor:'IFRS S2 第29段(e)'
+  },
+  {
+    tag:'f', color:'#d9720a', en:'Internal Carbon Prices', zh:'內部碳價格', kind:'量化＋文字說明',
+    plain:'公司內部有沒有自己訂一個「每公噸排放的影子價格」，拿來做投資決策用。',
+    example:'某公司揭露：內部設定每公噸二氧化碳當量 30 美元，用於評估新建廠房是否改用低碳製程的投資報酬率；另揭露此價格是否也用於部門間移轉計價（內部稅費）。',
+    detail:'兩個子項：(i) 有沒有用碳價格影響決策、怎麼用；(ii) 這個每公噸價格是多少。準則沒有規定要用單一價格或強制設定，「如有時」才揭露。',
+    anchor:'IFRS S2 第29段(f)｜補充說明見附錄A｜緣由見結論基礎'
+  },
+  {
+    tag:'g', color:'#d9720a', en:'Remuneration', zh:'薪酬', kind:'文字＋量化（占比）',
+    plain:'高階主管的獎金／薪酬有沒有跟氣候表現掛勾，掛了多少比例。',
+    example:'某公司揭露：執行長年度獎金有 15% 與達成溫室氣體減量目標掛勾。',
+    detail:'兩個子項：(i) 是否及如何把氣候考量放進高階主管薪酬設計；(ii) 本期已認列的高階主管薪酬中，連結氣候考量的百分比是多少。',
+    anchor:'IFRS S2 第29段(g)'
+  },
+];
+
+const wrap = document.getElementById('cards');
+DATA.forEach((d)=>{
+  const card = document.createElement('div');
+  card.className = 'card';
+  const btnId = 'h-' + d.tag;
+  card.innerHTML = `
+    <div class="head" id="${btnId}" role="button" tabindex="0" aria-expanded="false"
+         onclick="toggle(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggle(this)}">
+      <span class="tag" style="background:${d.color}">${d.tag}</span>
+      <span class="names">
+        <span class="en">${d.en}</span>
+        <span class="zh">${d.zh}</span>
+      </span>
+      <span class="kind">${d.kind}</span>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="body"><div class="body-in">
+      <p class="plain">${d.plain}</p>
+      <div class="ex"><b>例子｜</b>${d.example}</div>
+      <div class="detail">${d.detail}</div>
+      <div class="anchor mono">出處：${d.anchor}</div>
+    </div></div>`;
+  wrap.appendChild(card);
+});
+
+function toggle(head){
+  const card = head.parentElement;
+  const open = card.classList.toggle('open');
+  head.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+const CASES = [
+  {
+    co:'Microsoft', mech:'fee', mechLabel:'內部稅費（真的收）', rate:'電力 US$15／噸；商務差旅 US$100／噸；其他 US$8／噸',
+    body:'2012 年起對各事業部真的收「碳稅」，2020 年起連範疇3（差旅、供應鏈等）都收。事業部的年度預算裡從此真的多一筆「排碳成本」——出一趟差要多付 US$100／噸的內部帳，主管規劃差旅、選雲端機房用電來源時，這筆錢會被算進去，才有實際誘因減少排放。'
+  },
+  {
+    co:'Unilever', mech:'shadow', mechLabel:'影子價格（不真的收）', rate:'2021 年起，資本支出 > 100 萬歐元的投資案強制使用',
+    body:'不收現金，但規定超過門檻的資本支出案，財務評估一定要「多跑一次」：把碳成本加進淨現值試算。原本兩個方案中較便宜、但排碳量高的設備，加上碳影子價格後試算淨現值可能反而輸給排碳量低的方案，決策因此翻盤，資金轉而流向低碳投資。'
+  },
+  {
+    co:'Disney', mech:'fee', mechLabel:'內部稅費（真的收）', rate:'約 US$11–14／噸，依各事業部排放量比例分攤',
+    body:'透過「氣候解決方案基金」向各事業部真的收費，郵輪部門排碳量大、繳得最多，電影／電視部門排碳量小、繳得少。各事業部因此清楚看到自己的碳足跡有實際金額，成為評估燃油效率改善、航線規劃等投資的依據；收到的錢則投入風電等專案。'
+  }
+];
+
+const caseWrap = document.getElementById('cases');
+CASES.forEach(c=>{
+  const el = document.createElement('div');
+  el.className = 'case';
+  el.innerHTML = `
+    <div class="case-top">
+      <span class="case-co">${c.co}</span>
+      <span class="mech ${c.mech}">${c.mechLabel}</span>
+      <span class="case-rate">${c.rate}</span>
+    </div>
+    <p>${c.body}</p>`;
+  caseWrap.appendChild(el);
+});
+</script>
+</body>
+</html>
