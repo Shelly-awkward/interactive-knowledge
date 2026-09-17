@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>臺灣原住民｜遷徙、傳說與構樹的秘密</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#0f766e; --accent-soft:#ccfbf1;
+    --sea:#bae6fd; --land:#d9f99d;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#0f766e,#0e7490); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.02rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+  .exam{background:#fff7ed; border:1.5px solid #fb923c; border-radius:10px; padding:10px 14px; margin:12px 0; font-size:.95rem;}
+  .exam b.tag{display:inline-block; background:#ea580c; color:#fff; border-radius:6px; padding:0 8px; font-size:.8rem; margin-right:6px; vertical-align:middle;}
+  .mnemo{background:var(--accent-soft); border-left:4px solid var(--accent); border-radius:8px; padding:10px 14px; margin:10px 0; font-size:.98rem;}
+  .mnemo b{color:var(--accent);}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv .hi{background:#fef3c7;}
+  table.pv td.l{text-align:left;}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool button.on{background:#1d4ed8; box-shadow:inset 0 0 0 2px #93c5fd;}
+  .tool button:disabled{opacity:.45; cursor:default;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; min-height:2.4em;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  /* 拖曳配對 */
+  .dnd-pool,.dnd-zone{border:2px dashed var(--border); border-radius:12px; padding:10px 12px; min-height:64px; margin:8px 0; background:#fff; transition:.15s;}
+  .dnd-pool{background:#f9fafb;}
+  .dnd-zone.over,.dnd-pool.over{border-color:var(--blue); background:#eff6ff;}
+  .dnd-zones{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px;}
+  .dnd-zone-title{font-weight:bold; margin-bottom:6px; color:var(--accent);}
+  .dnd-card{display:inline-block; background:#fff; border:1.5px solid var(--border); border-radius:99px; padding:6px 14px; margin:4px 6px 4px 0;
+    cursor:grab; user-select:none; touch-action:none; font-size:.95rem; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .1s;}
+  .dnd-card:hover{border-color:var(--blue);}
+  .dnd-card.sel{border-color:var(--blue); background:#dbeafe; transform:scale(1.04);}
+  .dnd-card.drag{position:fixed; z-index:99; pointer-events:none; opacity:.9; transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.2);}
+  .dnd-card.ok{border-color:var(--green); background:var(--green-soft);}
+  .dnd-card.no{border-color:var(--red); background:var(--red-soft);}
+  .dnd-bar{margin-top:8px;}
+  .dnd-bar button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem; margin-right:6px;}
+  .dnd-bar button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .dnd-msg{font-weight:bold; margin-left:8px;}
+  .dnd-msg.ok{color:#166534;} .dnd-msg.no{color:#991b1b;}
+  .dnd-hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+
+  /* 翻翻卡 */
+  .flip-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px;}
+  .flip{perspective:800px; cursor:pointer; height:130px;}
+  .flip .inner{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+  .flip.on .inner{transform:rotateY(180deg);}
+  .flip .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:12px; padding:12px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:.92rem; line-height:1.5;}
+  .flip .front{background:#fff; border:2px solid var(--accent); color:var(--accent); font-weight:bold;}
+  .flip .back{background:var(--accent); color:#fff; transform:rotateY(180deg);}
+
+  /* 故事動畫播放器 */
+  .story{background:#0b1f2a; border-radius:var(--radius); overflow:hidden; color:#f8fafc; margin:12px 0;}
+  .story .stage{background:linear-gradient(#0ea5e9 0%,#bae6fd 100%); position:relative;}
+  .story .stage svg{display:block; width:100%; height:auto;}
+  .story .caption{padding:16px 20px 12px; min-height:7.5em; font-size:1.05rem; line-height:1.8;}
+  .story .caption .who{display:inline-block; background:#f59e0b; color:#1f2937; border-radius:6px; padding:0 8px; font-size:.82rem; font-weight:bold; margin-right:6px; vertical-align:middle;}
+  .story .caption .cur{border-right:2px solid #fbbf24; animation:blink .8s step-end infinite;}
+  @keyframes blink{50%{border-color:transparent;}}
+  .story .ctrl{display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding:0 16px 14px;}
+  .story .ctrl button{background:#fbbf24; color:#1f2937; border:none; border-radius:8px; padding:8px 16px; font-weight:bold; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .story .ctrl button.ghost{background:transparent; color:#fde68a; border:1px solid #fde68a;}
+  .story .ctrl button.on{background:#fde68a; box-shadow:inset 0 0 0 2px #b45309;}
+  .story .ctrl button:disabled{opacity:.4; cursor:default;}
+  .story .dots{display:flex; gap:5px; margin-left:auto; flex-wrap:wrap;}
+  .story .dots i{width:9px; height:9px; border-radius:99px; background:#334155; display:inline-block; cursor:pointer;}
+  .story .dots i.done{background:#94a3b8;} .story .dots i.cur{background:#fbbf24;}
+  .story .exam{margin:0 16px 14px; background:#fff7ed; color:#1f2937; display:none;}
+  .story .exam.show{display:block; animation:fade .3s;}
+
+  /* SVG 動畫 */
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg);} 50%{transform:translateY(-5px) rotate(2deg);}}
+  @keyframes wave{from{transform:translateX(0);} to{transform:translateX(-60px);}}
+  @keyframes sway{0%,100%{transform:rotate(-2deg);} 50%{transform:rotate(2deg);}}
+  @keyframes pop{0%{transform:scale(0);} 70%{transform:scale(1.15);} 100%{transform:scale(1);}}
+  @keyframes beat{0%,100%{transform:rotate(-40deg);} 50%{transform:rotate(10deg);}}
+  @keyframes shine{0%,100%{opacity:.35;} 50%{opacity:1;}}
+  @keyframes ripple{from{r:4; opacity:.9;} to{r:22; opacity:0;}}
+  .boat{animation:bob 2.2s ease-in-out infinite; transform-box:fill-box; transform-origin:center;}
+  .waves{animation:wave 3s linear infinite;}
+  .sway{animation:sway 3s ease-in-out infinite; transform-box:fill-box; transform-origin:bottom center;}
+  .pop{animation:pop .5s ease both; transform-box:fill-box; transform-origin:center;}
+  .beater{animation:beat .7s ease-in-out infinite; transform-box:fill-box; transform-origin:bottom right;}
+  .shine{animation:shine 1.4s ease-in-out infinite;}
+  .ripple{animation:ripple 1.6s ease-out infinite;}
+  .grow{transition:all .8s ease;}
+
+  /* 地圖 */
+  .mapwrap{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;}
+  .mapwrap .svgbox{margin:0; flex:0 0 auto;}
+  .mapwrap .side{flex:1 1 220px;}
+  .site{cursor:pointer;} .site:hover circle{stroke-width:4;}
+  .site.hit circle{animation:pulse .6s ease 2;}
+  @keyframes pulse{0%{r:7} 50%{r:13} 100%{r:7}}
+  .leg{display:inline-block; border-radius:99px; padding:1px 10px; font-size:.82rem; color:#fff; margin:2px 4px 2px 0;}
+  .lg-ping{background:#b45309;} .lg-gao{background:#1d4ed8;}
+  .era-tag{display:inline-block; border-radius:99px; padding:2px 10px; font-size:.85rem; color:#fff; margin-right:4px;}
+  .era-qing{background:#15803d;} .era-jp{background:#d97706;} .era-roc{background:#dc2626;} .era-now{background:#7c3aed;}
+  .legend-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:10px;}
+  .legend-card{border:1px solid var(--border); border-radius:10px; padding:10px 12px; background:#fff;}
+  .legend-card b{color:var(--accent);}
+  .legend-card .fn{font-size:.82rem; color:#fff; background:var(--accent); border-radius:6px; padding:0 6px; display:inline-block; margin-top:4px;}
+
+  /* 名稱時光機 */
+  .namebox{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px;}
+  .namebox .col{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 12px; text-align:center;}
+  .namebox .col .t{font-size:.82rem; color:var(--sub);}
+  .namebox .col .n{font-size:1.5rem; font-weight:bold; color:var(--accent); min-height:1.6em;}
+  .namebox .col .why{font-size:.85rem; color:var(--ink); margin-top:4px;}
+  .namebox.merged{grid-template-columns:1fr;}
+  .eras{display:flex; gap:6px; flex-wrap:wrap; margin-top:6px;}
+  .eras button{flex:1 1 auto;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 臺灣的歷史（上） · 第1章 1-2 ＋ 課後閱讀</span>
+  <h1>臺灣原住民｜遷徙、傳說與構樹的秘密</h1>
+  <p>先看一段「構樹偵探」的故事動畫，了解科學家怎麼用一棵樹找出南島語族的老家；再用互動地圖認識原住民住在哪裡、名稱怎麼一路改；最後用口訣、翻翻卡和測驗，把會考的重點記起來。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">🎬 故事：構樹偵探</button>
+  <button data-t="s2">🌏 南島語族是誰</button>
+  <button data-t="s3">🗺️ 原住民住哪裡</button>
+  <button data-t="s4">🏷️ 名稱怎麼改</button>
+  <button data-t="s5">🏁 口訣＋總測驗</button>
+</nav>
+
+<!-- ═══════════ 1 故事動畫 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 這一節要記住的</h2>
+    <ul>
+      <li>太平洋島上的構樹是<b>跟著人搬過去</b>的，因為島上的構樹<b>不會自己繁殖</b></li>
+      <li>太平洋構樹的特徵和<b>臺灣南部</b>的構樹相同 → 構樹是<b>從臺灣帶出去</b>的</li>
+      <li>學者推斷的路線：<b>臺灣 → 印尼 → 新幾內亞 → 太平洋諸島</b></li>
+      <li>用一種證據下結論不夠，要搭配語言、考古等證據互相印證</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🎬 故事動畫：構樹偵探</h2>
+    <p>按「▶ 下一幕」一幕一幕看；按「自動播放」就會自己往下走。每一幕下面如果跳出橘色框，就是<b>考試會考</b>的重點。</p>
+    <div class="story" id="story">
+      <div class="stage" id="stage"></div>
+      <div class="caption" id="caption"></div>
+      <div class="exam" id="storyExam"></div>
+      <div class="ctrl">
+        <button id="stPrev" class="ghost">◀ 上一幕</button>
+        <button id="stNext">▶ 下一幕</button>
+        <button id="stAuto" class="ghost">自動播放</button>
+        <button id="stSpeak" class="ghost">🔊 唸給我聽</button>
+        <div class="dots" id="stDots"></div>
+      </div>
+    </div>
+    <div class="note">💡 這個故事依據中央研究院鍾國芳研究團隊 2015 年發表的構樹研究改寫（課本 104 頁「課後閱讀」的參考資料）。人物對話是為了好記而編的，科學結論是真的。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 補充：構樹到底是什麼樹？</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th style="width:26%">問題</th><th>答案</th></tr>
+        <tr><td class="name">長什麼樣？</td><td class="l">中型落葉樹，葉子有毛、常裂成手掌形；夏天結<b>紅色圓球狀的果實</b>，甜甜的，鳥很愛吃。</td></tr>
+        <tr><td class="name">臺灣哪裡有？</td><td class="l">全臺灣低海拔的路邊、荒地、河邊都很常見，長得非常快，是「開荒先鋒」。</td></tr>
+        <tr><td class="name">為什麼叫「鹿仔樹」？</td><td class="l">臺灣話這樣叫，因為<b>鹿愛吃它的葉子</b>。以前平埔族群獵鹿、養鹿，構樹葉就是鹿的飼料。</td></tr>
+        <tr><td class="name">樹皮有什麼用？</td><td class="l">樹皮纖維<b>又長又韌</b>。東亞用它<b>造紙</b>（日本和紙的主要原料就是構樹），南島語族則把它<b>敲成布</b>做樹皮衣。</td></tr>
+        <tr><td class="name">特別的地方？</td><td class="l"><b>雌雄異株</b>：一棵樹只開雄花或只開雌花，要「男生樹」和「女生樹」都在，才會結出有用的種子。這一點是整個故事的關鍵！</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔧 動畫：樹皮怎麼變成一件衣服？</h2>
+    <p>按「敲一下」，看一條窄窄的樹皮被越敲越寬、越敲越薄。這就是<b>樹皮衣（樹皮布）</b>的做法，太平洋各島到今天都還會做。</p>
+    <div class="tool">
+      <div class="svgbox" id="svgTapa"></div>
+      <div class="row"><button id="tapaHit">🔨 敲一下</button><button id="tapaReset" class="ghost">重來</button></div>
+      <div class="infobox" id="tapaInfo">先把構樹的枝條砍下來，剝下一整條樹皮，刮掉外面粗糙的皮，只留內層白色的纖維。</div>
+    </div>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>地方</th><th>樹皮布的名字</th><th>小知識</th></tr>
+        <tr><td class="name">夏威夷</td><td>kapa</td><td class="l">用天然染料畫上幾何花紋</td></tr>
+        <tr><td class="name">東加</td><td>ngatu</td><td class="l">婚禮、喪禮的重要禮物，一塊可以長達幾十公尺</td></tr>
+        <tr><td class="name">薩摩亞</td><td>siapo</td><td class="l">傳統上由女性製作</td></tr>
+        <tr><td class="name">斐濟</td><td>masi</td><td class="l">酋長的服飾</td></tr>
+        <tr class="hi"><td class="name">臺灣</td><td>樹皮衣</td><td class="l">許多新石器時代遺址挖到<b>敲樹皮用的石拍</b>；<b>阿美族都蘭部落</b>至今仍保留製作技術</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 課本「閱讀思考」怎麼答</h2>
+    <details class="example" open><summary>第 1 題｜學者推論太平洋諸島的構樹是伴隨人們遷徙而來，原因為何？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 課本原文：「太平洋諸島<b>不適合構樹自然繁殖</b>，因此推論，太平洋諸島的構樹應是跟著人們遷徙而來。」</p>
+        <p class="step"><b>②</b> 答案：<b>(B) 因為此地不適合構樹自然繁殖</b>。</p>
+        <p class="step"><b>③</b> (A) 說反了：不是「島上居民需要此地的構樹」，而是島上原本沒有構樹，是人帶去的。</p>
+        <p class="step"><b>④</b> 補充「為什麼不適合自然繁殖」：島上的構樹幾乎<b>只有雌株</b>，沒有雄株就結不出種子，只能靠人切根、插枝一株一株種。</p>
+      </div>
+    </details>
+    <details class="example"><summary>第 2 題｜用太平洋構樹的研究來證明臺灣是南島語族的故鄉，合不合理？為什麼？</summary>
+      <div class="body">
+        <p><b>沒有標準答案，重點是說得出理由。</b>可以這樣答：</p>
+        <p class="step"><b>合理的地方：</b>構樹不會自己過海，一定是人帶去的；太平洋構樹的遺傳特徵又和臺灣南部的一樣，所以「帶樹的人從臺灣出發」是很合理的推論。</p>
+        <p class="step"><b>要小心的地方：</b>這只能證明「樹」從臺灣來，不能直接證明「人」從臺灣來，因為樹苗也可能透過交易、交流傳出去。</p>
+        <p class="step"><b>結論：</b>單靠一種證據不夠。要搭配<b>語言</b>（臺灣的南島語言最多樣）、<b>考古</b>（陶器、石器的相似）等證據互相印證，結論才可靠。目前多種證據都指向臺灣，所以「臺灣是南島語族的故鄉之一」是學界主流看法。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">1. 學者認為太平洋諸島的構樹是人帶去的，最主要的理由是：</div>
+      <label><input type="radio" name="p1q1" value="A">島上居民很喜歡構樹的果實</label>
+      <label><input type="radio" name="p1q1" value="B">島上不適合構樹自然繁殖，構樹不可能自己出現</label>
+      <label><input type="radio" name="p1q1" value="C">構樹的種子會隨海流漂流</label>
+      <label><input type="radio" name="p1q1" value="D">太平洋的氣候比臺灣溫暖</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　不會自己繁殖，卻出現在島上，只可能是人帶去的。">　</div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">2. 學者比對後發現，太平洋構樹和哪裡的構樹特徵相同？</div>
+      <label><input type="radio" name="p1q2" value="A">日本</label>
+      <label><input type="radio" name="p1q2" value="B">中國大陸東南沿海</label>
+      <label><input type="radio" name="p1q2" value="C">臺灣南部</label>
+      <label><input type="radio" name="p1q2" value="D">菲律賓</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　絕大多數與臺灣南部本土構樹擁有相同特徵。">　</div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">3. 由構樹分布推斷的南島語族遷移路線，正確順序是：</div>
+      <label><input type="radio" name="p1q3" value="A">臺灣 → 印尼 → 新幾內亞 → 太平洋諸島</label>
+      <label><input type="radio" name="p1q3" value="B">太平洋諸島 → 新幾內亞 → 印尼 → 臺灣</label>
+      <label><input type="radio" name="p1q3" value="C">臺灣 → 新幾內亞 → 印尼 → 太平洋諸島</label>
+      <label><input type="radio" name="p1q3" value="D">中國大陸 → 臺灣 → 日本 → 夏威夷</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　口訣：臺灣印新太陽（臺灣、印尼、新幾內亞、太平洋）。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">4. 南島語族用構樹的哪個部分製作「樹皮衣」？</div>
+      <label><input type="radio" name="p1q4" value="A">葉子</label>
+      <label><input type="radio" name="p1q4" value="B">果實</label>
+      <label><input type="radio" name="p1q4" value="C">樹根</label>
+      <label><input type="radio" name="p1q4" value="D">樹皮</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　剝下樹皮，敲打成布。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2 南島語族 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 這一節要記住的</h2>
+    <ul>
+      <li>臺灣原住民<b>屬於南島語族</b>，大約<b>數千年前</b>先後<b>跨海</b>來到臺灣</li>
+      <li>南島語族分布在<b>太平洋與印度洋的島嶼</b>上；<b>臺灣是最北端</b></li>
+      <li>近年學者推論史前臺灣原住民與東南亞、太平洋諸島住民互相交流，並<b>從臺灣向外擴散遷徙</b></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：南島語族是「講同一家族語言的人」</h2>
+    <p>「南島」不是一個國家、也不是一個種族，而是一個<b>語言家族</b>：住在太平洋、印度洋各個島嶼上，講的語言雖然不同，卻像親戚一樣有很多相似的字。這個語言家族有<b>超過 1,200 種語言</b>、將近 <b>4 億人</b>使用，是世界上分布最廣的語言家族之一。</p>
+    <div class="formula">南島語族＝分布在<b>太平洋與印度洋島嶼</b>上、屬於<b>南島語系</b>的眾多族群。臺灣＝地理分布的<b>最北端</b>。</div>
+    <h3>聽聽看，真的像親戚：</h3>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>中文</th><th>阿美語<br><small>（臺灣）</small></th><th>他加祿語<br><small>（菲律賓）</small></th><th>馬來語<br><small>（馬來西亞／印尼）</small></th><th>夏威夷語</th><th>毛利語<br><small>（紐西蘭）</small></th></tr>
+        <tr><td class="name">眼睛</td><td>mata</td><td>mata</td><td>mata</td><td>maka</td><td>mata</td></tr>
+        <tr><td class="name">五</td><td>lima</td><td>lima</td><td>lima</td><td>lima</td><td>rima</td></tr>
+        <tr><td class="name">二</td><td>tosa</td><td>dalawa</td><td>dua</td><td>lua</td><td>rua</td></tr>
+        <tr><td class="name">路</td><td>dalan</td><td>daan</td><td>jalan</td><td>ala</td><td>ara</td></tr>
+        <tr><td class="name">死</td><td>patay</td><td>patay</td><td>mati</td><td>make</td><td>mate</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 相隔一萬公里的兩個島，「眼睛」都叫 mata、「五」都叫 lima。語言學家就是靠這種相似，把它們歸成同一個家族。</div>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 互動地圖：南島語族的四個角</h2>
+    <p>南島語族的分布範圍像一個超大的<b>風箏</b>。點地圖上的四個角落，看看是哪裡；按「▶ 播放遷徙路線」看獨木舟從臺灣出發。</p>
+    <div class="tool">
+      <div class="svgbox" id="svgWorld"></div>
+      <div class="row"><button id="routePlay">▶ 播放遷徙路線</button><button id="routeReset" class="ghost">重來</button><span class="hint" id="routeYear"></span></div>
+      <div class="infobox" id="worldInfo">👆 點四個角落的圓點，或按播放。</div>
+    </div>
+    <div class="mnemo"><b>記憶法｜四個角：</b>風箏的頂點是<b>臺灣</b>（最北），左角<b>馬達加斯加</b>（最西，非洲旁邊），右角<b>復活節島</b>（最東，智利外海），下角<b>紐西蘭</b>（最南）。口訣：<b>「北臺、西馬、東復、南紐」</b>。</div>
+    <div class="exam"><b class="tag">考點</b>臺灣位於南島語族地理分布的<b>最北端</b>。大約<b>數千年前</b>，南島語族先後<b>跨越海洋</b>來到臺灣。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：為什麼很多學者說「起點是臺灣」？</h2>
+    <p>課本說「學界眾說紛紜」，但近年來越來越多證據指向臺灣。三種證據各自獨立，卻都指向同一個答案：</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>證據</th><th>發現什麼</th><th>怎麼推論</th></tr>
+        <tr><td class="name">🗣️ 語言</td><td class="l">南島語系可以分成大約十個大分支，其中<b>九個只在臺灣</b>，臺灣以外的一千多種語言全部屬於同一支</td><td class="l">語言分支最多的地方，通常就是住最久的老家（像一棵樹，樹根附近的枝最多）</td></tr>
+        <tr><td class="name">🏺 考古</td><td class="l">臺灣<b>大坌坑文化</b>的繩紋陶、石器，和菲律賓、印尼更晚的遺址很像；年代由北往南越來越晚</td><td class="l">東西越往南越「年輕」，表示人是從北往南走</td></tr>
+        <tr class="hi"><td class="name">🌳 植物</td><td class="l">太平洋構樹的遺傳特徵和<b>臺灣南部</b>的一樣</td><td class="l">帶著構樹搬家的人，是從臺灣出發的（見第 1 節故事）</td></tr>
+      </table>
+    </div>
+    <div class="formula">推斷的路線：<b>臺灣 → 印尼 → 新幾內亞 → 太平洋諸島</b>（沿著海路）</div>
+    <div class="mnemo"><b>記憶法｜路線口訣：</b>「<b>臺灣印新太陽</b>」→ 臺灣、印（尼）、新（幾內亞）、太（平洋諸島）。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：他們怎麼過海？</h2>
+    <p>沒有引擎、沒有指南針，南島語族的祖先靠的是：</p>
+    <ul>
+      <li><b>邊架艇（舷外浮桿獨木舟）</b>：獨木舟旁邊綁一根浮木，船就不容易翻，可以出遠海。這種船的形狀從臺灣到夏威夷都看得到。</li>
+      <li><b>看星星、看海浪、看鳥</b>：記住星星升起的方向；海鳥傍晚往島飛，跟著就找得到陸地。</li>
+      <li><b>把「家」一起帶走</b>：船上載著豬、雞、狗，還有芋頭、香蕉、構樹的苗。所以科學家才能靠這些動植物追蹤路線。</li>
+    </ul>
+    <div class="note">💡 這趟旅程花了好幾千年：離開臺灣大約在 5,000 多年前，到達最遠的夏威夷、復活節島、紐西蘭，已經是距今大約 800～1,000 年前的事了。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：證據卡分類</h2>
+    <p>把每一張證據卡拖到它屬於哪一類。</p>
+    <div id="dndEvidence"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">1. 臺灣原住民屬於哪一個語族？</div>
+      <label><input type="radio" name="p2q1" value="A">漢藏語族</label>
+      <label><input type="radio" name="p2q1" value="B">南島語族</label>
+      <label><input type="radio" name="p2q1" value="C">印歐語族</label>
+      <label><input type="radio" name="p2q1" value="D">阿爾泰語族</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　數千年前跨海來臺，屬於南島語族。">　</div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">2. 臺灣在南島語族地理分布上的位置是：</div>
+      <label><input type="radio" name="p2q2" value="A">最北端</label>
+      <label><input type="radio" name="p2q2" value="B">最南端</label>
+      <label><input type="radio" name="p2q2" value="C">最東端</label>
+      <label><input type="radio" name="p2q2" value="D">正中央</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　北臺、西馬、東復、南紐。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">3. 南島語族分布的最西端和最東端分別是：</div>
+      <label><input type="radio" name="p2q3" value="A">臺灣、夏威夷</label>
+      <label><input type="radio" name="p2q3" value="B">印尼、紐西蘭</label>
+      <label><input type="radio" name="p2q3" value="C">菲律賓、日本</label>
+      <label><input type="radio" name="p2q3" value="D">馬達加斯加、復活節島</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　風箏的左右兩角。">　</div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">4. 近年學者推論，史前臺灣原住民與東南亞、太平洋諸島住民的關係是：</div>
+      <label><input type="radio" name="p2q4" value="A">完全沒有往來</label>
+      <label><input type="radio" name="p2q4" value="B">被東南亞統治</label>
+      <label><input type="radio" name="p2q4" value="C">互相交流，並從臺灣向外擴散遷徙</label>
+      <label><input type="radio" name="p2q4" value="D">全部從夏威夷遷來臺灣</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　從臺灣向外擴散。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3 分布與傳說 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 這一節要記住的</h2>
+    <ul>
+      <li>原住民族分成兩大族群：<b>平埔族群</b>（西部及東北部的平原、丘陵）與<b>高山各族</b>（山區與東部）</li>
+      <li>平埔族群<b>很早就與漢人接觸</b>，漢人大量移民後<b>逐漸融入漢人社會</b></li>
+      <li>高山各族<b>與漢人接觸較晚</b>，因此<b>仍保有不少原有文化</b></li>
+      <li>原住民<b>沒有創制文字</b>，靠<b>口語傳說</b>傳承歷史文化；傳說內容多為<b>族群起源或遷徙過程</b></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：兩大族群，差別在「碰到漢人的早晚」</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th></th><th>平埔族群</th><th>高山各族</th></tr>
+        <tr><td class="name">住哪裡</td><td>臺灣<b>西部及東北部</b>的<b>平原、丘陵</b></td><td>臺灣<b>山區</b>與<b>東部</b>地區</td></tr>
+        <tr><td class="name">和漢人接觸</td><td><b>很早</b>（漢人從西部平原登陸，第一個碰到的就是他們）</td><td><b>較晚</b>（山高、路遠）</td></tr>
+        <tr><td class="name">結果</td><td>漢人大量移民後，<b>逐漸融入漢人社會</b>，語言文化多已消失</td><td><b>仍保有不少原有文化</b></td></tr>
+        <tr><td class="name">例子</td><td>凱達格蘭、道卡斯、巴則海、巴布拉、貓霧捒、和安雅、西拉雅、噶瑪蘭</td><td>現今官方認定的 16 族（見地圖）</td></tr>
+      </table>
+    </div>
+    <div class="mnemo"><b>記憶法：</b>想像漢人的船從西邊靠岸——<b>平埔在平地，先碰到，先融入</b>；<b>高山在山裡，晚碰到，留得多</b>。</div>
+    <div class="note">💡 「高山各族」是歷史上留下來的分法，不代表他們全住在高山：阿美族住東部平原、達悟族住蘭嶼海邊，也都算在這一群。</div>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 互動地圖：他們住在哪裡？</h2>
+    <p>切換兩張圖：<b>17 世紀的平埔族群</b>，和<b>現今官方認定的 16 族</b>。先「探索」點圓點看介紹，再按「考考你」找族群。</p>
+    <div class="tool">
+      <div class="row">
+        <button id="layerPing" class="ghost">平埔族群（17 世紀）</button>
+        <button id="layerGao" class="on">高山各族（現今 16 族）</button>
+        <button id="mapExplore" class="ghost">探索模式</button>
+        <button id="mapQuiz">考考你</button>
+      </div>
+      <div class="mapwrap">
+        <div class="svgbox" id="svgTaiwan"></div>
+        <div class="side">
+          <div class="infobox" id="twInfo">👆 點地圖上的圓點。</div>
+          <div class="hint" id="twScore"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mnemo"><b>記憶法｜16 族分區記：</b>北部山區 <b>泰雅、賽夏</b>／中部 <b>賽德克、邵、布農、鄒</b>／南部 <b>卡那卡那富、拉阿魯哇、魯凱、排灣</b>／東部 <b>太魯閣、撒奇萊雅、噶瑪蘭、阿美、卑南</b>／離島 <b>達悟</b>。（2＋4＋4＋5＋1＝16）</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：平埔還是高山？</h2>
+    <p>把族名拖到正確的那一群。提示：課本 102 頁左邊那張圖上的，都是平埔族群。</p>
+    <div id="dndGroup"></div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：沒有文字，就用「說故事」傳承</h2>
+    <p>原住民<b>沒有創制文字</b>，歷史和文化靠<b>口語傳說</b>一代傳一代。傳說的內容大多是<b>族群的起源</b>（我們從哪裡來）或<b>遷徙的過程</b>（我們怎麼搬到這裡），可以看出早期的生活與文化。</p>
+    <div class="exam"><b class="tag">考點</b>邵族的<b>白鹿傳說</b>：祖先追一隻大白鹿，翻山越嶺好幾天，追到今天南投的<b>日月潭</b>，發現湖裡魚蝦取之不盡，就搬來定居。→ 這是一個<b>遷徙與定居</b>的傳說。</div>
+    <h3>更多傳說（點卡片翻面看它「傳承了什麼」）</h3>
+    <div class="legend-grid" id="legendGrid"></div>
+    <div class="note" style="margin-top:10px">💡 傳說有很多版本，不同部落講法不一樣，這裡各挑一種常見的說法。考試考的是<b>傳說的功能</b>（傳承歷史文化）和<b>邵族白鹿傳說 → 日月潭</b>。</div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜為什麼平埔族群的語言和文化大多已經消失？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 他們住在西部平原，漢人一登陸就碰到。</p>
+        <p class="step"><b>②</b> 漢人大量移民後，通婚、改用漢語、學漢人習俗，慢慢融入漢人社會。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜白鹿傳說對邵族有什麼意義？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 解釋「我們為什麼住在日月潭」——族群遷徙與定居的歷程。</p>
+        <p class="step"><b>②</b> 沒有文字，靠這個故事讓子孫記得祖先的來歷。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="A">
+      <div class="stem">1. 平埔族群主要分布在：</div>
+      <label><input type="radio" name="p3q1" value="A">臺灣西部及東北部的平原、丘陵</label>
+      <label><input type="radio" name="p3q1" value="B">中央山脈高山地區</label>
+      <label><input type="radio" name="p3q1" value="C">蘭嶼、綠島</label>
+      <label><input type="radio" name="p3q1" value="D">臺灣東部海岸</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　平埔＝平地。">　</div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">2. 高山各族能保有較多原有文化，主要原因是：</div>
+      <label><input type="radio" name="p3q2" value="A">人口比較多</label>
+      <label><input type="radio" name="p3q2" value="B">有自己的文字</label>
+      <label><input type="radio" name="p3q2" value="C">與漢人接觸較晚</label>
+      <label><input type="radio" name="p3q2" value="D">受到清廷保護</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　晚碰到，留得多。">　</div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">3. 原住民用口語傳說傳承歷史文化，是因為：</div>
+      <label><input type="radio" name="p3q3" value="A">不喜歡寫字</label>
+      <label><input type="radio" name="p3q3" value="B">沒有創制文字</label>
+      <label><input type="radio" name="p3q3" value="C">紙太貴</label>
+      <label><input type="radio" name="p3q3" value="D">被禁止寫字</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　沒有文字，只能用說的。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">4. 邵族的白鹿傳說，最後族人定居在：</div>
+      <label><input type="radio" name="p3q4" value="A">阿里山</label>
+      <label><input type="radio" name="p3q4" value="B">蘭嶼</label>
+      <label><input type="radio" name="p3q4" value="C">太魯閣</label>
+      <label><input type="radio" name="p3q4" value="D">日月潭</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　南投日月潭，湖裡魚蝦取之不盡。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4 名稱演變 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🎯 這一節要記住的</h2>
+    <ul>
+      <li>原住民的稱呼隨<b>統治政權</b>改變</li>
+      <li>清帝國：依<b>是否納稅、服勞役</b>分為<b>熟番、生番</b></li>
+      <li>日治時期：改稱<b>平埔族、高砂族</b></li>
+      <li>中華民國：高砂族改稱<b>高山族</b>（後稱<b>山地同胞</b>）；平埔族最初因漢化未被視為原住民</li>
+      <li>現今：<b>原住民族</b>為正式統稱（<b>民國 83 年</b>起）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🔧 名稱時光機</h2>
+    <p>按不同的時代，看同一群人被叫成什麼名字，以及「為什麼這樣叫」。</p>
+    <div class="tool">
+      <div class="eras">
+        <button data-era="0" class="on">清帝國</button>
+        <button data-era="1" class="ghost">日治時期</button>
+        <button data-era="2" class="ghost">中華民國初期</button>
+        <button data-era="3" class="ghost">現今（民國 83 年起）</button>
+      </div>
+      <div class="namebox" id="nameBox"></div>
+      <div class="infobox" id="nameInfo"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 每一個名字背後的故事</h2>
+    <details class="example" open><summary><span class="era-tag era-qing">清帝國</span> 熟番、生番——「你有沒有繳稅？」</summary>
+      <div class="body">
+        <p>清廷管理臺灣，最在意的是誰<b>納稅</b>、誰<b>服勞役</b>（幫官府做工）。</p>
+        <p class="step"><b>熟番：</b>納稅、服勞役，住在平地，生活習慣越來越像漢人。</p>
+        <p class="step"><b>生番：</b>不納稅、不服勞役，住在山區，清廷管不到。</p>
+        <p class="step"><b>注意：</b>「番」是當時漢人帶有輕視的說法，現在不用了。考試會問的是<b>分類的依據＝是否納稅、服勞役</b>。</p>
+      </div>
+    </details>
+    <details class="example"><summary><span class="era-tag era-jp">日治時期</span> 平埔族、高砂族——「高砂」是什麼？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 「高砂」是日本人幾百年前對臺灣的古稱（讀作 Takasago）。</p>
+        <p class="step"><b>②</b> 熟番 → <b>平埔族</b>（住平地）；生番 → <b>高砂族</b>（住山地）。</p>
+        <p class="step"><b>③</b> 日本學者做了大量調查，把高砂族分成泰雅、布農、排灣……等族，今天的族名很多是那時候整理出來的。</p>
+      </div>
+    </details>
+    <details class="example"><summary><span class="era-tag era-roc">中華民國</span> 高山族、山地同胞——平埔族「消失」了？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 高砂族改稱<b>高山族</b>，後來又稱<b>山地同胞</b>（簡稱「山胞」）。</p>
+        <p class="step"><b>②</b> 平埔族因為已經<b>漢化</b>，最初<b>沒有被視為原住民</b>——身分證上就是「漢人」。所以課本示意圖裡，平埔族那條線是「部分平埔族」才接到今天的原住民族。</p>
+      </div>
+    </details>
+    <details class="example"><summary><span class="era-tag era-now">現今</span> 原住民族——自己爭取來的名字</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 1980 年代，原住民青年發起<b>正名運動</b>：「我們是這塊土地原來的主人，不要再叫我們山胞。」</p>
+        <p class="step"><b>②</b> <b>民國 83 年（1994 年）</b>修憲，正式把「山胞」改成「<b>原住民</b>」；後來再加一個「族」字，強調是一個個有自己文化的民族。</p>
+        <p class="step"><b>③</b> 修憲通過的 <b>8 月 1 日</b>，現在定為「<b>原住民族日</b>」。</p>
+        <p class="step"><b>④</b> 之後噶瑪蘭、太魯閣、撒奇萊雅、賽德克、拉阿魯哇、卡那卡那富陸續被認定，成為今天的 <b>16 族</b>。</p>
+      </div>
+    </details>
+    <div class="mnemo"><b>記憶法｜名稱口訣：</b>「<b>清生熟、日平高、民國高山變山胞、八十三年原住民</b>」。<br>分類依據記「<b>繳稅做工＝熟</b>」。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：名字放回對的時代</h2>
+    <div id="dndName"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">1. 清帝國時期把原住民分成「熟番」、「生番」，依據是：</div>
+      <label><input type="radio" name="p4q1" value="A">住在山上還是海邊</label>
+      <label><input type="radio" name="p4q1" value="B">是否納稅、服勞役</label>
+      <label><input type="radio" name="p4q1" value="C">會不會講漢語</label>
+      <label><input type="radio" name="p4q1" value="D">人口多寡</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　繳稅做工＝熟。">　</div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">2. 日治時期，「生番」改稱為：</div>
+      <label><input type="radio" name="p4q2" value="A">平埔族</label>
+      <label><input type="radio" name="p4q2" value="B">高山族</label>
+      <label><input type="radio" name="p4q2" value="C">高砂族</label>
+      <label><input type="radio" name="p4q2" value="D">山地同胞</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　高砂＝日本人對臺灣的古稱。">　</div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">3. 中華民國統治臺灣初期，平埔族沒有被視為原住民，原因是：</div>
+      <label><input type="radio" name="p4q3" value="A">已經漢化</label>
+      <label><input type="radio" name="p4q3" value="B">人口太少</label>
+      <label><input type="radio" name="p4q3" value="C">住在山上</label>
+      <label><input type="radio" name="p4q3" value="D">不納稅</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　最初因漢化而未被視為原住民。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">4. 現今各族別的正式統稱是：</div>
+      <label><input type="radio" name="p4q4" value="A">山地同胞</label>
+      <label><input type="radio" name="p4q4" value="B">高山族</label>
+      <label><input type="radio" name="p4q4" value="C">高砂族</label>
+      <label><input type="radio" name="p4q4" value="D">原住民族</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　民國 83 年修憲正名。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 5 口訣＋總測驗 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card">
+    <h2>🧠 考前一分鐘：五句口訣</h2>
+    <div class="mnemo"><b>1. 南島語族四個角：</b>北臺、西馬、東復、南紐。（臺灣＝最北端）</div>
+    <div class="mnemo"><b>2. 遷徙路線：</b>「臺灣印新太陽」→ 臺灣、印尼、新幾內亞、太平洋諸島。</div>
+    <div class="mnemo"><b>3. 構樹證據：</b>島上不能自然繁殖 → 人帶去；特徵和臺灣南部一樣 → 從臺灣帶出去。</div>
+    <div class="mnemo"><b>4. 兩大族群：</b>平埔在平地，先碰漢人，先融入；高山在山裡，晚碰漢人，留得多。</div>
+    <div class="mnemo"><b>5. 名稱演變：</b>清生熟（繳稅做工＝熟）、日平高、民國高山變山胞、八十三年原住民。</div>
+  </div>
+
+  <div class="card">
+    <h2>🃏 翻翻卡：自己考自己</h2>
+    <p>先想答案，再點卡片翻面。全部翻過一輪、都答得出來，就可以交卷了。</p>
+    <div class="flip-grid" id="flipGrid"></div>
+    <div class="row" style="margin-top:10px"><button class="check" id="flipReset" style="background:#fff;color:var(--blue);border:1px solid var(--blue);border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit">全部翻回正面</button></div>
+  </div>
+
+  <div class="card" id="quizCard">
+    <h2>🏁 單元總測驗（12 題）</h2>
+    <p>全部作答後按「交卷」，一次批改。</p>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 臺灣原住民屬於南島語族，他們大約在什麼時候、怎麼來到臺灣？</div>
+      <label><input type="radio" name="qz1" value="A">數百年前，跟著漢人移民一起來</label>
+      <label><input type="radio" name="qz1" value="B">數千年前，先後跨越海洋而來</label>
+      <label><input type="radio" name="qz1" value="C">數萬年前，從冰河走過來</label>
+      <label><input type="radio" name="qz1" value="D">從一開始就住在臺灣，沒有遷徙</label>
+      <div class="fb" data-exp="　數千年前跨海來臺。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">2. 關於南島語族的分布，下列何者<b>正確</b>？</div>
+      <label><input type="radio" name="qz2" value="A">臺灣是最北端，紐西蘭是最南端</label>
+      <label><input type="radio" name="qz2" value="B">臺灣是最南端</label>
+      <label><input type="radio" name="qz2" value="C">只分布在太平洋，印度洋沒有</label>
+      <label><input type="radio" name="qz2" value="D">最西端是夏威夷</label>
+      <div class="fb" data-exp="　北臺、西馬、東復、南紐。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">3. 平埔族群逐漸融入漢人社會，主要是因為：</div>
+      <label><input type="radio" name="qz3" value="A">被清廷強迫搬到山上</label>
+      <label><input type="radio" name="qz3" value="B">人口比高山各族少</label>
+      <label><input type="radio" name="qz3" value="C">住在平原，很早就與漢人接觸</label>
+      <label><input type="radio" name="qz3" value="D">語言和漢語相同</label>
+      <div class="fb" data-exp="　平埔在平地，先碰漢人，先融入。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. 高山各族多分布於：</div>
+      <label><input type="radio" name="qz4" value="A">西部平原</label>
+      <label><input type="radio" name="qz4" value="B">東北部丘陵</label>
+      <label><input type="radio" name="qz4" value="C">澎湖群島</label>
+      <label><input type="radio" name="qz4" value="D">山區與東部地區</label>
+      <div class="fb" data-exp="　山區與東部。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 原住民傳說的內容大多是：</div>
+      <label><input type="radio" name="qz5" value="A">戰爭的勝負</label>
+      <label><input type="radio" name="qz5" value="B">族群的起源或遷徙過程</label>
+      <label><input type="radio" name="qz5" value="C">和漢人的貿易</label>
+      <label><input type="radio" name="qz5" value="D">天氣的變化</label>
+      <div class="fb" data-exp="　從哪裡來、怎麼搬到這裡。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">6. 「族人追一隻大白鹿，最後在日月潭定居」是哪一族的傳說？</div>
+      <label><input type="radio" name="qz6" value="A">邵族</label>
+      <label><input type="radio" name="qz6" value="B">布農族</label>
+      <label><input type="radio" name="qz6" value="C">阿美族</label>
+      <label><input type="radio" name="qz6" value="D">達悟族</label>
+      <div class="fb" data-exp="　邵族白鹿傳說，敘述遷徙與定居。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">7. 清帝國時期的「熟番」是指：</div>
+      <label><input type="radio" name="qz7" value="A">住在山上、不納稅的原住民</label>
+      <label><input type="radio" name="qz7" value="B">會煮熟食物的原住民</label>
+      <label><input type="radio" name="qz7" value="C">納稅、服勞役的原住民</label>
+      <label><input type="radio" name="qz7" value="D">從中國大陸來的移民</label>
+      <div class="fb" data-exp="　繳稅做工＝熟。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">8. 「熟番」在日治時期改稱為：</div>
+      <label><input type="radio" name="qz8" value="A">高砂族</label>
+      <label><input type="radio" name="qz8" value="B">平埔族</label>
+      <label><input type="radio" name="qz8" value="C">山地同胞</label>
+      <label><input type="radio" name="qz8" value="D">原住民族</label>
+      <div class="fb" data-exp="　熟番→平埔族；生番→高砂族。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">9. 名稱演變的正確順序是：</div>
+      <label><input type="radio" name="qz9" value="A">高砂族 → 生番 → 高山族 → 原住民族</label>
+      <label><input type="radio" name="qz9" value="B">生番 → 高山族 → 高砂族 → 原住民族</label>
+      <label><input type="radio" name="qz9" value="C">山地同胞 → 高砂族 → 生番 → 原住民族</label>
+      <label><input type="radio" name="qz9" value="D">生番 → 高砂族 → 高山族（山地同胞） → 原住民族</label>
+      <div class="fb" data-exp="　清 → 日 → 民國 → 現今。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">10. 「原住民族」成為正式統稱，是從民國幾年開始？</div>
+      <label><input type="radio" name="qz10" value="A">83 年</label>
+      <label><input type="radio" name="qz10" value="B">38 年</label>
+      <label><input type="radio" name="qz10" value="C">100 年</label>
+      <label><input type="radio" name="qz10" value="D">50 年</label>
+      <div class="fb" data-exp="　民國 83 年（1994 年）修憲正名，8 月 1 日是原住民族日。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">11. 學者認為太平洋諸島的構樹是跟著人遷徙而來，原因是：</div>
+      <label><input type="radio" name="qz11" value="A">當地居民需要構樹製衣</label>
+      <label><input type="radio" name="qz11" value="B">當地不適合構樹自然繁殖</label>
+      <label><input type="radio" name="qz11" value="C">構樹的果實可以漂洋過海</label>
+      <label><input type="radio" name="qz11" value="D">構樹只生長在熱帶</label>
+      <div class="fb" data-exp="　課本閱讀思考第 1 題，答案 B。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">12. 太平洋構樹和臺灣南部構樹特徵相同，學者由此推斷：</div>
+      <label><input type="radio" name="qz12" value="A">南島語族從太平洋遷到臺灣</label>
+      <label><input type="radio" name="qz12" value="B">構樹是清朝時漢人帶去的</label>
+      <label><input type="radio" name="qz12" value="C">南島語族從臺灣出發，經印尼、新幾內亞到太平洋諸島</label>
+      <label><input type="radio" name="qz12" value="D">臺灣的構樹是從夏威夷傳來的</label>
+      <div class="fb" data-exp="　臺灣印新太陽。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 臺灣的歷史（上） · 1-2「臺灣原住民的遷徙與傳說」＋課後閱讀「構樹與南島語族的故鄉」<br>依 108 課綱單元架構自行編寫，故事與插圖為原創；構樹研究依中央研究院鍾國芳團隊 2015 年發表之成果改寫。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "歷史1-2 臺灣原住民的遷徙與傳說";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+    stopSpeak();
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw,rx){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx||0}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function circ(cx,cy,r,fill,stroke,sw,extra){ return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}" ${extra||''}/>`; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function svg(w,h,inner,extra){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img" ${extra||''}>${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// ===== 朗讀（裝置內建中文語音；沒有就安靜略過）=====
+let speakOn = false;
+function pickVoice(){
+  const vs = (window.speechSynthesis && speechSynthesis.getVoices()) || [];
+  return vs.find(v => /zh[-_]TW/i.test(v.lang)) || vs.find(v => /^zh/i.test(v.lang)) || null;
+}
+function speak(text){
+  if(!speakOn || !window.speechSynthesis) return;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text.replace(/<[^>]+>/g, ''));
+    const v = pickVoice(); if(v) u.voice = v;
+    u.lang = 'zh-TW'; u.rate = 0.95;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+function stopSpeak(){ try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){} }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 10){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 7){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議先看第 5 頁的五句口訣，再回前面重看，然後再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 拖曳配對（滑鼠、觸控都可以；也可以先點卡片、再點要放的區域）=====
+function dndGame(opts){
+  const box = document.getElementById(opts.box);
+  const placed = {};                       // 卡片 id → 放在哪一區
+  let selected = null;
+  const el = (tag, cls) => { const e = document.createElement(tag); if(cls) e.className = cls; return e; };
+  function render(){
+    box.innerHTML = '';
+    const pool = el('div', 'dnd-pool'); pool.dataset.zone = '__pool__';
+    pool.innerHTML = `<div class="dnd-zone-title" style="color:#6b7280">${opts.poolLabel || '卡片區（拖到下面正確的位置）'}</div>`;
+    const zonesWrap = el('div', 'dnd-zones');
+    const zoneEls = {};
+    opts.zones.forEach(z => {
+      const ze = el('div', 'dnd-zone'); ze.dataset.zone = z.id;
+      ze.innerHTML = `<div class="dnd-zone-title">${z.label}</div>`;
+      zonesWrap.appendChild(ze); zoneEls[z.id] = ze;
+    });
+    opts.items.forEach(it => {
+      const c = el('div', 'dnd-card'); c.dataset.item = it.id; c.textContent = it.label;
+      (placed[it.id] && zoneEls[placed[it.id]] ? zoneEls[placed[it.id]] : pool).appendChild(c);
+      attach(c);
+    });
+    const bar = el('div', 'row dnd-bar');
+    bar.innerHTML = `<button class="dnd-check">檢查</button><button class="ghost dnd-reset">重來</button><span class="dnd-msg"></span>`;
+    box.append(pool, zonesWrap, bar);
+    if(opts.hint){ const h = el('div', 'dnd-hint'); h.textContent = opts.hint; box.appendChild(h); }
+    bar.querySelector('.dnd-check').addEventListener('click', check);
+    bar.querySelector('.dnd-reset').addEventListener('click', () => { Object.keys(placed).forEach(k => delete placed[k]); selected = null; render(); });
+    [pool, ...Object.values(zoneEls)].forEach(z => z.addEventListener('click', () => {
+      if(!selected) return;
+      if(z.dataset.zone === '__pool__') delete placed[selected]; else placed[selected] = z.dataset.zone;
+      selected = null; render();
+    }));
+  }
+  function zoneAt(x, y){
+    const t = document.elementFromPoint(x, y);
+    return t ? t.closest('.dnd-zone, .dnd-pool') : null;
+  }
+  function attach(card){
+    let sx = 0, sy = 0, moved = false, ghost = null;
+    card.addEventListener('pointerdown', e => {
+      sx = e.clientX; sy = e.clientY; moved = false; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e => {
+      if(!(e.buttons & 1)) return;
+      if(!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 6) return;
+      if(!moved){
+        moved = true; ghost = card.cloneNode(true); ghost.classList.add('drag');
+        document.body.appendChild(ghost); card.style.opacity = '.35';
+      }
+      ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + 'px'; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + 'px';
+      box.querySelectorAll('.over').forEach(z => z.classList.remove('over'));
+      const z = zoneAt(e.clientX, e.clientY); if(z && box.contains(z)) z.classList.add('over');
+    });
+    card.addEventListener('pointerup', e => {
+      if(moved){
+        const z = zoneAt(e.clientX, e.clientY);
+        if(ghost) ghost.remove(); card.style.opacity = '';
+        if(z && box.contains(z)){ if(z.dataset.zone === '__pool__') delete placed[card.dataset.item]; else placed[card.dataset.item] = z.dataset.zone; }
+        selected = null; render();
+      }else{
+        selected = (selected === card.dataset.item) ? null : card.dataset.item;
+        box.querySelectorAll('.dnd-card').forEach(c => c.classList.toggle('sel', c.dataset.item === selected));
+      }
+    });
+    card.addEventListener('pointercancel', () => { if(ghost) ghost.remove(); card.style.opacity = ''; moved = false; });
+  }
+  function check(){
+    let ok = 0, total = opts.items.length, unplaced = 0;
+    box.querySelectorAll('.dnd-card').forEach(c => {
+      const id = c.dataset.item, z = placed[id];
+      const zone = opts.zones.find(zz => zz.id === z);
+      c.classList.remove('ok', 'no');
+      if(!zone){ unplaced++; c.classList.add('no'); return; }
+      if(zone.accepts.includes(id)){ ok++; c.classList.add('ok'); } else c.classList.add('no');
+    });
+    const msg = box.querySelector('.dnd-msg');
+    if(ok === total){ msg.className = 'dnd-msg ok'; msg.textContent = '✔ 全部正確！'; }
+    else { msg.className = 'dnd-msg no'; msg.textContent = `✘ 對了 ${ok} / ${total}${unplaced ? '（還有 ' + unplaced + ' 張沒放）' : ''}，紅色的再想想。`; }
+    toolLog(opts.name || opts.box, ok === total);
+  }
+  render();
+  return { placed };
+}
+
+// ===== 本單元專屬：故事動畫 =====
+// 畫故事場景用的零件
+function seaBand(y, h){
+  const wave = 'M0 10 Q 15 0 30 10 T 60 10 T 90 10 T 120 10 T 150 10 T 180 10 T 210 10 T 240 10 T 270 10 T 300 10 T 330 10 T 360 10 T 390 10 T 420 10 T 450 10 T 480 10 T 510 10 T 540 10 T 570 10 T 600 10 T 630 10 T 660 10 T 690 10 T 720 10 V 40 H 0 Z';
+  return rect(0, y, 640, h, '#0369a1') +
+    `<g class="waves"><path d="${wave}" transform="translate(0,${y-8})" fill="#38bdf8" opacity=".6"/><path d="${wave}" transform="translate(-30,${y+6})" fill="#7dd3fc" opacity=".35"/></g>`;
+}
+function island(x, y, w, h, extra){
+  return `<ellipse cx="${x}" cy="${y}" rx="${w}" ry="${h}" fill="#fde68a"/><ellipse cx="${x}" cy="${y-6}" rx="${w*.75}" ry="${h*.7}" fill="#86efac"/>` + (extra||'');
+}
+function tree(x, y, s, opts){
+  opts = opts || {};
+  const trunk = `<path d="M${x-4*s} ${y} L${x-3*s} ${y-40*s} L${x+3*s} ${y-40*s} L${x+4*s} ${y} Z" fill="#78350f"/>`;
+  const col = opts.grey ? '#9ca3af' : '#16a34a', col2 = opts.grey ? '#d1d5db' : '#4ade80';
+  const canopy = circ(x, y-58*s, 22*s, col) + circ(x-18*s, y-46*s, 16*s, col2) + circ(x+18*s, y-46*s, 16*s, col2) + circ(x, y-40*s, 14*s, col2);
+  let fruit = '';
+  if(opts.fruit !== false && !opts.grey) [[-10,-62],[8,-52],[-2,-44],[16,-40],[-20,-50]].forEach(([dx,dy]) => fruit += circ(x+dx*s, y+dy*s, 3.2*s, '#dc2626'));
+  const sym = opts.sym ? txt(x, y-90*s, opts.sym, opts.grey ? '#6b7280' : '#be185d', 20*s, 'middle', 'font-weight="bold"') : '';
+  return `<g class="sway">${trunk}${canopy}${fruit}${sym}</g>`;
+}
+function canoe(x, y, s, extra){
+  s = s || 1;
+  return `<g transform="translate(${x},${y}) scale(${s})"><g class="boat">
+    <path d="M-50 0 Q-40 18 0 18 Q40 18 50 0 Z" fill="#92400e"/>
+    <path d="M-50 0 L50 0" stroke="#451a03" stroke-width="3"/>
+    <path d="M-30 0 L-30 -14 M20 0 L20 -14" stroke="#451a03" stroke-width="3"/>
+    <path d="M-38 -14 L28 -14" stroke="#451a03" stroke-width="3"/>
+    <path d="M-42 -8 Q-38 8 -6 12 L-44 12 Z" fill="#b45309" transform="translate(0,-2)"/>
+    <path d="M0 -2 L0 -60 L34 -8 Z" fill="#fef3c7" stroke="#78350f" stroke-width="2"/>
+    ${txt(-14, -6, '🧑', '#000', 18)}${extra||''}
+  </g></g>`;
+}
+function barcode(x, y, w, h, color, seed){
+  let s = '';
+  const bars = [3,1,2,1,3,2,1,2,1,3,1,2];
+  let cx = x;
+  bars.forEach((b, i) => { const bw = b * w / 22; if((i + (seed||0)) % 2 === 0) s += rect(cx, y, bw, h, color); cx += bw; });
+  return s;
+}
+function twMini(x, y, s, fill, southFill){
+  const pts = TW_OUTLINE.map(([px,py]) => [x + px*s, y + py*s]);
+  const poly = `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill||'#86efac'}" stroke="#166534" stroke-width="1.5"/>`;
+  const south = southFill ? `<clipPath id="twS${x}"><rect x="${x}" y="${y+300*s}" width="${300*s}" height="${200*s}"/></clipPath><polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${southFill}" clip-path="url(#twS${x})"/>` : '';
+  return poly + south;
+}
+// 臺灣的簡化輪廓（給故事和分布圖共用，座標範圍 300×480）
+const TW_OUTLINE = [[182,42],[205,38],[232,58],[246,88],[242,132],[236,176],[232,214],[226,258],[216,300],[206,340],[192,382],[176,418],[164,450],[158,470],[142,456],[122,422],[102,382],[86,342],[76,300],[68,260],[70,220],[80,180],[100,140],[124,102],[150,70]];
+
+const SCENES = [
+  { who: '旁白', text: '南太平洋的小島上，有一種樹。它<b>不會自己長出來</b>，卻到處都是。這是怎麼回事？',
+    draw: () => seaBand(200, 100) + island(180, 215, 90, 22, txt(150, 190, '🌴', '#000', 34)) + tree(210, 208, .9) +
+      island(470, 225, 70, 18, txt(500, 205, '🌴', '#000', 30)) + tree(450, 218, .8) +
+      txt(320, 90, '？', '#fde68a', 64, 'middle', 'font-weight="bold" class="shine"') + txt(560, 60, '☀️', '#000', 36) },
+  { who: '鍾老師', text: '這種樹叫<b>構樹</b>。在臺灣的路邊、河邊超常見，長得很快。鹿愛吃它的葉子，所以臺灣話叫它「<b>鹿仔樹</b>」。夏天會結<b>紅紅圓圓的果實</b>。',
+    draw: () => rect(0, 220, 640, 80, '#86efac') + tree(200, 230, 2) + txt(330, 250, '🦌', '#000', 52) + txt(430, 210, '好吃～', '#1f2937', 16) +
+      txt(520, 130, '構樹', '#1f2937', 26, 'middle', 'font-weight="bold"') + txt(520, 160, 'Broussonetia papyrifera', '#374151', 12) + txt(520, 186, '桑科・雌雄異株', '#374151', 13) },
+  { who: '旁白', text: '幾千年前，南島語族的祖先把構樹的<b>樹皮</b>剝下來，放在木砧上用棒子敲、敲、敲……纖維攤開，變成一大片布。這就是「<b>樹皮衣</b>」。',
+    draw: () => rect(0, 220, 640, 80, '#a3e635') + rect(150, 205, 260, 18, '#78350f', '#451a03', 2, 4) + rect(180, 190, 200, 16, '#fef3c7', '#d6d3d1', 1, 3) +
+      `<g transform="translate(300,190)"><g class="beater">${rect(-6, -70, 12, 70, '#92400e', '#451a03', 2, 4)}${rect(-10, -80, 20, 18, '#78350f', '#451a03', 2, 3)}</g></g>` +
+      txt(440, 215, '🧍', '#000', 60) + txt(120, 150, '咚！', '#1f2937', 22, 'middle', 'class="shine"') + txt(90, 120, '咚！', '#1f2937', 18, 'middle', 'class="shine"') +
+      txt(520, 110, '樹皮衣', '#1f2937', 24, 'middle', 'font-weight="bold"') + txt(520, 138, '夏威夷 kapa・東加 ngatu', '#374151', 13) + txt(520, 158, '薩摩亞 siapo・斐濟 masi', '#374151', 13) },
+  { who: '鍾老師', text: '奇怪的是——太平洋島上的構樹，幾乎全部是「<b>女生樹</b>」（只開雌花）。沒有「男生樹」，就<b>結不出能發芽的種子</b>。所以它們在島上<b>沒辦法自己繁殖</b>。',
+    draw: () => rect(0, 220, 640, 80, '#86efac') + tree(120, 230, 1.3, { sym: '♀' }) + tree(250, 230, 1.3, { sym: '♀' }) + tree(380, 230, 1.3, { sym: '♀' }) +
+      tree(520, 230, 1.3, { sym: '♂', grey: true }) + txt(520, 150, '✕', '#dc2626', 60, 'middle', 'font-weight="bold"') +
+      txt(320, 60, '沒有種子 → 不能自己繁殖', '#7f1d1d', 20, 'middle', 'font-weight="bold"') },
+  { who: '旁白', text: '不會自己繁殖，卻到處都是？答案只有一個：<b>是人帶去的</b>。祖先出海時，把構樹的<b>根切一段</b>、帶上船，到了新的島再種下去。',
+    exam: '<b class="tag">考點</b>課本閱讀思考第 1 題：太平洋諸島的構樹伴隨人們遷徙而來，原因是「<b>此地不適合構樹自然繁殖</b>」→ 答案 <b>(B)</b>。',
+    draw: () => seaBand(190, 110) + canoe(300, 190, 1.2, txt(14, -20, '🌱', '#000', 26)) + island(80, 225, 60, 16) + tree(70, 218, .7) + island(580, 235, 55, 14) +
+      txt(560, 100, '新的島', '#1f2937', 16) + line(360, 150, 540, 190, '#fde68a', 3, true) },
+  { who: '鍾老師', text: '那，帶樹的人是<b>從哪裡出發</b>的？植物有「身分證」：<b>葉子細胞裡的一段 DNA</b>。同一個地方來的構樹，這段密碼會一樣。',
+    draw: () => rect(0, 220, 640, 80, '#86efac') + txt(150, 200, '🍃', '#000', 90) + txt(240, 230, '🔍', '#000', 64) +
+      rect(330, 110, 240, 90, '#fff', '#1f2937', 2, 10) + txt(450, 135, '構樹身分證', '#1f2937', 14, 'middle', 'font-weight="bold"') + barcode(350, 145, 200, 40, '#1f2937', 0) +
+      txt(450, 100, '葉綠體 DNA', '#1f2937', 15, 'middle', 'font-weight="bold"') },
+  { who: '旁白', text: '研究團隊跑遍<b>臺灣、中國大陸、東南亞、太平洋各島</b>，蒐集了<b>好幾百棵</b>構樹的葉子，一棵一棵比對身分證。',
+    draw: () => seaBand(150, 150) + island(120, 120, 80, 30) + island(300, 190, 60, 16) + island(430, 230, 40, 12) + island(540, 160, 45, 12) + island(200, 240, 50, 12) +
+      [[100,110],[140,125],[290,185],[320,195],[430,225],[545,155],[200,235],[215,245]].map(([x,y]) => `<circle cx="${x}" cy="${y}" r="5" fill="#dc2626" class="pop"/>`).join('') +
+      txt(80, 80, '🧑‍🔬', '#000', 34) + txt(560, 110, '🧑‍🔬', '#000', 34) + txt(320, 60, '蒐集幾百棵構樹的葉子', '#fff', 18, 'middle', 'font-weight="bold"') },
+  { who: '鍾老師', text: '結果出來了：太平洋構樹的身分證，和「<b>臺灣南部</b>」的構樹<b>一模一樣</b>！這種特徵在別的地方幾乎找不到。所以，構樹是<b>從臺灣帶出去的</b>。',
+    exam: '<b class="tag">考點</b>太平洋諸島的構樹，絕大多數與<b>臺灣南部</b>本土構樹擁有相同的特徵 → 構樹是<b>從臺灣帶出去的</b>。',
+    draw: () => seaBand(150, 150) + twMini(60, 40, .45, '#86efac', '#fbbf24') + txt(130, 290, '臺灣南部', '#fff', 15, 'middle', 'font-weight="bold"') +
+      rect(60, 250, 150, 22, '#fff', '#1f2937', 1, 4) + barcode(66, 253, 138, 16, '#1f2937', 0) +
+      island(400, 200, 50, 14) + island(540, 240, 40, 12) + island(480, 120, 35, 10) +
+      rect(430, 250, 150, 22, '#fff', '#1f2937', 1, 4) + barcode(436, 253, 138, 16, '#1f2937', 0) + txt(505, 290, '太平洋諸島', '#fff', 15, 'middle', 'font-weight="bold"') +
+      txt(320, 265, '＝', '#fde68a', 40, 'middle', 'font-weight="bold" class="shine"') },
+  { who: '旁白', text: '順著各地構樹的分布，路線就畫出來了：<b>從臺灣出發，沿著海路經過印尼、新幾內亞，到達太平洋諸島</b>。',
+    exam: '<b class="tag">考點</b>南島語族的遷移路線：<b>臺灣 → 印尼 → 新幾內亞 → 太平洋諸島</b>。口訣「<b>臺灣印新太陽</b>」。',
+    draw: () => seaBand(100, 200) + twMini(70, 30, .3) + island(140, 190, 50, 14) + island(300, 210, 60, 16) + island(470, 200, 40, 12) + island(560, 150, 30, 10) + island(590, 250, 30, 10) +
+      txt(115, 100, '臺灣', '#fff', 14, 'middle', 'font-weight="bold"') + txt(140, 215, '印尼', '#1f2937', 13) + txt(300, 235, '新幾內亞', '#1f2937', 13) + txt(520, 250, '太平洋諸島', '#fff', 13) +
+      `<path id="routeP" d="M115 130 Q 100 170 140 180 Q 220 200 300 200 Q 400 200 470 190 Q 540 180 560 150" fill="none" stroke="#fde68a" stroke-width="3" stroke-dasharray="8 6"/>` +
+      `<g><text font-size="30" text-anchor="middle" dominant-baseline="middle">🛶<animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#routeP"/></animateMotion></text></g>` },
+  { who: '鍾老師', text: '一棵樹就能證明一切嗎？<b>不能</b>。但<b>語言學</b>（臺灣的南島語言分支最多）和<b>考古學</b>（陶器、石器越往南越晚）的證據，也都指向臺灣。三條線索合在一起，結論才站得住。',
+    exam: '<b class="tag">考點</b>閱讀思考第 2 題怎麼答：構樹研究<b>合理但不夠</b>，要與語言、考古等證據<b>互相印證</b>。',
+    draw: () => rect(0, 240, 640, 60, '#86efac') + ['🗣️ 語言', '🏺 考古', '🌳 植物'].map((t, i) => rect(90 + i*180, 130, 120, 110, '#fff', '#1f2937', 2, 10) + txt(150 + i*180, 195, t, '#1f2937', 20, 'middle', 'font-weight="bold"')).join('') +
+      rect(200, 40, 240, 60, '#fbbf24', '#78350f', 2, 12) + txt(320, 78, '起點：臺灣', '#1f2937', 24, 'middle', 'font-weight="bold"') +
+      [150, 330, 510].map(x => line(x, 130, 320, 100, '#1f2937', 3)).join('') },
+  { who: '旁白', text: '所以，當夏威夷人穿上 kapa、東加人送出 ngatu，那片布的祖先，很可能來自幾千年前、從<b>臺灣</b>出發的一艘獨木舟。臺灣，是南島語族<b>最北的家</b>，也很可能是<b>出發的起點</b>。——故事完。',
+    draw: () => rect(0, 0, 640, 200, 'url(#sunset)') + `<defs><linearGradient id="sunset" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f97316"/><stop offset="1" stop-color="#fde68a"/></linearGradient></defs>` +
+      circ(500, 170, 40, '#fef3c7') + seaBand(200, 100) + canoe(300, 200, 1.4, txt(14, -20, '🌱', '#000', 26)) + txt(320, 60, '臺灣 → 太平洋', '#7c2d12', 22, 'middle', 'font-weight="bold"') },
+];
+
+let sceneIdx = 0, typing = null, autoOn = false, autoTimer = null;
+const stage = document.getElementById('stage'), caption = document.getElementById('caption'), storyExam = document.getElementById('storyExam');
+const dots = document.getElementById('stDots');
+dots.innerHTML = SCENES.map((_, i) => `<i data-i="${i}" title="第 ${i+1} 幕"></i>`).join('');
+dots.querySelectorAll('i').forEach(d => d.addEventListener('click', () => showScene(+d.dataset.i)));
+
+function showScene(i){
+  sceneIdx = Math.max(0, Math.min(SCENES.length - 1, i));
+  const sc = SCENES[sceneIdx];
+  stage.innerHTML = svg(640, 300, sc.draw(), 'preserveAspectRatio="xMidYMid meet"');
+  storyExam.className = 'exam'; storyExam.innerHTML = sc.exam || '';
+  dots.querySelectorAll('i').forEach((d, k) => { d.className = k < sceneIdx ? 'done' : (k === sceneIdx ? 'cur' : ''); });
+  document.getElementById('stPrev').disabled = sceneIdx === 0;
+  document.getElementById('stNext').textContent = sceneIdx === SCENES.length - 1 ? '⟲ 從頭再看' : '▶ 下一幕';
+  typeText(`<span class="who">${sc.who}</span>` + sc.text, () => {
+    if(sc.exam) storyExam.classList.add('show');
+    if(sceneIdx === SCENES.length - 1) toolLog('故事動畫看完', true);
+    if(autoOn) autoTimer = setTimeout(() => showScene(sceneIdx + 1 < SCENES.length ? sceneIdx + 1 : 0), sc.exam ? 4500 : 2800);
+  });
+  speak(sc.text);
+}
+// 逐字打出（標籤整個放進去，不會被拆壞）；點字幕可直接顯示全部
+function typeText(html, done){
+  clearTimeout(typing); clearTimeout(autoTimer);
+  const tokens = html.match(/<[^>]+>|[\s\S]/g) || [];
+  let i = 0, out = '';
+  caption.onclick = () => { clearTimeout(typing); caption.innerHTML = html; if(done){ const d = done; done = null; d(); } };
+  (function step(){
+    if(i >= tokens.length){ caption.innerHTML = html; if(done){ const d = done; done = null; d(); } return; }
+    out += tokens[i++];
+    caption.innerHTML = out + '<span class="cur"></span>';
+    typing = setTimeout(step, tokens[i-1].startsWith('<') ? 0 : 38);
+  })();
+}
+document.getElementById('stNext').addEventListener('click', () => showScene(sceneIdx + 1 < SCENES.length ? sceneIdx + 1 : 0));
+document.getElementById('stPrev').addEventListener('click', () => showScene(sceneIdx - 1));
+document.getElementById('stAuto').addEventListener('click', e => {
+  autoOn = !autoOn; e.target.classList.toggle('on', autoOn); e.target.textContent = autoOn ? '⏸ 停止自動' : '自動播放';
+  if(autoOn) showScene(sceneIdx); else clearTimeout(autoTimer);
+});
+document.getElementById('stSpeak').addEventListener('click', e => {
+  if(!window.speechSynthesis){ e.target.textContent = '（此裝置沒有語音）'; e.target.disabled = true; return; }
+  speakOn = !speakOn; e.target.classList.toggle('on', speakOn); e.target.textContent = speakOn ? '🔇 停止朗讀' : '🔊 唸給我聽';
+  if(speakOn) speak(SCENES[sceneIdx].text); else stopSpeak();
+});
+if(window.speechSynthesis) speechSynthesis.onvoiceschanged = () => {};
+showScene(0);
+
+// ===== 樹皮衣動畫 =====
+const TAPA = [
+  { w: 50, h: 22, col: '#a16207', info: '先把構樹的枝條砍下來，剝下一整條樹皮，刮掉外面粗糙的皮，只留內層白色的纖維。' },
+  { w: 80, h: 18, col: '#ca8a04', info: '① 泡水讓樹皮變軟，放在木砧（木頭墊板）上。' },
+  { w: 130, h: 14, col: '#eab308', info: '② 用木棒或<b>石拍</b>反覆敲打，纖維被打散、往兩邊攤開。臺灣很多新石器時代遺址都挖到這種石拍。' },
+  { w: 200, h: 10, col: '#fde047', info: '③ 越敲越寬、越敲越薄。一條窄樹皮可以敲成原來好幾倍寬。' },
+  { w: 280, h: 7, col: '#fef9c3', info: '④ 幾片拼接、曬乾、用天然染料畫上花紋——一件<b>樹皮衣</b>完成！✔ 這就是南島語族從臺灣一路帶到太平洋的技術。' },
+];
+let tapaStep = 0;
+function drawTapa(){
+  const t = TAPA[tapaStep];
+  let s = rect(0, 0, 480, 240, '#e0f2fe') + rect(0, 190, 480, 50, '#a3e635') + rect(60, 170, 360, 20, '#78350f', '#451a03', 2, 4);
+  s += `<rect class="grow" x="${240 - t.w/2}" y="${170 - t.h}" width="${t.w}" height="${t.h}" rx="3" fill="${t.col}" stroke="#a16207" stroke-width="1.5"/>`;
+  s += `<g transform="translate(300,160)"><g class="${tapaStep > 0 && tapaStep < 4 ? 'beater' : ''}">${rect(-5, -70, 10, 70, '#92400e', '#451a03', 2, 4)}${rect(-9, -80, 18, 16, '#78350f', '#451a03', 2, 3)}</g></g>`;
+  s += txt(400, 165, '🧍', '#000', 56);
+  s += txt(240, 40, tapaStep === 0 ? '一條樹皮' : (tapaStep === 4 ? '一件樹皮衣 ✔' : '寬度 ' + Math.round(t.w / TAPA[0].w * 10) / 10 + ' 倍'), '#1f2937', 18, 'middle', 'font-weight="bold"');
+  if(tapaStep === 4) s += [[150,60],[240,80],[330,60]].map(([x,y]) => txt(x, y, '✿', '#b91c1c', 20)).join('');
+  document.getElementById('svgTapa').innerHTML = svg(480, 240, s);
+  document.getElementById('tapaInfo').innerHTML = t.info;
+  document.getElementById('tapaHit').disabled = tapaStep >= TAPA.length - 1;
+}
+document.getElementById('tapaHit').addEventListener('click', () => { if(tapaStep < TAPA.length - 1){ tapaStep++; drawTapa(); if(tapaStep === TAPA.length - 1) toolLog('樹皮衣動畫', true); } });
+document.getElementById('tapaReset').addEventListener('click', () => { tapaStep = 0; drawTapa(); });
+drawTapa();
+
+// ===== 南島語族世界地圖（簡化示意；經度 30°E～115°W、緯度 50°N～50°S）=====
+const WX = lon => Math.round((lon - 30) * 3.2), WY = lat => Math.round((50 - lat) * 4);
+const WPTS = {
+  tw:  { x: WX(121), y: WY(23.5), name: '臺灣', tip: '最北端。南島語族的老家之一，也是「出發點」。' },
+  ph:  { x: WX(122), y: WY(12), name: '菲律賓' },
+  id:  { x: WX(115), y: WY(0), name: '印尼' },
+  ng:  { x: WX(145), y: WY(-6), name: '新幾內亞' },
+  fj:  { x: WX(178), y: WY(-18), name: '斐濟' },
+  sm:  { x: WX(188), y: WY(-14), name: '薩摩亞' },
+  hw:  { x: WX(204), y: WY(20), name: '夏威夷', tip: '太平洋正中央的火山島群，大約 1,000 年前才有人到達。' },
+  es:  { x: WX(251), y: WY(-27), name: '復活節島', tip: '最東端。屬於智利，離南美洲 3,700 公里，以巨石像聞名。' },
+  nz:  { x: WX(174), y: WY(-40), name: '紐西蘭', tip: '最南端。毛利人大約 750 年前到達，是南島語族最後抵達的大島。' },
+  mg:  { x: WX(47), y: WY(-20), name: '馬達加斯加', tip: '最西端。在非洲旁邊，但語言來自印尼婆羅洲，大約 1,300 年前渡過整個印度洋而來。' },
+};
+const CORNERS = ['tw', 'mg', 'es', 'nz', 'hw'];
+const ROUTE = [
+  ['tw', '約 5,000 多年前，從臺灣出發'], ['ph', '約 4,000 年前，到菲律賓'], ['id', '約 3,500 年前，到印尼'], ['ng', '約 3,300 年前，經過新幾內亞'],
+  ['fj', '約 3,000 年前，到斐濟'], ['sm', '約 2,800 年前，到薩摩亞、東加'], ['hw', '約 1,000 年前，北上夏威夷'], ['es', '約 800 年前，東抵復活節島'], ['nz', '約 750 年前，南下紐西蘭'],
+];
+function drawWorld(){
+  const land = '#d9f99d', lb = '#65a30d';
+  let s = rect(0, 0, 720, 400, '#bae6fd');
+  // 陸地（粗略形狀）
+  const P = pts => `<polygon points="${pts.map(([a,b]) => WX(a)+','+WY(b)).join(' ')}" fill="${land}" stroke="${lb}" stroke-width="1"/>`;
+  s += P([[30,50],[135,50],[130,42],[122,38],[121,30],[110,20],[108,12],[105,8],[104,2],[100,6],[97,10],[92,20],[80,8],[75,10],[72,20],[60,22],[52,14],[44,12],[40,20],[30,25]]);   // 亞洲
+  s += P([[30,50],[30,-35],[35,-34],[41,-25],[40,-10],[45,-2],[51,10],[44,11],[36,20],[32,30]]);   // 非洲東半
+  s += P([[44,-12],[50,-13],[50,-25],[47,-26],[43,-20]]);   // 馬達加斯加
+  s += P([[114,-22],[125,-14],[131,-11],[137,-12],[142,-11],[146,-19],[153,-25],[150,-37],[140,-38],[132,-32],[124,-34],[115,-34],[113,-26]]);   // 澳洲
+  s += P([[131,-1],[141,-3],[150,-10],[147,-8],[140,-9],[134,-7],[131,-3]]);   // 新幾內亞
+  s += P([[109,1],[117,7],[119,1],[116,-4],[110,-2]]);   // 婆羅洲
+  s += P([[95,6],[106,-6],[100,-4],[95,1]]);   // 蘇門答臘
+  s += P([[105,-6],[114,-8],[112,-7],[106,-6]]);   // 爪哇
+  s += P([[120,18],[122,18],[124,13],[126,7],[122,6],[120,11],[119,15]]);   // 菲律賓
+  s += P([[120,25],[122,25],[121,22],[120,22]]);   // 臺灣
+  s += P([[130,32],[141,42],[142,45],[140,36],[135,33]]);   // 日本
+  s += P([[172,-34],[178,-38],[174,-42],[167,-46],[168,-44],[173,-41]]);   // 紐西蘭
+  // 分布範圍（風箏）
+  const kite = [[54,272],[150,205],[235,175],[291,98],[557,108],[707,305],[461,368],[400,300],[372,238],[250,220],[100,300]];
+  s += `<polygon points="${kite.map(p=>p.join(',')).join(' ')}" fill="#f0abfc" opacity=".35" stroke="#a21caf" stroke-width="1.5" stroke-dasharray="6 4"/>`;
+  s += txt(WX(222), WY(-38), '南島語族分布範圍', '#701a75', 13, 'middle', 'font-weight="bold"');
+  // 路線（先畫線，之後由動畫點亮）
+  s += `<g id="routeLines">` + ROUTE.slice(1).map(([k], i) => { const a = WPTS[ROUTE[i][0]], b = WPTS[k]; return `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="#7c2d12" stroke-width="2.5" stroke-dasharray="6 5" opacity="0" data-seg="${i}"/>`; }).join('') + `</g>`;
+  s += `<line x1="${WPTS.id.x}" y1="${WPTS.id.y}" x2="${WPTS.mg.x}" y2="${WPTS.mg.y}" stroke="#7c2d12" stroke-width="2" stroke-dasharray="4 5" opacity="0" data-seg="mg"/>`;
+  // 地點
+  Object.entries(WPTS).forEach(([k, p]) => {
+    const isC = CORNERS.includes(k);
+    s += `<g class="site" data-k="${k}"><circle cx="${p.x}" cy="${p.y}" r="${isC ? 8 : 5}" fill="${isC ? '#dc2626' : '#f59e0b'}" stroke="#fff" stroke-width="2"/>` +
+      txt(k === 'es' ? p.x - 12 : p.x, p.y - (isC ? 13 : 10), p.name, '#1f2937', isC ? 13 : 11, k === 'es' ? 'end' : 'middle', 'font-weight="bold"') + `</g>`;
+  });
+  s += `<text id="routeBoat" x="${WPTS.tw.x}" y="${WPTS.tw.y}" font-size="26" text-anchor="middle" dominant-baseline="middle" opacity="0">🛶</text>`;
+  s += txt(8, 392, '★ 紅點＝四個角＋夏威夷；橘點＝路線中途站。地圖為簡化示意，形狀不精確。', '#374151', 11, 'start');
+  document.getElementById('svgWorld').innerHTML = svg(720, 400, s);
+  document.querySelectorAll('#svgWorld .site').forEach(g => g.addEventListener('click', () => {
+    const p = WPTS[g.dataset.k];
+    document.getElementById('worldInfo').innerHTML = `<b>${p.name}</b>：${p.tip || '遷徙路線的中途站。'}`;
+  }));
+}
+drawWorld();
+let routeAnim = null;
+function routeReset(){
+  cancelAnimationFrame(routeAnim); routeAnim = null;
+  document.querySelectorAll('#svgWorld [data-seg]').forEach(l => l.setAttribute('opacity', '0'));
+  const b = document.getElementById('routeBoat'); b.setAttribute('opacity', '0'); b.setAttribute('x', WPTS.tw.x); b.setAttribute('y', WPTS.tw.y);
+  document.getElementById('routeYear').textContent = '';
+  document.getElementById('routePlay').disabled = false;
+}
+document.getElementById('routeReset').addEventListener('click', () => { routeReset(); document.getElementById('worldInfo').textContent = '👆 點四個角落的圓點，或按播放。'; });
+document.getElementById('routePlay').addEventListener('click', () => {
+  routeReset();
+  document.getElementById('routePlay').disabled = true;
+  const boat = document.getElementById('routeBoat'); boat.setAttribute('opacity', '1');
+  const info = document.getElementById('worldInfo'), yr = document.getElementById('routeYear');
+  let seg = 0, t0 = null;
+  info.innerHTML = '<b>出發！</b>' + ROUTE[0][1] + '。';
+  const SEG_MS = 1400;
+  function frame(ts){
+    if(!t0) t0 = ts;
+    const k = Math.min(1, (ts - t0) / SEG_MS);
+    const a = WPTS[ROUTE[seg][0]], b = WPTS[ROUTE[seg+1][0]];
+    boat.setAttribute('x', a.x + (b.x - a.x) * k); boat.setAttribute('y', a.y + (b.y - a.y) * k - Math.sin(k * Math.PI) * 10);
+    if(k >= 1){
+      document.querySelector(`#svgWorld [data-seg="${seg}"]`).setAttribute('opacity', '1');
+      yr.textContent = ROUTE[seg+1][1];
+      info.innerHTML = `<b>${WPTS[ROUTE[seg+1][0]].name}</b>：${ROUTE[seg+1][1]}。` + (ROUTE[seg+1][0] === 'id' ? '（另一支從這裡往西渡過印度洋，約 1,300 年前到達馬達加斯加）' : '');
+      if(ROUTE[seg+1][0] === 'id') document.querySelector('#svgWorld [data-seg="mg"]').setAttribute('opacity', '1');
+      seg++; t0 = null;
+      if(seg >= ROUTE.length - 1){ info.innerHTML = '<b>抵達紐西蘭。</b>從臺灣出發到住滿整個太平洋，花了四千多年。路線口訣：<b>臺灣印新太陽</b>。'; toolLog('遷徙路線動畫', true); document.getElementById('routePlay').disabled = false; return; }
+    }
+    routeAnim = requestAnimationFrame(frame);
+  }
+  routeAnim = requestAnimationFrame(frame);
+});
+
+// ===== 臺灣原住民分布地圖 =====
+const PING = [
+  { n: '凱達格蘭', x: 190, y: 62, lx: -10, ly: 4, la: 'end', d: '臺北盆地、基隆一帶。總統府前的「凱達格蘭大道」就是用他們命名。' },
+  { n: '噶瑪蘭', x: 238, y: 100, lx: -10, ly: 4, la: 'end', d: '宜蘭平原。19 世紀後不少人遷到花蓮、臺東海岸，2002 年成為官方認定的族群。' },
+  { n: '道卡斯', x: 118, y: 118, d: '新竹、苗栗沿海。' },
+  { n: '巴則海', x: 98, y: 165, d: '臺中豐原一帶的丘陵。' },
+  { n: '巴布拉', x: 78, y: 188, d: '臺中海線。17 世紀曾有跨部落的「大肚王國」。' },
+  { n: '貓霧捒', x: 76, y: 216, d: '彰化平原。' },
+  { n: '和安雅', x: 76, y: 262, d: '雲林、嘉義到南投一帶。' },
+  { n: '西拉雅', x: 92, y: 350, lx: 12, ly: 4, la: 'start', d: '臺南、高雄平原。荷蘭時期學會用羅馬字寫自己的語言，留下「新港文書」；祭拜祖靈「阿立祖」。' },
+];
+const GAO = [
+  { n: '泰雅族', x: 150, y: 128, d: '北部山區，分布最廣。傳統有紋面文化。' },
+  { n: '賽夏族', x: 118, y: 148, d: '新竹、苗栗山區。每兩年一次的「矮靈祭」很有名。' },
+  { n: '太魯閣族', x: 212, y: 186, lx: 10, ly: 4, la: 'start', d: '花蓮北部山區。2004 年認定，太魯閣峽谷因他們得名。' },
+  { n: '賽德克族', x: 176, y: 196, lx: -10, ly: 4, la: 'end', d: '南投仁愛鄉。2008 年認定；1930 年霧社事件的主角。' },
+  { n: '撒奇萊雅族', x: 232, y: 214, lx: -10, ly: 14, la: 'end', d: '花蓮市附近。2007 年認定，有火神祭。' },
+  { n: '邵族', x: 150, y: 232, lx: -10, ly: 4, la: 'end', d: '南投日月潭。人數最少的族群之一；白鹿傳說。' },
+  { n: '布農族', x: 172, y: 270, lx: 10, ly: 4, la: 'start', d: '中央山脈中南段，住得最高。八部合音、射日傳說。' },
+  { n: '鄒族', x: 140, y: 292, lx: -10, ly: 4, la: 'end', d: '嘉義阿里山。戰祭。' },
+  { n: '噶瑪蘭族', x: 238, y: 270, lx: 11, ly: 4, la: 'start', d: '今日主要在花蓮、臺東海岸（原居宜蘭）。2002 年認定，香蕉絲織布。' },
+  { n: '阿美族', x: 216, y: 306, lx: 10, ly: 4, la: 'start', d: '花蓮、臺東的平原與海岸。人口最多；母系社會；豐年祭；都蘭部落保留樹皮衣技術。' },
+  { n: '卡那卡那富族', x: 138, y: 322, lx: -10, ly: 4, la: 'end', d: '高雄那瑪夏。2014 年認定。' },
+  { n: '拉阿魯哇族', x: 156, y: 342, lx: 10, ly: 4, la: 'start', d: '高雄桃源。2014 年認定，聖貝祭。' },
+  { n: '卑南族', x: 200, y: 362, lx: 10, ly: 4, la: 'start', d: '臺東平原。少年會所訓練；「卑南遺址」以他們命名。' },
+  { n: '魯凱族', x: 150, y: 368, lx: -10, ly: 4, la: 'end', d: '屏東、高雄山區。石板屋、百合花；巴冷公主傳說。' },
+  { n: '排灣族', x: 150, y: 412, lx: -10, ly: 4, la: 'end', d: '南部山區。人口第二多；有貴族制度；百步蛇、太陽紋。' },
+  { n: '達悟族（雅美族）', x: 262, y: 410, lx: 24, ly: -12, la: 'end', d: '蘭嶼。拼板舟、飛魚祭；語言和菲律賓巴丹群島最接近，是「從南邊回來」的一支。', island: true },
+];
+let twLayer = 'gao', twMode = 'explore', twTarget = null, twScore = { ok: 0, n: 0 };
+function drawTaiwan(){
+  const data = twLayer === 'gao' ? GAO : PING;
+  const col = twLayer === 'gao' ? '#1d4ed8' : '#b45309';
+  let s = rect(0, 0, 300, 480, '#bae6fd');
+  s += `<polygon points="${TW_OUTLINE.map(p=>p.join(',')).join(' ')}" fill="#d9f99d" stroke="#65a30d" stroke-width="2"/>`;
+  s += `<ellipse cx="262" cy="410" rx="9" ry="6" fill="#d9f99d" stroke="#65a30d" stroke-width="1.5"/>` + txt(262, 432, '蘭嶼', '#374151', 10);
+  s += `<ellipse cx="248" cy="352" rx="5" ry="4" fill="#d9f99d" stroke="#65a30d" stroke-width="1.5"/>`;
+  // 中央山脈示意
+  s += `<path d="M150 90 Q 175 200 180 300 Q 170 380 160 430" fill="none" stroke="#a3e635" stroke-width="30" stroke-linecap="round" opacity=".8"/>`;
+  [['臺北', 195, 78], ['臺中', 100, 188], ['臺南', 100, 352], ['高雄', 120, 402], ['花蓮', 226, 236], ['臺東', 206, 382]].forEach(([n, x, y]) => s += circ(x, y, 2.5, '#374151') + txt(x + 5, y + 4, n, '#374151', 10, 'start'));
+  data.forEach((p, i) => {
+    s += `<g class="site" data-i="${i}"><circle cx="${p.x}" cy="${p.y}" r="7" fill="${col}" stroke="#fff" stroke-width="2"/>` +
+      (twMode === 'explore' ? txt(p.x + (p.lx || 0), p.y + (p.ly === undefined ? -11 : p.ly), p.n, '#1f2937', 11, p.la || 'middle', 'font-weight="bold" stroke="#fff" stroke-width="3" paint-order="stroke"') : '') + `</g>`;
+  });
+  s += txt(8, 470, twLayer === 'gao' ? '現今官方認定 16 族（位置為傳統分布示意）' : '17 世紀的平埔族群（示意）', '#374151', 11, 'start');
+  document.getElementById('svgTaiwan').innerHTML = svg(300, 480, s);
+  document.querySelectorAll('#svgTaiwan .site').forEach(g => g.addEventListener('click', () => onTw(g, data[+g.dataset.i])));
+}
+function onTw(g, p){
+  const info = document.getElementById('twInfo');
+  if(twMode === 'explore'){
+    info.innerHTML = `<span class="leg ${twLayer === 'gao' ? 'lg-gao' : 'lg-ping'}">${twLayer === 'gao' ? '高山各族' : '平埔族群'}</span><b>${p.n}</b><br>${p.d}`;
+    return;
+  }
+  if(!twTarget) return;
+  twScore.n++;
+  if(p === twTarget){ twScore.ok++; g.classList.add('hit'); info.innerHTML = `✔ 答對了！<b>${p.n}</b>：${p.d}`; }
+  else info.innerHTML = `✘ 這是 <b>${p.n}</b>。再找找 <b>${twTarget.n}</b>。`;
+  document.getElementById('twScore').textContent = `答對 ${twScore.ok} / ${twScore.n}`;
+  if(p === twTarget){ toolLog('分布地圖', true); setTimeout(nextTarget, 1400); }
+}
+function nextTarget(){
+  const data = twLayer === 'gao' ? GAO : PING;
+  let t; do{ t = data[Math.floor(Math.random() * data.length)]; }while(t === twTarget && data.length > 1);
+  twTarget = t;
+  document.getElementById('twInfo').innerHTML = `🔎 找找看：<b>${t.n}</b> 在哪裡？點地圖上的圓點。`;
+}
+function setLayer(l){
+  twLayer = l;
+  document.getElementById('layerPing').className = l === 'ping' ? 'on' : 'ghost';
+  document.getElementById('layerGao').className = l === 'gao' ? 'on' : 'ghost';
+  drawTaiwan(); if(twMode === 'quiz') nextTarget(); else document.getElementById('twInfo').textContent = '👆 點地圖上的圓點。';
+}
+document.getElementById('layerPing').addEventListener('click', () => setLayer('ping'));
+document.getElementById('layerGao').addEventListener('click', () => setLayer('gao'));
+document.getElementById('mapExplore').addEventListener('click', () => {
+  twMode = 'explore'; document.getElementById('mapExplore').className = 'on'; document.getElementById('mapQuiz').className = 'ghost';
+  document.getElementById('twScore').textContent = ''; drawTaiwan(); document.getElementById('twInfo').textContent = '👆 點地圖上的圓點。';
+});
+document.getElementById('mapQuiz').addEventListener('click', () => {
+  twMode = 'quiz'; twScore = { ok: 0, n: 0 }; document.getElementById('mapQuiz').className = 'on'; document.getElementById('mapExplore').className = 'ghost';
+  drawTaiwan(); nextTarget();
+});
+document.getElementById('mapExplore').className = 'on'; document.getElementById('mapQuiz').className = 'ghost';
+drawTaiwan();
+
+// ===== 傳說卡 =====
+const LEGENDS = [
+  { t: '邵族｜白鹿傳說', s: '祖先追一隻大白鹿，翻山越嶺好幾天，追到一片美麗山水，湖裡魚蝦取之不盡——就是今天南投的日月潭。從此邵族定居於此。', f: '遷徙與定居' },
+  { t: '布農族｜射日傳說', s: '天上有兩個太陽，輪流照射，大地沒有黑夜，農作物都曬死了。一對父子出發去射太陽，射中一個，它變成了月亮。月亮教他們祭典和曆法，布農族從此照著月亮的圓缺過生活。', f: '解釋自然現象與祭典由來' },
+  { t: '排灣族｜太陽與百步蛇', s: '太陽在陶壺裡產下蛋，由百步蛇守護，孵出來的孩子成為頭目的祖先。所以排灣族的貴族以太陽和百步蛇為象徵，刻在木雕和石板屋上。', f: '族群起源與身分制度' },
+  { t: '泰雅族｜巨石生人', s: '在南投的深山裡，一塊巨石裂開，走出了泰雅族的祖先。子孫越來越多，就往北、往東翻山越嶺遷徙，散布到整個北臺灣的山區。', f: '起源與遷徙' },
+  { t: '阿美族｜大洪水', s: '大洪水淹沒了大地，一對兄妹坐在木臼裡漂流，漂到山上才得救。水退以後，他們繁衍後代，子孫往平原和海岸遷徙，成為今天的阿美族。', f: '起源與遷徙' },
+  { t: '達悟族｜石生與竹生', s: '蘭嶼的山上，一塊大石頭和一根竹子分別裂開，各走出一個人，他們的後代成為達悟族。達悟語和菲律賓巴丹群島的語言最接近，是南島語族「從南邊回來」的一支。', f: '起源；也印證南島遷徙' },
+  { t: '鄒族｜洪水與玉山', s: '大洪水來的時候，祖先逃到玉山山頂避難。水退了以後，大家從玉山下山，往四面八方分散，各自建立部落。', f: '遷徙' },
+  { t: '魯凱族｜巴冷公主', s: '頭目的女兒巴冷愛上鬼湖的百步蛇王，嫁入湖中。族人從此把百步蛇當成守護者，不能傷害，也把百合花當成純潔和榮譽的象徵。', f: '信仰與文化' },
+];
+document.getElementById('legendGrid').innerHTML = LEGENDS.map((l, i) => `<div class="legend-card" data-i="${i}" style="cursor:pointer"><b>${l.t}</b><div class="lstory" style="display:none;font-size:.92rem;margin-top:4px">${l.s}</div><div class="hint" style="font-size:.82rem;color:#6b7280">點一下看故事</div><span class="fn">傳承：${l.f}</span></div>`).join('');
+document.querySelectorAll('.legend-card').forEach(c => c.addEventListener('click', () => {
+  const st = c.querySelector('.lstory'), h = c.querySelector('.hint');
+  const open = st.style.display === 'none'; st.style.display = open ? 'block' : 'none'; h.style.display = open ? 'none' : 'block';
+}));
+
+// ===== 名稱時光機 =====
+const ERAS = [
+  { name: '清帝國時期', cls: 'era-qing', l: ['熟番', '納稅、服勞役<br>住平地，生活漸像漢人'], r: ['生番', '不納稅、不服勞役<br>住山區，清廷管不到'],
+    info: '<span class="era-tag era-qing">清帝國</span>依據<b>是否納稅、服勞役</b>分成兩類。「番」是當時帶輕視的用語，現在不用了。' },
+  { name: '日治時期', cls: 'era-jp', l: ['平埔族', '熟番改稱<br>「平埔」＝平地'], r: ['高砂族', '生番改稱<br>「高砂」＝日本人對臺灣的古稱'],
+    info: '<span class="era-tag era-jp">日治時期</span>改稱<b>平埔族、高砂族</b>。日本學者的調查，整理出今天很多族名。' },
+  { name: '中華民國統治初期', cls: 'era-roc', l: ['（未被視為原住民）', '平埔族因<b>漢化</b><br>身分被當成漢人'], r: ['高山族 → 山地同胞', '高砂族改稱高山族<br>後來又稱「山地同胞」（山胞）'],
+    info: '<span class="era-tag era-roc">中華民國</span>平埔族最初因<b>漢化</b>而未被視為原住民；高砂族改稱<b>高山族</b>，後稱<b>山地同胞</b>。' },
+  { name: '現今', cls: 'era-now', merged: ['原住民族', '<b>民國 83 年</b>（1994）修憲，把「山胞」正名為「原住民」；後再加「族」字。8 月 1 日＝原住民族日。<br>目前官方認定 16 族，部分平埔族群也在爭取認定。'],
+    info: '<span class="era-tag era-now">現今</span>以「<b>原住民族</b>」為各族別的正式統稱——這是原住民自己爭取來的名字。' },
+];
+function showEra(i){
+  const e = ERAS[i], box = document.getElementById('nameBox');
+  document.querySelectorAll('.eras button').forEach((b, k) => b.className = k === i ? 'on' : 'ghost');
+  if(e.merged){
+    box.className = 'namebox merged';
+    box.innerHTML = `<div class="col"><div class="t">${e.name}・所有族群</div><div class="n pop">${e.merged[0]}</div><div class="why">${e.merged[1]}</div></div>`;
+  }else{
+    box.className = 'namebox';
+    box.innerHTML = `<div class="col"><div class="t">${e.name}・平地、漢化較深</div><div class="n pop">${e.l[0]}</div><div class="why">${e.l[1]}</div></div>` +
+      `<div class="col"><div class="t">${e.name}・山區、保留原有文化</div><div class="n pop">${e.r[0]}</div><div class="why">${e.r[1]}</div></div>`;
+  }
+  document.getElementById('nameInfo').innerHTML = e.info;
+  if(i === 3) toolLog('名稱時光機', true);
+}
+document.querySelectorAll('.eras button').forEach(b => b.addEventListener('click', () => showEra(+b.dataset.era)));
+showEra(0);
+
+// ===== 拖曳配對 =====
+dndGame({ box: 'dndEvidence', name: '證據分類', poolLabel: '證據卡',
+  items: [
+    { id: 'l1', label: '南島語系十個大分支，九個只在臺灣' }, { id: 'l2', label: '相隔萬里，「眼睛」都叫 mata' },
+    { id: 'a1', label: '大坌坑文化的繩紋陶和菲律賓遺址很像' }, { id: 'a2', label: '遺址年代由北往南越來越晚' }, { id: 'a3', label: '臺灣遺址出土敲樹皮的石拍' },
+    { id: 'p1', label: '太平洋構樹幾乎只有雌株、不能自然繁殖' }, { id: 'p2', label: '太平洋構樹特徵與臺灣南部相同' },
+  ],
+  zones: [
+    { id: 'lang', label: '🗣️ 語言證據', accepts: ['l1', 'l2'] },
+    { id: 'arch', label: '🏺 考古證據', accepts: ['a1', 'a2', 'a3'] },
+    { id: 'plant', label: '🌳 植物證據', accepts: ['p1', 'p2'] },
+  ] });
+
+dndGame({ box: 'dndGroup', name: '平埔或高山', poolLabel: '族名',
+  items: [
+    { id: 'g1', label: '凱達格蘭' }, { id: 'g2', label: '西拉雅' }, { id: 'g3', label: '道卡斯' }, { id: 'g4', label: '巴布拉' }, { id: 'g5', label: '貓霧捒' }, { id: 'g6', label: '和安雅' }, { id: 'g7', label: '巴則海' },
+    { id: 'h1', label: '泰雅族' }, { id: 'h2', label: '阿美族' }, { id: 'h3', label: '布農族' }, { id: 'h4', label: '排灣族' }, { id: 'h5', label: '達悟族' }, { id: 'h6', label: '邵族' }, { id: 'h7', label: '鄒族' }, { id: 'h8', label: '卑南族' },
+  ],
+  zones: [
+    { id: 'ping', label: '平埔族群（西部及東北部平原、丘陵）', accepts: ['g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7'] },
+    { id: 'gao', label: '高山各族（山區與東部）', accepts: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'h8'] },
+  ], hint: '噶瑪蘭族比較特別：17 世紀住宜蘭平原算平埔族群，但 2002 年已成為官方認定的族群，所以沒放進這題。' });
+
+dndGame({ box: 'dndName', name: '名稱與時代', poolLabel: '名稱與關鍵字',
+  items: [
+    { id: 'n1', label: '熟番' }, { id: 'n2', label: '生番' }, { id: 'n3', label: '依是否納稅、服勞役分類' },
+    { id: 'n4', label: '平埔族' }, { id: 'n5', label: '高砂族' },
+    { id: 'n6', label: '高山族' }, { id: 'n7', label: '山地同胞' }, { id: 'n8', label: '平埔族因漢化未被視為原住民' },
+    { id: 'n9', label: '原住民族' }, { id: 'n10', label: '民國 83 年' },
+  ],
+  zones: [
+    { id: 'q', label: '清帝國時期', accepts: ['n1', 'n2', 'n3'] },
+    { id: 'j', label: '日治時期', accepts: ['n4', 'n5'] },
+    { id: 'r', label: '中華民國統治初期', accepts: ['n6', 'n7', 'n8'] },
+    { id: 'n', label: '現今', accepts: ['n9', 'n10'] },
+  ] });
+
+// ===== 翻翻卡 =====
+const FLIP = [
+  ['臺灣原住民屬於哪個語族？', '南島語族'], ['南島語族大約何時、怎麼來臺？', '數千年前，先後跨越海洋而來'], ['臺灣在南島語族分布的哪一端？', '最北端'],
+  ['最西、最東、最南分別是？', '馬達加斯加、復活節島、紐西蘭'], ['平埔族群住哪裡？', '西部及東北部的平原、丘陵'], ['高山各族住哪裡？', '山區與東部地區'],
+  ['平埔族群為何融入漢人社會？', '很早與漢人接觸，漢人大量移民後逐漸融入'], ['高山各族為何保有較多文化？', '與漢人接觸較晚'], ['原住民為何用口語傳說？', '沒有創制文字'],
+  ['傳說內容大多是？', '族群的起源或遷徙過程'], ['邵族白鹿傳說 → 定居哪裡？', '南投日月潭'], ['清廷分熟番、生番的依據？', '是否納稅、服勞役'],
+  ['日治時期改稱？', '平埔族、高砂族'], ['中華民國：高砂族改稱？', '高山族（後稱山地同胞）'], ['「原住民族」成為統稱是民國幾年？', '83 年（1994 年）'],
+  ['太平洋構樹為何是人帶去的？', '島上不適合自然繁殖（幾乎只有雌株）'], ['太平洋構樹和哪裡的構樹特徵相同？', '臺灣南部'], ['構樹推斷的遷移路線？', '臺灣 → 印尼 → 新幾內亞 → 太平洋諸島'],
+];
+const grid = document.getElementById('flipGrid');
+grid.innerHTML = FLIP.map(([q, a]) => `<div class="flip"><div class="inner"><div class="face front">${q}</div><div class="face back">${a}</div></div></div>`).join('');
+grid.querySelectorAll('.flip').forEach(f => f.addEventListener('click', () => f.classList.toggle('on')));
+document.getElementById('flipReset').addEventListener('click', () => grid.querySelectorAll('.flip').forEach(f => f.classList.remove('on')));
+</script>
+</body>
+</html>
