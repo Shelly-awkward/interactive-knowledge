@@ -54,6 +54,13 @@ main{max-width:960px;margin:0 auto;padding:24px 16px 80px;}
   border:1px solid var(--line);background:var(--card);color:var(--ink-soft);
 }
 .filters button.on{background:var(--night);border-color:var(--night);color:#fff;}
+.filterrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;width:100%;}
+.filterrow .flabel{
+  flex:0 0 auto;min-width:2.8em;
+  font-size:.75rem;font-weight:700;letter-spacing:.08em;color:var(--ink-soft);
+}
+.filters button .n{margin-left:6px;font-size:.78em;font-weight:500;opacity:.55;}
+.filters button[disabled]{opacity:.35;cursor:default;}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
 .lesson{
   display:flex;flex-direction:column;gap:8px;
@@ -96,7 +103,8 @@ footer{
 <main>
   <div class="toolbar">
     <input id="q" type="search" placeholder="搜尋標題、關鍵字…" aria-label="搜尋教材">
-    <div class="filters" id="filters"></div>
+    <div class="filterrow"><span class="flabel">科目</span><div class="filters" id="filters"></div></div>
+    <div class="filterrow"><span class="flabel">年段</span><div class="filters" id="stageFilters"></div></div>
   </div>
   <div class="grid" id="grid"></div>
   <p class="empty" id="empty" hidden>沒有符合的教材。</p>
@@ -139,30 +147,70 @@ footer{
   var grid = document.getElementById("grid");
   var empty = document.getElementById("empty");
   var q = document.getElementById("q");
-  var filterBox = document.getElementById("filters");
+  var subjectBox = document.getElementById("filters");
+  var stageBox = document.getElementById("stageFilters");
   var activeSubject = "全部";
+  var activeStage = "全部";
+
+  // 年段固定這四段。教材沒指定 stage 時，從 level 字串推算；
+  // 跨年段的（例如「國小～國中」）兩邊都算，按國小或按國中都找得到。
+  var STAGES = ["國小", "國中", "高中", "成人・檢定"];
+  function stagesOf(l){
+    if (l.stage && l.stage.length) return l.stage;
+    var t = l.level || "", out = [];
+    if (t.indexOf("國小") !== -1) out.push("國小");
+    if (t.indexOf("國中") !== -1) out.push("國中");
+    if (t.indexOf("高中") !== -1) out.push("高中");
+    return out.length ? out : ["成人・檢定"];
+  }
 
   var subjects = ["全部"];
   lessons.forEach(function(l){
     if (l.subject && subjects.indexOf(l.subject) === -1) subjects.push(l.subject);
   });
-  subjects.forEach(function(s){
-    var b = document.createElement("button");
-    b.textContent = s;
-    if (s === activeSubject) b.className = "on";
-    b.addEventListener("click", function(){
-      activeSubject = s;
-      Array.prototype.forEach.call(filterBox.children, function(c){ c.className = c.textContent === s ? "on" : ""; });
-      render();
-    });
-    filterBox.appendChild(b);
-  });
 
-  function match(l, kw){
-    if (activeSubject !== "全部" && l.subject !== activeSubject) return false;
+  function hit(l, kw, subject, stage){
+    if (subject !== "全部" && l.subject !== subject) return false;
+    if (stage !== "全部" && stagesOf(l).indexOf(stage) === -1) return false;
     if (!kw) return true;
     var hay = [l.title, l.subtitle, l.subject, l.level].concat(l.tags || []).join(" ").toLowerCase();
     return hay.indexOf(kw) !== -1;
+  }
+
+  function countBy(kw, subject, stage){
+    var n = 0;
+    lessons.forEach(function(l){ if (hit(l, kw, subject, stage)) n++; });
+    return n;
+  }
+
+  function buildRow(box, values, onPick){
+    values.forEach(function(v){
+      var b = document.createElement("button");
+      b.setAttribute("data-v", v);
+      b.appendChild(document.createTextNode(v));
+      var n = document.createElement("span");
+      n.className = "n";
+      b.appendChild(n);
+      b.addEventListener("click", function(){
+        if (b.disabled) return;
+        onPick(v);
+        render();
+      });
+      box.appendChild(b);
+    });
+  }
+  buildRow(subjectBox, subjects, function(v){ activeSubject = v; });
+  buildRow(stageBox, ["全部"].concat(STAGES), function(v){ activeStage = v; });
+
+  // 按鈕上的數字＝選了它會剩幾張；0 張就停用，避免按出空白頁
+  function paintRow(box, active, countFor){
+    Array.prototype.forEach.call(box.children, function(b){
+      var v = b.getAttribute("data-v");
+      var n = countFor(v);
+      b.className = (v === active) ? "on" : "";
+      b.querySelector(".n").textContent = n;
+      b.disabled = (n === 0 && v !== active);
+    });
   }
 
   function render(){
@@ -170,7 +218,7 @@ footer{
     grid.innerHTML = "";
     var shown = 0;
     lessons.forEach(function(l){
-      if (!match(l, kw)) return;
+      if (!hit(l, kw, activeSubject, activeStage)) return;
       shown++;
       var a = document.createElement("a");
       a.className = "lesson";
@@ -186,6 +234,8 @@ footer{
       grid.appendChild(a);
     });
     empty.hidden = shown > 0;
+    paintRow(subjectBox, activeSubject, function(v){ return countBy(kw, v, activeStage); });
+    paintRow(stageBox, activeStage, function(v){ return countBy(kw, activeSubject, v); });
   }
 
   q.addEventListener("input", render);
