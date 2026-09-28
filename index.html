@@ -152,16 +152,18 @@ footer{
   var activeSubject = "全部";
   var activeStage = "全部";
 
-  // 年段固定這四段。教材沒指定 stage 時，從 level 字串推算；
+  // 年段固定這五段。教材沒指定 stage 時，從 level 字串推算；
   // 跨年段的（例如「國小～國中」）兩邊都算，按國小或按國中都找得到。
-  var STAGES = ["國小", "國中", "高中", "成人・檢定"];
+  var STAGES = ["國小", "國中", "高中", "日語檢定", "專業"];
   function stagesOf(l){
     if (l.stage && l.stage.length) return l.stage;
     var t = l.level || "", out = [];
     if (t.indexOf("國小") !== -1) out.push("國小");
     if (t.indexOf("國中") !== -1) out.push("國中");
     if (t.indexOf("高中") !== -1) out.push("高中");
-    return out.length ? out : ["成人・檢定"];
+    if (out.length) return out;
+    if (t.indexOf("JLPT") !== -1 || l.subject === "日本語") return ["日語檢定"];
+    return ["專業"];
   }
 
   var subjects = ["全部"];

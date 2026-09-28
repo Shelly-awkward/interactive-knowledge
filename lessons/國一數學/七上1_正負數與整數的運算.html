@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國一數學｜七上 第1章 正負數與整數的運算</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#0f766e; --accent-soft:#ccfbf1;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#0f766e,#14b8a6); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .rt{white-space:nowrap;} .rt .rad{border-top:1.5px solid currentColor; padding:0 2px 0 1px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  table.tb{width:100%; border-collapse:collapse; margin:10px 0; font-size:.92rem;}
+  table.tb th,table.tb td{border:1px solid var(--border); padding:7px 10px; text-align:left;}
+  table.tb th{background:var(--accent-soft); font-weight:bold;}
+  .toolbox{background:var(--accent-soft); border-radius:12px; padding:14px 16px;}
+  .toolbox .row{display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap;}
+  .toolbox .row label{min-width:9em; font-size:.9rem;}
+  .toolbox .row label b{color:var(--accent); font-size:1.15rem;}
+  .toolbox input[type=range]{flex:1 1 200px; accent-color:var(--accent);}
+  .opbtns{display:flex; gap:6px;}
+  .opbtn{border:1px solid var(--accent); background:#fff; color:var(--accent); border-radius:99px;
+    padding:5px 16px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .opbtn.on{background:var(--accent); color:#fff; font-weight:bold;}
+  .bigsay{background:#fff; border-left:4px solid var(--accent); border-radius:8px;
+    padding:10px 14px; margin-top:8px; font-size:1rem; line-height:1.9;}
+  .chips{display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;}
+  .chip{border:1px solid var(--border); background:#fff; border-radius:99px;
+    padding:4px 12px; cursor:pointer; font-family:inherit; font-size:.85rem;}
+  .chip:hover{border-color:var(--accent); color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國中七年級上學期 · 第1章</span>
+  <h1>正負數與整數的運算</h1>
+  <p>三個小節＋單元總測驗。負數不是新的怪東西，它只是「往另一邊走」。這一章有一台「數線走路器」，你拉數字，箭頭就在數線上走給你看，旁邊的字同步改寫，看久了加減的正負號就不用背了。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1-1 正負數、數線與絕對值</button>
+  <button data-t="s2">1-2 整數的加減</button>
+  <button data-t="s3">1-3 整數的乘除與四則</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 1-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出負數在生活裡代表什麼</li>
+      <li>在數線上找出任何一個整數的位置，並比大小</li>
+      <li>說得出相反數和絕對值分別在問什麼</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：負數只是「往另一邊」</h2>
+    <p>生活裡本來就有很多「相反的一對」。我們先挑一個點當 <b>0</b>，一邊記成正的，另一邊就記成負的。</p>
+    <table class="tb">
+      <tr><th>情境</th><th>0 是什麼</th><th>正的那邊</th><th>負的那邊</th></tr>
+      <tr><td>溫度</td><td>結冰的溫度</td><td>+5℃ 比冰還熱 5 度</td><td>−5℃ 比冰還冷 5 度</td></tr>
+      <tr><td>電梯樓層</td><td>1 樓地面</td><td>+3 是三樓</td><td>−3 是地下三樓</td></tr>
+      <tr><td>零用錢</td><td>不欠也沒存</td><td>+50 是有 50 元</td><td>−50 是欠 50 元</td></tr>
+      <tr><td>海拔</td><td>海平面</td><td>+100 公尺是山上</td><td>−100 公尺是海面下</td></tr>
+    </table>
+    <div class="note">💡 負號不是「壞掉的數字」，它只是告訴你<b>方向</b>。−5 和 +5 離 0 一樣遠，只是站在相反邊。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：數線上，左邊一定比較小</h2>
+    <p>把所有的數排成一條線，這條線叫<b>數線</b>。規矩只有一條：<b>愈右邊愈大，愈左邊愈小。</b></p>
+    <div class="svgbox" id="svgNL"></div>
+    <div class="formula">−7 &lt; −2 &lt; 0 &lt; 3 &lt; 6</div>
+    <div class="warn">⚠️ 最常錯的地方：−7 比 −2 <b>小</b>。不要看到 7 比 2 大就以為 −7 比較大。欠 7 元當然比欠 2 元慘。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：相反數與絕對值</h2>
+    <p><b>相反數</b>：離 0 一樣遠，但在另一邊。5 的相反數是 −5，−5 的相反數是 5。</p>
+    <p><b>絕對值</b>：只問「離 0 有多遠」，不管在哪一邊，所以答案<b>絕對不會是負的</b>。寫成兩條直線 | |。</p>
+    <div class="formula">|5| ＝ 5　　|−5| ＝ 5　　|0| ＝ 0</div>
+    <div class="svgbox" id="svgAbs"></div>
+    <div class="note">💡 一句話記住：相反數在問「哪一邊」，絕對值在問「多遠」。</div>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ 數線走路器</h2>
+    <p>拉下面兩條桿子、按 ＋ 或 −，箭頭會直接走給你看，下面那句話也會跟著改。多拉幾次，正負號的規則自己會浮出來。</p>
+    <div class="toolbox">
+      <div class="row"><label>從哪裡出發 <b id="wA">3</b></label>
+        <input type="range" id="rA" min="-9" max="9" step="1" value="3"></div>
+      <div class="row"><label>怎麼做</label>
+        <span class="opbtns"><button class="opbtn on" data-op="+">＋ 加</button><button class="opbtn" data-op="-">－ 減</button></span></div>
+      <div class="row"><label>加減多少 <b id="wB">8</b></label>
+        <input type="range" id="rB" min="-9" max="9" step="1" value="8"></div>
+      <div class="svgbox" id="svgWalk"></div>
+      <div class="bigsay" id="walkSay"></div>
+      <div class="chips"><button class="chip" data-a="3" data-b="8" data-op="-">3 − 8</button><button class="chip" data-a="-2" data-b="-6" data-op="+">−2 ＋ (−6)</button><button class="chip" data-a="4" data-b="-7" data-op="-">4 − (−7)</button><button class="chip" data-a="-5" data-b="5" data-op="+">−5 ＋ 5</button></div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　把 −3、2、−7、0 由小到大排好</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 先在數線上把四個數點出來。</p>
+        <p class="step"><b>②</b> 數線上愈左邊愈小，由左往右念出來就是答案。</p>
+        <p class="step"><b>③</b> 答案：−7 ＜ −3 ＜ 0 ＜ 2。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　|−6| ＋ |4| ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 絕對值先算，它只問離 0 多遠：|−6| ＝ 6。</p>
+        <p class="step"><b>②</b> |4| ＝ 4。</p>
+        <p class="step"><b>③</b> 6 ＋ 4 ＝ 10。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 地下二樓記成 −2 樓，那麼六樓要記成：</div>
+      <label><input type="radio" name="p1q1" value="A">−6</label>
+      <label><input type="radio" name="p1q1" value="B">0</label>
+      <label><input type="radio" name="p1q1" value="C">+6</label>
+      <label><input type="radio" name="p1q1" value="D">|6|</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　地面以上是正的，所以六樓是 +6。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 下面哪一個式子是<b>對的</b>？</div>
+      <label><input type="radio" name="p1q2" value="A">−8 ＝ 8</label>
+      <label><input type="radio" name="p1q2" value="B">−8 &gt; 0</label>
+      <label><input type="radio" name="p1q2" value="C">−8 &gt; −3</label>
+      <label><input type="radio" name="p1q2" value="D">−8 &lt; −3</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　數線上 −8 在 −3 的左邊，左邊比較小。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. −12 的相反數是：</div>
+      <label><input type="radio" name="p1q3" value="A">0</label>
+      <label><input type="radio" name="p1q3" value="B">|12|</label>
+      <label><input type="radio" name="p1q3" value="C">12</label>
+      <label><input type="radio" name="p1q3" value="D">−12</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　相反數是離 0 一樣遠、換到另一邊，所以是 12。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. |−9| 的值是：</div>
+      <label><input type="radio" name="p1q4" value="A">0</label>
+      <label><input type="radio" name="p1q4" value="B">−9</label>
+      <label><input type="radio" name="p1q4" value="C">9</label>
+      <label><input type="radio" name="p1q4" value="D">沒有意義</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　絕對值只問離 0 多遠，−9 離 0 有 9，所以是 9，不會是負的。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>把加減看成在數線上往右走、往左走</li>
+      <li>算得出同號相加與異號相加</li>
+      <li>知道減一個數就是加它的相反數</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：加減就是在數線上走路</h2>
+    <p>回到剛剛那台走路器，規則其實只有兩句：</p>
+    <div class="formula">加正數、減負數 → <b>往右走</b>　　加負數、減正數 → <b>往左走</b></div>
+    <table class="tb">
+      <tr><th>算式</th><th>怎麼走</th><th>停在哪</th></tr>
+      <tr><td>3 ＋ 4</td><td>從 3 往右走 4</td><td>7</td></tr>
+      <tr><td>3 − 8</td><td>從 3 往左走 8</td><td>−5</td></tr>
+      <tr><td>−2 ＋ (−6)</td><td>從 −2 再往左走 6</td><td>−8</td></tr>
+      <tr><td>4 − (−7)</td><td>從 4 往右走 7</td><td>11</td></tr>
+    </table>
+    <div class="note">💡 減一個負數會往右走，因為「拿掉一筆欠款」等於變有錢。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：同號相加、異號相加</h2>
+    <p>如果不想每次都畫數線，可以這樣分兩類：</p>
+    <h3>同號（都正或都負）：兩個人同方向，走更遠</h3>
+    <div class="formula">絕對值相加，符號照抄　　(−3) ＋ (−5) ＝ −8</div>
+    <h3>異號（一正一負）：兩個人反方向，互相抵消</h3>
+    <div class="formula">大的絕對值減小的，符號跟<b>絕對值大</b>的那個走　　(−9) ＋ 4 ＝ −5</div>
+    <div class="svgbox" id="svgTug"></div>
+    <div class="note">💡 異號相加像拔河：兩邊互相抵掉，剩下誰力氣大，結果就往誰那邊倒。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：減法可以全部改成加法</h2>
+    <p>減一個數，就是<b>加上它的相反數</b>。這樣一來，全部的題目都只剩加法，不用再記兩套規則。</p>
+    <div class="formula">a − b ＝ a ＋ (−b)</div>
+    <table class="tb">
+      <tr><th>原式</th><th>改寫成加法</th><th>答案</th></tr>
+      <tr><td>7 − 10</td><td>7 ＋ (−10)</td><td>−3</td></tr>
+      <tr><td>−4 − 6</td><td>−4 ＋ (−6)</td><td>−10</td></tr>
+      <tr><td>−4 − (−6)</td><td>−4 ＋ 6</td><td>2</td></tr>
+    </table>
+    <div class="warn">⚠️ 去括號時符號要跟著變：− (−6) 會變成 ＋6，兩個負號碰在一起就翻成正的。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　(−13) ＋ 5 ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 一正一負，是異號相加，兩邊互相抵消。</p>
+        <p class="step"><b>②</b> 絕對值大的是 13，13 − 5 ＝ 8。</p>
+        <p class="step"><b>③</b> 符號跟絕對值大的 −13 走，所以是 −8。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　(−7) − (−15) ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 先把減法改成加法：(−7) ＋ 15。</p>
+        <p class="step"><b>②</b> 異號相加：15 − 7 ＝ 8。</p>
+        <p class="step"><b>③</b> 絕對值大的是 15，它是正的，所以答案是 8。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　某天早上 −3℃，中午升高 9 度，傍晚又降 5 度，傍晚幾度？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 升高是加、下降是減：−3 ＋ 9 − 5。</p>
+        <p class="step"><b>②</b> 先算 −3 ＋ 9 ＝ 6。</p>
+        <p class="step"><b>③</b> 再算 6 − 5 ＝ 1，傍晚 1℃。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. (−6) ＋ (−7) ＝ </div>
+      <label><input type="radio" name="p2q1" value="A">−13</label>
+      <label><input type="radio" name="p2q1" value="B">−1</label>
+      <label><input type="radio" name="p2q1" value="C">13</label>
+      <label><input type="radio" name="p2q1" value="D">1</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　同號相加：6 ＋ 7 ＝ 13，兩個都是負的，所以是 −13。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. (−10) ＋ 4 ＝ </div>
+      <label><input type="radio" name="p2q2" value="A">−14</label>
+      <label><input type="radio" name="p2q2" value="B">14</label>
+      <label><input type="radio" name="p2q2" value="C">6</label>
+      <label><input type="radio" name="p2q2" value="D">−6</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　異號相加：10 − 4 ＝ 6，絕對值大的 −10 是負的，所以是 −6。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">3. 8 − (−5) ＝ </div>
+      <label><input type="radio" name="p2q3" value="A">3</label>
+      <label><input type="radio" name="p2q3" value="B">−13</label>
+      <label><input type="radio" name="p2q3" value="C">−3</label>
+      <label><input type="radio" name="p2q3" value="D">13</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　減負數改成加正數：8 ＋ 5 ＝ 13。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. (−2) − 9 ＝ </div>
+      <label><input type="radio" name="p2q4" value="A">11</label>
+      <label><input type="radio" name="p2q4" value="B">−7</label>
+      <label><input type="radio" name="p2q4" value="C">7</label>
+      <label><input type="radio" name="p2q4" value="D">−11</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　改成 (−2) ＋ (−9)，同號相加得 −11。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出為什麼負負得正</li>
+      <li>用負號的個數快速判斷乘除的正負</li>
+      <li>照正確順序算完一串四則運算</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：乘法是「同一件事重複幾次」</h2>
+    <p>(−3) × 2 就是「欠 3 元這件事發生兩次」，當然是欠 6 元。</p>
+    <div class="formula">(−3) × 2 ＝ (−3) ＋ (−3) ＝ −6</div>
+    <p>所以<b>正 × 負 ＝ 負</b>，這一條很直覺。真正難的是下一條。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：負負得正，不是背的，是接下去的</h2>
+    <p>把乘數一格一格往下減，看答案的規律：</p>
+    <div class="svgbox" id="svgPat"></div>
+    <p>左邊每次少 1，右邊就每次多 3。規律不能到 0 就突然斷掉，所以繼續接下去，(−3) × (−1) 只能是 3、(−3) × (−2) 只能是 6。</p>
+    <div class="formula">負 × 負 ＝ 正</div>
+    <div class="note">💡 另一種講法：負號代表「轉 180 度」。轉一次面向反方向，<b>再轉一次就轉回來了</b>。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：數負號就好，不用想意義</h2>
+    <p>一串連乘連除，先不管符號把數字算出來，再<b>數有幾個負號</b>：</p>
+    <div class="formula">負號是<b>偶數</b>個 → 答案是正　　負號是<b>奇數</b>個 → 答案是負</div>
+    <table class="tb">
+      <tr><th>算式</th><th>幾個負號</th><th>答案</th></tr>
+      <tr><td>(−2) × (−3)</td><td>2 個，偶數</td><td>＋6</td></tr>
+      <tr><td>(−2) × 3 × (−1)</td><td>2 個，偶數</td><td>＋6</td></tr>
+      <tr><td>(−2) × (−3) × (−1)</td><td>3 個，奇數</td><td>−6</td></tr>
+      <tr><td>(−12) ÷ 4</td><td>1 個，奇數</td><td>−3</td></tr>
+    </table>
+    <div class="warn">⚠️ 這招只能用在<b>連乘連除</b>。中間有加減就不行，要照運算順序來。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：四則運算的順序</h2>
+    <p>一串式子不能從左念到右就算，要照順序：</p>
+    <div class="formula">① 括號　→　② 次方　→　③ 乘除（由左到右）　→　④ 加減（由左到右）</div>
+    <div class="warn">⚠️ 特別小心 (−2)² 和 −2² 不一樣。<br>(−2)² ＝ (−2)×(−2) ＝ <b>4</b>，括號裡的負號也要平方。<br>−2² ＝ −(2×2) ＝ <b>−4</b>，這裡只有 2 被平方，負號站在外面看戲。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　(−4) × (−5) ÷ (−2) ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 先算數字：4 × 5 ÷ 2 ＝ 10。</p>
+        <p class="step"><b>②</b> 數負號：三個，是奇數，所以答案是負的。</p>
+        <p class="step"><b>③</b> 答案是 −10。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　−3 ＋ (−2)² × 4 ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 先算次方：(−2)² ＝ 4（括號裡的負號也被平方掉了）。</p>
+        <p class="step"><b>②</b> 再算乘法：4 × 4 ＝ 16。</p>
+        <p class="step"><b>③</b> 最後加減：−3 ＋ 16 ＝ 13。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　(−18) ÷ [2 − (−1)] ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 括號優先：2 − (−1) ＝ 2 ＋ 1 ＝ 3。</p>
+        <p class="step"><b>②</b> 變成 (−18) ÷ 3。</p>
+        <p class="step"><b>③</b> 一個負號，奇數，答案是 −6。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="D">
+      <div class="stem">1. (−7) × (−3) ＝ </div>
+      <label><input type="radio" name="p3q1" value="A">10</label>
+      <label><input type="radio" name="p3q1" value="B">−21</label>
+      <label><input type="radio" name="p3q1" value="C">−10</label>
+      <label><input type="radio" name="p3q1" value="D">21</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　兩個負號是偶數，答案為正：7 × 3 ＝ 21。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. (−24) ÷ (−6) ＝ </div>
+      <label><input type="radio" name="p3q2" value="A">18</label>
+      <label><input type="radio" name="p3q2" value="B">−18</label>
+      <label><input type="radio" name="p3q2" value="C">4</label>
+      <label><input type="radio" name="p3q2" value="D">−4</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　兩個負號是偶數，答案為正：24 ÷ 6 ＝ 4。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. (−2)³ ＝ </div>
+      <label><input type="radio" name="p3q3" value="A">8</label>
+      <label><input type="radio" name="p3q3" value="B">6</label>
+      <label><input type="radio" name="p3q3" value="C">−8</label>
+      <label><input type="radio" name="p3q3" value="D">−6</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　(−2)×(−2)×(−2)，三個負號是奇數，所以是 −8。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. −5² 的值是：</div>
+      <label><input type="radio" name="p3q4" value="A">10</label>
+      <label><input type="radio" name="p3q4" value="B">−10</label>
+      <label><input type="radio" name="p3q4" value="C">25</label>
+      <label><input type="radio" name="p3q4" value="D">−25</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　沒有括號時只有 5 被平方，負號在外面：−(5×5) ＝ −25。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="D">
+      <div class="stem">1. 下面哪一個數<b>最小</b>？</div>
+      <label><input type="radio" name="qz1" value="A">5</label>
+      <label><input type="radio" name="qz1" value="B">−1</label>
+      <label><input type="radio" name="qz1" value="C">0</label>
+      <label><input type="radio" name="qz1" value="D">−9</label>
+      <div class="fb" data-exp="　數線上愈左邊愈小，−9 在最左邊。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">2. |−15| ＋ (−15) ＝ </div>
+      <label><input type="radio" name="qz2" value="A">−30</label>
+      <label><input type="radio" name="qz2" value="B">0</label>
+      <label><input type="radio" name="qz2" value="C">−15</label>
+      <label><input type="radio" name="qz2" value="D">30</label>
+      <div class="fb" data-exp="　|−15| ＝ 15，15 ＋ (−15) ＝ 0。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">3. (−13) ＋ 20 ＝ </div>
+      <label><input type="radio" name="qz3" value="A">−7</label>
+      <label><input type="radio" name="qz3" value="B">7</label>
+      <label><input type="radio" name="qz3" value="C">−33</label>
+      <label><input type="radio" name="qz3" value="D">33</label>
+      <div class="fb" data-exp="　異號相加：20 − 13 ＝ 7，絕對值大的 20 是正的。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">4. (−6) − (−14) ＝ </div>
+      <label><input type="radio" name="qz4" value="A">20</label>
+      <label><input type="radio" name="qz4" value="B">−8</label>
+      <label><input type="radio" name="qz4" value="C">8</label>
+      <label><input type="radio" name="qz4" value="D">−20</label>
+      <div class="fb" data-exp="　改成 (−6) ＋ 14，異號相加得 8。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">5. (−5) × 4 × (−2) ＝ </div>
+      <label><input type="radio" name="qz5" value="A">−40</label>
+      <label><input type="radio" name="qz5" value="B">11</label>
+      <label><input type="radio" name="qz5" value="C">40</label>
+      <label><input type="radio" name="qz5" value="D">−11</label>
+      <div class="fb" data-exp="　數字 5×4×2 ＝ 40，兩個負號是偶數，答案為正。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">6. (−36) ÷ 9 ＝ </div>
+      <label><input type="radio" name="qz6" value="A">−27</label>
+      <label><input type="radio" name="qz6" value="B">4</label>
+      <label><input type="radio" name="qz6" value="C">−4</label>
+      <label><input type="radio" name="qz6" value="D">27</label>
+      <div class="fb" data-exp="　一個負號是奇數，答案為負：36 ÷ 9 ＝ 4，所以是 −4。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">7. (−3)² ＋ (−3) ＝ </div>
+      <label><input type="radio" name="qz7" value="A">12</label>
+      <label><input type="radio" name="qz7" value="B">6</label>
+      <label><input type="radio" name="qz7" value="C">−6</label>
+      <label><input type="radio" name="qz7" value="D">−12</label>
+      <div class="fb" data-exp="　(−3)² ＝ 9，9 ＋ (−3) ＝ 6。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">8. 2 − 3 × (−4) ＝ </div>
+      <label><input type="radio" name="qz8" value="A">4</label>
+      <label><input type="radio" name="qz8" value="B">14</label>
+      <label><input type="radio" name="qz8" value="C">−10</label>
+      <label><input type="radio" name="qz8" value="D">−4</label>
+      <div class="fb" data-exp="　先乘除：3 × (−4) ＝ −12，再算 2 − (−12) ＝ 2 ＋ 12 ＝ 14。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">9. 玉山高 3952 公尺記成 +3952，海面下 200 公尺記成 −200，兩者相差幾公尺？</div>
+      <label><input type="radio" name="qz9" value="A">200</label>
+      <label><input type="radio" name="qz9" value="B">3752</label>
+      <label><input type="radio" name="qz9" value="C">3952</label>
+      <label><input type="radio" name="qz9" value="D">4152</label>
+      <div class="fb" data-exp="　相差就是 3952 − (−200) ＝ 3952 ＋ 200 ＝ 4152 公尺。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">10. 冷凍庫原本 −18℃，停電後每小時上升 4 度，5 小時後是幾度？</div>
+      <label><input type="radio" name="qz10" value="A">−38℃</label>
+      <label><input type="radio" name="qz10" value="B">−2℃</label>
+      <label><input type="radio" name="qz10" value="C">20℃</label>
+      <label><input type="radio" name="qz10" value="D">2℃</label>
+      <div class="fb" data-exp="　−18 ＋ 4×5 ＝ −18 ＋ 20 ＝ 2℃。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>國一數學自學教材 · 第 1 章 正負數與整數的運算<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "七上1 正負數與整數的運算";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.innerHTML='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.innerHTML='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.innerHTML='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.innerHTML='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// ── 一般數線 ──
+function numLine(lo, hi, W, marks){
+  const pad = 26, span = W - pad*2, y = 54;
+  const X = v => pad + (v - lo) / (hi - lo) * span;
+  let s = line(pad-8, y, W-pad+8, y, '#374151', 2);
+  s += `<path d="M${W-pad+8},${y} l-9,-5 l0,10 z" fill="#374151"/>`;
+  s += `<path d="M${pad-8},${y} l9,-5 l0,10 z" fill="#374151"/>`;
+  for(let v = lo; v <= hi; v++){
+    const big = (v % 2 === 0) || (hi - lo <= 12);
+    s += line(X(v), y - (big?7:4), X(v), y + (big?7:4), '#9ca3af', 1.5);
+    if(big) s += txt(X(v), y + 24, String(v).replace('-','−'), v===0?'#111827':'#6b7280', 12);
+  }
+  (marks||[]).forEach(m=>{
+    s += `<circle cx="${X(m.v)}" cy="${y}" r="6" fill="${m.c}"/>`;
+    s += txt(X(m.v), y - 16, m.t, m.c, 13, 'middle', 'font-weight="bold"');
+  });
+  return svg(W, 92, s);
+}
+document.getElementById('svgNL').innerHTML = numLine(-8, 8, 780,
+  [{v:-7,t:'−7',c:'#dc2626'},{v:-2,t:'−2',c:'#d97706'},{v:3,t:'3',c:'#2563eb'},{v:6,t:'6',c:'#16a34a'}]);
+
+// ── 絕對值：兩邊一樣遠 ──
+(function(){
+  const W = 640, pad = 60, y = 60, X = v => pad + (v + 6) / 12 * (W - pad*2);
+  let s = line(pad-6, y, W-pad+6, y, '#374151', 2);
+  for(let v = -6; v <= 6; v++){
+    s += line(X(v), y-6, X(v), y+6, '#9ca3af', 1.5);
+    s += txt(X(v), y+24, String(v).replace('-','−'), v===0?'#111827':'#6b7280', 12);
+  }
+  s += line(X(-5), y-22, X(0), y-22, '#dc2626', 3);
+  s += line(X(0), y-22, X(5), y-22, '#2563eb', 3);
+  s += txt(X(-2.5), y-30, '離 0 有 5 格', '#dc2626', 13);
+  s += txt(X(2.5), y-30, '離 0 有 5 格', '#2563eb', 13);
+  s += `<circle cx="${X(-5)}" cy="${y}" r="6" fill="#dc2626"/><circle cx="${X(5)}" cy="${y}" r="6" fill="#2563eb"/>`;
+  s += txt(X(-5), y+44, '|−5| ＝ 5', '#dc2626', 14, 'middle', 'font-weight="bold"');
+  s += txt(X(5), y+44, '|5| ＝ 5', '#2563eb', 14, 'middle', 'font-weight="bold"');
+  document.getElementById('svgAbs').innerHTML = svg(W, 112, s);
+})();
+
+// ── 拔河圖：異號相加 ──
+(function(){
+  const W = 620, y = 46;
+  let s = txt(W/2, 20, '(−9) ＋ 4：兩邊互相抵消', '#374151', 14);
+  s += rect(40, y, 360, 30, '#fecaca', '#dc2626', 1.5);
+  s += txt(220, y+21, '往左 9 格', '#991b1b', 14);
+  s += rect(40, y+42, 160, 30, '#bfdbfe', '#2563eb', 1.5);
+  s += txt(120, y+63, '往右 4 格', '#1e40af', 14);
+  s += line(200, y-6, 200, y+82, '#6b7280', 2, true);
+  s += rect(200, y+90, 200, 30, '#fecaca', '#dc2626', 1.5);
+  s += txt(300, y+111, '剩下往左 5 格', '#991b1b', 14);
+  s += txt(430, y+111, '→ 答案 −5', '#111827', 15, 'start', 'font-weight="bold"');
+  document.getElementById('svgTug').innerHTML = svg(W, 190, s);
+})();
+
+// ── 負負得正的規律表 ──
+(function(){
+  const W = 620, rows = [[2,-6],[1,-3],[0,0],[-1,3],[-2,6]];
+  let s = txt(W/2, 22, '(−3) × ■ 的答案，一格一格看下去', '#374151', 14);
+  rows.forEach((r, i)=>{
+    const y = 46 + i*30, known = r[0] >= 0;
+    s += rect(120, y, 190, 24, known ? '#f3f4f6' : '#ccfbf1', known ? '#d1d5db' : '#0f766e', 1.5);
+    s += txt(215, y+17, `(−3) × (${String(r[0]).replace('-','−')}) ＝ ${String(r[1]).replace('-','−')}`, known ? '#374151' : '#0f766e', 14);
+    if(i < rows.length - 1){
+      s += txt(96, y+38, '↓ 少 1', '#6b7280', 11);
+      s += txt(340, y+38, '↓ 多 3', '#0f766e', 11, 'start');
+    }
+  });
+  s += txt(420, 110, '這兩列是已經', '#6b7280', 12, 'start');
+  s += txt(420, 126, '會的乘法', '#6b7280', 12, 'start');
+  s += txt(420, 170, '規律不會斷掉，', '#0f766e', 12, 'start');
+  s += txt(420, 186, '所以答案只能是正的', '#0f766e', 12, 'start');
+  document.getElementById('svgPat').innerHTML = svg(W, 200, s);
+})();
+
+// ── 數線走路器 ──
+(function(){
+  const LO = -18, HI = 18, W = 820, pad = 24, y = 96;
+  const X = v => pad + (v - LO) / (HI - LO) * (W - pad*2);
+  let op = '+';
+  const NG = v => String(v).replace('-', '−');   // 顯示用的正式減號
+  const rA = document.getElementById('rA'), rB = document.getElementById('rB');
+
+  function draw(){
+    const a = +rA.value, b = +rB.value;
+    const res = op === '+' ? a + b : a - b;
+    const step = res - a;                       // 實際走幾步（正右負左）
+    document.getElementById('wA').textContent = NG(a);
+    document.getElementById('wB').textContent = NG(b);
+
+    let s = line(pad-8, y, W-pad+8, y, '#374151', 2);
+    s += `<path d="M${W-pad+8},${y} l-9,-5 l0,10 z" fill="#374151"/>`;
+    s += `<path d="M${pad-8},${y} l9,-5 l0,10 z" fill="#374151"/>`;
+    for(let v = LO; v <= HI; v++){
+      const big = v % 2 === 0;
+      s += line(X(v), y-(big?7:4), X(v), y+(big?7:4), '#9ca3af', 1.5);
+      if(big) s += txt(X(v), y+24, NG(v), v===0?'#111827':'#9ca3af', 11);
+    }
+    // 走路的弧線
+    if(step !== 0){
+      const x1 = X(a), x2 = X(res), top = y - 42;
+      const col = step > 0 ? '#2563eb' : '#dc2626';
+      s += `<path d="M${x1},${y-8} Q${(x1+x2)/2},${top} ${x2},${y-8}" fill="none" stroke="${col}" stroke-width="3"/>`;
+      const dir = step > 0 ? 1 : -1;
+      s += `<path d="M${x2},${y-8} l${-dir*10},-9 l0,14 z" fill="${col}"/>`;
+      s += txt((x1+x2)/2, top - 6, (step > 0 ? '往右走 ' : '往左走 ') + Math.abs(step) + ' 步', col, 14, 'middle', 'font-weight="bold"');
+    }
+    s += `<circle cx="${X(a)}" cy="${y}" r="7" fill="#6b7280"/>`;
+    s += txt(X(a), y+44, '出發 ' + NG(a), '#6b7280', 13);
+    s += `<circle cx="${X(res)}" cy="${y}" r="7" fill="#16a34a"/>`;
+    s += txt(X(res), y+44, '停在 ' + NG(res), '#16a34a', 14, 'middle', 'font-weight="bold"');
+    document.getElementById('svgWalk').innerHTML = svg(W, 160, s);
+
+    const bs = b < 0 ? '(' + NG(b) + ')' : b;
+    const why = step === 0 ? '走 0 步，原地不動' :
+      (op === '+' ? (b > 0 ? '加正數 → 往右走' : '加負數 → 往左走')
+                  : (b > 0 ? '減正數 → 往左走' : '減負數 → 往右走，兩個負號翻成正的'));
+    document.getElementById('walkSay').innerHTML =
+      `<b>${NG(a)} ${op === '+' ? '＋' : '－'} ${bs} ＝ ${NG(res)}</b><br>` +
+      `從 ${NG(a)} 出發，${why}，停在 <b>${NG(res)}</b>。`;
+  }
+
+  rA.addEventListener('input', draw);
+  rB.addEventListener('input', draw);
+  document.querySelectorAll('.opbtn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.opbtn').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on'); op = btn.dataset.op; draw();
+    });
+  });
+  document.querySelectorAll('.chip').forEach(c=>{
+    c.addEventListener('click', ()=>{
+      rA.value = c.dataset.a; rB.value = c.dataset.b; op = c.dataset.op;
+      document.querySelectorAll('.opbtn').forEach(b=>b.classList.toggle('on', b.dataset.op === op));
+      draw();
+    });
+  });
+  draw();
+})();
+
+</script>
+</body>
+</html>

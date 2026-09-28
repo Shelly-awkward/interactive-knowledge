@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國中地球科學｜四季變化：地軸傾角與陽光射角</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#0d9488; --accent-soft:#ccfbf1;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#0f766e,#f59e0b); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .rt{white-space:nowrap;} .rt .rad{border-top:1.5px solid currentColor; padding:0 2px 0 1px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  table.tb{width:100%; border-collapse:collapse; margin:10px 0; font-size:.92rem;}
+  table.tb th,table.tb td{border:1px solid var(--border); padding:7px 10px; text-align:left;}
+  table.tb th{background:var(--accent-soft); font-weight:bold;}
+  .card.myth{border-left:5px solid var(--red);}
+  .card.myth h2{color:var(--red);}
+  .toolbox{background:var(--accent-soft); border-radius:12px; padding:14px 16px;}
+  .toolbox .row{display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap;}
+  .toolbox .row label{min-width:10em; font-size:.9rem;}
+  .toolbox .row label b{color:#0f766e; font-size:1.15rem;}
+  .toolbox input[type=range]{flex:1 1 220px; accent-color:#0f766e;}
+  .statrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;}
+  .statrow .st{flex:1 1 150px; background:#fff; border-radius:10px; padding:8px 12px; text-align:center;}
+  .statrow .st small{display:block; color:var(--sub); font-size:.78rem;}
+  .statrow .st b{font-size:1.25rem; color:#0f766e;}
+  .bigsay{background:#fff; border-left:4px solid #0f766e; border-radius:8px;
+    padding:10px 14px; margin-top:8px; font-size:1rem; line-height:1.9; min-height:4em;}
+  .chips{display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;}
+  .chip{border:1px solid var(--border); background:#fff; border-radius:99px;
+    padding:5px 14px; cursor:pointer; font-family:inherit; font-size:.85rem;}
+  .chip:hover{border-color:#0f766e; color:#0f766e;}
+  .chip.flat{border-color:#b45309; color:#b45309; font-weight:bold;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國中地球科學 · 四季單元</span>
+  <h1>四季變化</h1>
+  <p>三個小節＋單元總測驗。四季不是因為地球離太陽比較近，是因為地軸歪了 23.5 度。這一章有一台四季模擬器：你拉月份，陽光的角度、白天的長度、地面拿到多少熱，全部同時變給你看。還有一個「把傾角歸零」的按鈕，按下去四季會直接消失。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">① 先看現象</button>
+  <button data-t="s2">② 四季模擬器</button>
+  <button data-t="s3">③ 為什麼斜射比較冷</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 1-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出一年之中正午太陽高度會變</li>
+      <li>知道影子長短和太陽高度的關係</li>
+      <li>知道夏天白天比較長</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：同一根桿子，影子一年到頭不一樣長</h2>
+    <p>在台灣，同一根直立的桿子，中午的影子夏天短、冬天長。這不是桿子變了，是<b>太陽的高度</b>變了。</p>
+    <div class="svgbox" id="svgShadow"></div>
+    <div class="formula">太陽愈高 → 影子愈短　　太陽愈低 → 影子愈長</div>
+    <div class="note">💡 太陽最高的那一天叫<b>夏至</b>（六月下旬），影子最短；最低的那一天叫<b>冬至</b>（十二月下旬），影子最長。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：白天的長度也在變</h2>
+    <p>夏天天亮得早、天黑得晚；冬天剛好相反。在台灣大約是這樣：</p>
+    <table class="tb">
+      <tr><th>時節</th><th>正午太陽仰角（台灣）</th><th>白天大約多長</th></tr>
+      <tr><td>夏至（約 6/21）</td><td>約 90°（正上方）</td><td>約 13.5 小時</td></tr>
+      <tr><td>春分・秋分</td><td>約 66.5°</td><td>剛好 12 小時</td></tr>
+      <tr><td>冬至（約 12/22）</td><td>約 43°</td><td>約 10.5 小時</td></tr>
+    </table>
+    <div class="note">💡 「仰角」就是從地平線抬頭看太陽，抬起來的角度。90° 代表太陽正好在頭頂。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：要解釋的是這三件事</h2>
+    <ul>
+      <li>為什麼太陽的高度一年會變一輪？</li>
+      <li>為什麼太陽高的時候比較熱？</li>
+      <li>為什麼南半球的季節和我們相反？</li>
+    </ul>
+    <p>答案全部只有一個原因：<b>地軸是歪的</b>。下一節用模擬器把它看清楚。</p>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　中午影子最短的那一天，是哪一個節氣？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 影子最短代表太陽最高。</p>
+        <p class="step"><b>②</b> 台灣太陽最高是在六月下旬。</p>
+        <p class="step"><b>③</b> 答案是夏至。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　台灣春分那天，白天和黑夜哪個長？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 春分和秋分是太陽直射赤道的日子。</p>
+        <p class="step"><b>②</b> 這時全球各地白天黑夜幾乎一樣長。</p>
+        <p class="step"><b>③</b> 答案是一樣長，各約 12 小時。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 台灣中午的影子什麼時候<b>最長</b>？</div>
+      <label><input type="radio" name="p1q1" value="A">春分</label>
+      <label><input type="radio" name="p1q1" value="B">冬至</label>
+      <label><input type="radio" name="p1q1" value="C">秋分</label>
+      <label><input type="radio" name="p1q1" value="D">夏至</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　冬至太陽仰角最低，只有約 43°，所以影子最長。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 「正午太陽仰角」是在量什麼？</div>
+      <label><input type="radio" name="p1q2" value="A">白天的長度</label>
+      <label><input type="radio" name="p1q2" value="B">太陽到地球的距離</label>
+      <label><input type="radio" name="p1q2" value="C">太陽的大小</label>
+      <label><input type="radio" name="p1q2" value="D">從地平線抬頭看太陽的角度</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　仰角是視線和地平線的夾角，90° 就是正頭頂。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. 台灣夏至那天，白天大約多長？</div>
+      <label><input type="radio" name="p1q3" value="A">10.5 小時</label>
+      <label><input type="radio" name="p1q3" value="B">24 小時</label>
+      <label><input type="radio" name="p1q3" value="C">13.5 小時</label>
+      <label><input type="radio" name="p1q3" value="D">12 小時</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　夏至白天最長，台灣約 13.5 小時。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. 春分那天，全球白天和黑夜的長度大約是：</div>
+      <label><input type="radio" name="p1q4" value="A">黑夜長很多</label>
+      <label><input type="radio" name="p1q4" value="B">白天長很多</label>
+      <label><input type="radio" name="p1q4" value="C">一樣長</label>
+      <label><input type="radio" name="p1q4" value="D">每個地方都不同</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　春分太陽直射赤道，晨昏線通過兩極，各地晝夜幾乎等長。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出地軸傾角 23.5° 而且方向固定不變</li>
+      <li>拉動月份看出直射點在南北回歸線之間移動</li>
+      <li>說得出如果地軸不傾斜就不會有四季</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：地軸歪 23.5 度，而且一直指著同一個方向</h2>
+    <p>地球一邊自轉一邊繞太陽公轉。關鍵是：地軸<b>不是直的</b>，它歪了約 23.5°，而且不管地球跑到軌道的哪裡，<b>都指著同一個方向</b>（指向北極星）。</p>
+    <div class="warn">⚠️ 地軸不會跟著太陽轉。就是因為方向固定，才會半年北極朝向太陽、半年背對太陽。</div>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ 四季模擬器</h2>
+    <p>拉月份，左邊看地球跑到軌道哪裡，右邊看陽光怎麼照到台灣。下面的數字和文字會一起變。</p>
+    <div class="note">💡 這是簡化的模型：把 3、6、9、12 月當成春分、夏至、秋分、冬至。實際的二分二至落在各月下旬（例如夏至約 6/21），差幾天而已，不影響道理。</div>
+    <p>最後把<b>地軸傾角</b>那條桿子拉到 0，看看會發生什麼事。</p>
+    <div class="toolbox">
+      <div class="row"><label>現在是幾月 <b id="wMon">6</b> 月</label>
+        <input type="range" id="rMon" min="1" max="12" step="1" value="6"></div>
+      <div class="row"><label>地軸傾角 <b id="wTilt">23.5</b>°</label>
+        <input type="range" id="rTilt" min="0" max="235" step="5" value="235"></div>
+      <div class="svgbox" id="svgSeason"></div>
+      <div class="statrow" id="statRow"></div>
+      <div class="bigsay" id="seasonSay"></div>
+      <div class="chips">
+        <button class="chip" data-m="3">春分（3月）</button>
+        <button class="chip" data-m="6">夏至（6月）</button>
+        <button class="chip" data-m="9">秋分（9月）</button>
+        <button class="chip" data-m="12">冬至（12月）</button>
+        <button class="chip flat" id="btnFlat">把地軸拉直（傾角 0）</button>
+        <button class="chip" id="btnBack">轉回 23.5°</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：直射點在南北回歸線之間來回</h2>
+    <p>太陽正上方照射的那條緯線，叫<b>直射點</b>。因為地軸固定歪著，直射點一年之中會在南北之間來回一趟：</p>
+    <table class="tb">
+      <tr><th>時間</th><th>直射點</th><th>北半球</th></tr>
+      <tr><td>春分（約 3/21）</td><td>赤道</td><td>春天，晝夜等長</td></tr>
+      <tr><td>夏至（約 6/21）</td><td>北回歸線（23.5°N）</td><td>夏天，白天最長</td></tr>
+      <tr><td>秋分（約 9/23）</td><td>赤道</td><td>秋天，晝夜等長</td></tr>
+      <tr><td>冬至（約 12/22）</td><td>南回歸線（23.5°S）</td><td>冬天，白天最短</td></tr>
+    </table>
+    <div class="note">💡 台灣的嘉義就在北回歸線上，所以夏至中午太陽真的會在正頭頂，直立的東西幾乎沒有影子。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　夏至時太陽直射哪裡？北半球為什麼熱？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 夏至時北極朝向太陽，直射點跑到北回歸線（23.5°N）。</p>
+        <p class="step"><b>②</b> 北半球的陽光變成接近直射，角度高、熱量集中。</p>
+        <p class="step"><b>③</b> 加上白天又比較長，一整天累積的熱量最多，所以熱。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　如果地軸完全不傾斜，會發生什麼事？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 直射點會永遠停在赤道，不會南北移動。</p>
+        <p class="step"><b>②</b> 每天的太陽仰角都一樣，白天都是 12 小時。</p>
+        <p class="step"><b>③</b> 四季會消失，只剩下緯度造成的冷熱差別。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 地球公轉時，地軸指的方向：</div>
+      <label><input type="radio" name="p2q1" value="A">一直跟著太陽轉</label>
+      <label><input type="radio" name="p2q1" value="B">夏天直、冬天斜</label>
+      <label><input type="radio" name="p2q1" value="C">永遠固定不變</label>
+      <label><input type="radio" name="p2q1" value="D">每天換一個方向</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　地軸方向固定指向北極星，這正是四季的根本原因。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 夏至時太陽直射：</div>
+      <label><input type="radio" name="p2q2" value="A">赤道</label>
+      <label><input type="radio" name="p2q2" value="B">南回歸線</label>
+      <label><input type="radio" name="p2q2" value="C">北回歸線</label>
+      <label><input type="radio" name="p2q2" value="D">北極</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　夏至直射 23.5°N，也就是北回歸線。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 冬至時太陽直射：</div>
+      <label><input type="radio" name="p2q3" value="A">南回歸線</label>
+      <label><input type="radio" name="p2q3" value="B">北回歸線</label>
+      <label><input type="radio" name="p2q3" value="C">南極</label>
+      <label><input type="radio" name="p2q3" value="D">赤道</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　冬至直射 23.5°S，北半球因此最冷。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. 如果地軸傾角變成 0°，會發生什麼事？</div>
+      <label><input type="radio" name="p2q4" value="A">四季變更明顯</label>
+      <label><input type="radio" name="p2q4" value="B">四季消失，全年晝夜等長</label>
+      <label><input type="radio" name="p2q4" value="C">地球會停止公轉</label>
+      <label><input type="radio" name="p2q4" value="D">白天變成 24 小時</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　直射點永遠在赤道，各地太陽高度和日照長度全年不變。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>用光斑大小解釋直射比斜射熱</li>
+      <li>說得出日照長度也會影響冷熱</li>
+      <li>破除「夏天是因為離太陽近」的誤解</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：同樣一束光，斜著照就攤開了</h2>
+    <p>拿手電筒垂直照桌面，光斑小又亮；斜著照，光斑被拉長、變暗。光的總量沒變，但<b>攤在比較大的面積上</b>，每一塊地方分到的就變少。</p>
+    <div class="svgbox" id="svgBeam"></div>
+    <div class="formula">直射：光集中 → 單位面積得到的熱多 → 熱<br>斜射：光攤開 → 單位面積得到的熱少 → 冷</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：白天愈長，累積的熱愈多</h2>
+    <p>除了角度，還有時間。夏天白天約 13.5 小時、冬天只有 10.5 小時，等於太陽多曬 3 個小時。</p>
+    <div class="formula">夏天熱 ＝ 角度高（每小時比較熱）＋ 時間長（曬比較久）</div>
+    <div class="note">💡 兩個原因是同一個來源：地軸傾斜。北極朝向太陽時，這一半的地球同時得到高角度和長白天。</div>
+  </div>
+
+  <div class="card myth">
+    <h2>❌ 最常見的誤解：「夏天是因為離太陽比較近」</h2>
+    <p>這個說法聽起來很合理，但事實剛好相反：</p>
+    <div class="svgbox" id="svgOrbit2"></div>
+    <table class="tb">
+      <tr><th>時間</th><th>地球到太陽的距離</th><th>北半球的季節</th></tr>
+      <tr><td>一月初（近日點）</td><td>約 1.47 億公里（<b>最近</b>）</td><td><b>冬天</b></td></tr>
+      <tr><td>七月初（遠日點）</td><td>約 1.52 億公里（最遠）</td><td>夏天</td></tr>
+    </table>
+    <p>距離只差約 3%，影響很小；而且如果距離是主因，全球應該同時過夏天才對。</p>
+    <div class="formula">但事實是：北半球夏天時，南半球正在過冬天</div>
+    <p>南北半球季節相反，這件事只有「地軸傾斜」解釋得通，距離解釋不通。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：整理成一句話</h2>
+    <div class="formula">地軸傾斜 23.5° 且方向固定<br>→ 半年北半球朝向太陽、半年背對<br>→ 太陽直射點在南北回歸線之間移動<br>→ 陽光射角與白天長度跟著變<br>→ 四季</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　為什麼同樣的太陽，冬天曬起來比較不熱？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 冬天太陽仰角只有約 43°，陽光是斜射的。</p>
+        <p class="step"><b>②</b> 同一束光攤在比較大的地面上，每平方公尺分到的能量變少。</p>
+        <p class="step"><b>③</b> 再加上白天短，一天累積的熱量就更少了。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　七月時地球離太陽最遠，北半球卻是夏天，怎麼解釋？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 距離變化只有約 3%，影響很小。</p>
+        <p class="step"><b>②</b> 七月時北極朝向太陽，北半球陽光接近直射、白天又長。</p>
+        <p class="step"><b>③</b> 角度和日照長度的影響遠大於距離，所以還是夏天。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　為什麼澳洲的聖誕節是夏天？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 十二月時北極背對太陽，南極朝向太陽。</p>
+        <p class="step"><b>②</b> 直射點跑到南回歸線，南半球陽光直射、白天長。</p>
+        <p class="step"><b>③</b> 所以南半球的十二月是夏天，季節和台灣相反。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 斜射的陽光比較不熱，主要是因為：</div>
+      <label><input type="radio" name="p3q1" value="A">光走的路比較長所以變弱</label>
+      <label><input type="radio" name="p3q1" value="B">光攤開在比較大的面積上</label>
+      <label><input type="radio" name="p3q1" value="C">斜射時太陽比較小</label>
+      <label><input type="radio" name="p3q1" value="D">斜射的光比較冷</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　總能量一樣，但攤在較大面積上，單位面積得到的就變少。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 地球在哪個月份離太陽<b>最近</b>？</div>
+      <label><input type="radio" name="p3q2" value="A">四月</label>
+      <label><input type="radio" name="p3q2" value="B">七月</label>
+      <label><input type="radio" name="p3q2" value="C">一月</label>
+      <label><input type="radio" name="p3q2" value="D">十月</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　一月初是近日點，但北半球正在過冬天。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 北半球是夏天時，南半球是：</div>
+      <label><input type="radio" name="p3q3" value="A">冬天</label>
+      <label><input type="radio" name="p3q3" value="B">也是夏天但比較涼</label>
+      <label><input type="radio" name="p3q3" value="C">春天</label>
+      <label><input type="radio" name="p3q3" value="D">夏天</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　同一時間兩半球一個朝向太陽、一個背對，季節相反。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. 下面哪一個<b>不是</b>夏天比較熱的原因？</div>
+      <label><input type="radio" name="p3q4" value="A">白天比較長</label>
+      <label><input type="radio" name="p3q4" value="B">太陽仰角比較高</label>
+      <label><input type="radio" name="p3q4" value="C">地球離太陽比較近</label>
+      <label><input type="radio" name="p3q4" value="D">陽光比較接近直射</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　距離不是主因；七月其實是遠日點，北半球卻最熱。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="D">
+      <div class="stem">1. 四季形成的<b>主要</b>原因是：</div>
+      <label><input type="radio" name="qz1" value="A">地球到太陽的距離改變</label>
+      <label><input type="radio" name="qz1" value="B">地球自轉速度改變</label>
+      <label><input type="radio" name="qz1" value="C">太陽本身忽冷忽熱</label>
+      <label><input type="radio" name="qz1" value="D">地軸傾斜且方向固定</label>
+      <div class="fb" data-exp="　傾斜使直射點南北移動，造成射角與日照長度的變化。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">2. 地軸傾角大約是：</div>
+      <label><input type="radio" name="qz2" value="A">23.5°</label>
+      <label><input type="radio" name="qz2" value="B">66.5°</label>
+      <label><input type="radio" name="qz2" value="C">45°</label>
+      <label><input type="radio" name="qz2" value="D">90°</label>
+      <div class="fb" data-exp="　地軸和公轉軌道面的垂直方向夾約 23.5°。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 台灣冬至那天，正午太陽仰角大約是：</div>
+      <label><input type="radio" name="qz3" value="A">43°</label>
+      <label><input type="radio" name="qz3" value="B">90°</label>
+      <label><input type="radio" name="qz3" value="C">23.5°</label>
+      <label><input type="radio" name="qz3" value="D">66.5°</label>
+      <div class="fb" data-exp="　直射點在 23.5°S，台灣在 23.5°N，相差 47°，90 − 47 ＝ 43°。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">4. 太陽直射北回歸線的那一天是：</div>
+      <label><input type="radio" name="qz4" value="A">春分</label>
+      <label><input type="radio" name="qz4" value="B">秋分</label>
+      <label><input type="radio" name="qz4" value="C">夏至</label>
+      <label><input type="radio" name="qz4" value="D">冬至</label>
+      <div class="fb" data-exp="　夏至直射 23.5°N，北半球白天最長。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">5. 台灣一年之中中午影子<b>最短</b>的日子是：</div>
+      <label><input type="radio" name="qz5" value="A">夏至</label>
+      <label><input type="radio" name="qz5" value="B">秋分</label>
+      <label><input type="radio" name="qz5" value="C">春分</label>
+      <label><input type="radio" name="qz5" value="D">冬至</label>
+      <div class="fb" data-exp="　夏至太陽最高（接近正頭頂），影子最短。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">6. 春分和秋分這兩天，太陽直射：</div>
+      <label><input type="radio" name="qz6" value="A">赤道</label>
+      <label><input type="radio" name="qz6" value="B">南極</label>
+      <label><input type="radio" name="qz6" value="C">南回歸線</label>
+      <label><input type="radio" name="qz6" value="D">北回歸線</label>
+      <div class="fb" data-exp="　直射赤道，全球晝夜幾乎等長。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">7. 如果地軸傾角變成 0°，下列何者正確？</div>
+      <label><input type="radio" name="qz7" value="A">夏天會更熱</label>
+      <label><input type="radio" name="qz7" value="B">只剩下冬天</label>
+      <label><input type="radio" name="qz7" value="C">全年晝夜等長，四季消失</label>
+      <label><input type="radio" name="qz7" value="D">地球不再公轉</label>
+      <div class="fb" data-exp="　直射點永遠在赤道，各地太陽高度與日照長度全年不變。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">8. 七月初地球位於遠日點，北半球卻是夏天，最合理的解釋是：</div>
+      <label><input type="radio" name="qz8" value="A">遠日點時太陽比較亮</label>
+      <label><input type="radio" name="qz8" value="B">距離量錯了</label>
+      <label><input type="radio" name="qz8" value="C">射角與日照長度的影響遠大於距離</label>
+      <label><input type="radio" name="qz8" value="D">北半球七月其實是冬天</label>
+      <div class="fb" data-exp="　距離只差約 3%，而傾斜造成的射角與晝長差異大得多。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">9. 同樣一束陽光，斜射時地面比較不熱，是因為：</div>
+      <label><input type="radio" name="qz9" value="A">光的總量變少</label>
+      <label><input type="radio" name="qz9" value="B">空氣把光擋掉了</label>
+      <label><input type="radio" name="qz9" value="C">斜射的光溫度比較低</label>
+      <label><input type="radio" name="qz9" value="D">照到的面積變大，單位面積能量變少</label>
+      <div class="fb" data-exp="　能量攤開在較大的面積上，每平方公尺分到的就變少。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">10. 十二月時，下列敘述何者<b>正確</b>？</div>
+      <label><input type="radio" name="qz10" value="A">澳洲和台灣都是冬天</label>
+      <label><input type="radio" name="qz10" value="B">全球都是冬天</label>
+      <label><input type="radio" name="qz10" value="C">澳洲是夏天，台灣是冬天</label>
+      <label><input type="radio" name="qz10" value="D">赤道地區是冬天最冷的時候</label>
+      <div class="fb" data-exp="　十二月直射南回歸線，南半球是夏天、北半球是冬天。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>國中地球科學自學教材 · 四季變化<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "地科 四季變化";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.innerHTML='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.innerHTML='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.innerHTML='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.innerHTML='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// ── 影子長短對照 ──
+(function(){
+  const W = 680, gy = 150;
+  let s = line(30, gy, W - 30, gy, '#6b7280', 2);
+  [[170, 90, '夏至　仰角約 90°', '#dc2626'], [500, 43, '冬至　仰角約 43°', '#2563eb']].forEach(c=>{
+    const x = c[0], alt = c[1], H = 70;
+    s += line(x, gy, x, gy - H, '#374151', 5);                      // 桿子
+    const shadow = H / Math.tan(alt * Math.PI / 180);
+    s += line(x, gy, x + shadow, gy, '#9ca3af', 9);                 // 影子
+    s += line(x + shadow + 90, gy - (H + 90 * Math.tan(alt*Math.PI/180)), x, gy - H, '#f59e0b', 2, true);
+    s += txt(x, gy - H - 12, c[2], c[3], 13);
+    s += txt(x + shadow/2, gy + 20, '影子', '#6b7280', 12);
+    s += txt(x + shadow/2, gy + 36, shadow < 20 ? '幾乎沒有' : '很長', '#6b7280', 12);
+  });
+  document.getElementById('svgShadow').innerHTML = svg(W, 180, s);
+})();
+
+// ── 直射 vs 斜射的光斑 ──
+(function(){
+  const W = 680, gy = 160, beam = 70;
+  let s = '';
+  [[150, 90, '直射（90°）', '#dc2626'], [470, 30, '斜射（30°）', '#2563eb']].forEach(c=>{
+    const x = c[0], alt = c[1] * Math.PI / 180, col = c[3] || '#374151';
+    const spread = beam / Math.sin(alt);
+    s += line(x - 130, gy, x + 150, gy, '#6b7280', 2);
+    // 兩條平行光線
+    for(let k = -1; k <= 1; k += 2){
+      const off = k * beam / 2;
+      const sx = x + off / Math.sin(alt) - 110 * Math.cos(alt), sy = gy - 110 * Math.sin(alt);
+      s += line(sx, sy, x + off / Math.sin(alt), gy, '#f59e0b', 2);
+    }
+    s += rect(x - spread/2, gy, spread, 12, '#fcd34d', '#b45309', 1.5);
+    s += txt(x, gy + 34, c[2], col, 13, 'middle', 'font-weight="bold"');
+    s += txt(x, gy + 52, '光斑寬 ' + Math.round(spread) + '（同樣的光）', '#6b7280', 12);
+  });
+  s += txt(W/2, 20, '兩邊的光一樣多，只是照到的面積不一樣', '#374151', 14);
+  document.getElementById('svgBeam').innerHTML = svg(W, 230, s);
+})();
+
+// ── 近日點／遠日點 ──
+(function(){
+  const W = 660, H = 220, cx = W/2, cy = H/2;
+  let s = `<ellipse cx="${cx}" cy="${cy}" rx="250" ry="78" fill="none" stroke="#9ca3af" stroke-width="2" stroke-dasharray="6 5"/>`;
+  s += `<circle cx="${cx - 26}" cy="${cy}" r="22" fill="#f59e0b"/>`;
+  s += txt(cx - 26, cy + 42, '太陽', '#b45309', 13);
+  s += `<circle cx="${cx - 250}" cy="${cy}" r="11" fill="#2563eb"/>`;
+  s += txt(cx - 250, cy - 24, '一月・近日點', '#2563eb', 13, 'middle', 'font-weight="bold"');
+  s += txt(cx - 250, cy + 30, '約 1.47 億公里', '#6b7280', 11);
+  s += txt(cx - 250, cy + 46, '北半球：冬天', '#1d4ed8', 12, 'middle', 'font-weight="bold"');
+  s += `<circle cx="${cx + 250}" cy="${cy}" r="11" fill="#dc2626"/>`;
+  s += txt(cx + 250, cy - 24, '七月・遠日點', '#dc2626', 13, 'middle', 'font-weight="bold"');
+  s += txt(cx + 250, cy + 30, '約 1.52 億公里', '#6b7280', 11);
+  s += txt(cx + 250, cy + 46, '北半球：夏天', '#b91c1c', 12, 'middle', 'font-weight="bold"');
+  s += txt(cx, 22, '離太陽最近的時候，北半球反而在過冬天', '#b91c1c', 14, 'middle', 'font-weight="bold"');
+  document.getElementById('svgOrbit2').innerHTML = svg(W, H, s);
+})();
+
+// ── 四季模擬器 ──
+(function(){
+  const rMon = document.getElementById('rMon'), rTilt = document.getElementById('rTilt');
+  const LATTW = 23.5;                       // 台灣約北緯 23.5 度
+
+  function dayLength(latDeg, decDeg){       // 日照長度（小時）
+    const la = latDeg * Math.PI/180, de = decDeg * Math.PI/180;
+    let c = -Math.tan(la) * Math.tan(de);
+    if(c <= -1) return 24;
+    if(c >= 1) return 0;
+    return 2 * Math.acos(c) * 180/Math.PI / 15;
+  }
+  function seasonName(dec, tilt){
+    if(tilt < 1) return '沒有季節';
+    if(dec > tilt * 0.7) return '夏天';
+    if(dec < -tilt * 0.7) return '冬天';
+    return dec >= 0 ? '春天～初夏' : '秋天～初冬';
+  }
+
+  function draw(){
+    const mon = +rMon.value, tilt = +rTilt.value / 10;
+    // 簡化模型：3、6、9、12 月分別當作春分、夏至、秋分、冬至
+    const dec = tilt * Math.sin((mon - 3) / 12 * 2 * Math.PI);
+    const alt = 90 - Math.abs(LATTW - dec);          // 台灣正午太陽仰角
+    const dl = dayLength(LATTW, dec);
+    document.getElementById('wMon').textContent = mon;
+    document.getElementById('wTilt').textContent = tilt.toFixed(1);
+
+    const W = 800, H = 300;
+    // 左：軌道俯視圖
+    const ox = 190, oy = 162, RX = 118, RY = 78;
+    let s = txt(ox, 22, '從上面看：地球繞太陽跑一圈', '#6b7280', 13);
+    s += `<ellipse cx="${ox}" cy="${oy}" rx="${RX}" ry="${RY}" fill="none" stroke="#d1d5db" stroke-width="2"/>`;
+    s += `<circle cx="${ox}" cy="${oy}" r="20" fill="#f59e0b"/>`;
+    s += txt(ox, oy + 5, '☀', '#fff', 20);
+    const ang = (mon - 3) / 12 * 2 * Math.PI;        // 春分在右側
+    const ex = ox + RX * Math.cos(ang), ey = oy - RY * Math.sin(ang);
+    // 四個節氣的位置標記，字往外放，才不會被地球壓到
+    [[0,'春分'],[Math.PI/2,'夏至'],[Math.PI,'秋分'],[3*Math.PI/2,'冬至']].forEach(p=>{
+      const px = ox + RX * Math.cos(p[0]), py = oy - RY * Math.sin(p[0]);
+      const lx = ox + (RX + 34) * Math.cos(p[0]), ly = oy - (RY + 30) * Math.sin(p[0]);
+      s += `<circle cx="${px}" cy="${py}" r="3" fill="#9ca3af"/>`;
+      s += txt(lx, ly + 4, p[1], '#9ca3af', 11);
+    });
+    // 地球＋固定方向的地軸
+    s += `<circle cx="${ex}" cy="${ey}" r="13" fill="#2563eb"/>`;
+    const ta = (90 - tilt) * Math.PI/180;            // 地軸永遠指同一個方向
+    s += line(ex - 22*Math.cos(ta), ey + 22*Math.sin(ta), ex + 22*Math.cos(ta), ey - 22*Math.sin(ta), '#111827', 2.5);
+    s += `<path d="M${ex + 22*Math.cos(ta)},${ey - 22*Math.sin(ta)} l-4,-6 l8,0 z" fill="#111827"/>`;
+    s += txt(ox, 292, '地軸永遠指同一個方向（北極星）', '#374151', 12);
+
+    // 右：側視放大
+    const sx = 600, sy = 150, R = 66;
+    s += txt(sx, 22, '放大看：陽光怎麼照到地球', '#6b7280', 13);
+    for(let i = -2; i <= 2; i++){                    // 平行陽光（從左邊來）
+      const yy = sy + i * 30;
+      s += line(sx - 160, yy, sx - R - 6, yy, '#f59e0b', 2);
+      s += `<path d="M${sx - R - 6},${yy} l-8,-4 l0,8 z" fill="#f59e0b"/>`;
+    }
+    s += `<circle cx="${sx}" cy="${sy}" r="${R}" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>`;
+    s += `<path d="M ${sx},${sy - R} A ${R},${R} 0 0 1 ${sx},${sy + R} Z" fill="#1e3a8a" opacity=".55"/>`;   // 夜半球
+    s += txt(sx + 36, sy + R + 18, '夜晚', '#1e3a8a', 11);
+    s += txt(sx - 40, sy + R + 18, '白天', '#b45309', 11);
+    // 太陽在左邊。地軸朝太陽傾斜 dec 度：北極方向 =（−sin dec, cos dec）（數學座標，y 向上）
+    const d = dec * Math.PI / 180;
+    const npx = sx - (R + 18) * Math.sin(d), npy = sy - (R + 18) * Math.cos(d);
+    const spx = sx + (R + 18) * Math.sin(d), spy = sy + (R + 18) * Math.cos(d);
+    s += line(spx, spy, npx, npy, '#111827', 2.5);
+    s += txt(npx, npy - 6, 'N', '#111827', 12);
+    // 赤道：和地軸垂直
+    s += line(sx - R * Math.cos(d), sy + R * Math.sin(d), sx + R * Math.cos(d), sy - R * Math.sin(d), '#6b7280', 1.5, true);
+    // 台灣（北緯 23.5°）正午時的位置：離直射點差 (緯度 − 直射緯度) 度
+    const gap = (LATTW - dec) * Math.PI / 180;
+    const px = sx - R * Math.cos(gap), py = sy - R * Math.sin(gap);
+    s += `<circle cx="${px}" cy="${py}" r="5" fill="#dc2626"/>`;
+    s += txt(px - 9, py - 7, '台灣', '#dc2626', 12, 'end', 'font-weight="bold"');
+    // 直射點（陽光垂直打下來的地方）
+    const zx = sx - R * Math.cos(0), zy = sy;
+    s += `<circle cx="${zx}" cy="${zy}" r="4" fill="#b45309"/>`;
+    s += txt(sx, sy + R + 40, '直射點：' + (Math.abs(dec) < 0.4 ? '赤道' :
+             (dec > 0 ? '北緯 ' + dec.toFixed(1) + '°' : '南緯 ' + Math.abs(dec).toFixed(1) + '°')),
+             '#374151', 13, 'middle', 'font-weight="bold"');
+    document.getElementById('svgSeason').innerHTML = svg(W, H, s);
+
+    const hh = Math.floor(dl), mm = Math.round((dl - hh) * 60);
+    document.getElementById('statRow').innerHTML =
+      `<div class="st"><small>台灣正午太陽仰角</small><b>${alt.toFixed(1)}°</b></div>` +
+      `<div class="st"><small>白天長度</small><b>${hh} 時 ${mm} 分</b></div>` +
+      `<div class="st"><small>太陽直射</small><b>${Math.abs(dec) < 0.4 ? '赤道' : (dec > 0 ? '北緯' : '南緯') + Math.abs(dec).toFixed(1) + '°'}</b></div>` +
+      `<div class="st"><small>北半球季節</small><b>${seasonName(dec, tilt)}</b></div>`;
+
+    let msg;
+    if(tilt < 1){
+      msg = `<b style="color:#b45309">地軸拉直了，四季消失。</b><br>` +
+        `不管幾月，太陽都直射赤道，台灣的正午仰角固定 ${alt.toFixed(1)}°、白天固定 12 小時。` +
+        `拉拉看月份，數字完全不會變 —— 這就證明了<b>四季來自傾角，不是來自距離</b>。`;
+    } else {
+      const hot = dec > 0;
+      msg = `${mon} 月：太陽直射 ${Math.abs(dec) < 0.4 ? '赤道' : (dec > 0 ? '北緯' : '南緯') + Math.abs(dec).toFixed(1) + '°'}，` +
+        `北極${hot ? '朝向' : '背對'}太陽。<br>` +
+        `台灣正午的太陽在 <b>${alt.toFixed(1)}°</b>，白天 <b>${hh} 小時 ${mm} 分</b>。` +
+        `太陽愈高，陽光愈集中；白天愈長，曬得愈久。兩件事都變${hot ? '多' : '少'}，所以${hot ? '熱' : '冷'}。<br>` +
+        `<span style="color:#6b7280">此時南半球剛好相反，是${hot ? '冬天' : '夏天'}。</span>`;
+    }
+    document.getElementById('seasonSay').innerHTML = msg;
+  }
+  rMon.addEventListener('input', draw);
+  rTilt.addEventListener('input', draw);
+  document.querySelectorAll('.chip[data-m]').forEach(c=>{
+    c.addEventListener('click', ()=>{ rMon.value = c.dataset.m; draw(); });
+  });
+  document.getElementById('btnFlat').addEventListener('click', ()=>{ rTilt.value = 0; draw(); });
+  document.getElementById('btnBack').addEventListener('click', ()=>{ rTilt.value = 235; draw(); });
+  draw();
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國一數學｜七上 第2章 指數與科學記號</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#b45309; --accent-soft:#fef3c7;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#b45309,#f59e0b); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .rt{white-space:nowrap;} .rt .rad{border-top:1.5px solid currentColor; padding:0 2px 0 1px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  table.tb{width:100%; border-collapse:collapse; margin:10px 0; font-size:.92rem;}
+  table.tb th,table.tb td{border:1px solid var(--border); padding:7px 10px; text-align:left;}
+  table.tb th{background:var(--accent-soft); font-weight:bold;}
+  .toolbox{background:var(--accent-soft); border-radius:12px; padding:14px 16px;}
+  .toolbox .row{display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap;}
+  .toolbox .row label{min-width:9em; font-size:.9rem;}
+  .toolbox .row label b{color:var(--accent); font-size:1.15rem;}
+  .toolbox input[type=range]{flex:1 1 200px; accent-color:var(--accent);}
+  .bigsay{background:#fff; border-left:4px solid var(--accent); border-radius:8px;
+    padding:10px 14px; margin-top:8px; font-size:1rem; line-height:1.9;}
+  .chips{display:flex; gap:6px; flex-wrap:wrap;}
+  .chip{border:1px solid var(--border); background:#fff; border-radius:99px;
+    padding:4px 12px; cursor:pointer; font-family:inherit; font-size:.85rem;}
+  .chip.on{background:var(--accent); color:#fff; border-color:var(--accent); font-weight:bold;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國中七年級上學期 · 第2章</span>
+  <h1>指數與科學記號</h1>
+  <p>三個小節＋單元總測驗。指數只是「同一個數乘好幾次」的縮寫。這一章有兩台機器：一台把 2 的次方整個攤開給你數，一台讓你拖小數點，看指數怎麼跟著變。指數律不是背的，是數出來的。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">2-1 指數記法與指數律</button>
+  <button data-t="s2">2-2 科學記號</button>
+  <button data-t="s3">2-3 科學記號的比較與運用</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 2-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>讀寫指數，說得出底數和指數各是誰</li>
+      <li>用「數幾個」推出同底相乘、相除的規則</li>
+      <li>算得出負數的次方是正是負</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：指數是偷懶的寫法</h2>
+    <p>2×2×2×2×2 寫五次很累，所以縮寫成 2<sup>5</sup>。</p>
+    <div class="svgbox" id="svgName"></div>
+    <div class="formula">2<sup>5</sup> 念作「2 的 5 次方」，意思是<b>五個 2 相乘</b>，值是 32</div>
+    <div class="warn">⚠️ 2<sup>5</sup> 不是 2×5＝10。指數在說「乘幾次」，不是「乘多少」。</div>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ 指數展開器：指數律用數的就好</h2>
+    <p>拉兩條桿子，下面會把兩串 2 全部攤開讓你數。數完你就知道為什麼指數是用加的。</p>
+    <div class="toolbox">
+      <div class="row"><label>左邊 2 的 <b id="wM">3</b> 次方</label>
+        <input type="range" id="rM" min="1" max="6" step="1" value="3"></div>
+      <div class="row"><label>右邊 2 的 <b id="wN">4</b> 次方</label>
+        <input type="range" id="rN" min="1" max="6" step="1" value="4"></div>
+      <div class="svgbox" id="svgExp"></div>
+      <div class="bigsay" id="expSay"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：三條指數律</h2>
+    <p>三條都是同一個道理：<b>指數只是在數有幾個</b>。底數一樣才能合併。</p>
+    <table class="tb">
+      <tr><th>情況</th><th>規則</th><th>為什麼</th></tr>
+      <tr><td>同底<b>相乘</b></td><td>a<sup>m</sup> × a<sup>n</sup> ＝ a<sup>m＋n</sup></td><td>m 個再加 n 個，總共 m＋n 個</td></tr>
+      <tr><td>同底<b>相除</b></td><td>a<sup>m</sup> ÷ a<sup>n</sup> ＝ a<sup>m−n</sup></td><td>上下約掉 n 個，剩 m−n 個</td></tr>
+      <tr><td><b>次方的次方</b></td><td>(a<sup>m</sup>)<sup>n</sup> ＝ a<sup>m×n</sup></td><td>每組 m 個，共 n 組，所以用乘的</td></tr>
+    </table>
+    <div class="warn">⚠️ 底數不一樣不能合併。2<sup>3</sup> × 3<sup>2</sup> 只能各自算成 8 × 9 ＝ 72，不會變成 6 的幾次方。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：負數的次方，看指數是奇是偶</h2>
+    <div class="formula">(−2)<sup>2</sup> ＝ (−2)×(−2) ＝ <b>4</b>　　(−2)<sup>3</sup> ＝ (−2)×(−2)×(−2) ＝ <b>−8</b></div>
+    <p>負號兩兩配對就變正的，所以：</p>
+    <div class="formula">指數是<b>偶數</b> → 答案是正　　指數是<b>奇數</b> → 答案是負</div>
+    <div class="warn">⚠️ 再提醒一次括號：(−2)<sup>4</sup> ＝ 16，但 −2<sup>4</sup> ＝ −16。沒有括號時，負號沒有被平方。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　把 3<sup>4</sup> × 3<sup>2</sup> 寫成一個指數</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 底數都是 3，可以合併。</p>
+        <p class="step"><b>②</b> 指數相加：4 ＋ 2 ＝ 6。</p>
+        <p class="step"><b>③</b> 答案是 3<sup>6</sup>（＝729）。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　(2<sup>3</sup>)<sup>2</sup> ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 每一組有 3 個 2，一共 2 組。</p>
+        <p class="step"><b>②</b> 指數相乘：3 × 2 ＝ 6。</p>
+        <p class="step"><b>③</b> 答案是 2<sup>6</sup> ＝ 64。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　(−1)<sup>2025</sup> ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 底數是 −1，只要看指數的奇偶。</p>
+        <p class="step"><b>②</b> 2025 是奇數，負號沒配對完，剩一個。</p>
+        <p class="step"><b>③</b> 答案是 −1。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 5<sup>3</sup> 的值是：</div>
+      <label><input type="radio" name="p1q1" value="A">15</label>
+      <label><input type="radio" name="p1q1" value="B">53</label>
+      <label><input type="radio" name="p1q1" value="C">125</label>
+      <label><input type="radio" name="p1q1" value="D">8</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　5×5×5 ＝ 125。指數是乘幾次，不是乘多少。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. 2<sup>4</sup> × 2<sup>5</sup> ＝ </div>
+      <label><input type="radio" name="p1q2" value="A">4<sup>9</sup></label>
+      <label><input type="radio" name="p1q2" value="B">2<sup>9</sup></label>
+      <label><input type="radio" name="p1q2" value="C">2<sup>1</sup></label>
+      <label><input type="radio" name="p1q2" value="D">2<sup>20</sup></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　底數相同，指數相加：4 ＋ 5 ＝ 9。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">3. 7<sup>8</sup> ÷ 7<sup>5</sup> ＝ </div>
+      <label><input type="radio" name="p1q3" value="A">1<sup>3</sup></label>
+      <label><input type="radio" name="p1q3" value="B">7<sup>13</sup></label>
+      <label><input type="radio" name="p1q3" value="C">7<sup>40</sup></label>
+      <label><input type="radio" name="p1q3" value="D">7<sup>3</sup></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　同底相除，指數相減：8 − 5 ＝ 3。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. (−3)<sup>4</sup> 的值是：</div>
+      <label><input type="radio" name="p1q4" value="A">−12</label>
+      <label><input type="radio" name="p1q4" value="B">12</label>
+      <label><input type="radio" name="p1q4" value="C">−81</label>
+      <label><input type="radio" name="p1q4" value="D">81</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　指數 4 是偶數，負號兩兩配對變正的，3&lt;sup&gt;4&lt;/sup&gt; ＝ 81。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出科學記號為什麼要規定 1 到 10 之間</li>
+      <li>把大數寫成科學記號，也能寫回來</li>
+      <li>看懂小數點移動幾位，指數就變多少</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：太長的數字，用 10 的次方壓縮</h2>
+    <p>光每秒跑 300000000 公尺。這串 0 很容易數錯，所以改寫成：</p>
+    <div class="formula">300000000 ＝ 3 × 10<sup>8</sup></div>
+    <p>這種寫法叫<b>科學記號</b>，長相固定是：</p>
+    <div class="formula">a × 10<sup>n</sup>　，其中 <b>1 ≦ a ＜ 10</b>，n 是整數</div>
+    <div class="note">💡 為什麼規定 a 要在 1 到 10 之間？因為這樣每個數只有<b>一種</b>寫法，大家才好互相比較。32 × 10<sup>3</sup> 雖然值一樣，但不是標準寫法。</div>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ 小數點滑桿</h2>
+    <p>拖著滑桿把小數點移來移去，右邊的 10 的次方會自己跟著加減。移到綠燈亮起來的位置，就是標準的科學記號。</p>
+    <div class="toolbox">
+      <div class="row"><label>先挑一個數</label>
+        <span class="chips"><button class="chip on" data-v="32000">32000</button><button class="chip" data-v="4500000">4500000</button><button class="chip" data-v="907">907</button><button class="chip" data-v="60000000">60000000</button></span></div>
+      <div class="row"><label>小數點放哪裡</label>
+        <input type="range" id="rDot" min="0" max="7" step="1" value="4"></div>
+      <div class="svgbox" id="svgDot"></div>
+      <div class="bigsay" id="dotSay"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：小數點往左幾位，指數就是幾</h2>
+    <p>因為小數點每往左移一位，數字就被縮小 10 倍，所以要乘一個 10 補回來。</p>
+    <table class="tb">
+      <tr><th>原來的數</th><th>小數點往左移幾位</th><th>科學記號</th></tr>
+      <tr><td>907</td><td>2 位</td><td>9.07 × 10<sup>2</sup></td></tr>
+      <tr><td>32000</td><td>4 位</td><td>3.2 × 10<sup>4</sup></td></tr>
+      <tr><td>4500000</td><td>6 位</td><td>4.5 × 10<sup>6</sup></td></tr>
+    </table>
+    <div class="note">💡 反過來也一樣：看到 5.8 × 10<sup>5</sup>，就把小數點往<b>右</b>移 5 位，不夠的位置補 0，得到 580000。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　把 68000 寫成科學記號</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 先把小數點移到第一個數字後面：6.8。</p>
+        <p class="step"><b>②</b> 數一數移了幾位：從 68000. 移到 6.8000，往左 4 位。</p>
+        <p class="step"><b>③</b> 答案是 6.8 × 10<sup>4</sup>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　2.05 × 10<sup>3</sup> 是多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 指數是 3，小數點往右移 3 位。</p>
+        <p class="step"><b>②</b> 2.05 → 20.5 → 205 → 2050（最後一位補 0）。</p>
+        <p class="step"><b>③</b> 答案是 2050。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　為什麼 45 × 10<sup>3</sup> 不是標準的科學記號？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 科學記號規定前面那個數要在 1 到 10 之間。</p>
+        <p class="step"><b>②</b> 45 太大了，要再把小數點往左移一位變成 4.5，指數就多 1。</p>
+        <p class="step"><b>③</b> 改寫成 4.5 × 10<sup>4</sup>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="D">
+      <div class="stem">1. 520000 的科學記號是：</div>
+      <label><input type="radio" name="p2q1" value="A">52 × 10<sup>4</sup></label>
+      <label><input type="radio" name="p2q1" value="B">5.2 × 10<sup>4</sup></label>
+      <label><input type="radio" name="p2q1" value="C">0.52 × 10<sup>6</sup></label>
+      <label><input type="radio" name="p2q1" value="D">5.2 × 10<sup>5</sup></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　小數點往左移 5 位得到 5.2，所以是 5.2 × 10&lt;sup&gt;5&lt;/sup&gt;。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. 3.7 × 10<sup>4</sup> 等於：</div>
+      <label><input type="radio" name="p2q2" value="A">3.70004</label>
+      <label><input type="radio" name="p2q2" value="B">37000</label>
+      <label><input type="radio" name="p2q2" value="C">370000</label>
+      <label><input type="radio" name="p2q2" value="D">3700</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　小數點往右移 4 位：3.7 → 37000。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 下面哪一個<b>是</b>標準的科學記號？</div>
+      <label><input type="radio" name="p2q3" value="A">80.1 × 10<sup>5</sup></label>
+      <label><input type="radio" name="p2q3" value="B">8.01 × 10<sup>6</sup></label>
+      <label><input type="radio" name="p2q3" value="C">801 × 10<sup>4</sup></label>
+      <label><input type="radio" name="p2q3" value="D">0.8 × 10<sup>7</sup></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　前面那個數要「大於等於 1、小於 10」，只有 8.01 符合。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. 某細菌數量是 9 × 10<sup>3</sup> 隻，寫成一般數字是：</div>
+      <label><input type="radio" name="p2q4" value="A">9003</label>
+      <label><input type="radio" name="p2q4" value="B">9000</label>
+      <label><input type="radio" name="p2q4" value="C">900</label>
+      <label><input type="radio" name="p2q4" value="D">90000</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　9 後面接 3 個 0，是 9000。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>用指數快速比較兩個大數誰大</li>
+      <li>會做科學記號的簡單乘除</li>
+      <li>讀得懂新聞或自然課本上的大數</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：比大小，先看指數</h2>
+    <p>科學記號最好用的地方就是比大小，不用數 0：</p>
+    <div class="formula">① 先比 10 的<b>指數</b>，指數大的就大<br>② 指數一樣時，才比前面的數</div>
+    <table class="tb">
+      <tr><th>比較</th><th>怎麼判斷</th><th>誰大</th></tr>
+      <tr><td>3.1 × 10<sup>8</sup> 和 9.9 × 10<sup>7</sup></td><td>8 比 7 大，不用看前面</td><td>3.1 × 10<sup>8</sup></td></tr>
+      <tr><td>4.2 × 10<sup>5</sup> 和 4.7 × 10<sup>5</sup></td><td>指數一樣，比前面</td><td>4.7 × 10<sup>5</sup></td></tr>
+    </table>
+    <div class="warn">⚠️ 前提是兩個都已經是標準寫法。如果看到 25 × 10<sup>6</sup>，要先整理成 2.5 × 10<sup>7</sup> 再比。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：乘除法，前面歸前面、指數歸指數</h2>
+    <div class="formula">(a × 10<sup>m</sup>) × (b × 10<sup>n</sup>) ＝ (a×b) × 10<sup>m＋n</sup></div>
+    <p>算完如果前面那個數跑出 1～10 的範圍，再調整一次小數點。</p>
+    <div class="note">💡 例：(3 × 10<sup>4</sup>) × (4 × 10<sup>3</sup>) ＝ 12 × 10<sup>7</sup>。12 太大，改寫成 1.2 × 10<sup>8</sup>。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：這些數字長什麼樣子</h2>
+    <p>把課本和新聞裡常見的大數排在同一條尺上，感覺一下差幾個 0：</p>
+    <div class="svgbox" id="svgScale"></div>
+    <div class="note">💡 每往右一格，就是變成 10 倍。太陽到地球的距離是一個人身高的一百億倍左右，中間差了 10 個格子。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　誰比較大：6.3 × 10<sup>9</sup> 還是 8.8 × 10<sup>8</sup>？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 兩個都是標準寫法，先比指數。</p>
+        <p class="step"><b>②</b> 9 比 8 大。</p>
+        <p class="step"><b>③</b> 所以 6.3 × 10<sup>9</sup> 比較大，即使 6.3 比 8.8 小。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　(2 × 10<sup>5</sup>) × (4 × 10<sup>6</sup>) ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 前面相乘：2 × 4 ＝ 8。</p>
+        <p class="step"><b>②</b> 指數相加：5 ＋ 6 ＝ 11。</p>
+        <p class="step"><b>③</b> 8 在 1 到 10 之間，不用調整，答案是 8 × 10<sup>11</sup>。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　(6 × 10<sup>8</sup>) ÷ (3 × 10<sup>2</sup>) ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 前面相除：6 ÷ 3 ＝ 2。</p>
+        <p class="step"><b>②</b> 指數相減：8 − 2 ＝ 6。</p>
+        <p class="step"><b>③</b> 答案是 2 × 10<sup>6</sup>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="D">
+      <div class="stem">1. 下面哪一個<b>最大</b>？</div>
+      <label><input type="radio" name="p3q1" value="A">8.8 × 10<sup>7</sup></label>
+      <label><input type="radio" name="p3q1" value="B">9.9 × 10<sup>8</sup></label>
+      <label><input type="radio" name="p3q1" value="C">5.5 × 10<sup>8</sup></label>
+      <label><input type="radio" name="p3q1" value="D">1.1 × 10<sup>9</sup></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　先比指數，10&lt;sup&gt;9&lt;/sup&gt; 最大，所以 1.1 × 10&lt;sup&gt;9&lt;/sup&gt; 最大。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. (3 × 10<sup>2</sup>) × (2 × 10<sup>5</sup>) ＝ </div>
+      <label><input type="radio" name="p3q2" value="A">5 × 10<sup>7</sup></label>
+      <label><input type="radio" name="p3q2" value="B">6 × 10<sup>6</sup></label>
+      <label><input type="radio" name="p3q2" value="C">6 × 10<sup>10</sup></label>
+      <label><input type="radio" name="p3q2" value="D">6 × 10<sup>7</sup></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　3×2 ＝ 6，指數 2＋5 ＝ 7。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. (8 × 10<sup>9</sup>) ÷ (4 × 10<sup>4</sup>) ＝ </div>
+      <label><input type="radio" name="p3q3" value="A">2 × 10<sup>36</sup></label>
+      <label><input type="radio" name="p3q3" value="B">4 × 10<sup>5</sup></label>
+      <label><input type="radio" name="p3q3" value="C">2 × 10<sup>5</sup></label>
+      <label><input type="radio" name="p3q3" value="D">2 × 10<sup>13</sup></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　8÷4 ＝ 2，指數 9−4 ＝ 5。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. 25 × 10<sup>6</sup> 整理成標準科學記號是：</div>
+      <label><input type="radio" name="p3q4" value="A">2.5 × 10<sup>7</sup></label>
+      <label><input type="radio" name="p3q4" value="B">0.25 × 10<sup>8</sup></label>
+      <label><input type="radio" name="p3q4" value="C">2.5 × 10<sup>6</sup></label>
+      <label><input type="radio" name="p3q4" value="D">25 × 10<sup>6</sup></label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　25 要變成 2.5，小數點往左移 1 位，指數就加 1 變成 7。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="A">
+      <div class="stem">1. 3<sup>4</sup> 的值是：</div>
+      <label><input type="radio" name="qz1" value="A">81</label>
+      <label><input type="radio" name="qz1" value="B">12</label>
+      <label><input type="radio" name="qz1" value="C">43</label>
+      <label><input type="radio" name="qz1" value="D">64</label>
+      <div class="fb" data-exp="　3×3×3×3 ＝ 81。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">2. a<sup>6</sup> × a<sup>3</sup> ＝ </div>
+      <label><input type="radio" name="qz2" value="A">a<sup>2</sup></label>
+      <label><input type="radio" name="qz2" value="B">2a<sup>9</sup></label>
+      <label><input type="radio" name="qz2" value="C">a<sup>9</sup></label>
+      <label><input type="radio" name="qz2" value="D">a<sup>18</sup></label>
+      <div class="fb" data-exp="　同底相乘，指數相加：6 ＋ 3 ＝ 9。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">3. (5<sup>2</sup>)<sup>3</sup> ＝ </div>
+      <label><input type="radio" name="qz3" value="A">25<sup>3</sup></label>
+      <label><input type="radio" name="qz3" value="B">5<sup>5</sup></label>
+      <label><input type="radio" name="qz3" value="C">5<sup>6</sup></label>
+      <label><input type="radio" name="qz3" value="D">5<sup>8</sup></label>
+      <div class="fb" data-exp="　次方的次方，指數相乘：2 × 3 ＝ 6。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. (−2)<sup>5</sup> 的值是：</div>
+      <label><input type="radio" name="qz4" value="A">−10</label>
+      <label><input type="radio" name="qz4" value="B">32</label>
+      <label><input type="radio" name="qz4" value="C">10</label>
+      <label><input type="radio" name="qz4" value="D">−32</label>
+      <div class="fb" data-exp="　指數 5 是奇數，答案為負：−32。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">5. −4<sup>2</sup> 的值是：</div>
+      <label><input type="radio" name="qz5" value="A">8</label>
+      <label><input type="radio" name="qz5" value="B">−8</label>
+      <label><input type="radio" name="qz5" value="C">−16</label>
+      <label><input type="radio" name="qz5" value="D">16</label>
+      <div class="fb" data-exp="　沒有括號，只有 4 被平方，負號在外面：−(4×4) ＝ −16。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">6. 7300000 的科學記號是：</div>
+      <label><input type="radio" name="qz6" value="A">7.3 × 10<sup>7</sup></label>
+      <label><input type="radio" name="qz6" value="B">7.3 × 10<sup>6</sup></label>
+      <label><input type="radio" name="qz6" value="C">7.3 × 10<sup>5</sup></label>
+      <label><input type="radio" name="qz6" value="D">73 × 10<sup>5</sup></label>
+      <div class="fb" data-exp="　小數點往左移 6 位變成 7.3。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">7. 4.06 × 10<sup>3</sup> 等於：</div>
+      <label><input type="radio" name="qz7" value="A">406</label>
+      <label><input type="radio" name="qz7" value="B">4060</label>
+      <label><input type="radio" name="qz7" value="C">4.06000</label>
+      <label><input type="radio" name="qz7" value="D">40600</label>
+      <div class="fb" data-exp="　小數點往右移 3 位，不夠的補 0：4060。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">8. 下面哪一個<b>不是</b>標準的科學記號？</div>
+      <label><input type="radio" name="qz8" value="A">1.2 × 10<sup>4</sup></label>
+      <label><input type="radio" name="qz8" value="B">9.99 × 10<sup>2</sup></label>
+      <label><input type="radio" name="qz8" value="C">1 × 10<sup>8</sup></label>
+      <label><input type="radio" name="qz8" value="D">12 × 10<sup>4</sup></label>
+      <div class="fb" data-exp="　前面那個數必須大於等於 1 且小於 10，12 超過了。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">9. (2 × 10<sup>6</sup>) × (4 × 10<sup>3</sup>) 化成標準寫法是：</div>
+      <label><input type="radio" name="qz9" value="A">8 × 10<sup>18</sup></label>
+      <label><input type="radio" name="qz9" value="B">6 × 10<sup>9</sup></label>
+      <label><input type="radio" name="qz9" value="C">0.8 × 10<sup>10</sup></label>
+      <label><input type="radio" name="qz9" value="D">8 × 10<sup>9</sup></label>
+      <div class="fb" data-exp="　2×4 ＝ 8，指數 6＋3 ＝ 9，8 已在範圍內。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">10. 某國人口約 2.3 × 10<sup>7</sup> 人，另一國約 1.4 × 10<sup>8</sup> 人，後者大約是前者的幾倍？</div>
+      <label><input type="radio" name="qz10" value="A">6 倍</label>
+      <label><input type="radio" name="qz10" value="B">60 倍</label>
+      <label><input type="radio" name="qz10" value="C">0.6 倍</label>
+      <label><input type="radio" name="qz10" value="D">600 倍</label>
+      <div class="fb" data-exp="　1.4×10&lt;sup&gt;8&lt;/sup&gt; ÷ (2.3×10&lt;sup&gt;7&lt;/sup&gt;) ≒ 0.61 × 10 ＝ 6.1，大約 6 倍。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>國一數學自學教材 · 第 2 章 指數與科學記號<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "七上2 指數與科學記號";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.innerHTML='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.innerHTML='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.innerHTML='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.innerHTML='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// ── 底數與指數的名稱圖 ──
+(function(){
+  let s = txt(300, 62, '2', '#b45309', 54, 'middle', 'font-weight="bold"');
+  s += txt(336, 38, '5', '#b45309', 32, 'middle', 'font-weight="bold"');
+  s += line(300, 78, 250, 104, '#6b7280', 2);
+  s += txt(244, 120, '底數：要一直乘的那個數', '#6b7280', 13, 'end');
+  s += line(340, 24, 400, 24, '#6b7280', 2);
+  s += txt(406, 29, '指數：乘幾次', '#6b7280', 13, 'start');
+  document.getElementById('svgName').innerHTML = svg(620, 136, s);
+})();
+
+// ── 指數展開器 ──
+(function(){
+  const rM = document.getElementById('rM'), rN = document.getElementById('rN');
+  function draw(){
+    const m = +rM.value, n = +rN.value, W = 760;
+    document.getElementById('wM').textContent = m;
+    document.getElementById('wN').textContent = n;
+    const cw = 34, gap = 6;
+    let s = '';
+    function group(x0, y, cnt, col, soft, label){
+      let g = txt(x0, y - 10, label, col, 13, 'start', 'font-weight="bold"');
+      for(let i = 0; i < cnt; i++){
+        const x = x0 + i * (cw + gap);
+        g += rect(x, y, cw, 30, soft, col, 1.5);
+        g += txt(x + cw/2, y + 21, '2', col, 15);
+        if(i < cnt - 1) g += txt(x + cw + gap/2, y + 21, '×', '#9ca3af', 12);
+      }
+      return g;
+    }
+    s += group(14, 30, m, '#b45309', '#fef3c7', m + ' 個 2');
+    const midX = 14 + m * (cw + gap) + 6;
+    s += txt(midX, 51, '×', '#111827', 20, 'middle', 'font-weight="bold"');
+    s += group(midX + 14, 30, n, '#0f766e', '#ccfbf1', n + ' 個 2');
+    s += txt(14, 104, '合起來數一數：一共 ' + (m + n) + ' 個 2 相乘', '#374151', 14, 'start');
+    for(let i = 0; i < m + n; i++){
+      const x = 14 + i * (cw + gap);
+      s += rect(x, 114, cw, 30, i < m ? '#fef3c7' : '#ccfbf1', i < m ? '#b45309' : '#0f766e', 1.5);
+      s += txt(x + cw/2, 135, '2', i < m ? '#b45309' : '#0f766e', 15);
+    }
+    document.getElementById('svgExp').innerHTML = svg(W, 158, s);
+    document.getElementById('expSay').innerHTML =
+      `<b>2<sup>${m}</sup> × 2<sup>${n}</sup> ＝ 2<sup>${m + n}</sup> ＝ ${Math.pow(2, m + n)}</b><br>` +
+      `${m} 個 2 再接上 ${n} 個 2，總共就是 ${m + n} 個 2。指數是在<b>數個數</b>，所以用加的。`;
+  }
+  rM.addEventListener('input', draw); rN.addEventListener('input', draw); draw();
+})();
+
+// ── 小數點滑桿 ──
+(function(){
+  let base = '32000';
+  const rDot = document.getElementById('rDot');
+  function draw(){
+    const digits = base.split('');
+    const L = digits.length;
+    rDot.max = L - 1;
+    let pos = Math.min(+rDot.value, L - 1);      // 小數點放在第 pos 個數字之後（由左數）
+    const left = digits.slice(0, pos + 1).join('');
+    const right = digits.slice(pos + 1).join('').replace(/0+$/, '');  // 末尾的 0 不用寫
+    const shift = L - 1 - pos;                   // 還要往右移幾位才回到原數
+    const aStr = right ? left + '.' + right : left;
+    const aNum = parseFloat(aStr);
+    const std = aNum >= 1 && aNum < 10;
+
+    const W = 700, y = 56, cw = 40;
+    const x0 = (W - L * cw) / 2;
+    let s = '';
+    for(let i = 0; i < L; i++){
+      s += rect(x0 + i * cw, y, cw - 4, 44, '#fff', '#d1d5db', 1.5);
+      s += txt(x0 + i * cw + (cw - 4)/2, y + 31, digits[i], '#111827', 22);
+    }
+    const dx = x0 + (pos + 1) * cw - 2;
+    s += `<circle cx="${dx}" cy="${y + 50}" r="5" fill="${std ? '#16a34a' : '#b45309'}"/>`;
+    s += line(dx, y - 10, dx, y + 44, std ? '#16a34a' : '#b45309', 2, true);
+    s += txt(dx, y - 16, '小數點', std ? '#16a34a' : '#b45309', 12);
+    s += txt(W/2, y + 82, `${aStr} × 10<tspan font-size="14" dy="-10">${shift}</tspan>`,
+             '#111827', 22, 'middle', 'font-weight="bold"');
+    s += txt(W/2, y + 108, std ? '✔ 這就是標準的科學記號' : '✘ 前面那個數要在 1 到 10 之間',
+             std ? '#16a34a' : '#dc2626', 14);
+    document.getElementById('svgDot').innerHTML = svg(W, y + 126, s);
+
+    document.getElementById('dotSay').innerHTML =
+      `原來的數是 <b>${base}</b>。小數點往左移 <b>${shift}</b> 位變成 ${aStr}，` +
+      `每移一位數字就小 10 倍，所以要乘回 10<sup>${shift}</sup>。<br>` +
+      (std ? `<b>${base} ＝ ${aStr} × 10<sup>${shift}</sup></b>`
+           : `現在前面是 ${aStr}，不在 1～10 之間，再拉一下滑桿找到綠燈的位置。`);
+  }
+  rDot.addEventListener('input', draw);
+  document.querySelectorAll('.chip').forEach(c=>{
+    c.addEventListener('click', ()=>{
+      document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+      c.classList.add('on');
+      base = c.dataset.v;
+      rDot.max = base.length - 1;
+      rDot.value = 0;                       // 先歸零再讓使用者自己拉到標準位置
+      draw();
+    });
+  });
+  draw();
+})();
+
+// ── 10 的次方尺 ──
+(function(){
+  const items = [
+    [0, '1 元硬幣', '2 公分'],
+    [2, '一間教室', '10<sup>2</sup>'],
+    [4, '台北到新竹', '10<sup>4</sup>'],
+    [7, '地球一圈', '10<sup>7</sup>'],
+    [11, '地球到太陽', '10<sup>11</sup>'],
+  ];
+  const W = 760, pad = 50, y = 74;
+  const X = e => pad + e / 11 * (W - pad * 2);
+  let s = line(pad - 10, y, W - pad + 10, y, '#374151', 2);
+  s += `<path d="M${W-pad+10},${y} l-9,-5 l0,10 z" fill="#374151"/>`;
+  for(let e = 0; e <= 11; e++){
+    s += line(X(e), y - 5, X(e), y + 5, '#d1d5db', 1.5);
+  }
+  items.forEach((it, i)=>{
+    const x = X(it[0]), up = i % 2 === 0;
+    s += `<circle cx="${x}" cy="${y}" r="6" fill="#b45309"/>`;
+    s += line(x, y, x, up ? y - 22 : y + 22, '#b45309', 1.5, true);
+    s += txt(x, up ? y - 28 : y + 40, it[1], '#374151', 13);
+    s += txt(x, up ? y - 44 : y + 56, '約 10 的 ' + it[0] + ' 次方公尺', '#9ca3af', 11);
+  });
+  s += txt(W/2, 18, '每往右一格，就大 10 倍', '#6b7280', 13);
+  document.getElementById('svgScale').innerHTML = svg(W, 148, s);
+})();
+
+</script>
+</body>
+</html>
