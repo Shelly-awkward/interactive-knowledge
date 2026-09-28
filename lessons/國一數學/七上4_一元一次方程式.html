@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國一數學｜七上 第4章 一元一次方程式</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#be123c; --accent-soft:#ffe4e6;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#be123c,#f43f5e); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .rt{white-space:nowrap;} .rt .rad{border-top:1.5px solid currentColor; padding:0 2px 0 1px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  table.tb{width:100%; border-collapse:collapse; margin:10px 0; font-size:.92rem;}
+  table.tb th,table.tb td{border:1px solid var(--border); padding:7px 10px; text-align:left;}
+  table.tb th{background:var(--accent-soft); font-weight:bold;}
+  .toolbox{background:var(--accent-soft); border-radius:12px; padding:14px 16px;}
+  .toolbox .row2{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:10px;}
+  .toolbox .row2 span{display:flex; align-items:center; gap:8px; flex:1 1 210px;}
+  .toolbox label{font-size:.88rem; white-space:nowrap;}
+  .toolbox label b{color:var(--accent); font-size:1.1rem;}
+  .toolbox input[type=range]{flex:1 1 70px; accent-color:var(--accent);}
+  .bigsay{background:#fff; border-left:4px solid var(--accent); border-radius:8px;
+    padding:10px 14px; margin-top:8px; font-size:1rem; line-height:1.9; min-height:3.2em;}
+  .btnrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
+  .abtn{border:1px solid var(--accent); background:var(--accent); color:#fff; border-radius:99px;
+    padding:7px 16px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .abtn:disabled{opacity:.35; cursor:default;}
+  .abtn.bad{background:#fff; color:#b91c1c; border-color:#b91c1c;}
+  .abtn.ghost{background:#fff; color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國中七年級上學期 · 第4章</span>
+  <h1>一元一次方程式</h1>
+  <p>三個小節＋單元總測驗。解方程式不是在「移項變號」，是在「兩邊做一樣的事，讓天平保持平衡」。這一章有一台天平模擬器，你每按一次，天平會告訴你這一步合不合法。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">4-1 用符號列式與化簡</button>
+  <button data-t="s2">4-2 等量公理與解方程式</button>
+  <button data-t="s3">4-3 應用問題</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 4-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>把一句中文寫成含未知數的式子</li>
+      <li>分得出同類項，並把它們合併</li>
+      <li>知道式子和方程式差在哪裡</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：不知道的東西，先給它一個名字</h2>
+    <p>題目說「某個數」，我們就叫它 <b>x</b>。接下來的中文就可以一句一句翻成式子：</p>
+    <table class="tb">
+      <tr><th>中文</th><th>式子</th></tr>
+      <tr><td>某數的 3 倍</td><td>3x</td></tr>
+      <tr><td>某數的 3 倍再加 5</td><td>3x ＋ 5</td></tr>
+      <tr><td>某數減 4 之後的 2 倍</td><td>2(x − 4)</td></tr>
+      <tr><td>某數的一半</td><td><span class="frac"><span>x</span><span>2</span></span></td></tr>
+      <tr><td>比某數多 7 的數</td><td>x ＋ 7</td></tr>
+    </table>
+    <div class="warn">⚠️ 「某數減 4 的 2 倍」要看清楚是 2(x−4) 還是 x−4×2。有括號差很多，讀題時先想清楚誰先算。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：同類項才能合併</h2>
+    <p><b>同類項</b>就是「文字部分長得一模一樣」的項。3x 和 5x 是同類項，3x 和 5 不是。</p>
+    <div class="formula">3x ＋ 5x ＝ 8x　　3x ＋ 5 ＝ 3x ＋ 5（合併不了）</div>
+    <div class="svgbox" id="svgLike"></div>
+    <div class="note">💡 想成「3 隻貓 ＋ 5 隻貓 ＝ 8 隻貓」，但「3 隻貓 ＋ 5 顆蘋果」只能放著。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：式子、等式、方程式</h2>
+    <table class="tb">
+      <tr><th>名稱</th><th>長相</th><th>說明</th></tr>
+      <tr><td>式子</td><td>3x ＋ 5</td><td>只是一串算式，沒有等號</td></tr>
+      <tr><td>等式</td><td>3x ＋ 5 ＝ 20</td><td>有等號，宣稱兩邊一樣大</td></tr>
+      <tr><td>一元一次方程式</td><td>3x ＋ 5 ＝ 20</td><td>只有<b>一個</b>未知數（一元），而且次方是 <b>1</b>（一次）</td></tr>
+    </table>
+    <p>讓等式成立的那個 x，叫做這個方程式的<b>解</b>（或根）。</p>
+    <div class="warn">⚠️ x² ＋ 1 ＝ 5 不是一元一次，因為 x 的次方是 2。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　把「某數的 4 倍比 9 少 1」列成方程式</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 某數叫 x，它的 4 倍是 4x。</p>
+        <p class="step"><b>②</b> 「比 9 少 1」就是 9 − 1 ＝ 8。</p>
+        <p class="step"><b>③</b> 方程式是 4x ＝ 8。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　化簡 5x − 3 ＋ 2x ＋ 8</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 把同類項排在一起：(5x ＋ 2x) ＋ (−3 ＋ 8)。</p>
+        <p class="step"><b>②</b> x 的部分：5 ＋ 2 ＝ 7，得 7x。</p>
+        <p class="step"><b>③</b> 數字部分：−3 ＋ 8 ＝ 5。答案是 7x ＋ 5。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 「某數的 5 倍再減 3」寫成式子是：</div>
+      <label><input type="radio" name="p1q1" value="A">3 − 5x</label>
+      <label><input type="radio" name="p1q1" value="B">5x − 3</label>
+      <label><input type="radio" name="p1q1" value="C">5(x − 3)</label>
+      <label><input type="radio" name="p1q1" value="D">x − 3×5</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　先 5 倍得 5x，再減 3。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 化簡 8x − 2x ＋ 5 ＝ </div>
+      <label><input type="radio" name="p1q2" value="A">6x ＋ 5</label>
+      <label><input type="radio" name="p1q2" value="B">6x</label>
+      <label><input type="radio" name="p1q2" value="C">11x</label>
+      <label><input type="radio" name="p1q2" value="D">13x</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　只有 8x 和 −2x 是同類項，合併成 6x，5 留著。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 下面哪一個<b>是</b>一元一次方程式？</div>
+      <label><input type="radio" name="p1q3" value="A">2x ＋ 1 ＝ 7</label>
+      <label><input type="radio" name="p1q3" value="B">x ＋ y ＝ 5</label>
+      <label><input type="radio" name="p1q3" value="C">3x ＋ 1</label>
+      <label><input type="radio" name="p1q3" value="D">x² ＝ 9</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　要有一個未知數、次方是 1、而且有等號。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. x ＝ 3 是下面哪一個方程式的解？</div>
+      <label><input type="radio" name="p1q4" value="A">2x ＋ 1 ＝ 9</label>
+      <label><input type="radio" name="p1q4" value="B">5x ＝ 10</label>
+      <label><input type="radio" name="p1q4" value="C">2x ＋ 1 ＝ 7</label>
+      <label><input type="radio" name="p1q4" value="D">x ＋ 3 ＝ 3</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　代入：2×3 ＋ 1 ＝ 7 成立。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出等量公理在講什麼</li>
+      <li>用天平的方式一步一步解出 x</li>
+      <li>知道「移項變號」其實就是兩邊同加同減</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：等量公理就是「兩邊要公平」</h2>
+    <p>等號代表天平是平的。只要<b>兩邊做一模一樣的事</b>，天平就會一直保持平衡：</p>
+    <div class="formula">兩邊同加、同減、同乘、同除（除數不為 0），等號都還是成立</div>
+    <div class="warn">⚠️ 只動一邊，天平立刻歪掉，等號就不成立了。解方程式最常見的錯就是只改了一邊。</div>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ 天平模擬器</h2>
+    <p>先拉出一個方程式，再按下面的按鈕動它。<b>兩邊一起動</b>天平會保持水平，<b>只動一邊</b>天平就會歪掉。試試看就懂了。</p>
+    <div class="toolbox">
+      <div class="row2">
+        <span><label>x 前面的係數 <b id="wA">2</b></label><input type="range" id="rA" min="1" max="4" value="2"></span>
+        <span><label>加上的數 <b id="wB">3</b></label><input type="range" id="rB" min="-5" max="5" value="3"></span>
+        <span><label>x 其實是 <b id="wX">4</b></label><input type="range" id="rX" min="1" max="6" value="4"></span>
+      </div>
+      <div class="svgbox" id="svgBal"></div>
+      <div class="bigsay" id="balSay"></div>
+      <div class="btnrow">
+        <button class="abtn" id="bSub">兩邊同減</button>
+        <button class="abtn" id="bDiv">兩邊同除以</button>
+        <button class="abtn bad" id="bBad">只把左邊減 1（故意做錯）</button>
+        <button class="abtn ghost" id="bReset">重來</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：解方程式的固定流程</h2>
+    <div class="formula">① 有括號先拆　→　② 兩邊各自合併同類項　→　③ 把 x 移到同一邊、數字移到另一邊　→　④ 兩邊同除以 x 的係數</div>
+    <table class="tb">
+      <tr><th>步驟</th><th>式子</th><th>做了什麼</th></tr>
+      <tr><td>原式</td><td>2x ＋ 3 ＝ 11</td><td></td></tr>
+      <tr><td>①</td><td>2x ＝ 8</td><td>兩邊同減 3</td></tr>
+      <tr><td>②</td><td>x ＝ 4</td><td>兩邊同除以 2</td></tr>
+      <tr><td>驗算</td><td>2×4 ＋ 3 ＝ 11 ✔</td><td>代回原式確認</td></tr>
+    </table>
+    <div class="note">💡 所謂「移項要變號」，其實就是兩邊同減。把 ＋3 移到右邊變 −3，是因為兩邊都減了 3。知道原理就不會記錯方向。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：兩邊都有 x 怎麼辦</h2>
+    <p>一樣的做法，把 x 全部趕到同一邊：</p>
+    <div class="formula">5x − 2 ＝ 3x ＋ 8　→（兩邊同減 3x）→　2x − 2 ＝ 8　→（同加 2）→　2x ＝ 10　→　x ＝ 5</div>
+    <div class="note">💡 習慣把 x 留在係數比較大的那一邊，可以少處理一次負號。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　解 4x − 7 ＝ 9</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 兩邊同加 7：4x ＝ 16。</p>
+        <p class="step"><b>②</b> 兩邊同除以 4：x ＝ 4。</p>
+        <p class="step"><b>③</b> 驗算：4×4 − 7 ＝ 9 ✔</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　解 3(x ＋ 2) ＝ 18</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 先拆括號：3x ＋ 6 ＝ 18。</p>
+        <p class="step"><b>②</b> 兩邊同減 6：3x ＝ 12。</p>
+        <p class="step"><b>③</b> 兩邊同除以 3：x ＝ 4。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　解 7x ＋ 1 ＝ 2x ＋ 16</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 兩邊同減 2x：5x ＋ 1 ＝ 16。</p>
+        <p class="step"><b>②</b> 兩邊同減 1：5x ＝ 15。</p>
+        <p class="step"><b>③</b> 兩邊同除以 5：x ＝ 3。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 解 x ＋ 9 ＝ 4，x ＝ </div>
+      <label><input type="radio" name="p2q1" value="A">−13</label>
+      <label><input type="radio" name="p2q1" value="B">5</label>
+      <label><input type="radio" name="p2q1" value="C">−5</label>
+      <label><input type="radio" name="p2q1" value="D">13</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　兩邊同減 9：x ＝ 4 − 9 ＝ −5。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 解 6x ＝ −18，x ＝ </div>
+      <label><input type="radio" name="p2q2" value="A">−3</label>
+      <label><input type="radio" name="p2q2" value="B">−12</label>
+      <label><input type="radio" name="p2q2" value="C">3</label>
+      <label><input type="radio" name="p2q2" value="D">12</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　兩邊同除以 6，一個負號所以是 −3。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. 解 2x − 5 ＝ 11，x ＝ </div>
+      <label><input type="radio" name="p2q3" value="A">3</label>
+      <label><input type="radio" name="p2q3" value="B">6</label>
+      <label><input type="radio" name="p2q3" value="C">8</label>
+      <label><input type="radio" name="p2q3" value="D">16</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　同加 5 得 2x ＝ 16，同除以 2 得 x ＝ 8。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. 解 4x ＋ 3 ＝ x ＋ 12，x ＝ </div>
+      <label><input type="radio" name="p2q4" value="A">5</label>
+      <label><input type="radio" name="p2q4" value="B">15</label>
+      <label><input type="radio" name="p2q4" value="C">−3</label>
+      <label><input type="radio" name="p2q4" value="D">3</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　同減 x 得 3x ＋ 3 ＝ 12，同減 3 得 3x ＝ 9，x ＝ 3。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>讀完題目知道要把哪一個量設成 x</li>
+      <li>把題目的關係寫成一條方程式</li>
+      <li>解完會檢查答案合不合理</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：應用題的四個步驟</h2>
+    <div class="formula">① 設：要求什麼就設什麼是 x　→　② 列：把題目的關係寫成等式<br>③ 解：照上一節的流程解出來　→　④ 答：回頭看合不合理，記得寫單位</div>
+    <div class="warn">⚠️ 第 ④ 步不要跳過。人數算出小數、年齡算出負的，就代表前面列錯了。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：常見題型的列式方法</h2>
+    <h3>和差問題</h3>
+    <p>兩數和 30、大數比小數多 6。設小數是 x，大數就是 x ＋ 6。</p>
+    <div class="formula">x ＋ (x ＋ 6) ＝ 30</div>
+    <h3>年齡問題</h3>
+    <p>大家<b>一起</b>變老，所以 n 年後每個人都加 n。</p>
+    <div class="formula">今年爸爸 40、兒子 10，幾年後爸爸是兒子的 2 倍？<br>40 ＋ x ＝ 2(10 ＋ x)</div>
+    <h3>速率問題</h3>
+    <div class="formula">路程 ＝ 速率 × 時間</div>
+    <p>相向而行就把兩人的路程<b>加起來</b>等於總距離。</p>
+    <h3>分配問題</h3>
+    <p>「甲是乙的 3 倍」→ 設乙是 x，甲就是 3x，兩個加起來等於總數。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：把中文翻成式子的對照表</h2>
+    <table class="tb">
+      <tr><th>題目怎麼說</th><th>式子怎麼寫</th></tr>
+      <tr><td>比 x 多 5</td><td>x ＋ 5</td></tr>
+      <tr><td>比 x 少 5</td><td>x − 5</td></tr>
+      <tr><td>是 x 的 3 倍</td><td>3x</td></tr>
+      <tr><td>比 x 的 3 倍多 2</td><td>3x ＋ 2</td></tr>
+      <tr><td>x 的一半再減 1</td><td><span class="frac"><span>x</span><span>2</span></span> − 1</td></tr>
+      <tr><td>連續的兩個整數</td><td>x 和 x ＋ 1</td></tr>
+    </table>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　兩數和是 46，大數比小數多 8，求這兩個數</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 設小數是 x，大數就是 x ＋ 8。</p>
+        <p class="step"><b>②</b> 列式：x ＋ (x ＋ 8) ＝ 46，也就是 2x ＋ 8 ＝ 46。</p>
+        <p class="step"><b>③</b> 解得 2x ＝ 38、x ＝ 19。小數 19、大數 27，相加 46 ✔</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　今年媽媽 36 歲、女兒 8 歲，幾年後媽媽的年齡是女兒的 3 倍？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 設 x 年後，那時媽媽 36 ＋ x、女兒 8 ＋ x。</p>
+        <p class="step"><b>②</b> 列式：36 ＋ x ＝ 3(8 ＋ x)，拆開得 36 ＋ x ＝ 24 ＋ 3x。</p>
+        <p class="step"><b>③</b> 同減 x、同減 24：12 ＝ 2x，x ＝ 6。6 年後媽媽 42、女兒 14，剛好 3 倍 ✔</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　買 5 支筆付 200 元，找回 35 元，一支筆多少錢？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 設一支筆 x 元，5 支就是 5x。</p>
+        <p class="step"><b>②</b> 列式：5x ＝ 200 − 35 ＝ 165。</p>
+        <p class="step"><b>③</b> x ＝ 33，一支筆 33 元。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 連續兩個整數的和是 35，較小的是：</div>
+      <label><input type="radio" name="p3q1" value="A">17</label>
+      <label><input type="radio" name="p3q1" value="B">20</label>
+      <label><input type="radio" name="p3q1" value="C">18</label>
+      <label><input type="radio" name="p3q1" value="D">16</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　設較小的是 x：x ＋ (x＋1) ＝ 35，2x ＝ 34，x ＝ 17。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 一件衣服打八折後 640 元，原價是：</div>
+      <label><input type="radio" name="p3q2" value="A">800 元</label>
+      <label><input type="radio" name="p3q2" value="B">512 元</label>
+      <label><input type="radio" name="p3q2" value="C">720 元</label>
+      <label><input type="radio" name="p3q2" value="D">768 元</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　設原價 x：0.8x ＝ 640，x ＝ 800。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">3. 哥哥今年 15 歲，弟弟 9 歲，幾年前哥哥的年齡是弟弟的 3 倍？</div>
+      <label><input type="radio" name="p3q3" value="A">9 年前</label>
+      <label><input type="radio" name="p3q3" value="B">2 年前</label>
+      <label><input type="radio" name="p3q3" value="C">3 年前</label>
+      <label><input type="radio" name="p3q3" value="D">6 年前</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　設 x 年前：15 − x ＝ 3(9 − x)，15 − x ＝ 27 − 3x，2x ＝ 12，x ＝ 6。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. 甲乙相距 60 公里，相向而行，甲每小時 8 公里、乙每小時 12 公里，幾小時後相遇？</div>
+      <label><input type="radio" name="p3q4" value="A">4 小時</label>
+      <label><input type="radio" name="p3q4" value="B">2 小時</label>
+      <label><input type="radio" name="p3q4" value="C">3 小時</label>
+      <label><input type="radio" name="p3q4" value="D">5 小時</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　兩人路程相加：8x ＋ 12x ＝ 60，20x ＝ 60，x ＝ 3。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 化簡 7x ＋ 4 − 3x − 9 ＝ </div>
+      <label><input type="radio" name="qz1" value="A">10x − 5</label>
+      <label><input type="radio" name="qz1" value="B">4x − 5</label>
+      <label><input type="radio" name="qz1" value="C">−2x</label>
+      <label><input type="radio" name="qz1" value="D">4x ＋ 5</label>
+      <div class="fb" data-exp="　x 的部分 7−3 ＝ 4，數字部分 4−9 ＝ −5。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">2. 解 x − 12 ＝ −5，x ＝ </div>
+      <label><input type="radio" name="qz2" value="A">−7</label>
+      <label><input type="radio" name="qz2" value="B">−17</label>
+      <label><input type="radio" name="qz2" value="C">7</label>
+      <label><input type="radio" name="qz2" value="D">17</label>
+      <div class="fb" data-exp="　兩邊同加 12：x ＝ −5 ＋ 12 ＝ 7。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">3. 解 −3x ＝ 21，x ＝ </div>
+      <label><input type="radio" name="qz3" value="A">18</label>
+      <label><input type="radio" name="qz3" value="B">7</label>
+      <label><input type="radio" name="qz3" value="C">−18</label>
+      <label><input type="radio" name="qz3" value="D">−7</label>
+      <div class="fb" data-exp="　兩邊同除以 −3，一個負號，x ＝ −7。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">4. 解 5x ＋ 2 ＝ 17，x ＝ </div>
+      <label><input type="radio" name="qz4" value="A">3</label>
+      <label><input type="radio" name="qz4" value="B">5</label>
+      <label><input type="radio" name="qz4" value="C">15</label>
+      <label><input type="radio" name="qz4" value="D">19</label>
+      <div class="fb" data-exp="　同減 2 得 5x ＝ 15，同除以 5 得 x ＝ 3。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">5. 解 2(x − 3) ＝ 10，x ＝ </div>
+      <label><input type="radio" name="qz5" value="A">2</label>
+      <label><input type="radio" name="qz5" value="B">13</label>
+      <label><input type="radio" name="qz5" value="C">8</label>
+      <label><input type="radio" name="qz5" value="D">5</label>
+      <div class="fb" data-exp="　拆括號 2x − 6 ＝ 10，2x ＝ 16，x ＝ 8。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">6. 解 6x − 1 ＝ 2x ＋ 15，x ＝ </div>
+      <label><input type="radio" name="qz6" value="A">16</label>
+      <label><input type="radio" name="qz6" value="B">2</label>
+      <label><input type="radio" name="qz6" value="C">4</label>
+      <label><input type="radio" name="qz6" value="D">3.5</label>
+      <div class="fb" data-exp="　同減 2x 得 4x − 1 ＝ 15，同加 1 得 4x ＝ 16，x ＝ 4。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">7. 下面哪一個步驟<b>違反</b>等量公理？</div>
+      <label><input type="radio" name="qz7" value="A">兩邊同減 3</label>
+      <label><input type="radio" name="qz7" value="B">只把左邊減 3</label>
+      <label><input type="radio" name="qz7" value="C">兩邊同乘 2</label>
+      <label><input type="radio" name="qz7" value="D">兩邊同除以 5</label>
+      <div class="fb" data-exp="　只動一邊天平就歪了，等號不再成立。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">8. 兩數和 50、其中一數是另一數的 4 倍，較大的數是：</div>
+      <label><input type="radio" name="qz8" value="A">12.5</label>
+      <label><input type="radio" name="qz8" value="B">40</label>
+      <label><input type="radio" name="qz8" value="C">10</label>
+      <label><input type="radio" name="qz8" value="D">37.5</label>
+      <div class="fb" data-exp="　設小的是 x：x ＋ 4x ＝ 50，5x ＝ 50，x ＝ 10，大的是 40。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">9. 小明有一些錢，花掉一半再花 20 元後剩 30 元，原來有：</div>
+      <label><input type="radio" name="qz9" value="A">70 元</label>
+      <label><input type="radio" name="qz9" value="B">80 元</label>
+      <label><input type="radio" name="qz9" value="C">50 元</label>
+      <label><input type="radio" name="qz9" value="D">100 元</label>
+      <div class="fb" data-exp="　設原有 x：x/2 − 20 ＝ 30，x/2 ＝ 50，x ＝ 100。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">10. 一個長方形的長比寬多 4 公分，周長是 36 公分，寬是：</div>
+      <label><input type="radio" name="qz10" value="A">9 公分</label>
+      <label><input type="radio" name="qz10" value="B">14 公分</label>
+      <label><input type="radio" name="qz10" value="C">7 公分</label>
+      <label><input type="radio" name="qz10" value="D">11 公分</label>
+      <div class="fb" data-exp="　設寬 x：2(x ＋ x＋4) ＝ 36，2(2x＋4) ＝ 36，4x ＝ 28，x ＝ 7。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>國一數學自學教材 · 第 4 章 一元一次方程式<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "七上4 一元一次方程式";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.innerHTML='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.innerHTML='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.innerHTML='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.innerHTML='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// ── 同類項圖 ──
+(function(){
+  const W = 640;
+  let s = txt(W/2, 20, '3x ＋ 5x ＝ 8x　但　3x ＋ 5 合併不了', '#374151', 14);
+  for(let i = 0; i < 3; i++){ s += rect(40 + i*46, 36, 40, 34, '#ffe4e6', '#be123c', 1.5); s += txt(60 + i*46, 59, 'x', '#be123c', 16); }
+  s += txt(190, 59, '＋', '#111827', 18);
+  for(let i = 0; i < 5; i++){ s += rect(212 + i*46, 36, 40, 34, '#ffe4e6', '#be123c', 1.5); s += txt(232 + i*46, 59, 'x', '#be123c', 16); }
+  s += txt(460, 59, '＝ 8 個 x', '#111827', 16, 'start', 'font-weight="bold"');
+  for(let i = 0; i < 3; i++){ s += rect(40 + i*46, 92, 40, 34, '#ffe4e6', '#be123c', 1.5); s += txt(60 + i*46, 115, 'x', '#be123c', 16); }
+  s += txt(190, 115, '＋', '#111827', 18);
+  for(let i = 0; i < 5; i++){ s += `<circle cx="${232 + i*40}" cy="109" r="15" fill="#e5e7eb" stroke="#6b7280" stroke-width="1.5"/>`; s += txt(232 + i*40, 114, '1', '#374151', 14); }
+  s += txt(440, 115, '＝ 不同東西，放著', '#6b7280', 15, 'start');
+  document.getElementById('svgLike').innerHTML = svg(W, 142, s);
+})();
+
+// ── 天平模擬器 ──
+(function(){
+  const rA = document.getElementById('rA'), rB = document.getElementById('rB'), rX = document.getElementById('rX');
+  const say = document.getElementById('balSay');
+  const bSub = document.getElementById('bSub'), bDiv = document.getElementById('bDiv'),
+        bBad = document.getElementById('bBad'), bReset = document.getElementById('bReset');
+  const NG = v => String(v).replace('-', '−');
+  let st = null, xv = 4, note = '';
+
+  function reset(){
+    const a = +rA.value, b = +rB.value; xv = +rX.value;
+    st = { la: a, lb: b, rc: a * xv + b, tilted: false };
+    note = '';
+    document.getElementById('wA').textContent = a;
+    document.getElementById('wB').textContent = NG(b);
+    document.getElementById('wX').textContent = xv;
+    draw();
+  }
+  // 以托盤中心為準，x 方塊排一列，1 圓片每 5 個換一行，避免排出畫面
+  function side(cxPan, y, coef, konst){
+    let s = '';
+    if(coef > 0){
+      const w = coef * 34 - 4, x0 = cxPan - w/2;
+      for(let i = 0; i < coef; i++){
+        s += rect(x0 + i*34, y - 32, 30, 30, '#fecdd3', '#be123c', 1.5);
+        s += txt(x0 + i*34 + 15, y - 11, 'x', '#be123c', 15);
+      }
+    }
+    const n = Math.abs(konst);
+    if(n === 0) return s;
+    const neg = konst < 0, fill = neg ? '#e5e7eb' : '#fde68a', stroke = neg ? '#6b7280' : '#b45309';
+    const yTop = y + (coef > 0 ? 6 : -28);
+    if(n > 20){
+      s += rect(cxPan - 40, yTop, 80, 30, fill, stroke, 1.5);
+      s += txt(cxPan, yTop + 21, (neg ? '−' : '') + n + ' 顆', neg ? '#374151' : '#92400e', 14);
+      return s;
+    }
+    for(let i = 0; i < n; i++){
+      const row = Math.floor(i / 5), col = i % 5;
+      const inRow = Math.min(5, n - row * 5);
+      const x0 = cxPan - (inRow * 26 - 2) / 2;
+      const cx2 = x0 + col * 26 + 12, cy2 = yTop + 13 + row * 26;
+      s += `<circle cx="${cx2}" cy="${cy2}" r="12" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
+      s += txt(cx2, cy2 + 5, neg ? '−1' : '1', neg ? '#374151' : '#92400e', 11);
+    }
+    return s;
+  }
+  function draw(){
+    const W = 760, cx = W/2, topY = 40;
+    const lw = st.la * xv + st.lb, rw = st.rc;
+    const diff = lw - rw;
+    const ang = st.tilted ? Math.max(-9, Math.min(9, diff * 3)) : 0;
+    const arm = 250;
+    const lx = cx - arm * Math.cos(ang * Math.PI/180), ly = topY + arm * Math.sin(ang * Math.PI/180);
+    const rx = cx + arm * Math.cos(ang * Math.PI/180), ry = topY - arm * Math.sin(ang * Math.PI/180);
+    let s = '';
+    s += line(lx, ly, rx, ry, '#374151', 5);
+    s += `<circle cx="${cx}" cy="${topY}" r="7" fill="#374151"/>`;
+    s += poly([[cx-16, topY+96],[cx+16, topY+96],[cx, topY+6]], '#9ca3af', '#6b7280', 1.5);
+    s += line(cx-34, topY+96, cx+34, topY+96, '#6b7280', 3);
+    // 托盤
+    s += line(lx, ly, lx, ly+26, '#9ca3af', 2); s += line(lx-52, ly+26, lx+52, ly+26, '#374151', 4);
+    s += line(rx, ry, rx, ry+26, '#9ca3af', 2); s += line(rx-52, ry+26, rx+52, ry+26, '#374151', 4);
+    // 盤上的東西
+    s += side(lx, ly + 26, st.la, st.lb);
+    s += side(rx, ry + 26, 0, st.rc);
+    // 式子
+    const lstr = (st.la === 1 ? 'x' : st.la + 'x') + (st.lb === 0 ? '' : (st.lb > 0 ? ' ＋ ' + st.lb : ' － ' + Math.abs(st.lb)));
+    s += txt(cx, topY + 210, lstr + (st.tilted ? '  ≠  ' : '  ＝  ') + NG(st.rc),
+             st.tilted ? '#b91c1c' : '#111827', 22, 'middle', 'font-weight="bold"');
+    document.getElementById('svgBal').innerHTML = svg(W, topY + 236, s);
+
+    bSub.textContent = st.lb === 0 ? '兩邊同減（不需要了）' : '兩邊同減 ' + Math.abs(st.lb);
+    bSub.disabled = st.lb === 0 || st.tilted;
+    bDiv.textContent = st.la === 1 ? '兩邊同除（不需要了）' : '兩邊同除以 ' + st.la;
+    bDiv.disabled = st.la === 1 || st.lb !== 0 || st.tilted;
+    bBad.disabled = st.tilted;
+
+    if(st.tilted){
+      say.innerHTML = `<b style="color:#b91c1c">天平歪了，等號不成立。</b><br>` +
+        `只把左邊減 1，左右就不一樣重了。這一步在數學上是錯的，解方程式時<b>兩邊一定要做一樣的事</b>。按「重來」再試一次。`;
+    } else if(st.la === 1 && st.lb === 0){
+      say.innerHTML = `<b>x ＝ ${NG(st.rc)}</b>　解出來了！<br>` +
+        `驗算：把 x ＝ ${NG(st.rc)} 代回最開始的式子，左右兩邊確實一樣大。`;
+    } else {
+      say.innerHTML = (note ? note + '<br>' : '天平現在是平的，兩邊一樣重。<br>') +
+        `目前的式子是 <b>${lstr} ＝ ${NG(st.rc)}</b>。` +
+        (st.lb !== 0 ? '想辦法先把左邊的數字拿掉，才看得出一個 x 有多重。'
+                     : '左邊有 ' + st.la + ' 個 x，兩邊同除以 ' + st.la + ' 就知道一個 x 是多少。');
+    }
+  }
+  bSub.addEventListener('click', ()=>{
+    const k = st.lb; st.lb -= k; st.rc -= k;
+    note = `兩邊各拿掉 ${Math.abs(k)}，${k > 0 ? '拿走一樣多' : '補上一樣多'}，所以天平還是平的。`;
+    draw();
+  });
+  bDiv.addEventListener('click', ()=>{
+    const k = st.la; st.la = 1; st.rc = st.rc / k;
+    note = `兩邊都切成 ${k} 等份（同除以 ${k}），天平一樣是平的。`;
+    draw();
+  });
+  bBad.addEventListener('click', ()=>{ st.tilted = true; st.lb -= 1; draw(); });
+  bReset.addEventListener('click', reset);
+  [rA, rB, rX].forEach(r=>r.addEventListener('input', reset));
+  reset();
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國一數學｜七上 第5章 二元一次聯立方程式</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#0369a1; --accent-soft:#e0f2fe;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#0369a1,#0ea5e9); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .rt{white-space:nowrap;} .rt .rad{border-top:1.5px solid currentColor; padding:0 2px 0 1px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  table.tb{width:100%; border-collapse:collapse; margin:10px 0; font-size:.92rem;}
+  table.tb th,table.tb td{border:1px solid var(--border); padding:7px 10px; text-align:left;}
+  table.tb th{background:var(--accent-soft); font-weight:bold;}
+  .toolbox{background:var(--accent-soft); border-radius:12px; padding:14px 16px;}
+  .toolbox .row2{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:10px; align-items:center;}
+  .toolbox .row2 span{display:flex; align-items:center; gap:8px; flex:1 1 200px;}
+  .toolbox .tag{flex:0 0 auto; border-radius:99px; padding:3px 12px; color:#fff; font-size:.85rem; font-weight:bold;}
+  .toolbox .tag.l1{background:#0369a1;} .toolbox .tag.l2{background:#c2410c;}
+  .toolbox label{font-size:.88rem; white-space:nowrap;}
+  .toolbox label b{color:var(--accent); font-size:1.1rem;}
+  .toolbox input[type=range]{flex:1 1 70px; accent-color:var(--accent);}
+  .eqshow{background:#fff; border-radius:8px; padding:8px 14px; margin:8px 0; font-size:1.05rem; line-height:1.9;}
+  .bigsay{background:#fff; border-left:4px solid var(--accent); border-radius:8px;
+    padding:10px 14px; margin-top:8px; font-size:1rem; line-height:1.9; min-height:3em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國中七年級上學期 · 第5章</span>
+  <h1>二元一次聯立方程式</h1>
+  <p>三個小節＋單元總測驗。兩個未知數要兩條線索才抓得住。這一章有一台「兩條線找交點」的機器，你拉係數，兩條直線跟著動，交點就是答案；拉到平行的時候，你會親眼看到「無解」長什麼樣子。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">5-1 二元一次方程式與它的解</button>
+  <button data-t="s2">5-2 解聯立：消去法</button>
+  <button data-t="s3">5-3 應用問題</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 5-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>看得懂 (x, y) 這種成對的解</li>
+      <li>知道一個二元一次方程式有無限多組解</li>
+      <li>知道這些解畫出來會排成一條直線</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：兩個未知數，答案要一對一對出現</h2>
+    <p>像 x ＋ y ＝ 7 這種有<b>兩個</b>未知數、次方都是 <b>1</b> 的等式，叫<b>二元一次方程式</b>。</p>
+    <p>它的解不是一個數，而是一對數，寫成 (x, y)：</p>
+    <table class="tb">
+      <tr><th>x</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+      <tr><th>y</th><td>7</td><td>6</td><td>5</td><td>4</td><td>3</td></tr>
+    </table>
+    <div class="formula">(0, 7)、(1, 6)、(2, 5)、(3, 4)… 通通都是解</div>
+    <div class="note">💡 一條線索抓不住兩個未知數。只知道「兩數和是 7」，你說不出它們各是多少。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：把解畫出來，會排成一條直線</h2>
+    <p>把上面那些 (x, y) 一個一個點在坐標平面上，它們會乖乖排成一條直線。</p>
+    <div class="svgbox" id="svgLine1"></div>
+    <div class="note">💡 所以一個二元一次方程式 ＝ 一條直線。線上的每一點都是它的解，共有無限多個。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：兩條線索一起看，才抓得住</h2>
+    <p>如果同時知道「兩數和是 7」和「兩數差是 1」，答案就只剩一組了。把兩個方程式用大括號綁在一起，叫<b>聯立方程式</b>：</p>
+    <div class="formula">x ＋ y ＝ 7<br>x − y ＝ 1　　→　　解是 x ＝ 4、y ＝ 3</div>
+    <p>畫成圖就是：<b>兩條直線的交點</b>，因為交點同時在兩條線上，同時滿足兩個式子。</p>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　(2, 5) 是不是 3x ＋ y ＝ 11 的解？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 把 x ＝ 2、y ＝ 5 代進去。</p>
+        <p class="step"><b>②</b> 左邊 ＝ 3×2 ＋ 5 ＝ 11。</p>
+        <p class="step"><b>③</b> 右邊也是 11，兩邊相等，所以是解。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　x ＋ 2y ＝ 10 中，若 x ＝ 4，y 是多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 代入：4 ＋ 2y ＝ 10。</p>
+        <p class="step"><b>②</b> 兩邊同減 4：2y ＝ 6。</p>
+        <p class="step"><b>③</b> y ＝ 3，所以 (4, 3) 是一組解。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="D">
+      <div class="stem">1. 下面哪一組是 x ＋ y ＝ 9 的解？</div>
+      <label><input type="radio" name="p1q1" value="A">(9, 9)</label>
+      <label><input type="radio" name="p1q1" value="B">(4, 6)</label>
+      <label><input type="radio" name="p1q1" value="C">(3, 5)</label>
+      <label><input type="radio" name="p1q1" value="D">(4, 5)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　4 ＋ 5 ＝ 9，代進去成立。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. 在 2x ＋ y ＝ 12 中，若 x ＝ 3，則 y ＝ </div>
+      <label><input type="radio" name="p1q2" value="A">3</label>
+      <label><input type="radio" name="p1q2" value="B">6</label>
+      <label><input type="radio" name="p1q2" value="C">12</label>
+      <label><input type="radio" name="p1q2" value="D">9</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　2×3 ＋ y ＝ 12，6 ＋ y ＝ 12，y ＝ 6。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 一個二元一次方程式有幾組解？</div>
+      <label><input type="radio" name="p1q3" value="A">無限多組</label>
+      <label><input type="radio" name="p1q3" value="B">剛好一組</label>
+      <label><input type="radio" name="p1q3" value="C">剛好兩組</label>
+      <label><input type="radio" name="p1q3" value="D">沒有解</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　線上每一點都是解，所以有無限多組。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. 下面哪一個<b>不是</b>二元一次方程式？</div>
+      <label><input type="radio" name="p1q4" value="A">x ＋ y ＝ 5</label>
+      <label><input type="radio" name="p1q4" value="B">x ＝ y</label>
+      <label><input type="radio" name="p1q4" value="C">2x − 3y ＝ 0</label>
+      <label><input type="radio" name="p1q4" value="D">x² ＋ y ＝ 5</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　x 的次方是 2，不符合「一次」。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 5-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>用代入消去法解聯立方程式</li>
+      <li>用加減消去法解聯立方程式</li>
+      <li>看圖說得出無解和無限多解的差別</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：想辦法把兩個未知數變成一個</h2>
+    <p>我們只會解一個未知數的方程式（第 4 章），所以策略就是<b>消掉一個</b>。有兩條路：</p>
+    <table class="tb">
+      <tr><th>方法</th><th>什麼時候好用</th></tr>
+      <tr><td><b>代入消去法</b></td><td>其中一個式子可以輕鬆寫成「y ＝ …」的時候</td></tr>
+      <tr><td><b>加減消去法</b></td><td>兩式中某個未知數的係數一樣或剛好相反的時候</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：代入消去法</h2>
+    <div class="formula">① y ＋ 2x ＝ 11　　② y ＝ x ＋ 2</div>
+    <p>②已經是「y ＝ …」，直接把它整包塞進①的 y：</p>
+    <div class="formula">(x ＋ 2) ＋ 2x ＝ 11　→　3x ＋ 2 ＝ 11　→　x ＝ 3</div>
+    <p>再把 x ＝ 3 代回②：y ＝ 3 ＋ 2 ＝ 5。解是 (3, 5)。</p>
+    <div class="warn">⚠️ 代進去時整包要加括號，不然負號會漏掉。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：加減消去法</h2>
+    <div class="formula">① 3x ＋ y ＝ 14　　② x ＋ y ＝ 6</div>
+    <p>兩式的 y 係數都是 1，<b>相減</b>就把 y 消掉了：</p>
+    <div class="formula">①−②：(3x − x) ＋ (y − y) ＝ 14 − 6　→　2x ＝ 8　→　x ＝ 4</div>
+    <p>代回②：4 ＋ y ＝ 6，y ＝ 2。解是 (4, 2)。</p>
+    <div class="note">💡 係數不一樣時，先把其中一式（或兩式）乘一個數，湊成一樣再相減。例如係數是 2 和 3，就各乘 3 和 2 湊成 6。</div>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ 兩條直線找交點</h2>
+    <p>拉四條桿子改變兩條直線。<b>交點的坐標就是聯立方程式的解</b>。把兩條線拉成平行看看，會發生什麼事？</p>
+    <div class="toolbox">
+      <div class="row2">
+        <span class="tag l1">第①式</span>
+        <span><label>x 的係數 <b id="wA1">1</b></label><input type="range" id="rA1" min="-3" max="3" value="1"></span>
+        <span><label>等於 <b id="wC1">7</b></label><input type="range" id="rC1" min="-6" max="8" value="7"></span>
+      </div>
+      <div class="row2">
+        <span class="tag l2">第②式</span>
+        <span><label>x 的係數 <b id="wA2">-1</b></label><input type="range" id="rA2" min="-3" max="3" value="-1"></span>
+        <span><label>等於 <b id="wC2">1</b></label><input type="range" id="rC2" min="-6" max="8" value="1"></span>
+      </div>
+      <div class="eqshow" id="eqShow"></div>
+      <div class="svgbox" id="svgXY"></div>
+      <div class="bigsay" id="xySay"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：三種結果</h2>
+    <table class="tb">
+      <tr><th>圖形</th><th>解的情況</th><th>算式上會看到</th></tr>
+      <tr><td>兩線交於一點</td><td>剛好一組解</td><td>算得出 x 和 y</td></tr>
+      <tr><td>兩線平行</td><td><b>無解</b></td><td>消去後變成 0 ＝ 5 這種不可能的式子</td></tr>
+      <tr><td>兩線重疊</td><td><b>無限多組解</b></td><td>消去後變成 0 ＝ 0</td></tr>
+    </table>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　用代入法解：y ＝ 2x − 1、3x ＋ y ＝ 9</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 把 y ＝ 2x − 1 代入第二式：3x ＋ (2x − 1) ＝ 9。</p>
+        <p class="step"><b>②</b> 化簡：5x − 1 ＝ 9，5x ＝ 10，x ＝ 2。</p>
+        <p class="step"><b>③</b> 代回：y ＝ 2×2 − 1 ＝ 3。解是 (2, 3)。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　用加減法解：2x ＋ y ＝ 8、x − y ＝ 1</summary>
+      <div class="body">
+        <p class="step"><b>①</b> y 的係數是 ＋1 和 −1，剛好相反，兩式<b>相加</b>就消掉。</p>
+        <p class="step"><b>②</b> 相加：3x ＝ 9，x ＝ 3。</p>
+        <p class="step"><b>③</b> 代回第二式：3 − y ＝ 1，y ＝ 2。解是 (3, 2)。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　解：x ＋ y ＝ 5、2x ＋ 2y ＝ 14</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 第二式整條除以 2：x ＋ y ＝ 7。</p>
+        <p class="step"><b>②</b> 但第一式說 x ＋ y ＝ 5，同一個東西不可能又是 5 又是 7。</p>
+        <p class="step"><b>③</b> 兩條線平行，這個聯立方程式<b>無解</b>。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="D">
+      <div class="stem">1. 解 x ＋ y ＝ 10、x − y ＝ 2，則 x ＝ </div>
+      <label><input type="radio" name="p2q1" value="A">4</label>
+      <label><input type="radio" name="p2q1" value="B">5</label>
+      <label><input type="radio" name="p2q1" value="C">8</label>
+      <label><input type="radio" name="p2q1" value="D">6</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　兩式相加消去 y：2x ＝ 12，x ＝ 6。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. 解 y ＝ x ＋ 1、2x ＋ y ＝ 7，則 (x, y) ＝ </div>
+      <label><input type="radio" name="p2q2" value="A">(1, 2)</label>
+      <label><input type="radio" name="p2q2" value="B">(2, 3)</label>
+      <label><input type="radio" name="p2q2" value="C">(3, 2)</label>
+      <label><input type="radio" name="p2q2" value="D">(2, 5)</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　代入：2x ＋ x ＋ 1 ＝ 7，3x ＝ 6，x ＝ 2，y ＝ 3。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 解 3x ＋ 2y ＝ 16、3x − 2y ＝ 4，則 y ＝ </div>
+      <label><input type="radio" name="p2q3" value="A">3</label>
+      <label><input type="radio" name="p2q3" value="B">4</label>
+      <label><input type="radio" name="p2q3" value="C">5</label>
+      <label><input type="radio" name="p2q3" value="D">2</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　兩式相減消去 x：4y ＝ 12，y ＝ 3。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. 兩條直線畫出來<b>平行</b>，代表這個聯立方程式：</div>
+      <label><input type="radio" name="p2q4" value="A">有兩組解</label>
+      <label><input type="radio" name="p2q4" value="B">無限多組解</label>
+      <label><input type="radio" name="p2q4" value="C">剛好一組解</label>
+      <label><input type="radio" name="p2q4" value="D">無解</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　平行線永遠不相交，所以沒有同時滿足兩式的 (x, y)。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 5-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>讀題時判斷要設兩個未知數</li>
+      <li>列出兩條互相獨立的方程式</li>
+      <li>解完會代回原題目檢查</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：兩個未知數，就要找到兩條關係</h2>
+    <div class="formula">① 設：兩個不知道的量分別設成 x 和 y<br>② 列：從題目找出<b>兩條</b>不一樣的關係<br>③ 解：用代入或加減消去<br>④ 答：代回題目檢查，寫上單位</div>
+    <div class="warn">⚠️ 兩條式子必須是「不同的線索」。如果第二條只是第一條乘 2，等於什麼都沒說，會變成無限多解。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：三種常見題型</h2>
+    <h3>買東西</h3>
+    <p>筆 x 元、本子 y 元。「3 支筆 2 本共 130 元」「1 支筆 4 本共 160 元」：</p>
+    <div class="formula">3x ＋ 2y ＝ 130　　x ＋ 4y ＝ 160</div>
+    <h3>雞兔同籠</h3>
+    <p>雞 x 隻、兔 y 隻。<b>頭</b>各一個，<b>腳</b>雞 2 兔 4：</p>
+    <div class="formula">x ＋ y ＝ 頭的總數　　2x ＋ 4y ＝ 腳的總數</div>
+    <h3>兩位數的數字</h3>
+    <p>十位是 x、個位是 y，這個兩位數的值是 <b>10x ＋ y</b>，不是 xy。</p>
+    <div class="formula">數字和：x ＋ y ＝ ○○　　對調後：10y ＋ x ＝ …</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：列完先檢查兩件事</h2>
+    <ul>
+      <li>兩條式子的<b>單位</b>對不對？一條在算「個數」、一條在算「錢」，不要混在同一條。</li>
+      <li>兩條式子是不是<b>真的不同</b>？把其中一條乘或除看看，會不會變成另一條。</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　雞和兔共 10 隻，腳共 28 隻，各幾隻？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 設雞 x 隻、兔 y 隻。頭：x ＋ y ＝ 10；腳：2x ＋ 4y ＝ 28。</p>
+        <p class="step"><b>②</b> 第一式乘 2：2x ＋ 2y ＝ 20，與第二式相減得 2y ＝ 8，y ＝ 4。</p>
+        <p class="step"><b>③</b> 代回：x ＝ 6。雞 6 隻、兔 4 隻。檢查腳：2×6 ＋ 4×4 ＝ 28 ✔</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　2 個麵包加 3 瓶牛奶 145 元，1 個麵包加 1 瓶牛奶 60 元，各多少錢？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 設麵包 x 元、牛奶 y 元：2x ＋ 3y ＝ 145、x ＋ y ＝ 60。</p>
+        <p class="step"><b>②</b> 第二式乘 2：2x ＋ 2y ＝ 120，與第一式相減得 y ＝ 25。</p>
+        <p class="step"><b>③</b> 代回：x ＝ 35。麵包 35 元、牛奶 25 元。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　一個兩位數，數字和是 9，十位數比個位數大 3，這個數是多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 設十位 x、個位 y：x ＋ y ＝ 9、x − y ＝ 3。</p>
+        <p class="step"><b>②</b> 相加：2x ＝ 12，x ＝ 6；代回得 y ＝ 3。</p>
+        <p class="step"><b>③</b> 這個兩位數是 10×6 ＋ 3 ＝ 63。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 雞兔共 20 隻、腳共 56 隻，兔子有幾隻？</div>
+      <label><input type="radio" name="p3q1" value="A">6 隻</label>
+      <label><input type="radio" name="p3q1" value="B">8 隻</label>
+      <label><input type="radio" name="p3q1" value="C">12 隻</label>
+      <label><input type="radio" name="p3q1" value="D">10 隻</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　x＋y ＝ 20、2x＋4y ＝ 56。第一式乘 2 相減得 2y ＝ 16，y ＝ 8。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. 2 支筆 3 本簿子 85 元，2 支筆 1 本簿子 55 元，一本簿子多少錢？</div>
+      <label><input type="radio" name="p3q2" value="A">25 元</label>
+      <label><input type="radio" name="p3q2" value="B">15 元</label>
+      <label><input type="radio" name="p3q2" value="C">10 元</label>
+      <label><input type="radio" name="p3q2" value="D">20 元</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　兩式相減：2y ＝ 30，y ＝ 15。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 兩數和 24、差 6，較大的數是：</div>
+      <label><input type="radio" name="p3q3" value="A">18</label>
+      <label><input type="radio" name="p3q3" value="B">15</label>
+      <label><input type="radio" name="p3q3" value="C">12</label>
+      <label><input type="radio" name="p3q3" value="D">9</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　x＋y ＝ 24、x−y ＝ 6，相加得 2x ＝ 30，x ＝ 15。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. 一個兩位數，十位數字 x、個位數字 y，這個數的值是：</div>
+      <label><input type="radio" name="p3q4" value="A">x ＋ 10y</label>
+      <label><input type="radio" name="p3q4" value="B">x ＋ y</label>
+      <label><input type="radio" name="p3q4" value="C">10x ＋ y</label>
+      <label><input type="radio" name="p3q4" value="D">xy</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　十位要乘 10，例如 63 ＝ 10×6 ＋ 3。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="A">
+      <div class="stem">1. 下面哪一組是 2x ＋ y ＝ 7 的解？</div>
+      <label><input type="radio" name="qz1" value="A">(3, 1)</label>
+      <label><input type="radio" name="qz1" value="B">(7, 2)</label>
+      <label><input type="radio" name="qz1" value="C">(1, 3)</label>
+      <label><input type="radio" name="qz1" value="D">(2, 7)</label>
+      <div class="fb" data-exp="　2×3 ＋ 1 ＝ 7 成立；其餘代進去都不等於 7。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">2. 解 x ＋ y ＝ 12、x − y ＝ 4，則 y ＝ </div>
+      <label><input type="radio" name="qz2" value="A">2</label>
+      <label><input type="radio" name="qz2" value="B">6</label>
+      <label><input type="radio" name="qz2" value="C">8</label>
+      <label><input type="radio" name="qz2" value="D">4</label>
+      <div class="fb" data-exp="　兩式相減：2y ＝ 8，y ＝ 4。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">3. 解 y ＝ 3x、x ＋ y ＝ 16，則 x ＝ </div>
+      <label><input type="radio" name="qz3" value="A">3</label>
+      <label><input type="radio" name="qz3" value="B">4</label>
+      <label><input type="radio" name="qz3" value="C">12</label>
+      <label><input type="radio" name="qz3" value="D">8</label>
+      <div class="fb" data-exp="　代入：x ＋ 3x ＝ 16，4x ＝ 16，x ＝ 4。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">4. 解 2x ＋ 3y ＝ 19、2x − 3y ＝ 1，則 x ＝ </div>
+      <label><input type="radio" name="qz4" value="A">2</label>
+      <label><input type="radio" name="qz4" value="B">3</label>
+      <label><input type="radio" name="qz4" value="C">5</label>
+      <label><input type="radio" name="qz4" value="D">4</label>
+      <div class="fb" data-exp="　兩式相加：4x ＝ 20，x ＝ 5。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">5. 聯立方程式消去後得到 0 ＝ 6，代表：</div>
+      <label><input type="radio" name="qz5" value="A">x ＝ 6</label>
+      <label><input type="radio" name="qz5" value="B">無限多組解</label>
+      <label><input type="radio" name="qz5" value="C">剛好一組解</label>
+      <label><input type="radio" name="qz5" value="D">無解</label>
+      <div class="fb" data-exp="　0 不可能等於 6，代表兩條線平行，沒有交點。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">6. 聯立方程式消去後得到 0 ＝ 0，代表：</div>
+      <label><input type="radio" name="qz6" value="A">x ＝ 0</label>
+      <label><input type="radio" name="qz6" value="B">無限多組解</label>
+      <label><input type="radio" name="qz6" value="C">剛好一組解</label>
+      <label><input type="radio" name="qz6" value="D">無解</label>
+      <div class="fb" data-exp="　兩條式子其實是同一條線，線上每一點都是解。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">7. 在坐標平面上，聯立方程式的解對應到：</div>
+      <label><input type="radio" name="qz7" value="A">兩條直線的交點</label>
+      <label><input type="radio" name="qz7" value="B">原點</label>
+      <label><input type="radio" name="qz7" value="C">兩條直線的中點</label>
+      <label><input type="radio" name="qz7" value="D">y 軸上的點</label>
+      <div class="fb" data-exp="　交點同時在兩條線上，所以同時滿足兩個式子。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">8. 雞兔共 15 隻、腳共 40 隻，雞有幾隻？</div>
+      <label><input type="radio" name="qz8" value="A">10 隻</label>
+      <label><input type="radio" name="qz8" value="B">7 隻</label>
+      <label><input type="radio" name="qz8" value="C">8 隻</label>
+      <label><input type="radio" name="qz8" value="D">5 隻</label>
+      <div class="fb" data-exp="　x＋y ＝ 15、2x＋4y ＝ 40，解得 y ＝ 5、x ＝ 10。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">9. 3 個蘋果 2 個橘子 76 元，1 個蘋果 2 個橘子 44 元，一個蘋果多少錢？</div>
+      <label><input type="radio" name="qz9" value="A">20 元</label>
+      <label><input type="radio" name="qz9" value="B">16 元</label>
+      <label><input type="radio" name="qz9" value="C">12 元</label>
+      <label><input type="radio" name="qz9" value="D">14 元</label>
+      <div class="fb" data-exp="　兩式相減：2x ＝ 32，x ＝ 16。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">10. 一個兩位數的數字和是 11，十位比個位大 1，這個數是：</div>
+      <label><input type="radio" name="qz10" value="A">47</label>
+      <label><input type="radio" name="qz10" value="B">56</label>
+      <label><input type="radio" name="qz10" value="C">74</label>
+      <label><input type="radio" name="qz10" value="D">65</label>
+      <div class="fb" data-exp="　x＋y ＝ 11、x−y ＝ 1，得 x ＝ 6、y ＝ 5，數值是 65。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>國一數學自學教材 · 第 5 章 二元一次聯立方程式<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "七上5 二元一次聯立方程式";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.innerHTML='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.innerHTML='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.innerHTML='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.innerHTML='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+const NG = v => String(v).replace('-', '−');
+
+// ── 坐標平面的骨架 ──
+function axes(W, H, LO, HI){
+  const pad = 30, sp = (W - pad*2) / (HI - LO);
+  const X = v => pad + (v - LO) * sp, Y = v => H - pad - (v - LO) * sp;
+  let s = '';
+  for(let v = LO; v <= HI; v++){
+    s += line(X(v), Y(LO), X(v), Y(HI), '#e5e7eb', 1);
+    s += line(X(LO), Y(v), X(HI), Y(v), '#e5e7eb', 1);
+  }
+  s += line(X(LO), Y(0), X(HI), Y(0), '#374151', 2);
+  s += line(X(0), Y(LO), X(0), Y(HI), '#374151', 2);
+  for(let v = LO + 2; v <= HI - 2; v += 2){   // 兩端不標，免得和 x、y 字母疊在一起
+    if(v === 0) continue;
+    s += txt(X(v), Y(0) + 15, NG(v), '#9ca3af', 10);
+    s += txt(X(0) - 9, Y(v) + 4, NG(v), '#9ca3af', 10, 'end');
+  }
+  s += txt(X(HI) + 2, Y(0) + 14, 'x', '#374151', 12, 'start');
+  s += txt(X(0) - 10, Y(HI) + 2, 'y', '#374151', 12, 'end');
+  return { s, X, Y };
+}
+
+// ── x ＋ y ＝ 7 的圖 ──
+(function(){
+  const W = 400, H = 400, LO = -1, HI = 8;
+  const A = axes(W, H, LO, HI);
+  let s = A.s;
+  s += line(A.X(-1), A.Y(8), A.X(8), A.Y(-1), '#0369a1', 3);
+  [[0,7],[1,6],[2,5],[3,4],[4,3]].forEach(p=>{
+    s += `<circle cx="${A.X(p[0])}" cy="${A.Y(p[1])}" r="5" fill="#0369a1"/>`;
+  });
+  s += txt(A.X(6), A.Y(3), 'x ＋ y ＝ 7', '#0369a1', 14, 'start', 'font-weight="bold"');
+  document.getElementById('svgLine1').innerHTML = svg(W, H, s);
+})();
+
+// ── 兩條直線找交點 ──
+(function(){
+  const ids = ['rA1','rC1','rA2','rC2'].map(i=>document.getElementById(i));
+  function eqStr(a, c){
+    const ax = a === 0 ? '' : (a === 1 ? 'x' : (a === -1 ? '−x' : NG(a) + 'x'));
+    if(a === 0) return 'y ＝ ' + NG(c);
+    return ax + ' ＋ y ＝ ' + NG(c);
+  }
+  function draw(){
+    const [a1, c1, a2, c2] = ids.map(i=>+i.value);
+    document.getElementById('wA1').textContent = NG(a1);
+    document.getElementById('wC1').textContent = NG(c1);
+    document.getElementById('wA2').textContent = NG(a2);
+    document.getElementById('wC2').textContent = NG(c2);
+    document.getElementById('eqShow').innerHTML =
+      `<span style="color:#0369a1;font-weight:bold">①　${eqStr(a1, c1)}</span><br>` +
+      `<span style="color:#c2410c;font-weight:bold">②　${eqStr(a2, c2)}</span>`;
+
+    const W = 420, H = 420, LO = -8, HI = 8;
+    const A = axes(W, H, LO, HI);
+    let s = A.s;
+    // y = c - a x，只畫在框內的部分
+    function seg(a, c, col){
+      const y1 = c - a * LO, y2 = c - a * HI;
+      const cl = (x, y) => [Math.max(LO, Math.min(HI, x)), Math.max(LO, Math.min(HI, y))];
+      // 用取樣避免超出邊界
+      let pts = [];
+      for(let i = 0; i <= 160; i++){
+        const x = LO + (HI - LO) * i / 160, y = c - a * x;
+        if(y >= LO && y <= HI) pts.push([A.X(x), A.Y(y)]);
+      }
+      if(pts.length < 2) return '';
+      return `<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${col}" stroke-width="3"/>`;
+    }
+    s += seg(a1, c1, '#0369a1');
+    s += seg(a2, c2, '#c2410c');
+
+    let msg;
+    if(a1 === a2 && c1 === c2){
+      msg = `<b>兩條線完全疊在一起。</b>兩個式子其實是同一條線，線上每一點都同時滿足兩式，所以有<b>無限多組解</b>。<br>` +
+            `算式上會看到消去後變成 0 ＝ 0。`;
+    } else if(a1 === a2){
+      msg = `<b style="color:#b91c1c">兩條線平行，永遠不會相交。</b>找不到同時滿足兩式的 (x, y)，所以<b>無解</b>。<br>` +
+            `算式上會看到消去後變成 0 ＝ ${NG(c1 - c2)} 這種不可能的式子。`;
+      s += txt(W/2, 28, '平行 → 無解', '#b91c1c', 16, 'middle', 'font-weight="bold"');
+    } else {
+      const x = (c1 - c2) / (a1 - a2), y = c1 - a1 * x;
+      const rx = Math.round(x * 100) / 100, ry = Math.round(y * 100) / 100;
+      if(x >= LO && x <= HI && y >= LO && y <= HI){
+        s += `<circle cx="${A.X(x)}" cy="${A.Y(y)}" r="7" fill="#16a34a"/>`;
+        s += txt(A.X(x) + 12, A.Y(y) - 10, `(${NG(rx)}, ${NG(ry)})`, '#16a34a', 14, 'start', 'font-weight="bold"');
+      }
+      const intp = Number.isInteger(x) && Number.isInteger(y);
+      msg = `兩條線交在 <b>(${NG(rx)}, ${NG(ry)})</b>，這一點同時在兩條線上，所以它就是聯立方程式的解：` +
+            `<b>x ＝ ${NG(rx)}、y ＝ ${NG(ry)}</b>。<br>` +
+            (intp ? `用加減消去法：①−② 得 ${NG(a1 - a2)}x ＝ ${NG(c1 - c2)}，所以 x ＝ ${NG(rx)}，再代回①得 y ＝ ${NG(ry)}。`
+                  : `這一組解不是整數，代入原式一樣成立，只是寫成小數比較難看而已。`);
+    }
+    document.getElementById('svgXY').innerHTML = svg(W, H, s);
+    document.getElementById('xySay').innerHTML = msg;
+  }
+  ids.forEach(i=>i.addEventListener('input', draw));
+  draw();
+})();
+
+</script>
+</body>
+</html>
