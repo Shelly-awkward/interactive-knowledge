@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國二數學｜八上 第5章 統計資料處理</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#0f766e; --accent-soft:#ccfbf1;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#115e59,#14b8a6); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .rt{white-space:nowrap;} .rt .rad{border-top:1.5px solid currentColor; padding:0 2px 0 1px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  table.tb{width:100%; border-collapse:collapse; margin:10px 0; font-size:.92rem;}
+  table.tb th,table.tb td{border:1px solid var(--border); padding:7px 10px; text-align:left;}
+  table.tb th{background:var(--accent-soft); font-weight:bold;}
+  table.tb td.num{text-align:right; font-variant-numeric:tabular-nums;}
+  .rawbox{display:flex; flex-wrap:wrap; gap:6px; margin:10px 0;}
+  .rawbox span{background:var(--accent-soft); border-radius:6px; padding:2px 8px; font-size:.9rem; font-variant-numeric:tabular-nums;}
+  .toolbox{background:var(--accent-soft); border-radius:12px; padding:14px 16px;}
+  .toolbox .row{display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap;}
+  .toolbox label{font-size:.9rem; white-space:nowrap; min-width:6em;}
+  .toolbox label b{color:var(--accent); font-size:1.15rem;}
+  .toolbox input[type=range]{flex:1 1 200px; accent-color:var(--accent);}
+  .bigsay{background:#fff; border-left:4px solid var(--accent); border-radius:8px;
+    padding:10px 14px; margin-top:8px; font-size:1rem; line-height:1.9; min-height:3.4em;}
+  .chips{display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;}
+  .chip{border:1px solid var(--border); background:#fff; border-radius:99px;
+    padding:4px 12px; cursor:pointer; font-family:inherit; font-size:.85rem;}
+  .chip:hover{border-color:var(--accent); color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國中八年級上學期 · 第5章</span>
+  <h1>統計資料處理</h1>
+  <p>三個小節＋章末總測驗。一堆數字排在那裡看不出東西，分組畫成圖才看得出趨勢。這一章有一台組距滑桿，同一筆資料你拉組距，直方圖跟著重畫，你會親眼看到組距太粗會抹掉差異、太細會變鋸齒。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">5-1 次數分配表</button>
+  <button data-t="s2">5-2 直方圖與折線圖</button>
+  <button data-t="s3">5-3 累積次數與相對次數</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 5-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出為什麼要分組</li>
+      <li>看懂組距、組界、組中點各是什麼</li>
+      <li>會把一筆原始資料整理成次數分配表</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：原始資料看不出東西，要先分組</h2>
+    <p>下面是某班 40 位同學的身高（公分）：</p>
+    <div class="rawbox" id="rawData"></div>
+    <p>直接看這 40 個數字，你說得出這班身高大概集中在哪裡嗎？很難。所以要<b>分組計次</b>。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：三個名詞</h2>
+    <table class="tb">
+      <tr><th>名詞</th><th>意思</th><th>例子（以 150～155 這一組）</th></tr>
+      <tr><td><b>組距</b></td><td>每一組的寬度</td><td>5</td></tr>
+      <tr><td><b>組界</b></td><td>每一組的上下邊界</td><td>下限 150、上限 155</td></tr>
+      <tr><td><b>組中點</b></td><td>每一組的正中間，畫折線圖用</td><td>(150＋155)÷2 ＝ 152.5</td></tr>
+    </table>
+    <div class="warn">⚠️ 邊界上的數字歸哪一組要講清楚。國中習慣用「150～155」代表 <b>150 以上、未滿 155</b>，所以剛好 155 要放到下一組。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：把上面那 40 個身高分成組距 5</h2>
+    <div id="tblFreq"></div>
+    <div class="note">💡 次數加起來一定要等於總人數 40，這是檢查有沒有漏掉的方法。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　資料最小 148、最大 176，組距 5 從 145 開始要分幾組？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 全距 ＝ 176 − 148 ＝ 28，但要從 145 起算到蓋過 176。</p>
+        <p class="step"><b>②</b> 145、150、155、160、165、170、175，最後一組是 175～180。</p>
+        <p class="step"><b>③</b> 一共 7 組。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　160～165 這一組的組中點是多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 組中點 ＝ (下限 ＋ 上限) ÷ 2。</p>
+        <p class="step"><b>②</b> (160 ＋ 165) ÷ 2。</p>
+        <p class="step"><b>③</b> ＝ 162.5。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="D">
+      <div class="stem">1. 「155～160」這一組的組距是：</div>
+      <label><input type="radio" name="p1q1" value="A">155</label>
+      <label><input type="radio" name="p1q1" value="B">160</label>
+      <label><input type="radio" name="p1q1" value="C">157.5</label>
+      <label><input type="radio" name="p1q1" value="D">5</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　組距是這一組的寬度：160 − 155 ＝ 5。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 「155～160」這一組的組中點是：</div>
+      <label><input type="radio" name="p1q2" value="A">5</label>
+      <label><input type="radio" name="p1q2" value="B">160</label>
+      <label><input type="radio" name="p1q2" value="C">157.5</label>
+      <label><input type="radio" name="p1q2" value="D">155</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　(155 ＋ 160) ÷ 2 ＝ 157.5。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. 依國中習慣，身高剛好 160 公分的人歸在哪一組？</div>
+      <label><input type="radio" name="p1q3" value="A">都不算</label>
+      <label><input type="radio" name="p1q3" value="B">155～160</label>
+      <label><input type="radio" name="p1q3" value="C">160～165</label>
+      <label><input type="radio" name="p1q3" value="D">兩組都算</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　「155～160」代表 155 以上未滿 160，剛好 160 要放下一組。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. 次數分配表每一組的次數加總，應該等於：</div>
+      <label><input type="radio" name="p1q4" value="A">資料總筆數</label>
+      <label><input type="radio" name="p1q4" value="B">組距</label>
+      <label><input type="radio" name="p1q4" value="C">全距</label>
+      <label><input type="radio" name="p1q4" value="D">組數</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　每一筆資料都會被算進某一組，加起來就是總筆數。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 5-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>分得出直方圖和長條圖的差別</li>
+      <li>會畫直方圖與次數折線圖</li>
+      <li>說得出組距對圖形的影響</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：直方圖和長條圖不一樣</h2>
+    <table class="tb">
+      <tr><th></th><th>直方圖</th><th>長條圖</th></tr>
+      <tr><td>資料類型</td><td>連續的數量（身高、分數）</td><td>類別（血型、最喜歡的科目）</td></tr>
+      <tr><td>長條之間</td><td><b>相連</b>，因為數值是連續的</td><td><b>有空隙</b>，因為類別之間沒有順序關係</td></tr>
+      <tr><td>橫軸</td><td>組界</td><td>類別名稱</td></tr>
+    </table>
+    <div class="warn">⚠️ 直方圖的長條不能有空隙。有空隙代表中間那段數值不存在，但身高從 155 到 160 是連續的。</div>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ 組距滑桿</h2>
+    <p>同一筆 40 人的身高，拉組距看直方圖怎麼變。注意什麼時候看得出「集中在哪裡」，什麼時候看不出來。</p>
+    <div class="toolbox">
+      <div class="row"><label>組距 <b id="wW">5</b></label>
+        <input type="range" id="rW" min="2" max="15" step="1" value="5"></div>
+      <div class="svgbox" id="svgHist"></div>
+      <div class="bigsay" id="histSay"></div>
+      <div class="chips"><button class="chip" data-w="2">組距 2</button><button class="chip" data-w="5">組距 5</button><button class="chip" data-w="15">組距 15</button></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：次數折線圖，把組中點連起來</h2>
+    <p>在每一根長條的頂端正中間（也就是<b>組中點</b>的位置）點一個點，再把點連起來，就是次數折線圖。</p>
+    <p>兩端習慣往外各延伸一組、次數 0，讓線落回橫軸。</p>
+    <div class="svgbox" id="svgPoly"></div>
+    <div class="note">💡 折線圖和直方圖是同一份資料的兩種畫法，折線圖比較適合把兩個班的分布疊在一起比較。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　「全班最喜歡的水果」要用直方圖還是長條圖？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 水果是類別，不是連續的數量。</p>
+        <p class="step"><b>②</b> 類別之間沒有「介於蘋果和香蕉之間」這種東西。</p>
+        <p class="step"><b>③</b> 用長條圖，長條之間要留空隙。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　組距從 5 改成 10，直方圖的長條會變多還是變少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 組距變大，每一組蓋的範圍變寬。</p>
+        <p class="step"><b>②</b> 同樣的全距需要的組數就變少。</p>
+        <p class="step"><b>③</b> 長條變少、每根變高，但細節也跟著被抹掉。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 下面哪一種資料適合畫<b>直方圖</b>？</div>
+      <label><input type="radio" name="p2q1" value="A">家裡養的寵物種類</label>
+      <label><input type="radio" name="p2q1" value="B">全班的體重</label>
+      <label><input type="radio" name="p2q1" value="C">最喜歡的顏色</label>
+      <label><input type="radio" name="p2q1" value="D">全班的血型</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　體重是連續數量，其他三個都是類別。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 直方圖的長條之間為什麼要相連？</div>
+      <label><input type="radio" name="p2q2" value="A">因為次數很多</label>
+      <label><input type="radio" name="p2q2" value="B">因為組距一樣</label>
+      <label><input type="radio" name="p2q2" value="C">為了好看</label>
+      <label><input type="radio" name="p2q2" value="D">因為數值是連續的</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　相鄰兩組的邊界是同一個數，中間沒有斷開。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 次數折線圖的點要點在每一組的：</div>
+      <label><input type="radio" name="p2q3" value="A">組中點</label>
+      <label><input type="radio" name="p2q3" value="B">上限</label>
+      <label><input type="radio" name="p2q3" value="C">任意位置</label>
+      <label><input type="radio" name="p2q3" value="D">下限</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　點在組中點的正上方，高度是該組次數。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. 組距取太小，直方圖會：</div>
+      <label><input type="radio" name="p2q4" value="A">長條變少</label>
+      <label><input type="radio" name="p2q4" value="B">看得更清楚</label>
+      <label><input type="radio" name="p2q4" value="C">沒有影響</label>
+      <label><input type="radio" name="p2q4" value="D">變成鋸齒狀，看不出趨勢</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　每組人數太少，高低起伏變得隨機。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 5-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會算累積次數並看懂累積折線圖</li>
+      <li>會算相對次數（百分比）</li>
+      <li>能從圖表回答「有幾人低於某個值」這類問題</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：累積次數，一路加上來</h2>
+    <p><b>累積次數</b>就是「到這一組為止，總共有幾筆」。從第一組開始一組一組加。</p>
+    <div id="tblCum"></div>
+    <div class="note">💡 最後一組的累積次數一定等於總筆數。看「幾人未滿 165」直接看 160～165 那一列的累積次數就好，不用自己加。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：相對次數，換成比例</h2>
+    <div class="formula">相對次數 ＝ 該組次數 ÷ 總筆數（常寫成百分比）</div>
+    <p>兩個班人數不同時，直接比次數不公平，要比相對次數。</p>
+    <div class="svgbox" id="svgRel"></div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：累積折線圖怎麼看</h2>
+    <p>累積折線圖的點要點在每一組的<b>上限</b>（不是組中點），因為「累積到這一組」代表「未滿這個上限的全部」。線會一路往上，最後到達總筆數。</p>
+    <div class="svgbox" id="svgCum"></div>
+    <div class="note">💡 從縱軸某個人數往右對到線、再往下對到橫軸，就能讀出「第 20 個人大約多高」。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　某組次數 8、總人數 40，相對次數是多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 8 ÷ 40 ＝ 0.2。</p>
+        <p class="step"><b>②</b> 換成百分比：20%。</p>
+        <p class="step"><b>③</b> 代表這一組占全班兩成。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　累積次數表中 160～165 那一列寫 26，代表什麼？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 累積是從最小那組一路加到這一組。</p>
+        <p class="step"><b>②</b> 所以是「身高未滿 165 的」總共 26 人。</p>
+        <p class="step"><b>③</b> 不是 160～165 這一組有 26 人。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 某組次數 6、全班 30 人，相對次數是：</div>
+      <label><input type="radio" name="p3q1" value="A">20%</label>
+      <label><input type="radio" name="p3q1" value="B">5%</label>
+      <label><input type="radio" name="p3q1" value="C">30%</label>
+      <label><input type="radio" name="p3q1" value="D">6%</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　6 ÷ 30 ＝ 0.2 ＝ 20%。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 累積次數表的最後一列，數字應該等於：</div>
+      <label><input type="radio" name="p3q2" value="A">最大的次數</label>
+      <label><input type="radio" name="p3q2" value="B">組數</label>
+      <label><input type="radio" name="p3q2" value="C">總筆數</label>
+      <label><input type="radio" name="p3q2" value="D">全距</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　全部加完就是總筆數。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. 累積折線圖的點要點在每一組的：</div>
+      <label><input type="radio" name="p3q3" value="A">組中點</label>
+      <label><input type="radio" name="p3q3" value="B">下限</label>
+      <label><input type="radio" name="p3q3" value="C">上限</label>
+      <label><input type="radio" name="p3q3" value="D">任意處</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　「累積到這組」＝「未滿上限的全部」，所以點在上限。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. 「155～160」累積次數 10、「160～165」累積次數 26，則 160～165 這一組有幾人？</div>
+      <label><input type="radio" name="p3q4" value="A">16</label>
+      <label><input type="radio" name="p3q4" value="B">36</label>
+      <label><input type="radio" name="p3q4" value="C">26</label>
+      <label><input type="radio" name="p3q4" value="D">10</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　26 − 10 ＝ 16。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="A">
+      <div class="stem">1. 「165～170」這一組的組中點是：</div>
+      <label><input type="radio" name="qz1" value="A">167.5</label>
+      <label><input type="radio" name="qz1" value="B">170</label>
+      <label><input type="radio" name="qz1" value="C">5</label>
+      <label><input type="radio" name="qz1" value="D">165</label>
+      <div class="fb" data-exp="　(165 ＋ 170) ÷ 2。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">2. 組距是指：</div>
+      <label><input type="radio" name="qz2" value="A">組數</label>
+      <label><input type="radio" name="qz2" value="B">每一組的寬度</label>
+      <label><input type="radio" name="qz2" value="C">最大值減最小值</label>
+      <label><input type="radio" name="qz2" value="D">每一組的人數</label>
+      <div class="fb" data-exp="　上限減下限。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">3. 最大值 92、最小值 48，全距是：</div>
+      <label><input type="radio" name="qz3" value="A">48</label>
+      <label><input type="radio" name="qz3" value="B">92</label>
+      <label><input type="radio" name="qz3" value="C">70</label>
+      <label><input type="radio" name="qz3" value="D">44</label>
+      <div class="fb" data-exp="　92 − 48 ＝ 44。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">4. 下面哪一種資料<b>不適合</b>畫直方圖？</div>
+      <label><input type="radio" name="qz4" value="A">考試分數</label>
+      <label><input type="radio" name="qz4" value="B">通勤時間</label>
+      <label><input type="radio" name="qz4" value="C">最喜歡的運動</label>
+      <label><input type="radio" name="qz4" value="D">體重</label>
+      <div class="fb" data-exp="　運動種類是類別，要用長條圖。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">5. 直方圖與長條圖最主要的差別是：</div>
+      <label><input type="radio" name="qz5" value="A">高度</label>
+      <label><input type="radio" name="qz5" value="B">有沒有標題</label>
+      <label><input type="radio" name="qz5" value="C">顏色</label>
+      <label><input type="radio" name="qz5" value="D">長條之間有沒有空隙</label>
+      <div class="fb" data-exp="　直方圖相連（連續資料），長條圖有空隙（類別資料）。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">6. 組距取太大，直方圖會：</div>
+      <label><input type="radio" name="qz6" value="A">更精確</label>
+      <label><input type="radio" name="qz6" value="B">變成鋸齒狀</label>
+      <label><input type="radio" name="qz6" value="C">長條變多</label>
+      <label><input type="radio" name="qz6" value="D">組數變少，差異被抹平</label>
+      <div class="fb" data-exp="　大家都擠進少數幾組，看不出細節。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">7. 次數折線圖兩端為什麼要延伸到次數 0？</div>
+      <label><input type="radio" name="qz7" value="A">因為那兩組有人</label>
+      <label><input type="radio" name="qz7" value="B">為了美觀</label>
+      <label><input type="radio" name="qz7" value="C">讓線落回橫軸，圖形完整</label>
+      <label><input type="radio" name="qz7" value="D">沒有原因</label>
+      <div class="fb" data-exp="　習慣做法，讓折線和橫軸圍成封閉區域。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">8. 某組次數 12、總數 40，相對次數是：</div>
+      <label><input type="radio" name="qz8" value="A">40%</label>
+      <label><input type="radio" name="qz8" value="B">30%</label>
+      <label><input type="radio" name="qz8" value="C">25%</label>
+      <label><input type="radio" name="qz8" value="D">12%</label>
+      <div class="fb" data-exp="　12 ÷ 40 ＝ 0.3。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">9. 累積次數表中「未滿 160」是 10 人、「未滿 165」是 26 人，160～165 有幾人？</div>
+      <label><input type="radio" name="qz9" value="A">16 人</label>
+      <label><input type="radio" name="qz9" value="B">36 人</label>
+      <label><input type="radio" name="qz9" value="C">26 人</label>
+      <label><input type="radio" name="qz9" value="D">10 人</label>
+      <div class="fb" data-exp="　26 − 10 ＝ 16。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">10. 兩班人數不同，要比較「高分群佔比」應該用：</div>
+      <label><input type="radio" name="qz10" value="A">全距</label>
+      <label><input type="radio" name="qz10" value="B">相對次數</label>
+      <label><input type="radio" name="qz10" value="C">累積次數</label>
+      <label><input type="radio" name="qz10" value="D">次數</label>
+      <div class="fb" data-exp="　相對次數把人數換成比例，才能公平比較。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>國二數學自學教材 · 第 5 章 統計資料處理<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "八上5 統計資料處理";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.innerHTML='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.innerHTML='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.innerHTML='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.innerHTML='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// 40 位同學的身高（固定資料，所有圖表共用）
+const DATA = [152,158,161,149,166,163,157,170,155,160,
+              164,159,168,153,162,171,156,165,158,150,
+              167,161,174,163,159,148,169,162,157,166,
+              160,154,172,165,158,163,176,161,155,168];
+const LO = 145;
+function bins(w){
+  const mx = Math.max(...DATA), n = Math.ceil((mx - LO + 1) / w);
+  const out = [];
+  for(let i = 0; i < n; i++){
+    const a = LO + i * w, b = a + w;
+    out.push({ a, b, n: DATA.filter(v => v >= a && v < b).length });
+  }
+  return out;
+}
+
+// ── 原始資料 ──
+document.getElementById('rawData').innerHTML = DATA.map(v => '<span>' + v + '</span>').join('');
+
+// ── 組距 5 的次數分配表 ──
+(function(){
+  const B = bins(5);
+  let h = '<table class="tb"><tr><th>身高（公分）</th><th>組中點</th><th>劃記</th><th>次數</th></tr>';
+  B.forEach(b=>{
+    h += `<tr><td>${b.a}～${b.b}</td><td class="num">${(b.a+b.b)/2}</td><td>${'正'.repeat(Math.floor(b.n/5))}${'|'.repeat(b.n%5)}</td><td class="num">${b.n}</td></tr>`;
+  });
+  h += `<tr><td colspan="3"><b>合計</b></td><td class="num"><b>${DATA.length}</b></td></tr></table>`;
+  document.getElementById('tblFreq').innerHTML = h;
+})();
+
+// ── 累積次數表 ──
+(function(){
+  const B = bins(5); let cum = 0;
+  let h = '<table class="tb"><tr><th>身高（公分）</th><th>次數</th><th>累積次數</th><th>相對次數</th></tr>';
+  B.forEach(b=>{ cum += b.n;
+    h += `<tr><td>${b.a}～${b.b}</td><td class="num">${b.n}</td><td class="num">${cum}</td><td class="num">${(b.n/DATA.length*100).toFixed(1)}%</td></tr>`;
+  });
+  h += '</table>';
+  document.getElementById('tblCum').innerHTML = h;
+})();
+
+// ── 直方圖繪製（共用）──
+function histSVG(w, opts){
+  opts = opts || {};
+  const B = bins(w), W = 700, H = 300, padL = 50, padB = 46, padT = 30;
+  const maxN = Math.max(...B.map(b=>b.n), 1);
+  const plotW = W - padL - 20, plotH = H - padT - padB;
+  const bw = plotW / B.length;
+  const Y = n => padT + plotH - n / maxN * plotH;
+  let s = line(padL, padT + plotH, W - 20, padT + plotH, '#374151', 2);
+  s += line(padL, padT, padL, padT + plotH, '#374151', 2);
+  for(let n = 0; n <= maxN; n += Math.max(1, Math.ceil(maxN / 5))){
+    s += txt(padL - 8, Y(n) + 4, n, '#6b7280', 11, 'end');
+    s += line(padL, Y(n), W - 20, Y(n), '#f3f4f6', 1);
+  }
+  B.forEach((b, i)=>{
+    const x = padL + i * bw;
+    if(!opts.noBars) s += rect(x, Y(b.n), bw, padT + plotH - Y(b.n), opts.fill || '#5eead4', '#0f766e', 1.5);
+    if(!opts.noBars && b.n) s += txt(x + bw/2, Y(b.n) - 5, b.n, '#0f766e', 11);
+    s += txt(x, padT + plotH + 16, b.a, '#6b7280', 10);
+    if(i === B.length - 1) s += txt(x + bw, padT + plotH + 16, b.b, '#6b7280', 10);
+  });
+  if(opts.poly){
+    const pts = [[padL - bw/2, Y(0)]].concat(B.map((b, i)=>[padL + i*bw + bw/2, Y(b.n)])).concat([[padL + B.length*bw + bw/2, Y(0)]]);
+    s += `<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#c2410c" stroke-width="2.5"/>`;
+    pts.forEach(p=>{ s += `<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="#c2410c"/>`; });
+  }
+  s += txt(W/2, H - 6, '身高（公分）', '#6b7280', 12);
+  s += txt(padL - 8, 16, '人數', '#6b7280', 12, 'end');
+  return { svg: svg(W, H, s), B };
+}
+
+// ── 組距滑桿 ──
+(function(){
+  const rW = document.getElementById('rW');
+  function draw(){
+    const w = +rW.value;
+    document.getElementById('wW').textContent = w;
+    const r = histSVG(w);
+    document.getElementById('svgHist').innerHTML = r.svg;
+    const k = r.B.length, top = r.B.reduce((m, b) => b.n > m.n ? b : m, r.B[0]);
+    let judge;
+    if(k <= 3) judge = `只有 <b>${k}</b> 組，太粗了。大家都擠在同一根長條裡，看不出誰高誰矮，差異被抹平。`;
+    else if(k >= 11) judge = `切成 <b>${k}</b> 組，太細了。每組只有一兩個人，高低起伏變得隨機，像鋸齒，看不出整體趨勢。`;
+    else judge = `分成 <b>${k}</b> 組，剛剛好。一眼看得出身高集中在 <b>${top.a}～${top.b}</b>，兩邊人數慢慢變少。`;
+    document.getElementById('histSay').innerHTML = judge +
+      `<br><span style="color:#6b7280">組距通常挑讓組數落在 5～10 組之間的數，太多太少都不好看。</span>`;
+  }
+  rW.addEventListener('input', draw);
+  document.querySelectorAll('.chip[data-w]').forEach(c=>c.addEventListener('click', ()=>{ rW.value = c.dataset.w; draw(); }));
+  draw();
+})();
+
+// ── 次數折線圖（疊在淡色直方圖上）──
+document.getElementById('svgPoly').innerHTML = histSVG(5, { poly: true, fill: '#ccfbf1' }).svg;
+
+// ── 相對次數：兩班比較 ──
+(function(){
+  const W = 640, H = 150;
+  const rows = [['甲班 40 人，高分群 12 人', 12, 40], ['乙班 25 人，高分群 10 人', 10, 25]];
+  let s = txt(W/2, 20, '次數 12 ＞ 10，但比例 30% ＜ 40%，乙班的高分群其實比較多', '#374151', 13);
+  rows.forEach((r, i)=>{
+    const y = 46 + i * 46, pct = r[1] / r[2];
+    s += txt(10, y + 20, r[0], '#374151', 12, 'start');
+    s += rect(230, y, 300, 26, '#f3f4f6', '#d1d5db', 1);
+    s += rect(230, y, 300 * pct, 26, i ? '#f97316' : '#14b8a6', 'none');
+    s += txt(540, y + 18, (pct * 100).toFixed(0) + '%', '#111827', 14, 'start', 'font-weight="bold"');
+  });
+  document.getElementById('svgRel').innerHTML = svg(W, H, s);
+})();
+
+// ── 累積折線圖 ──
+(function(){
+  const B = bins(5), W = 700, H = 300, padL = 50, padB = 46, padT = 30;
+  const plotW = W - padL - 20, plotH = H - padT - padB, bw = plotW / B.length, N = DATA.length;
+  const Y = n => padT + plotH - n / N * plotH;
+  let s = line(padL, padT + plotH, W - 20, padT + plotH, '#374151', 2);
+  s += line(padL, padT, padL, padT + plotH, '#374151', 2);
+  [0, 10, 20, 30, 40].forEach(n=>{ s += txt(padL - 8, Y(n) + 4, n, '#6b7280', 11, 'end'); s += line(padL, Y(n), W - 20, Y(n), '#f3f4f6', 1); });
+  let cum = 0; const pts = [[padL, Y(0)]];
+  B.forEach((b, i)=>{ cum += b.n; pts.push([padL + (i + 1) * bw, Y(cum)]);
+    s += txt(padL + i * bw, padT + plotH + 16, b.a, '#6b7280', 10);
+    if(i === B.length - 1) s += txt(padL + (i+1) * bw, padT + plotH + 16, b.b, '#6b7280', 10);
+  });
+  s += `<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#7c3aed" stroke-width="2.5"/>`;
+  pts.forEach((p, i)=>{ s += `<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="#7c3aed"/>`; if(i) s += txt(p[0], p[1] - 8, (i ? B.slice(0, i).reduce((a, b)=>a + b.n, 0) : 0), '#5b21b6', 11); });
+  s += txt(W/2, H - 6, '身高（公分），點在每一組的上限', '#6b7280', 12);
+  s += txt(padL - 8, 16, '累積人數', '#6b7280', 12, 'end');
+  document.getElementById('svgCum').innerHTML = svg(W, H, s);
+})();
+
+</script>
+</body>
+</html>

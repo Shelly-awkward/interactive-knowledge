@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國二數學｜八上 第4章 一元二次方程式</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#c2410c; --accent-soft:#ffedd5;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#9a3412,#f97316); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .rt{white-space:nowrap;} .rt .rad{border-top:1.5px solid currentColor; padding:0 2px 0 1px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  table.tb{width:100%; border-collapse:collapse; margin:10px 0; font-size:.92rem;}
+  table.tb th,table.tb td{border:1px solid var(--border); padding:7px 10px; text-align:left;}
+  table.tb th{background:var(--accent-soft); font-weight:bold;}
+  .toolbox{background:var(--accent-soft); border-radius:12px; padding:14px 16px;}
+  .toolbox .row{display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap;}
+  .toolbox label{font-size:.9rem; white-space:nowrap; min-width:9em;}
+  .toolbox label b{color:var(--accent); font-size:1.15rem;}
+  .toolbox input[type=range]{flex:1 1 200px; accent-color:var(--accent);}
+  .bigsay{background:#fff; border-left:4px solid var(--accent); border-radius:8px;
+    padding:10px 14px; margin-top:8px; font-size:1rem; line-height:1.9; min-height:3.4em;}
+  .btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 10px;}
+  .abtn{border:1px solid var(--accent); background:#fff; color:var(--accent); border-radius:99px;
+    padding:7px 16px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .abtn.on{background:var(--accent); color:#fff; font-weight:bold;}
+  .abtn.ghost{border-color:var(--border); color:var(--sub);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國中八年級上學期 · 第4章</span>
+  <h1>一元二次方程式</h1>
+  <p>三個小節＋章末總測驗。解一元二次方程式有三招：因式分解、配方法、公式解。三招背後都靠同一件事：「兩數相乘等於 0，其中一個一定是 0」。這一章先用零乘積機讓你看清楚為什麼等於 6 就不行，再用拼圖看配方法到底在補什麼。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">4-1 零乘積與因式分解解法</button>
+  <button data-t="s2">4-2 配方法</button>
+  <button data-t="s3">4-3 公式解與應用</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 4-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>認得出一元二次方程式的長相</li>
+      <li>說得出為什麼一定要先整理成「＝ 0」</li>
+      <li>會用因式分解解一元二次方程式</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：一元二次方程式長這樣</h2>
+    <div class="formula">ax² ＋ bx ＋ c ＝ 0　（a ≠ 0）</div>
+    <p>一個未知數（一元），最高次方是 2（二次）。因為有 x²，答案常常會有<b>兩個</b>。</p>
+    <div class="note">💡 x² ＝ 9 的解是 3 和 −3。這是最簡單的一元二次方程式，已經看得出「兩個解」是常態。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：兩數相乘等於 0，其中一個一定是 0</h2>
+    <p>這條叫<b>零乘積性質</b>，是整章的地基：</p>
+    <div class="formula">如果 A × B ＝ 0，那麼 A ＝ 0 或 B ＝ 0</div>
+    <p>所以只要把方程式整理成「（一坨）×（一坨）＝ 0」，就能拆成兩個一元一次方程式，各自解掉。</p>
+    <div class="warn">⚠️ 這招<b>只對 0 有效</b>。A × B ＝ 6 不能說 A ＝ 6 或 B ＝ 6，因為 2×3、1×6、−2×−3 都等於 6。下面的機器會讓你看到差別。</div>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ 零乘積機</h2>
+    <p>右邊等於 0 和等於 6，差在哪裡？按按看。</p>
+    <div class="toolbox">
+      <div class="btnrow"><button class="abtn on" data-rhs="0">A × B ＝ 0</button><button class="abtn" data-rhs="6">A × B ＝ 6</button></div>
+      <div class="svgbox" id="svgZero"></div>
+      <div class="bigsay" id="zeroSay"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：因式分解解法，三個步驟</h2>
+    <div class="formula">① 全部移到左邊，右邊留 0　→　② 左邊因式分解　→　③ 每個因式各自 ＝ 0，解出來</div>
+    <table class="tb">
+      <tr><th>步驟</th><th>式子</th></tr>
+      <tr><td>原式</td><td>x² ＋ 5x ＝ −6</td></tr>
+      <tr><td>① 移項</td><td>x² ＋ 5x ＋ 6 ＝ 0</td></tr>
+      <tr><td>② 因式分解</td><td>(x ＋ 2)(x ＋ 3) ＝ 0</td></tr>
+      <tr><td>③ 各自 ＝ 0</td><td>x ＋ 2 ＝ 0 或 x ＋ 3 ＝ 0</td></tr>
+      <tr><td>答案</td><td>x ＝ −2 或 x ＝ −3</td></tr>
+    </table>
+    <div class="warn">⚠️ 步驟 ① 最常被跳過。如果左邊是 (x＋2)(x＋3) 但右邊是 6，直接說 x＋2 ＝ 6 就錯了。一定要先讓右邊變 0。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　解 x² − 7x ＋ 12 ＝ 0</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 右邊已經是 0，直接因式分解。</p>
+        <p class="step"><b>②</b> 找兩數相乘 12、相加 −7：是 −3 和 −4。(x − 3)(x − 4) ＝ 0。</p>
+        <p class="step"><b>③</b> x ＝ 3 或 x ＝ 4。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　解 x² ＝ 5x</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 先移項：x² − 5x ＝ 0。</p>
+        <p class="step"><b>②</b> 提公因式：x(x − 5) ＝ 0。</p>
+        <p class="step"><b>③</b> x ＝ 0 或 x ＝ 5。（不要把兩邊同除以 x，會把 x ＝ 0 這個解弄丟）</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　解 (x ＋ 1)(x − 2) ＝ 4</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 右邊不是 0，不能直接拆。先展開：x² − x − 2 ＝ 4。</p>
+        <p class="step"><b>②</b> 移項：x² − x − 6 ＝ 0，因式分解：(x − 3)(x ＋ 2) ＝ 0。</p>
+        <p class="step"><b>③</b> x ＝ 3 或 x ＝ −2。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 下面哪一個<b>是</b>一元二次方程式？</div>
+      <label><input type="radio" name="p1q1" value="A">x³ ＝ 8</label>
+      <label><input type="radio" name="p1q1" value="B">x² − 3x ＝ 0</label>
+      <label><input type="radio" name="p1q1" value="C">2x ＋ 1 ＝ 0</label>
+      <label><input type="radio" name="p1q1" value="D">x² ＋ y ＝ 1</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　一個未知數、最高次是 2、有等號。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. (x − 4)(x ＋ 1) ＝ 0 的解是：</div>
+      <label><input type="radio" name="p1q2" value="A">x ＝ 4 或 x ＝ −1</label>
+      <label><input type="radio" name="p1q2" value="B">x ＝ 4 或 x ＝ 1</label>
+      <label><input type="radio" name="p1q2" value="C">x ＝ 3</label>
+      <label><input type="radio" name="p1q2" value="D">x ＝ −4 或 x ＝ 1</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　各因式 ＝ 0：x − 4 ＝ 0 得 4，x ＋ 1 ＝ 0 得 −1。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. 解 x² ＋ 8x ＋ 15 ＝ 0，x ＝ </div>
+      <label><input type="radio" name="p1q3" value="A">−8 或 −15</label>
+      <label><input type="radio" name="p1q3" value="B">−3 或 5</label>
+      <label><input type="radio" name="p1q3" value="C">−3 或 −5</label>
+      <label><input type="radio" name="p1q3" value="D">3 或 5</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　(x＋3)(x＋5) ＝ 0。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. 解 x² ＝ 6x，x ＝ </div>
+      <label><input type="radio" name="p1q4" value="A">0</label>
+      <label><input type="radio" name="p1q4" value="B">0 或 6</label>
+      <label><input type="radio" name="p1q4" value="C">6</label>
+      <label><input type="radio" name="p1q4" value="D">±√6</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　x² − 6x ＝ 0，x(x − 6) ＝ 0，兩個解都要留。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>認得出完全平方式的長相</li>
+      <li>說得出配方法在「補」什麼</li>
+      <li>用配方法解不能因式分解的方程式</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：完全平方式，長得有規律</h2>
+    <div class="formula">(x ＋ m)² ＝ x² ＋ 2mx ＋ m²</div>
+    <p>中間那一項是 <b>2m</b>，最後那一項是 <b>m²</b>。反過來看：中間係數的一半再平方，就是最後那一項。</p>
+    <table class="tb">
+      <tr><th>看到</th><th>中間係數的一半</th><th>要補的數</th><th>變成</th></tr>
+      <tr><td>x² ＋ 6x</td><td>3</td><td>9</td><td>(x ＋ 3)²</td></tr>
+      <tr><td>x² − 10x</td><td>−5</td><td>25</td><td>(x − 5)²</td></tr>
+      <tr><td>x² ＋ 5x</td><td>5/2</td><td>25/4</td><td>(x ＋ 5/2)²</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ 配方法拼圖</h2>
+    <p>x² 是一個正方形，bx 是兩條長方形貼在旁邊，右下角缺一塊。拉 b 看缺口大小，再按「補上」看它變成一個完整的正方形。</p>
+    <div class="toolbox">
+      <div class="row"><label>x 的係數 b ＝ <b id="wB">6</b></label>
+        <input type="range" id="rB" min="2" max="12" step="2" value="6"></div>
+      <div class="svgbox" id="svgSqC"></div>
+      <div class="bigsay" id="sqcSay"></div>
+      <div class="btnrow"><button class="abtn" id="btnFill">補上缺的那一塊</button><button class="abtn ghost" id="btnUnfill">拿掉</button></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：配方法解方程式</h2>
+    <p>當左邊因式分解不出來，就把它<b>補成完全平方</b>，再開根號：</p>
+    <table class="tb">
+      <tr><th>步驟</th><th>式子</th><th>做了什麼</th></tr>
+      <tr><td>原式</td><td>x² ＋ 6x ＋ 2 ＝ 0</td><td>2 不能拆成兩數相加 6、相乘 2</td></tr>
+      <tr><td>①</td><td>x² ＋ 6x ＝ −2</td><td>常數移到右邊</td></tr>
+      <tr><td>②</td><td>x² ＋ 6x ＋ 9 ＝ −2 ＋ 9</td><td>兩邊同加 (6/2)² ＝ 9</td></tr>
+      <tr><td>③</td><td>(x ＋ 3)² ＝ 7</td><td>左邊變完全平方</td></tr>
+      <tr><td>④</td><td>x ＋ 3 ＝ ±√7</td><td>開根號，正負都要</td></tr>
+      <tr><td>答案</td><td>x ＝ −3 ± √7</td><td></td></tr>
+    </table>
+    <div class="warn">⚠️ 步驟 ② 兩邊都要加，這是第 4 章學過的等量公理。只加左邊天平就歪了。</div>
+    <div class="note">💡 如果 x² 前面有係數（例如 2x²），先整條除以那個係數，再開始配方。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　把 x² ＋ 8x 配成完全平方</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 中間係數 8 的一半是 4。</p>
+        <p class="step"><b>②</b> 4 的平方是 16，補上：x² ＋ 8x ＋ 16。</p>
+        <p class="step"><b>③</b> ＝ (x ＋ 4)²。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　用配方法解 x² − 4x − 1 ＝ 0</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 常數移右邊：x² − 4x ＝ 1。</p>
+        <p class="step"><b>②</b> 補 (−4/2)² ＝ 4：x² − 4x ＋ 4 ＝ 5，即 (x − 2)² ＝ 5。</p>
+        <p class="step"><b>③</b> x − 2 ＝ ±√5，x ＝ 2 ± √5。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　解 (x ＋ 1)² ＝ 16</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 已經是完全平方，直接開根號。</p>
+        <p class="step"><b>②</b> x ＋ 1 ＝ ±4。</p>
+        <p class="step"><b>③</b> x ＝ 3 或 x ＝ −5。（兩個都要，很多人只寫 3）</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. x² ＋ 10x ＋ ▢ 要是完全平方式，▢ ＝ </div>
+      <label><input type="radio" name="p2q1" value="A">10</label>
+      <label><input type="radio" name="p2q1" value="B">25</label>
+      <label><input type="radio" name="p2q1" value="C">5</label>
+      <label><input type="radio" name="p2q1" value="D">100</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　10 的一半是 5，5² ＝ 25。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. x² − 6x ＋ 9 ＝ </div>
+      <label><input type="radio" name="p2q2" value="A">(x − 3)²</label>
+      <label><input type="radio" name="p2q2" value="B">(x − 6)²</label>
+      <label><input type="radio" name="p2q2" value="C">(x − 9)²</label>
+      <label><input type="radio" name="p2q2" value="D">(x ＋ 3)²</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　−6 的一半是 −3，(x − 3)² ＝ x² − 6x ＋ 9。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. (x − 2)² ＝ 9 的解是：</div>
+      <label><input type="radio" name="p2q3" value="A">x ＝ 3 或 x ＝ −3</label>
+      <label><input type="radio" name="p2q3" value="B">x ＝ 11</label>
+      <label><input type="radio" name="p2q3" value="C">x ＝ 5 或 x ＝ −1</label>
+      <label><input type="radio" name="p2q3" value="D">x ＝ 5</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　x − 2 ＝ ±3，x ＝ 5 或 −1。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. 用配方法解 x² ＋ 2x − 5 ＝ 0，x ＝ </div>
+      <label><input type="radio" name="p2q4" value="A">−1 ± √6</label>
+      <label><input type="radio" name="p2q4" value="B">1 ± √6</label>
+      <label><input type="radio" name="p2q4" value="C">−2 ± √5</label>
+      <label><input type="radio" name="p2q4" value="D">−1 ± √5</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　x² ＋ 2x ＋ 1 ＝ 6，(x＋1)² ＝ 6，x ＝ −1 ± √6。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>會用公式解直接算答案</li>
+      <li>用判別式判斷有幾個解</li>
+      <li>把應用題列成一元二次方程式，解完會檢查合理性</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：公式解，就是配方法做一次做到底</h2>
+    <p>對 ax² ＋ bx ＋ c ＝ 0 做一次配方法，會得到一條萬用公式：</p>
+    <div class="formula">x ＝ <span class="frac"><span>−b ± √(b² − 4ac)</span><span>2a</span></span></div>
+    <p>把 a、b、c 代進去就好，任何一元二次方程式都能解。缺點是計算量大，所以能因式分解就先因式分解。</p>
+    <div class="warn">⚠️ 代入時 b 和 c 的<b>負號要一起帶進去</b>。x² − 3x − 4 ＝ 0 的 b 是 −3、c 是 −4，不是 3 和 4。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：根號裡面那一坨，決定有幾個解</h2>
+    <p>公式裡的 b² − 4ac 叫<b>判別式</b>，常寫成 D。它在根號裡面，所以：</p>
+    <table class="tb">
+      <tr><th>D ＝ b² − 4ac</th><th>根號</th><th>解的個數</th></tr>
+      <tr><td>D ＞ 0</td><td>開得出兩個不同的數</td><td><b>兩個</b>不相等的實數解</td></tr>
+      <tr><td>D ＝ 0</td><td>√0 ＝ 0，± 沒差</td><td><b>一個</b>解（兩個相等的解）</td></tr>
+      <tr><td>D ＜ 0</td><td>負數不能開根號</td><td><b>沒有</b>實數解</td></tr>
+    </table>
+    <div class="svgbox" id="svgDisc"></div>
+    <div class="note">💡 題目問「有幾個解」不用真的解出來，算 D 就好。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：應用問題</h2>
+    <div class="formula">設 x → 列出二次方程式 → 解 → <b>檢查哪個解合理</b></div>
+    <p>最後一步比一元一次更重要，因為常常會解出兩個答案，其中一個不合題意（例如長度是負的、人數是小數）。</p>
+    <table class="tb">
+      <tr><th>題型</th><th>列式的關鍵</th></tr>
+      <tr><td>面積</td><td>長 × 寬 ＝ 面積，長寬用 x 表示</td></tr>
+      <tr><td>連續整數</td><td>設 x、x＋1，相乘或平方和等於題目給的數</td></tr>
+      <tr><td>數字問題</td><td>「某數的平方比它的 3 倍多 10」→ x² ＝ 3x ＋ 10</td></tr>
+    </table>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　用公式解 x² ＋ 3x − 2 ＝ 0</summary>
+      <div class="body">
+        <p class="step"><b>①</b> a ＝ 1、b ＝ 3、c ＝ −2。</p>
+        <p class="step"><b>②</b> D ＝ 3² − 4×1×(−2) ＝ 9 ＋ 8 ＝ 17。</p>
+        <p class="step"><b>③</b> x ＝ (−3 ± √17) / 2。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　x² − 6x ＋ 9 ＝ 0 有幾個解？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> D ＝ (−6)² − 4×1×9 ＝ 36 − 36 ＝ 0。</p>
+        <p class="step"><b>②</b> D ＝ 0，只有一個解。</p>
+        <p class="step"><b>③</b> 確認：(x − 3)² ＝ 0，x ＝ 3。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　長方形的長比寬多 3 公分，面積 40 平方公分，求寬</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 設寬 x，長 x ＋ 3：x(x ＋ 3) ＝ 40。</p>
+        <p class="step"><b>②</b> x² ＋ 3x − 40 ＝ 0，(x ＋ 8)(x − 5) ＝ 0，x ＝ −8 或 5。</p>
+        <p class="step"><b>③</b> 寬不能是負的，捨去 −8。寬是 5 公分。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="D">
+      <div class="stem">1. x² − 5x ＋ 2 ＝ 0 的判別式 D ＝ </div>
+      <label><input type="radio" name="p3q1" value="A">−17</label>
+      <label><input type="radio" name="p3q1" value="B">21</label>
+      <label><input type="radio" name="p3q1" value="C">33</label>
+      <label><input type="radio" name="p3q1" value="D">17</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　D ＝ (−5)² − 4×1×2 ＝ 25 − 8 ＝ 17。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. x² ＋ 4x ＋ 5 ＝ 0 有幾個實數解？</div>
+      <label><input type="radio" name="p3q2" value="A">兩個</label>
+      <label><input type="radio" name="p3q2" value="B">無限多個</label>
+      <label><input type="radio" name="p3q2" value="C">一個</label>
+      <label><input type="radio" name="p3q2" value="D">沒有</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　D ＝ 16 − 20 ＝ −4 ＜ 0，負數不能開根號。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">3. 用公式解 x² − 2x − 1 ＝ 0，x ＝ </div>
+      <label><input type="radio" name="p3q3" value="A">2 ± √2</label>
+      <label><input type="radio" name="p3q3" value="B">−1 ± √2</label>
+      <label><input type="radio" name="p3q3" value="C">1 ± 2√2</label>
+      <label><input type="radio" name="p3q3" value="D">1 ± √2</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　D ＝ 4 ＋ 4 ＝ 8，x ＝ (2 ± √8)/2 ＝ (2 ± 2√2)/2 ＝ 1 ± √2。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">4. 兩個連續正整數的乘積是 56，較小的數是：</div>
+      <label><input type="radio" name="p3q4" value="A">7</label>
+      <label><input type="radio" name="p3q4" value="B">8</label>
+      <label><input type="radio" name="p3q4" value="C">−8</label>
+      <label><input type="radio" name="p3q4" value="D">6</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　x(x＋1) ＝ 56，x² ＋ x − 56 ＝ 0，(x＋8)(x−7) ＝ 0，正整數取 7。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="C">
+      <div class="stem">1. 零乘積性質是說：若 A × B ＝ 0，則</div>
+      <label><input type="radio" name="qz1" value="A">A ＝ −B</label>
+      <label><input type="radio" name="qz1" value="B">A ＝ 0 且 B ＝ 0</label>
+      <label><input type="radio" name="qz1" value="C">A ＝ 0 或 B ＝ 0</label>
+      <label><input type="radio" name="qz1" value="D">A ＝ B</label>
+      <div class="fb" data-exp="　至少有一個是 0，不一定兩個都是。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">2. (x ＋ 5)(x − 2) ＝ 0 的解是：</div>
+      <label><input type="radio" name="qz2" value="A">x ＝ −5 或 x ＝ −2</label>
+      <label><input type="radio" name="qz2" value="B">x ＝ 3</label>
+      <label><input type="radio" name="qz2" value="C">x ＝ 5 或 x ＝ −2</label>
+      <label><input type="radio" name="qz2" value="D">x ＝ −5 或 x ＝ 2</label>
+      <div class="fb" data-exp="　各因式 ＝ 0：x ＝ −5、x ＝ 2。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">3. 解 x² − 9x ＋ 20 ＝ 0，x ＝ </div>
+      <label><input type="radio" name="qz3" value="A">−4 或 −5</label>
+      <label><input type="radio" name="qz3" value="B">9 或 20</label>
+      <label><input type="radio" name="qz3" value="C">4 或 5</label>
+      <label><input type="radio" name="qz3" value="D">4 或 −5</label>
+      <div class="fb" data-exp="　(x−4)(x−5) ＝ 0。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">4. 解 x² ＝ 3x，x ＝ </div>
+      <label><input type="radio" name="qz4" value="A">3</label>
+      <label><input type="radio" name="qz4" value="B">0 或 3</label>
+      <label><input type="radio" name="qz4" value="C">±√3</label>
+      <label><input type="radio" name="qz4" value="D">0</label>
+      <div class="fb" data-exp="　x(x − 3) ＝ 0，兩個解都要。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">5. x² − 12x ＋ ▢ 是完全平方式，▢ ＝ </div>
+      <label><input type="radio" name="qz5" value="A">36</label>
+      <label><input type="radio" name="qz5" value="B">12</label>
+      <label><input type="radio" name="qz5" value="C">6</label>
+      <label><input type="radio" name="qz5" value="D">144</label>
+      <div class="fb" data-exp="　−12 的一半是 −6，(−6)² ＝ 36。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">6. (x ＋ 3)² ＝ 25 的解是：</div>
+      <label><input type="radio" name="qz6" value="A">x ＝ 2</label>
+      <label><input type="radio" name="qz6" value="B">x ＝ 5 或 x ＝ −5</label>
+      <label><input type="radio" name="qz6" value="C">x ＝ 2 或 x ＝ −8</label>
+      <label><input type="radio" name="qz6" value="D">x ＝ 22</label>
+      <div class="fb" data-exp="　x ＋ 3 ＝ ±5，x ＝ 2 或 −8。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">7. 用配方法解 x² ＋ 4x − 3 ＝ 0，x ＝ </div>
+      <label><input type="radio" name="qz7" value="A">−2 ± √3</label>
+      <label><input type="radio" name="qz7" value="B">2 ± √7</label>
+      <label><input type="radio" name="qz7" value="C">−2 ± √7</label>
+      <label><input type="radio" name="qz7" value="D">−4 ± √7</label>
+      <div class="fb" data-exp="　x² ＋ 4x ＋ 4 ＝ 7，(x＋2)² ＝ 7。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">8. x² ＋ 2x ＋ 1 ＝ 0 有幾個解？</div>
+      <label><input type="radio" name="qz8" value="A">沒有</label>
+      <label><input type="radio" name="qz8" value="B">兩個</label>
+      <label><input type="radio" name="qz8" value="C">一個</label>
+      <label><input type="radio" name="qz8" value="D">無限多個</label>
+      <div class="fb" data-exp="　D ＝ 4 − 4 ＝ 0，只有 x ＝ −1 一個解。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">9. x² ＋ x ＋ 1 ＝ 0 的判別式是：</div>
+      <label><input type="radio" name="qz9" value="A">3</label>
+      <label><input type="radio" name="qz9" value="B">−1</label>
+      <label><input type="radio" name="qz9" value="C">5</label>
+      <label><input type="radio" name="qz9" value="D">−3</label>
+      <div class="fb" data-exp="　D ＝ 1 − 4 ＝ −3，所以沒有實數解。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">10. 某正數的平方比它的 2 倍多 15，這個數是：</div>
+      <label><input type="radio" name="qz10" value="A">15</label>
+      <label><input type="radio" name="qz10" value="B">5</label>
+      <label><input type="radio" name="qz10" value="C">−3</label>
+      <label><input type="radio" name="qz10" value="D">3</label>
+      <div class="fb" data-exp="　x² ＝ 2x ＋ 15，x² − 2x − 15 ＝ 0，(x−5)(x＋3) ＝ 0，正數取 5。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>國二數學自學教材 · 第 4 章 一元二次方程式<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "八上4 一元二次方程式";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.innerHTML='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.innerHTML='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.innerHTML='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.innerHTML='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// ── 判別式三種情況：開口向上的拋物線，頂點在橫線下／上／上方 ──
+(function(){
+  const W = 700, H = 160, y0 = 104;
+  const cases = [['D ＞ 0','兩個解：碰到橫線兩次','#16a34a', 28], ['D ＝ 0','一個解：剛好碰一次','#d97706', 0], ['D ＜ 0','沒有解：碰不到','#dc2626', -30]];
+  let s = '';
+  cases.forEach((c, i)=>{
+    const cx = 120 + i * 230, vY = y0 + c[3];        // 頂點的 y（螢幕座標，往下是正）
+    s += line(cx - 85, y0, cx + 85, y0, '#9ca3af', 1.5);
+    let d = '';
+    for(let t = -1; t <= 1.001; t += 0.05){
+      const x = cx + t * 72, y = vY - 62 * t * t;
+      d += (t === -1 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+    }
+    s += `<path d="${d}" fill="none" stroke="${c[2]}" stroke-width="3"/>`;
+    if(c[3] > 0){ const t = Math.sqrt(c[3] / 62); [-1, 1].forEach(sg=>{ s += `<circle cx="${cx + sg*t*72}" cy="${y0}" r="5" fill="${c[2]}"/>`; }); }
+    if(c[3] === 0){ s += `<circle cx="${cx}" cy="${y0}" r="5" fill="${c[2]}"/>`; }
+    s += txt(cx, 22, c[0], c[2], 15, 'middle', 'font-weight="bold"');
+    s += txt(cx, 146, c[1], '#374151', 12);
+  });
+  document.getElementById('svgDisc').innerHTML = svg(W, H, s);
+})();
+
+// ── 零乘積機 ──
+(function(){
+  let rhs = 0;
+  function draw(){
+    const W = 700;
+    let s = '';
+    if(rhs === 0){
+      s += txt(W/2, 34, 'A × B ＝ 0', '#111827', 24, 'middle', 'font-weight="bold"');
+      s += line(W/2, 48, W/2 - 140, 96, '#c2410c', 3); s += line(W/2, 48, W/2 + 140, 96, '#c2410c', 3);
+      s += rect(W/2 - 210, 96, 140, 40, '#ffedd5', '#c2410c', 2); s += txt(W/2 - 140, 122, 'A ＝ 0', '#9a3412', 18);
+      s += rect(W/2 + 70, 96, 140, 40, '#ffedd5', '#c2410c', 2); s += txt(W/2 + 140, 122, 'B ＝ 0', '#9a3412', 18);
+      s += txt(W/2, 104, '或', '#6b7280', 14);
+      s += txt(W/2, 168, '只有這兩條路。因為任何數乘 0 才會是 0，兩個都不是 0 的話乘起來絕對不是 0。', '#374151', 13);
+      document.getElementById('zeroSay').innerHTML =
+        `等於 <b>0</b> 的時候，答案只有兩種可能：A 是 0，或 B 是 0。<br>所以 (x − 3)(x ＋ 2) ＝ 0 可以直接拆成 x − 3 ＝ 0 或 x ＋ 2 ＝ 0。`;
+    } else {
+      s += txt(W/2, 34, 'A × B ＝ 6', '#111827', 24, 'middle', 'font-weight="bold"');
+      const pairs = ['1×6','2×3','3×2','6×1','−1×−6','−2×−3','0.5×12','1.5×4','0.1×60','√2×3√2','…'];
+      pairs.forEach((p, i)=>{
+        const col = i % 6, row = Math.floor(i / 6);
+        const x = 70 + col * 100, y = 70 + row * 46;
+        s += rect(x, y, 90, 34, '#fee2e2', '#dc2626', 1.5);
+        s += txt(x + 45, y + 23, p, '#991b1b', 14);
+      });
+      s += txt(W/2, 168, '無限多種組合都會等於 6，你不知道 A 到底是哪一個。拆不開。', '#b91c1c', 13, 'middle', 'font-weight="bold"');
+      document.getElementById('zeroSay').innerHTML =
+        `等於 <b>6</b> 的時候沒有這種好事。A 可以是 1、2、3、−2、0.5……，B 就跟著變，永遠猜不完。<br>` +
+        `所以看到 (x − 3)(x ＋ 2) ＝ 6，<b>不能</b>說 x − 3 ＝ 6。要先展開、移項，讓右邊變 0 再重新因式分解。`;
+    }
+    document.getElementById('svgZero').innerHTML = svg(W, 186, s);
+  }
+  document.querySelectorAll('.abtn[data-rhs]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      document.querySelectorAll('.abtn[data-rhs]').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on'); rhs = +b.dataset.rhs; draw();
+    });
+  });
+  draw();
+})();
+
+// ── 配方法拼圖 ──
+(function(){
+  const rB = document.getElementById('rB');
+  let filled = false;
+  function draw(){
+    const b = +rB.value, m = b / 2;
+    document.getElementById('wB').textContent = b;
+    const X = 150, u = 15, M = m * u, x0 = 60, y0 = 40, W = 640;
+    let s = '';
+    s += rect(x0, y0, X, X, '#fed7aa', '#c2410c', 2);
+    s += txt(x0 + X/2, y0 + X/2 + 7, 'x²', '#9a3412', 22, 'middle', 'font-weight="bold"');
+    s += rect(x0 + X, y0, M, X, '#fde68a', '#b45309', 2);
+    s += txt(x0 + X + M/2, y0 + X/2 + 6, m + 'x', '#92400e', 15);
+    s += rect(x0, y0 + X, X, M, '#fde68a', '#b45309', 2);
+    s += txt(x0 + X/2, y0 + X + M/2 + 6, m + 'x', '#92400e', 15);
+    if(filled){
+      s += rect(x0 + X, y0 + X, M, M, '#bbf7d0', '#16a34a', 2);
+      s += txt(x0 + X + M/2, y0 + X + M/2 + 5, m*m, '#166534', 14, 'middle', 'font-weight="bold"');
+    } else {
+      s += `<rect x="${x0 + X}" y="${y0 + X}" width="${M}" height="${M}" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4"/>`;
+      s += txt(x0 + X + M/2, y0 + X + M/2 + 5, '?', '#dc2626', 16, 'middle', 'font-weight="bold"');
+    }
+    // 邊長標示
+    s += txt(x0 + X/2, y0 - 12, 'x', '#374151', 13); s += txt(x0 + X + M/2, y0 - 12, m, '#374151', 13);
+    s += txt(x0 - 12, y0 + X/2 + 5, 'x', '#374151', 13, 'end'); s += txt(x0 - 12, y0 + X + M/2 + 5, m, '#374151', 13, 'end');
+    const rx = x0 + X + M + 60;
+    s += txt(rx, y0 + 30, 'x² ＋ ' + b + 'x', '#111827', 17, 'start', 'font-weight="bold"');
+    s += txt(rx, y0 + 58, '＝ 大正方形 ＋ 兩條長方形', '#6b7280', 12, 'start');
+    s += txt(rx, y0 + 100, filled ? '補上 ' + m + '² ＝ ' + m*m + ' 之後：' : '右下角缺一塊 ' + m + ' × ' + m, filled ? '#16a34a' : '#dc2626', 13, 'start');
+    if(filled) s += txt(rx, y0 + 128, '(x ＋ ' + m + ')²', '#16a34a', 20, 'start', 'font-weight="bold"');
+    document.getElementById('svgSqC').innerHTML = svg(W, y0 + X + M + 30, s);
+    document.getElementById('sqcSay').innerHTML = filled
+      ? `補上右下角的 <b>${m}² ＝ ${m*m}</b>，整塊就是邊長 (x ＋ ${m}) 的正方形：<b>x² ＋ ${b}x ＋ ${m*m} ＝ (x ＋ ${m})²</b>。<br>` +
+        `這就是配方法：中間係數 ${b} 的一半是 ${m}，補上 ${m} 的平方。`
+      : `x² ＋ ${b}x 拼起來差一個角。把 ${b}x 平分成兩條 ${m}x 貼在兩邊，右下角就缺一塊 ${m} × ${m}。<br>` +
+        `按「補上」看它變成完整的正方形。`;
+  }
+  rB.addEventListener('input', draw);
+  document.getElementById('btnFill').addEventListener('click', ()=>{ filled = true; draw(); });
+  document.getElementById('btnUnfill').addEventListener('click', ()=>{ filled = false; draw(); });
+  draw();
+})();
+
+</script>
+</body>
+</html>
