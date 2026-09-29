@@ -108,7 +108,8 @@
   footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
   @media (max-width:520px){ nav.tabs button{min-width:44%;} }
 
-  .big{font-size:1.6rem; text-align:center; padding:18px 10px; background:var(--card); border:2px solid var(--border); border-radius:12px; margin:12px 0; letter-spacing:.02em;}
+  .big{font-size:1.6rem; text-align:center; padding:18px 10px; background:var(--card); border:2px solid var(--border); border-radius:12px; margin:12px 0; letter-spacing:.02em; position:relative;}
+  .big .fu{position:absolute; left:10px; top:8px; font-size:.72rem; background:var(--amber-soft); color:#92400e; border-radius:99px; padding:2px 10px; font-weight:bold;}
   .stage{margin:14px 0;}
   .stage h3{font-size:1rem; margin-bottom:8px; color:var(--sub);}
   .mbtns{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:8px;}
@@ -125,9 +126,11 @@
   .fb2.ok{display:block; background:var(--green-soft); color:#166534;}
   .fb2.alt{display:block; background:var(--amber-soft); color:#92400e;}
   .fb2.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .fb2 .diag{display:block; font-weight:bold; font-size:1rem; margin-bottom:6px;}
+  .fb2 .why{display:block; color:#7f1d1d; opacity:.85; font-size:.9rem;}
   .prog{height:8px; background:var(--border); border-radius:99px; overflow:hidden; margin-bottom:8px;}
   .prog i{display:block; height:100%; background:var(--accent); width:0; transition:.2s;}
-  .meta{display:flex; justify-content:space-between; font-size:.85rem; color:var(--sub); margin-bottom:6px;}
+  .meta{display:flex; justify-content:space-between; font-size:.85rem; color:var(--sub); margin-bottom:6px; flex-wrap:wrap; gap:6px;}
   .chips{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0;}
   .chips button{font:inherit; font-size:.9rem; padding:6px 14px; border-radius:99px; border:1.5px solid var(--border); background:var(--card); cursor:pointer;}
   .chips button.on{background:var(--accent); border-color:var(--accent); color:#fff; font-weight:bold;}
@@ -137,6 +140,13 @@
     background:var(--accent); color:#fff; border:none; border-radius:12px; cursor:pointer;}
   .bigbtn.ghost{background:var(--card); color:var(--accent); border:1.5px solid var(--accent);}
   .bigbtn:disabled{opacity:.4; cursor:default;}
+  .smbtn{font:inherit; font-size:.88rem; padding:7px 14px; border-radius:99px; border:1.5px solid var(--accent); background:#fff; color:var(--accent); cursor:pointer; margin:8px 8px 0 0;}
+  .smbtn.solid{background:var(--accent); color:#fff;}
+  .smbtn:disabled{opacity:.4; cursor:default;}
+  .steps{margin-top:10px; display:grid; gap:6px;}
+  .steps .st{background:#fff; border:1.5px solid var(--border); border-radius:10px; padding:8px 12px; font-size:.93rem;}
+  .steps .st b{color:var(--accent);}
+  .steps .st .a{display:block; margin-top:4px; color:#166534; font-weight:bold;}
   .stats{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; margin:10px 0;}
   .stats div{background:var(--accent-soft); border-radius:10px; padding:10px; text-align:center;}
   .stats div small{display:block; color:var(--sub); font-size:.8rem;}
@@ -153,6 +163,23 @@
   ul.wl li .ex{font-size:1.1rem; flex:1 1 220px;}
   ul.wl li .tag{font-size:.78rem; border-radius:99px; padding:2px 10px; background:var(--red-soft); color:#991b1b;}
   ul.wl li .tag.m{background:var(--amber-soft); color:#92400e;}
+  .bars{display:grid; gap:10px;}
+  .bar{display:grid; grid-template-columns:7em 1fr 6em; gap:10px; align-items:center; font-size:.92rem;}
+  .bar .tr{height:14px; background:var(--border); border-radius:99px; overflow:hidden;}
+  .bar .tr i{display:block; height:100%; background:var(--green);}
+  .bar .tr i.mid{background:var(--amber);} .bar .tr i.low{background:var(--red);}
+  .bar small{color:var(--sub);}
+  .errlist{list-style:none; padding:0; margin:8px 0;}
+  .errlist li{padding:8px 12px; border-left:4px solid var(--red); background:var(--red-soft); border-radius:8px; margin-bottom:6px; font-size:.92rem;}
+  .errlist li b{margin-right:8px;}
+  .keybox{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0;}
+  .keybox input,.keybox select{font:inherit; font-size:.92rem; padding:8px 12px; border:1.5px solid var(--border); border-radius:10px; flex:1 1 220px;}
+  .aiwrap{margin-top:10px;}
+  .bubble{background:#fff; border:1.5px solid var(--accent); border-radius:14px; padding:10px 14px; margin-top:8px; font-size:.95rem; line-height:1.8; white-space:pre-wrap;}
+  .bubble.me{border-color:var(--border); background:#f9fafb; color:var(--sub);}
+  .bubble.wait{color:var(--sub); font-style:italic;}
+  .askrow{display:flex; gap:8px; margin-top:8px;}
+  .askrow input{flex:1; font:inherit; font-size:.92rem; padding:8px 12px; border:1.5px solid var(--border); border-radius:10px;}
 </style>
 </head>
 <body>
@@ -161,22 +188,25 @@
 <header class="hero">
   <span class="badge">108課綱 · 國中八年級上學期 · 第 1、3、4 章交錯練習</span>
   <h1>混合練習場｜先判斷該用哪一招</h1>
-  <p>展開、提公因式、公式反用、十字交乘、解方程式，五種題目隨機混在一起出。每一題要先選「用哪一招」，選完才算答案。分開練都會、混在一起就當機，是八上最常見的狀況，這裡專門治這個。</p>
+  <p>五種題目隨機混出，每題先選「用哪一招」再算答案。答錯時會像家教一樣告訴你錯在哪一步，馬上再出一題同類型讓你補回來；練得多了它會記住你的弱點，弱的多出、強的少出。</p>
 </header>
 
 <nav class="tabs">
   <button class="active" data-t="pStart">✏️ 開始練習</button>
-  <button data-t="pGuide">🧭 怎麼判斷該用哪一招</button>
-  <button data-t="pWrong">🔁 我的錯題 <span id="wrongN"></span></button>
+  <button data-t="pWeak">📈 你的弱點</button>
+  <button data-t="pGuide">🧭 怎麼判斷</button>
+  <button data-t="pWrong">🔁 錯題 <span id="wrongN"></span></button>
+  <button data-t="pSet">⚙️</button>
 </nav>
 
 <section id="pStart" class="panel show">
   <div class="card goal">
-    <h2>🎯 這裡在練什麼</h2>
+    <h2>🎯 這裡怎麼練</h2>
     <ul>
-      <li>看到一個式子，<b>先判斷</b>它要你做什麼、該用哪一招，再動手算。</li>
-      <li>「選錯招」和「算錯」會分開記，結束時告訴你問題出在哪一種。</li>
-      <li>錯的題目會存起來，可以只練錯過的類型。</li>
+      <li>看到式子，<b>先判斷</b>該做什麼、用哪一招，再算。</li>
+      <li>答錯會直接說你<b>錯在哪一步</b>，不只給答案；還可以「提示一步」自己補完。</li>
+      <li>錯的那一型會<b>馬上再出一題</b>，隔幾題再考一次，確定你真的會了。</li>
+      <li>「選錯招」和「算錯」分開記；弱點頁會告訴你最常犯的錯是什麼。</li>
     </ul>
   </div>
   <div class="card">
@@ -190,7 +220,7 @@
       <label><input type="checkbox" value="cross" checked> 十字交乘</label>
       <label><input type="checkbox" value="solve" checked> 解一元二次方程式</label>
     </div>
-    <div class="note">💡 建議全部勾。只勾一種就失去「判斷」的練習了，那跟課本後面的習題沒兩樣。</div>
+    <div class="note" id="startNote">💡 建議全部勾。只勾一種就失去「判斷」的練習了。</div>
     <button class="bigbtn" id="btnStart">開始混合練習</button>
     <button class="bigbtn ghost" id="btnWrongStart">只練錯過的題型（<span id="wrongN2">0</span> 題）</button>
   </div>
@@ -211,7 +241,13 @@
     <div class="stage" id="stage2" style="display:none">
       <h3>② 再算：答案是哪一個？</h3>
       <div class="abtns" id="aBtns"></div>
+      <div id="hintBox"><button class="smbtn" id="btnHint">提示一步</button><div class="steps" id="steps"></div></div>
       <div class="fb2" id="fb2"></div>
+      <div class="aiwrap" id="aiWrap" style="display:none">
+        <button class="smbtn solid" id="btnAsk">問老師這題</button>
+        <div id="aiLog"></div>
+        <div class="askrow" id="askRow" style="display:none"><input id="askIn" placeholder="還有哪裡不懂？"><button class="smbtn solid" id="btnAsk2">追問</button></div>
+      </div>
     </div>
 
     <button class="bigbtn" id="btnNext" style="display:none">下一題 →</button>
@@ -225,6 +261,21 @@
   <div class="card"><h2>🧠 你的問題在哪一種</h2><div id="doneAdvice" style="line-height:1.9"></div>
     <button class="bigbtn" id="btnAgain">再來一輪</button>
     <button class="bigbtn ghost" id="btnDoneWrong">只練這輪錯的</button>
+  </div>
+</section>
+
+<section id="pWeak" class="panel">
+  <div class="card">
+    <h2>📈 五種題型的熟練度</h2>
+    <p style="color:var(--sub);font-size:.9rem">依這台裝置上所有練過的紀錄。答對率＝招選對而且算對。</p>
+    <div class="bars" id="masteryBars"></div>
+    <div class="note" id="weakNote"></div>
+    <button class="bigbtn" id="btnWeakest">專攻最弱的那一型</button>
+  </div>
+  <div class="card">
+    <h2>❌ 你最常犯的錯</h2>
+    <ul class="errlist" id="errList"></ul>
+    <button class="bigbtn ghost" id="btnMasteryClear">清空熟練度紀錄</button>
   </div>
 </section>
 
@@ -249,10 +300,33 @@
 <section id="pWrong" class="panel">
   <div class="card">
     <h2>🔁 錯題本</h2>
-    <p style="color:var(--sub);font-size:.9rem">存在這台裝置的瀏覽器裡。「選錯招」和「算錯」分開標。</p>
+    <p style="color:var(--sub);font-size:.9rem">存在這台裝置的瀏覽器裡。「選錯招」和「算錯」分開標，算錯的會註明是哪一種錯。</p>
     <ul class="wl" id="wrongList"></ul>
     <button class="bigbtn" id="btnWrongPractice">重練這些題型</button>
     <button class="bigbtn ghost" id="btnWrongClear">清空錯題本</button>
+  </div>
+</section>
+
+<section id="pSet" class="panel">
+  <div class="card">
+    <h2>⚙️ 選用：AI 問老師</h2>
+    <p>沒有設定這一項，練習場完全離線、免費、資料不出門。設定了之後，答錯的題目旁邊會多一顆「問老師這題」。</p>
+    <div class="warn">⚠️ 家長請先讀完再貼：<br>
+      ① 金鑰只存在<b>這台裝置的瀏覽器</b>裡，不會上傳、不會進教材檔案。但這台裝置任何人打開都能用它。<br>
+      ② <b>每問一次都要錢</b>，由這組金鑰的帳號付。一次問答通常幾百個 token，大約台幣幾分到幾毛，問很多次會累積。<br>
+      ③ 小孩的<b>題目和問題會傳到 Anthropic 的伺服器</b>處理。<br>
+      ④ 不想用了按「清除」就回到完全離線。</div>
+    <div class="keybox">
+      <input type="password" id="keyIn" placeholder="貼上 API 金鑰（sk-ant-…）" autocomplete="off">
+      <select id="modelSel">
+        <option value="claude-opus-5-5">claude-opus-5-5（預設，最好；每百萬 token 輸入 $4／輸出 $20）</option>
+        <option value="claude-sonnet-5-5">claude-sonnet-5-5（較便宜；$2／$10）</option>
+        <option value="claude-haiku-4-5">claude-haiku-4-5（最便宜；$1／$5）</option>
+      </select>
+    </div>
+    <button class="smbtn solid" id="btnKeySave">儲存</button>
+    <button class="smbtn" id="btnKeyClear">清除金鑰</button>
+    <div class="note" id="keyStatus"></div>
   </div>
 </section>
 
@@ -261,6 +335,8 @@
 
 <script>
 // ===== 混合練習場：出題引擎（純函式，node 與瀏覽器共用）=====
+// 每一題：expr 顯示、ans 正解、dis 三個錯誤選項（各帶錯誤代碼 k 與家教口吻的診斷句 d）、
+//         ok 正確方法、alt 也算對的方法、why 解析、clue 辨識線索、steps 一步一步的引導小問題
 const MIX = (function(){
   const NG = v => String(v).replace(/-/g, '−');
   function rnd(lo, hi){ return lo + Math.floor(Math.random() * (hi - lo + 1)); }
@@ -269,7 +345,6 @@ const MIX = (function(){
   function nz(lo, hi){ let v; do { v = rnd(lo, hi); } while(v === 0); return v; }
   function gcd(a, b){ a = Math.abs(a); b = Math.abs(b); while(b){ [a, b] = [b, a % b]; } return a; }
 
-  // ax² + bx + c 的漂亮寫法
   function poly(a, b, c){
     const parts = [];
     if(a){ parts.push((a === 1 ? '' : a === -1 ? '−' : NG(a)) + 'x²'); }
@@ -277,7 +352,6 @@ const MIX = (function(){
     if(c){ parts.push((parts.length ? (c > 0 ? ' ＋ ' : ' − ') : (c < 0 ? '−' : '')) + Math.abs(c)); }
     return parts.length ? parts.join('') : '0';
   }
-  // (px + q)
   function bin(p, q){
     const ps = p === 1 ? 'x' : p === -1 ? '−x' : NG(p) + 'x';
     if(q === 0) return '(' + ps + ')';
@@ -285,6 +359,7 @@ const MIX = (function(){
   }
   function sq(p, q){ return bin(p, q) + '²'; }
   function roots(a, b){ return 'x ＝ ' + NG(-a) + ' 或 x ＝ ' + NG(-b); }
+  const D = (t, k, d) => ({ t, k, d });
 
   const METHODS = {
     expand:  { key: 'expand',  name: '展開：把括號乘開',              short: '展開' },
@@ -294,99 +369,204 @@ const MIX = (function(){
     solve:   { key: 'solve',   name: '解方程式：整理成＝0，再因式分解',  short: '解方程式' },
   };
 
-  // 每種題型：expr（顯示）、ans（正解字串）、dis（三個錯誤選項）、ok（正確方法）、alt（也算對的方法）、why（解析）、clue（辨識線索）
+  // 錯誤代碼 → 弱點頁用的短標籤
+  const DIAG = {
+    miss_mid: '完全平方漏掉中間項', half_mid: '中間項少了 2 倍', mid_as_const: '把 2a 放到常數項',
+    diff_sign: '平方差的減號寫成加號', diff_mid_neg: '平方差多了中間項', diff_mid_pos: '平方差多了中間項',
+    swap: '相加和相乘放反', sign_c: '常數項的符號錯', mid_sub: '中間項用了相減',
+    num_only: '只提數字沒提 x', x_only: '只提 x 沒提數字', not_div: '括號裡沒除以提出去的數',
+    as_diff: '把完全平方當成平方差', double_a: '中間係數沒除以 2', sign_a: '括號裡 a 的正負錯',
+    diff_as_sq_neg: '平方差寫成 (x−a)²', diff_as_sq_pos: '平方差寫成 (x＋a)²', diff_partial: '平方差只提了 x',
+    both_flip: '十字交乘兩個數符號都反了', first_flip: '十字交乘第一個數符號反了', second_flip: '十字交乘第二個數符號反了',
+    root_both: '兩個根的符號都和括號相反', root_first: '第一個根的符號錯', root_second: '第二個根的符號錯',
+  };
+
   const GEN = {
     expand(){
       const kind = pick(['ab', 'ab', 'sq', 'diff']);
       if(kind === 'sq'){
-        const a = nz(-6, 6);
+        const a = nz(-6, 6), A = NG(a), A2 = NG(2*a);
         return { type: 'expand', ok: 'expand', alt: [],
           expr: sq(1, a), ans: poly(1, 2*a, a*a),
-          dis: [poly(1, 0, a*a), poly(1, a, a*a), poly(1, 2*a, 2*a)],
-          why: `完全平方：首平方 x²，加 2 × 首 × 尾 ＝ ${NG(2*a)}x，加尾平方 ${a*a}。最常漏掉中間那一項。`,
-          clue: '有括號、要把它乘開，是展開。' };
+          dis: [D(poly(1, 0, a*a), 'miss_mid', `你把 ${sq(1,a)} 當成 x² ＋ ${a*a}，漏掉中間那一項。完全平方一定有三項，中間是 2 × x × (${A}) ＝ ${A2}x。`),
+                D(poly(1, a, a*a), 'half_mid', `中間項少了一倍。(x ＋ a)² 的中間是 2ax，不是 ax，所以應該是 ${A2}x。`),
+                D(poly(1, 2*a, 2*a), 'mid_as_const', `常數項應該是尾項的平方 ${A}² ＝ ${a*a}，你放成了 2a。`)],
+          why: `完全平方：首平方 x²，加 2 × 首 × 尾 ＝ ${A2}x，加尾平方 ${a*a}。`,
+          clue: '有括號、要把它乘開，是展開。',
+          steps: [{ q: '首項的平方是多少？', a: 'x × x ＝ x²' },
+                  { q: `2 × 首 × 尾 ＝ 2 × x × (${A}) 是多少？`, a: `${A2}x` },
+                  { q: `尾項 (${A}) 的平方是多少？`, a: `${a*a}` },
+                  { q: '三項合起來？', a: poly(1, 2*a, a*a) }] };
       }
       if(kind === 'diff'){
         const a = rnd(2, 9);
         return { type: 'expand', ok: 'expand', alt: [],
           expr: bin(1, a) + bin(1, -a), ans: poly(1, 0, -a*a),
-          dis: [poly(1, 0, a*a), poly(1, -2*a, -a*a), poly(1, 2*a, -a*a)],
+          dis: [D(poly(1, 0, a*a), 'diff_sign', `平方差是「首平方 減 尾平方」，(x ＋ ${a})(x − ${a}) ＝ x² − ${a*a}，減號不會變加號。`),
+                D(poly(1, -2*a, -a*a), 'diff_mid_neg', `中間項會互相抵消：＋${a}x 和 −${a}x 加起來是 0，不會留下 −${2*a}x。`),
+                D(poly(1, 2*a, -a*a), 'diff_mid_pos', `中間項會互相抵消：−${a}x 和 ＋${a}x 加起來是 0，不會留下 ＋${2*a}x。`)],
           why: `平方差：(x ＋ ${a})(x − ${a}) ＝ x² − ${a*a}，中間的 ${a}x 和 −${a}x 互相抵消。`,
-          clue: '有括號、要把它乘開，是展開。' };
+          clue: '有括號、要把它乘開，是展開。',
+          steps: [{ q: '首 × 首 是多少？', a: 'x²' },
+                  { q: `外 ＋ 內：x × (−${a}) ＋ ${a} × x 是多少？`, a: `−${a}x ＋ ${a}x ＝ 0，抵消了` },
+                  { q: `尾 × 尾：${a} × (−${a}) 是多少？`, a: `−${a*a}` },
+                  { q: '合起來？', a: poly(1, 0, -a*a) }] };
       }
       let a = nz(-6, 6), b = nz(-6, 6); if(b === a) b = a > 0 ? a - 1 || 1 : a + 1;
       return { type: 'expand', ok: 'expand', alt: [],
         expr: bin(1, a) + bin(1, b), ans: poly(1, a + b, a * b),
-        dis: [poly(1, a * b, a + b), poly(1, a + b, -a * b), poly(1, a - b, a * b)],
+        dis: [D(poly(1, a * b, a + b), 'swap', `你把「相加」和「相乘」放反了：中間項是 ${NG(a)} ＋ ${NG(b)} ＝ ${NG(a+b)}，常數項是 ${NG(a)} × ${NG(b)} ＝ ${NG(a*b)}。`),
+              D(poly(1, a + b, -a * b), 'sign_c', `常數項的符號錯了。${NG(a)} × ${NG(b)} ＝ ${NG(a*b)}，兩個數${a*b<0?'一正一負相乘是負的':'同號相乘是正的'}。`),
+              D(poly(1, a - b, a * b), 'mid_sub', `中間項是外加內，兩個都是「加」：${NG(a)}x ＋ ${NG(b)}x ＝ ${NG(a+b)}x，不是相減。`)],
         why: `分配律：x·x ＝ x²，外加內 ＝ ${NG(a)}x ＋ ${NG(b)}x ＝ ${NG(a+b)}x，尾 ＝ ${NG(a)} × ${NG(b)} ＝ ${NG(a*b)}。`,
-        clue: '有括號、要把它乘開，是展開。' };
+        clue: '有括號、要把它乘開，是展開。',
+        steps: [{ q: '首 × 首 是多少？', a: 'x²' },
+                { q: `外 ＋ 內：${NG(b)}x ＋ ${NG(a)}x 是多少？`, a: `${NG(a+b)}x` },
+                { q: `尾 × 尾：(${NG(a)}) × (${NG(b)}) 是多少？`, a: `${NG(a*b)}` },
+                { q: '合起來？', a: poly(1, a + b, a * b) }] };
     },
     gcf(){
-      let k = rnd(2, 6), p = nz(-5, 5), q = nz(-7, 7);            // k·x·(px + q)，p、q 互質
+      let k = rnd(2, 6), p = nz(-5, 5), q = nz(-7, 7);
       if(gcd(p, q) !== 1) return GEN.gcf();
-      if(p < 0){ k = -k; p = -p; q = -q; }                          // 括號裡 x 的係數保持正的，負號放外面
-      const A = k * p, B = k * q;                                   // kp x² + kq x
+      if(p < 0){ k = -k; p = -p; q = -q; }
+      const A = k * p, B = k * q, K = NG(k), ka = Math.abs(k);
       return { type: 'gcf', ok: 'gcf', alt: [],
-        expr: poly(A, B, 0), ans: NG(k) + 'x' + bin(p, q),
-        dis: [NG(k) + '(' + poly(p, q, 0) + ')', 'x' + bin(A, B), NG(k) + 'x' + bin(p, q * Math.abs(k))],
-        why: `兩項都有 ${NG(k)}x（${NG(A)} 和 ${NG(B)} 的公因數是 ${Math.abs(k)}，再加上都有 x），提出來剩 ${bin(p, q)}。提完要檢查括號裡還能不能拆。`,
-        clue: '沒有括號、要拆成括號，是因式分解。每一項都有的東西先提出來。' };
+        expr: poly(A, B, 0), ans: K + 'x' + bin(p, q),
+        dis: [D(K + '(' + poly(p, q, 0) + ')', 'num_only', `你只提出了數字 ${K}。兩項都有 x，x 也要一起提出來，提完括號裡才會是最簡的。`),
+              D('x' + bin(A, B), 'x_only', `你只提出了 x。${NG(A)} 和 ${NG(B)} 還有公因數 ${ka}，要一起提。`),
+              D(K + 'x' + bin(p, q * ka), 'not_div', `提出 ${K}x 之後，每一項都要除以它。第二項 ${NG(B)}x ÷ ${K}x ＝ ${NG(q)}，不是 ${NG(q*ka)}。`)],
+        why: `兩項都有 ${K}x（${NG(A)} 和 ${NG(B)} 的公因數是 ${ka}，再加上都有 x），提出來剩 ${bin(p, q)}。`,
+        clue: '沒有括號、要拆成括號，是因式分解。每一項都有的東西先提出來。',
+        steps: [{ q: `${NG(A)} 和 ${NG(B)} 的最大公因數是多少？`, a: `${ka}` },
+                { q: '每一項都有 x 嗎？', a: `有，${NG(A)}x² 和 ${NG(B)}x 都有 x，所以要提出 ${K}x` },
+                { q: `${NG(A)}x² ÷ ${K}x 和 ${NG(B)}x ÷ ${K}x 各是多少？`, a: `${NG(p)}x 和 ${NG(q)}` },
+                { q: '寫成提完的樣子？', a: K + 'x' + bin(p, q) }] };
     },
     formula(){
       const kind = pick(['sq', 'sq', 'diff']);
       if(kind === 'sq'){
-        const a = nz(-7, 7);
+        const a = nz(-7, 7), A = NG(a), aa = Math.abs(a);
         return { type: 'formula', ok: 'formula', alt: ['cross'],
           expr: poly(1, 2*a, a*a), ans: sq(1, a),
-          dis: [bin(1, a) + bin(1, -a), sq(1, 2*a), sq(1, -a)],
-          why: `首尾都是平方數（x² 和 ${a*a} ＝ ${Math.abs(a)}²），中間 ${NG(2*a)}x 剛好是 2 × x × ${NG(a)}，所以是完全平方 ${sq(1, a)}。`,
-          clue: '三項、首尾都是平方數、中間是 2×兩個根的乘積，直接套完全平方。' };
+          dis: [D(bin(1, a) + bin(1, -a), 'as_diff', `這不是平方差。平方差只有兩項、中間是 0；這裡有三項，中間 ${NG(2*a)}x 不是 0，是完全平方。`),
+                D(sq(1, 2*a), 'double_a', `你把中間係數 ${NG(2*a)} 直接當成 a。中間係數是 2a，要先除以 2：a ＝ ${A}。`),
+                D(sq(1, -a), 'sign_a', `括號裡 a 的正負看中間項：中間是 ${NG(2*a)}x，所以 a ＝ ${A}，不是 ${NG(-a)}。`)],
+          why: `首尾都是平方數（x² 和 ${a*a} ＝ ${aa}²），中間 ${NG(2*a)}x ＝ 2 × x × ${A}，所以是 ${sq(1, a)}。`,
+          clue: '三項、首尾都是平方數、中間是 2×兩個根的乘積，直接套完全平方。',
+          steps: [{ q: `首尾是平方數嗎？x² 和 ${a*a} 各是誰的平方？`, a: `x 和 ${aa}` },
+                  { q: `中間係數 ${NG(2*a)} 除以 2 是多少？`, a: `${A}` },
+                  { q: `${A} 的平方等於尾項 ${a*a} 嗎？`, a: `等於，所以確定是完全平方` },
+                  { q: '寫成 (x ＋ a)² 的形式？', a: sq(1, a) }] };
       }
       const a = rnd(2, 9);
       return { type: 'formula', ok: 'formula', alt: ['cross'],
         expr: poly(1, 0, -a*a), ans: bin(1, a) + bin(1, -a),
-        dis: [sq(1, -a), sq(1, a), 'x' + bin(1, -a)],
-        why: `兩項相減、都是平方數（x² 和 ${a*a} ＝ ${a}²），是平方差：x² − ${a}² ＝ ${bin(1, a)}${bin(1, -a)}。`,
-        clue: '只有兩項、相減、都是平方數，是平方差。' };
+        dis: [D(sq(1, -a), 'diff_as_sq_neg', `(x − ${a})² 展開是 x² − ${2*a}x ＋ ${a*a}，有中間項而且常數是正的，和 x² − ${a*a} 不一樣。`),
+              D(sq(1, a), 'diff_as_sq_pos', `(x ＋ ${a})² 展開是 x² ＋ ${2*a}x ＋ ${a*a}，不是 x² − ${a*a}。兩項相減、都是平方數，要用平方差。`),
+              D('x' + bin(1, -a), 'diff_partial', `x(x − ${a}) ＝ x² − ${a}x，多了一個 x，不等於 x² − ${a*a}。這裡沒有公因式可提。`)],
+        why: `兩項相減、都是平方數（x² 和 ${a*a} ＝ ${a}²），是平方差：${bin(1, a)}${bin(1, -a)}。`,
+        clue: '只有兩項、相減、都是平方數，是平方差。',
+        steps: [{ q: `有幾項？中間有 x 的項嗎？`, a: '兩項，沒有中間項' },
+                { q: `${a*a} 是誰的平方？`, a: `${a}` },
+                { q: '平方差公式 a² − b² ＝ ？', a: '(a ＋ b)(a − b)' },
+                { q: '套進去？', a: bin(1, a) + bin(1, -a) }] };
     },
     cross(){
       let a = nz(-7, 7), b = nz(-7, 7);
-      if(a === b || a === -b) return GEN.cross();                    // 排除完全平方與平方差
+      if(a === b || a === -b) return GEN.cross();
+      const A = NG(a), B = NG(b), S = NG(a+b), P = NG(a*b);
       return { type: 'cross', ok: 'cross', alt: [],
         expr: poly(1, a + b, a * b), ans: bin(1, a) + bin(1, b),
-        dis: [bin(1, -a) + bin(1, -b), bin(1, a) + bin(1, -b), bin(1, -a) + bin(1, b)],
-        why: `找兩個數相乘等於 ${NG(a*b)}、相加等於 ${NG(a+b)}：是 ${NG(a)} 和 ${NG(b)}。所以是 ${bin(1, a)}${bin(1, b)}。`,
-        clue: '三項式、沒有公因式、又不是完全平方或平方差，就用十字交乘。' };
+        dis: [D(bin(1, -a) + bin(1, -b), 'both_flip', `${NG(-a)} 和 ${NG(-b)} 相乘是 ${P} 沒錯，但相加是 ${NG(-a-b)}，不是 ${S}。兩個數的符號要同時滿足相乘和相加。`),
+              D(bin(1, a) + bin(1, -b), 'second_flip', `${A} 和 ${NG(-b)} 相乘是 ${NG(-a*b)}，不是 ${P}。找到相加對的組合後，還要檢查相乘的符號。`),
+              D(bin(1, -a) + bin(1, b), 'first_flip', `${NG(-a)} 和 ${B} 相乘是 ${NG(-a*b)}，不是 ${P}。找到相加對的組合後，還要檢查相乘的符號。`)],
+        why: `找兩個數相乘等於 ${P}、相加等於 ${S}：是 ${A} 和 ${B}。所以是 ${bin(1, a)}${bin(1, b)}。`,
+        clue: '三項式、沒有公因式、又不是完全平方或平方差，就用十字交乘。',
+        steps: [{ q: `常數項是 ${P}，要找哪兩個數相乘等於它？先列幾組。`, a: `例如 ${NG(Math.abs(a))} 和 ${NG(Math.abs(b))}（正負還沒定）` },
+                { q: `這兩個數相加要等於 x 的係數，也就是多少？`, a: `${S}` },
+                { q: '哪一組正負同時滿足相乘和相加？', a: `${A} 和 ${B}：(${A}) × (${B}) ＝ ${P}，(${A}) ＋ (${B}) ＝ ${S}` },
+                { q: '寫成兩個括號？', a: bin(1, a) + bin(1, b) }] };
     },
     solve(){
       let a = nz(-7, 7), b = nz(-7, 7); if(a === b) b = -b;
+      const r1 = NG(-a), r2 = NG(-b);
       return { type: 'solve', ok: 'solve', alt: [],
         expr: poly(1, a + b, a * b) + ' ＝ 0', ans: roots(a, b),
-        dis: [roots(-a, -b), roots(a, -b), roots(-a, b)],
-        why: `右邊已是 0。因式分解：${bin(1, a)}${bin(1, b)} ＝ 0，兩個因式各自 ＝ 0，得 ${roots(a, b)}。注意根的符號和括號裡相反。`,
-        clue: '有等號，是在解方程式。先確定右邊是 0，再因式分解，各因式＝0。' };
+        dis: [D(roots(-a, -b), 'root_both', `根的符號和括號裡相反。${bin(1, a)} ＝ 0 時 x ＝ ${r1}，${bin(1, b)} ＝ 0 時 x ＝ ${r2}，你兩個都寫反了。`),
+              D(roots(a, -b), 'root_second', `第二個根錯了：${bin(1, b)} ＝ 0 要移項，x ＝ ${r2}，不是 ${NG(b)}。`),
+              D(roots(-a, b), 'root_first', `第一個根錯了：${bin(1, a)} ＝ 0 要移項，x ＝ ${r1}，不是 ${NG(a)}。`)],
+        why: `右邊已是 0。因式分解：${bin(1, a)}${bin(1, b)} ＝ 0，兩個因式各自 ＝ 0，得 ${roots(a, b)}。`,
+        clue: '有等號，是在解方程式。先確定右邊是 0，再因式分解，各因式＝0。',
+        steps: [{ q: '右邊是 0 嗎？', a: '是，可以直接因式分解' },
+                { q: `左邊 ${poly(1, a+b, a*b)} 因式分解成什麼？`, a: `${bin(1, a)}${bin(1, b)}` },
+                { q: `${bin(1, a)} ＝ 0，x 是多少？`, a: `x ＝ ${r1}` },
+                { q: `${bin(1, b)} ＝ 0，x 是多少？`, a: `x ＝ ${r2}` },
+                { q: '所以這個方程式的解是？', a: roots(a, b) }] };
     },
   };
 
   function make(type){
     for(let tries = 0; tries < 50; tries++){
       const q = GEN[type]();
-      const all = [q.ans].concat(q.dis);
-      if(new Set(all).size === 4){                                   // 四個選項都不一樣
+      const all = [q.ans].concat(q.dis.map(d => d.t));
+      if(new Set(all).size === 4){
         const order = shuffle([0, 1, 2, 3]);
         q.opts = order.map(i => all[i]);
+        q.optDiag = order.map(i => i === 0 ? null : q.dis[i - 1]);   // 每個位置對應的診斷（正解是 null）
         q.ansIdx = order.indexOf(0);
         return q;
       }
     }
     throw new Error('無法生成不重複的選項：' + type);
   }
-  function batch(types, n){
+
+  // 依熟練度加權：弱的多出、強的少出，每種保底至少一題（題數夠時）
+  function weightOf(m){
+    if(!m || !m.seen) return 2;                          // 沒練過的當中等偏弱
+    const err = 1 - Math.min(m.mOk, m.aOk) / m.seen;
+    return 1 + err * 3 + (m.streak < 2 ? 1.5 : 0);
+  }
+  function batch(types, n, mastery){
+    mastery = mastery || {};
     const out = [];
-    for(let i = 0; i < n; i++) out.push(make(types[i % types.length]));
+    if(n >= types.length) types.forEach(t => out.push(make(t)));
+    const w = types.map(t => weightOf(mastery[t]));
+    const tot = w.reduce((s, x) => s + x, 0);
+    while(out.length < n){
+      let r = Math.random() * tot, i = 0;
+      while(i < w.length - 1 && r >= w[i]){ r -= w[i]; i++; }
+      out.push(make(types[i]));
+    }
     return shuffle(out);
   }
-  return { METHODS, GEN, make, batch, NG };
+  // 熟練度更新（mastery 是 { [type]: {seen,mOk,aOk,streak,errs,last} }）
+  function applyResult(mastery, q, mWrong, aWrong, diagK){
+    const m = mastery[q.type] = mastery[q.type] || { seen: 0, mOk: 0, aOk: 0, streak: 0, errs: {}, last: 0 };
+    m.seen++; if(!mWrong) m.mOk++; if(!aWrong) m.aOk++;
+    m.streak = (mWrong || aWrong) ? 0 : m.streak + 1;
+    if(diagK) m.errs[diagK] = (m.errs[diagK] || 0) + 1;
+    m.last = Date.now();
+    return m;
+  }
+  // 追題規劃：答錯時呼叫。回傳要插進 list 的 [{pos, q}]（pos 由大到小排好，直接 splice）
+  // state.fu[type]＝這一輪已追加的輪數，最多 2 輪；state.runStreak[type]＝這一輪連對，滿 2 次把輪數歸零
+  function planFollowups(list, i, q, state){
+    const t = q.type;
+    state.fu = state.fu || {}; state.runStreak = state.runStreak || {};
+    if((state.fu[t] || 0) >= 2) return [];
+    state.fu[t] = (state.fu[t] || 0) + 1;
+    const a = make(t); a.followup = true;
+    const b = make(t); b.followup = true;
+    // 先插後面那題（i+3），再插前面那題（i+1），前面那題插入後後面那題會被推到 i+4
+    const p2 = Math.min(i + 3, list.length), p1 = i + 1;
+    return [{ pos: p2, q: b }, { pos: p1, q: a }];
+  }
+  function noteStreak(state, q, ok){
+    state.runStreak = state.runStreak || {}; state.fu = state.fu || {};
+    state.runStreak[q.type] = ok ? (state.runStreak[q.type] || 0) + 1 : 0;
+    if(state.runStreak[q.type] >= 2) state.fu[q.type] = 0;
+  }
+  return { METHODS, DIAG, GEN, make, batch, weightOf, applyResult, planFollowups, noteStreak, NG };
 })();
 
 
@@ -398,11 +578,15 @@ const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
 function cloudSend(row){ if(!CLOUD_URL) return; const body = JSON.stringify(Object.assign({ ch: CH }, row));
   try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} } }
 
-// ===== 錯題本 =====
-const WKEY = "b8_mix_wrong_v1";
-function loadWrong(){ try{ return JSON.parse(localStorage.getItem(WKEY) || "[]"); }catch(e){ return []; } }
-function saveWrong(a){ try{ localStorage.setItem(WKEY, JSON.stringify(a)); }catch(e){} }
-function refreshWrongN(){ const n = loadWrong().length; document.getElementById('wrongN').textContent = n ? '(' + n + ')' : ''; document.getElementById('wrongN2').textContent = n; document.getElementById('btnWrongStart').disabled = !n; }
+// ===== 本機儲存：錯題本、熟練度、AI 設定 =====
+const WKEY = "b8_mix_wrong_v1", MKEY = "b8_mix_mastery_v1", AIKEY = "ai_key_v1", AIMODEL = "ai_model_v1";
+function lsGet(k, d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d; }catch(e){ return d; } }
+function lsSet(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+const loadWrong = () => lsGet(WKEY, []), saveWrong = a => lsSet(WKEY, a);
+const loadMastery = () => lsGet(MKEY, {}), saveMastery = m => lsSet(MKEY, m);
+function aiKey(){ try{ return localStorage.getItem(AIKEY) || ""; }catch(e){ return ""; } }
+function aiModel(){ try{ return localStorage.getItem(AIMODEL) || "claude-opus-5-5"; }catch(e){ return "claude-opus-5-5"; } }
+function refreshWrongN(){ const n = loadWrong().length; $('#wrongN').textContent = n ? '(' + n + ')' : ''; $('#wrongN2').textContent = n; $('#btnWrongStart').disabled = !n; }
 
 // ===== 分頁 =====
 const $ = s => document.querySelector(s);
@@ -411,6 +595,9 @@ function showPanel(id){
   document.querySelectorAll('nav.tabs button').forEach(b => b.classList.toggle('active', b.dataset.t === id));
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if(id === 'pWrong') renderWrong();
+  if(id === 'pWeak') renderWeak();
+  if(id === 'pSet') renderSet();
+  if(id === 'pStart') renderStartNote();
 }
 document.querySelectorAll('nav.tabs button').forEach(b => b.addEventListener('click', () => showPanel(b.dataset.t)));
 
@@ -420,22 +607,34 @@ document.querySelectorAll('#nChips button').forEach(b => b.addEventListener('cli
   document.querySelectorAll('#nChips button').forEach(x => x.classList.remove('on')); b.classList.add('on'); cfgN = +b.dataset.n;
 }));
 function chosenTypes(){ return [...document.querySelectorAll('#typeChecks input:checked')].map(i => i.value); }
+function weakestTypes(mastery, k){
+  const ts = Object.keys(MIX.METHODS).filter(t => mastery[t] && mastery[t].seen >= 3);
+  return ts.sort((a, b) => MIX.weightOf(mastery[b]) - MIX.weightOf(mastery[a])).slice(0, k);
+}
+function renderStartNote(){
+  const m = loadMastery(), w = weakestTypes(m, 1);
+  $('#startNote').innerHTML = w.length && MIX.weightOf(m[w[0]]) > 2
+    ? `💡 依你的紀錄，這一輪會多出一點「<b>${MIX.METHODS[w[0]].short}</b>」，因為它是你目前最弱的一型。`
+    : '💡 建議全部勾。只勾一種就失去「判斷」的練習了。';
+}
 
 // ===== 一輪練習 =====
 let run = null;
 function startRun(types, n){
   if(!types.length){ alert('至少勾一種題型'); return; }
-  run = { list: MIX.batch(types, n), i: 0, mOk: 0, aOk: 0, mBad: 0, aBad: 0, per: {}, wrongThis: [] };
+  run = { list: MIX.batch(types, n, loadMastery()), base: n, i: 0, mOk: 0, aOk: 0, mBad: 0, aBad: 0, per: {}, wrongThis: [], fuState: {}, extra: 0 };
   showPanel('pQuiz'); renderQ();
 }
 function renderQ(){
   const q = run.list[run.i];
   $('#progBar').style.width = (run.i / run.list.length * 100) + '%';
-  $('#mProg').textContent = `第 ${run.i + 1} / ${run.list.length} 題`;
+  $('#mProg').textContent = `第 ${run.i + 1} / ${run.list.length} 題` + (run.extra ? `（${run.base} ＋ 追加 ${run.extra}）` : '');
   $('#mScore').textContent = `招選對 ${run.mOk}　答對 ${run.aOk}`;
-  $('#qExpr').textContent = q.expr;
+  $('#qExpr').innerHTML = (q.followup ? '<span class="fu">追加題：剛才那一型再來一題</span>' : '') + q.expr;
   $('#fb1').className = 'fb2'; $('#fb2').className = 'fb2';
   $('#stage2').style.display = 'none'; $('#btnNext').style.display = 'none';
+  $('#steps').innerHTML = ''; $('#btnHint').disabled = false; $('#btnHint').textContent = '提示一步';
+  $('#aiWrap').style.display = 'none'; $('#aiLog').innerHTML = ''; $('#askRow').style.display = 'none';
   const mb = $('#mBtns'); mb.innerHTML = '';
   Object.values(MIX.METHODS).forEach(m => {
     const b = document.createElement('button'); b.textContent = m.name; b.dataset.k = m.key;
@@ -446,7 +645,7 @@ function renderQ(){
     const b = document.createElement('button'); b.textContent = o;
     b.addEventListener('click', () => pickAnswer(q, i)); ab.appendChild(b);
   });
-  q._mWrong = false; q._aWrong = false;
+  q._mWrong = false; q._aWrong = false; q._diag = null; q._stepI = 0; q._chat = [];
 }
 function pickMethod(q, k){
   const btns = [...$('#mBtns').children]; btns.forEach(b => b.disabled = true);
@@ -454,7 +653,7 @@ function pickMethod(q, k){
   const hit = btns.find(b => b.dataset.k === k), right = btns.find(b => b.dataset.k === q.ok);
   if(k === q.ok){
     hit.classList.add('ok'); run.mOk++;
-    fb.className = 'fb2 ok'; fb.innerHTML = '✔ 對，就是這一招。接下來算算看。';
+    fb.className = 'fb2 ok'; fb.innerHTML = '✔ 對，就是這一招。接下來算算看，卡住可以按「提示一步」。';
   } else if(q.alt.includes(k)){
     hit.classList.add('alt'); right.classList.add('ok'); run.mOk++;
     fb.className = 'fb2 alt'; fb.innerHTML = `△ 也可以，做得出來。但這題其實長得像公式：${q.clue} 用「${MIX.METHODS[q.ok].short}」會快很多。`;
@@ -464,24 +663,52 @@ function pickMethod(q, k){
   }
   $('#stage2').style.display = 'block';
 }
+function showStep(q){
+  const i = q._stepI;
+  if(i >= q.steps.length) return;
+  const s = q.steps[i];
+  const d = document.createElement('div'); d.className = 'st';
+  d.innerHTML = `<b>第 ${i + 1} 步</b> ${s.q}<span class="a">→ ${s.a}</span>`;
+  $('#steps').appendChild(d);
+  q._stepI++;
+  if(q._stepI >= q.steps.length){ $('#btnHint').disabled = true; $('#btnHint').textContent = '步驟都看完了'; }
+  else $('#btnHint').textContent = `提示一步（還有 ${q.steps.length - q._stepI} 步）`;
+}
+$('#btnHint').addEventListener('click', () => { if(run) showStep(run.list[run.i]); });
+
 function pickAnswer(q, i){
   const btns = [...$('#aBtns').children]; btns.forEach(b => b.disabled = true);
   const fb = $('#fb2');
   if(i === q.ansIdx){
     btns[i].classList.add('ok'); run.aOk++;
-    fb.className = 'fb2 ok'; fb.innerHTML = '✔ 答對了。' + q.why;
+    fb.className = 'fb2 ok'; fb.innerHTML = '✔ 答對了。<span class="why">' + q.why + '</span>';
   } else {
     btns[i].classList.add('no'); btns[q.ansIdx].classList.add('ok'); run.aBad++; q._aWrong = true;
-    fb.className = 'fb2 no'; fb.innerHTML = '✘ 算錯了。正解是 <b>' + q.ans + '</b>。<br>' + q.why;
+    const dg = q.optDiag[i]; q._diag = dg ? dg.k : null;
+    fb.className = 'fb2 no';
+    fb.innerHTML = `<span class="diag">✘ ${dg ? dg.d : '算錯了。'}</span>` +
+      `正解是 <b>${q.ans}</b>。` +
+      (q._stepI < q.steps.length ? ' 想自己補回來的話，按上面的「提示一步」一步一步看。' : '') +
+      `<span class="why">${q.why}</span>`;
+    if(aiKey()){ $('#aiWrap').style.display = 'block'; }
   }
+  const wrong = q._mWrong || q._aWrong;
   const p = run.per[q.type] = run.per[q.type] || { n: 0, m: 0, a: 0 };
   p.n++; if(!q._mWrong) p.m++; if(!q._aWrong) p.a++;
-  if(q._mWrong || q._aWrong){
+  // 熟練度與錯題本
+  const M = loadMastery(); MIX.applyResult(M, q, q._mWrong, q._aWrong, q._diag); saveMastery(M);
+  MIX.noteStreak(run.fuState, q, !wrong);
+  if(wrong){
     run.wrongThis.push(q);
-    const w = loadWrong(); w.push({ type: q.type, expr: q.expr, ans: q.ans, m: q._mWrong, a: q._aWrong, t: Date.now() });
+    const w = loadWrong(); w.push({ type: q.type, expr: q.expr, ans: q.ans, m: q._mWrong, a: q._aWrong, k: q._diag, t: Date.now() });
     saveWrong(w.slice(-60)); refreshWrongN();
+    // 自動追題：馬上一題、隔幾題再一題
+    const ins = MIX.planFollowups(run.list, run.i, q, run.fuState);
+    ins.forEach(x => run.list.splice(x.pos, 0, x.q));
+    run.extra += ins.length;
+    if(ins.length) fb.innerHTML += `<span class="why">📌 這一型會馬上再來一題，隔幾題再考一次。</span>`;
   }
-  logEv({ type: 'practice', q: q.type, ok: !q._mWrong && !q._aWrong });
+  logEv({ type: 'practice', q: q.type, ok: !wrong });
   $('#btnNext').style.display = 'block';
   $('#btnNext').textContent = run.i + 1 < run.list.length ? '下一題 →' : '看結果';
 }
@@ -493,17 +720,24 @@ function showDone(){
   $('#doneStats').innerHTML =
     `<div><small>題數</small><b>${N}</b></div><div><small>招選對</small><b>${run.mOk}</b></div><div><small>答案對</small><b>${run.aOk}</b></div>` +
     `<div><small>選錯招</small><b style="color:#b45309">${run.mBad}</b></div><div><small>算錯</small><b style="color:#dc2626">${run.aBad}</b></div>`;
-  let t = '<table class="tb"><tr><th>題型</th><th>題數</th><th>招選對</th><th>答對</th></tr>';
-  Object.keys(MIX.METHODS).forEach(k => { const p = run.per[k]; if(p) t += `<tr><td>${MIX.METHODS[k].short}</td><td>${p.n}</td><td>${p.m}</td><td>${p.a}</td></tr>`; });
+  let t = '<table class="tb"><tr><th>題型</th><th>題數</th><th>招選對</th><th>答對</th><th>歷來答對率</th></tr>';
+  const M = loadMastery();
+  Object.keys(MIX.METHODS).forEach(k => { const p = run.per[k]; if(p){ const m = M[k]; const rate = m ? Math.round(Math.min(m.mOk, m.aOk) / m.seen * 100) : 0;
+    t += `<tr><td>${MIX.METHODS[k].short}</td><td>${p.n}</td><td>${p.m}</td><td>${p.a}</td><td>${rate}%（${m ? m.seen : 0} 題）</td></tr>`; } });
   $('#doneTable').innerHTML = t + '</table>';
   let adv;
-  if(run.mBad === 0 && run.aBad === 0) adv = '<b>全對。</b>辨識和計算都穩了，可以把題數拉到 30，或去做各章的總測驗。';
-  else if(run.mBad > run.aBad) adv = `<b>你的問題在「辨識」，不在計算。</b>選錯招 ${run.mBad} 次、算錯只有 ${run.aBad} 次。代表招式本身會，但看到題目不知道該出哪一招。<br>去「怎麼判斷」那一頁把五個步驟看一遍，然後再來一輪，這一輪只做「先判斷」這件事，不要急著算。`;
-  else if(run.aBad > run.mBad) adv = `<b>辨識沒問題，是計算錯。</b>招都選對了，算錯 ${run.aBad} 次。這種錯多半是<b>負號</b>：展開時漏掉中間項、十字交乘兩個數的正負弄反、解方程式時根的符號和括號相反。<br>下一輪放慢，每一題算完先檢查符號再按。`;
-  else adv = `辨識和計算各錯 ${run.mBad} 次。先解決辨識：去「怎麼判斷」看一遍再回來。辨識對了，計算的錯通常會跟著減少一半。`;
+  if(run.mBad === 0 && run.aBad === 0){
+    const w = weakestTypes(M, 1);
+    adv = '<b>這一輪全對。</b>' + (w.length && MIX.weightOf(M[w[0]]) > 2.5
+      ? `不過你過去在「${MIX.METHODS[w[0]].short}」錯得比較多，下一輪它會多出一點，確認真的穩了。`
+      : '辨識和計算都穩了，可以把題數拉到 30，或去做各章的總測驗。');
+  } else if(run.mBad > run.aBad) adv = `<b>你的問題在「辨識」，不在計算。</b>選錯招 ${run.mBad} 次、算錯只有 ${run.aBad} 次。招式本身會，但看到題目不知道該出哪一招。<br>去「怎麼判斷」把五個步驟看一遍，再來一輪只做「先判斷」這件事。`;
+  else if(run.aBad > run.mBad){
+    const top = topErrs(M, 1)[0];
+    adv = `<b>辨識沒問題，是計算錯。</b>算錯 ${run.aBad} 次。` + (top ? `你歷來最常犯的是「<b>${MIX.DIAG[top[0]]}</b>」（${top[1]} 次），下一輪那一步放慢。` : '下一輪放慢，每一題算完先檢查符號再按。');
+  } else adv = `辨識和計算各錯 ${run.mBad} 次。先解決辨識：去「怎麼判斷」看一遍再回來。辨識對了，計算的錯通常會跟著減少一半。`;
   $('#doneAdvice').innerHTML = adv;
-  const wrongTypes = [...new Set(run.wrongThis.map(q => q.type))];
-  $('#btnDoneWrong').disabled = !wrongTypes.length;
+  $('#btnDoneWrong').disabled = !run.wrongThis.length;
   logEv({ type: 'quiz', score: run.aOk, total: N, wrong: run.wrongThis.map((q, i) => i + 1) });
   cloudSend({ type: '混合練習', detail: `${N} 題，選錯招 ${run.mBad}、算錯 ${run.aBad}`, score: run.aOk + '/' + N });
   showPanel('pDone');
@@ -515,16 +749,103 @@ function wrongTypes(){ return [...new Set(loadWrong().map(w => w.type))]; }
 $('#btnWrongStart').addEventListener('click', () => { const ts = wrongTypes(); if(ts.length) startRun(ts, 10); });
 $('#btnWrongPractice').addEventListener('click', () => { const ts = wrongTypes(); if(ts.length) startRun(ts, 10); else showPanel('pStart'); });
 $('#btnWrongClear').addEventListener('click', () => { if(confirm('清空錯題本？')){ saveWrong([]); refreshWrongN(); renderWrong(); } });
+$('#btnWeakest').addEventListener('click', () => { const w = weakestTypes(loadMastery(), 1); startRun(w.length ? w : Object.keys(MIX.METHODS), 10); });
+$('#btnMasteryClear').addEventListener('click', () => { if(confirm('清空熟練度紀錄？弱點頁會重新開始統計。')){ saveMastery({}); renderWeak(); } });
 
 function renderWrong(){
   const w = loadWrong().slice().reverse();
   $('#wrongList').innerHTML = w.length ? w.map(x =>
     `<li><span class="ex">${x.expr}</span><span style="color:var(--sub);font-size:.85rem">→ ${x.ans}</span>` +
-    (x.m ? '<span class="tag m">選錯招</span>' : '') + (x.a ? '<span class="tag">算錯</span>' : '') + '</li>').join('')
+    (x.m ? '<span class="tag m">選錯招</span>' : '') + (x.a ? `<span class="tag">算錯${x.k && MIX.DIAG[x.k] ? '：' + MIX.DIAG[x.k] : ''}</span>` : '') + '</li>').join('')
     : '<li style="color:var(--sub)">目前沒有錯題。</li>';
   $('#btnWrongPractice').disabled = !w.length;
 }
-refreshWrongN();
+function topErrs(M, k){
+  const all = {};
+  Object.values(M).forEach(m => Object.entries(m.errs || {}).forEach(([e, c]) => all[e] = (all[e] || 0) + c));
+  return Object.entries(all).sort((a, b) => b[1] - a[1]).slice(0, k);
+}
+function renderWeak(){
+  const M = loadMastery();
+  $('#masteryBars').innerHTML = Object.keys(MIX.METHODS).map(t => {
+    const m = M[t]; const rate = m && m.seen ? Math.min(m.mOk, m.aOk) / m.seen : null;
+    const pct = rate === null ? 0 : Math.round(rate * 100);
+    const cls = rate === null ? 'low' : rate >= .8 ? '' : rate >= .5 ? 'mid' : 'low';
+    return `<div class="bar"><span>${MIX.METHODS[t].short}</span><div class="tr"><i class="${cls}" style="width:${pct}%"></i></div>` +
+      `<small>${m && m.seen ? pct + '%・' + m.seen + ' 題・連對 ' + m.streak : '還沒練'}</small></div>`;
+  }).join('');
+  const w = weakestTypes(M, 1);
+  $('#weakNote').innerHTML = w.length ? `📌 目前最弱：<b>${MIX.METHODS[w[0]].short}</b>。下一輪會多出這一型。` : '📌 練滿 3 題以上才會開始判斷弱點。';
+  const errs = topErrs(M, 3);
+  $('#errList').innerHTML = errs.length ? errs.map(([k, c]) => `<li><b>${c} 次</b>${MIX.DIAG[k] || k}</li>`).join('') : '<li style="background:none;border:none;color:var(--sub)">還沒有算錯的紀錄。</li>';
+}
+
+// ===== 設定頁與 AI 問老師 =====
+function renderSet(){
+  const has = !!aiKey();
+  $('#keyIn').value = ''; $('#modelSel').value = aiModel();
+  $('#keyStatus').innerHTML = has ? `✅ 已設定金鑰（${aiModel()}）。答錯的題目會出現「問老師這題」。` : '目前沒有金鑰，練習場完全離線。';
+}
+$('#btnKeySave').addEventListener('click', () => {
+  const k = $('#keyIn').value.trim();
+  try{ if(k) localStorage.setItem(AIKEY, k); localStorage.setItem(AIMODEL, $('#modelSel').value); }catch(e){}
+  renderSet();
+});
+$('#btnKeyClear').addEventListener('click', () => { try{ localStorage.removeItem(AIKEY); }catch(e){} renderSet(); });
+
+const AI_SYS = '你是台灣的國中數學家教，只針對這一題回答。學生選了錯的答案，請用不超過 120 字說明他哪裡想錯、正確的思路是什麼，不要直接列出整個解答過程，最後問一個引導他自己算下一步的問題。用台灣的說法（例如「十字交乘」「提公因式」），不要用中國用語，用繁體中文。';
+function bubble(text, cls){ const d = document.createElement('div'); d.className = 'bubble ' + (cls || ''); d.textContent = text; $('#aiLog').appendChild(d); return d; }
+async function askTeacher(q, followText){
+  const key = aiKey(); if(!key) return;
+  if(!q._chat.length){
+    const dg = q._diag ? MIX.DIAG[q._diag] : '（未分類）';
+    q._chat.push({ role: 'user', content:
+      `題目：${q.expr}\n這題該用的方法：${MIX.METHODS[q.ok].short}\n學生選的方法：${q._mWrong ? '選錯了' : '選對了'}\n` +
+      `正確答案：${q.ans}\n學生選的錯誤答案對應的錯誤類型：${dg}\n請像家教一樣說明。` });
+  } else if(followText){
+    q._chat.push({ role: 'user', content: followText });
+  }
+  const wait = bubble('老師在想…', 'wait');
+  $('#btnAsk').disabled = true; $('#btnAsk2').disabled = true;
+  try{
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+        'anthropic-beta': 'server-side-fallback-2026-07-01',
+      },
+      body: JSON.stringify({
+        model: aiModel(), max_tokens: 600,
+        output_config: { effort: 'low' },
+        fallbacks: 'default',
+        system: AI_SYS, messages: q._chat,
+      }),
+    });
+    if(r.status === 401){ wait.textContent = '金鑰不對，請到 ⚙️ 重新貼一次。'; return; }
+    if(r.status === 429){ wait.textContent = '問太快了，等一下再問。'; return; }
+    if(!r.ok){ const e = await r.json().catch(() => ({})); wait.textContent = '老師這次沒回應（' + r.status + (e.error && e.error.message ? '：' + e.error.message : '') + '）。'; return; }
+    const data = await r.json();
+    if(data.stop_reason === 'refusal'){ wait.textContent = '老師沒辦法回答這一題。'; return; }
+    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n').trim() || '（老師沒有說話）';
+    wait.className = 'bubble'; wait.textContent = text;
+    q._chat.push({ role: 'assistant', content: text });
+    $('#askRow').style.display = 'flex';
+  }catch(e){
+    wait.textContent = '連不上老師，可能沒有網路。練習不受影響，可以繼續。';
+  }finally{
+    $('#btnAsk').disabled = q._chat.length > 0; $('#btnAsk2').disabled = false;
+  }
+}
+$('#btnAsk').addEventListener('click', () => { if(run) askTeacher(run.list[run.i]); });
+$('#btnAsk2').addEventListener('click', () => {
+  const t = $('#askIn').value.trim(); if(!t || !run) return;
+  bubble(t, 'me'); $('#askIn').value = ''; askTeacher(run.list[run.i], t);
+});
+
+refreshWrongN(); renderStartNote();
 </script>
 </body>
 </html>
