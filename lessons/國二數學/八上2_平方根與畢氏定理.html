@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國二數學｜八上 第2章 平方根與畢氏定理</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#7c3aed; --accent-soft:#ede9fe;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#5b21b6,#8b5cf6); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .rt{white-space:nowrap;} .rt .rad{border-top:1.5px solid currentColor; padding:0 2px 0 1px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  table.tb{width:100%; border-collapse:collapse; margin:10px 0; font-size:.92rem;}
+  table.tb th,table.tb td{border:1px solid var(--border); padding:7px 10px; text-align:left;}
+  table.tb th{background:var(--accent-soft); font-weight:bold;}
+  .toolbox{background:var(--accent-soft); border-radius:12px; padding:14px 16px;}
+  .toolbox .row{display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap;}
+  .toolbox .row2{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:10px;}
+  .toolbox .row2 span{display:flex; align-items:center; gap:8px; flex:1 1 240px;}
+  .toolbox label{font-size:.9rem; white-space:nowrap; min-width:7em;}
+  .toolbox label b{color:var(--accent); font-size:1.15rem;}
+  .toolbox input[type=range]{flex:1 1 140px; accent-color:var(--accent);}
+  .bigsay{background:#fff; border-left:4px solid var(--accent); border-radius:8px;
+    padding:10px 14px; margin-top:8px; font-size:1rem; line-height:1.9; min-height:3.4em;}
+  .chips{display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;}
+  .chip{border:1px solid var(--border); background:#fff; border-radius:99px;
+    padding:4px 12px; cursor:pointer; font-family:inherit; font-size:.85rem;}
+  .chip:hover{border-color:var(--accent); color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 國中八年級上學期 · 第2章</span>
+  <h1>平方根與畢氏定理</h1>
+  <p>三個小節＋章末總測驗。根號不是一種運算符號，它在問一件事：「哪個數平方會變成它？」這一章有兩台機器，一台讓你拉正方形的面積看邊長，無理數第一次看得見；一台把畢氏定理的三個正方形畫出來，你會看到小的兩個加起來就是大的那個。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">2-1 平方根與根號</button>
+  <button data-t="s2">2-2 根式的運算</button>
+  <button data-t="s3">2-3 畢氏定理</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 2-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出平方根在問什麼</li>
+      <li>分得清楚「平方根」和「根號」不一樣</li>
+      <li>會把根號化到最簡，例如 √72 ＝ 6√2</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：平方根是在問「誰平方會變成它」</h2>
+    <p>平方是往前走：3 平方變成 9。平方根是<b>倒著問</b>：什麼數平方會變成 9？</p>
+    <div class="formula">3² ＝ 9　　(−3)² ＝ 9　　→　9 的平方根有<b>兩個</b>：3 和 −3</div>
+    <div class="warn">⚠️ 這裡有一個最常錯的地方：<br>
+      「9 的<b>平方根</b>」有兩個，是 ±3。<br>
+      「<b>√9</b>」只有一個，規定只取正的，所以 √9 ＝ 3。<br>
+      要表示負的那個要自己寫負號：−√9 ＝ −3。</div>
+    <div class="note">💡 負數沒有平方根（在國中的範圍內）。因為任何數平方都不會是負的，所以 √−4 這種東西在國中是沒有答案的。</div>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ 正方形邊長機</h2>
+    <p>正方形的面積 ＝ 邊長 × 邊長，所以<b>邊長就是面積的平方根</b>。拉面積看邊長，注意小數點後面發生什麼事。</p>
+    <div class="toolbox">
+      <div class="row"><label>正方形的面積 <b id="wArea">9</b></label>
+        <input type="range" id="rArea" min="1" max="40" step="1" value="9"></div>
+      <div class="svgbox" id="svgSq"></div>
+      <div class="bigsay" id="sqSay"></div>
+      <div class="chips"><button class="chip" data-a="9">面積 9</button><button class="chip" data-a="10">面積 10</button><button class="chip" data-a="16">面積 16</button><button class="chip" data-a="2">面積 2</button></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：有些平方根是無理數</h2>
+    <p>面積 9、16、25 這種<b>完全平方數</b>，邊長剛好是整數。其他的就麻煩了：</p>
+    <div class="formula">√2 ＝ 1.41421356…　小數點後不會結束，也不會循環</div>
+    <p>這種寫不完、也寫不成分數的數，叫做<b>無理數</b>。所以答案通常保留成 √2，不寫成小數。</p>
+    <div class="note">💡 要估大小就夾在兩個整數之間：√10 在 3 和 4 之間，因為 3² ＝ 9，小於 10；4² ＝ 16，大於 10。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：根號化簡，把平方的部分搬出來</h2>
+    <div class="formula">√(a×b) ＝ √a × √b　　所以平方數可以搬到根號外面</div>
+    <table class="tb">
+      <tr><th>步驟</th><th>做法</th></tr>
+      <tr><td>① 拆出最大的平方因數</td><td>72 ＝ <b>36</b> × 2</td></tr>
+      <tr><td>② 平方數開出來</td><td>√72 ＝ √36 × √2 ＝ 6√2</td></tr>
+      <tr><td>③ 檢查裡面還能不能拆</td><td>2 沒有平方因數，完成</td></tr>
+    </table>
+    <div class="note">💡 找不到最大平方因數也沒關係，慢慢拆一樣會到：√72 ＝ √(4×18) ＝ 2√18 ＝ 2√(9×2) ＝ 2×3√2 ＝ 6√2。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　化簡 √50</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 50 裡面最大的平方因數是 25。</p>
+        <p class="step"><b>②</b> √50 ＝ √25 × √2 ＝ 5√2。</p>
+        <p class="step"><b>③</b> 2 沒有平方因數了，這就是最簡。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　√(−5)² 等於多少？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 先算括號裡：(−5)² ＝ 25。</p>
+        <p class="step"><b>②</b> √25 ＝ 5（根號只取正的）。</p>
+        <p class="step"><b>③</b> 答案是 5，不是 −5。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　√13 大約在哪兩個整數之間？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 找附近的完全平方數：3² ＝ 9、4² ＝ 16。</p>
+        <p class="step"><b>②</b> 9 ＜ 13 ＜ 16。</p>
+        <p class="step"><b>③</b> 所以 3 ＜ √13 ＜ 4。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 25 的<b>平方根</b>是：</div>
+      <label><input type="radio" name="p1q1" value="A">只有 5</label>
+      <label><input type="radio" name="p1q1" value="B">625</label>
+      <label><input type="radio" name="p1q1" value="C">5 和 −5</label>
+      <label><input type="radio" name="p1q1" value="D">只有 −5</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　平方根有正負兩個；只有寫成 √25 時才規定取正的。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. √36 的值是：</div>
+      <label><input type="radio" name="p1q2" value="A">18</label>
+      <label><input type="radio" name="p1q2" value="B">6</label>
+      <label><input type="radio" name="p1q2" value="C">−6</label>
+      <label><input type="radio" name="p1q2" value="D">6 和 −6</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　根號只取正的那一個，所以是 6。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 化簡 √48 ＝ </div>
+      <label><input type="radio" name="p1q3" value="A">3√4</label>
+      <label><input type="radio" name="p1q3" value="B">4√3</label>
+      <label><input type="radio" name="p1q3" value="C">2√12</label>
+      <label><input type="radio" name="p1q3" value="D">16√3</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　48 ＝ 16 × 3，√16 ＝ 4，所以是 4√3。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">4. √20 介於哪兩個整數之間？</div>
+      <label><input type="radio" name="p1q4" value="A">3 和 4</label>
+      <label><input type="radio" name="p1q4" value="B">5 和 6</label>
+      <label><input type="radio" name="p1q4" value="C">9 和 10</label>
+      <label><input type="radio" name="p1q4" value="D">4 和 5</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　4² ＝ 16 ＜ 20 ＜ 25 ＝ 5²。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道只有同類方根才能加減</li>
+      <li>會做根式的乘除</li>
+      <li>會把分母的根號有理化</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：加減要「同類方根」</h2>
+    <p>根號裡面一樣的才能合併，這件事和「同類項」完全一樣。把 √2 想成一隻貓：</p>
+    <div class="formula">3√2 ＋ 5√2 ＝ 8√2　　（3 隻貓 ＋ 5 隻貓）</div>
+    <div class="warn">⚠️ √2 ＋ √3 <b>不能</b>合併，它就是 √2 ＋ √3。<br>
+      更不能寫成 √5。因為 √2 ＋ √3 ≒ 1.414 ＋ 1.732 ＝ 3.146，但 √5 ≒ 2.236，差很多。</div>
+    <div class="note">💡 看起來不同類，先化簡再看：√8 ＋ √2 ＝ 2√2 ＋ √2 ＝ 3√2，化簡後就同類了。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：乘除比加減簡單，直接進出根號</h2>
+    <div class="formula">√a × √b ＝ √(ab)　　√a ÷ √b ＝ √(a÷b)</div>
+    <table class="tb">
+      <tr><th>算式</th><th>過程</th><th>答案</th></tr>
+      <tr><td>√3 × √12</td><td>√36</td><td>6</td></tr>
+      <tr><td>2√3 × 5√2</td><td>(2×5)√(3×2)</td><td>10√6</td></tr>
+      <tr><td>√18 ÷ √2</td><td>√9</td><td>3</td></tr>
+    </table>
+    <div class="note">💡 數字歸數字乘、根號歸根號乘，兩邊分開處理就不會亂。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：分母有理化，把根號趕出分母</h2>
+    <p>數學上習慣不要讓根號留在分母。做法是<b>上下同乘</b>同一個根號（等於乘 1，值不變）：</p>
+    <div class="formula"><span class="frac"><span>1</span><span>√2</span></span> ＝ <span class="frac"><span>1×√2</span><span>√2×√2</span></span> ＝ <span class="frac"><span>√2</span><span>2</span></span></div>
+    <div class="svgbox" id="svgRat"></div>
+    <div class="note">💡 為什麼要這樣做？以前沒有計算機，除以 1.414 很難算，但除以 2 很簡單。習慣就留下來了。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　√12 ＋ √27 ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 先各自化簡：√12 ＝ 2√3、√27 ＝ 3√3。</p>
+        <p class="step"><b>②</b> 現在兩個都是 √3 這一類，可以合併。</p>
+        <p class="step"><b>③</b> 2√3 ＋ 3√3 ＝ 5√3。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　3√5 × 2√10 ＝ ？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 數字相乘：3 × 2 ＝ 6。</p>
+        <p class="step"><b>②</b> 根號相乘：√5 × √10 ＝ √50 ＝ 5√2。</p>
+        <p class="step"><b>③</b> 合起來：6 × 5√2 ＝ 30√2。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　把 6 ÷ √3 有理化</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 上下同乘 √3：(6×√3) ÷ (√3×√3)。</p>
+        <p class="step"><b>②</b> 分母變成 3。</p>
+        <p class="step"><b>③</b> 6√3 ÷ 3 ＝ 2√3。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="D">
+      <div class="stem">1. 2√7 ＋ 5√7 ＝ </div>
+      <label><input type="radio" name="p2q1" value="A">10√7</label>
+      <label><input type="radio" name="p2q1" value="B">7√14</label>
+      <label><input type="radio" name="p2q1" value="C">√14</label>
+      <label><input type="radio" name="p2q1" value="D">7√7</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　同類方根，係數相加：2 ＋ 5 ＝ 7。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. √8 ＋ √18 ＝ </div>
+      <label><input type="radio" name="p2q2" value="A">5√2</label>
+      <label><input type="radio" name="p2q2" value="B">√26</label>
+      <label><input type="radio" name="p2q2" value="C">6√2</label>
+      <label><input type="radio" name="p2q2" value="D">2√13</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　化簡後是 2√2 ＋ 3√2 ＝ 5√2。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. √6 × √24 ＝ </div>
+      <label><input type="radio" name="p2q3" value="A">6√4</label>
+      <label><input type="radio" name="p2q3" value="B">12</label>
+      <label><input type="radio" name="p2q3" value="C">144</label>
+      <label><input type="radio" name="p2q3" value="D">√30</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　√(6×24) ＝ √144 ＝ 12。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">4. 把 <span class='frac'><span>3</span><span>√3</span></span> 有理化，結果是：</div>
+      <label><input type="radio" name="p2q4" value="A">1</label>
+      <label><input type="radio" name="p2q4" value="B"><span class='frac'><span>√3</span><span>3</span></span></label>
+      <label><input type="radio" name="p2q4" value="C">√3</label>
+      <label><input type="radio" name="p2q4" value="D">3√3</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　上下同乘 √3：3√3 ÷ 3 ＝ √3。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出畢氏定理在講哪三個正方形</li>
+      <li>算得出直角三角形的第三邊</li>
+      <li>用逆定理判斷是不是直角三角形</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h2>📖 觀念 1：兩個小正方形，剛好等於大的那個</h2>
+    <p>直角三角形的三邊各長出一個正方形，<b>兩個小的面積加起來，剛好等於大的</b>。</p>
+    <div class="formula">a² ＋ b² ＝ c²　（c 一定是<b>斜邊</b>，也就是直角對面那條，最長）</div>
+    <div class="warn">⚠️ 一定要先確認哪一條是斜邊。斜邊永遠在直角的對面，也永遠最長。套錯邊是最常見的錯。</div>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ 畢氏面積拼圖</h2>
+    <p>拉兩條直角邊，三個正方形的面積會跟著變。看下面那行數字：不管你怎麼拉，小的兩個加起來永遠等於大的那個。</p>
+    <div class="toolbox">
+      <div class="row2">
+        <span><label>底邊 a ＝ <b id="wPa">3</b></label><input type="range" id="rPa" min="3" max="12" value="3"></span>
+        <span><label>高 b ＝ <b id="wPb">4</b></label><input type="range" id="rPb" min="3" max="12" value="4"></span>
+      </div>
+      <div class="svgbox" id="svgPy"></div>
+      <div class="bigsay" id="pySay"></div>
+      <div class="chips"><button class="chip" data-a="3" data-b="4">3、4、5</button><button class="chip" data-a="5" data-b="12">5、12、13</button><button class="chip" data-a="8" data-b="15">8、15、17</button><button class="chip" data-a="6" data-b="6">6、6（不是整數）</button></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：背幾組常見的，考試會快很多</h2>
+    <table class="tb">
+      <tr><th>組合</th><th>驗算</th><th>倍數也成立</th></tr>
+      <tr><td>3、4、5</td><td>9 ＋ 16 ＝ 25</td><td>6、8、10　9、12、15</td></tr>
+      <tr><td>5、12、13</td><td>25 ＋ 144 ＝ 169</td><td>10、24、26</td></tr>
+      <tr><td>8、15、17</td><td>64 ＋ 225 ＝ 289</td><td>16、30、34</td></tr>
+    </table>
+    <div class="note">💡 整組同乘一個數還是直角三角形，因為等式兩邊都被乘了平方倍。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：逆定理，用來判斷是不是直角</h2>
+    <p>反過來也成立：<b>三邊只要滿足 a² ＋ b² ＝ c²，這個三角形就一定有直角。</b></p>
+    <div class="formula">最長邊的平方 ＝ 另外兩邊的平方和　→　直角三角形</div>
+    <p>如果不相等，也能看出是哪一種：</p>
+    <table class="tb">
+      <tr><th>比較</th><th>這個三角形是</th></tr>
+      <tr><td>c² ＝ a² ＋ b²</td><td>直角三角形</td></tr>
+      <tr><td>c² ＞ a² ＋ b²</td><td>鈍角三角形</td></tr>
+      <tr><td>c² ＜ a² ＋ b²</td><td>銳角三角形</td></tr>
+    </table>
+    <div class="note">💡 應用題常見的樣子：梯子靠牆、電視尺寸（量對角線）、座標平面上兩點的距離，通通是在找斜邊。</div>
+  </div>
+
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例題 1　直角三角形兩股是 6 和 8，斜邊多長？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 斜邊是 c：6² ＋ 8² ＝ c²。</p>
+        <p class="step"><b>②</b> 36 ＋ 64 ＝ 100。</p>
+        <p class="step"><b>③</b> c ＝ √100 ＝ 10。（這就是 3、4、5 的兩倍）</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 2　斜邊 13、一股 5，另一股多長？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 這次已知的是斜邊，要用減的：5² ＋ b² ＝ 13²。</p>
+        <p class="step"><b>②</b> 25 ＋ b² ＝ 169，b² ＝ 144。</p>
+        <p class="step"><b>③</b> b ＝ 12。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例題 3　三邊 7、24、25 是直角三角形嗎？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 最長邊是 25，先算它的平方：625。</p>
+        <p class="step"><b>②</b> 另外兩邊：7² ＋ 24² ＝ 49 ＋ 576 ＝ 625。</p>
+        <p class="step"><b>③</b> 兩邊相等，所以是直角三角形。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 直角三角形兩股是 9 和 12，斜邊是：</div>
+      <label><input type="radio" name="p3q1" value="A">18</label>
+      <label><input type="radio" name="p3q1" value="B">√21</label>
+      <label><input type="radio" name="p3q1" value="C">15</label>
+      <label><input type="radio" name="p3q1" value="D">21</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　81 ＋ 144 ＝ 225，√225 ＝ 15。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 斜邊 10、一股 6，另一股是：</div>
+      <label><input type="radio" name="p3q2" value="A">√136</label>
+      <label><input type="radio" name="p3q2" value="B">16</label>
+      <label><input type="radio" name="p3q2" value="C">4</label>
+      <label><input type="radio" name="p3q2" value="D">8</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　100 − 36 ＝ 64，√64 ＝ 8。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. 兩股都是 1 的直角三角形，斜邊是：</div>
+      <label><input type="radio" name="p3q3" value="A">√3</label>
+      <label><input type="radio" name="p3q3" value="B">1</label>
+      <label><input type="radio" name="p3q3" value="C">√2</label>
+      <label><input type="radio" name="p3q3" value="D">2</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1 ＋ 1 ＝ 2，斜邊 ＝ √2，這是一個無理數。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">4. 三邊 6、8、11 的三角形是：</div>
+      <label><input type="radio" name="p3q4" value="A">直角三角形</label>
+      <label><input type="radio" name="p3q4" value="B">鈍角三角形</label>
+      <label><input type="radio" name="p3q4" value="C">不存在</label>
+      <label><input type="radio" name="p3q4" value="D">銳角三角形</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　11² ＝ 121 ＞ 36 ＋ 64 ＝ 100，最長邊的平方比較大，是鈍角。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（10 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="A">
+      <div class="stem">1. 49 的平方根是：</div>
+      <label><input type="radio" name="qz1" value="A">7 和 −7</label>
+      <label><input type="radio" name="qz1" value="B">2401</label>
+      <label><input type="radio" name="qz1" value="C">√7</label>
+      <label><input type="radio" name="qz1" value="D">只有 7</label>
+      <div class="fb" data-exp="　平方根有正負兩個。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">2. √81 ＝ </div>
+      <label><input type="radio" name="qz2" value="A">9</label>
+      <label><input type="radio" name="qz2" value="B">6561</label>
+      <label><input type="radio" name="qz2" value="C">−9</label>
+      <label><input type="radio" name="qz2" value="D">9 和 −9</label>
+      <div class="fb" data-exp="　根號只取正的那一個。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">3. 化簡 √98 ＝ </div>
+      <label><input type="radio" name="qz3" value="A">14√2</label>
+      <label><input type="radio" name="qz3" value="B">2√49</label>
+      <label><input type="radio" name="qz3" value="C">7√2</label>
+      <label><input type="radio" name="qz3" value="D">49√2</label>
+      <div class="fb" data-exp="　98 ＝ 49 × 2，√49 ＝ 7。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">4. √30 介於哪兩個整數之間？</div>
+      <label><input type="radio" name="qz4" value="A">4 和 5</label>
+      <label><input type="radio" name="qz4" value="B">6 和 7</label>
+      <label><input type="radio" name="qz4" value="C">5 和 6</label>
+      <label><input type="radio" name="qz4" value="D">14 和 16</label>
+      <div class="fb" data-exp="　5² ＝ 25 ＜ 30 ＜ 36 ＝ 6²。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">5. √50 − √18 ＝ </div>
+      <label><input type="radio" name="qz5" value="A">8√2</label>
+      <label><input type="radio" name="qz5" value="B">√32</label>
+      <label><input type="radio" name="qz5" value="C">2√2</label>
+      <label><input type="radio" name="qz5" value="D">√2</label>
+      <div class="fb" data-exp="　化簡成 5√2 − 3√2 ＝ 2√2。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">6. √5 × √20 ＝ </div>
+      <label><input type="radio" name="qz6" value="A">5√4</label>
+      <label><input type="radio" name="qz6" value="B">10</label>
+      <label><input type="radio" name="qz6" value="C">√25</label>
+      <label><input type="radio" name="qz6" value="D">100</label>
+      <div class="fb" data-exp="　√100 ＝ 10。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">7. 下面哪一個<b>不能</b>再合併？</div>
+      <label><input type="radio" name="qz7" value="A">√12 ＋ √3</label>
+      <label><input type="radio" name="qz7" value="B">√18 ＋ √50</label>
+      <label><input type="radio" name="qz7" value="C">√2 ＋ √3</label>
+      <label><input type="radio" name="qz7" value="D">√8 ＋ √2</label>
+      <div class="fb" data-exp="　√2 和 √3 根號裡不同又化不動，只有它不能合併。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">8. 直角三角形兩股 5 和 12，斜邊是：</div>
+      <label><input type="radio" name="qz8" value="A">13</label>
+      <label><input type="radio" name="qz8" value="B">60</label>
+      <label><input type="radio" name="qz8" value="C">17</label>
+      <label><input type="radio" name="qz8" value="D">√17</label>
+      <div class="fb" data-exp="　25 ＋ 144 ＝ 169，√169 ＝ 13。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">9. 一面牆高 12 公尺，梯子底端離牆 5 公尺剛好靠到牆頂，梯子長：</div>
+      <label><input type="radio" name="qz9" value="A">√7 公尺</label>
+      <label><input type="radio" name="qz9" value="B">7 公尺</label>
+      <label><input type="radio" name="qz9" value="C">17 公尺</label>
+      <label><input type="radio" name="qz9" value="D">13 公尺</label>
+      <div class="fb" data-exp="　梯子是斜邊：5² ＋ 12² ＝ 169，長 13 公尺。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">10. 三邊 5、12、14 的三角形是：</div>
+      <label><input type="radio" name="qz10" value="A">鈍角三角形</label>
+      <label><input type="radio" name="qz10" value="B">直角三角形</label>
+      <label><input type="radio" name="qz10" value="C">等腰三角形</label>
+      <label><input type="radio" name="qz10" value="D">銳角三角形</label>
+      <div class="fb" data-exp="　14² ＝ 196 ＞ 25 ＋ 144 ＝ 169，最長邊平方較大，是鈍角。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>國二數學自學教材 · 第 2 章 平方根與畢氏定理<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "八上2 平方根與畢氏定理";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.innerHTML='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.innerHTML='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.innerHTML='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.innerHTML='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 8){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 5){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// ── 分母有理化示意 ──
+(function(){
+  const W = 620;
+  let s = txt(W/2, 22, '上下同乘 √2，等於乘 1，值不會變', '#6b7280', 13);
+  s += txt(120, 66, '1', '#111827', 20); s += line(96, 76, 144, 76, '#111827', 2);
+  s += txt(120, 102, '√2', '#111827', 20);
+  s += txt(180, 84, '×', '#6b7280', 18);
+  s += txt(240, 66, '√2', '#7c3aed', 20); s += line(212, 76, 268, 76, '#7c3aed', 2);
+  s += txt(240, 102, '√2', '#7c3aed', 20);
+  s += txt(310, 84, '＝', '#111827', 18);
+  s += txt(376, 66, '√2', '#111827', 20); s += line(350, 76, 402, 76, '#111827', 2);
+  s += txt(376, 102, '2', '#16a34a', 20);
+  s += txt(470, 90, '分母乾淨了', '#16a34a', 14, 'start', 'font-weight="bold"');
+  document.getElementById('svgRat').innerHTML = svg(W, 126, s);
+})();
+
+// ── 正方形邊長機 ──
+(function(){
+  const rArea = document.getElementById('rArea');
+  function draw(){
+    const A = +rArea.value, side = Math.sqrt(A);
+    const isInt = Number.isInteger(side);
+    document.getElementById('wArea').textContent = A;
+    const W = 620, s0 = 42;                    // 每單位 42 像素（面積 40 時邊長約 6.3）
+    const px = side * s0, x0 = 40, y0 = 300 - px;
+    let s = line(x0 - 10, 300, x0 + 300, 300, '#d1d5db', 1.5);
+    s += rect(x0, y0, px, px, isInt ? '#ddd6fe' : '#ede9fe', '#7c3aed', 2);
+    s += txt(x0 + px/2, y0 + px/2 + 6, '面積 ' + A, '#5b21b6', 15, 'middle', 'font-weight="bold"');
+    s += line(x0, 314, x0 + px, 314, '#7c3aed', 2);
+    s += txt(x0 + px/2, 334, '邊長 √' + A + ' ＝ ' + (isInt ? side : side.toFixed(6) + '…'),
+             '#5b21b6', 14, 'middle', 'font-weight="bold"');
+    // 夾在哪兩個整數之間
+    const lo = Math.floor(side), hi = lo + 1;
+    if(!isInt){
+      s += line(x0, y0 - 16, x0 + lo * s0, y0 - 16, '#9ca3af', 2);
+      s += line(x0, y0 - 30, x0 + hi * s0, y0 - 30, '#9ca3af', 2);
+      s += txt(x0 + lo * s0 + 6, y0 - 11, lo, '#6b7280', 12, 'start');
+      s += txt(x0 + hi * s0 + 6, y0 - 25, hi, '#6b7280', 12, 'start');
+    }
+    document.getElementById('svgSq').innerHTML = svg(W, 350, s);
+    document.getElementById('sqSay').innerHTML = isInt
+      ? `面積 ${A} 是<b>完全平方數</b>（${side} × ${side}），所以邊長剛好是整數 <b>${side}</b>。<br>` +
+        `√${A} ＝ ${side}，寫得完。`
+      : `面積 ${A} 不是完全平方數，邊長 √${A} ≒ <b>${side.toFixed(6)}…</b>，小數點後面停不下來，` +
+        `也寫不成分數。這種數叫<b>無理數</b>，所以答案通常就保留成 √${A}。<br>` +
+        `要抓大小的話：${lo}² ＝ ${lo*lo} ＜ ${A} ＜ ${hi*hi} ＝ ${hi}²，所以 √${A} 在 <b>${lo} 和 ${hi} 之間</b>。`;
+  }
+  rArea.addEventListener('input', draw);
+  document.querySelectorAll('#svgSq').length;
+  document.querySelectorAll('.chip[data-a]:not([data-b])').forEach(c=>{
+    c.addEventListener('click', ()=>{ rArea.value = c.dataset.a; draw(); });
+  });
+  draw();
+})();
+
+// ── 畢氏面積拼圖 ──
+(function(){
+  const rPa = document.getElementById('rPa'), rPb = document.getElementById('rPb');
+  function draw(){
+    const a = +rPa.value, b = +rPb.value;
+    document.getElementById('wPa').textContent = a;
+    document.getElementById('wPb').textContent = b;
+    const c2 = a*a + b*b, c = Math.sqrt(c2), isInt = Number.isInteger(c);
+    const u = 11, W = 470, H = 450, Ax = 165, Ay = 300;
+    const Bx = Ax + a*u, By = Ay;          // 底邊終點
+    const Cx = Ax, Cy = Ay - b*u;          // 高的終點
+    let s = '';
+    // 底邊上的正方形（往下）
+    s += poly([[Ax,Ay],[Bx,By],[Bx,By + a*u],[Ax,Ay + a*u]], '#fde68a', '#b45309', 2);
+    s += txt((Ax+Bx)/2, Ay + a*u/2 + 6, 'a² ＝ ' + a*a, '#92400e', 13);
+    // 高上的正方形（往左）
+    s += poly([[Ax,Ay],[Cx,Cy],[Cx - b*u,Cy],[Ax - b*u,Ay]], '#bfdbfe', '#1d4ed8', 2);
+    s += txt(Ax - b*u/2, (Ay+Cy)/2 + 6, 'b² ＝ ' + b*b, '#1e3a8a', 13);
+    // 斜邊上的正方形（往外）
+    const px = b*u, py = -a*u;             // 指向遠離直角的那一側
+    s += poly([[Bx,By],[Cx,Cy],[Cx+px,Cy+py],[Bx+px,By+py]], '#ddd6fe', '#6d28d9', 2);
+    s += txt((Bx+Cx)/2 + px/2, (By+Cy)/2 + py/2 + 6, 'c² ＝ ' + c2, '#5b21b6', 14, 'middle', 'font-weight="bold"');
+    // 三角形本體與直角記號
+    s += poly([[Ax,Ay],[Bx,By],[Cx,Cy]], '#fff', '#374151', 2.5);
+    s += rect(Ax, Ay - 12, 12, 12, 'none', '#374151', 1.5);
+    document.getElementById('svgPy').innerHTML = svg(W, H, s);
+    document.getElementById('pySay').innerHTML =
+      `<b>${a*a} ＋ ${b*b} ＝ ${c2}</b>　兩個小正方形加起來，剛好是大的那一個。<br>` +
+      `斜邊 c ＝ √${c2} ＝ ` + (isInt ? `<b>${c}</b>，剛好是整數。` :
+        `<b>${c.toFixed(4)}…</b>，不是整數，答案就寫成 √${c2}` +
+        (c2 % 1 === 0 ? '（能化簡就化簡）' : '') + '。');
+  }
+  [rPa, rPb].forEach(r=>r.addEventListener('input', draw));
+  document.querySelectorAll('.chip[data-b]').forEach(c=>{
+    c.addEventListener('click', ()=>{ rPa.value = c.dataset.a; rPb.value = c.dataset.b; draw(); });
+  });
+  draw();
+})();
+
+</script>
+</body>
+</html>
