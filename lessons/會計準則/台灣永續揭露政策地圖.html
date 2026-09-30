@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>台灣永續揭露政策地圖（私人學習用）</title>
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --paper:#F4F6F3;
+  --card:#FFFFFF;
+  --ink:#1C2A30;
+  --ink-2:#4B5A62;
+  --ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);
+  --blue:#1F4E8C;
+  --blue-soft:#E3EBF6;
+  --green:#2E7D4F;
+  --green-soft:#E1F0E6;
+  --signal:#E0A100;
+  --signal-soft:#FBF1CF;
+  --warn:#9B2C2C;
+  --warn-soft:#F8E4E4;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F;
+    --card:#1D262B;
+    --ink:#E9EEF0;
+    --ink-2:#B8C3CA;
+    --ink-3:#7F8C95;
+    --rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0;
+    --blue-soft:#243448;
+    --green:#7CC79C;
+    --green-soft:#223A2B;
+    --signal:#F0C24A;
+    --signal-soft:#3A3213;
+    --warn:#F08A8A;
+    --warn-soft:#3F2323;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F;
+  --card:#1D262B;
+  --ink:#E9EEF0;
+  --ink-2:#B8C3CA;
+  --ink-3:#7F8C95;
+  --rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0;
+  --blue-soft:#243448;
+  --green:#7CC79C;
+  --green-soft:#223A2B;
+  --signal:#F0C24A;
+  --signal-soft:#3A3213;
+  --warn:#F08A8A;
+  --warn-soft:#3F2323;
+  --focus:#7FA7E0;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 96px);scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+*,*::before,*::after{box-sizing:inherit}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;
+  font-size:16px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:3px}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.9rem;letter-spacing:-.01em}
+h2{font-size:1.45rem;margin-top:0}
+h3{font-size:1.1rem;margin-top:1.4em}
+p{margin:0 0 1em}
+ul,ol{margin:0 0 1em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:.55em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2);background:transparent}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scroll table{min-width:0}
+.scroll table.wide{min-width:560px}
+.scroll th:first-child,.scroll td:first-child{white-space:nowrap}
+code{font-family:inherit;background:var(--blue-soft);padding:.05em .35em;border-radius:4px}
+
+/* header + metro line */
+.top{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:20;
+  background:var(--paper);border-bottom:1px solid var(--rule);
+  padding-top:env(safe-area-inset-top,0px);
+}
+.top-inner{max-width:960px;margin:0 auto;padding:.6rem 1rem .4rem}
+.brand{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.brand strong{font-size:1rem}
+.brand .tag{font-size:.8rem;color:var(--ink-2);background:var(--signal-soft);border:1px solid var(--signal);border-radius:999px;padding:.05em .7em;white-space:nowrap}
+.line{list-style:none;margin:.5rem 0 0;padding:0;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;position:relative}
+.line::-webkit-scrollbar{display:none}
+.line li{flex:0 0 auto;position:relative;padding:0 .2rem}
+.line a{display:flex;flex-direction:column;align-items:center;gap:.25rem;text-decoration:none;color:var(--ink-2);font-size:.78rem;min-width:5.4rem;padding:.2rem .3rem .35rem;border-radius:6px}
+.line a .dot{width:14px;height:14px;border-radius:50%;border:3px solid var(--blue);background:var(--card);display:block;position:relative;z-index:1}
+.line li::before{content:"";position:absolute;left:0;right:0;top:calc(.2rem + 5px);height:4px;background:var(--blue);opacity:.35}
+.line li:first-child::before{left:50%}
+.line li:last-child::before{right:50%}
+.line a.visited .dot{background:var(--blue)}
+.line a.current{color:var(--ink);font-weight:700}
+.line a.current .dot{background:var(--signal);border-color:var(--signal);box-shadow:0 0 0 4px var(--signal-soft)}
+.line a:hover{background:var(--blue-soft)}
+
+/* main */
+main{max-width:960px;margin:0 auto;padding:1.25rem 1rem 4rem}
+section.station{padding:1.6rem 0 2rem;border-bottom:1px solid var(--rule)}
+section.station:last-of-type{border-bottom:0}
+.station-head{display:flex;align-items:baseline;gap:.75rem;margin-bottom:.75rem}
+.station-head .no{font-size:.85rem;color:var(--ink-3);white-space:nowrap}
+.lead{font-size:1.05rem;color:var(--ink);max-width:70ch}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:1rem 1.1rem;margin:0 0 1rem}
+.card.blue{border-left:5px solid var(--blue)}
+.card.green{border-left:5px solid var(--green)}
+.card.signal{border-left:5px solid var(--signal);background:var(--signal-soft)}
+.card.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+.btn{display:inline-block;font:inherit;font-size:.95rem;font-weight:500;color:var(--card);background:var(--blue);border:0;border-radius:6px;padding:.55em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.small{font-size:.85rem;padding:.35em .8em}
+.btn:disabled{opacity:.5;cursor:default}
+.next{margin-top:1.5rem;display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.signal{background:var(--signal-soft);border-color:transparent;color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0 1rem}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+
+/* two-line svg */
+.metro{width:100%;height:auto;display:block;margin:.5rem 0 1rem}
+.metro text{font-family:inherit;font-size:13px;fill:var(--ink)}
+.metro .lbl{fill:var(--ink-2);font-size:12px}
+.metro .l-blue{stroke:var(--blue)}
+.metro .l-green{stroke:var(--green)}
+.metro .st{fill:var(--card);stroke-width:3}
+.metro .st.b{stroke:var(--blue)}
+.metro .st.g{stroke:var(--green)}
+.metro .xfer{fill:var(--card);stroke:var(--signal);stroke-width:4}
+
+/* timeline */
+.tl{list-style:none;margin:0;padding:0;border-left:3px solid var(--rule);margin-left:.6rem}
+.tl li{position:relative;padding:.1rem 0 .9rem 1.4rem}
+.tl li::before{content:"";position:absolute;left:-9px;top:.55rem;width:13px;height:13px;border-radius:50%;background:var(--card);border:3px solid var(--blue)}
+.tl li.env::before{border-color:var(--green)}
+.tl li.both::before{border-color:var(--signal)}
+.tl .when{font-size:.85rem;color:var(--ink-3)}
+.tl button.t{font:inherit;font-weight:700;color:var(--ink);background:none;border:0;padding:0;text-align:left;cursor:pointer;line-height:1.4}
+.tl button.t::after{content:" ＋";color:var(--ink-3);font-weight:400}
+.tl li.open button.t::after{content:" －"}
+.tl .body{display:none;margin-top:.4rem;font-size:.95rem}
+.tl li.open .body{display:block}
+.tl .body dl{display:grid;grid-template-columns:5.5em 1fr;gap:.2rem .6rem;margin:.4rem 0}
+.tl .body dt{color:var(--ink-3)}
+.tl .body dd{margin:0}
+.tl li.hidden{display:none}
+
+/* tabs */
+.tabs{display:flex;gap:.3rem;flex-wrap:wrap;border-bottom:1px solid var(--rule);margin-bottom:1rem}
+.tabs button{font:inherit;font-size:.95rem;background:none;border:0;border-bottom:3px solid transparent;padding:.4em .8em;cursor:pointer;color:var(--ink-2);margin-bottom:-1px}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--signal);font-weight:700}
+.panel{display:none}
+.panel.on{display:block}
+
+/* wizard */
+.wiz fieldset{border:1px solid var(--rule);border-radius:8px;padding:.6rem 1rem .8rem;margin:0 0 .8rem}
+.wiz legend{font-weight:700;padding:0 .4em}
+.wiz label{display:inline-flex;align-items:center;gap:.4em;margin:.2em 1.2em .2em 0;cursor:pointer}
+.result{display:none}
+.result.on{display:block}
+.result h3{margin-top:0}
+.rows th{width:9.5em}
+.years{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:.4rem;margin:.6rem 0 1rem}
+.yr{border:1px solid var(--rule);border-radius:6px;padding:.4rem .5rem;font-size:.82rem;background:var(--card)}
+.yr b{display:block;font-size:.9rem}
+.yr.on{border-color:var(--blue);background:var(--blue-soft)}
+
+/* stages */
+.stage{display:grid;grid-template-columns:8em 1fr;gap:.4rem .8rem;align-items:start;margin:.5rem 0}
+.stage .q{font-weight:700;color:var(--blue)}
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 180px;background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:.7rem .9rem}
+.flow .step b{display:block;margin-bottom:.2rem}
+
+/* quiz */
+.q-card{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:1.1rem 1.2rem}
+.q-card .prog{font-size:.85rem;color:var(--ink-3);margin-bottom:.4rem}
+.opts{list-style:none;padding:0;margin:.8rem 0}
+.opts li{margin:.4rem 0}
+.opts button{font:inherit;width:100%;text-align:left;background:var(--paper);border:1.5px solid var(--rule);border-radius:6px;padding:.6em .9em;cursor:pointer;color:var(--ink)}
+.opts button:hover{border-color:var(--blue)}
+.opts button.right{border-color:var(--green);background:var(--green-soft)}
+.opts button.wrong{border-color:var(--warn);background:var(--warn-soft)}
+.opts button:disabled{cursor:default}
+.explain{display:none;margin-top:.6rem;padding:.7rem .9rem;border-radius:6px;background:var(--signal-soft);font-size:.95rem}
+.explain.on{display:block}
+.score{font-size:1.2rem;font-weight:700}
+
+/* glossary + links */
+.search{width:100%;font:inherit;font-size:1rem;padding:.55em .8em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);margin-bottom:.8rem}
+.gl{list-style:none;margin:0;padding:0}
+.gl li{padding:.55rem 0;border-bottom:1px solid var(--rule)}
+.gl li b{display:block}
+.gl li.hidden{display:none}
+.links{list-style:none;padding:0;margin:0}
+.links li{padding:.45rem 0;border-bottom:1px solid var(--rule)}
+.links li .who{font-size:.8rem;color:var(--ink-3);display:block}
+footer{max-width:960px;margin:0 auto;padding:1rem 1rem 2rem;color:var(--ink-2);font-size:.85rem;border-top:1px solid var(--rule)}
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <strong>台灣永續揭露政策地圖</strong>
+      <span class="tag">私人學習筆記，非官方，正確答案以主管機關法規為準</span>
+    </div>
+    <ol class="line" id="line">
+      <li><a href="#s0" data-st="s0"><span class="dot"></span>起點</a></li>
+      <li><a href="#s1" data-st="s1"><span class="dot"></span>兩條線</a></li>
+      <li><a href="#s2" data-st="s2"><span class="dot"></span>時間軸</a></li>
+      <li><a href="#s3" data-st="s3"><span class="dot"></span>名詞地圖</a></li>
+      <li><a href="#s4" data-st="s4"><span class="dot"></span>我是哪一組</a></li>
+      <li><a href="#sy" data-st="sy"><span class="dot"></span>逐年看</a></li>
+      <li><a href="#s5" data-st="s5"><span class="dot"></span>導入計畫</a></li>
+      <li><a href="#s6" data-st="s6"><span class="dot"></span>測驗</a></li>
+      <li><a href="#s7" data-st="s7"><span class="dot"></span>查找</a></li>
+    </ol>
+  </div>
+</header>
+
+<main>
+
+<!-- S0 -->
+<section class="station" id="s0">
+  <div class="station-head"><span class="no">起點</span><h2>走一遍就懂台灣的永續揭露制度</h2></div>
+  <p class="lead">八站走完，你會知道誰管什麼、哪份文件管哪件事、自己公司哪一年要做什麼。想直接查，跳到最後一站。</p>
+  <div class="card signal">
+    <b>使用前先讀</b>
+    <ul class="small" style="margin-bottom:0">
+      <li>這是私人學習筆記，整理自公開的新聞稿、問答集與範例，不是官方解釋。</li>
+      <li>內容截至 2026 年 9 月 30 日。金管會預計年底修正年報準則與函令，屆時以正式條文為準。</li>
+      <li>家數與市值為金管會 2026 年 6 月 30 日統計。</li>
+      <li>每一站底部都有官方連結，拿不準時點出去看原文。</li>
+    </ul>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <b>走一遍（約 30 分鐘）</b>
+      <p class="small muted">照站序讀，每站最後按「下一站」。上方路線圖會記住你走到哪。</p>
+      <a class="btn" href="#s1">從第一站開始</a>
+    </div>
+    <div class="card">
+      <b>直接查</b>
+      <p class="small muted">用條件查自己公司的義務，或搜名詞、找官方連結。</p>
+      <a class="btn secondary" href="#s4">查我的公司</a>
+      <a class="btn secondary" href="#s7" style="margin-left:.4rem">名詞與連結</a>
+    </div>
+  </div>
+  <p class="small muted">進度只存在你這台裝置的瀏覽器裡。<button class="btn small secondary" id="reset">清除進度</button></p>
+</section>
+
+<!-- S1 -->
+<section class="station" id="s1">
+  <div class="station-head"><span class="no">第一站</span><h2>兩條線：金管會管揭露，環境部管減量</h2></div>
+  <p class="lead">新人搞混時程，八成是把兩條線混在一起看。先把它們分開。</p>
+
+  <svg class="metro" viewBox="0 0 900 300" role="img" aria-label="兩條線示意：金管會揭露線的五站依開始年份由左到右排列；環境部減量線在列管排放源與盤查站轉乘">
+    <text x="20" y="24" font-weight="700">金管會 揭露線</text>
+    <text x="20" y="42" class="lbl">單位：上市櫃公司（個體＋合併報表子公司）。站名下方是「從哪一年開始」，由左到右愈晚。</text>
+    <g>
+      <text x="90" y="70" text-anchor="middle">永續報告書</text><text x="90" y="86" text-anchor="middle" class="lbl">2014 起，分階段擴大</text>
+      <text x="260" y="70" text-anchor="middle">範疇一、二盤查</text><text x="260" y="86" text-anchor="middle" class="lbl">2023 起，2027 全體</text>
+      <text x="430" y="70" text-anchor="middle">溫室氣體確信</text><text x="430" y="86" text-anchor="middle" class="lbl">2024 起分階段</text>
+      <text x="600" y="70" text-anchor="middle">年報氣候資訊</text><text x="600" y="86" text-anchor="middle" class="lbl">附表 2-2-3，2024 起</text>
+      <text x="790" y="70" text-anchor="middle">IFRS S1/S2 專章</text><text x="790" y="86" text-anchor="middle" class="lbl">2026 起分階段</text>
+    </g>
+    <line x1="20" y1="104" x2="880" y2="104" class="l-blue" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="90" cy="104" r="10" class="st b"/>
+    <circle cx="260" cy="104" r="10" class="st b"/>
+    <circle cx="430" cy="104" r="10" class="st b"/>
+    <circle cx="600" cy="104" r="10" class="st b"/>
+    <circle cx="790" cy="104" r="10" class="st b"/>
+    <line x1="260" y1="116" x2="260" y2="192" stroke="var(--signal)" stroke-width="4" stroke-dasharray="6 6"/>
+    <text x="272" y="158" class="lbl">盤查範圍含列管排放源者，可直接採用環境部規定</text>
+    <text x="20" y="168" font-weight="700">環境部 減量線</text>
+    <text x="20" y="186" class="lbl">單位：排放源（多為工廠）</text>
+    <line x1="20" y1="204" x2="880" y2="204" class="l-green" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="260" cy="204" r="14" class="xfer"/>
+    <circle cx="430" cy="204" r="10" class="st g"/>
+    <circle cx="600" cy="204" r="10" class="st g"/>
+    <circle cx="790" cy="204" r="10" class="st g"/>
+    <g>
+      <text x="260" y="236" text-anchor="middle" font-weight="700">列管排放源（轉乘站）</text><text x="260" y="252" text-anchor="middle" class="lbl">環境部公告名單</text>
+      <text x="430" y="236" text-anchor="middle">盤查登錄</text><text x="430" y="252" text-anchor="middle" class="lbl">每年 4 月底前</text>
+      <text x="600" y="236" text-anchor="middle">查驗</text><text x="600" y="252" text-anchor="middle" class="lbl">查驗機構</text>
+      <text x="790" y="236" text-anchor="middle">碳費</text><text x="790" y="252" text-anchor="middle" class="lbl">2.5 萬噸以上，2025 起</text>
+    </g>
+  </svg>
+  <p class="small muted">這張圖不是時間軸。藍線五站是金管會「要求的五件事」，站名下方標的是各自從哪一年開始；綠線是環境部對排放源的四個步驟。完整年份順序在第二站。</p>
+
+  <div class="scroll"><table>
+    <thead><tr><th></th><th><span class="pill blue">金管會</span>證期局</th><th><span class="pill green">環境部</span>氣候變遷署</th></tr></thead>
+    <tbody>
+      <tr><th>法源</th><td>證交法、公開發行公司年報應行記載事項準則、證交所／櫃買永續報告書作業辦法</td><td>氣候變遷因應法第 21 條及子法</td></tr>
+      <tr><th>對象單位</th><td>上市櫃公司：母公司個體，加合併報表子公司（含國內外）</td><td>排放源，多為工廠</td></tr>
+      <tr><th>門檻</th><td>實收資本額分階段：100 億、50 億、20 億</td><td>年排放量達 2.5 萬公噸 CO2e 的電力、燃氣供應、製造業</td></tr>
+      <tr><th>要求</th><td>盤查、確信、年報專章、永續報告書</td><td>盤查登錄、查驗、繳碳費</td></tr>
+      <tr><th>目的</th><td>讓投資人看得到氣候風險與碳排</td><td>排碳有價、實質減量</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="card signal">
+    <b>轉乘站：環境部列管排放源</b>
+    <p class="small" style="margin-bottom:.3em">路徑圖問答集 Q2：公司依路徑圖盤查的範圍若包含環境部列管排放源，可以直接採用環境部規定辦理盤查及確信。</p>
+    <p class="small" style="margin-bottom:0">2026.9.23 起，資本額未達 20 億但排放源被環境部列管的上市櫃公司，仍要強制接軌 IFRS 永續準則。列管與否，決定你在哪一組。</p>
+  </div>
+
+  <p class="small muted">原文：<a href="https://cgc.twse.com.tw/responsibilityRoadMap/listCh" target="_blank" rel="noopener">證交所 路徑圖專區（含問答集）</a>・<a href="https://www.climatetalks.tw/" target="_blank" rel="noopener">環境部 氣候公民對話平臺</a></p>
+  <div class="next"><a class="btn" href="#s2" data-next="s1">下一站：時間軸</a></div>
+</section>
+
+<!-- S2 -->
+<section class="station" id="s2">
+  <div class="station-head"><span class="no">第二站</span><h2>時間軸：十二年怎麼走到今天</h2></div>
+  <p class="lead">門檻從「100 億加特定產業」一路擴到「全體上市櫃」，2026 年 9 月再收回「20 億以上加環境部列管」。方向沒變，變的是誰先做、做到哪一層。</p>
+  <div class="chips" role="group" aria-label="篩選機關">
+    <button class="chip" data-f="all" aria-pressed="true">全部</button>
+    <button class="chip" data-f="fsc" aria-pressed="false">金管會、證交所</button>
+    <button class="chip" data-f="env" aria-pressed="false">環境部</button>
+  </div>
+  <ul class="tl" id="tl"></ul>
+  <div class="card">
+    <b>年份怎麼讀</b>
+    <p class="small" style="margin-bottom:0">金管會文件的「年度」多指年報申報年，揭露的是前一年度的資料。例如「114 年揭露個體盤查」是 2025 年 3 月的年報，裡面放 2024 年的盤查。本站兩種年都寫，看到「資料年」就是排放發生的那一年。</p>
+  </div>
+  <div class="next"><a class="btn" href="#s3" data-next="s2">下一站：名詞地圖</a></div>
+</section>
+
+<!-- S3 -->
+<section class="station" id="s3">
+  <div class="station-head"><span class="no">第三站</span><h2>名詞地圖：四組最容易混的概念</h2></div>
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="t1">文件層級</button>
+    <button role="tab" aria-selected="false" data-tab="t2">查驗 vs 確信</button>
+    <button role="tab" aria-selected="false" data-tab="t3">個體 vs 合併</button>
+    <button role="tab" aria-selected="false" data-tab="t4">申報年 vs 資料年</button>
+  </div>
+
+  <div class="panel on" id="t1">
+    <p class="lead">藍圖、行動方案、路徑圖都不是法規，是政策文件。有沒有義務、會不會罰，看年報準則、作業辦法、函令。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>名稱</th><th>白話</th><th>管多寬</th><th>例子</th></tr></thead>
+      <tbody>
+        <tr><th>藍圖</th><td>我們要往哪裡去</td><td>中長期方向，跨很多議題</td><td>公司治理 3.0（2021–2023）、接軌 IFRS 永續揭露準則藍圖（2023.8）</td></tr>
+        <tr><th>行動方案</th><td>要做哪些事</td><td>一張措施清單，每項各有年份</td><td>上市櫃公司永續發展行動方案（2023.3），五大主軸二十幾項</td></tr>
+        <tr><th>路徑圖</th><td>誰在哪一年做到哪</td><td>只管一件事的分階段時程表</td><td>上市櫃公司永續發展路徑圖（2022.3），只管範疇一、二盤查和確信</td></tr>
+        <tr><th>法規、函令</th><td>不做會有事</td><td>有拘束力</td><td>年報準則、永續報告書作業辦法、金管證發字令</td></tr>
+        <tr><th>問答集、範例、指引</th><td>怎麼做</td><td>解釋執行細節</td><td>路徑圖問答集、IFRS 專區揭露範例、導入計畫參考範例</td></tr>
+      </tbody>
+    </table></div>
+    <ul class="small">
+      <li>路徑圖比行動方案早一年出來，行動方案說自己建立在路徑圖和藍圖之上。功能不同，不是嚴格上下層。</li>
+      <li>減碳目標、20 億以下編永續報告書，寫在行動方案，不在路徑圖。</li>
+      <li>2026.9.23 當天改的是藍圖和路徑圖，年報準則和函令年底才修。政策文件先動、法規後跟，是常態。</li>
+    </ul>
+  </div>
+
+  <div class="panel" id="t2">
+    <p class="lead">三個詞都是「找第三方檢查碳排數字」，差在哪個體系、用哪套準則、由誰簽字。</p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th><span class="pill green">環境部</span>查驗（舊稱查證）</th><th><span class="pill blue">金管會</span>確信</th></tr></thead>
+      <tbody>
+        <tr><th>準則</th><td>ISO 14064-3、環境部查驗作業規定</td><td>確信準則 3410 號（2023.6，參考 ISAE 3410），補充 3000 號</td></tr>
+        <tr><th>執行者</th><td>環境部許可之查驗機構、合格登錄之主導查驗員</td><td>會計師事務所；金管會體系也接受查驗機構</td></tr>
+        <tr><th>等級用語</th><td>合理保證、有限保證</td><td>合理確信、有限確信</td></tr>
+        <tr><th>產出</th><td>查驗聲明書</td><td>確信報告（意見書）</td></tr>
+        <tr><th>用詞演變</th><td>溫室氣體減量及管理法稱查證，2023 氣候法改稱查驗</td><td>2022 路徑圖原稱查證，2023 起改稱確信</td></tr>
+      </tbody>
+    </table></div>
+    <h3>有限確信與合理確信</h3>
+    <p class="small">差在程序深度。有限確信取得的確信程度明顯低於合理確信，程序範圍較小，通常不做控制測試。合理確信要驗證每項聲明，例如範疇一有沒有漏列。兩套準則理論基礎不同，不宜直接比較「合理保證」和「合理確信」誰高誰低。</p>
+    <h3>兩條線接起來的地方</h3>
+    <p class="small">證交所、櫃買「上市上櫃公司永續報告書確信機構管理要點」：溫室氣體確信機構是取得環境部查驗機構許可證者，或有相關經驗的會計師事務所。部分營運據點已依環境部規定取得查驗聲明書的，會計師可以採用該聲明書出具分攤式意見。</p>
+    <h3>別搞混的另一種確信</h3>
+    <p class="small" style="margin-bottom:0">永續報告書作業辦法第 4 條第 2 項要求食品、化工、金融等特定產業，就永續報告書中的永續指標取得會計師確信。這和溫室氣體確信是兩件事，不受 2026.9.23 調整影響。</p>
+  </div>
+
+  <div class="panel" id="t3">
+    <p class="lead">路徑圖是「先做自己、再做整個集團」的兩層設計。盤查和確信各走一次，每次都先母公司個體、隔年擴到合併報表範圍。</p>
+    <ul class="small">
+      <li>「個體」是母公司自己一家；「合併」是母公司加所有合併報表子公司，含國內外。</li>
+      <li>終點是揭露範圍與合併財報一致，因為 IFRS S2 的報導個體就是合併報表。</li>
+      <li>合併開始後，母公司自己那一列還在。年報附表 2-2-3 本來就是母公司一列、子公司一列或多列。</li>
+      <li>合併開始後，5% 重大性門檻的分母從母公司總排放量改成合併總排放量。</li>
+    </ul>
+    <div class="scroll"><table>
+      <caption class="small muted" style="text-align:left;padding:.3em 0">以 50 億以下公司為例，原路徑圖，年份為年報申報年</caption>
+      <thead><tr><th>申報年</th><th>資料年</th><th>盤查</th><th>確信（原規劃）</th></tr></thead>
+      <tbody>
+        <tr><td>2026（115）</td><td>2025</td><td>母公司個體</td><td>—</td></tr>
+        <tr><td>2027（116）</td><td>2026</td><td>合併報表</td><td>—</td></tr>
+        <tr><td>2028（117）</td><td>2027</td><td>持續</td><td>母公司個體（9/23 後免）</td></tr>
+        <tr><td>2029（118）</td><td>2028</td><td>持續</td><td>合併報表（第三階段仍要，第四組免）</td></tr>
+      </tbody>
+    </table></div>
+    <div class="card signal small">
+      <b>母子公司都是上市櫃時</b><br>
+      子公司依自己的時程揭露。但母公司合併年度較早時，子公司要提前把盤查資料交給母公司。例如 100 億母公司 2025 年報就要揭露合併盤查，20 億上櫃子公司 2026 才輪到個體揭露，但 2025 就要先把數字給母公司。
+    </div>
+  </div>
+
+  <div class="panel" id="t4">
+    <p class="lead">申報年 ＝ 資料年 ＋ 1。文件說「116 年揭露」，指 2027 年 3 月的年報，內容是 2026 年的事。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>申報年<br><span class="small muted">民國（西元）</span></th><th>資料年</th><th>這一年常見的事</th></tr></thead>
+      <tbody>
+        <tr><td>112（2023）</td><td>2022</td><td>第一階段個體盤查首次揭露</td></tr>
+        <tr><td>113（2024）</td><td>2023</td><td>附表 2-2-3 全面適用；第一階段個體確信</td></tr>
+        <tr><td>114（2025）</td><td>2024</td><td>第一階段合併盤查；第二階段個體盤查；全體編永續報告書</td></tr>
+        <tr><td>115（2026）</td><td>2025</td><td>第二階段合併盤查；50 億以下個體盤查</td></tr>
+        <tr><td>116（2027）</td><td>2026</td><td>第一階段首次 IFRS 專章、合併確信；50 億以下合併盤查</td></tr>
+        <tr><td>117（2028）</td><td>2027</td><td>第二階段首次專章、合併確信</td></tr>
+        <tr><td>118（2029）</td><td>2028</td><td>第三階段首次專章、合併確信</td></tr>
+        <tr><td>119（2030）</td><td>2029</td><td>金管會再檢討適用範圍與豁免</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <p class="small muted">原文：<a href="https://www.ardf.org.tw/ardf/3410.pdf" target="_blank" rel="noopener">確信準則 3410 號</a>・<a href="https://cgc.twse.com.tw/static/20221221/8a828e1784e0710501853420f4010003_%E7%A2%BA%E4%BF%A1%E6%A9%9F%E6%A7%8B%E7%AE%A1%E7%90%86%E8%A6%81%E9%BB%9E%E6%A2%9D%E6%96%87%E5%85%A8%E6%96%87.pdf" target="_blank" rel="noopener">確信機構管理要點</a></p>
+  <div class="next"><a class="btn" href="#s4" data-next="s3">下一站：我是哪一組</a></div>
+</section>
+
+<!-- S4 -->
+<section class="station" id="s4">
+  <div class="station-head"><span class="no">第四站</span><h2>我的公司是哪一組，哪一年要做什麼</h2></div>
+  <p class="lead">判斷順序：先看產業，再看排放源有沒有被環境部列管，最後看實收資本額。</p>
+  <form class="wiz" id="wiz" onsubmit="return false">
+    <fieldset><legend>1. 產業</legend>
+      <label><input type="radio" name="ind" value="general" checked>一般產業</label>
+      <label><input type="radio" name="ind" value="fin">金融、保險、證券期貨業</label>
+      <label><input type="radio" name="ind" value="steel">鋼鐵、水泥業</label>
+    </fieldset>
+    <fieldset><legend>2. 排放源是否為環境部公告應盤查登錄及查驗對象</legend>
+      <label><input type="radio" name="env" value="no" checked>否</label>
+      <label><input type="radio" name="env" value="yes">是</label>
+      <label><input type="radio" name="env" value="unknown">不知道</label>
+    </fieldset>
+    <fieldset><legend>3. 實收資本額（新臺幣）</legend>
+      <label><input type="radio" name="cap" value="100">100 億以上</label>
+      <label><input type="radio" name="cap" value="50">50 億以上，未達 100 億</label>
+      <label><input type="radio" name="cap" value="20">20 億以上，未達 50 億</label>
+      <label><input type="radio" name="cap" value="0" checked>未達 20 億</label>
+    </fieldset>
+    <p class="small muted">無面額或面額非 10 元的公司，100 億以淨值 200 億替代、50 億以淨值 100 億替代。20 億門檻的判斷時點待年底函令。</p>
+    <button class="btn" id="wizgo" type="button">看結果</button>
+  </form>
+  <div class="result" id="wizout"></div>
+  <p class="small muted">原文：<a href="https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0&mcustomize=news_view.jsp&dataserno=202609230001&dtable=News" target="_blank" rel="noopener">金管會 2026.9.23 新聞稿及附件</a>・<a href="https://isds.tpex.org.tw/IFRS/front/#/main/customized-query/exclusive-roadmap" target="_blank" rel="noopener">櫃買 公司專屬路徑圖查詢（9/23 調整前版本）</a></p>
+  <div class="next"><a class="btn" href="#sy" data-next="s4">下一站：逐年看</a></div>
+</section>
+
+<!-- SY -->
+<section class="station" id="sy">
+  <div class="station-head"><span class="no">第五站</span><h2>逐年看：每一年，哪些公司要做什麼</h2></div>
+  <p class="lead">上一站是「一家公司看自己」，這一站是「一個年份看全體」。先認識四組公司長什麼樣，再用年份切換。</p>
+  <div class="scroll"><table>
+    <thead><tr><th>組別</th><th>實收資本額</th><th>家數</th><th>特徵</th></tr></thead>
+    <tbody>
+      <tr><th><span class="pill blue">第一階段</span></th><td>100 億以上</td><td>126</td><td>大型集團，子公司多、國外據點多；最早做，也最早進 IFRS。鋼鐵、水泥業的盤查確信跟這組同時程</td></tr>
+      <tr><th><span class="pill blue">第二階段</span></th><td>50 億以上，未達 100 億</td><td>118</td><td>中大型公司，2027 年度進 IFRS，免母公司個體確信</td></tr>
+      <tr><th><span class="pill blue">第三階段</span></th><td>20 億以上未達 50 億，或未達 20 億但環境部列管</td><td>316</td><td>291 家靠資本額、25 家靠排放源被列管。2028 年度進 IFRS，前二年只揭露氣候，範疇三自願</td></tr>
+      <tr><th><span class="pill signal">第四組</span></th><td>未達 20 億，且非列管</td><td>1,410</td><td>家數最多但排放量小。不強制 IFRS，盤查照做，確信自願，揭露氣候基本資訊</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted">20 億以上 535 家：家數 27%、市值 87%、範疇一二排放逾 96%。未達 20 億 1,435 家：市值 13%、排放約 4%。金管會 2026.6.30 統計。金融業另依綠色及轉型金融行動方案。</p>
+  <div class="chips" id="ychips" role="group" aria-label="選擇申報年"></div>
+  <div id="yout"></div>
+  <p class="small muted">年份為年報申報年，括號內是資料年。第四組 2029 年以後的揭露形式，等金管會年底的簡易揭露範例與函令。</p>
+  <div class="next"><a class="btn" href="#s5" data-next="sy">下一站：導入計畫</a></div>
+</section>
+
+<!-- S5 -->
+<section class="station" id="s5">
+  <div class="station-head"><span class="no">第六站</span><h2>導入計畫：接軌前的準備時程表</h2></div>
+  <p class="lead">導入計畫是接軌 IFRS S1/S2 前的準備工作清單。只對強制接軌的三個階段有意義，第四組不用做。拘束力來自證交所、櫃買中心的公告，不是年報準則。</p>
+  <div class="chips" role="group" aria-label="選擇階段">
+    <button class="chip" data-stage="1" aria-pressed="true">第一階段（100 億以上）</button>
+    <button class="chip" data-stage="2" aria-pressed="false">第二階段（50–100 億）</button>
+    <button class="chip" data-stage="3" aria-pressed="false">第三階段</button>
+  </div>
+  <div class="card" id="stageout"></div>
+  <h3>每一季的節奏</h3>
+  <div class="flow">
+    <div class="step"><b>季內做完應執行項目</b><span class="small">範例標「⦿」的是應執行，沒標的是建議。</span></div>
+    <div class="step"><b>下一季提報董事會</b><span class="small">作為報告案。進度落後要提出改善方式。</span></div>
+    <div class="step"><b>季末後 15 日內申報</b><span class="small">上傳「執行情形進度表」到 ESG 數位平台。董事長、總經理、專案負責人、內部稽核四人簽章。</span></div>
+  </div>
+  <ul class="small">
+    <li>例：2024 Q4 的項目，2025 Q1 提董事會，2025 年 4 月 15 日前申報。第一階段最後一次是 2027 Q1 項目，2027 Q2 提董事會，7 月 15 日前申報。</li>
+    <li>該季沒有應執行項目，就不用提報也不用申報。</li>
+    <li>專案小組是任務型小組，由業務、財會、風險管理、法遵、內部稽核派員，和永續發展委員會不同。</li>
+    <li>差異分析用會計研究發展基金會的「IFRS S1 及 S2 與年報及永續報告書之逐條差異分析」。</li>
+    <li>2025 年 1 月 1 日起，上市櫃公司要有永續資訊管理內部控制制度。</li>
+    <li>法源：證交所 2024.7.3 臺證治理字第 1130012011 號公告，經金管會證期局備查。第二、三階段的提交文件，公告保留視情況調整的空間。</li>
+  </ul>
+  <p class="small muted">原文：<a href="https://cgc.twse.com.tw/static/20240814/8a828e17914f3d8501914fae98960001_IFRS%E6%B0%B8%E7%BA%8C%E6%8F%AD%E9%9C%B2%E6%BA%96%E5%89%87%E5%B0%8E%E5%85%A5%E8%A8%88%E7%95%AB%E4%B9%8B%E4%BB%8B%E7%B4%B9.pdf" target="_blank" rel="noopener">證交所 導入計畫介紹簡報（2024.8）</a>・<a href="https://isds.tpex.org.tw/IFRS/front/#/main/home" target="_blank" rel="noopener">櫃買 IFRS 專區（範例、問答集）</a></p>
+  <div class="next"><a class="btn" href="#s6" data-next="s5">下一站：測驗</a></div>
+</section>
+
+<!-- S6 -->
+<section class="station" id="s6">
+  <div class="station-head"><span class="no">第七站</span><h2>測驗：十四題確認你走懂了</h2></div>
+  <p class="lead">答錯會給解釋。答案依 2026.9.30 前的公開文件整理，非官方。</p>
+  <div class="q-card" id="quiz"></div>
+  <div class="next"><a class="btn" href="#s7" data-next="s6">下一站：查找</a></div>
+</section>
+
+<!-- S7 -->
+<section class="station" id="s7">
+  <div class="station-head"><span class="no">終點</span><h2>查找：名詞速查與官方連結</h2></div>
+  <h3>名詞速查</h3>
+  <input class="search" id="glq" type="search" placeholder="輸入關鍵字，例如 範疇三、確信、附表" aria-label="搜尋名詞">
+  <ul class="gl" id="gl"></ul>
+  <h3>官方連結</h3>
+  <ul class="links" id="links"></ul>
+  <div class="next"><a class="btn secondary" href="#s0" data-next="s7">回到起點</a></div>
+</section>
+
+</main>
+
+<footer>
+  私人學習筆記，非官方，整理自金管會、證交所、櫃買中心、環境部公開資料。內容截至 2026 年 9 月 30 日；正式規定以主管機關法規、函令為準。
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var KEY='tw-esg-map-progress-v1';
+  var progress={visited:{},quiz:null};
+  try{var raw=localStorage.getItem(KEY);if(raw){progress=JSON.parse(raw)||progress;progress.visited=progress.visited||{};}}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(progress));}catch(e){}}
+
+  /* ---------- progress line ---------- */
+  var links=[].slice.call(document.querySelectorAll('#line a'));
+  function paint(current){
+    links.forEach(function(a){
+      var id=a.getAttribute('data-st');
+      a.classList.toggle('visited',!!progress.visited[id]);
+      a.classList.toggle('current',id===current);
+    });
+  }
+  function visit(id){progress.visited[id]=true;save();paint(id);}
+  var sections=[].slice.call(document.querySelectorAll('section.station'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){if(en.isIntersecting){paint(en.target.id);}});
+    },{rootMargin:'-40% 0px -55% 0px'});
+    sections.forEach(function(s){io.observe(s);});
+  }
+  document.querySelectorAll('[data-next]').forEach(function(b){
+    b.addEventListener('click',function(){visit(b.getAttribute('data-next'));});
+  });
+  document.getElementById('reset').addEventListener('click',function(){
+    progress={visited:{},quiz:null};save();paint('s0');renderQuiz();
+  });
+  paint('s0');
+
+  /* ---------- timeline ---------- */
+  var TL=[
+    {when:'2014.9',who:'fsc',t:'金管會宣布 2015 年起強制編製 CSR 報告書',scope:'食品工業、餐飲收入占五成以上、化學工業、金融保險業、實收資本額 100 億以上',why:'劣油食安風暴（食品）、高雄氣爆（化工）、金融業獲利大增應負社會責任',lead:'金管會；證交所、櫃買訂定作業辦法',link:'https://cgc.twse.com.tw/front/chPage',lt:'證交所 永續報告書專區'},
+    {when:'2017',who:'fsc',t:'CSR 報告書擴大至資本額 50 億以上',scope:'資本額 50 億以上上市櫃，加民生相關產業',why:'逐步擴大揭露範圍',lead:'金管會'},
+    {when:'2020.8',who:'fsc',t:'公司治理 3.0—永續發展藍圖',scope:'資本額 20 億以上自 2023 年起編製永續報告書；2022 年起 CSR 報告書更名為永續報告書；參考 SASB、TCFD',why:'接軌國際，回應投資人對 ESG 資訊的需求',lead:'金管會',link:'https://cgc.twse.com.tw/front/aboutCorp21t23',lt:'證交所 公司治理 3.0 簡介'},
+    {when:'2022.3.3',who:'fsc',t:'上市櫃公司永續發展路徑圖',scope:'全體上市櫃分四階段：範疇一、二盤查 2023–2027，確信 2024–2029，先個體再合併，揭露至合併財報範圍',why:'配合 2050 淨零，先盤查才能訂減碳目標，以大帶小串聯供應鏈',lead:'金管會',link:'https://cgc.twse.com.tw/responsibilityRoadMap/listCh',lt:'證交所 路徑圖專區'},
+    {when:'2022.11.28',who:'fsc',t:'年報準則增訂附表 2-2-3 氣候相關資訊',scope:'上市櫃公司 2024 年起於年報揭露氣候治理、策略、風險、指標，及依路徑圖時程的盤查與確信',why:'把 TCFD 架構寫進年報，為接軌 IFRS S2 鋪路',lead:'金管會'},
+    {when:'2023.2',who:'env',t:'氣候變遷因應法施行',scope:'公告列管排放源盤查登錄與查驗；年排放 2.5 萬公噸以上電力、燃氣供應、製造業自 2025 年起繳碳費（計 2024 年排放）',why:'排碳有價、實質減量',lead:'環境部',link:'https://www.climatetalks.tw/',lt:'環境部 氣候公民對話平臺'},
+    {when:'2023.3',who:'fsc',t:'上市櫃公司永續發展行動方案',scope:'減碳目標、策略、行動計畫分階段揭露：2025 年 100 億以上及鋼鐵水泥、2026 年 50–100 億、2027 年 50 億以下；20 億以下 2025 年起編永續報告書；全體依產業揭露 SASB 指標；永續資訊納入內控',why:'從揭露數字走向設定目標與行動',lead:'金管會',link:'https://cgc.twse.com.tw/responsibilityPlan/listCh',lt:'證交所 行動方案專區'},
+    {when:'2023.6',who:'fsc',t:'確信準則 3410 號發布',scope:'會計師執行溫室氣體聲明確信的準則，分合理確信與有限確信',why:'讓會計師事務所能承接溫室氣體確信，補足查驗機構量能',lead:'會計研究發展基金會',link:'https://www.ardf.org.tw/ardf/3410.pdf',lt:'確信準則 3410 號全文'},
+    {when:'2023.8.17',who:'fsc',t:'我國接軌 IFRS 永續揭露準則藍圖',scope:'直接採用 IFRS S1、S2：2026 年 100 億以上、2027 年 50–100 億、2028 年其餘全體；年報專章，與財報同時公告',why:'由自願性永續報告書走向法定報告、防漂綠',lead:'金管會；會計研究發展基金會設永續準則委員會',link:'https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0%2C2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News',lt:'金管會新聞稿'},
+    {when:'2024.7.3',who:'fsc',t:'導入計畫參考範例公告',scope:'第一階段公司 2024 Q4 起執行導入計畫，按季提報董事會並申報執行情形進度表',why:'讓董事會看得到接軌進度',lead:'證交所、櫃買中心；金管會備查',link:'https://cgc.twse.com.tw/static/20240814/8a828e17914f3d8501914fae98960001_IFRS%E6%B0%B8%E7%BA%8C%E6%8F%AD%E9%9C%B2%E6%BA%96%E5%89%87%E5%B0%8E%E5%85%A5%E8%A8%88%E7%95%AB%E4%B9%8B%E4%BB%8B%E7%B4%B9.pdf',lt:'證交所 導入計畫簡報'},
+    {when:'2025.1.1',who:'fsc',t:'永續資訊管理內控上路；全體上市櫃編製永續報告書',scope:'上市櫃公司內部控制制度納入永續資訊之管理；20 億以下公司首次編製永續報告書（2024 年度）',why:'提升永續資訊品質',lead:'金管會、證交所、櫃買中心'},
+    {when:'2025.11',who:'fsc',t:'年報準則修正，三階段專章法制化',scope:'第 7 條、第 10 條之 1、第 23 條；首階段 126 家 2027 年 3 月首次申報；合併範疇一、二取得有限確信',why:'把藍圖寫進法規',lead:'金管會',link:'https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0%2C2&mcustomize=news_view.jsp&dataserno=202505130005&dtable=News',lt:'金管會 修正預告新聞稿（2025.5）'},
+    {when:'2026.9.23',who:'both',t:'環境部×金管會 共同調整接軌藍圖與路徑圖',scope:'強制門檻改為 20 億以上加環境部列管，約 560 家、市值逾 87%；第三階段前二年只揭露氣候資訊、範疇三改自願；第二、三階段免母公司個體確信；20 億以下改揭露氣候基本資訊；過渡期專章得延至股東會前 14 日；2030 年再檢討',why:'參考歐盟 Omnibus I 與日韓澳分階段作法；20 億以下公司占排放量約 4%',lead:'金管會、環境部',link:'https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0&mcustomize=news_view.jsp&dataserno=202609230001&dtable=News',lt:'金管會新聞稿及附件'}
+  ];
+  var tl=document.getElementById('tl');
+  TL.forEach(function(e,i){
+    var li=document.createElement('li');
+    li.className=(e.who==='env'?'env':e.who==='both'?'both':'')+' w-'+e.who;
+    li.innerHTML='<div class="when">'+e.when+'</div><button class="t" type="button" aria-expanded="false">'+e.t+'</button>'+
+      '<div class="body"><dl><dt>範圍</dt><dd>'+e.scope+'</dd><dt>為什麼</dt><dd>'+e.why+'</dd><dt>主導</dt><dd>'+e.lead+'</dd>'+
+      (e.link?'<dt>原文</dt><dd><a href="'+e.link+'" target="_blank" rel="noopener">'+e.lt+'</a></dd>':'')+'</dl></div>';
+    li.querySelector('button.t').addEventListener('click',function(){
+      var open=li.classList.toggle('open');this.setAttribute('aria-expanded',open?'true':'false');
+    });
+    tl.appendChild(li);
+  });
+  document.querySelectorAll('#s2 .chip').forEach(function(c){
+    c.addEventListener('click',function(){
+      document.querySelectorAll('#s2 .chip').forEach(function(x){x.setAttribute('aria-pressed','false');});
+      c.setAttribute('aria-pressed','true');
+      var f=c.getAttribute('data-f');
+      tl.querySelectorAll('li').forEach(function(li){
+        var show=f==='all'||li.classList.contains('w-'+f)||(f!=='all'&&li.classList.contains('w-both'));
+        li.classList.toggle('hidden',!show);
+      });
+    });
+  });
+
+  /* ---------- tabs ---------- */
+  document.querySelectorAll('#s3 .tabs button').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('#s3 .tabs button').forEach(function(x){x.setAttribute('aria-selected','false');});
+      document.querySelectorAll('#s3 .panel').forEach(function(p){p.classList.remove('on');});
+      b.setAttribute('aria-selected','true');
+      document.getElementById(b.getAttribute('data-tab')).classList.add('on');
+    });
+  });
+
+  /* ---------- wizard ---------- */
+  var G={
+    g1:{name:'第一階段：實收資本額 100 億以上',yrs:['2026','2027','2028','2029'],rows:[
+      ['範疇一、二盤查','個體 2022 資料（2023 申報）起；合併報表 2024 資料（2025 申報）起，逐年持續'],
+      ['溫室氣體確信','個體 2023 資料（2024 申報）；合併 2026 資料（2027 申報）起，有限確信，不含範疇三'],
+      ['IFRS S1/S2 專章','2026 年度起，2027 年 3 月首次申報；首年得僅揭露氣候相關資訊'],
+      ['氣候以外資訊','2027 年度起'],
+      ['範疇三','首次適用前三個會計年度豁免，之後強制（修正藍圖標示 2030 年揭露）'],
+      ['導入計畫','2024 Q4 啟動，按季提董事會與申報，至 2027 Q2'],
+      ['減碳目標、策略','2025 年報起，以合併盤查為基準年'],
+      ['專章申報時限','過渡期前二年（2026、2027 年度資訊）得延至股東會前 14 日；第三年起與財報同時'],
+      ['永續報告書','每年 8 月 31 日前申報']]},
+    g2:{name:'第二階段：50 億以上，未達 100 億',yrs:['2027','2028','2029','2030'],rows:[
+      ['範疇一、二盤查','個體 2024 資料（2025 申報）起；合併 2025 資料（2026 申報）起'],
+      ['溫室氣體確信','免母公司個體確信（9/23 調整）；合併 2027 資料（2028 申報）起，有限確信'],
+      ['IFRS S1/S2 專章','2027 年度起，2028 年首次申報；首年得僅揭露氣候'],
+      ['氣候以外資訊','2028 年度起'],
+      ['範疇三','前三個會計年度豁免（修正藍圖標示 2031 年揭露）'],
+      ['導入計畫','2025 Q4 啟動；範例 2025.10 發布，假設 2026 年 3 月首次提董事會'],
+      ['減碳目標、策略','2026 年報起'],
+      ['專章申報時限','過渡期 2027、2028 年度資訊得延至股東會前 14 日'],
+      ['永續報告書','每年 8 月 31 日前申報']]},
+    g3:{name:'第三階段：20 億以上未達 50 億，或未達 20 億但環境部列管',yrs:['2027','2028','2029','2030'],rows:[
+      ['範疇一、二盤查','個體 2025 資料（2026 申報）起；合併 2026 資料（2027 申報）起'],
+      ['溫室氣體確信','免母公司個體確信；合併 2028 資料（2029 申報）起。列管排放源另依環境部規定查驗'],
+      ['IFRS S1/S2 專章','2028 年度起，2029 年首次申報；2028、2029 兩個年度僅揭露氣候相關資訊'],
+      ['氣候以外資訊','2030 年度起'],
+      ['範疇三','自願揭露'],
+      ['導入計畫','參考範例待金管會公告（原規劃 2026 Q4 啟動）'],
+      ['減碳目標、策略','2027 年報起（行動方案）'],
+      ['專章申報時限','過渡期 2028、2029 年度資訊得延至股東會前 14 日'],
+      ['永續報告書','每年 8 月 31 日前申報']]},
+    g4:{name:'第四組：未達 20 億，且非環境部列管',yrs:['2026','2027','2028','2029'],rows:[
+      ['範疇一、二盤查','沒有免。個體 2025 資料（2026 申報）、合併 2026 資料（2027 申報）照原路徑圖完成並揭露'],
+      ['溫室氣體確信','自願'],
+      ['IFRS S1/S2 專章','不強制。仍須揭露氣候治理、風險管理、範疇一及二等基本資訊；金管會將訂簡易揭露範例'],
+      ['氣候以外資訊','不強制'],
+      ['範疇三','自願'],
+      ['導入計畫','不需要；自願接軌可參考第三階段範例'],
+      ['減碳目標、策略','原規劃 2027 年報揭露；9/23 未列入豁免也未寫進基本資訊，待年底函令'],
+      ['其他','自願接軌永續準則有 ESG 評鑑加分；2030 年再檢討適用範圍'],
+      ['永續報告書','每年 8 月 31 日前申報']]}
+  };
+  function pick(name){var el=document.querySelector('input[name="'+name+'"]:checked');return el?el.value:'';}
+  document.getElementById('wizgo').addEventListener('click',function(){
+    var ind=pick('ind'),env=pick('env'),cap=pick('cap');
+    var out=document.getElementById('wizout'),html='';
+    if(ind==='fin'){
+      html='<div class="card warn"><h3>金融、保險、證券期貨業：不適用 2026.9.23 調整</h3><p class="small">不論規模，依金管會「綠色及轉型金融行動方案」及主管業務局規劃辦理。依 IFRS 問答集整理：金控、上市櫃銀行與票券公司、資本額 100 億以上證券期貨商 2026 年起適用；非金控子公司的本國銀行、50–100 億證券期貨商 2027 年起適用。細節以主管業務局公告為準。</p></div>';
+      out.innerHTML=html;out.classList.add('on');return;
+    }
+    var key;
+    if(cap==='100')key='g1';else if(cap==='50')key='g2';else if(cap==='20')key='g3';else key=(env==='yes')?'g3':'g4';
+    var g=G[key];
+    html='<div class="card blue"><h3>'+g.name+'</h3>';
+    if(env==='unknown'&&cap==='0'){html+='<p class="small card warn">你選了「不知道」。未達 20 億的公司，列管與否直接決定是第三階段還是第四組。先向公司負責溫室氣體盤查的單位確認環境部公告名單，下面先以「非列管」顯示。</p>';}
+    if(ind==='steel'){html+='<p class="small card signal">鋼鐵、水泥業：IFRS 專章階段依資本額判斷，但溫室氣體盤查與確信仍依原路徑圖（與 100 億以上同列第一階段時程，母公司個體確信不適用 9/23 的免除）。下表的盤查、確信兩列請改看第一階段。</p>';}
+    html+='<div class="years">';
+    g.yrs.forEach(function(y,i){html+='<div class="yr'+(i===0?' on':'')+'"><b>'+y+' 申報</b>'+(parseInt(y,10)-1)+' 年資料</div>';});
+    html+='</div><div class="scroll"><table class="rows"><tbody>';
+    g.rows.forEach(function(r){html+='<tr><th>'+r[0]+'</th><td>'+r[1]+'</td></tr>';});
+    html+='</tbody></table></div><p class="small muted" style="margin:.8em 0 0">依 2026.9.23 新聞稿及附件整理；正式規定以年底修正的年報準則與函令為準。</p></div>';
+    out.innerHTML=html;out.classList.add('on');
+    out.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  /* ---------- year view ---------- */
+  var YG=[
+    {k:'g1',name:'第一階段',cap:'100 億以上',cls:'blue'},
+    {k:'g2',name:'第二階段',cap:'50–100 億',cls:'blue'},
+    {k:'g3',name:'第三階段',cap:'20–50 億，或未達 20 億但列管',cls:'blue'},
+    {k:'g4',name:'第四組',cap:'未達 20 億且非列管',cls:'signal'},
+    {k:'all',name:'全體上市櫃',cap:'',cls:'green'}
+  ];
+  var YEARS={
+    '2023':{g1:['首次揭露母公司個體盤查（2022 資料）；鋼鐵、水泥業同'],all:['年報先在附表 2-2-2 填溫室氣體資訊，給一年緩衝']},
+    '2024':{g1:['母公司個體確信（2023 資料）'],all:['附表 2-2-3 氣候相關資訊全面適用：治理、策略、風險、指標','環境部：列管排放源依氣候法盤查登錄與查驗']},
+    '2025':{g1:['首次合併報表盤查（2024 資料）','首次揭露減碳目標、策略、行動計畫','導入計畫按季申報開始，4 月 15 日前第一次'],g2:['首次母公司個體盤查（2024 資料）'],all:['20 億以下首次編製永續報告書（2024 年度），全體上市櫃都要編','永續資訊管理內部控制上路','環境部：碳費首次申報繳納（2024 排放）']},
+    '2026':{g1:['適用 IFRS S1/S2 的第一個會計年度，年底試編專章'],g2:['首次合併盤查（2025 資料）','首次減碳目標、策略','導入計畫啟動，第一季首次提董事會'],g3:['首次母公司個體盤查（2025 資料）'],g4:['首次母公司個體盤查（2025 資料）'],all:['9 月 23 日金管會、環境部調整第三階段範圍與過渡措施']},
+    '2027':{g1:['首次年報永續專章（2026 資料），首年得僅氣候；過渡期得延至股東會前 14 日','合併範疇一、二有限確信（2026 資料）'],g2:['適用 IFRS 的第一個會計年度'],g3:['首次合併盤查（2026 資料）','減碳目標、策略（行動方案）'],g4:['首次合併盤查（2026 資料）','減碳目標是否仍要，待年底函令']},
+    '2028':{g1:['專章第二年，納入氣候以外的永續資訊'],g2:['首次專章（2027 資料）；合併確信；免母公司個體確信'],g3:['適用 IFRS 的第一個會計年度','原規劃母公司個體確信，9/23 免除'],g4:['原規劃母公司個體確信，改自願']},
+    '2029':{g1:['專章第三年起與財報同時申報'],g2:['專章第二年，納入氣候以外資訊'],g3:['首次專章（2028 資料），僅氣候相關資訊；合併確信（2028 資料）'],g4:['原規劃合併確信，改自願','不強制專章；揭露氣候治理、風險管理、範疇一及二基本資訊']},
+    '2030':{g1:['範疇三揭露（修正藍圖標示）'],g2:['專章第三年起與財報同時申報'],g3:['專章第二年，仍僅氣候'],all:['金管會再檢討適用範圍、豁免措施']},
+    '2031':{g2:['範疇三揭露'],g3:['專章第三年，納入氣候以外資訊（2030 資料）；與財報同時申報'],g4:['視 2030 年檢討結果']}
+  };
+  var ych=document.getElementById('ychips'),yout=document.getElementById('yout');
+  Object.keys(YEARS).forEach(function(y,i){
+    var b=document.createElement('button');b.className='chip';b.type='button';b.textContent=y+'（'+(parseInt(y,10)-1)+' 資料）';
+    b.setAttribute('aria-pressed',i===3?'true':'false');b.setAttribute('data-y',y);
+    b.addEventListener('click',function(){ych.querySelectorAll('.chip').forEach(function(x){x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed','true');renderYear(y);});
+    ych.appendChild(b);
+  });
+  function renderYear(y){
+    var d=YEARS[y],h='';
+    YG.forEach(function(g){
+      if(!d[g.k])return;
+      h+='<div class="card '+g.cls+'"><b>'+g.name+'</b>'+(g.cap?' <span class="small muted">'+g.cap+'</span>':'')+'<ul class="small" style="margin:.3em 0 0">';
+      d[g.k].forEach(function(t){h+='<li>'+t+'</li>';});
+      h+='</ul></div>';
+    });
+    yout.innerHTML=h;
+  }
+  renderYear('2026');
+
+  /* ---------- stages ---------- */
+  var ST={
+    '1':{t:'第一階段（100 億以上）',rows:[['一、分析及規劃','最遲 2024 Q4'],['二、設計與執行','2025 Q2 – 2026 Q4'],['三、導入','2026 Q3 – Q4'],['四、調整與改善','2027 Q1']],note:'首次適用 2026 年度，2027 年 3 月申報專章。'},
+    '2':{t:'第二階段（50–100 億）',rows:[['一、分析及規劃','最遲 2025 Q4'],['二、設計與執行','2026 Q2 – 2027 Q4'],['三、導入','2027 Q3 – Q4'],['四、調整與改善','2028 Q1']],note:'2026 年第一季前完成專案小組成立、導入計畫擬訂、辨認重大差異。'},
+    '3':{t:'第三階段（20–50 億，或未達 20 億但列管）',rows:[['一、分析及規劃','原規劃最遲 2026 Q4'],['二、設計與執行','原規劃 2027 Q2 – 2028 Q4'],['三、導入','原規劃 2028 Q3 – Q4'],['四、調整與改善','原規劃 2029 Q1']],note:'專用範例金管會預計 2026 年公告，另有中小型非製造業簡易範例。9/23 後前二年只揭露氣候資訊，範例內容可能配合調整。第四組不需要導入計畫。'}
+  };
+  var ITEMS=['成立跨部門專案小組、初步辨認與現行揭露的重大差異、初步辨認報導個體、擬訂導入計畫','辨認永續風險機會與財務影響、辨認及蒐集所需資料、調整流程、資訊系統、供應鏈管理、內控','試行編製年報永續專章、更新內控作業手冊與教育訓練','公告申報年報永續專章、依回饋持續改善'];
+  function renderStage(k){
+    var s=ST[k],h='<b>'+s.t+'</b><p class="small muted" style="margin:.2em 0 .6em">'+s.note+'</p>';
+    s.rows.forEach(function(r,i){h+='<div class="stage"><div class="q">'+r[1]+'</div><div><b>'+r[0]+'</b><br><span class="small">'+ITEMS[i]+'</span></div></div>';});
+    document.getElementById('stageout').innerHTML=h;
+  }
+  renderStage('1');
+  document.querySelectorAll('#s5 .chip').forEach(function(c){
+    c.addEventListener('click',function(){
+      document.querySelectorAll('#s5 .chip').forEach(function(x){x.setAttribute('aria-pressed','false');});
+      c.setAttribute('aria-pressed','true');renderStage(c.getAttribute('data-stage'));
+    });
+  });
+
+  /* ---------- quiz ---------- */
+  var Q=[
+    {q:'2022 年的「上市櫃公司永續發展路徑圖」管的是哪件事？',o:['永續報告書的編製範圍','範疇一、二溫室氣體盤查與確信的分階段時程','減碳目標與策略的揭露','IFRS S1/S2 專章的適用時程'],a:1,e:'路徑圖只管一件事：範疇一、二的盤查（2023–2027）與確信（2024–2029），先個體再合併。'},
+    {q:'「上市櫃公司應分階段揭露減碳目標、策略及具體行動計畫」寫在哪份文件？',o:['永續發展路徑圖','公司治理 3.0','上市櫃公司永續發展行動方案（2023）','氣候變遷因應法'],a:2,e:'減碳目標在 2023 年行動方案：2025 年 100 億以上及鋼鐵水泥、2026 年 50–100 億、2027 年 50 億以下。'},
+    {q:'2026.9.23 之後，實收資本額未達 20 億且非環境部列管的上市櫃公司，溫室氣體確信怎麼辦？',o:['仍須母公司個體確信','仍須合併報表確信','改為自願','由環境部查驗取代'],a:2,e:'第四組兩層確信都免，改自願。盤查沒有免，氣候治理、風險管理、範疇一及二仍要揭露。'},
+    {q:'「查驗」和「確信」的主要差別是？',o:['查驗管範疇三、確信管範疇一二','查驗是環境部體系用 ISO 14064-3，確信是會計師體系用確信準則 3410','查驗等級比確信高','沒有差別，只是翻譯不同'],a:1,e:'兩個體系、兩套準則、不同人簽字。金管會體系兩種人都收，會計師還能採用環境部查驗聲明書出具分攤式意見。'},
+    {q:'有限確信與合理確信的差別在哪？',o:['有限確信只看範疇一','程序深度不同，有限確信程度明顯較低、範圍較小','合理確信由環境部做','有限確信不需要獨立性'],a:1,e:'有限確信通常不做控制測試；合理確信要驗證每項聲明。接軌 IFRS 的公司，年報準則要求合併範疇一、二取得有限確信。'},
+    {q:'文件寫「116 年揭露合併報表盤查資訊」，指的是？',o:['2027 年 3 月的年報，內容是 2026 年的排放','2027 年的排放','2026 年 3 月的年報','2027 年 8 月的永續報告書'],a:0,e:'年份多指年報申報年，申報年 = 資料年 + 1。116 年 = 2027 年，揭露 2026 年資料。'},
+    {q:'路徑圖為什麼要先做母公司個體、隔年再做合併？',o:['母公司排放量最大','先練手再拉子公司，終點是揭露範圍與合併財報一致','子公司不用盤查','法規只要求母公司'],a:1,e:'IFRS S2 的報導個體就是合併報表，所以要走到合併。母公司自己那一列在合併開始後仍持續揭露。'},
+    {q:'第三階段公司接軌後的前二個會計年度，專章要揭露什麼？',o:['所有永續主題','僅氣候相關資訊','僅範疇一、二','僅治理'],a:1,e:'9/23 調整：第三階段前二年僅揭露氣候相關資訊，第三年（2030 年度）起才納入氣候以外的永續議題。'},
+    {q:'導入計畫的執行情形要多久提報董事會一次、向哪裡申報？',o:['每年一次，申報公開資訊觀測站','每季提董事會，季末後 15 日內上傳 ESG 數位平台','每半年提審計委員會','不用提報，公司自行保存'],a:1,e:'季內做完的項目，下一季作為報告案提董事會，該季結束後 15 日內申報進度表，四人簽章。'},
+    {q:'環境部碳費的徵收對象是？',o:['所有上市櫃公司','公告列管排放源且年排放 2.5 萬公噸以上的電力、燃氣供應、製造業','資本額 100 億以上公司','所有工廠'],a:1,e:'首批約 281 家企業、500 個工廠，占全國排放約 54%。與金管會的資本額門檻是兩套邏輯。'},
+    {q:'一家資本額 15 億的上市公司，工廠是環境部公告應盤查登錄及查驗對象，2026.9.23 後屬於？',o:['第四組，不強制接軌','第三階段，強制接軌','第二階段','不適用任何規定'],a:1,e:'未達 20 億但環境部列管者約 25 家，納入第三階段強制適用，理由是氣候轉型風險較高。'},
+    {q:'藍圖、行動方案、路徑圖，哪一個有法律拘束力？',o:['藍圖','行動方案','路徑圖','都沒有，拘束力在年報準則、作業辦法與函令'],a:3,e:'三者都是政策文件。判斷「一定要做嗎」要翻年報準則、永續報告書作業辦法和金管會函令。'},
+    {q:'哪些產業不適用 2026.9.23 的調整措施？',o:['鋼鐵、水泥業','金融、保險、證券期貨業','電子業','食品業'],a:1,e:'金融、保險、證券期貨業不論規模依「綠色及轉型金融行動方案」辦理。鋼鐵水泥業則是盤查與確信仍依原路徑圖。'},
+    {q:'金管會預計哪一年再檢討這次調整的適用範圍與豁免措施？',o:['2027','2028','2030','2035'],a:2,e:'新聞稿寫明預計 119 年（2030 年）視國際趨勢與企業準備情形再行檢討。'}
+  ];
+  var qi=0,score=0,answered=false;
+  var quiz=document.getElementById('quiz');
+  function renderQuiz(){
+    if(progress.quiz&&progress.quiz.done){
+      quiz.innerHTML='<p class="score">上次得分 '+progress.quiz.score+' / '+Q.length+'</p><p class="small muted">想再做一次就按下面。</p><button class="btn" id="qagain" type="button">重新測驗</button>';
+      document.getElementById('qagain').addEventListener('click',function(){progress.quiz=null;save();qi=0;score=0;renderQuiz();});
+      return;
+    }
+    if(qi>=Q.length){
+      progress.quiz={done:true,score:score};save();visit('s6');
+      quiz.innerHTML='<p class="score">你答對 '+score+' / '+Q.length+' 題</p><p class="small">'+(score>=12?'走懂了。':score>=8?'大方向對了，回去看看答錯的那幾站。':'建議從第一站再走一次，重點放在名詞地圖。')+'</p><button class="btn" id="qagain" type="button">重新測驗</button>';
+      document.getElementById('qagain').addEventListener('click',function(){progress.quiz=null;save();qi=0;score=0;renderQuiz();});
+      return;
+    }
+    var it=Q[qi];answered=false;
+    var h='<div class="prog">第 '+(qi+1)+' 題，共 '+Q.length+' 題</div><b>'+it.q+'</b><ul class="opts">';
+    it.o.forEach(function(o,i){h+='<li><button type="button" data-i="'+i+'">'+o+'</button></li>';});
+    h+='</ul><div class="explain" id="qexp"></div><div class="next"><button class="btn" id="qnext" type="button" disabled>'+(qi===Q.length-1?'看結果':'下一題')+'</button></div>';
+    quiz.innerHTML=h;
+    quiz.querySelectorAll('.opts button').forEach(function(b){
+      b.addEventListener('click',function(){
+        if(answered)return;answered=true;
+        var i=parseInt(b.getAttribute('data-i'),10);
+        quiz.querySelectorAll('.opts button').forEach(function(x){x.disabled=true;});
+        if(i===it.a){b.classList.add('right');score++;}else{b.classList.add('wrong');quiz.querySelector('.opts button[data-i="'+it.a+'"]').classList.add('right');}
+        var ex=document.getElementById('qexp');ex.textContent=(i===it.a?'答對。':'答錯。')+it.e;ex.classList.add('on');
+        document.getElementById('qnext').disabled=false;
+      });
+    });
+    document.getElementById('qnext').addEventListener('click',function(){qi++;renderQuiz();});
+  }
+  renderQuiz();
+
+  /* ---------- glossary ---------- */
+  var GL=[
+    ['範疇一、二、三','範疇一是直接排放（自有鍋爐、車輛），範疇二是外購電力、蒸汽的間接排放，範疇三是價值鏈其他間接排放。金管會路徑圖只強制範疇一、二；範疇三第一、二階段前三年豁免，第三階段自願。'],
+    ['個體公司','母公司自己一家，不含子公司。路徑圖每階段先做個體。'],
+    ['合併財務報告子公司','納入合併財報的所有子公司，含國內外。路徑圖第二層的範圍，也是 IFRS S2 的報導個體。'],
+    ['確信','會計師體系用語，依確信準則 3000、3410 出具意見。分有限確信與合理確信。'],
+    ['查驗（查證）','環境部體系用語，依 ISO 14064-3 由許可之查驗機構執行，出具查驗聲明書。2023 年氣候法把「查證」改稱「查驗」。'],
+    ['有限確信','確信程度較低、程序範圍較小，通常不做控制測試。年報準則對接軌公司的合併範疇一、二要求此等級。'],
+    ['合理確信','確信程度較高，需驗證各項聲明。列管排放源的環境部查驗要求合理保證等級。'],
+    ['附表 2-2-3','年報準則的「氣候相關資訊」附表，2024 年起適用，含治理、策略、風險、指標、盤查與確信情形（1-1）及減碳目標（1-2）。接軌 IFRS 後由永續專章取代。'],
+    ['年報永續資訊專章','接軌 IFRS S1/S2 的公司在年報中以專章揭露永續相關財務資訊，經董事會通過，與財報同時申報（過渡期可延至股東會前 14 日）。'],
+    ['IFRS S1、S2','國際永續準則理事會（ISSB）2023 年 6 月發布。S1 是永續相關財務資訊揭露之一般規定，S2 是氣候相關揭露。台灣直接採用。'],
+    ['導入計畫','接軌 IFRS 永續準則前的四階段準備工作表：分析規劃、設計執行、導入、調整改善。按季提董事會與申報。'],
+    ['專案小組','為導入 IFRS 永續準則成立的任務型小組，由業務、財會、風險管理、法遵、內部稽核派員。與永續發展委員會不同。'],
+    ['重大性 5%','未納入盤查的排放量不得高於總排放量 5%。分母是強制揭露範圍：個體階段是母公司總量，合併階段是合併總量。'],
+    ['ESG 數位平台','證交所建置的永續資訊申報與查詢平台，導入計畫進度表、永續報告書等在此上傳。'],
+    ['公開資訊觀測站（MOPS）','上市櫃公司法定資訊揭露網站，溫室氣體盤查資訊須於會計年度終了後六個月內在專區揭露。'],
+    ['永續報告書','原名企業社會責任（CSR）報告書，2022 年起更名。依 GRI 準則編製，2025 年起全體上市櫃公司每年 8 月 31 日前申報。'],
+    ['GRI、SASB、TCFD','GRI 是永續報告書的通用框架；SASB 是行業別指標，IFRS S2 的行業指標源自 SASB；TCFD 是氣候財務揭露架構，附表 2-2-3 與 IFRS S2 都以它為骨架。'],
+    ['公司治理 3.0','金管會 2020 年發布的 2021–2023 藍圖，副標「永續發展藍圖」，把永續報告書門檻擴大到 20 億。'],
+    ['永續發展路徑圖','金管會 2022.3.3 發布，範疇一、二盤查與確信的四階段時程表。2026.9.23 修正。'],
+    ['永續發展行動方案','金管會 2023.3 發布，五大主軸的措施清單，含減碳目標分階段揭露、20 億以下編永續報告書。'],
+    ['接軌 IFRS 永續揭露準則藍圖','金管會 2023.8.17 發布，三階段適用 IFRS S1/S2。2026.9.23 修正第三階段門檻為 20 億。'],
+    ['氣候變遷因應法','環境部主管，2023 年施行。第 21 條公告應盤查登錄及查驗的排放源，另定碳費制度。'],
+    ['列管排放源','環境部公告應盤查登錄及查驗溫室氣體排放量的排放源，多以工廠為單位。是金管會與環境部兩條線的轉乘站。'],
+    ['碳費','環境部對年排放 2.5 萬公噸以上的電力、燃氣供應、製造業徵收，2025 年起就 2024 年排放計費。一般費率每噸 300 元，自主減量可適用優惠費率。'],
+    ['ESG 評鑑','2026 年起由公司治理評鑑更名，證交所、櫃買中心辦理。小型公司自願接軌永續準則可加分。'],
+    ['綠色及轉型金融行動方案','金管會對金融業的永續政策，金融、保險、證券期貨業的接軌時程依此辦理，不適用 2026.9.23 的調整。'],
+    ['氣候基本資訊','2026.9.23 新聞稿對第四組公司的要求：氣候相關治理、風險管理、溫室氣體範疇一及二。簡易揭露範例待金管會訂定。']
+  ];
+  var gl=document.getElementById('gl');
+  GL.forEach(function(g){var li=document.createElement('li');li.innerHTML='<b>'+g[0]+'</b><span class="small">'+g[1]+'</span>';gl.appendChild(li);});
+  document.getElementById('glq').addEventListener('input',function(){
+    var q=this.value.trim().toLowerCase();
+    gl.querySelectorAll('li').forEach(function(li){li.classList.toggle('hidden',q&&li.textContent.toLowerCase().indexOf(q)<0);});
+  });
+
+  /* ---------- links ---------- */
+  var LINKS=[
+    ['金管會 2026.9.23 新聞稿：環境部×金管會共同優化永續揭露接軌路徑','金管會','https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0&mcustomize=news_view.jsp&dataserno=202609230001&dtable=News','最新調整的原始出處，附件 1 對照表、附件 2 修正後藍圖與路徑圖、附件 3 簡報。'],
+    ['金管會 2023.8.17 新聞稿：我國接軌 IFRS 永續揭露準則藍圖','金管會','https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0%2C2&mcustomize=news_view.jsp&dataserno=202308170002&dtable=News','原始三階段規劃。'],
+    ['金管會 2025.5.13 新聞稿：年報準則第 7 條、第 10 條之 1、第 23 條修正預告','金管會','https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0%2C2&mcustomize=news_view.jsp&dataserno=202505130005&dtable=News','專章法制化的修正重點。'],
+    ['公開發行公司年報應行記載事項準則','全國法規資料庫','https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0400022','現行條文，年底前預計再修。'],
+    ['上市櫃公司永續發展路徑圖專區','證交所公司治理中心','https://cgc.twse.com.tw/responsibilityRoadMap/listCh','路徑圖、114 年 4 月問答集、宣導影音、環保署盤查指引。'],
+    ['上市櫃公司永續發展行動方案（2023 年）','證交所公司治理中心','https://cgc.twse.com.tw/responsibilityPlan/listCh','減碳目標時程、20 億以下編永續報告書的依據。'],
+    ['公司治理 3.0—永續發展藍圖','證交所公司治理中心','https://cgc.twse.com.tw/front/aboutCorp21t23','2021–2023 藍圖內容。'],
+    ['接軌 IFRS 永續揭露準則專區','證交所、櫃買中心','https://isds.tpex.org.tw/IFRS/front/#/main/home','導入計畫範例、差異分析、問答集、揭露範例、實務指引。'],
+    ['公司專屬永續發展路徑圖查詢','櫃買中心','https://isds.tpex.org.tw/IFRS/front/#/main/customized-query/exclusive-roadmap','輸入股票代碼查自家時程（專區註明尚未依 9/23 調整更新）。'],
+    ['IFRS 永續揭露準則導入計畫之介紹（2024.8 簡報）','證交所','https://cgc.twse.com.tw/static/20240814/8a828e17914f3d8501914fae98960001_IFRS%E6%B0%B8%E7%BA%8C%E6%8F%AD%E9%9C%B2%E6%BA%96%E5%89%87%E5%B0%8E%E5%85%A5%E8%A8%88%E7%95%AB%E4%B9%8B%E4%BB%8B%E7%B4%B9.pdf','四階段工作項目、提報時程、進度表格式。'],
+    ['導入計畫參考範例：第二階段公司適用（2025.10）','櫃買中心','https://www.tpex.org.tw/event/web/supervise_IFRS%E6%B0%B8%E7%BA%8C114/20251014_IFRS%E5%AE%A3%E5%B0%8E%E6%9C%83%E4%B8%BB%E9%A1%8C3_IFRS%E6%B0%B8%E7%BA%8C%E6%8F%AD%E9%9C%B2%E6%BA%96%E5%89%87%E5%B0%8E%E5%85%A5%E8%A8%88%E7%95%AB_%E7%AC%AC%E4%BA%8C%E9%9A%8E%E6%AE%B5%E5%85%AC%E5%8F%B8.pdf','第二階段的時程假設。'],
+    ['上市上櫃公司永續報告書確信機構管理要點','證交所、櫃買中心','https://cgc.twse.com.tw/static/20221221/8a828e1784e0710501853420f4010003_%E7%A2%BA%E4%BF%A1%E6%A9%9F%E6%A7%8B%E7%AE%A1%E7%90%86%E8%A6%81%E9%BB%9E%E6%A2%9D%E6%96%87%E5%85%A8%E6%96%87.pdf','溫室氣體確信與永續指標確信的機構、人員資格。'],
+    ['確信準則 3410 號：溫室氣體聲明之確信案件','會計研究發展基金會','https://www.ardf.org.tw/ardf/3410.pdf','合理確信與有限確信的規範。'],
+    ['ESG 數位平台','證交所','https://esg.twse.com.tw/ESG/front/tw/#/main/home','永續資訊申報與查詢。'],
+    ['氣候公民對話平臺','環境部','https://www.climatetalks.tw/','氣候法、碳費相關資訊入口。'],
+    ['產業節能減碳資訊網','經濟部產業發展署','https://sdd.nat.gov.tw/ghg/','製造業盤查與減碳輔導資源。']
+  ];
+  var ul=document.getElementById('links');
+  LINKS.forEach(function(l){var li=document.createElement('li');li.innerHTML='<a href="'+l[2]+'" target="_blank" rel="noopener">'+l[0]+'</a><span class="who">'+l[1]+'</span><span class="small muted">'+l[3]+'</span>';ul.appendChild(li);});
+})();
+</script>
+</body>
+</html>
