@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>行政訴訟法｜綜合練習場</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F4F6F3; --card:#FFFFFF;
+  --ink:#1C2A30; --ink-2:#4B5A62; --ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --law:#5B3A8C; --law-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F; --card:#1D262B;
+    --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+    --rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --law:#B9A0E3; --law-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F; --card:#1D262B;
+  --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+  --rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --law:#B9A0E3; --law-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--blue);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+
+/* hero */
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--law);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--law-soft);color:var(--law);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+/* tabs */
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit}
+nav.tabs button:hover{border-color:var(--blue);color:var(--ink)}
+nav.tabs button.active{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--blue-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--law-soft);border-left:4px solid var(--law);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--law);display:block;margin-bottom:.2em}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.law{background:var(--law-soft);border-color:transparent;color:var(--law)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+
+/* examples */
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+.step4{display:grid;grid-template-columns:5em 1fr;gap:.25rem .7rem;font-size:.95rem;margin:.3rem 0 .8rem}
+.step4 dt{color:var(--law);font-weight:700}
+.step4 dd{margin:0}
+
+/* interactive tool */
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--law)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+.btn.danger{background:transparent;color:var(--warn);border:1.5px solid var(--warn)}
+.btn[disabled]{opacity:.5;cursor:default}
+
+/* dynamic practice (綜合練習場專用) */
+.stage{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.stage .stem{font-weight:700;margin-bottom:.4rem}
+.scene{font-weight:400;background:var(--paper);border-radius:6px;padding:.5em .9em;margin:.3em 0 .6em;font-size:.95rem}
+.meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.3rem .8rem;font-size:.85rem;color:var(--ink-2)}
+.prog{height:6px;background:var(--rule);border-radius:3px;overflow:hidden;margin:.4rem 0 .6rem}
+.prog i{display:block;height:100%;background:var(--blue);width:0;transition:width .3s}
+.opts{display:grid;gap:.45rem;margin:.5rem 0}
+.opt{font:inherit;text-align:left;border:1.5px solid var(--rule);background:var(--card);color:var(--ink);border-radius:8px;padding:.55em .9em;cursor:pointer;font-size:.95rem;line-height:1.5;width:100%}
+.opt:hover{border-color:var(--blue)}
+.opt b{color:var(--ink-3);margin-right:.5em;font-weight:700}
+.opt.ok{border-color:var(--green);background:var(--green-soft)}
+.opt.no{border-color:var(--warn);background:var(--warn-soft)}
+.opt[disabled]{cursor:default}
+.fbk{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.fbk.ok{display:block;background:var(--green-soft);color:var(--green)}
+.fbk.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.fbk .diag{display:block;margin-top:.3em;color:var(--ink)}
+.fbk .art{display:block;margin-top:.3em;color:var(--law);font-size:.88rem}
+.fu{display:inline-block;font-size:.75rem;background:var(--signal-soft);color:var(--signal);border-radius:999px;padding:.05em .7em;margin-bottom:.3em}
+.actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+.done{padding:14px 16px;border-radius:10px;margin-top:12px;font-size:1.02rem;background:var(--blue-soft)}
+.done.good{background:var(--green-soft);color:var(--green)}
+.done.bad{background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--law);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{margin-top:.5rem}
+.essay .self .btn{margin-right:.5rem;margin-bottom:.3rem}
+.essay .selfmsg{font-size:.9rem;color:var(--ink-2)}
+.bars .bar{display:grid;grid-template-columns:11em 1fr 8em;gap:.6rem;align-items:center;font-size:.9rem;margin:.35rem 0}
+@media (max-width:560px){.bars .bar{grid-template-columns:1fr;gap:.15rem;margin:.6rem 0}}
+.bar .tr{height:10px;background:var(--rule);border-radius:5px;overflow:hidden}
+.bar .tr i{display:block;height:100%;background:var(--green)}
+.bar .tr i.mid{background:var(--signal)}
+.bar .tr i.low{background:var(--warn)}
+.bar small{color:var(--ink-2)}
+.wl{list-style:none;padding:0;margin:0}
+.wl li{border:1px solid var(--rule);border-radius:8px;padding:.5em .9em;margin:.4em 0;font-size:.93rem}
+.wl li .cnt{display:inline-block;min-width:3.5em;color:var(--warn);font-weight:700}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">行政訴訟法 · 綜合練習場</span>
+  <h1>綜合練習場：交錯練習、錯題重出、弱點統計</h1>
+  <p>十二課讀完以後來這裡。這一頁不教新東西，只做三件事：先逼你在情境裡判斷「該提哪一種訴」，再把十二課的選擇題混在一起隨機抽，最後用實例題練寫法。你答錯的課別會被記下來，下一輪會多抽那一課，弱點頁告訴你該回哪一節重讀。</p>
+  <p class="ver">依民國 111 年 6 月 22 日修正條文編寫。題目全為原創；條文以全國法規資料庫為準。練習紀錄只存在你的瀏覽器裡。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">先判斷該提哪種訴</button>
+  <button data-t="s2">混合題庫</button>
+  <button data-t="s3">實例演練</button>
+  <button data-t="s4">弱點頁</button>
+</nav>
+
+<!-- ═══════════ s1 先判斷該提哪種訴 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>這一節在練什麼</h2>
+    <ul>
+      <li>看到一段事實，先問三個問題：有沒有行政處分？處分還在不在？人民要的是撤銷、作成處分、還是處分以外的給付？</li>
+      <li>八個選項固定不動，逼你每一題都把八種可能掃一遍，而不是看關鍵字猜。</li>
+      <li>答錯時會告訴你「你選的那一種訴缺了哪個要件」，並把這題排在 2 到 3 題後再出一次。</li>
+    </ul>
+    <div class="tip">判斷順序：第 2 條（是不是公法爭議）→ 有無處分（第 4、5 條）→ 處分是否已消滅（第 6 條第 1 項後段、第 196 條第 2 項）→ 瑕疵是不是重大明顯（第 6 條第 2 項）→ 剩下的給付走第 8 條，剩下的確認走第 6 條第 1 項但受第 3 項補充性限制。</div>
+  </div>
+
+  <div class="card">
+    <h2>情境判斷</h2>
+    <div class="meta"><span id="c1prog">第 1 題</span><span id="c1score">答對 0 / 0</span></div>
+    <div class="prog"><i id="c1bar"></i></div>
+    <div class="stage">
+      <div class="stem" id="c1stem">情境</div>
+      <div class="scene" id="c1scene"></div>
+      <div class="stem small">該提哪一種訴訟？</div>
+      <div class="opts" id="c1opts"></div>
+      <div class="fbk" id="c1fb"></div>
+      <div class="actions"><button class="btn" id="c1next" style="display:none">下一題</button></div>
+    </div>
+    <p class="small muted">每輪把全部情境出完一遍（答錯的會重出），之後自動重新洗牌。類型與條文：撤銷 §4、課予義務 §5 I／II、確認無效 §6 I、II、確認法律關係 §6 I、III、確認已消滅處分違法 §6 I 後段與 §196 II、一般給付 §8、審判權 §2。</p>
+  </div>
+</section>
+
+<!-- ═══════════ s2 混合題庫 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>這一節在練什麼</h2>
+    <ul>
+      <li>題庫跨十二課，每輪隨機抽 10 題。抽題時會依你的紀錄加權：答錯過的課別出得多、連對的課別出得少。</li>
+      <li>答錯立刻看解析和「你為什麼會選那個選項」，並且馬上追加一題同一課的題目（每輪最多追加 3 題）。</li>
+      <li>每題都標了課別與條文，答完一輪可以直接從弱點頁連回那一節。</li>
+    </ul>
+  </div>
+
+  <div class="card" id="m2start">
+    <h2>開始一輪</h2>
+    <p class="small muted" id="m2note">還沒有紀錄，第一輪會平均抽各課。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>課別</th><th>題數</th><th>課別</th><th>題數</th></tr></thead>
+      <tbody id="m2tbl"></tbody>
+    </table></div>
+    <button class="bigbtn" id="m2go">抽 10 題開始</button>
+  </div>
+
+  <div class="card" id="m2run" style="display:none">
+    <h2>混合題</h2>
+    <div class="meta"><span id="m2prog"></span><span id="m2score"></span></div>
+    <div class="prog"><i id="m2bar"></i></div>
+    <div class="stage">
+      <div id="m2tag" class="small muted"></div>
+      <div class="stem" id="m2stem"></div>
+      <div class="opts" id="m2opts"></div>
+      <div class="fbk" id="m2fb"></div>
+      <div class="actions"><button class="btn" id="m2next" style="display:none">下一題</button></div>
+    </div>
+  </div>
+
+  <div class="card" id="m2end" style="display:none">
+    <h2>這一輪結束</h2>
+    <div class="done" id="m2res"></div>
+    <div id="m2wrong"></div>
+    <div class="actions">
+      <button class="btn" id="m2again">再來一輪</button>
+      <button class="btn secondary" id="m2weak">看弱點頁</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ s3 實例演練 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>這一節在練什麼</h2>
+    <ul>
+      <li>六題實例題，各對應一個國考常考的主題。先自己寫，再展開參考答案對照。</li>
+      <li>參考答案固定四段：爭點、條文、涵攝、結論，最後一行「加分」是可以多拿的分。</li>
+      <li>自評結果會記進弱點頁；寫不出來就按「沒寫到」，不用客氣。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>實例 1　訴訟類型選擇</h2>
+    <div class="essay" data-id="e1" data-l="02">
+      <div class="stem">甲向市政府申請建造執照，市政府以基地不符退縮規定為由駁回。甲訴願遭駁回後起訴，訴之聲明只寫「請求撤銷原處分及訴願決定」。訴訟中市政府另具狀表示，縱使退縮規定沒問題，甲的建築高度也超過限制。問：甲該提哪一種訴訟、聲明該怎麼寫？法院最後可能怎麼判？</div>
+      <textarea placeholder="爭點／條文／涵攝／結論，寫完展開參考答案對照。"></textarea>
+      <details class="example"><summary>參考答案</summary><div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>申請遭駁回時，只請求撤銷駁回處分夠不夠；法院在課予義務訴訟中怎麼處理機關新提出的駁回理由。</dd>
+        <dt>條文</dt><dd>第 5 條第 2 項（依法申請之案件予以駁回，經訴願後得請求機關應為行政處分或特定內容之處分）；第 125 條第 4 項（審判長對訴訟類型不明瞭或不完足者應令敘明補充）；第 200 條第 3、4 款。</dd>
+        <dt>涵攝</dt><dd>甲要的是建照，不是把駁回處分拿掉而已；單純撤銷判決確定後，市政府只是回到「尚未決定」的狀態。甲應依第 5 條第 2 項提課予義務訴訟，聲明「撤銷原處分及訴願決定，並命被告作成核發建造執照之處分」。如果甲只寫了撤銷，審判長依第 125 條第 4 項應闡明令其補充。法院審理時以言詞辯論終結時的事實與法律狀態判斷甲有沒有請求權；市政府追加的高度問題屬於該不該核發的實體要件，法院一併審查。</dd>
+        <dt>結論</dt><dd>課予義務訴訟（駁回型）。若法院認定甲符合全部核發要件且事證明確，依第 200 條第 3 款判命市政府核發建照；若高度問題仍待機關審查或涉及裁量，依第 200 條第 4 款判命市政府遵照判決的法律見解重為決定。</dd>
+        <dt>加分</dt><dd>點出第 6 條第 3 項：能提課予義務訴訟就不能改提確認訴訟；並引第 1 條「保障人民權益」說明為什麼闡明義務要往有效權利保護的方向走。</dd>
+      </dl></div></details>
+      <div class="self"><span class="small">自評：</span><button class="btn small" data-ok="1">寫到了</button><button class="btn small secondary" data-ok="0">沒寫到</button><span class="selfmsg"></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>實例 2　期間與前置程序</h2>
+    <div class="essay" data-id="e2" data-l="06">
+      <div class="stem">乙不服補稅處分提起訴願，訴願決定書因乙不在家，於 5 月 2 日寄存於住所地警察機關。乙 5 月 20 日才去領，7 月 10 日向行政法院起訴。乙住在非法院所在地，司法院所定在途期間為 3 日。問：乙的起訴是否逾期？若逾期，有沒有救濟？</div>
+      <textarea placeholder="先定起算日，再算末日，再看在途與回復原狀。"></textarea>
+      <details class="example"><summary>參考答案</summary><div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>寄存送達何時生效；2 個月不變期間從哪一天起算；在途期間怎麼扣；遲誤了能不能回復原狀。</dd>
+        <dt>條文</dt><dd>第 73 條第 3 項（寄存送達自寄存之日起經十日發生效力）；第 106 條第 1 項（訴願決定書送達後二個月之不變期間）、第 2 項（逾三年不得提起）；第 89 條第 1 項（不在法院所在地住居者扣除在途期間）；第 90 條第 1 項但書（不變期間不得伸長）；第 91 條（回復原狀）；第 88 條第 3 項（期間計算依民法）。</dd>
+        <dt>涵攝</dt><dd>送達生效日不是乙領取的 5 月 20 日，而是寄存之日起經十日，也就是 5 月 12 日生效。2 個月不變期間自送達後起算，依民法計算末日落在 7 月 12 日，再加 3 日在途期間，乙最晚可在 7 月 15 日起訴。乙 7 月 10 日起訴，仍在期間內。如果乙拖到 7 月 20 日才起訴，則已遲誤不變期間，法院依第 107 條第 1 項第 6 款裁定駁回；除非乙有天災或其他不可歸責事由，於原因消滅後一個月內依第 91 條聲請回復原狀並同時補行起訴（第 92 條第 2 項）。</dd>
+        <dt>結論</dt><dd>起訴未逾期。考點在於「寄存之日起經十日」與「領取日無關」，以及在途期間只加在法定期間上。</dd>
+        <dt>加分</dt><dd>補一句第 91 條第 3 項：遲誤不變期間已逾一年、或遲誤第 106 條起訴期間已逾三年者，連回復原狀都不能聲請；再提第 210 條第 5 項對上訴期間告知錯誤的特別回復規定，說明制度上對人民的保護。</dd>
+      </dl></div></details>
+      <div class="self"><span class="small">自評：</span><button class="btn small" data-ok="1">寫到了</button><button class="btn small secondary" data-ok="0">沒寫到</button><span class="selfmsg"></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>實例 3　暫時權利保護</h2>
+    <div class="essay" data-id="e3" data-l="07">
+      <div class="stem">丙經營餐廳，衛生局以多次違規為由作成「勒令停業三個月」處分，自送達日起生效。丙已提起訴願，尚未起訴；停業三個月足以讓餐廳倒閉。丙的律師打算聲請「假處分，禁止衛生局執行停業處分」。問：聲請的方式對不對？應該怎麼做、要件是什麼、法院程序上要注意什麼？</div>
+      <textarea placeholder="先排除假處分，再寫停止執行的要件。"></textarea>
+      <details class="example"><summary>參考答案</summary><div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>針對行政處分的執行，暫時權利保護該走停止執行還是假處分；起訴前能不能聲請。</dd>
+        <dt>條文</dt><dd>第 116 條第 1 項（原則不停止執行）、第 3 項（起訴前得依受處分人或訴願人之聲請裁定停止執行）、第 4 項（裁定前應徵詢當事人意見；機關已停止執行者應駁回）、第 5 項（得停止效力、執行或程序續行之全部或部分）；第 299 條（得依第 116 條請求停止執行者，不得聲請假處分）；第 119 條（得抗告）；第 98 條之 5 第 3 款（聲請停止執行徵收裁判費一千元）。</dd>
+        <dt>涵攝</dt><dd>停業處分是行政處分，丙爭執的是它的執行，依第 299 條這類情形只能走第 116 條，假處分會被駁回。丙雖尚未起訴，但已是訴願人，第 116 條第 3 項允許起訴前聲請。要件是「執行將發生難於回復之損害，且有急迫情事」，停業三個月導致倒閉、員工流失，屬金錢難以填補的損害，且處分已生效屬急迫；但書是「於公益有重大影響者不在此限」，衛生局會主張食品安全，法院要衡量違規的嚴重程度。注意起訴前的第 3 項但書沒有「原告之訴在法律上顯無理由」這一句，那是第 2 項（訴訟繫屬中）才有的。裁定前法院應依第 4 項徵詢兩造意見。</dd>
+        <dt>結論</dt><dd>不應聲請假處分，應依第 116 條第 3 項向行政法院聲請停止執行，請求停止處分的效力或執行；若被駁回，依第 119 條得抗告。</dd>
+        <dt>加分</dt><dd>說明第 299 條的用意是避免兩套制度競合，並點出第 118 條：停止執行的原因消滅或情事變更，法院得依職權或聲請撤銷停止執行裁定，所以停止執行不是一勞永逸。</dd>
+      </dl></div></details>
+      <div class="self"><span class="small">自評：</span><button class="btn small" data-ok="1">寫到了</button><button class="btn small secondary" data-ok="0">沒寫到</button><span class="selfmsg"></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>實例 4　情況判決與判決效力</h2>
+    <div class="essay" data-id="e4" data-l="09">
+      <div class="stem">丁為某河川旁的地主，對縣政府核准堤防工程的處分提起撤銷訴訟。言詞辯論終結時，法院認定該處分確實違法，但堤防已完工九成，拆除將使下游數萬居民暴露在洪水風險中。丁在訴訟中並未聲明請求賠償。問：法院可以怎麼判？判決確定後，丁和縣政府各自處於什麼地位？</div>
+      <textarea placeholder="情況判決的要件、主文、賠償與費用，再寫效力。"></textarea>
+      <details class="example"><summary>參考答案</summary><div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>處分違法但撤銷顯與公益相違背時的裁判方式；情況判決對原告的補償與費用分配；判決的效力範圍。</dd>
+        <dt>條文</dt><dd>第 198 條第 1 項（撤銷或變更於公益有重大損害，斟酌原告所受損害、賠償程度、防止方法及其他一切情事，認顯與公益相違背時得駁回原告之訴）、第 2 項（應於主文諭知原處分違法）；第 199 條第 1 項（應依原告聲明於判決內命被告賠償）、第 2 項（未聲明者得於判決確定後一年內訴請賠償）；第 98 條第 1 項但書（情況判決之訴訟費用由被告負擔）；第 213 條（既判力）；第 216 條第 1 項（撤銷判決拘束各關係機關）。</dd>
+        <dt>涵攝</dt><dd>法院已認定處分違法，撤銷訴訟本應勝訴；但拆除堤防對下游居民的損害遠大於丁的利益，符合第 198 條第 1 項「撤銷顯與公益相違背」。法院得駁回丁的訴，但主文必須諭知處分違法，不能只在理由裡帶過。丁沒有聲明賠償，法院不能依第 199 條第 1 項主動判賠，丁得於判決確定後一年內另行訴請賠償。因為是第 198 條的判決，訴訟費用例外由被告縣政府負擔，不適用敗訴者負擔原則。</dd>
+        <dt>結論</dt><dd>情況判決：駁回丁之訴，主文諭知處分違法，訴訟費用由縣政府負擔。確定後，「處分違法」這一點依第 213 條有確定力，丁可在一年內以此為基礎請求賠償；處分本身未被撤銷，所以第 215 條對第三人的效力與第 216 條第 1 項拘束各關係機關的效力都無從發生；縣政府仍可依該處分繼續施工。</dd>
+        <dt>加分</dt><dd>引第 1 條三個宗旨說明情況判決是「確保行政合法」讓位於公益、但以賠償補足「保障人民權益」的設計；再提醒第 198 條只在撤銷訴訟中適用，課予義務訴訟沒有情況判決。</dd>
+      </dl></div></details>
+      <div class="self"><span class="small">自評：</span><button class="btn small" data-ok="1">寫到了</button><button class="btn small secondary" data-ok="0">沒寫到</button><span class="selfmsg"></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>實例 5　上訴要件</h2>
+    <div class="essay" data-id="e5" data-l="11">
+      <div class="stem">戊對高等行政法院高等行政訴訟庭的第一審判決不服。判決正本 8 月 1 日送達，戊 8 月 25 日自行提出上訴狀，理由寫「原審認定事實錯誤，罰鍰 200 萬元過重」，未委任律師。問：這個上訴有哪些問題？最高行政法院會怎麼處理？</div>
+      <textarea placeholder="期間、理由、代理人，一項一項檢查。"></textarea>
+      <details class="example"><summary>參考答案</summary><div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>上訴期間是否遵守；上訴理由是否合於「違背法令」；是否需要律師代理；不合法的效果。</dd>
+        <dt>條文</dt><dd>第 241 條（判決送達後二十日之不變期間）；第 242 條（非以違背法令為理由不得上訴）；第 243 條（違背法令的定義與當然違背法令六款）；第 244 條第 2 項（上訴理由應表明原判決所違背之法令及其具體內容、合於該違背法令之具體事實）；第 254 條第 1 項（最高行政法院以原判決確定之事實為判決基礎）；第 49 條之 1 第 1 項第 3 款（向最高行政法院提起之事件應委任律師）；第 249 條第 1 項（上訴不合法者以裁定駁回，可補正者先命補正）。</dd>
+        <dt>涵攝</dt><dd>第一，期間：8 月 1 日送達，20 日不變期間於 8 月 21 日屆滿，8 月 25 日已逾期，除非有在途期間可扣或得回復原狀，否則上訴不合法，而且逾期無法補正。第二，理由：「認定事實錯誤」與「罰鍰過重」不是第 243 條的違背法令，最高行政法院是法律審，依第 254 條第 1 項受原判決確定事實拘束；戊若要主張，必須寫成原判決違反哪一條法令或違反論理經驗法則（第 189 條第 1 項）、判決不備理由（第 243 條第 2 項第 6 款）等。第三，代理：向最高行政法院提起之事件屬強制律師代理，戊未委任律師，依第 49 條之 1 第 7 項以下的程序應先命補正，逾期未補正才駁回。</dd>
+        <dt>結論</dt><dd>上訴因逾期而不合法，最高行政法院依第 249 條第 1 項裁定駁回，逾期不屬可補正事項，不須先命補正。即使期間合法，上訴理由也未合第 244 條第 2 項，且欠缺律師代理，仍須補正。</dd>
+        <dt>加分</dt><dd>提第 245 條第 1 項：上訴狀未表明理由者，應於提起上訴後 20 日內補提理由書，未提出者由原高等行政法院裁定駁回、毋庸命補正，說明「理由書期間」和「上訴期間」是兩個 20 日；並提第 251 條第 2 項法院調查違背法令不受上訴理由拘束，與第 258 條不影響裁判結果不得廢棄。</dd>
+      </dl></div></details>
+      <div class="self"><span class="small">自評：</span><button class="btn small" data-ok="1">寫到了</button><button class="btn small secondary" data-ok="0">沒寫到</button><span class="selfmsg"></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>實例 6　再審</h2>
+    <div class="essay" data-id="e6" data-l="12">
+      <div class="stem">己對撤銷罰鍰處分之訴，於高等行政法院敗訴、上訴最高行政法院亦遭駁回，判決於兩年前確定。己近日才得知，原審採為判決基礎的鑑定人作成虛偽鑑定，且該鑑定人已因此受偽證罪判決確定。問：己能否聲明不服？向哪個法院、多久內、以什麼事由？</div>
+      <textarea placeholder="事由、證明要件、期間、管轄，四個都要寫。"></textarea>
+      <details class="example"><summary>參考答案</summary><div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>確定判決能否以鑑定虛偽為由再審；第 273 條第 3 項的證明要件；再審期間起算；審級不同的判決由哪個法院管轄。</dd>
+        <dt>條文</dt><dd>第 273 條第 1 項第 10 款（證人、鑑定人或通譯就為判決基礎之證言、鑑定或通譯為虛偽陳述）、第 3 項（第 7 至 10 款以經判決確定等為限）；第 276 條第 1 項（三十日不變期間）、第 2 項（事由知悉在後者自知悉時起算）、第 4 項（確定後逾五年不得提起）；第 275 條第 1 項（專屬原法院）、第 2 項（審級不同者專屬上級法院合併管轄）、第 3 項（對上訴審判決本於第 9 至 14 款事由者仍專屬原第一審法院）；第 274 條之 1（同一事由不得再提）；第 98 條之 3（裁判費）。</dd>
+        <dt>涵攝</dt><dd>鑑定虛偽是第 273 條第 1 項第 10 款事由，而且該鑑定是判決基礎，事由成立。第 3 項要求「經判決確定」，鑑定人已受偽證罪判決確定，證明要件具備。期間：事由知悉在後，30 日自知悉時起算；距判決確定兩年，未逾第 4 項的五年上限。管轄：高等行政法院與最高行政法院對同一事件各有判決，原則上專屬上級法院合併管轄，但第 10 款屬第 9 至 14 款的事實面事由，依第 275 條第 3 項仍專屬原第一審的高等行政法院管轄。</dd>
+        <dt>結論</dt><dd>己得於知悉之日起 30 日內，以第 273 條第 1 項第 10 款為由，向原第一審高等行政法院提起再審之訴；通常訴訟程序之再審屬第 49 條之 1 第 1 項第 4 款強制律師代理事件。</dd>
+        <dt>加分</dt><dd>補第 273 條第 1 項但書：若己已在上訴時主張此事由並經判決為無理由，或知其事由而不為上訴主張者，不得再審；再提第 282 條，再審判決不影響第三人因信賴確定判決以善意取得之權利。</dd>
+      </dl></div></details>
+      <div class="self"><span class="small">自評：</span><button class="btn small" data-ok="1">寫到了</button><button class="btn small secondary" data-ok="0">沒寫到</button><span class="selfmsg"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ s4 弱點頁 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>弱點頁怎麼讀</h2>
+    <ul>
+      <li>每課一條正確率，顏色依正確率分三級。練不到 3 題的課別先不判斷。</li>
+      <li>「最常錯的 5 題」列出錯誤次數最多的題目，連結直接開到該課對應的小節。</li>
+      <li>紀錄只存在這台裝置的瀏覽器裡（key：<code>xzss_mix_v1</code>）；清除時不會動到各課的章末測驗進度。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>各課正確率</h2>
+    <p class="small muted" id="w4note"></p>
+    <div class="bars" id="w4bars"></div>
+    <h3>情境判斷（第 1 分頁）</h3>
+    <p class="small" id="w4s1"></p>
+    <h3>實例題自評</h3>
+    <p class="small" id="w4essay"></p>
+  </div>
+
+  <div class="card">
+    <h2>最常錯的 5 題</h2>
+    <ul class="wl" id="w4list"></ul>
+  </div>
+
+  <div class="card">
+    <h2>清除</h2>
+    <p class="small muted">只刪掉綜合練習場的紀錄（xzss_mix_v1）。各課的 visited、章末測驗分數與實例自評（xzss_progress_v1）不受影響。</p>
+    <button class="btn danger" id="w4clear">清除練習紀錄</button>
+    <span class="small muted" id="w4msg" style="margin-left:.6em"></span>
+  </div>
+</section>
+
+<footer>行政訴訟法自學教材 · 綜合練習場<br>依民國 111 年 6 月 22 日修正條文自行編寫，題目為原創；條文以<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030154" target="_blank" rel="noopener">全國法規資料庫</a>為準。</footer>
+</div>
+
+<script>
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const LESSON_ID = "mix", CH = "行政訴訟法 綜合練習場";
+const PROG_KEY = "xzss_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與數學教材共用 study_log_v1，供「學習紀錄」頁讀取）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+
+// ===== 練習場專用紀錄 xzss_mix_v1 =====
+// { les:{ "06":{n,ok,streak} }, items:{ "m20":{n,w,last} , "c3":{...} }, s1:{n,ok}, essay:{ e1:true } }
+const MIX_KEY = "xzss_mix_v1";
+function readMix(){ try{ const m = JSON.parse(localStorage.getItem(MIX_KEY) || "{}"); m.les = m.les || {}; m.items = m.items || {}; m.s1 = m.s1 || { n:0, ok:0 }; m.essay = m.essay || {}; return m; }catch(e){ return { les:{}, items:{}, s1:{n:0,ok:0}, essay:{} }; } }
+function writeMix(m){ try{ m.t = Date.now(); localStorage.setItem(MIX_KEY, JSON.stringify(m)); }catch(e){} }
+function noteItem(m, id, ok){ const it = m.items[id] = m.items[id] || { n:0, w:0, last:0 }; it.n++; if(!ok) it.w++; it.last = Date.now(); }
+function noteLesson(m, l, ok){ const s = m.les[l] = m.les[l] || { n:0, ok:0, streak:0 }; s.n++; if(ok){ s.ok++; s.streak++; } else s.streak = 0; }
+function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const $ = s => document.querySelector(s);
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+  if(id === 's4') renderWeak();
+  if(id === 's2') renderStart();
+}
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+// 網址帶 #s2 / #s4 時的開頁動作放在檔尾（題庫常數宣告之後）。
+
+// ===== 十二課的檔名與小節（弱點頁連結用）=====
+const LESSONS = {
+  "01":{ f:"01_導論與法院架構.html", t:"導論與法院架構" },
+  "02":{ f:"02_訴訟類型一_撤銷與課予義務.html", t:"撤銷與課予義務" },
+  "03":{ f:"03_訴訟類型二_確認給付公益.html", t:"確認、給付、公益" },
+  "04":{ f:"04_管轄與當事人.html", t:"管轄與當事人" },
+  "05":{ f:"05_多數當事人與代理.html", t:"多數當事人與代理" },
+  "06":{ f:"06_起訴程序.html", t:"起訴程序" },
+  "07":{ f:"07_暫時權利保護.html", t:"暫時權利保護" },
+  "08":{ f:"08_審理與證據.html", t:"審理與證據" },
+  "09":{ f:"09_裁判與終結.html", t:"裁判與終結" },
+  "10":{ f:"10_特別程序.html", t:"特別程序" },
+  "11":{ f:"11_上訴與抗告.html", t:"上訴與抗告" },
+  "12":{ f:"12_再審重新審理與執行.html", t:"再審、重新審理與執行" }
+};
+const LKEYS = Object.keys(LESSONS).sort(); // "10"–"12" 是整數鍵，Object.keys 會排在 "01" 前面，必須先排序
+
+// ===== s1 題庫：該提哪一種訴 =====
+// 八種類型；l/s 是答錯時該回去的課與小節
+const TYPES = {
+  A:{ n:"撤銷訴訟", art:"第 4 條第 1 項", l:"02", s:"s1" },
+  B:{ n:"課予義務訴訟（怠為處分）", art:"第 5 條第 1 項", l:"02", s:"s2" },
+  C:{ n:"課予義務訴訟（申請駁回）", art:"第 5 條第 2 項", l:"02", s:"s2" },
+  D:{ n:"確認行政處分無效", art:"第 6 條第 1 項前段、第 2 項", l:"03", s:"s1" },
+  E:{ n:"確認公法上法律關係成立或不成立", art:"第 6 條第 1 項前段、第 3 項", l:"03", s:"s1" },
+  F:{ n:"確認已執行完畢或已消滅之處分違法", art:"第 6 條第 1 項後段；第 196 條第 2 項", l:"03", s:"s1" },
+  G:{ n:"一般給付訴訟", art:"第 8 條第 1 項", l:"03", s:"s2" },
+  H:{ n:"不屬行政法院審判權", art:"第 2 條", l:"01", s:"s1" }
+};
+// 通用診斷：選了 X 但 X 的要件在這題不存在（每題再用 d 覆寫最容易選錯的幾個）
+const GEN = {
+  A:"撤銷訴訟（第 4 條第 1 項）要有一個仍然存在、對原告不利的行政處分可供撤銷；這題沒有這樣的處分，或處分已經不在了。",
+  B:"怠為處分型（第 5 條第 1 項）要有「依法申請」加上機關「於法令所定期間內應作為而不作為」；這題沒有被擱置的申請。",
+  C:"駁回型（第 5 條第 2 項）要有「依法申請之案件予以駁回」；這題沒有申請被駁回的處分。",
+  D:"確認處分無效（第 6 條第 1、2 項）要有重大明顯瑕疵到「無效」程度的處分，並先向原處分機關請求確認；這題的瑕疵頂多是違法，或根本沒有處分。",
+  E:"確認法律關係（第 6 條第 1 項）受第 6 條第 3 項補充性限制：能提撤銷、課予義務或一般給付就不能提確認；這題有別的訴可以走。",
+  F:"確認已消滅處分違法（第 6 條第 1 項後段）的前提是處分已執行而無回復原狀可能或已消滅；這題的處分還在或根本沒有處分。",
+  G:"一般給付訴訟（第 8 條第 1 項）只用在「作成行政處分以外」的給付；這題要的東西必須先由機關作成處分，或者爭的是處分本身。",
+  H:"第 2 條：公法上之爭議除法律別有規定外得提行政訴訟。這題是公法關係，也沒有法律把它劃給其他法院，行政法院有審判權。"
+};
+const SCEN = [
+  { id:"c1", ans:"A", t:"甲經營餐廳，環保局以噪音超標為由裁處罰鍰新臺幣 6 萬元。甲認為量測程序違法，提起訴願遭駁回。", why:"罰鍰是對甲不利的行政處分，仍然存在，甲經訴願不服其決定，第 4 條第 1 項的要件齊備。", d:{ C:"甲沒有向機關「申請」什麼，罰鍰是機關主動開的，不是申請被駁回。", G:"甲要的是把罰鍰拿掉，不是請求機關給付；第 8 條管不到處分本身。", H:"罰鍰是行使公權力的處分，是典型的第 2 條公法爭議。" } },
+  { id:"c2", ans:"B", t:"乙於 1 月 10 日向市政府申請營業登記，法令規定應於 30 日內處理。到 4 月市政府仍未作任何回應。乙提起訴願，訴願機關以機關尚在審查為由駁回。", why:"乙有依法申請、法令定有處理期間、機關逾期不作為，且已經訴願程序，是第 5 條第 1 項的怠為處分型課予義務訴訟。", d:{ C:"市政府從頭到尾沒有作成「駁回」處分，只是不理；駁回型要有駁回處分。", A:"沒有任何處分可以撤銷，連訴願決定也只是維持「不作為」的狀態。", G:"營業登記是行政處分，乙要的是機關作成處分，第 8 條第 1 項明文排除「請求作成行政處分」。" } },
+  { id:"c3", ans:"C", t:"丙申請低收入戶資格，社會局審查後以家庭財產超過標準為由作成駁回處分。丙訴願遭駁回。", why:"依法申請的案件被駁回，丙認為權利受違法損害且已經訴願，應依第 5 條第 2 項請求社會局作成核定資格的處分。", d:{ A:"只撤銷駁回處分，丙還是拿不到資格；課予義務訴訟才能命機關作成處分，撤銷只是其中一部分聲明。", B:"社會局已經作成駁回處分，不是「應作為而不作為」。", E:"丙能提課予義務訴訟，依第 6 條第 3 項不得改提確認法律關係。" } },
+  { id:"c4", ans:"D", t:"丁收到一份「處分書」，內容既未記載處分機關，也看不出是由誰、依什麼法令作成，屬學理上重大明顯瑕疵。丁先向其認為的原處分機關請求確認該處分無效，該機關 30 日內未置可否。", why:"第 6 條第 1 項前段確認處分無效之訴，且第 2 項的前置程序（請求確認未被允許或 30 日內不為確答）已經走完。", d:{ A:"撤銷是針對「違法但有效」的處分；無效處分自始不生效力，重大明顯瑕疵走第 6 條確認無效。", H:"機關作成的文書即使有重大瑕疵，爭議仍是公法上的，行政法院有審判權。", E:"丁爭的是處分本身是否無效，不是某個法律關係是否成立。" } },
+  { id:"c5", ans:"E", t:"戊為公立學校教師，學校主張聘約已於 7 月 31 日期滿自動終止，戊主張依法應視為繼續聘任。學校未作成任何處分，只是不再排課、不再發薪。戊想請法院確認聘任關係仍然存在。", why:"雙方爭執的是「公法上職務（聘任）關係是否存續」，沒有處分可撤銷，也不是向機關申請被駁回，依第 6 條第 1 項前段確認法律關係成立，並具即受確認判決之法律上利益。", d:{ A:"學校沒有作成解聘或不續聘的處分，沒有東西可以撤銷。", C:"戊沒有提出申請被駁回；聘約是否存續是一個狀態，不是申請案。", G:"戊要的不是單筆給付，而是整個關係的確認；薪資請求可以再另依第 8 條提起或合併。" } },
+  { id:"c6", ans:"F", t:"己參加集會時，警察機關以命令要求己「即刻離開現場」。集會當日已結束，命令執行完畢。己認為該命令違法，而且以後類似集會很可能再遇到相同處置。", why:"該命令是已執行完畢且無回復原狀可能的行政處分，己有重複發生之可能而具確認利益，依第 6 條第 1 項後段確認其違法。", d:{ A:"命令已經執行完畢、無法回復，撤銷沒有實益；第 6 條第 1 項後段就是為這種情形設計的。", D:"命令只是違法，不是重大明顯到無效；而且「無效」與「已消滅」是兩個不同的類型。", G:"己沒有要求機關給付任何東西。" } },
+  { id:"c7", ans:"G", t:"庚為公務員，機關漏發 3 個月的地域加給共 9 萬元。加給依法令規定直接發給，不需另行核定。庚請求機關補發。", why:"公務員與國家間是公法上職務關係，加給請求是「因公法上原因發生財產上之給付」，且不需先作成處分，依第 8 條第 1 項提一般給付訴訟。", d:{ C:"加給不需要機關另作核定處分，庚也沒有申請被駁回；直接請求給付即可。", A:"沒有任何處分存在，漏發是單純的不給付。", H:"公務員的俸給爭議是公法關係，不是私法上的勞資契約。" } },
+  { id:"c8", ans:"H", t:"辛向市政府承租市有土地經營停車場，雙方簽訂的是一般租賃契約。市政府主張辛欠繳租金 3 期，辛則主張市政府未修繕地面。辛想告市政府。", why:"市有地出租是私經濟行政，法律關係性質為私法上租賃，不是第 2 條的「公法上爭議」，應向普通法院起訴。", d:{ G:"第 8 條第 1 項後段的「公法上契約」要以公法關係為內容；一般租賃是私法契約。", A:"市政府在租約裡是契約一方，不是以公權力作成處分。", E:"確認法律關係限於「公法上」法律關係，租賃是私法關係。" } },
+  { id:"c9", ans:"H", t:"壬的車輛遭警察執勤時過失撞壞，壬未對任何行政處分或公法關係起訴，單獨向行政法院請求國家賠償 15 萬元。", why:"國家賠償法將國賠訴訟交由民事法院審理，屬第 2 條「法律別有規定」。只有在已合法提起的行政訴訟中，才能依第 7 條合併請求損害賠償。", d:{ G:"國賠請求不是第 8 條的公法上給付訴訟，而是法律別有規定歸民事法院的事件。", A:"撞壞車輛是事實行為，沒有處分。", C:"壬沒有向機關申請什麼被駁回。" } },
+  { id:"c10", ans:"A", t:"癸的建造執照被縣政府撤銷。癸訴願後，訴願機關內政部將原處分撤銷，改為「附加三項條件後維持執照」。癸認為這三項條件仍然違法，不服。", why:"訴願決定變更了原處分，對癸仍屬不利的行政處分，癸不服其決定，依第 4 條第 1 項提撤銷訴訟；被告依第 24 條第 2 款為內政部。", d:{ C:"癸不是申請被駁回，他已經有執照，爭的是附加條件這個不利處分。", E:"有處分可以撤銷，依第 6 條第 3 項不得提確認訴訟。", F:"處分（附條件維持執照）正在發生效力，沒有消滅。" } },
+  { id:"c11", ans:"A", t:"乙公司申請營業許可，市政府核發許可，但附加「每日營業至 20 時為止」的負擔。乙公司認為該負擔違法，訴願遭駁回。", why:"附款是許可處分的一部分，對乙公司不利，乙公司經訴願不服其決定，應依第 4 條第 1 項就該附款部分提撤銷訴訟。", d:{ C:"許可已經核發，不是申請被駁回；要的是把附加的負擔拿掉。", B:"機關已經作成處分，沒有怠為。", G:"營業時間限制是處分的內容，不是機關的給付；第 8 條管不到。" } },
+  { id:"c12", ans:"F", t:"丁的汽車牌照被公路主管機關吊扣 3 個月，丁訴願遭駁回後起訴。起訴時吊扣期間已滿，牌照也已發還。丁仍希望法院確認吊扣處分違法，因為該紀錄會影響他日後的加重處罰。", why:"吊扣處分已執行完畢且無回復原狀可能，丁因紀錄影響日後處罰而有即受確認判決之法律上利益，依第 6 條第 1 項後段確認違法。若在撤銷訴訟繫屬中處分才執行完畢，則依第 196 條第 2 項聲請確認。", d:{ A:"處分已執行完畢，撤銷沒有東西可撤，第 6 條第 1 項後段才是正解。", D:"吊扣處分只是可能違法，不是重大明顯瑕疵的無效處分。", G:"牌照已經發還，丁沒有要求任何給付。" } },
+  { id:"c13", ans:"G", t:"戊與衛生局簽訂公費醫師契約，約定學成後服務偏鄉 6 年，未履行者應返還公費。戊服務 2 年後離職，衛生局依契約要求戊返還公費 120 萬元，戊拒絕。衛生局想透過法院請求。", why:"公費醫師契約以培育公共醫療人力為內容，一般認為是公法上契約；因公法上契約發生之給付，依第 8 條第 1 項後段提一般給付訴訟，機關也可以是原告。", d:{ A:"衛生局沒有也不能用「處分」命戊還錢，契約關係要用給付訴訟請求。", H:"公費契約以公法上義務為內容，不是私法上的借貸或僱傭契約。", C:"機關是原告，沒有申請被駁回的問題。" } },
+  { id:"c14", ans:"A", t:"己住在某大樓，鄰地建商取得建造執照興建 20 層樓。己認為該執照違反日照與退縮規定，損害其權利，提起訴願遭駁回。", why:"建造執照是對建商的授益處分，但己是處分的利害關係人，認為該違法處分損害其權利或法律上利益，經訴願不服其決定，依第 4 條第 1 項提撤銷訴訟。", d:{ E:"有處分可以撤銷，依第 6 條第 3 項不得改提確認法律關係。", G:"己要的是把違法執照拿掉，不是請求機關給付。", H:"核發建照是公權力行為，鄰人爭執它是公法爭議。" } },
+  { id:"c15", ans:"G", t:"庚公司發現市政府在官方網站新聞稿中稱「庚公司為黑心廠商」，該新聞稿並非行政處分。庚公司要求市政府移除該段文字並停止散布。", why:"新聞稿是事實行為，不是處分；庚公司請求的是「作成行政處分以外之其他非財產上給付」（移除、停止），依第 8 條第 1 項提一般給付訴訟。", d:{ A:"新聞稿不是行政處分，沒有規制效力，不能撤銷。", D:"不是處分就談不上處分無效。", H:"機關以公權力主體身分發布的資訊屬公法上爭議，不是民事名譽糾紛。" } },
+  { id:"c16", ans:"B", t:"辛申請身心障礙證明，機關要求補件後，辛補件完成已超過法令所定處理期間 4 個月，機關不置可否。辛未經訴願即向行政法院起訴，請求機關作成核發證明的處分。", why:"類型是第 5 條第 1 項的怠為處分型課予義務訴訟。但第 5 條第 1 項要求「經依訴願程序後」，辛未經訴願，未經訴願屬起訴不備其他要件，法院依第 107 條第 1 項第 10 款以裁定駁回。類型判斷正確，程序還差一步。", d:{ C:"機關沒有作成駁回處分，只是不作為。", G:"身心障礙證明是行政處分，第 8 條第 1 項排除「請求作成行政處分」。", A:"沒有任何處分可以撤銷。" } },
+  { id:"c17", ans:"C", t:"壬向勞工保險局申請老年給付，勞保局核定給付 48 萬元。壬主張依其投保年資應為 50 萬元，對短少的 2 萬元不服，訴願遭駁回。", why:"社會保險給付需要保險人先以處分核定金額，壬的申請在 2 萬元的範圍內等於被駁回，應依第 5 條第 2 項請求勞保局作成核定 50 萬元的處分（部分駁回型）。", d:{ G:"這類給付要先經機關核定處分，不能繞過處分直接依第 8 條請求差額；第 8 條第 1 項排除「請求作成行政處分」。", A:"只撤銷核定處分，壬連 48 萬元都拿不到；他要的是更高金額的新處分。", B:"機關已經作成核定處分，不是怠為。" } },
+  { id:"c18", ans:"D", t:"癸收到一張「罰單」，開立者是某民間協會，該協會未受任何法令或機關委託行使公權力，罰單上卻記載「依法處罰、逾期移送強制執行」。癸向該協會與主管機關請求確認無效，主管機關 30 日內未確答。", why:"由完全無公權力權限的主體以處分外觀作成，屬重大明顯瑕疵，應依第 6 條第 1 項前段確認無效；第 6 條第 2 項的前置程序已經完成。", d:{ A:"無效處分自始不生效力，不是「違法但有效」，不走撤銷。", H:"爭議內容是該文書有無公法上的規制效力，仍是公法上爭議。", G:"癸沒有請求任何給付。" } },
+  { id:"c19", ans:"H", t:"丙公司得標市政府辦公用品採購案，交貨後市政府以品質不符為由拒付貨款 80 萬元。丙公司想請求給付貨款。", why:"機關採購文具是私經濟行政，買賣契約為私法關係，貨款爭議不是第 2 條的公法上爭議，應向普通法院起訴。", d:{ G:"第 8 條第 1 項後段要「公法上契約」；採購買賣是私法契約。", A:"拒付貨款是契約上的抗辯，不是行政處分。", E:"買賣關係是私法關係，不是「公法上」法律關係。" } },
+  { id:"c20", ans:"G", t:"戊的罰鍰處分 20 萬元經法院判決撤銷確定。戊早已繳納罰鍰，判決確定後機關遲遲不退還。戊想請求返還 20 萬元。", why:"處分已被撤銷，機關保有罰鍰欠缺法律上原因，戊請求的是公法上原因發生的財產給付，依第 8 條第 1 項提一般給付訴訟（撤銷判決時也可依第 196 條第 1 項聲請命回復原狀）。", d:{ A:"處分已經被撤銷了，沒有東西可以再撤銷。", C:"退還罰鍰不需要機關另作處分，不是申請被駁回。", F:"處分已經被撤銷判決消滅，不需要再確認它違法。" } },
+  { id:"c21", ans:"B", t:"己向主管機關申請核定都市更新事業計畫，法令定有審查期間。申請已滿 14 個月，機關每次都回覆「尚在審查中」，未作任何決定。己訴願遭駁回。", why:"有依法申請、逾法定期間未作為、已經訴願，依第 5 條第 1 項提怠為處分型課予義務訴訟。「尚在審查」不是處分。", d:{ C:"「尚在審查中」的回覆不是駁回處分。", A:"沒有處分可撤銷。", E:"己能提課予義務訴訟，依第 6 條第 3 項不得提確認。" } },
+  { id:"c22", ans:"A", t:"庚因違規停車遭裁決罰鍰 1,200 元並已繳納。庚認為並未違規，希望撤銷裁決並拿回已繳的罰鍰。", why:"對道交條例第 8 條裁決不服提起撤銷訴訟，屬第 237 條之 1 第 1 項第 1 款的交通裁決事件；返還已繳罰鍰依同項第 2 款合併請求。類型仍是撤銷訴訟，但不經訴願、30 日內逕向地方行政法院起訴（第 237 條之 3）。", d:{ G:"罰鍰的返還要以裁決被撤銷為前提，主訴是撤銷，返還只是合併請求（第 237 條之 1 第 1 項第 2 款）。", F:"裁決仍然存在、未消滅，已繳納不等於處分消滅。", H:"交通裁決事件自 101 年起由行政法院審理，第 237 條之 1 以下有明文。" } },
+  { id:"c23", ans:"E", t:"辛主張自己依法具有某公法上保險的被保險人資格，保險人（機關）在函文中否認，但未作成任何處分，辛也沒有提出具體給付申請。辛想請法院確認其被保險人資格存在。", why:"爭的是公法上法律關係（保險關係）是否成立，沒有處分、沒有被駁回的申請，依第 6 條第 1 項前段提確認法律關係成立之訴，須有即受確認判決之法律上利益。", d:{ C:"辛沒有提出申請被駁回，函文否認也不是對申請的駁回處分。", G:"辛沒有請求給付，而是要確認整個資格。", A:"沒有任何處分可以撤銷。" } },
+  { id:"c24", ans:"G", t:"壬所有的一筆土地遭鄉公所未經任何徵收或撥用程序，直接鋪設柏油作為道路使用。壬請求鄉公所除去柏油、返還土地。", why:"鄉公所的占用是公法上的事實行為，沒有處分；壬請求的是「作成行政處分以外之非財產上給付」（除去、返還），依第 8 條第 1 項提一般給付訴訟。", d:{ A:"沒有徵收或撥用處分存在，無從撤銷。", H:"機關為公共道路目的占用土地是公法上原因，不是私法上的無權占有糾紛。", E:"壬要的是具體的除去與返還行為，不只是確認所有權。" } }
+];
+
+// ===== s2 題庫：跨章混合選擇題（l 課別、s 小節、art 條文、a 正解索引、d 錯誤選項診斷）=====
+const BANK = [
+  // 01 導論與法院架構
+  { id:"m01", l:"01", s:"s1", art:"第 2 條、第 7 條、第 107 條第 1 項第 1 款", q:"甲主張警察執勤過失撞壞其招牌，未對任何行政處分或公法關係起訴，單獨向行政法院請求國家賠償 10 萬元。行政法院應如何處理？",
+    o:["以判決駁回，因請求在法律上顯無理由","屬審判權欠缺：不能依法移送者依第 107 條第 1 項第 1 款裁定駁回，能移送者移送有審判權之法院","依第 7 條受理，因行政訴訟得合併請求損害賠償","命甲於 10 日內補行訴願程序"], a:1,
+    exp:"國家賠償法將國賠事件交由民事法院審理，屬第 2 條「法律別有規定」。第 107 條第 1 項第 1 款：訴訟事件不屬行政訴訟審判權，不能依法移送者，裁定駁回。",
+    d:{ 0:"審判權欠缺是程序事項，第 107 條第 1 項用「裁定」駁回，不是判決。", 2:"第 7 條只允許在已合法提起的行政訴訟中合併請求，甲沒有任何主訴訟可以合併。", 3:"訴願是針對行政處分的前置程序，與審判權有無無關，而且國賠事件補了訴願也不會變成行政法院的事件。" } },
+  { id:"m02", l:"01", s:"s2", art:"第 229 條第 1、2 項、第 104 條之 1", q:"乙不服國稅局核定補徵營業稅 40 萬元之處分，經復查、訴願後提起撤銷訴訟。第一審管轄法院與程序為何？",
+    o:["高等行政訴訟庭，通常訴訟程序","地方行政訴訟庭，通常訴訟程序","地方行政訴訟庭，簡易訴訟程序","高等行政訴訟庭，簡易訴訟程序"], a:2,
+    exp:"第 229 條第 2 項第 1 款：稅捐課徵事件所核課稅額在 50 萬元以下者適用簡易程序；第 1 項：簡易程序以地方行政法院為第一審。",
+    d:{ 0:"150 萬元以下的稅捐事件，依第 104 條之 1 第 1 項但書第 1 款就不在高等行政訴訟庭，40 萬更不會。", 1:"40 萬未超過 50 萬，落在第 229 條第 2 項第 1 款的簡易程序，不是通常程序。", 3:"第 229 條第 1 項：簡易程序以地方行政法院為第一審，高等行政訴訟庭不辦簡易事件。" } },
+  { id:"m03", l:"01", s:"s3", art:"第 106 條第 1 項", q:"丙之訴願決定書於 3 月 1 日合法送達。依第 106 條第 1 項，丙提起撤銷訴訟的期間為何？",
+    o:["送達後 20 日之不變期間","送達後 30 日之不變期間","送達後 2 個月之不變期間","送達後 3 個月"], a:2,
+    exp:"第 106 條第 1 項：第 4 條及第 5 條訴訟之提起，應於訴願決定書送達後二個月之不變期間內為之。",
+    d:{ 0:"20 日是對高等行政法院判決上訴的期間（第 241 條）。", 1:"30 日是交通裁決撤銷訴訟（第 237 條之 3 第 2 項）與再審之訴（第 276 條第 1 項）的期間。", 3:"3 個月是「提起訴願逾三個月不為決定」得起訴的等待期間（第 4 條第 1 項），不是起訴期間。" } },
+  // 02 撤銷與課予義務
+  { id:"m04", l:"02", s:"s1", art:"第 4 條第 2 項", q:"機關作成之行政處分逾越權限或濫用權力。依第 4 條第 2 項，其法律上評價為何？",
+    o:["以無效論","以違法論","以不當論，僅得循訴願救濟","以不成立論"], a:1,
+    exp:"第 4 條第 2 項：逾越權限或濫用權力之行政處分，以違法論。這使裁量瑕疵成為撤銷訴訟可以審查的對象（另見第 201 條）。",
+    d:{ 0:"條文說的是「以違法論」，違法處分有效但可撤銷，不是無效。", 2:"「不當」是訴願才審的範圍，第 4 條第 2 項正是要把裁量濫用拉進「違法」讓法院能審。", 3:"處分不成立是指根本未對外發生，與逾越權限無關。" } },
+  { id:"m05", l:"02", s:"s2", art:"第 106 條第 4 項", q:"丁依法申請某項許可，法律特別規定此類案件機關逾期不作為時得不經訴願逕行起訴。丁的課予義務訴訟（怠為處分型）何時可以提起？",
+    o:["申請後隨時可提起","於應作為期間屆滿後始得為之；但期間屆滿後已逾 3 年者不得提起","於行政處分達到或公告後 2 個月之不變期間內","於訴願決定書送達後 2 個月之不變期間內"], a:1,
+    exp:"第 106 條第 4 項：不經訴願程序即得提起第 5 條第 1 項之訴訟者，於應作為期間屆滿後始得為之；期間屆滿後已逾三年者，不得提起。",
+    d:{ 0:"機關在法定期間內還沒違法，第 106 條第 4 項明定要等應作為期間屆滿。", 2:"第 106 條第 3 項是給不經訴願的第 4 條或第 5 條第 2 項訴訟用的，怠為處分根本沒有「處分達到」可以起算。", 3:"第 106 條第 1 項是經訴願程序者的規定，題目說的是不經訴願。" } },
+  { id:"m06", l:"02", s:"s3", art:"第 200 條第 4 款", q:"戊提起課予義務訴訟。法院認其訴有理由，但是否核准涉及機關的行政裁量。法院應為何種裁判？",
+    o:["判命機關作成戊所申請內容之行政處分","判命機關遵照其判決之法律見解對戊作成決定","以判決駁回，因裁量事項法院不得介入","以裁定駁回，因欠缺權利保護必要"], a:1,
+    exp:"第 200 條第 4 款：原告之訴雖有理由，惟案件事證尚未臻明確或涉及行政機關之行政裁量決定者，應判命行政機關遵照其判決之法律見解對於原告作成決定。",
+    d:{ 0:"第 200 條第 3 款要「事證明確」且不涉裁量，才能判命作成原告申請內容的處分。", 2:"有理由就不能用第 2 款判決駁回；裁量只影響判決方式，不影響勝敗。", 3:"裁定駁回是第 1 款訴不合法的情形，與裁量無關。" } },
+  { id:"m07", l:"02", s:"s3", art:"第 195 條第 2 項、第 197 條、第 201 條", q:"己對 50 萬元罰鍰處分提起撤銷訴訟，法院認為裁罰金額的計算有誤。下列何者正確？",
+    o:["法院得改判為 80 萬元，因法院不受原處分金額拘束","法院若變更原處分，不得為較原處分不利於己之判決","裁量處分一律不得由法院撤銷","法院應自行作成新的罰鍰處分取代原處分"], a:1,
+    exp:"第 195 條第 2 項：撤銷訴訟之判決如係變更原處分或決定者，不得為較原處分或決定不利於原告之判決。第 197 條允許法院以確定不同金額之給付代替撤銷。",
+    d:{ 0:"第 195 條第 2 項明定不利益變更禁止，原告告了反而更慘是制度上不許的。", 2:"第 201 條：裁量處分以逾越權限或濫用權力者為限，法院「得予撤銷」，不是一律不能。", 3:"法院是撤銷或變更處分（第 197 條用不同金額代替），不是代替機關作成處分。" } },
+  // 03 確認、給付、公益
+  { id:"m08", l:"03", s:"s1", art:"第 6 條第 2 項", q:"庚欲提起確認行政處分無效之訴。起訴前應先踐行何種程序？",
+    o:["依訴願法提起訴願","向原處分機關請求確認其無效，未被允許或請求後 30 日內不為確答","向訴願管轄機關請求確認無效","無任何前置程序"], a:1,
+    exp:"第 6 條第 2 項：確認行政處分無效之訴訟，須已向原處分機關請求確認其無效未被允許，或經請求後於三十日內不為確答者，始得提起。",
+    d:{ 0:"確認無效不走訴願，對象是原處分機關本身，等待期間是 30 日不是訴願法的 3 個月。", 2:"條文寫的是「原處分機關」，不是訴願管轄機關。", 3:"沒有前置程序的是確認法律關係與確認已消滅處分違法；確認無效有第 6 條第 2 項的前置。" } },
+  { id:"m09", l:"03", s:"s1", art:"第 6 條第 4 項", q:"辛應提起撤銷訴訟，卻誤提確認行政處分無效之訴，且未經訴願程序。行政法院應如何處理？",
+    o:["以裁定駁回其訴","以判決駁回其訴","以裁定將該事件移送訴願管轄機關，並以法院收受訴狀之時視為提起訴願","命辛於 10 日內補提訴願，逾期駁回"], a:2,
+    exp:"第 6 條第 4 項：應提起撤銷訴訟、課予義務訴訟，誤為提起確認行政處分無效之訴訟，其未經訴願程序者，行政法院應以裁定將該事件移送於訴願管轄機關，並以行政法院收受訴狀之時，視為提起訴願。",
+    d:{ 0:"第 6 條第 4 項特別設計了移送機制保護人民的訴願期間，不是直接駁回。", 1:"這是程序問題，而且條文明定「裁定移送」。", 3:"條文是法院主動移送並視為已提訴願，不是命當事人自己去補。" } },
+  { id:"m10", l:"03", s:"s2", art:"第 8 條第 2 項", q:"壬請求機關返還已繳的規費 30 萬元，但返還與否取決於核課規費的處分應否撤銷。壬應如何起訴？",
+    o:["於依第 4 條第 1 項或第 3 項提起撤銷訴訟時，併為給付請求；未請求者審判長應告以得為請求","先提起確認處分違法之訴，確定後再提給付訴訟","單獨提起一般給付訴訟即可，法院在給付訴訟中附帶審查處分","聲請停止訴訟程序，待處分經訴願確定"], a:0,
+    exp:"第 8 條第 2 項：給付訴訟之裁判以行政處分應否撤銷為據者，應於依第 4 條第 1 項或第 3 項提起撤銷訴訟時併為請求；原告未為請求者，審判長應告以得為請求。",
+    d:{ 1:"處分還在、可以撤銷，依第 6 條第 3 項不能提確認；而且分兩次打拖延救濟。", 2:"處分有效期間機關保有規費就有法律上原因，法院不能在給付訴訟裡「附帶」撤銷處分，第 8 條第 2 項要求併提撤銷訴訟。", 3:"第 177 條的停止是針對民事法律關係或其他爭訟，不是叫原告自己停下來等。" } },
+  { id:"m11", l:"03", s:"s2", art:"第 203 條", q:"甲公司與機關簽訂公法上契約後，發生締約時無法預料的情事變更，依原契約效果顯失公平。下列何者正確？",
+    o:["僅甲公司得聲請法院變更契約效果，機關不得聲請","行政法院得依當事人聲請為增、減給付或變更、消滅其他原有效果之判決；機關為防止或免除公益上顯然重大之損害亦得聲請","行政法院得依職權調整，不待聲請","此規定不適用於因公法上其他原因發生之財產給付"], a:1,
+    exp:"第 203 條第 1 項：法院得依當事人聲請為增、減給付或變更、消滅其他原有效果之判決；第 2 項：為當事人之行政機關因防止或免除公益上顯然重大之損害亦得聲請；第 3 項準用於因公法上其他原因發生之財產上給付。",
+    d:{ 0:"第 203 條第 2 項明文允許機關為公益聲請。", 2:"條文寫「依當事人聲請」，法院不能主動改契約。", 3:"第 203 條第 3 項明定準用於公法上其他原因發生之財產上給付。" } },
+  { id:"m12", l:"03", s:"s3", art:"第 9 條、第 35 條", q:"乙為環保團體成員，就與自己權利無關的某開發許可認為違法，欲以自己名義提起行政訴訟維護公益。下列何者正確？",
+    o:["依第 9 條，任何人民為維護公益均得起訴","依第 9 條，以法律有特別規定者為限","只要經法院許可即可","依第 35 條，個人也可為公益起訴"], a:1,
+    exp:"第 9 條：人民為維護公益，就無關自己權利及法律上利益之事項，對於行政機關之違法行為，得提起行政訴訟。但以法律有特別規定者為限。",
+    d:{ 0:"第 9 條但書是整條的關鍵：沒有法律特別規定，就沒有公益訴訟。", 2:"法院許可不是公益訴訟的要件，條文要的是「法律有特別規定」。", 3:"第 35 條是公益社團法人經多數社員授與訴訟實施權而起訴，主體是社團法人，不是個人。" } },
+  // 04 管轄與當事人
+  { id:"m13", l:"04", s:"s1", art:"第 15 條第 1 項、第 13 條第 1 項", q:"丙所有坐落臺南市的土地遭內政部核准徵收。丙對徵收處分提起撤銷訴訟，管轄法院為何？",
+    o:["內政部所在地之行政法院（第 13 條第 1 項）","專屬不動產所在地之行政法院（第 15 條第 1 項）","丙住所地之行政法院（第 14 條第 1 項）","由丙在上述法院中任選其一"], a:1,
+    exp:"第 15 條第 1 項：因不動產徵收、徵用或撥用之訴訟，專屬不動產所在地之行政法院管轄。專屬管轄排除第 13 條的一般規定。",
+    d:{ 0:"第 13 條第 1 項是對公法人或其機關的普通審判籍，但徵收事件有第 15 條第 1 項的專屬管轄優先。", 2:"第 14 條是對第 13 條以外之被告（主要是自然人、私人）的規定，被告是機關時不適用。", 3:"專屬管轄沒有選擇餘地；可以選的是第 15 條第 2 項「其他有關不動產之公法上權利」的「得由」。" } },
+  { id:"m14", l:"04", s:"s2", art:"第 17 條", q:"丁對某機關起訴時該機關所在地屬 A 行政法院轄區；訴訟中機關遷至 B 行政法院轄區。下列何者正確？",
+    o:["A 法院應裁定移送 B 法院","定行政法院之管轄以起訴時為準，A 法院管轄不受影響","應由直接上級行政法院指定管轄","B 法院得請求 A 法院移送"], a:1,
+    exp:"第 17 條：定行政法院之管轄以起訴時為準（管轄恆定原則）。被告事後遷移不影響已取得的管轄。",
+    d:{ 0:"移送是起訴時就無管轄權的情形；起訴時有管轄權，之後就恆定。", 2:"第 16 條指定管轄限於法院不能行審判權、境界不明、恐影響公安或難期公平三種情形。", 3:"法院之間沒有「請求移送」的制度，而且第 17 條已經解決這個問題。" } },
+  { id:"m15", l:"04", s:"s2", art:"第 19 條第 2 款", q:"法官戊曾在內政部任職時參與該訴訟事件的訴願決定。戊能否參與本案裁判？",
+    o:["得參與，但當事人得聲請迴避","應自行迴避，不得執行職務","僅於當事人聲請時始須迴避","得參與，因訴願與訴訟是不同程序"], a:1,
+    exp:"第 19 條第 2 款：曾在中央或地方機關參與該訴訟事件之行政處分或訴願決定者，法官應自行迴避，不得執行職務。",
+    d:{ 0:"第 19 條是「應自行迴避」的法定事由，不是靜待聲請的任意迴避。", 2:"法定迴避事由不以聲請為前提，法官有義務自行迴避。", 3:"第 19 條第 2 款正是為訴願決定參與者設的，程序不同不是理由。" } },
+  { id:"m16", l:"04", s:"s3", art:"第 24 條第 2 款", q:"己的原處分由市政府作成，訴願機關內政部將原處分「變更」為較輕的處分，己仍不服提起撤銷訴訟。被告機關為何？",
+    o:["市政府，因其為原處分機關","內政部，因其為變更原處分之機關","市政府與內政部為共同被告","行政院，因其為內政部之上級機關"], a:1,
+    exp:"第 24 條：經訴願程序之行政訴訟，其被告為：一、駁回訴願時之原處分機關；二、撤銷或變更原處分時，為撤銷或變更之機關。",
+    d:{ 0:"原處分機關當被告是「駁回訴願」的情形（第 1 款）；訴願機關變更了處分，被告就換成它。", 2:"第 24 條是二擇一，不是共同被告。", 3:"被告不是看上下級，而是看誰作了最後那個對原告不利的決定。" } },
+  // 05 多數當事人與代理
+  { id:"m17", l:"05", s:"s1", art:"第 37 條", q:"下列何者不是第 37 條第 1 項所列得為共同訴訟人的情形？",
+    o:["為訴訟標的之行政處分係二以上機關共同為之","為訴訟標的之權利、義務或法律上利益為其所共同","為訴訟標的之權利、義務或法律上利益於事實上或法律上有同一或同種類之原因","原告間具有配偶或三親等內血親關係"], a:3,
+    exp:"第 37 條第 1 項列舉三款：處分係二以上機關共同為之、權利義務為其所共同、事實上或法律上有同一或同種類之原因。親屬關係不是事由。第 2 項另對「同種類原因」的共同訴訟設有被告所在地同一法院轄區的限制。",
+    d:{ 0:"這是第 37 條第 1 項第 1 款。", 1:"這是第 37 條第 1 項第 2 款。", 2:"這是第 37 條第 1 項第 3 款，但依第 2 項以被告所在地在同一法院轄區為限。" } },
+  { id:"m18", l:"05", s:"s2", art:"第 41 條、第 42 條第 1 項、第 44 條", q:"庚對建商的建造執照提起撤銷訴訟，撤銷結果將使建商的權利受損害。法院得如何處理建商的參加？",
+    o:["依第 41 條以裁定命其必要參加","依第 42 條第 1 項得依職權命其獨立參加，並得因其聲請裁定允許參加","依第 44 條命其輔助參加","不得命其參加，建商僅得另行起訴"], a:1,
+    exp:"第 42 條第 1 項：行政法院認為撤銷訴訟之結果，第三人之權利或法律上利益將受損害者，得依職權命其獨立參加訴訟，並得因該第三人之聲請，裁定允許其參加。",
+    d:{ 0:"第 41 條是「訴訟標的對於第三人及當事人一造必須合一確定」的必要參加；建商與機關之間不是合一確定關係。", 2:"第 44 條的輔助參加是針對「其他行政機關」或有利害關係之第三人輔助一造，建商在這裡是權利直接受影響的對立面，用第 42 條。", 3:"第 42 條就是為保護這種第三人設計的，而且第 42 條第 4 項還把利害關係人另行起訴視為參加。" } },
+  { id:"m19", l:"05", s:"s3", art:"第 49 條之 1 第 1 項第 2 款", q:"辛對高等行政法院地方行政訴訟庭以通常訴訟程序所為之判決，上訴至高等行政訴訟庭。是否應委任律師為訴訟代理人？",
+    o:["否，僅向最高行政法院提起之事件才強制律師代理","是，高等行政法院管轄之通常訴訟程序上訴事件屬第 49 條之 1 第 1 項第 2 款","否，僅環境保護、土地爭議事件才強制","是，所有上訴事件一律強制律師代理"], a:1,
+    exp:"第 49 條之 1 第 1 項第 2 款：高等行政法院管轄之通常訴訟程序上訴事件，當事人應委任律師為訴訟代理人。第 3 款才是最高行政法院事件。",
+    d:{ 0:"第 3 款是最高行政法院，但第 2 款另外把高等行政法院的通常程序上訴事件也納入。", 2:"環保、土地是第 1 款「第一審通常訴訟程序事件」的範圍，上訴事件另有第 2 款。", 3:"簡易程序與交通裁決事件的上訴不在第 49 條之 1 第 1 項各款內，不強制。" } },
+  { id:"m20", l:"05", s:"s3", art:"第 49 條第 1 項、第 6 項", q:"壬委任訴訟代理人。依第 49 條，每一當事人委任之訴訟代理人與複代理人人數上限各為何？",
+    o:["訴訟代理人 2 人、複代理人 1 人","訴訟代理人 3 人、複代理人 1 人","訴訟代理人 3 人、複代理人 2 人","訴訟代理人 5 人、複代理人 1 人"], a:1,
+    exp:"第 49 條第 1 項但書：每一當事人委任之訴訟代理人不得逾三人。第 6 項：訴訟代理人委任複代理人者，不得逾一人。",
+    d:{ 0:"訴訟代理人的上限是 3 人，不是 2 人。", 2:"複代理人不得逾 1 人（第 49 條第 6 項）。", 3:"5 人是第 29 條選定當事人「一人至五人」的數字，不是代理人。" } },
+  // 06 起訴程序
+  { id:"m21", l:"06", s:"s1", art:"第 73 條第 3 項、第 82 條", q:"法院文書因無法交付，於 5 月 2 日寄存於甲住所地之警察機關並黏貼通知。該送達何時發生效力？",
+    o:["寄存當日即生效","自寄存之日起經 10 日發生效力","自寄存之日起經 20 日發生效力","自甲實際領取之日發生效力"], a:1,
+    exp:"第 73 條第 3 項：寄存送達，自寄存之日起，經十日發生效力。領取日不影響。",
+    d:{ 0:"寄存送達有 10 日的緩衝，不是當日生效。", 2:"20 日是公示送達的生效期間（第 82 條），寄存送達是 10 日。", 3:"寄存送達是擬制送達，領取與否與生效無關；否則當事人可以用不領取來拖延期間。" } },
+  { id:"m22", l:"06", s:"s2", art:"第 91 條", q:"乙因颱風交通中斷而遲誤 2 個月的起訴不變期間。原因消滅後，乙應於多久內聲請回復原狀？",
+    o:["10 日內","1 個月內；該不變期間少於 1 個月者，於相等之日數內","2 個月內，與原不變期間相同","1 年內"], a:1,
+    exp:"第 91 條第 1 項：因天災或其他不應歸責於己之事由致遲誤不變期間者，於其原因消滅後一個月內，如該不變期間少於一個月者，於相等之日數內，得聲請回復原狀。",
+    d:{ 0:"10 日是抗告期間（第 268 條），不是回復原狀的聲請期間。", 2:"回復原狀的聲請期間固定是 1 個月，只有原不變期間短於 1 個月時才縮短為相等日數，不會跟著變長。", 3:"1 年是第 91 條第 3 項的上限：遲誤不變期間已逾一年者不得聲請回復原狀。" } },
+  { id:"m23", l:"06", s:"s3", art:"第 98 條第 2 項、第 98 條之 2", q:"丙的通常訴訟程序撤銷訴訟敗訴，向最高行政法院提起上訴。上訴應徵收裁判費多少？",
+    o:["新臺幣 4,000 元","新臺幣 6,000 元","新臺幣 2,000 元","免徵，因最高行政法院為法律審"], a:1,
+    exp:"第 98 條第 2 項：起訴按件徵收 4,000 元。第 98 條之 2 第 1 項：上訴依第 98 條第 2 項規定加徵裁判費二分之一，即 6,000 元。",
+    d:{ 0:"4,000 元是第一審起訴的裁判費，上訴要加徵二分之一。", 2:"2,000 元是簡易訴訟程序的起訴裁判費。", 3:"免徵的情形是發回或發交更審後再行上訴（第 98 條之 2 第 2 項），不是因為法律審。" } },
+  { id:"m24", l:"06", s:"s4", art:"第 112 條第 1 項", q:"丁提起課予義務訴訟，被告機關想在同一訴訟中對丁提起反訴請求返還溢領補助。下列何者正確？",
+    o:["被告於言詞辯論終結前得提起反訴","對於撤銷訴訟及課予義務訴訟不得提起反訴","反訴須經原告同意","反訴僅限於專屬他行政法院管轄之事件"], a:1,
+    exp:"第 112 條第 1 項：被告於言詞辯論終結前得在本訴繫屬之行政法院提起反訴。但對於撤銷訴訟及課予義務訴訟，不得提起反訴。",
+    d:{ 0:"這是第 112 條第 1 項本文，但但書把撤銷與課予義務訴訟排除了。", 2:"反訴不需原告同意；需同意的是訴之變更追加（第 111 條第 1 項）與撤回（第 113 條第 2 項）。", 3:"第 112 條第 3 項反而規定專屬他法院管轄者「不得」提起反訴。" } },
+  { id:"m25", l:"06", s:"s4", art:"第 111 條第 3 項第 4 款、第 4 項", q:"訴狀送達後，戊欲變更訴訟類型。下列何種變更依第 111 條第 3 項「應予准許」？",
+    o:["應提起確認訴訟，誤為提起撤銷訴訟，改為確認訴訟","將原一般給付訴訟變更為未經訴願程序之撤銷訴訟","任何變更，只要原告聲請","被告已表示異議後的變更"], a:0,
+    exp:"第 111 條第 3 項第 4 款：應提起確認訴訟，誤為提起撤銷訴訟者，訴之變更應予准許。第 4 項：變更或追加之新訴為撤銷訴訟而未經訴願程序者，不適用第 1 至 3 項。",
+    d:{ 1:"第 111 條第 4 項明文排除：新訴為撤銷訴訟而未經訴願程序者，不能靠變更追加繞過訴願。", 2:"第 111 條第 1 項原則是訴狀送達後不得變更，例外才准。", 3:"被告無異議而為本案言詞辯論才視為同意（第 2 項）；異議後只能靠第 3 項法定事由。" } },
+  // 07 暫時權利保護
+  { id:"m26", l:"07", s:"s1", art:"第 116 條第 1、2 項", q:"己對拆除處分提起撤銷訴訟後，聲請停止執行。關於訴訟繫屬中停止執行的要件，下列何者正確？",
+    o:["原處分之執行將發生難於回復之損害且有急迫情事；但於公益有重大影響或原告之訴在法律上顯無理由者不得為之","提起行政訴訟即當然停止執行","法院僅得依聲請裁定停止執行，不得依職權","聲請人應提供擔保始得停止執行"], a:0,
+    exp:"第 116 條第 1 項：原處分之執行不因提起行政訴訟而停止。第 2 項：法院認執行將發生難於回復之損害且有急迫情事者，得依職權或依聲請裁定停止執行；但於公益有重大影響或原告之訴在法律上顯無理由者，不得為之。",
+    d:{ 1:"第 116 條第 1 項採「不停止執行」原則，正好相反。", 2:"第 116 條第 2 項明定「依職權或依聲請」。", 3:"第 116 條沒有擔保要件；擔保是假扣押、假處分準用民事訴訟法的制度。" } },
+  { id:"m27", l:"07", s:"s1", art:"第 116 條第 3 項", q:"庚在訴願中、尚未起訴，向行政法院聲請停止執行。下列何者正確？",
+    o:["起訴前不得聲請停止執行","得依受處分人或訴願人之聲請裁定停止，要件為執行將發生難於回復之損害且有急迫情事；於公益有重大影響者不在此限","須原告之訴顯有理由始得停止","任何利害關係人均得聲請"], a:1,
+    exp:"第 116 條第 3 項：於行政訴訟起訴前，如原處分之執行將發生難於回復之損害且有急迫情事者，法院亦得依受處分人或訴願人之聲請裁定停止執行。但於公益有重大影響者，不在此限。",
+    d:{ 0:"第 116 條第 3 項明文允許起訴前聲請。", 2:"第 3 項的但書只有「公益有重大影響」，沒有「法律上顯無理由」那一句（那在第 2 項），更沒有要求顯有理由。", 3:"第 3 項限定聲請人為「受處分人或訴願人」。" } },
+  { id:"m28", l:"07", s:"s2", art:"第 295 條", q:"辛聲請假扣押獲准後尚未提起給付訴訟。依第 295 條，辛應於裁定送達後多久內起訴？",
+    o:["10 日內；逾期未起訴者法院應依聲請撤銷假扣押裁定","20 日內","30 日內","2 個月內"], a:0,
+    exp:"第 295 條：假扣押裁定後，尚未提起給付之訴者，應於裁定送達後十日內提起；逾期未起訴者，行政法院應依聲請撤銷假扣押裁定。",
+    d:{ 1:"20 日是上訴期間（第 241 條）。", 2:"30 日是交通裁決起訴與再審期間，不是假扣押的起訴期限。", 3:"2 個月是第 106 條的起訴不變期間，與假扣押無關。" } },
+  { id:"m29", l:"07", s:"s3", art:"第 299 條、第 298 條", q:"壬對罰鍰處分提起撤銷訴訟，同時聲請假處分「禁止機關執行該罰鍰」。法院應如何處理？",
+    o:["准許假處分，因有保全必要","得依第 116 條請求停止執行者不得聲請假處分，應駁回假處分聲請","應先命壬聲請假扣押","應轉為定暫時狀態之處分"], a:1,
+    exp:"第 299 條：得依第 116 條請求停止原處分或決定之執行者，不得聲請為前條之假處分。針對處分的執行，只能走停止執行。",
+    d:{ 0:"第 299 條明文排除，兩套制度不能競合。", 2:"假扣押是保全「公法上金錢給付之強制執行」（第 293 條），壬是被罰的一方，不是債權人。", 3:"定暫時狀態處分（第 298 條第 2 項）也是第 298 條的假處分，同樣被第 299 條排除。" } },
+  // 08 審理與證據
+  { id:"m30", l:"08", s:"s2", art:"第 125 條第 1 項、第 133 條、第 134 條", q:"關於行政法院對事實與證據的調查，下列何者正確？",
+    o:["法院受當事人事實主張及證據聲明之拘束","法院應依職權調查事實關係，不受當事人事實主張及證據聲明之拘束，並應依職權調查證據","法院僅得依當事人聲請調查證據","當事人自認之事實，法院即不得再調查"], a:1,
+    exp:"第 125 條第 1 項：行政法院應依職權調查事實關係，不受當事人事實主張及證據聲明之拘束。第 133 條：應依職權調查證據。第 134 條：雖經他造自認，仍應調查其他必要之證據。",
+    d:{ 0:"這是民事訴訟的辯論主義，行政訴訟採職權調查主義（第 125 條第 1 項）。", 2:"第 133 條明定「應依職權調查證據」。", 3:"第 134 條：當事人主張之事實雖經他造自認，法院仍應調查其他必要之證據。" } },
+  { id:"m31", l:"08", s:"s3", art:"第 146 條第 1 項第 2 款、第 144 條", q:"律師甲被傳為證人，就其因業務所知悉有關委任人秘密之事項受訊問。甲得否拒絕證言？",
+    o:["不得拒絕，因任何人均有作證義務","得拒絕證言","須經其監督長官同意後始得作證","僅得拒絕具結，不得拒絕證言"], a:1,
+    exp:"第 146 條第 1 項第 2 款：證人為醫師、藥師、藥商、心理師、助產士、宗教師、律師、會計師或其他從事相類業務之人，就其因業務所知悉有關他人秘密之事項受訊問者，得拒絕證言。",
+    d:{ 0:"第 142 條的作證義務有例外，第 145、146 條就是例外。", 2:"監督長官同意是第 144 條公務員就職務上應守秘密事項的規定，律師不適用。", 3:"拒絕具結是第 152 條針對「與自己或親屬有直接利害關係之事項」，這題是業務秘密，可以直接拒絕證言。" } },
+  { id:"m32", l:"08", s:"s4", art:"第 175 條第 1 項", q:"乙尚未起訴，但擔心關鍵證物即將滅失，欲聲請保全證據。應向哪個法院聲請？",
+    o:["受訴行政法院","受訊問人住居地或證物所在地之地方行政法院","高等行政法院高等行政訴訟庭","最高行政法院"], a:1,
+    exp:"第 175 條第 1 項：保全證據之聲請，在起訴後向受訴行政法院為之；在起訴前，向受訊問人住居地或證物所在地之地方行政法院為之。",
+    d:{ 0:"受訴行政法院是「起訴後」的管轄法院，起訴前還沒有受訴法院。", 2:"條文明定起訴前向「地方行政法院」聲請。", 3:"最高行政法院是法律審，不處理證據保全。" } },
+  // 09 裁判與終結
+  { id:"m33", l:"09", s:"s1", art:"第 178 條之 1", q:"行政法院審理中，認為應適用之法律違憲，聲請憲法法庭判決宣告違憲。訴訟程序如何處理？",
+    o:["得裁定停止訴訟程序","應裁定停止訴訟程序","不得停止，應續行審判並以合憲解釋為之","訴訟程序當然停止"], a:1,
+    exp:"第 178 條之 1：行政法院就其受理事件，對所應適用之法律位階法規範，聲請憲法法庭判決宣告違憲者，應裁定停止訴訟程序。",
+    d:{ 0:"第 178 條之 1 用「應」，不是「得」；「得」裁定停止是第 177 條第 2 項其他爭訟牽涉的情形。", 2:"法院自己聲請釋憲就表示它認為該法違憲，不能一邊聲請一邊照用。", 3:"當然停止是第 179 條等法定事由自動發生，釋憲聲請需要法院「裁定」停止。" } },
+  { id:"m34", l:"09", s:"s2", art:"第 198 條、第 199 條、第 98 條第 1 項", q:"法院認原處分違法，但撤銷顯與公益相違背而為情況判決。下列何者正確？",
+    o:["法院得駁回原告之訴，並應於判決主文中諭知原處分違法","法院於判決理由中說明處分違法即可","原告未於訴訟中聲明賠償者，不得再請求賠償","訴訟費用由敗訴之原告負擔"], a:0,
+    exp:"第 198 條第 2 項：情況判決應於判決主文中諭知原處分或決定違法。第 199 條第 2 項：原告未聲明賠償者，得於判決確定後一年內訴請賠償。第 98 條第 1 項但書：為第 198 條之判決時，訴訟費用由被告負擔。",
+    d:{ 1:"第 198 條第 2 項要求寫在「主文」，因為違法的宣告要有確定力作為後續賠償的基礎。", 2:"第 199 條第 2 項允許原告於判決確定後一年內另行訴請賠償。", 3:"第 98 條第 1 項但書：情況判決的費用由被告負擔，是敗訴者負擔原則的例外。" } },
+  { id:"m35", l:"09", s:"s3", art:"第 215 條、第 216 條第 1 項", q:"法院判決撤銷某建造執照確定。該判決對建商（非當事人）與其他相關機關的效力如何？",
+    o:["僅對原告與被告機關有效力","對第三人亦有效力，且就其事件有拘束各關係機關之效力","僅拘束被告機關，其他機關不受拘束","須經登記或公告後始對第三人生效"], a:1,
+    exp:"第 215 條：撤銷或變更原處分或決定之判決，對第三人亦有效力。第 216 條第 1 項：撤銷或變更原處分或決定之判決，就其事件有拘束各關係機關之效力。",
+    d:{ 0:"撤銷判決有形成力，依第 215 條對第三人也有效，否則建商可以主張執照還在。", 2:"第 216 條第 1 項說的是「各關係機關」，不限於被告。", 3:"條文沒有登記或公告的要件，判決確定即生效力。" } },
+  { id:"m36", l:"09", s:"s4", art:"第 224 條", q:"丙與機關於訴訟中成立和解，之後丙主張和解有得撤銷之原因，欲請求繼續審判。期間限制為何？",
+    o:["10 日之不變期間","30 日之不變期間，自和解成立時起算；原因知悉在後者自知悉時起算；和解成立後經過 3 年者不得請求","2 個月之不變期間","無期間限制"], a:1,
+    exp:"第 224 條第 1 項：請求繼續審判應於三十日之不變期間內為之。第 2 項：自和解成立時起算，無效或得撤銷之原因知悉在後者自知悉時起算。第 3 項：和解成立後經過三年者不得請求，但主張代理權有欠缺者不在此限。",
+    d:{ 0:"10 日是抗告期間，不是繼續審判的期間。", 2:"2 個月是起訴不變期間（第 106 條）。", 3:"第 224 條第 3 項設有 3 年上限。" } },
+  // 10 特別程序
+  { id:"m37", l:"10", s:"s1", art:"第 229 條第 2 項第 4 款", q:"丁因違反某職業管理法規，受主管機關「警告」處分，不服提起撤銷訴訟。應適用何種程序？",
+    o:["通常訴訟程序，由高等行政訴訟庭管轄","簡易訴訟程序，由地方行政訴訟庭管轄","交通裁決事件訴訟程序","因處分輕微，不得提起行政訴訟"], a:1,
+    exp:"第 229 條第 2 項第 4 款：因不服行政機關所為告誡、警告、記點、記次、講習、輔導教育或其他相類之輕微處分而涉訟者，適用簡易程序；第 1 項：以地方行政法院為第一審。",
+    d:{ 0:"警告屬第 229 條第 2 項第 4 款的輕微處分，走簡易程序，不是通常程序。", 2:"交通裁決事件限於道交條例第 8 條及第 37 條第 6 項之裁決（第 237 條之 1），職業管理法規的警告不是。", 3:"處分輕微只影響程序種類，不影響訴訟權。" } },
+  { id:"m38", l:"10", s:"s2", art:"第 237 條之 3", q:"戊對交通裁決不服，欲提起撤銷訴訟。關於被告、期間與程序，下列何者正確？",
+    o:["先訴願，於訴願決定書送達後 2 個月內起訴","以原處分機關為被告，於裁決書送達後 30 日之不變期間內逕向管轄之地方行政法院起訴","以訴願機關為被告，於 20 日內起訴","於裁決書送達後 60 日內向高等行政法院起訴"], a:1,
+    exp:"第 237 條之 3 第 1 項：交通裁決事件訴訟之提起，應以原處分機關為被告，逕向管轄之地方行政法院為之。第 2 項：撤銷訴訟之提起，應於裁決書送達後三十日之不變期間內為之。",
+    d:{ 0:"交通裁決事件不經訴願（第 237 條之 3 第 1 項「逕向」），期間也是 30 日不是 2 個月。", 2:"沒有訴願就沒有訴願機關；被告是原處分機關，期間是 30 日。", 3:"期間是 30 日，管轄是地方行政法院（第 237 條之 2）。" } },
+  { id:"m39", l:"10", s:"s3", art:"第 237 條之 16 第 1 項", q:"己對地方行政法院所為續予收容之裁定不服。救濟方式為何？",
+    o:["於裁定送達後 10 日內抗告，並得再抗告","於裁定送達後 5 日內抗告於管轄之高等行政法院；對抗告法院之裁定不得再為抗告","於 20 日內上訴高等行政法院","收容裁定不得聲明不服"], a:1,
+    exp:"第 237 條之 16 第 1 項：聲請人、受裁定人或移民署對地方行政法院所為收容聲請事件之裁定不服者，應於裁定送達後五日內抗告於管轄之高等行政法院。對於抗告法院之裁定，不得再為抗告。",
+    d:{ 0:"一般抗告期間是 10 日（第 268 條），收容聲請事件縮短為 5 日；而且依第 267 條第 2 項本來就不得再抗告。", 2:"收容聲請事件用裁定，救濟是抗告不是上訴。", 3:"第 237 條之 16 明文允許抗告。" } },
+  { id:"m40", l:"10", s:"s4", art:"第 237 條之 20、第 237 條之 18", q:"庚認為某都市計畫違法將損害其權利，欲依都市計畫審查程序請求宣告無效。起訴期間為何？",
+    o:["都市計畫發布後 2 個月之不變期間","都市計畫發布後 1 年之不變期間；發布後始發生違法原因者，自原因發生時起算","都市計畫發布後 30 日之不變期間","無期間限制，因都市計畫是法規性質"], a:1,
+    exp:"第 237 條之 20：本章訴訟應於都市計畫發布後一年之不變期間內提起。但都市計畫發布後始發生違法之原因者，應自原因發生時起算。",
+    d:{ 0:"2 個月是第 106 條對處分訴訟的規定，都市計畫審查有自己的 1 年期間。", 2:"30 日是交通裁決與再審的期間。", 3:"第 237 條之 20 設有 1 年的不變期間。" } },
+  // 11 上訴與抗告
+  { id:"m41", l:"11", s:"s1", art:"第 241 條、第 245 條第 1 項", q:"辛於高等行政法院判決送達後第 15 日提起上訴，上訴狀未記載上訴理由。下列何者正確？",
+    o:["應於提起上訴後 20 日內提出理由書於原高等行政法院；未提出者毋庸命補正，由原高等行政法院裁定駁回","應於提起上訴後 10 日內補提理由書","法院應先裁定命補正，逾期始得駁回","上訴因無理由書而當然不合法，無補提機會"], a:0,
+    exp:"第 241 條：上訴應於判決送達後二十日之不變期間內為之（第 15 日提起合法）。第 245 條第 1 項：上訴狀內未表明上訴理由者，上訴人應於提起上訴後二十日內提出理由書於原高等行政法院；未提出者，毋庸命其補正，由原高等行政法院以裁定駁回之。",
+    d:{ 1:"理由書期間是 20 日，與上訴期間相同；10 日是抗告期間。", 2:"第 245 條第 1 項明定「毋庸命其補正」，這是與第 249 條第 1 項但書不同的地方。", 3:"第 245 條給了 20 日補提理由書的機會，不是當然不合法。" } },
+  { id:"m42", l:"11", s:"s2", art:"第 243 條", q:"下列何者屬於第 243 條第 2 項的「判決當然違背法令」？",
+    o:["判決不備理由或理由矛盾","判決認定事實與卷證不符","判決適用法規不當","判決對訴訟費用的計算錯誤"], a:0,
+    exp:"第 243 條第 2 項列舉六款當然違背法令：組織不合法、應迴避法官參與、審判權辨別不當或違背專屬管轄、未經合法代理或代表、違背言詞辯論公開、判決不備理由或理由矛盾。",
+    d:{ 1:"事實認定本身不是違背法令；要透過違背論理經驗法則（第 189 條）或第 243 條第 1 項「不適用法規或適用不當」來主張。", 2:"適用法規不當是第 243 條第 1 項的「一般」違背法令，不是第 2 項的「當然」違背法令。", 3:"費用計算錯誤不在第 243 條第 2 項六款內。" } },
+  { id:"m43", l:"11", s:"s3", art:"第 263 條之 1 第 2 項、第 263 條之 4 第 1 項", q:"壬對高等行政法院就地方行政訴訟庭判決所為之第二審判決不服。下列何者正確？",
+    o:["得以違背法令為理由上訴最高行政法院","不得上訴；但高等行政法院受理上訴事件認有確保裁判見解統一之必要者，應以裁定敘明理由移送最高行政法院裁判","得向最高行政法院抗告","得不附理由直接聲請再審"], a:1,
+    exp:"第 263 條之 1 第 2 項：對於高等行政法院之第二審判決，不得上訴。第 263 條之 4 第 1 項：高等行政法院受理上訴事件，認有確保裁判見解統一之必要者，應以裁定敘明理由移送最高行政法院裁判之。",
+    d:{ 0:"三級二審：地方庭起算的案件到高等庭終結，第 263 條之 1 第 2 項明文不得上訴。", 2:"判決的救濟是上訴不是抗告；而且第二審判決已不得聲明不服。", 3:"再審要有第 273 條的事由，不是上訴的替代品。" } },
+  { id:"m44", l:"11", s:"s4", art:"第 268 條、第 267 條第 2 項", q:"甲對行政法院駁回停止執行聲請之裁定不服。抗告期間與再抗告？",
+    o:["裁定送達後 20 日內；對抗告法院之裁定得再抗告","裁定送達後 10 日之不變期間內；對抗告法院之裁定不得再為抗告","裁定送達後 30 日內","裁定送達後 5 日內"], a:1,
+    exp:"第 119 條：關於停止執行之裁定得為抗告。第 268 條：提起抗告應於裁定送達後十日之不變期間內為之。第 267 條第 2 項：對於抗告法院之裁定，不得再為抗告。",
+    d:{ 0:"20 日是上訴期間；而且第 267 條第 2 項禁止再抗告。", 2:"30 日是再審與交通裁決起訴的期間。", 3:"5 日是收容聲請事件的特別抗告期間（第 237 條之 16），一般抗告是 10 日。" } },
+  // 12 再審、重新審理與執行
+  { id:"m45", l:"12", s:"s1", art:"第 273 條第 1 項第 13 款、第 4 項", q:"乙於判決確定後發現一份有利證物。乙以第 273 條第 1 項第 13 款聲請再審，有何限制？",
+    o:["只要是新證物即得再審","以如經斟酌可受較有利益之判決為限，且以當事人非因可歸責於己之事由不能於言詞辯論終結前提出者為限","僅限於刑事判決確定之證物","須先經憲法法庭裁判"], a:1,
+    exp:"第 273 條第 1 項第 13 款：發現未經斟酌之證物或得使用該證物，但以如經斟酌可受較有利益之判決為限。第 4 項：以當事人非因可歸責於己之事由，不能於該訴訟言詞辯論終結前提出者為限。",
+    d:{ 0:"第 13 款但書與第 4 項各設一道門檻，不是發現新證物就能再審。", 2:"「經判決確定」的證明要求是第 3 項對第 7 至 10 款的規定，不是第 13 款。", 3:"憲法法庭是第 273 條第 2 項的另一種再審事由，與新證物無關。" } },
+  { id:"m46", l:"12", s:"s1", art:"第 276 條", q:"丙的判決於 110 年 3 月 1 日確定，丙於 113 年 6 月 1 日才知悉再審事由。關於再審期間，下列何者正確？",
+    o:["再審之訴應於判決確定後 20 日內提起","再審之訴應於 30 日之不變期間內提起，事由知悉在後者自知悉時起算；但自判決確定時起已逾 5 年者不得提起（第 273 條第 1 項第 5、6、12 款除外）","再審之訴應於知悉後 2 個月內提起","再審之訴自判決確定逾 1 年即不得提起"], a:1,
+    exp:"第 276 條第 1 項：再審之訴應於三十日之不變期間內提起。第 2 項：事由發生或知悉在後者自知悉時起算。第 4 項：自判決確定時起已逾五年者不得提起，但以第 273 條第 1 項第 5 款、第 6 款或第 12 款為事由者不在此限。丙距確定約 3 年 3 個月，仍可提起。",
+    d:{ 0:"再審期間是 30 日，20 日是上訴期間。", 2:"2 個月是起訴不變期間，再審是 30 日。", 3:"1 年是重新審理的上限（第 284 條第 2 項），再審是 5 年。" } },
+  { id:"m47", l:"12", s:"s3", art:"第 284 條", q:"丁為撤銷判決而權利受損害的第三人，因不可歸責於己之事由未參加訴訟。丁聲請重新審理的期間為何？",
+    o:["知悉確定判決之日起 30 日之不變期間；但自判決確定之日起已逾 1 年者不得聲請","知悉確定判決之日起 2 個月內","判決確定後 5 年內均得聲請","知悉確定判決之日起 10 日內"], a:0,
+    exp:"第 284 條第 2 項：聲請應於知悉確定判決之日起三十日之不變期間內為之。但自判決確定之日起已逾一年者，不得聲請。",
+    d:{ 1:"2 個月是起訴期間，重新審理是 30 日。", 2:"5 年是再審之訴的上限（第 276 條第 4 項），重新審理是 1 年。", 3:"10 日是抗告期間。" } },
+  { id:"m48", l:"12", s:"s4", art:"第 305 條第 1、2 項", q:"行政法院判命機關給付戊 100 萬元確定，機關逾期不給付。戊應向何者聲請強制執行？",
+    o:["地方法院民事執行處","地方行政法院；法院應先定相當期間通知債務人履行，逾期不履行者強制執行","高等行政法院高等行政訴訟庭","機關之上級機關"], a:1,
+    exp:"第 305 條第 1 項：裁判命債務人為一定之給付，經裁判確定後債務人不為給付者，債權人得以之為執行名義，聲請地方行政法院強制執行。第 2 項：地方行政法院應先定相當期間通知債務人履行；逾期不履行者，強制執行。第 3 項：債務人為機關者並應通知其上級機關督促履行。",
+    d:{ 0:"執行機關是地方行政法院；民事執行處只是第 306 條第 1 項可被「囑託代為執行」的對象。", 2:"第 305 條第 1 項明定向「地方行政法院」聲請。", 3:"通知上級機關督促是第 305 條第 3 項法院該做的事，不是戊聲請的對象。" } }
+];
+
+// ===== s1 引擎：情境→選類型；答錯指出缺哪個要件，並在 2–3 題後重出 =====
+(function(){
+  const stem = $('#c1stem'), scene = $('#c1scene'), opts = $('#c1opts'), fb = $('#c1fb');
+  const next = $('#c1next'), prog = $('#c1prog'), score = $('#c1score'), bar = $('#c1bar');
+  const KEYS = Object.keys(TYPES);
+  let queue = [], round = 0, n = 0, ok = 0, total = 0, cur = null, answered = false;
+
+  function newRound(){ queue = shuffle(SCEN); round++; n = 0; ok = 0; total = SCEN.length; }
+
+  function render(){
+    if(!queue.length) newRound();
+    cur = queue.shift(); answered = false;
+    stem.textContent = cur.again ? '情境（重出：剛才答錯的）' : '情境';
+    scene.textContent = cur.t;
+    opts.innerHTML = KEYS.map(k => '<button class="opt" data-k="' + k + '"><b>' + k + '</b>' + TYPES[k].n + '</button>').join('');
+    fb.className = 'fbk'; fb.innerHTML = ''; next.style.display = 'none';
+    prog.textContent = '第 ' + round + ' 輪 · 第 ' + (n + 1) + ' 題（本輪還有 ' + queue.length + ' 題）';
+    score.textContent = '答對 ' + ok + ' / ' + n;
+    bar.style.width = Math.round(100 * n / Math.max(total, 1)) + '%';
+  }
+
+  opts.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if(!b || answered) return; answered = true;
+    const k = b.dataset.k, good = (k === cur.ans), T = TYPES[cur.ans];
+    opts.querySelectorAll('.opt').forEach(x => {
+      x.disabled = true;
+      if(x.dataset.k === cur.ans) x.classList.add('ok');
+      else if(x === b) x.classList.add('no');
+    });
+    n++; if(good) ok++;
+    const back = '<a href="' + LESSONS[T.l].f + '#' + T.s + '">回第 ' + T.l + ' 課 ' + LESSONS[T.l].t + '</a>';
+    if(good){
+      fb.className = 'fbk ok';
+      fb.innerHTML = '答對。' + cur.why + '<span class="art">' + T.art + '</span>';
+    } else {
+      const diag = (cur.d && cur.d[k]) || GEN[k];
+      fb.className = 'fbk no';
+      fb.innerHTML = '不對，這題是「' + T.n + '」。' + cur.why
+        + '<span class="diag">你選的「' + TYPES[k].n + '」缺了什麼：' + diag + '</span>'
+        + '<span class="art">正解條文：' + T.art + '　·　' + back + '　·　這題會在 2 到 3 題後再出一次。</span>';
+      const pos = Math.min(queue.length, 2 + Math.floor(Math.random() * 2));
+      queue.splice(pos, 0, Object.assign({}, cur, { again: true })); total++;
+    }
+    const m = readMix(); m.s1.n++; if(good) m.s1.ok++;
+    noteItem(m, cur.id, good); noteLesson(m, T.l, good); writeMix(m);
+    logEv({ type: "practice", q: "mix-" + cur.id, ok: good });
+    score.textContent = '答對 ' + ok + ' / ' + n;
+    bar.style.width = Math.round(100 * n / Math.max(total, 1)) + '%';
+    next.style.display = '';
+  });
+  next.addEventListener('click', render);
+  render();
+})();
+
+// ===== s2 引擎：加權抽 10 題、答錯立刻追加同課一題、即時診斷、再來一輪 =====
+const PER_ROUND = 10, MAX_FU = 3;
+const BY_LESSON = {}; BANK.forEach(q => { (BY_LESSON[q.l] = BY_LESSON[q.l] || []).push(q); });
+
+function lessonWeight(m, l){
+  const s = m.les[l];
+  if(!s || !s.n) return 1.4;                 // 沒練過的課略多抽
+  const acc = s.ok / s.n;
+  let w = 0.6 + 2.4 * (1 - acc);             // 全錯 3.0、全對 0.6
+  if(s.streak >= 3) w *= 0.6;                // 連對三題以上再降
+  return w;
+}
+function itemWeight(m, id){
+  const it = m.items[id];
+  if(!it) return 1.2;                        // 沒出過
+  if(it.w > 0) return 1 + it.w;              // 錯過的題
+  return 0.5;                                // 出過且都答對
+}
+function drawRound(m){
+  const pool = BANK.map(q => ({ q, w: lessonWeight(m, q.l) * itemWeight(m, q.id) }));
+  const out = [];
+  while(out.length < PER_ROUND && pool.length){
+    let tot = pool.reduce((a, b) => a + b.w, 0), r = Math.random() * tot, i = 0;
+    for(; i < pool.length - 1; i++){ r -= pool[i].w; if(r <= 0) break; }
+    out.push(pool[i].q); pool.splice(i, 1);
+  }
+  return out;
+}
+function weakLessons(m, k){
+  return LKEYS
+    .filter(l => m.les[l] && m.les[l].n >= 2)
+    .map(l => ({ l, acc: m.les[l].ok / m.les[l].n }))
+    .filter(x => x.acc < 0.8)
+    .sort((a, b) => a.acc - b.acc).slice(0, k).map(x => x.l);
+}
+
+function renderStart(){
+  const m = readMix(), tbl = $('#m2tbl'), ls = LKEYS;
+  let rows = '';
+  for(let i = 0; i < ls.length; i += 2){
+    const cell = l => {
+      const s = m.les[l], cnt = (BY_LESSON[l] || []).length;
+      const acc = s && s.n ? '，答對 ' + s.ok + '/' + s.n : '';
+      return '<td>第 ' + l + ' 課 ' + LESSONS[l].t + '</td><td>' + cnt + ' 題' + acc + '</td>';
+    };
+    rows += '<tr>' + cell(ls[i]) + (ls[i + 1] ? cell(ls[i + 1]) : '<td></td><td></td>') + '</tr>';
+  }
+  tbl.innerHTML = rows;
+  const weak = weakLessons(m, 3);
+  const any = Object.values(m.les).some(s => s.n > 0);
+  $('#m2note').textContent = !any ? '還沒有紀錄，第一輪會平均抽各課。'
+    : weak.length ? '依紀錄加權：第 ' + weak.join('、') + ' 課的正確率偏低，這一輪會多抽；連對三題以上的課別會少抽。'
+    : '依紀錄加權：目前沒有正確率低於 80% 的課別，各課大致平均抽，沒出過的題優先。';
+}
+
+(function(){
+  const start = $('#m2start'), run = $('#m2run'), end = $('#m2end');
+  const tag = $('#m2tag'), stem = $('#m2stem'), opts = $('#m2opts'), fb = $('#m2fb'), next = $('#m2next');
+  const prog = $('#m2prog'), score = $('#m2score'), bar = $('#m2bar');
+  let list = [], idx = 0, ok = 0, fu = 0, wrong = [], answered = false, roundNo = 0;
+
+  function begin(){
+    list = drawRound(readMix()); idx = 0; ok = 0; fu = 0; wrong = []; roundNo++;
+    start.style.display = 'none'; end.style.display = 'none'; run.style.display = '';
+    show();
+  }
+  function show(){
+    const q = list[idx]; answered = false;
+    tag.innerHTML = (q.fu ? '<span class="fu">追加題：剛才那一課再來一題</span><br>' : '')
+      + '<span class="pill law">第 ' + q.l + ' 課 ' + LESSONS[q.l].t + '</span><span class="pill">' + q.art + '</span>';
+    stem.textContent = q.q;
+    const order = shuffle(q.o.map((_, i) => i));
+    opts.innerHTML = order.map((i, k) => '<button class="opt" data-i="' + i + '"><b>' + 'ABCD'[k] + '</b>' + q.o[i] + '</button>').join('');
+    fb.className = 'fbk'; fb.innerHTML = ''; next.style.display = 'none';
+    prog.textContent = '第 ' + roundNo + ' 輪 · 第 ' + (idx + 1) + ' / ' + list.length + ' 題';
+    score.textContent = '答對 ' + ok + ' / ' + idx;
+    bar.style.width = Math.round(100 * idx / list.length) + '%';
+  }
+  function pickFollowUp(q){
+    const used = new Set(list.map(x => x.id));
+    const cands = (BY_LESSON[q.l] || []).filter(x => !used.has(x.id));
+    return cands.length ? Object.assign({}, shuffle(cands)[0], { fu: true }) : null;
+  }
+  opts.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if(!b || answered) return; answered = true;
+    const q = list[idx], i = Number(b.dataset.i), good = (i === q.a);
+    opts.querySelectorAll('.opt').forEach(x => {
+      x.disabled = true;
+      if(Number(x.dataset.i) === q.a) x.classList.add('ok');
+      else if(x === b) x.classList.add('no');
+    });
+    const back = '<a href="' + LESSONS[q.l].f + '#' + q.s + '">回第 ' + q.l + ' 課 ' + LESSONS[q.l].t + '</a>';
+    if(good){
+      ok++;
+      fb.className = 'fbk ok';
+      fb.innerHTML = '答對。' + q.exp + '<span class="art">' + q.art + '</span>';
+    } else {
+      wrong.push(q);
+      fb.className = 'fbk no';
+      fb.innerHTML = '不對，正解是「' + q.o[q.a] + '」。' + q.exp
+        + '<span class="diag">你為什麼會選那個：' + (q.d[i] || '這個選項與條文不符。') + '</span>'
+        + '<span class="art">' + q.art + '　·　' + back + '</span>';
+      if(fu < MAX_FU){
+        const f = pickFollowUp(q);
+        if(f){ list.splice(idx + 1, 0, f); fu++; fb.innerHTML += '<span class="art">下一題追加同一課再練一題。</span>'; }
+      }
+    }
+    const m = readMix(); noteItem(m, q.id, good); noteLesson(m, q.l, good); writeMix(m);
+    logEv({ type: "practice", q: "mix-" + q.id, ok: good });
+    score.textContent = '答對 ' + ok + ' / ' + (idx + 1);
+    next.textContent = idx + 1 < list.length ? '下一題' : '看結果';
+    next.style.display = '';
+  });
+  next.addEventListener('click', () => {
+    idx++;
+    if(idx < list.length){ show(); return; }
+    finish();
+  });
+  function finish(){
+    run.style.display = 'none'; end.style.display = '';
+    const total = list.length, res = $('#m2res');
+    res.className = 'done ' + (ok >= Math.ceil(total * 0.8) ? 'good' : ok >= Math.ceil(total * 0.5) ? '' : 'bad');
+    res.textContent = ok + ' / ' + total + (total > PER_ROUND ? '（含 ' + (total - PER_ROUND) + ' 題追加題）' : '')
+      + (ok === total ? '，全對。' : ok >= Math.ceil(total * 0.8) ? '，穩了，換弱點課別再來一輪。' : '，先看下面的錯題連回該節，再來一輪。');
+    const wl = wrong.map(q => '<li><span class="cnt">第 ' + q.l + ' 課</span>' + q.q.slice(0, 48) + (q.q.length > 48 ? '…' : '')
+      + '　<a href="' + LESSONS[q.l].f + '#' + q.s + '">' + LESSONS[q.l].t + ' ' + q.s.replace('s', '') + ' 節</a> <span class="small muted">' + q.art + '</span></li>').join('');
+    $('#m2wrong').innerHTML = wrong.length ? '<h3>這一輪答錯的</h3><ul class="wl">' + wl + '</ul>' : '';
+    logEv({ type: "quiz", score: ok, total, wrong: wrong.map(q => q.id) });
+    const p = readProg()[LESSON_ID] || {};
+    writeProg({ quiz: { score: ok, total }, rounds: (p.rounds || 0) + 1 });
+    end.scrollIntoView({ behavior: 'smooth' });
+  }
+  $('#m2go').addEventListener('click', begin);
+  $('#m2again').addEventListener('click', begin);
+  $('#m2weak').addEventListener('click', () => { showTab('s4'); history.replaceState(null, '', '#s4'); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  renderStart();
+})();
+
+// ===== s3 實例題自評：寫進 xzss_mix_v1（含課別）與 xzss_progress_v1 =====
+const ESSAY_S = { e1: 's2', e2: 's2', e3: 's1', e4: 's2', e5: 's1', e6: 's1' };
+const ESSAY_T = { e1: '訴訟類型選擇', e2: '期間與前置程序', e3: '暫時權利保護', e4: '情況判決與判決效力', e5: '上訴要件', e6: '再審' };
+document.querySelectorAll('.essay').forEach(es => {
+  es.querySelectorAll('.self button').forEach(b => {
+    b.addEventListener('click', () => {
+      const ok = b.dataset.ok === '1', id = es.dataset.id, l = es.dataset.l;
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文，弱點頁會提醒你。';
+      logEv({ type: "essay", q: id, ok });
+      const m = readMix(); m.essay[id] = { ok, l, t: Date.now() }; writeMix(m);
+      const all = readProg(); const me = (all[LESSON_ID] || {}); const e = me.essay || {}; e[id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== s4 弱點頁 =====
+function renderWeak(){
+  const m = readMix(), ls = LKEYS;
+  const totalN = Object.values(m.les).reduce((a, s) => a + s.n, 0);
+  $('#w4note').textContent = totalN ? '已作答 ' + totalN + ' 題（情境判斷 ' + m.s1.n + ' 題、混合題 ' + (totalN - m.s1.n) + ' 題）。情境判斷的結果計入該訴訟類型所屬的課別。'
+    : '還沒有紀錄。先到前兩個分頁做幾題，這裡才會有東西。';
+  $('#w4bars').innerHTML = ls.map(l => {
+    const s = m.les[l] || { n: 0, ok: 0 };
+    const pct = s.n ? Math.round(100 * s.ok / s.n) : 0;
+    const few = s.n < 3;
+    const cls = few ? 'mid' : pct >= 80 ? '' : pct >= 60 ? 'mid' : 'low';
+    const label = few ? (s.n ? s.ok + '/' + s.n + '，再練幾題' : '尚未練習') : s.ok + '/' + s.n + ' · ' + pct + '%';
+    return '<div class="bar"><span><a href="' + LESSONS[l].f + '">第 ' + l + ' 課 ' + LESSONS[l].t + '</a></span>'
+      + '<div class="tr"><i class="' + cls + '" style="width:' + (few ? Math.min(pct, 100) * 0.5 : pct) + '%;opacity:' + (few ? '.45' : '1') + '"></i></div>'
+      + '<small>' + label + '</small></div>';
+  }).join('');
+
+  // 情境判斷：最常選錯的類型
+  const typeWrong = {};
+  SCEN.forEach(c => { const it = m.items[c.id]; if(it && it.w) typeWrong[c.ans] = (typeWrong[c.ans] || 0) + it.w; });
+  const tw = Object.entries(typeWrong).sort((a, b) => b[1] - a[1]).slice(0, 3);
+  $('#w4s1').innerHTML = !m.s1.n ? '尚未練習。'
+    : '答對 ' + m.s1.ok + ' / ' + m.s1.n + '。' + (tw.length
+      ? '最常判斷錯的類型：' + tw.map(([k, w]) => '「' + TYPES[k].n + '」' + w + ' 次（' + TYPES[k].art + '，<a href="' + LESSONS[TYPES[k].l].f + '#' + TYPES[k].s + '">回第 ' + TYPES[k].l + ' 課</a>）').join('；') + '。'
+      : '目前沒有答錯的情境。');
+
+  // 實例題自評
+  const es = Object.keys(ESSAY_T), done = es.filter(id => m.essay[id]);
+  const miss = done.filter(id => !m.essay[id].ok);
+  $('#w4essay').innerHTML = !done.length ? '尚未自評。'
+    : '已自評 ' + done.length + ' / 6 題，寫到了 ' + (done.length - miss.length) + ' 題。'
+      + (miss.length ? '沒寫到：' + miss.map(id => '實例 ' + id.slice(1) + '（' + ESSAY_T[id] + '，<a href="' + LESSONS[m.essay[id].l].f + '#' + ESSAY_S[id] + '">回第 ' + m.essay[id].l + ' 課</a>）').join('、') + '。' : '');
+
+  // 最常錯的 5 題
+  const all = Object.entries(m.items).filter(([, it]) => it.w > 0).sort((a, b) => b[1].w - a[1].w || b[1].last - a[1].last).slice(0, 5);
+  $('#w4list').innerHTML = all.length ? all.map(([id, it]) => {
+    let text, l, s, art;
+    const q = BANK.find(x => x.id === id), c = SCEN.find(x => x.id === id);
+    if(q){ text = q.q; l = q.l; s = q.s; art = q.art; }
+    else if(c){ const T = TYPES[c.ans]; text = '情境：' + c.t; l = T.l; s = T.s; art = T.art; }
+    else return '';
+    return '<li><span class="cnt">錯 ' + it.w + ' 次</span>' + text.slice(0, 60) + (text.length > 60 ? '…' : '')
+      + '<br><a href="' + LESSONS[l].f + '#' + s + '">' + LESSONS[l].f.replace('.html', '') + ' 第 ' + s.replace('s', '') + ' 節</a> <span class="small muted">' + art + '</span></li>';
+  }).join('') : '<li class="muted">還沒有錯題。</li>';
+}
+
+$('#w4clear').addEventListener('click', () => {
+  if(!confirm('確定清除綜合練習場的練習紀錄？\n只會刪掉 xzss_mix_v1，各課的章末測驗進度不受影響。')) return;
+  try{ localStorage.removeItem(MIX_KEY); }catch(e){}
+  renderWeak(); renderStart();
+  $('#w4msg').textContent = '已清除。';
+  logEv({ type: "tool", q: "mix-clear" });
+});
+
+// 網址帶 #s2 / #s4 時直接開到該節（放在所有常數與函式之後）
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+</script>
+</body>
+</html>

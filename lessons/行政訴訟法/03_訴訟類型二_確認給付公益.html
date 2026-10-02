@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>行政訴訟法｜第 3 課 訴訟類型 II：確認、一般給付、公益訴訟與合併請求</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F4F6F3; --card:#FFFFFF;
+  --ink:#1C2A30; --ink-2:#4B5A62; --ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --law:#5B3A8C; --law-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F; --card:#1D262B;
+    --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+    --rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --law:#B9A0E3; --law-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F; --card:#1D262B;
+  --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+  --rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --law:#B9A0E3; --law-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--blue);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+
+/* hero */
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--law);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--law-soft);color:var(--law);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+/* tabs */
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit}
+nav.tabs button:hover{border-color:var(--blue);color:var(--ink)}
+nav.tabs button.active{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--blue-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--law-soft);border-left:4px solid var(--law);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--law);display:block;margin-bottom:.2em}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.law{background:var(--law-soft);border-color:transparent;color:var(--law)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+
+/* flow / structure diagrams */
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 160px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--blue)}
+.courts{display:grid;grid-template-columns:1fr;gap:8px;margin:.6rem 0 1rem}
+.court{border:1px solid var(--rule);border-radius:10px;padding:.7rem .9rem;background:var(--paper);display:grid;grid-template-columns:7.5em 1fr;gap:.3rem .8rem;align-items:start}
+.court .lv{font-weight:700;color:var(--law)}
+.court .what{font-size:.92rem}
+.court.top{border-color:var(--law)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+/* examples */
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+.step4{display:grid;grid-template-columns:5em 1fr;gap:.25rem .7rem;font-size:.95rem;margin:.3rem 0 .8rem}
+.step4 dt{color:var(--law);font-weight:700}
+.step4 dd{margin:0}
+
+/* interactive tool */
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox select,.toolbox input[type=number]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--law)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+
+/* practice & quiz */
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--law);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+/* 條文速查 */
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">行政訴訟法 · 第 3 課</span>
+  <h1>訴訟類型 II：確認、一般給付、公益訴訟與合併請求</h1>
+  <p>三節加章末測驗。第 2 課講完撤銷與課予義務，這一課補齊剩下的類型：第 6 條的三種確認訴訟、第 8 條的一般給付訴訟、第 9 條與第 10 條的公益與選罷事件，以及第 7 條合併請求、第 12 條民刑事法院停止審判。重點只有一句：先問「我要的是什麼」，再決定提哪一種訴。</p>
+  <p class="ver">依民國 111 年 6 月 22 日修正條文編寫（多數條文自 112 年 8 月 15 日施行）。自學筆記，非官方；條文以全國法規資料庫為準。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">3-1 確認訴訟</button>
+  <button data-t="s2">3-2 一般給付訴訟</button>
+  <button data-t="s3">3-3 公益、選罷、合併與第 12 條</button>
+  <button data-t="s4">章末測驗</button>
+  <button data-t="s5">條文速查</button>
+</nav>
+
+<!-- ═══════════ 3-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出第 6 條第 1 項的三種確認訴訟，以及共同要件「即受確認判決之法律上利益」</li>
+      <li>記得確認無效訴訟的前置程序是向原處分機關請求、等 30 日，不是訴願</li>
+      <li>會用第 6 條第 3 項「補充性」把確認訴訟擋掉，也知道但書為什麼放過確認無效</li>
+      <li>分得清處分執行完畢的兩個時點：起訴前就消滅走第 6 條第 1 項後段，訴訟中才消滅走第 196 條第 2 項</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：第 6 條第 1 項裝了三種確認訴訟</h2>
+    <div class="law"><b class="art">第 6 條第 1 項</b>確認行政處分無效及確認公法上法律關係成立或不成立之訴訟，非原告有即受確認判決之法律上利益者，不得提起之。其確認已執行而無回復原狀可能之行政處分或已消滅之行政處分為違法之訴訟，亦同。</div>
+    <p>條文前段兩種、後段一種，一共三種。三種都卡同一個要件：原告要有<b>即受確認判決之法律上利益</b>。白話說，就是你的法律地位現在正處於不安定狀態，而且法院的一句確認判決能夠把這個不安定除去。單純想知道答案、想討個公道，不算。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>類型</th><th>確認的對象</th><th>典型情境</th><th>特別要件</th></tr></thead>
+      <tbody>
+        <tr><td><b>確認行政處分無效</b></td><td>一個存在但有重大明顯瑕疵、自始不生效力的處分</td><td>處分書連機關名稱都沒有；由完全無管轄權的機關作成</td><td>先向原處分機關請求確認（第 6 條第 2 項）；不受補充性限制（第 6 條第 3 項但書）</td></tr>
+        <tr><td><b>確認公法上法律關係成立或不成立</b></td><td>人與機關間具體的公法上權利義務關係</td><td>甲是不是仍具公務員身分；乙對某筆土地有無公法上的使用權</td><td>受補充性限制：能提撤銷、課予義務或一般給付就不能提</td></tr>
+        <tr><td><b>確認已執行完畢或已消滅之處分違法</b></td><td>已經執行而無法回復原狀、或已因期間屆滿等原因消滅的處分</td><td>違建已被拆除；為期 7 日的集會禁止處分期間已過</td><td>處分在起訴前就已經消滅；仍要有法律上利益（例如為了後續國賠或防止反覆發生）</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：「確認行政處分違法之訴訟」不是一種獨立、隨時可提的類型。一個仍有效存在的處分，要主張它違法就得走第 4 條撤銷訴訟；只有處分<b>已執行而無回復原狀可能</b>或<b>已消滅</b>，才能依第 6 條第 1 項後段請求確認違法。考題給你一個還活著的處分，卻讓你選「確認違法」，那是陷阱。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：確認無效的前置程序是「問原處分機關」，不是訴願</h2>
+    <div class="law"><b class="art">第 6 條第 2 項</b>確認行政處分無效之訴訟，須已向原處分機關請求確認其無效未被允許，或經請求後於三十日內不為確答者，始得提起之。</div>
+    <p>無效的處分本來就不生效力，法律不要求你去訴願，但要求你先給原處分機關一次自己承認的機會。兩種情形之一就可以起訴：機關<b>拒絕確認</b>，或者<b>請求後 30 日內不為確答</b>。</p>
+    <p>注意三個對照。對象是<b>原處分機關</b>，不是訴願管轄機關；等待期間是 <b>30 日</b>，不是訴願的 3 個月；性質是「請求確認」，不是「聲明不服」，所以沒有訴願法上的期間問題。</p>
+    <div class="tip">國考用法：題目寫「甲未經訴願即提起確認處分無效之訴訟，是否合法」，答案不是看有沒有訴願，而是看有沒有先向原處分機關請求確認。寫出第 6 條第 2 項的兩個要件，再帶一句「無須經訴願程序」，就拿到分。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：補充性，確認訴訟是最後手段</h2>
+    <div class="law"><b class="art">第 6 條第 3 項</b>確認訴訟，於原告得提起或可得提起撤銷訴訟、課予義務訴訟或一般給付訴訟者，不得提起之。但確認行政處分無效之訴訟，不在此限。</div>
+    <p>這叫<b>確認訴訟的補充性</b>。理由很實際：撤銷訴訟有訴願前置與 2 個月不變期間，課予義務訴訟也要經訴願；如果可以隨意改提確認訴訟，這些程序要件就被架空了。所以只要撤銷、課予義務或一般給付訴訟「得提起或可得提起」，就不能提確認。</p>
+    <p>「可得提起」四個字要讀仔細。它包含「本來可以提、但你自己錯過期間」的情形：撤銷訴訟逾期後，不能改用確認法律關係不成立之訴訟繞回來，否則第 106 條的期間就沒有意義。</p>
+    <div class="note">但書放過確認無效訴訟，道理在無效與違法的差別。無效處分自始不生效力，理論上可以隨時主張，不受撤銷訴訟期間限制；而且原告先走第 6 條第 2 項向原處分機關請求，已經有自己的前置程序。所以就算也能提撤銷訴訟，確認無效之訴仍可提。</div>
+    <div class="warn">常錯：把補充性套到確認無效之訴上。題目問「處分可提撤銷訴訟，原告改提確認無效之訴是否受第 6 條第 3 項限制」，答案是<b>不受限制</b>，第 3 項但書明文。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：誤提確認無效，第 6 條第 4 項幫你轉成訴願</h2>
+    <div class="law"><b class="art">第 6 條第 4 項</b>應提起撤銷訴訟、課予義務訴訟，誤為提起確認行政處分無效之訴訟，其未經訴願程序者，行政法院應以裁定將該事件移送於訴願管轄機關，並以行政法院收受訴狀之時，視為提起訴願。</div>
+    <p>情境：原告以為處分「無效」，其實法院看來只是「違法」，應該提撤銷訴訟；而原告沒有訴願過。此時法院不是駁回，而是<b>裁定移送訴願管轄機關</b>，並且把<b>行政法院收受訴狀的時點</b>當作提起訴願的時點，讓訴願期間從那一刻算。</p>
+    <div class="flow">
+      <div class="step"><b>1. 原告起訴</b>以確認無效為聲明，未經訴願</div>
+      <div class="step"><b>2. 法院審查</b>認為處分非無效，應提撤銷或課予義務訴訟</div>
+      <div class="step"><b>3. 裁定移送</b>移送訴願管轄機關，不是駁回、不是移送原處分機關</div>
+      <div class="step"><b>4. 時點擬制</b>法院收受訴狀時視為提起訴願</div>
+    </div>
+    <p>適用範圍有兩個邊界。第一，只限「應提撤銷、課予義務訴訟而誤提<b>確認無效</b>」，誤提確認法律關係存否的情形條文沒有寫。第二，只限「<b>未經訴願程序</b>」，已經訴願過的人用不到移送，法院會視情形闡明讓原告變更訴之聲明。</p>
+    <div class="tip">國考用法：這一項常和第 1 條的「保障人民權益」宗旨綁在一起考。寫理由時可以說：無效與違法的界線連學者都常爭論，不該讓人民因為定性錯誤而喪失訴願與起訴的機會。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 5：處分執行完畢，看時點決定走第 6 條還是第 196 條</h2>
+    <div class="law"><b class="art">第 196 條</b>Ⅰ 行政處分已執行者，行政法院為撤銷行政處分判決時，經原告聲請，並認為適當者，得於判決中命行政機關為回復原狀之必要處置。<br>Ⅱ 撤銷訴訟進行中，原處分已執行而無回復原狀可能或已消滅者，於原告有即受確認判決之法律上利益時，行政法院得依聲請，確認該行政處分為違法。</div>
+    <p>「處分已經執行完畢」在考題裡有三種走法，差別在<b>時點</b>與<b>能否回復原狀</b>。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>情形</th><th>處理</th><th>條文</th><th>判決內容</th></tr></thead>
+      <tbody>
+        <tr><td>已執行，但<b>可以</b>回復原狀（例如罰鍰已繳）</td><td>照常提撤銷訴訟，一併聲請回復原狀</td><td>第 196 條第 1 項</td><td>撤銷處分，並命機關為回復原狀之必要處置</td></tr>
+        <tr><td><b>起訴前</b>就已執行而無法回復，或已消滅</td><td>直接提確認處分違法之訴訟</td><td>第 6 條第 1 項後段</td><td>確認該處分違法</td></tr>
+        <tr><td><b>撤銷訴訟進行中</b>才執行完畢無法回復，或消滅</td><td>原告聲請，法院轉為確認處分違法</td><td>第 196 條第 2 項</td><td>確認該處分違法</td></tr>
+      </tbody>
+    </table></div>
+    <p>第 196 條第 2 項被稱為<b>續行確認訴訟</b>：原本的撤銷訴訟因為標的不存在而失去撤銷的意義，但原告已經投入的程序不該白費，所以允許在同一程序中改請求確認違法。它和第 6 條第 1 項後段的關係是「起訴前消滅用第 6 條，起訴後消滅用第 196 條」，兩者都要求即受確認判決之法律上利益。</p>
+    <div class="note">法律上利益在這類案件長什麼樣？最常見的兩個：一是原告準備請求國家賠償，確認違法可作為後續民事法院裁判的依據（連到第 12 條，3-3 會講）；二是同類處分有反覆發生的危險，例如每年申請集會都被同一理由禁止。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲的房屋於 113 年 3 月 1 日收到縣政府拆除處分，3 月 20 日即遭強制拆除。甲於 5 月 2 日想起訴，主張處分違法並打算日後請求國家賠償。甲應提起何種訴訟？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>處分在起訴前已執行完畢且無法回復原狀，原告還能提什麼訴訟；國家賠償的打算算不算法律上利益。</dd>
+        <dt>條文</dt><dd>第 6 條第 1 項後段：確認已執行而無回復原狀可能之行政處分為違法之訴訟，須有即受確認判決之法律上利益。第 12 條第 1 項：民事訴訟之裁判以行政處分是否違法為據者，應依行政爭訟程序確定之。</dd>
+        <dt>涵攝</dt><dd>房屋已拆，撤銷處分也無法使房屋回復，屬「已執行而無回復原狀可能」，不能再提第 4 條撤銷訴訟，第 196 條第 2 項也用不上（它以撤銷訴訟繫屬中為前提）。甲將來的國賠訴訟以該處分違法為裁判前提，依第 12 條第 1 項須由行政爭訟程序確定，所以確認判決能直接影響甲的法律地位，有即受確認判決之法律上利益。</dd>
+        <dt>結論</dt><dd>甲應依第 6 條第 1 項後段提起確認拆除處分違法之訴訟；因為不是確認無效，不適用第 6 條第 2 項的前置請求。確認違法後，甲得另向民事法院請求國賠，或依第 7 條於同一程序合併請求（3-3）。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙收到環保局 40 萬元罰鍰處分，認為處分書未記載任何事實與理由、且由無管轄權的機關作成，於收受處分後第 10 日直接向行政法院起訴請求確認處分無效。法院應如何處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>未先向原處分機關請求確認無效就起訴，欠缺第 6 條第 2 項要件，法院是直接駁回、移送，還是命補正。</dd>
+        <dt>條文</dt><dd>第 6 條第 2 項（須先請求原處分機關確認、30 日）；第 6 條第 4 項（誤提確認無效之移送）；第 107 條第 1 項第 10 款與但書（起訴不備其他要件，可以補正者審判長應先定期間命補正）。</dd>
+        <dt>涵攝</dt><dd>要分兩層。第一層：如果法院也認為瑕疵確實達到無效程度，乙的問題只是沒走第 6 條第 2 項，這屬「起訴不備其他要件」，而且可以補正：乙補向環保局請求確認，機關拒絕或 30 日不確答，要件即告具備，法院應先定期命補正，不能直接裁定駁回。第二層：如果法院認為處分只是違法而非無效，乙應提撤銷訴訟而誤提確認無效，且未經訴願，就落入第 6 條第 4 項。</dd>
+        <dt>結論</dt><dd>處分若屬無效：審判長定期命補正，補正後進入實體審理。處分若僅違法：法院裁定將事件移送訴願管轄機關，並以行政法院收受訴狀之時（起訴第 10 日）視為提起訴願，乙未因定性錯誤而逾訴願期間。學說上有認為第 6 條第 2 項的前置得於訴訟中補行，但補正的具體方式條文未明定，寫答案時點到即可。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="D">
+      <div class="stem">1. 下列何者<b>不是</b>行政訴訟法第 6 條第 1 項所定之確認訴訟類型？</div>
+      <label><input type="radio" name="p1q1" value="A">確認行政處分無效之訴訟</label>
+      <label><input type="radio" name="p1q1" value="B">確認公法上法律關係不成立之訴訟</label>
+      <label><input type="radio" name="p1q1" value="C">確認已消滅之行政處分為違法之訴訟</label>
+      <label><input type="radio" name="p1q1" value="D">確認仍有效存續中之行政處分為違法之訴訟</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 6 條第 1 項的三種類型是：確認處分無效、確認公法上法律關係成立或不成立、確認已執行而無回復原狀可能或已消滅之處分違法。仍有效存在的處分要主張違法，走第 4 條撤銷訴訟。" data-diag='{"A":"確認無效是第 6 條第 1 項前段明文的第一種類型。","B":"確認法律關係成立或不成立是前段的第二種類型，不成立也包含在內。","C":"確認已消滅之處分違法是第 6 條第 1 項後段的類型。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">2. 甲欲提起確認某行政處分無效之訴訟，起訴前應踐行何種程序？</div>
+      <label><input type="radio" name="p1q2" value="A">先依訴願法提起訴願，經訴願決定後始得起訴</label>
+      <label><input type="radio" name="p1q2" value="B">先向訴願管轄機關請求確認其無效，未被允許或 30 日內不為確答</label>
+      <label><input type="radio" name="p1q2" value="C">先向原處分機關請求確認其無效，未被允許或請求後 30 日內不為確答</label>
+      <label><input type="radio" name="p1q2" value="D">先向原處分機關請求確認其無效，未被允許或請求後 2 個月內不為確答</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 6 條第 2 項：須已向原處分機關請求確認其無效未被允許，或經請求後於三十日內不為確答者，始得提起之。對象是原處分機關、期間是 30 日。" data-diag='{"A":"確認無效之訴不經訴願，第 6 條第 2 項的前置是向原處分機關請求確認。","B":"對象錯了。請求的對象是原處分機關，不是訴願管轄機關；訴願管轄機關只在第 6 條第 4 項移送時出現。","D":"期間錯了。第 6 條第 2 項是 30 日，2 個月是第 106 條撤銷訴訟的起訴期間。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">3. 乙對一個應提起撤銷訴訟的違法處分，未經訴願即提起確認處分無效之訴訟。行政法院應如何處理？</div>
+      <label><input type="radio" name="p1q3" value="A">依第 107 條第 1 項第 10 款以裁定駁回</label>
+      <label><input type="radio" name="p1q3" value="B">以裁定將事件移送訴願管轄機關，並以法院收受訴狀之時視為提起訴願</label>
+      <label><input type="radio" name="p1q3" value="C">以裁定將事件移送原處分機關，命其重新審查</label>
+      <label><input type="radio" name="p1q3" value="D">以裁定將事件移送訴願管轄機關，並以訴願機關收受移送之時視為提起訴願</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 6 條第 4 項：行政法院應以裁定將該事件移送於訴願管轄機關，並以行政法院收受訴狀之時，視為提起訴願。" data-diag='{"A":"第 6 條第 4 項是第 107 條駁回的特別規定，有移送就不駁回。","C":"移送的對象是訴願管轄機關，不是原處分機關；目的是讓事件進入訴願程序。","D":"時點錯了。視為提起訴願的時點是行政法院收受訴狀之時，這樣原告才不會因移送耗時而逾期。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出第 8 條第 1 項的三種給付標的：財產上給付、行政處分以外的非財產給付、公法上契約的給付</li>
+      <li>看到請求內容，判斷得出是課予義務訴訟（要處分）還是一般給付訴訟（要錢、要事實行為）</li>
+      <li>記得第 8 條第 2 項：給付以處分應否撤銷為據時，要併在撤銷訴訟裡請求，審判長有告知義務</li>
+      <li>會用第 197 條與第 203 條：金錢處分法院可改金額，公法契約情事變更法院可調整給付</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：第 8 條第 1 項的三種給付</h2>
+    <div class="law"><b class="art">第 8 條第 1 項</b>人民與中央或地方機關間，因公法上原因發生財產上之給付或請求作成行政處分以外之其他非財產上之給付，得提起給付訴訟。因公法上契約發生之給付，亦同。</div>
+    <p>這條管的叫<b>一般給付訴訟</b>，用來跟第 5 條的課予義務訴訟（也是一種給付訴訟）區別。它的標的有三種：</p>
+    <ul>
+      <li><b>財產上之給付</b>：請求機關給錢或返還財物。例如公務員請求補發法定加給、人民請求返還溢繳的公法上費用。</li>
+      <li><b>行政處分以外之其他非財產上給付</b>：請求機關做一件不是處分的事，或停止做一件事。例如刪除違法蒐集的個人資料、停止在網站公告原告姓名、提供依法應公開的資訊副本。</li>
+      <li><b>因公法上契約發生之給付</b>：公費生的服務義務、委託行使公權力契約的報酬、行政契約的違約金。</li>
+    </ul>
+    <p>一般給付訴訟<b>不經訴願</b>，也沒有第 106 條的 2 個月不變期間。原因很簡單：沒有行政處分可以訴願，第 106 條又只管第 4 條與第 5 條的訴訟。請求權會不會過期，看實體法的消滅時效，不看訴訟法。</p>
+    <div class="tip">國考用法：題目問「是否須經訴願」「有無起訴期間限制」，先定性。只要定性為一般給付訴訟，這兩題的答案都是「否」，再補一句「但請求權仍受公法上請求權時效拘束」。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：要的是「處分」還是「錢／行為」，決定第 5 條或第 8 條</h2>
+    <p>這是本課最常考的區別。問自己一句話：<b>原告要法院命機關做的，是不是「作成一個行政處分」？</b>是，走第 5 條課予義務訴訟；不是，走第 8 條一般給付訴訟。第 8 條第 1 項的「請求作成行政處分<b>以外</b>之其他非財產上之給付」就是這條界線。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>原告要的東西</th><th>性質</th><th>訴訟類型</th><th>前置與期間</th></tr></thead>
+      <tbody>
+        <tr><td>核發建造執照</td><td>行政處分</td><td><span class="pill law">課予義務（§5）</span></td><td>訴願前置、§106 期間</td></tr>
+        <tr><td>核定退休金（金額須經機關審定）</td><td>先要一個核定處分</td><td><span class="pill law">課予義務（§5）</span></td><td>訴願前置、§106 期間</td></tr>
+        <tr><td>補發法令直接規定、金額確定的加給</td><td>財產上給付，無須處分</td><td><span class="pill green">一般給付（§8 I）</span></td><td>不經訴願、無 §106 期間</td></tr>
+        <tr><td>刪除資料庫中的違法紀錄</td><td>事實行為</td><td><span class="pill green">一般給付（§8 I）</span></td><td>不經訴願</td></tr>
+        <tr><td>依公費契約給付培訓津貼</td><td>公法上契約的給付</td><td><span class="pill green">一般給付（§8 I 後段）</span></td><td>不經訴願</td></tr>
+        <tr><td>撤銷罰鍰並退還已繳 50 萬元</td><td>給付以處分應否撤銷為據</td><td><span class="pill law">撤銷訴訟</span>＋併請求給付（§8 II）</td><td>訴願前置；給付併在撤銷訴訟裡</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：看到「要錢」就選一般給付。金錢給付若依法須先由機關<b>以行政處分核定</b>（例如多數社會給付、退休金、補助款的核准），學說上通說認為原告應先申請、經駁回或怠為後提課予義務訴訟，請法院命機關作成核給處分，不能跳過處分階段直接請求給付。否則第 5 條的訴願前置會被架空。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：第 8 條第 2 項，給付跟著撤銷走</h2>
+    <div class="law"><b class="art">第 8 條第 2 項</b>前項給付訴訟之裁判，以行政處分應否撤銷為據者，應於依第四條第一項或第三項提起撤銷訴訟時，併為請求。原告未為請求者，審判長應告以得為請求。</div>
+    <p>情境：甲被罰 50 萬元、已經繳了，現在要撤銷罰鍰並拿回錢。「拿回 50 萬」是財產上給付，但它成不成立完全看罰鍰該不該撤銷。第 8 條第 2 項說：這種給付<b>應該併在撤銷訴訟裡請求</b>，不要另外提一個一般給付訴訟，避免兩個法院對同一個處分有不同認定。</p>
+    <p>第二句是對法院的義務：原告沒有併請求，<b>審判長應告以得為請求</b>。這是闡明義務的具體化，考題常用「法院未告知即判決」來問程序有沒有瑕疵。</p>
+    <div class="note">第 8 條第 2 項與第 7 條（3-3）互相配合。第 7 條是通則，允許任何行政訴訟合併請求損害賠償或其他財產上給付；第 8 條第 2 項針對「給付以處分應否撤銷為據」的情形，進一步要求<b>應</b>併為請求。前者是「得」，後者是「應」，兩者在考卷上要分開引。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：第 197 條與第 203 條，法院可以直接調整給付</h2>
+    <div class="law"><b class="art">第 197 條</b>撤銷訴訟，其訴訟標的之行政處分涉及金錢或其他代替物之給付或確認者，行政法院得以確定不同金額之給付或以不同之確認代替之。</div>
+    <p>罰鍰、稅額這類金錢處分，法院認為金額算錯時，不必只能「全部撤銷、發回重算」，可以<b>直接確定不同金額</b>代替撤銷。這是撤銷訴訟裡的例外，條文放在判決那一章，但考點與金錢給付緊密相關，所以放在這一節。</p>
+    <div class="law"><b class="art">第 203 條</b>Ⅰ 公法上契約成立後，情事變更，非當時所得預料，而依其原有效果顯失公平者，行政法院得依當事人聲請，為增、減給付或變更、消滅其他原有效果之判決。<br>Ⅱ 為當事人之行政機關，因防止或免除公益上顯然重大之損害，亦得為前項之聲請。<br>Ⅲ 前二項規定，於因公法上其他原因發生之財產上給付，準用之。</div>
+    <p>第 203 條是公法上的<b>情事變更原則</b>。三個重點：第一，要件是契約成立後情事變更、非當時所得預料、依原有效果顯失公平，三者缺一不可。第二，聲請人不限人民，<b>行政機關</b>為防止或免除公益上顯然重大之損害也可以聲請。第三，第 3 項把適用範圍從公法上契約擴張到<b>因公法上其他原因發生之財產上給付</b>。</p>
+    <div class="warn">常錯：把第 203 條套到行政處分上。條文對象是公法上契約與公法上其他原因的財產給付，行政處分的金額調整要走第 197 條。另一個常錯是「法院得依職權變更給付」：第 203 條第 1 項寫的是「依當事人聲請」。</div>
+  </div>
+
+  <div class="card">
+    <h2>本課工具：「該提哪一種訴訟」判斷器（完整版）</h2>
+    <p class="small muted">第 2 課的判斷器只有撤銷與課予義務。這一版把確認無效、確認法律關係、確認已消滅處分違法、一般給付都放進來，並加上「處分已執行完畢」與「補充性」兩個分支。照著問題選，最後按「判斷」。</p>
+    <div class="toolbox" id="router">
+      <fieldset><legend>第 1 問：你爭執的對象是什麼？</legend>
+        <label><input type="radio" name="r1" value="proc">機關已經作成一個行政處分，我不服</label><br>
+        <label><input type="radio" name="r1" value="apply">我依法申請，機關沒作成處分或把我駁回</label><br>
+        <label><input type="radio" name="r1" value="nonproc">不是處分：我要機關給錢、返還財物、做或停止做某個事實行為，或履行公法上契約</label><br>
+        <label><input type="radio" name="r1" value="rel">我跟機關之間某個公法上法律關係存不存在，雙方有爭執</label>
+      </fieldset>
+      <fieldset id="rfProc" style="display:none"><legend>第 2 問：這個處分現在的狀態？</legend>
+        <label><input type="radio" name="r2" value="alive">仍有效存在（即使已執行，也還能回復原狀）</label><br>
+        <label><input type="radio" name="r2" value="gone">已執行而無法回復原狀，或已經消滅（期間屆滿、被廢止等）</label><br>
+        <label><input type="radio" name="r2" value="void">我主張它有重大明顯瑕疵，根本無效</label>
+      </fieldset>
+      <fieldset id="rfGone" style="display:none"><legend>第 3 問：處分是什麼時候消滅的？</legend>
+        <label><input type="radio" name="r3" value="before">我還沒起訴，它就已經執行完畢或消滅</label><br>
+        <label><input type="radio" name="r3" value="during">我已經提起撤銷訴訟，審理中才執行完畢或消滅</label>
+      </fieldset>
+      <fieldset id="rfApply" style="display:none"><legend>第 2 問：機關怎麼對待你的申請？</legend>
+        <label><input type="radio" name="r4" value="silent">法令所定期間內應作為而不作為（怠為處分）</label><br>
+        <label><input type="radio" name="r4" value="reject">作成處分把我駁回</label>
+      </fieldset>
+      <fieldset id="rfNon" style="display:none"><legend>第 2 問：你要的給付，依法要不要先由機關作成處分核定？</legend>
+        <label><input type="radio" name="r5" value="need">要（例如補助款、退休金須先經審定）</label><br>
+        <label><input type="radio" name="r5" value="noneed">不要（金額法令直接規定、事實行為、契約給付）</label>
+      </fieldset>
+      <fieldset id="rfDep" style="display:none"><legend>第 3 問：這個給付是否以某個行政處分「應否撤銷」為前提？</legend>
+        <label><input type="radio" name="r6" value="dep">是（例如要撤銷罰鍰才拿得回已繳的錢）</label><br>
+        <label><input type="radio" name="r6" value="indep">否，跟任何處分無關</label>
+      </fieldset>
+      <fieldset id="rfRel" style="display:none"><legend>第 2 問：這個爭執能不能用撤銷、課予義務或一般給付訴訟解決？</legend>
+        <label><input type="radio" name="r7" value="yes">可以（有處分可撤銷、可申請處分、或可直接請求給付）</label><br>
+        <label><input type="radio" name="r7" value="no">不能，只有確認法律關係才解決得了</label>
+      </fieldset>
+      <button class="btn" id="rGo">判斷</button>
+      <div class="result" id="rRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　公務員丙主張依法令規定每月應領地域加給 5,000 元，機關自 112 年 1 月起漏發 12 個月，共 6 萬元。丁則申請退休，機關尚未核定退休金，丁直接起訴請求給付退休金 300 萬元。兩人各應提何種訴訟？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>金錢給付何時走一般給付訴訟、何時走課予義務訴訟。</dd>
+        <dt>條文</dt><dd>第 8 條第 1 項（因公法上原因發生財產上之給付，得提起給付訴訟）；第 5 條第 1 項（依法申請之案件，於法令所定期間內應作為而不作為，經訴願後得提課予義務訴訟）。</dd>
+        <dt>涵攝</dt><dd>丙的加給金額由法令直接規定，公務員身分與職務所在地確定後即可計算，不需要機關再作成任何處分，屬第 8 條第 1 項「因公法上原因發生財產上之給付」。丁的退休金則須經機關審定年資、計算基數後作成核定處分，丁要的其實是「請機關作成核定退休金之處分」，屬第 5 條；跳過處分直接請求給付，會架空第 5 條的訴願前置。</dd>
+        <dt>結論</dt><dd>丙提一般給付訴訟，不經訴願，請求給付 6 萬元；金額未逾 50 萬元，適用簡易程序（第 229 條第 2 項第 3 款）。丁應先申請，於機關怠為時經訴願後依第 5 條第 1 項提課予義務訴訟；直接提一般給付訴訟者，學說上有認為屬欠缺權利保護必要，法院得依第 107 條第 3 項第 1 款判決駁回。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　戊被處 50 萬元罰鍰並已繳納，經訴願駁回後提起撤銷訴訟，訴狀只聲明撤銷處分，沒有請求返還罰鍰。法院審理後認為違規事實成立，但正確罰鍰額應為 30 萬元。法院可以怎麼判？戊的 20 萬元怎麼拿回？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>金錢處分金額錯誤時的判決方式；未併請求返還時審判長的義務。</dd>
+        <dt>條文</dt><dd>第 197 條（金錢處分法院得以確定不同金額之給付代替撤銷）；第 8 條第 2 項（給付以處分應否撤銷為據者應併為請求，原告未為請求者審判長應告以得為請求）；第 196 條第 1 項（撤銷判決得命回復原狀之必要處置）。</dd>
+        <dt>涵攝</dt><dd>罰鍰是涉及金錢給付的處分，法院依第 197 條得直接確定罰鍰為 30 萬元，不必全部撤銷發回。至於溢繳的 20 萬元，它是否返還完全取決於罰鍰處分是否（部分）撤銷，屬第 8 條第 2 項「以行政處分應否撤銷為據」的給付，應併在本件撤銷訴訟中請求；戊沒有請求，審判長應告知得為請求。戊補為請求後，法院得於判決中併命返還，也可依第 196 條第 1 項命機關為回復原狀之必要處置。</dd>
+        <dt>結論</dt><dd>法院得依第 197 條判決將罰鍰確定為 30 萬元。審判長應依第 8 條第 2 項告知戊得併請求返還 20 萬元；戊請求後，法院一併判命返還。若審判長未告知即判決，程序有瑕疵。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="A">
+      <div class="stem">4. 下列何者<b>不能</b>以第 8 條第 1 項之一般給付訴訟請求？</div>
+      <label><input type="radio" name="p2q1" value="A">請求機關作成核發營業許可之行政處分</label>
+      <label><input type="radio" name="p2q1" value="B">請求機關刪除違法蒐集之個人資料</label>
+      <label><input type="radio" name="p2q1" value="C">請求機關依公費生契約給付培訓津貼</label>
+      <label><input type="radio" name="p2q1" value="D">公務員請求補發法令明定金額之加給</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 8 條第 1 項的非財產給付限於「行政處分以外」。請求作成行政處分是第 5 條課予義務訴訟的範圍。" data-diag='{"B":"刪除資料是事實行為，屬行政處分以外之非財產上給付，可提一般給付訴訟。","C":"第 8 條第 1 項後段：因公法上契約發生之給付，亦同。","D":"金額由法令直接規定、無須機關核定的金錢請求，是典型的因公法上原因發生之財產上給付。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">5. 甲提起撤銷罰鍰處分之訴訟，該罰鍰已繳納，但甲未請求返還。依第 8 條第 2 項，法院應如何處理？</div>
+      <label><input type="radio" name="p2q2" value="A">法院應依職權於判決中命被告返還已繳罰鍰</label>
+      <label><input type="radio" name="p2q2" value="B">法院應告知甲另行提起一般給付訴訟</label>
+      <label><input type="radio" name="p2q2" value="C">審判長應告知甲得於本件撤銷訴訟中併為返還之請求</label>
+      <label><input type="radio" name="p2q2" value="D">法院無告知義務，撤銷判決確定後甲再自行請求</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 8 條第 2 項後段：原告未為請求者，審判長應告以得為請求。給付以處分應否撤銷為據者，應於撤銷訴訟中併為請求，不是另行起訴。" data-diag='{"A":"第 8 條第 2 項是告知義務，不是職權判決；沒有原告的請求，法院不能自己加上給付的主文。","B":"方向反了。第 8 條第 2 項要求這類給付「應」併在撤銷訴訟裡請求，而不是另提一般給付訴訟。","D":"條文明定審判長應告以得為請求，法院有告知義務。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">6. 關於第 203 條情事變更原則，下列敘述何者正確？</div>
+      <label><input type="radio" name="p2q3" value="A">僅人民得聲請，行政機關不得聲請</label>
+      <label><input type="radio" name="p2q3" value="B">為當事人之行政機關，因防止或免除公益上顯然重大之損害，亦得聲請</label>
+      <label><input type="radio" name="p2q3" value="C">行政法院得不待聲請，依職權為增、減給付之判決</label>
+      <label><input type="radio" name="p2q3" value="D">本條僅適用於公法上契約，不適用於其他公法上原因發生之財產上給付</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 203 條第 2 項明文行政機關亦得聲請；第 1 項要求「依當事人聲請」；第 3 項準用於因公法上其他原因發生之財產上給付。" data-diag='{"A":"第 203 條第 2 項明文：為當事人之行政機關，因防止或免除公益上顯然重大之損害，亦得為前項之聲請。","C":"第 203 條第 1 項寫的是「行政法院得依當事人聲請」，不是依職權。","D":"第 203 條第 3 項：前二項規定，於因公法上其他原因發生之財產上給付，準用之。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出第 9 條公益訴訟的要件，知道「以法律有特別規定者為限」怎麼用在考題</li>
+      <li>知道第 10 條選罷事件與第 11 條準用的位置，不把它們跟第 35 條團體訴訟混在一起</li>
+      <li>會用第 7 條合併請求損害賠償，也知道它需要一個合法繫屬的主訴訟</li>
+      <li>會用第 12 條：民刑事裁判以處分無效或違法為據時，誰來認定、要不要停止審判</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：第 9 條公益訴訟，主觀訴訟原則的例外</h2>
+    <div class="law"><b class="art">第 9 條</b>人民為維護公益，就無關自己權利及法律上利益之事項，對於行政機關之違法行為，得提起行政訴訟。但以法律有特別規定者為限。</div>
+    <p>第 1 條把「保障人民權益」放第一位，所以行政訴訟原則上是主觀訴訟，要主張自己的權利受損。第 9 條開一個洞：就算<b>無關自己權利及法律上利益</b>，人民也可以為維護公益對機關的違法行為起訴。但這個洞有門檻：<b>以法律有特別規定者為限</b>。</p>
+    <p>所以第 9 條本身不是起訴的依據，它只是告訴你「別的法律如果允許，這種訴訟可以在行政法院進行」。沒有特別法的授權，人民以公益為由起訴，欠缺當事人適格，法院得依第 107 條第 3 項第 1 款不經言詞辯論逕以判決駁回。環境法規常見的「公民訴訟條款」是典型的特別規定。</p>
+    <div class="law"><b class="art">第 11 條</b>前二條訴訟依其性質，準用撤銷、確認或給付訴訟有關之規定。</div>
+    <p>公益訴訟與選罷事件訴訟不是第四種訴訟類型，它們依請求內容分別套用撤銷、確認或給付訴訟的規定。公益訴訟請求機關撤銷違法許可，準用撤銷訴訟；請求機關採取執行行為，準用給付訴訟。</p>
+    <div class="warn">常錯：把第 9 條公益訴訟和第 35 條的團體訴訟混為一談。第 35 條是以公益為目的之社團法人，由多數<b>有共同利益之社員</b>授與訴訟實施權而起訴，本質仍是替社員主張<b>自己的權利</b>，是主觀訴訟；第 9 條則是為與自己無關的公益起訴。第 4 課會細講第 35 條。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 10 條選罷事件，記住「除法律別有規定外」</h2>
+    <div class="law"><b class="art">第 10 條</b>選舉罷免事件之爭議，除法律別有規定外，得依本法提起行政訴訟。</div>
+    <p>選舉罷免事件原則上是公法爭議，可以提行政訴訟。但「除法律別有規定外」是重點：公職人員選舉罷免法把選舉無效、當選無效等訴訟交給普通法院，那些就是法律別有規定，行政法院不收。剩下的爭議，例如不服選務機關對候選人登記的否准、對競選經費補貼的核定，才回到行政法院，依第 11 條準用撤銷或給付訴訟的規定。</p>
+    <div class="tip">國考用法：題目給一個選舉爭議，先問「選罷法有沒有把它交給別的法院」。有，就答普通法院、法律別有規定；沒有，才答第 10 條加第 11 條準用，再往下判斷是撤銷還是給付。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：第 7 條合併請求，國賠可以搭行政訴訟的便車</h2>
+    <div class="law"><b class="art">第 7 條</b>提起行政訴訟，得於同一程序中，合併請求損害賠償或其他財產上給付。</div>
+    <p>國家賠償本來由民事法院審理（第 1 課講過，這是第 2 條的「法律別有規定」）。第 7 條允許原告在<b>提起行政訴訟的同一程序</b>裡合併請求損害賠償或其他財產上給付，讓行政法院一次解決處分合法性與賠償問題，省掉再跑一趟民事法院。</p>
+    <p>三個條件要記。第一，必須<b>有一個行政訴訟作為主訴訟</b>：撤銷、課予義務、確認、一般給付都可以。單獨對國家提賠償訴訟，沒有主訴訟可以合併，行政法院無審判權。第二，條文寫「得」，是原告的選擇，不合併也可以之後去民事法院。第三，主訴訟如果不合法而被裁定駁回，合併請求失去依附對象；學說上對此時合併部分應如何處理有不同看法，點到即可。</p>
+    <div class="note">法條裡還有幾個「合併請求」的親戚：第 199 條情況判決時，法院應依原告聲明在判決內命被告機關賠償，原告未聲明者得於判決確定後一年內訴請賠償；第 237 條之 1 第 1 項第 2 款讓交通裁決事件合併請求返還已繳罰鍰；第 229 條第 2 項第 5 款讓收容事件合併請求損害賠償也走簡易程序。它們都是第 7 條精神的具體化。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：第 12 條，處分合法性由行政爭訟說了算</h2>
+    <div class="law"><b class="art">第 12 條</b>Ⅰ 民事或刑事訴訟之裁判，以行政處分是否無效或違法為據者，應依行政爭訟程序確定之。<br>Ⅱ 前項行政爭訟程序已經開始者，於其程序確定前，民事或刑事法院應停止其審判程序。</div>
+    <p>情境：民事法院審國賠案件，判斷的前提是「那個拆除處分到底違不違法」。第 12 條第 1 項說，這個前提問題<b>應依行政爭訟程序確定</b>，民事法院不自己認定。第 2 項補充：如果行政爭訟（訴願、行政訴訟）已經開始，民刑事法院<b>應停止審判</b>，等行政爭訟確定再繼續。</p>
+    <p>這一條回頭解釋了 3-1 的問題：為什麼「打算請求國賠」就有即受確認判決之法律上利益。因為民事法院依第 12 條要等行政爭訟的結果，確認處分違法的判決會直接決定國賠案件的走向。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>情形</th><th>民刑事法院怎麼做</th><th>條文</th></tr></thead>
+      <tbody>
+        <tr><td>裁判以處分是否無效或違法為據，行政爭訟尚未開始</td><td>不自行認定，應依行政爭訟程序確定；原告得另依第 6 條提確認訴訟</td><td>第 12 條第 1 項</td></tr>
+        <tr><td>行政爭訟程序已經開始</td><td>停止審判程序，待行政爭訟確定</td><td>第 12 條第 2 項</td></tr>
+        <tr><td>原告乾脆把國賠請求帶進行政訴訟</td><td>不需要民事法院，行政法院在同一程序一併裁判</td><td>第 7 條</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：第 12 條第 2 項的「停止審判」是義務（應），不是裁量（得）。另一個常錯是把第 12 條反過來用：行政法院審理時遇到民事法律關係的前提問題，第 12 條沒有規定行政法院要停止，行政法院原則上自行判斷。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　某環保團體 A 認為縣政府違法核發 B 公司的工廠設立許可，排放將汙染河川，A 本身沒有任何成員住在該流域。A 得否向行政法院起訴請求撤銷許可？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>無自己權利受損者得否為公益起訴；第 9 條與第 35 條的區別。</dd>
+        <dt>條文</dt><dd>第 9 條（為維護公益，就無關自己權利及法律上利益之事項得提起行政訴訟，但以法律有特別規定者為限）；第 11 條（準用撤銷訴訟規定）；第 35 條（公益社團法人由有共同利益之社員授與訴訟實施權）。</dd>
+        <dt>涵攝</dt><dd>A 沒有成員住在流域，無法主張自己或社員的權利受損，第 35 條用不上，因為那仍以社員有共同利益為前提。A 只能走第 9 條，而第 9 條以法律有特別規定為限：要看相關環境法規有沒有公民訴訟條款允許人民或團體對主管機關的違法行為起訴，以及該條款允許的請求內容是什麼。若有，依第 11 條準用撤銷訴訟的規定（訴願前置、第 106 條期間）。</dd>
+        <dt>結論</dt><dd>有特別法授權時，A 得依第 9 條提起公益訴訟，程序準用撤銷訴訟；無特別法授權時，A 欠缺當事人適格，行政法院得依第 107 條第 3 項第 1 款不經言詞辯論逕以判決駁回。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　己的車輛遭監理機關以違法處分吊扣牌照 3 個月，期間已過，牌照已發還。己認為處分違法，造成營業損失 15 萬元。己可以怎麼走？若己先向民事法院請求國賠，民事法院如何處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>已消滅處分的救濟途徑；國賠與行政爭訟的先後關係。</dd>
+        <dt>條文</dt><dd>第 6 條第 1 項後段（確認已消滅之處分違法）；第 7 條（合併請求損害賠償）；第 12 條（民事裁判以處分違法為據者應依行政爭訟程序確定，已開始者停止審判）。</dd>
+        <dt>涵攝</dt><dd>吊扣期間已過，處分已消滅，己不能提撤銷訴訟，只能依第 6 條第 1 項後段提確認處分違法之訴訟。己將來要請求國賠，確認判決能決定國賠訴訟的前提，有即受確認判決之法律上利益。己可以在同一件確認訴訟中依第 7 條合併請求 15 萬元損害賠償，一次解決。若己先去民事法院，民事法院的裁判以處分是否違法為據，依第 12 條第 1 項應由行政爭訟程序確定；己若同時在行政法院起訴確認違法，依第 12 條第 2 項民事法院應停止審判。</dd>
+        <dt>結論</dt><dd>最經濟的路是：向行政法院提確認吊扣處分違法之訴訟，並依第 7 條合併請求 15 萬元賠償。單獨向民事法院起訴者，民事法院不自行認定處分違法性，行政爭訟已開始時應停止審判。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="D">
+      <div class="stem">7. 關於第 9 條之公益訴訟，下列敘述何者正確？</div>
+      <label><input type="radio" name="p3q1" value="A">任何人民為維護公益，均得逕依第 9 條對行政機關之違法行為起訴</label>
+      <label><input type="radio" name="p3q1" value="B">原告仍須主張自己之權利或法律上利益受損害</label>
+      <label><input type="radio" name="p3q1" value="C">以公益為目的之社團法人經社員授與訴訟實施權者，即為第 9 條之公益訴訟</label>
+      <label><input type="radio" name="p3q1" value="D">以法律有特別規定者為限，始得提起</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 9 條但書：以法律有特別規定者為限。第 9 條本身不是起訴依據，要有特別法授權。" data-diag='{"A":"漏看但書。第 9 條以法律有特別規定者為限，沒有特別法就不能提。","B":"第 9 條的要件剛好相反：就「無關自己權利及法律上利益之事項」起訴。要主張自己權利的是第 4 條以下的主觀訴訟。","C":"這是第 35 條的團體訴訟，仍以社員有共同利益為前提，是主觀訴訟，不是第 9 條。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">8. 甲認為公務員執行職務違法致其受損，單獨向行政法院起訴請求國家賠償 30 萬元，未對任何行政處分或公法上法律關係提起訴訟。法院應如何處理？</div>
+      <label><input type="radio" name="p3q2" value="A">依第 7 條受理，因國家賠償屬財產上給付</label>
+      <label><input type="radio" name="p3q2" value="B">行政法院無審判權；第 7 條僅允許於已提起之行政訴訟同一程序中合併請求</label>
+      <label><input type="radio" name="p3q2" value="C">依第 8 條第 1 項受理，因國家賠償係因公法上原因發生之財產上給付</label>
+      <label><input type="radio" name="p3q2" value="D">依第 12 條停止審判，待民事法院判決確定</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 7 條以「提起行政訴訟」為前提，於同一程序中合併請求。沒有主訴訟就無從合併；國家賠償依國家賠償法由民事法院審理，是第 2 條的法律別有規定。" data-diag='{"A":"第 7 條是「合併」請求，前提是已有一個行政訴訟繫屬，單獨請求沒有東西可以合併。","C":"國家賠償由國家賠償法交給民事法院，屬第 2 條「法律別有規定」，不能用第 8 條概括收進來。","D":"第 12 條規範的是民刑事法院遇到行政處分前提問題時停止審判，不是行政法院停止。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">9. 民事法院審理國家賠償案件，裁判以某行政處分是否違法為據，而該處分之撤銷訴訟已繫屬於行政法院。民事法院應：</div>
+      <label><input type="radio" name="p3q3" value="A">自行認定該處分是否違法後裁判</label>
+      <label><input type="radio" name="p3q3" value="B">將國家賠償案件移送行政法院合併審理</label>
+      <label><input type="radio" name="p3q3" value="C">於行政爭訟程序確定前停止其審判程序</label>
+      <label><input type="radio" name="p3q3" value="D">得裁量是否停止審判程序</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 12 條第 2 項：前項行政爭訟程序已經開始者，於其程序確定前，民事或刑事法院應停止其審判程序。是「應」，不是「得」。" data-diag='{"A":"第 12 條第 1 項：以處分是否無效或違法為據者，應依行政爭訟程序確定之，民事法院不自行認定。","B":"第 12 條沒有移送的規定；合併審理是原告依第 7 條自己把國賠帶進行政訴訟，不是民事法院移送。","D":"條文用字是「應停止」，是義務不是裁量。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>章末測驗（選擇 10 題 + 實例 2 題）</h2>
+    <p>選擇題全部作答後按「交卷」，10 題答對 8 題過關。實例題先自己寫，再展開參考答案對照，自評後按「我寫到了」或「要再加強」。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 依第 6 條第 1 項，三種確認訴訟的共同要件為：</div>
+      <label><input type="radio" name="qz1" value="A">原告須先經訴願程序</label>
+      <label><input type="radio" name="qz1" value="B">原告有即受確認判決之法律上利益</label>
+      <label><input type="radio" name="qz1" value="C">原告須於處分達到後 2 個月內起訴</label>
+      <label><input type="radio" name="qz1" value="D">原告須先向原處分機關請求確認</label>
+      <div class="fb" data-exp="第 6 條第 1 項：非原告有即受確認判決之法律上利益者，不得提起之；後段「亦同」把這個要件也套到確認違法訴訟。先向原處分機關請求只是確認無效訴訟的要件（第 2 項）。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">2. 甲對一個仍有效存在、且撤銷訴訟期間尚未屆滿的處分，主張其無效，向原處分機關請求確認未被允許後提起確認無效之訴。被告抗辯甲得提撤銷訴訟，依第 6 條第 3 項不得提確認訴訟。此抗辯：</div>
+      <label><input type="radio" name="qz2" value="A">有理由，確認訴訟具補充性</label>
+      <label><input type="radio" name="qz2" value="B">有理由，但法院應依第 6 條第 4 項移送訴願管轄機關</label>
+      <label><input type="radio" name="qz2" value="C">無理由，因確認訴訟無補充性之限制</label>
+      <label><input type="radio" name="qz2" value="D">無理由，因第 6 條第 3 項但書明定確認行政處分無效之訴訟不受補充性限制</label>
+      <div class="fb" data-exp="第 6 條第 3 項但書：確認行政處分無效之訴訟，不在此限。補充性只限制確認法律關係與確認違法，不限制確認無效。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 乙於撤銷訴訟審理中，原處分因期間屆滿而消滅。乙仍想請法院宣告該處分違法，應：</div>
+      <label><input type="radio" name="qz3" value="A">依第 196 條第 2 項聲請法院確認該處分為違法</label>
+      <label><input type="radio" name="qz3" value="B">撤回訴訟，另依第 6 條第 1 項後段起訴</label>
+      <label><input type="radio" name="qz3" value="C">依第 6 條第 2 項先向原處分機關請求確認</label>
+      <label><input type="radio" name="qz3" value="D">無法救濟，法院應以欠缺權利保護必要駁回</label>
+      <div class="fb" data-exp="第 196 條第 2 項：撤銷訴訟進行中，原處分已執行而無回復原狀可能或已消滅者，於原告有即受確認判決之法律上利益時，行政法院得依聲請確認該處分為違法。訴訟中消滅走第 196 條，起訴前消滅才走第 6 條第 1 項後段。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">4. 關於第 8 條第 1 項之一般給付訴訟，下列何者正確？</div>
+      <label><input type="radio" name="qz4" value="A">應先經訴願程序</label>
+      <label><input type="radio" name="qz4" value="B">應於請求權發生後 2 個月之不變期間內起訴</label>
+      <label><input type="radio" name="qz4" value="C">因公法上契約發生之給付，亦得提起</label>
+      <label><input type="radio" name="qz4" value="D">得請求機關作成特定內容之行政處分</label>
+      <div class="fb" data-exp="第 8 條第 1 項後段：因公法上契約發生之給付，亦同。一般給付訴訟不經訴願，第 106 條的 2 個月期間只適用於第 4 條、第 5 條的訴訟；請求作成處分是第 5 條的範圍。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 丙申請低收入戶生活補助，依法須經機關審核資格後核定，丙未經申請即向行政法院起訴請求給付補助 12 萬元。關於丙應提起之訴訟類型，下列何者正確？</div>
+      <label><input type="radio" name="qz5" value="A">一般給付訴訟，因補助屬財產上給付</label>
+      <label><input type="radio" name="qz5" value="B">應先申請，經駁回或怠為後經訴願，提起課予義務訴訟請求作成核定處分</label>
+      <label><input type="radio" name="qz5" value="C">確認公法上法律關係成立之訴訟</label>
+      <label><input type="radio" name="qz5" value="D">撤銷訴訟</label>
+      <div class="fb" data-exp="補助須經機關以處分核定，丙要的其實是「作成核給處分」，屬第 5 條課予義務訴訟。跳過處分直接請求給付，會架空第 5 條的訴願前置。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">6. 關於第 8 條第 2 項，下列何者正確？</div>
+      <label><input type="radio" name="qz6" value="A">給付以處分應否撤銷為據者，應另行提起一般給付訴訟</label>
+      <label><input type="radio" name="qz6" value="B">原告未併為請求者，法院應依職權判命給付</label>
+      <label><input type="radio" name="qz6" value="C">原告未併為請求者，法院應以裁定駁回撤銷訴訟</label>
+      <label><input type="radio" name="qz6" value="D">應於依第 4 條第 1 項或第 3 項提起撤銷訴訟時併為請求；未請求者審判長應告以得為請求</label>
+      <div class="fb" data-exp="第 8 條第 2 項全文。重點是「應併為請求」加「審判長告知義務」。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">7. 法院審理撤銷罰鍰 60 萬元之訴訟，認定違規事實存在但正確金額應為 45 萬元。依第 197 條，法院得：</div>
+      <label><input type="radio" name="qz7" value="A">以確定 45 萬元之給付代替撤銷判決</label>
+      <label><input type="radio" name="qz7" value="B">僅能全部撤銷，命機關重為處分</label>
+      <label><input type="radio" name="qz7" value="C">依第 203 條情事變更原則減為 45 萬元</label>
+      <label><input type="radio" name="qz7" value="D">駁回原告之訴，因違規事實確實存在</label>
+      <div class="fb" data-exp="第 197 條：撤銷訴訟之訴訟標的處分涉及金錢給付者，行政法院得以確定不同金額之給付代替之。第 203 條是公法上契約與其他公法原因財產給付的情事變更，不適用於行政處分。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">8. 依第 203 條，下列何者得聲請行政法院為增、減給付之判決？</div>
+      <label><input type="radio" name="qz8" value="A">僅人民一方</label>
+      <label><input type="radio" name="qz8" value="B">僅行政機關一方</label>
+      <label><input type="radio" name="qz8" value="C">當事人；為當事人之行政機關因防止或免除公益上顯然重大之損害亦得聲請</label>
+      <label><input type="radio" name="qz8" value="D">任何利害關係人</label>
+      <div class="fb" data-exp="第 203 條第 1 項「依當事人聲請」；第 2 項明定為當事人之行政機關因防止或免除公益上顯然重大之損害亦得聲請。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">9. 第 11 條規定，第 9 條與第 10 條之訴訟：</div>
+      <label><input type="radio" name="qz9" value="A">一律適用撤銷訴訟之規定</label>
+      <label><input type="radio" name="qz9" value="B">依其性質，準用撤銷、確認或給付訴訟有關之規定</label>
+      <label><input type="radio" name="qz9" value="C">不經訴願，亦無起訴期間之限制</label>
+      <label><input type="radio" name="qz9" value="D">專屬最高行政法院管轄</label>
+      <div class="fb" data-exp="第 11 條：前二條訴訟依其性質，準用撤銷、確認或給付訴訟有關之規定。公益與選罷訴訟不是獨立類型，套用哪一種規定看請求內容。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">10. 刑事法院審理案件，裁判以某行政處分是否無效為據，但人民尚未對該處分提起任何行政爭訟。依第 12 條第 1 項，刑事法院應：</div>
+      <label><input type="radio" name="qz10" value="A">自行認定該處分是否無效</label>
+      <label><input type="radio" name="qz10" value="B">以該處分有效為前提逕為裁判</label>
+      <label><input type="radio" name="qz10" value="C">將案件移送行政法院</label>
+      <label><input type="radio" name="qz10" value="D">處分是否無效應依行政爭訟程序確定之</label>
+      <div class="fb" data-exp="第 12 條第 1 項：民事或刑事訴訟之裁判，以行政處分是否無效或違法為據者，應依行政爭訟程序確定之。第 2 項的停止審判則以行政爭訟已經開始為前提。"></div>
+    </div>
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>實例題（自評）</h2>
+    <div class="essay" data-id="e1">
+      <div class="stem">實例一　甲於 113 年 2 月 1 日收到市政府「命於 3 月 1 日前自行拆除違建」之處分，未提訴願。甲於 3 月 10 日自行拆除。113 年 6 月 1 日，甲認為該處分違法，向行政法院起訴，聲明「確認該拆除處分違法」，並合併請求損害賠償 50 萬元。被告抗辯：甲未經訴願、且撤銷訴訟期間已逾，依第 6 條第 3 項不得提確認訴訟。<br>問：(1) 甲所提確認訴訟是否合法？(2) 被告的補充性抗辯有無理由？(3) 損害賠償部分，行政法院能否審理？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>爭點</dt><dd>處分已執行完畢後的確認違法訴訟要件；補充性與「可得提起撤銷訴訟」的解釋；第 7 條合併請求的要件。</dd>
+          <dt>條文</dt><dd>第 6 條第 1 項後段、第 3 項；第 196 條第 2 項（對照）；第 7 條；第 12 條第 1 項；第 106 條第 1 項（對照）。</dd>
+          <dt>涵攝</dt><dd>(1) 甲依處分自行拆除，處分已執行而無回復原狀可能，屬第 6 條第 1 項後段類型；起訴前即已執行完畢，不是第 196 條第 2 項的訴訟中消滅。甲打算請求國賠，依第 12 條第 1 項處分違法性須由行政爭訟確定，故有即受確認判決之法律上利益。確認違法訴訟非確認無效，不適用第 6 條第 2 項前置。(2) 第 6 條第 3 項的「可得提起撤銷訴訟」是否包含原告自己逾期未提的情形，條文未明定；學說上有認為應包含，否則第 106 條期間失去意義，但處分既已執行完畢而無回復可能，撤銷訴訟在起訴時已非「得提起」之訴訟，補充性不應阻斷唯一剩下的救濟途徑。此處宜分別論述：若採前說，補充性有理由；若採後說，無理由。(3) 第 7 條允許於同一程序合併請求損害賠償，前提是主訴訟合法繫屬；確認訴訟合法時，行政法院得一併審理 50 萬元之賠償請求。</dd>
+          <dt>結論</dt><dd>甲的確認違法訴訟在要件上可以成立，關鍵在補充性抗辯的處理，考卷上應兩說並陳後擇一；主訴訟合法則合併請求之賠償部分行政法院得審理，主訴訟被駁回則賠償部分失所附麗。</dd>
+          <dt>加分</dt><dd>引第 1 條「保障人民權益」宗旨，說明補充性的目的在防止規避訴願與期間，而非剝奪已無其他途徑者的救濟；並可指出甲未提訴願，若當初以確認無效之訴起訴，有第 6 條第 4 項移送的機會，但確認違法訴訟並無相同規定，這是立法上的漏洞。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+    <div class="essay" data-id="e2">
+      <div class="stem">實例二　乙與某國立大學簽訂公費生契約，約定畢業後服務 6 年，違約者按未服務年數每年賠償 60 萬元。乙服務 2 年後離職，大學向行政法院起訴請求乙給付違約金 240 萬元。乙抗辯：契約簽訂後政府大幅修改公費制度，服務單位被裁併，繼續履約顯失公平。<br>問：(1) 大學所提訴訟屬何種類型？是否須經訴願？第一審管轄法院為何？(2) 乙的抗辯在行政訴訟法上有無對應的制度？法院得為何種判決？(3) 若大學改以行政處分命乙繳納違約金，乙應如何救濟？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>爭點</dt><dd>公法上契約給付的訴訟類型；第 203 條情事變更；契約給付與處分給付在救濟途徑上的不同。</dd>
+          <dt>條文</dt><dd>第 8 條第 1 項後段；第 104 條之 1 第 1 項第 3 款；第 203 條；第 4 條、第 8 條第 2 項；第 197 條。</dd>
+          <dt>涵攝</dt><dd>(1) 公費生契約以培育公共人力、課予服務義務為內容，屬公法上契約，違約金請求是「因公法上契約發生之給付」，依第 8 條第 1 項後段提一般給付訴訟，不經訴願。第 8 條第 1 項文字為「人民與中央或地方機關間」，學說上多認為機關亦得為原告。240 萬元屬公法上財產關係之訴訟，未逾 150 萬元才歸地方行政訴訟庭，本件超過，依第 104 條之 1 第 1 項本文由高等行政訴訟庭為第一審。(2) 乙主張的就是第 203 條第 1 項的情事變更：契約成立後情事變更、非當時所得預料、依原有效果顯失公平。乙得聲請法院為減少給付或變更原有效果之判決；注意須「依當事人聲請」，法院不得依職權。(3) 若大學改以行政處分命繳違約金，爭執對象變成處分，乙應經訴願後依第 4 條提撤銷訴訟；已繳納者依第 8 條第 2 項併請求返還；金額有誤時法院得依第 197 條確定不同金額。</dd>
+          <dt>結論</dt><dd>大學提一般給付訴訟，不經訴願，由高等行政訴訟庭第一審；乙得聲請依第 203 條減少給付；大學若以處分為之，乙改走撤銷訴訟並併請求返還。</dd>
+          <dt>加分</dt><dd>可討論大學是否得以單方處分取代契約請求（行政程序法上契約與處分的選擇問題，點到即可），並說明第 203 條第 2 項允許機關為公益聲請的用意在於雙向平衡，不是只保護人民。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card">
+    <h2>本課引用條文</h2>
+    <p class="small muted">點開看原文。只收錄本課講到的條文；全文請見全國法規資料庫。</p>
+    <div class="arts">
+      <details><summary>第 1 條 <span>宗旨</span></summary><div class="txt">行政訴訟以保障人民權益，確保國家行政權之合法行使，增進司法功能為宗旨。</div></details>
+      <details><summary>第 2 條 <span>公法上爭議</span></summary><div class="txt">公法上之爭議，除法律別有規定外，得依本法提起行政訴訟。</div></details>
+      <details><summary>第 3 條 <span>三大類型</span></summary><div class="txt">前條所稱之行政訴訟，指撤銷訴訟、確認訴訟及給付訴訟。</div></details>
+      <details><summary>第 4 條 <span>撤銷訴訟</span></summary><div class="txt">Ⅰ 人民因中央或地方機關之違法行政處分，認為損害其權利或法律上之利益，經依訴願法提起訴願而不服其決定，或提起訴願逾三個月不為決定，或延長訴願決定期間逾二個月不為決定者，得向行政法院提起撤銷訴訟。
+Ⅱ 逾越權限或濫用權力之行政處分，以違法論。
+Ⅲ 訴願人以外之利害關係人，認為第一項訴願決定，損害其權利或法律上之利益者，得向行政法院提起撤銷訴訟。</div></details>
+      <details><summary>第 5 條 <span>課予義務訴訟</span></summary><div class="txt">Ⅰ 人民因中央或地方機關對其依法申請之案件，於法令所定期間內應作為而不作為，認為其權利或法律上利益受損害者，經依訴願程序後，得向行政法院提起請求該機關應為行政處分或應為特定內容之行政處分之訴訟。
+Ⅱ 人民因中央或地方機關對其依法申請之案件，予以駁回，認為其權利或法律上利益受違法損害者，經依訴願程序後，得向行政法院提起請求該機關應為行政處分或應為特定內容之行政處分之訴訟。</div></details>
+      <details><summary>第 6 條 <span>確認訴訟</span></summary><div class="txt">Ⅰ 確認行政處分無效及確認公法上法律關係成立或不成立之訴訟，非原告有即受確認判決之法律上利益者，不得提起之。其確認已執行而無回復原狀可能之行政處分或已消滅之行政處分為違法之訴訟，亦同。
+Ⅱ 確認行政處分無效之訴訟，須已向原處分機關請求確認其無效未被允許，或經請求後於三十日內不為確答者，始得提起之。
+Ⅲ 確認訴訟，於原告得提起或可得提起撤銷訴訟、課予義務訴訟或一般給付訴訟者，不得提起之。但確認行政處分無效之訴訟，不在此限。
+Ⅳ 應提起撤銷訴訟、課予義務訴訟，誤為提起確認行政處分無效之訴訟，其未經訴願程序者，行政法院應以裁定將該事件移送於訴願管轄機關，並以行政法院收受訴狀之時，視為提起訴願。</div></details>
+      <details><summary>第 7 條 <span>合併請求</span></summary><div class="txt">提起行政訴訟，得於同一程序中，合併請求損害賠償或其他財產上給付。</div></details>
+      <details><summary>第 8 條 <span>一般給付訴訟</span></summary><div class="txt">Ⅰ 人民與中央或地方機關間，因公法上原因發生財產上之給付或請求作成行政處分以外之其他非財產上之給付，得提起給付訴訟。因公法上契約發生之給付，亦同。
+Ⅱ 前項給付訴訟之裁判，以行政處分應否撤銷為據者，應於依第四條第一項或第三項提起撤銷訴訟時，併為請求。原告未為請求者，審判長應告以得為請求。</div></details>
+      <details><summary>第 9 條 <span>公益訴訟</span></summary><div class="txt">人民為維護公益，就無關自己權利及法律上利益之事項，對於行政機關之違法行為，得提起行政訴訟。但以法律有特別規定者為限。</div></details>
+      <details><summary>第 10 條 <span>選罷事件</span></summary><div class="txt">選舉罷免事件之爭議，除法律別有規定外，得依本法提起行政訴訟。</div></details>
+      <details><summary>第 11 條 <span>準用</span></summary><div class="txt">前二條訴訟依其性質，準用撤銷、確認或給付訴訟有關之規定。</div></details>
+      <details><summary>第 12 條 <span>民刑事法院停止審判</span></summary><div class="txt">Ⅰ 民事或刑事訴訟之裁判，以行政處分是否無效或違法為據者，應依行政爭訟程序確定之。
+Ⅱ 前項行政爭訟程序已經開始者，於其程序確定前，民事或刑事法院應停止其審判程序。</div></details>
+      <details><summary>第 35 條 <span>公益社團之團體訴訟</span></summary><div class="txt">Ⅰ 以公益為目的之社團法人，於其章程所定目的範圍內，由多數有共同利益之社員，就一定之法律關係，授與訴訟實施權者，得為公共利益提起訴訟。
+Ⅱ 前項規定於以公益為目的之非法人之團體準用之。
+Ⅲ 前二項訴訟實施權之授與，應以文書證之。
+Ⅳ 第三十三條之規定，於第一項之社團法人或第二項之非法人之團體，準用之。</div></details>
+      <details><summary>第 104 條之 1 第 1 項 <span>通常程序第一審管轄（節錄）</span></summary><div class="txt">Ⅰ 適用通常訴訟程序之事件，以高等行政法院為第一審管轄法院。但下列事件，以地方行政法院為第一審管轄法院：
+一、關於稅捐課徵事件涉訟，所核課之稅額在新臺幣一百五十萬元以下者。
+二、因不服行政機關所為新臺幣一百五十萬元以下之罰鍰或其附帶之其他裁罰性、管制性不利處分而涉訟者。
+三、其他關於公法上財產關係之訴訟，其標的之金額或價額在新臺幣一百五十萬元以下者。
+四、其他依法律規定或經司法院指定由地方行政法院管轄之事件。</div></details>
+      <details><summary>第 106 條 <span>起訴期間</span></summary><div class="txt">Ⅰ 第四條及第五條訴訟之提起，除本法別有規定外，應於訴願決定書送達後二個月之不變期間內為之。但訴願人以外之利害關係人知悉在後者，自知悉時起算。
+Ⅱ 第四條及第五條之訴訟，自訴願決定書送達後，已逾三年者，不得提起。
+Ⅲ 不經訴願程序即得提起第四條或第五條第二項之訴訟者，應於行政處分達到或公告後二個月之不變期間內為之。
+Ⅳ 不經訴願程序即得提起第五條第一項之訴訟者，於應作為期間屆滿後，始得為之。但於期間屆滿後，已逾三年者，不得提起。</div></details>
+      <details><summary>第 107 條 <span>起訴之駁回（節錄）</span></summary><div class="txt">Ⅰ 原告之訴，有下列各款情形之一者，行政法院應以裁定駁回之。但其情形可以補正者，審判長應先定期間命補正：
+一、訴訟事件不屬行政訴訟審判權，不能依法移送。
+（第二款至第九款略）
+十、起訴不合程式或不備其他要件。
+十一、起訴基於惡意、不當或其他濫用訴訟程序之目的或有重大過失，且事實上或法律上之主張欠缺合理依據。
+Ⅲ 原告之訴，有下列各款情形之一者，行政法院得不經言詞辯論，逕以判決駁回之。但其情形可以補正者，審判長應先定期間命補正：
+一、除第二項以外之當事人不適格或欠缺權利保護必要。
+二、依其所訴之事實，在法律上顯無理由。</div></details>
+      <details><summary>第 196 條 <span>回復原狀與續行確認</span></summary><div class="txt">Ⅰ 行政處分已執行者，行政法院為撤銷行政處分判決時，經原告聲請，並認為適當者，得於判決中命行政機關為回復原狀之必要處置。
+Ⅱ 撤銷訴訟進行中，原處分已執行而無回復原狀可能或已消滅者，於原告有即受確認判決之法律上利益時，行政法院得依聲請，確認該行政處分為違法。</div></details>
+      <details><summary>第 197 條 <span>金錢處分之判決</span></summary><div class="txt">撤銷訴訟，其訴訟標的之行政處分涉及金錢或其他代替物之給付或確認者，行政法院得以確定不同金額之給付或以不同之確認代替之。</div></details>
+      <details><summary>第 199 條 <span>情況判決之賠償</span></summary><div class="txt">Ⅰ 行政法院為前條判決時，應依原告之聲明，將其因違法處分或決定所受之損害，於判決內命被告機關賠償。
+Ⅱ 原告未為前項聲明者，得於前條判決確定後一年內，向行政法院訴請賠償。</div></details>
+      <details><summary>第 203 條 <span>情事變更</span></summary><div class="txt">Ⅰ 公法上契約成立後，情事變更，非當時所得預料，而依其原有效果顯失公平者，行政法院得依當事人聲請，為增、減給付或變更、消滅其他原有效果之判決。
+Ⅱ 為當事人之行政機關，因防止或免除公益上顯然重大之損害，亦得為前項之聲請。
+Ⅲ 前二項規定，於因公法上其他原因發生之財產上給付，準用之。</div></details>
+      <details><summary>第 229 條第 2 項 <span>簡易訴訟程序事件（節錄）</span></summary><div class="txt">Ⅱ 下列各款行政訴訟事件，除本法別有規定外，適用本章所定之簡易程序：
+一、關於稅捐課徵事件涉訟，所核課之稅額在新臺幣五十萬元以下者。
+二、因不服行政機關所為新臺幣五十萬元以下罰鍰處分而涉訟者。
+三、其他關於公法上財產關係之訴訟，其標的之金額或價額在新臺幣五十萬元以下者。
+四、因不服行政機關所為告誡、警告、記點、記次、講習、輔導教育或其他相類之輕微處分而涉訟者。
+五、關於內政部移民署（以下簡稱移民署）之行政收容事件涉訟，或合併請求損害賠償或其他財產上給付者。
+六、依法律之規定應適用簡易訴訟程序者。</div></details>
+      <details><summary>第 237 條之 1 第 1 項 <span>交通裁決事件（節錄）</span></summary><div class="txt">Ⅰ 本法所稱交通裁決事件如下：
+一、不服道路交通管理處罰條例第八條及第三十七條第六項之裁決，而提起之撤銷訴訟、確認訴訟。
+二、合併請求返還與前款裁決相關之已繳納罰鍰或已繳送之駕駛執照、計程車駕駛人執業登記證、汽車牌照。</div></details>
+    </div>
+  </div>
+  <div class="card">
+    <h2>下一課</h2>
+    <p>第 4 課「管轄與當事人」：訴訟類型決定了之後，案子要送到哪個法院、誰當原告被告。會講第 13 條以下的管轄、第 24 條被告機關、第 35 條團體訴訟。<a href="04_管轄與當事人.html">前往第 4 課</a>　<a href="00_總覽地圖.html">回總覽地圖</a></p>
+  </div>
+</section>
+
+<footer>行政訴訟法自學教材 · 第 3 課 訴訟類型 II：確認、一般給付、公益訴訟與合併請求<br>依民國 111 年 6 月 22 日修正條文自行編寫，題目為原創；條文以<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030154" target="_blank" rel="noopener">全國法規資料庫</a>為準。</footer>
+</div>
+
+<script>
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const LESSON_ID = "03", CH = "行政訴訟法 03 訴訟類型二 確認給付公益";
+const PROG_KEY = "xzss_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與數學教材共用 study_log_v1，供「學習紀錄」頁讀取）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+let pracCount = 0, pracOk = 0;
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="s4"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok }); pracCount++; if(ok) pracOk++;
+  });
+});
+
+// ===== 章末測驗交卷 =====
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0; const wrong = [];
+  qs.forEach((q,i)=>{
+    const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+    else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+  });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  writeProg({ quiz: { score, total: qs.length } });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+  else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="s4"]').classList.add('done'); }
+  else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+  else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 實例題自評 =====
+document.querySelectorAll('.essay').forEach(es=>{
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 本課專屬工具：「該提哪一種訴訟」判斷器（完整版）=====
+(function(){
+  const box = document.getElementById('router'), res = document.getElementById('rRes');
+  const fs = { proc:'rfProc', gone:'rfGone', apply:'rfApply', non:'rfNon', dep:'rfDep', rel:'rfRel' };
+  function val(n){ const i = box.querySelector('input[name="'+n+'"]:checked'); return i ? i.value : ''; }
+  function show(id, on){ const el = document.getElementById(id); el.style.display = on ? '' : 'none'; if(!on) el.querySelectorAll('input').forEach(i=>i.checked=false); }
+  function refresh(){
+    const r1 = val('r1');
+    show(fs.proc, r1==='proc');
+    show(fs.gone, r1==='proc' && val('r2')==='gone');
+    show(fs.apply, r1==='apply');
+    show(fs.non, r1==='nonproc');
+    show(fs.dep, r1==='nonproc' && val('r5')==='noneed');
+    show(fs.rel, r1==='rel');
+    res.classList.remove('on');
+  }
+  box.querySelectorAll('input[type=radio]').forEach(i=>i.addEventListener('change', refresh));
+
+  function out(title, pill, rows, extra){
+    let h = '<h3>'+title+'　<span class="pill law">'+pill+'</span></h3><div class="scroll"><table><tbody>';
+    rows.forEach(r=>{ h += '<tr><th style="width:7em">'+r[0]+'</th><td>'+r[1]+'</td></tr>'; });
+    h += '</tbody></table></div>';
+    if(extra) h += '<p class="small muted" style="margin:0">'+extra+'</p>';
+    res.innerHTML = h; res.classList.add('on');
+  }
+  function need(msg){ res.innerHTML = '<p class="small" style="margin:0;color:var(--warn)">'+msg+'</p>'; res.classList.add('on'); }
+
+  document.getElementById('rGo').addEventListener('click',()=>{
+    const r1 = val('r1');
+    if(!r1) return need('先回答第 1 問。');
+    let key = r1;
+    if(r1==='proc'){
+      const r2 = val('r2'); if(!r2) return need('請回答第 2 問：處分現在的狀態。');
+      if(r2==='alive'){
+        key += ':alive';
+        out('撤銷訴訟', '第 4 條', [
+          ['條文','第 4 條第 1 項；利害關係人依第 4 條第 3 項'],
+          ['前置程序','訴願前置：經訴願而不服其決定，或訴願逾 3 個月不為決定、延長逾 2 個月不為決定'],
+          ['起訴期間','訴願決定書送達後 2 個月不變期間（第 106 條第 1 項）；逾 3 年不得提起（第 106 條第 2 項）'],
+          ['被告','依第 24 條：駁回訴願時為原處分機關，撤銷或變更原處分時為該機關'],
+          ['判決','撤銷處分；已執行者得聲請命回復原狀（第 196 條第 1 項）；金錢處分法院得確定不同金額（第 197 條）']
+        ], '想拿回已繳的錢？依第 8 條第 2 項應在這件撤銷訴訟裡併為請求，審判長有告知義務。補充性提醒：此時不得改提確認法律關係或確認違法之訴（第 6 條第 3 項）。');
+      } else if(r2==='gone'){
+        const r3 = val('r3'); if(!r3) return need('請回答第 3 問：處分什麼時候消滅。');
+        key += ':gone:'+r3;
+        if(r3==='before'){
+          out('確認行政處分違法之訴訟', '第 6 條第 1 項後段', [
+            ['條文','第 6 條第 1 項後段：確認已執行而無回復原狀可能之行政處分或已消滅之行政處分為違法'],
+            ['特別要件','即受確認判決之法律上利益，例如準備請求國家賠償（連動第 12 條）、同類處分有反覆發生的危險'],
+            ['前置程序','不是確認無效，不適用第 6 條第 2 項；是否須經訴願，條文未明定'],
+            ['補充性','處分已無法撤銷，撤銷訴訟已非「得提起」，一般認為不受第 6 條第 3 項阻斷'],
+            ['合併請求','得依第 7 條在同一程序合併請求損害賠償']
+          ], '分支說明：處分已執行但「可以」回復原狀（例如罰鍰已繳）不算這裡，仍走撤銷訴訟加第 196 條第 1 項。');
+        } else {
+          out('續行確認訴訟（撤銷訴訟轉為確認違法）', '第 196 條第 2 項', [
+            ['條文','第 196 條第 2 項：撤銷訴訟進行中，原處分已執行而無回復原狀可能或已消滅者'],
+            ['程序','由原告「聲請」，法院在同一程序確認該處分為違法；不必撤回另訴'],
+            ['特別要件','原告有即受確認判決之法律上利益'],
+            ['與第 6 條的關係','起訴前就消滅走第 6 條第 1 項後段；起訴後才消滅走第 196 條第 2 項']
+          ]);
+        }
+      } else {
+        key += ':void';
+        out('確認行政處分無效之訴訟', '第 6 條第 1 項前段', [
+          ['條文','第 6 條第 1 項前段'],
+          ['前置程序','第 6 條第 2 項：先向原處分機關請求確認其無效，未被允許或請求後 30 日內不為確答。不是訴願。'],
+          ['特別要件','即受確認判決之法律上利益'],
+          ['補充性','不受限制。第 6 條第 3 項但書：即使也能提撤銷訴訟，確認無效之訴仍可提'],
+          ['定性錯誤時','法院認為只是違法而非無效，且你未經訴願：依第 6 條第 4 項裁定移送訴願管轄機關，以法院收受訴狀時視為提起訴願']
+        ]);
+      }
+    } else if(r1==='apply'){
+      const r4 = val('r4'); if(!r4) return need('請回答第 2 問：機關怎麼對待你的申請。');
+      key += ':'+r4;
+      const silent = r4==='silent';
+      out(silent ? '課予義務訴訟（怠為處分型）' : '課予義務訴訟（駁回申請型）', silent ? '第 5 條第 1 項' : '第 5 條第 2 項', [
+        ['條文', silent ? '第 5 條第 1 項：依法申請之案件，於法令所定期間內應作為而不作為' : '第 5 條第 2 項：依法申請之案件，予以駁回'],
+        ['前置程序','經訴願程序'],
+        ['起訴期間','訴願決定書送達後 2 個月不變期間（第 106 條第 1 項）'],
+        ['判決方式','第 200 條：事證明確判命作成所申請之處分（第 3 款）；事證未明或涉裁量，判命依判決之法律見解作成決定（第 4 款）'],
+        ['補充性','有申請處分的途徑，就不能改提確認法律關係之訴（第 6 條第 3 項）']
+      ], '對照：如果你要的不是「一個處分」而是錢或事實行為，回到第 1 問選第三個選項。');
+    } else if(r1==='nonproc'){
+      const r5 = val('r5'); if(!r5) return need('請回答第 2 問：給付要不要先經處分核定。');
+      key += ':'+r5;
+      if(r5==='need'){
+        out('應先申請處分，走課予義務訴訟', '第 5 條', [
+          ['為什麼','給付依法須由機關以行政處分核定時，你真正要的是「作成核給處分」，屬第 5 條，不是第 8 條'],
+          ['程序','先申請；機關怠為依第 5 條第 1 項、駁回依第 5 條第 2 項，經訴願後起訴'],
+          ['直接提一般給付的後果','學說上有認為欠缺權利保護必要，法院得依第 107 條第 3 項第 1 款判決駁回']
+        ]);
+      } else {
+        const r6 = val('r6'); if(!r6) return need('請回答第 3 問：給付是否以處分應否撤銷為前提。');
+        key += ':'+r6;
+        if(r6==='dep'){
+          out('撤銷訴訟，併為給付請求', '第 8 條第 2 項', [
+            ['條文','第 8 條第 2 項：給付訴訟之裁判以行政處分應否撤銷為據者，應於依第 4 條第 1 項或第 3 項提起撤銷訴訟時併為請求'],
+            ['前置程序','跟著撤銷訴訟走：訴願前置、第 106 條期間'],
+            ['審判長義務','原告未為請求者，審判長應告以得為請求'],
+            ['金額爭議','法院得依第 197 條確定不同金額代替撤銷']
+          ]);
+        } else {
+          out('一般給付訴訟', '第 8 條第 1 項', [
+            ['條文','第 8 條第 1 項：因公法上原因發生財產上之給付、行政處分以外之非財產上給付；因公法上契約發生之給付亦同'],
+            ['前置程序','不經訴願'],
+            ['起訴期間','無第 106 條期間；請求權是否罹於時效依實體法'],
+            ['管轄','公法上財產關係之訴訟：150 萬元以下地方行政訴訟庭（第 104 條之 1 第 1 項第 3 款），50 萬元以下簡易程序（第 229 條第 2 項第 3 款）'],
+            ['情事變更','公法上契約或其他公法原因之財產給付，得依第 203 條聲請增減給付']
+          ], '補充性提醒：能提一般給付訴訟，就不能改提確認法律關係之訴（第 6 條第 3 項）。');
+        }
+      }
+    } else {
+      const r7 = val('r7'); if(!r7) return need('請回答第 2 問：有沒有其他訴訟類型可用。');
+      key += ':'+r7;
+      if(r7==='yes'){
+        out('不得提確認訴訟，改提其他類型', '第 6 條第 3 項', [
+          ['條文','第 6 條第 3 項：確認訴訟，於原告得提起或可得提起撤銷訴訟、課予義務訴訟或一般給付訴訟者，不得提起之'],
+          ['下一步','有處分可撤銷：第 4 條。可申請處分：第 5 條。可直接請求給付：第 8 條。回到第 1 問重選'],
+          ['例外','只有確認行政處分無效之訴不受補充性限制（第 6 條第 3 項但書）']
+        ], '「可得提起」包含本來可以提卻錯過期間的情形，不能用確認訴訟繞過第 106 條。');
+      } else {
+        out('確認公法上法律關係成立或不成立之訴訟', '第 6 條第 1 項前段', [
+          ['條文','第 6 條第 1 項前段'],
+          ['特別要件','即受確認判決之法律上利益：法律地位不安定，且確認判決能除去該不安定'],
+          ['前置程序','無。不經訴願，也不適用第 6 條第 2 項（那是確認無效專用）'],
+          ['起訴期間','無第 106 條期間'],
+          ['補充性','已通過：沒有撤銷、課予義務或一般給付訴訟可用，才能走到這裡']
+        ]);
+      }
+    }
+    logEv({ type:"tool", q:"suit-router-full", k:key });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>行政訴訟法｜第 7 課 暫時權利保護</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F4F6F3; --card:#FFFFFF;
+  --ink:#1C2A30; --ink-2:#4B5A62; --ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --law:#5B3A8C; --law-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F; --card:#1D262B;
+    --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+    --rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --law:#B9A0E3; --law-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F; --card:#1D262B;
+  --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+  --rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --law:#B9A0E3; --law-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--blue);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+
+/* hero */
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--law);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--law-soft);color:var(--law);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+/* tabs */
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit}
+nav.tabs button:hover{border-color:var(--blue);color:var(--ink)}
+nav.tabs button.active{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--blue-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--law-soft);border-left:4px solid var(--law);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--law);display:block;margin-bottom:.2em}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.law{background:var(--law-soft);border-color:transparent;color:var(--law)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+
+/* flow / structure diagrams */
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 160px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--blue)}
+.courts{display:grid;grid-template-columns:1fr;gap:8px;margin:.6rem 0 1rem}
+.court{border:1px solid var(--rule);border-radius:10px;padding:.7rem .9rem;background:var(--paper);display:grid;grid-template-columns:7.5em 1fr;gap:.3rem .8rem;align-items:start}
+.court .lv{font-weight:700;color:var(--law)}
+.court .what{font-size:.92rem}
+.court.top{border-color:var(--law)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+/* examples */
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+.step4{display:grid;grid-template-columns:5em 1fr;gap:.25rem .7rem;font-size:.95rem;margin:.3rem 0 .8rem}
+.step4 dt{color:var(--law);font-weight:700}
+.step4 dd{margin:0}
+
+/* interactive tool */
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox select,.toolbox input[type=number]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--law)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+
+/* practice & quiz */
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--law);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+/* 條文速查 */
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">行政訴訟法 · 第 7 課</span>
+  <h1>暫時權利保護：停止執行與保全程序</h1>
+  <p>打官司要一兩年，處分卻明天就執行；等判決下來，房子已經拆了、錢已經被對方搬走了。這一課講的就是「判決前先把狀態凍住」的三套工具：針對行政處分的<b>停止執行</b>（§116–119）、針對金錢給付的<b>假扣押</b>（§293–297）、針對其他公法上權利與法律關係的<b>假處分</b>與<b>定暫時狀態處分</b>（§298–303）。第 299 條是三者之間的分水嶺，考試最愛考。</p>
+  <p class="ver">依民國 111 年 6 月 22 日修正條文編寫（多數條文自 112 年 8 月 15 日施行）。自學筆記，非官方；條文以全國法規資料庫為準。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">7-1 停止執行</button>
+  <button data-t="s2">7-2 假扣押</button>
+  <button data-t="s3">7-3 假處分與定暫時狀態處分</button>
+  <button data-t="s4">章末測驗</button>
+  <button data-t="s5">條文速查</button>
+</nav>
+
+<!-- ═══════════ 7-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出第 116 條第 1 項「執行不停止原則」的意思，以及它為什麼需要第 2、3 項當例外</li>
+      <li>分得清訴訟繫屬中（第 2 項）與起訴前（第 3 項）聲請停止執行的三個差異：誰能聲請、法院能否依職權、但書有幾個</li>
+      <li>記得第 4 項「應先徵詢意見」與「機關已停止執行者應駁回」，第 5 項停止執行可以停什麼</li>
+      <li>知道停止執行裁定之後還有第 118 條撤銷、第 119 條抗告、第 98 條之 5 的 1,000 元裁判費</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：原則是「照樣執行」，停止執行是例外</h2>
+    <div class="law"><b class="art">第 116 條第 1 項</b>原處分或決定之執行，除法律另有規定外，不因提起行政訴訟而停止。</div>
+    <p>你對罰鍰處分提起撤銷訴訟，機關可以照樣移送執行；你對拆除處分起訴，怪手可以照樣來。這叫<b>執行不停止原則</b>：行政處分一作成就推定有效、可以執行，起訴本身不會按下暫停鍵。立法者選這個原則，是怕人民隨便起訴就能癱瘓行政。</p>
+    <p>代價是：如果處分最後被撤銷，但損害已經發生而且回不去，第 1 條「保障人民權益」的宗旨就落空了。所以第 2、3 項開了一道門，讓法院在特定條件下裁定<b>停止執行</b>。「除法律另有規定外」則是指其他法律自己設的停止執行規定，例如訴願程序裡的停止執行。</p>
+    <div class="tip">國考用法：題目問「提起行政訴訟後原處分是否停止執行」，先寫第 116 條第 1 項的原則，再寫第 2 項或第 3 項的例外，最後涵攝事實。順序反了會被認為搞不清楚原則與例外。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：訴訟繫屬中的停止執行（第 2 項）</h2>
+    <div class="law"><b class="art">第 116 條第 2 項</b>行政訴訟繫屬中，行政法院認為原處分或決定之執行，將發生難於回復之損害，且有急迫情事者，得依職權或依聲請裁定停止執行。但於公益有重大影響，或原告之訴在法律上顯無理由者，不得為之。</div>
+    <p>拆成三塊看。<b>積極要件</b>兩個，缺一不可：「難於回復之損害」加「急迫情事」。單純要繳一筆錢，將來可以退還加利息，通常不算難於回復；房屋拆除、驅逐出國、商品銷毀，就是典型的難於回復。<b>消極要件</b>（但書）兩個，碰到任一個就不能停：對公益有重大影響，或原告之訴在法律上顯無理由。<b>發動方式</b>：法院得依職權，也得依聲請。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>要件</th><th>條文用語</th><th>白話</th></tr></thead>
+      <tbody>
+        <tr><td>積極要件 1</td><td>執行將發生難於回復之損害</td><td>等打完官司再補救已經來不及，錢賠不回來的那種損害</td></tr>
+        <tr><td>積極要件 2</td><td>有急迫情事</td><td>執行就在眼前，沒有時間等本案判決</td></tr>
+        <tr><td>消極要件 1</td><td>於公益有重大影響</td><td>停下來會傷到公眾（例如停止對危樓的拆除命令）</td></tr>
+        <tr><td>消極要件 2</td><td>原告之訴在法律上顯無理由</td><td>本案一看就會輸，沒有必要為它凍住處分</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：把「難於回復之損害」寫成「重大損害」。「重大損害」是第 298 條第 2 項定暫時狀態處分與第 237 條之 30 的用語，第 116 條用的是「難於回復」。考試會拿這兩個詞互換當錯誤選項。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：起訴前也能聲請（第 3 項），但有三處不同</h2>
+    <div class="law"><b class="art">第 116 條第 3 項</b>於行政訴訟起訴前，如原處分或決定之執行將發生難於回復之損害，且有急迫情事者，行政法院亦得依受處分人或訴願人之聲請，裁定停止執行。但於公益有重大影響者，不在此限。</div>
+    <p>訴願還在進行、還沒起訴，處分卻要執行了，怎麼辦？第 3 項讓你直接向行政法院聲請停止執行，不必等到起訴。積極要件跟第 2 項一樣，但有三個差異，每一個都是考點。</p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>訴訟繫屬中（第 2 項）</th><th>起訴前（第 3 項）</th></tr></thead>
+      <tbody>
+        <tr><th>誰能發動</th><td>法院依職權，或依聲請</td><td>只能依<b>聲請</b>，法院不能依職權</td></tr>
+        <tr><th>誰能聲請</th><td>當事人（條文未限制）</td><td>限<b>受處分人或訴願人</b></td></tr>
+        <tr><th>但書</th><td>公益重大影響；原告之訴在法律上顯無理由</td><td>只有<b>公益重大影響</b>一個</td></tr>
+        <tr><th>為什麼不同</th><td colspan="2">起訴前還沒有「原告之訴」，無從判斷訴在法律上有無理由；也還沒有訴訟繫屬，法院沒有依職權介入的基礎</td></tr>
+      </tbody>
+    </table></div>
+    <div class="law"><b class="art">第 117 條</b>前條規定，於確認行政處分無效之訴訟準用之。</div>
+    <p>撤銷訴訟的對象是「違法但有效」的處分，確認無效訴訟的對象是「自始無效」的處分。無效的處分照理不能執行，但機關未必這麼想，所以第 117 條讓確認無效之訴也能準用停止執行。注意它只準用於<b>確認處分無效</b>之訴，不包括第 6 條的其他確認訴訟。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：裁定前要問、裁定能停什麼、裁定後怎麼翻</h2>
+    <div class="law"><b class="art">第 116 條第 4 項</b>行政法院為前二項裁定前，應先徵詢當事人之意見。如原處分或決定機關已依職權或依聲請停止執行者，應為駁回聲請之裁定。</div>
+    <p>兩個「應」。第一，裁定前<b>應</b>先徵詢當事人意見，這是程序保障，不是「得」。第二，如果機關自己已經停止執行了，法院<b>應</b>駁回聲請，因為已經沒有停止的必要，不是「准許但無庸執行」。</p>
+    <div class="law"><b class="art">第 116 條第 5 項</b>停止執行之裁定，得停止原處分或決定之效力、處分或決定之執行或程序之續行之全部或部份。</div>
+    <p>停止執行不是只能「停止執行」。法院可以選三種對象：處分的<b>效力</b>、處分的<b>執行</b>、<b>程序之續行</b>，而且可以只停一部份。例如對「吊銷執照並命繳回」的處分，法院可以只停止「繳回」的執行，而讓吊銷的效力照常。</p>
+    <div class="law"><b class="art">第 118 條</b>停止執行之原因消滅，或有其他情事變更之情形，行政法院得依職權或依聲請撤銷停止執行之裁定。</div>
+    <div class="law"><b class="art">第 119 條</b>關於停止執行或撤銷停止執行之裁定，得為抗告。</div>
+    <p>停止執行是暫時措施，原因消滅或情事變更，法院得依職權或依聲請撤銷它。對停止執行、撤銷停止執行的裁定，不服都可以抗告；抗告期間依第 268 條是裁定送達後 10 日之不變期間。費用方面，第 98 條之 5 第 3 款規定聲請停止執行或撤銷停止執行之裁定，徵收裁判費<b>新臺幣 1,000 元</b>。</p>
+    <div class="note">整理一下「應」與「得」：徵詢意見是<b>應</b>、機關已停止則<b>應</b>駁回；停止執行本身是法院<b>得</b>裁定；撤銷停止執行是<b>得</b>依職權或依聲請。選擇題常把這些字對調。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲經營餐廳，衛生局以多次衛生檢查不合格為由，於 3 月 1 日作成「勒令停業 6 個月」處分並命自 3 月 15 日起生效。甲於 3 月 5 日提起訴願，訴願尚未決定。甲可以向行政法院聲請停止執行嗎？要件為何？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>訴願中、尚未起訴，可否向行政法院聲請停止執行；適用第 116 條第 2 項還是第 3 項。</dd>
+        <dt>條文</dt><dd>第 116 條第 1 項執行不停止原則；第 3 項起訴前得依受處分人或訴願人之聲請裁定停止執行，但於公益有重大影響者不在此限；第 4 項法院應先徵詢當事人意見。</dd>
+        <dt>涵攝</dt><dd>甲是受處分人也是訴願人，符合第 3 項聲請人資格。停業 6 個月將使餐廳失去客源、員工流失，縱使日後處分被撤銷也無法回復營業狀態，屬難於回復之損害；處分 3 月 15 日生效，有急迫情事。但書方面，若衛生局能證明餐廳有立即危害食品安全之虞，停止執行即對公益有重大影響，法院不得准許；本題多次檢查不合格但未達立即危害，尚難認有重大公益影響。</dd>
+        <dt>結論</dt><dd>甲得於起訴前依第 116 條第 3 項聲請停止執行，繳納裁判費 1,000 元（第 98 條之 5 第 3 款）；法院裁定前應徵詢衛生局與甲之意見。注意第 3 項沒有「原告之訴在法律上顯無理由」的但書，法院不能以甲的訴願顯無理由為由駁回。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙為公務員，遭服務機關作成免職處分，乙提起撤銷訴訟後向受訴法院聲請停止執行。審理中，服務機關主動函知乙「暫緩執行免職，待判決確定後再行處理」。法院應如何處理乙的聲請？若法院准許停止執行後，乙另案涉犯貪污罪被羈押，機關可以做什麼？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>機關已自行停止執行時法院的處理方式；停止執行裁定後情事變更的救濟。</dd>
+        <dt>條文</dt><dd>第 116 條第 4 項後段：原處分機關已依職權或依聲請停止執行者，應為駁回聲請之裁定。第 118 條：停止執行之原因消滅或有其他情事變更，行政法院得依職權或依聲請撤銷停止執行之裁定。第 119 條：對撤銷停止執行之裁定得抗告。</dd>
+        <dt>涵攝</dt><dd>機關函知暫緩執行，即屬「已依職權停止執行」，乙已無聲請停止執行之必要，法院不是准許也不是「無庸裁定」，而是應<b>駁回</b>聲請。若法院先前已准許停止執行，乙之後因涉犯貪污被羈押，使繼續停止免職效力的基礎發生變化，屬第 118 條「其他情事變更之情形」，機關得聲請法院撤銷停止執行之裁定，法院也得依職權撤銷。</dd>
+        <dt>結論</dt><dd>法院應依第 116 條第 4 項後段裁定駁回乙的聲請。情事變更時，機關得依第 118 條聲請撤銷停止執行，乙對撤銷裁定不服得依第 119 條於 10 日內抗告。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">1. 甲對縣政府 50 萬元罰鍰處分提起撤銷訴訟，繫屬中聲請停止執行。依第 116 條第 2 項，下列何者正確？</div>
+      <label><input type="radio" name="p1q1" value="A">提起撤銷訴訟後，原處分之執行即當然停止，無須聲請</label>
+      <label><input type="radio" name="p1q1" value="B">只要有急迫情事，法院即應裁定停止執行</label>
+      <label><input type="radio" name="p1q1" value="C">須執行將發生難於回復之損害且有急迫情事，且無公益重大影響或訴顯無理由之情形，法院得裁定停止執行</label>
+      <label><input type="radio" name="p1q1" value="D">法院僅得依聲請裁定，不得依職權為之</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 116 條第 2 項：難於回復之損害「且」有急迫情事，兩個積極要件並列；但書兩個消極要件；法院得依職權或依聲請。" data-diag='{"A":"第 116 條第 1 項是執行不停止原則，起訴不會自動停止執行。","B":"急迫情事只是其中一個積極要件，還要有難於回復之損害，而且是「得」不是「應」。","D":"訴訟繫屬中法院得依職權或依聲請；只能依聲請的是起訴前的第 3 項。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">2. 乙受主管機關「限期拆除違建」處分，提起訴願後、起訴前向行政法院聲請停止執行。關於第 116 條第 3 項，下列敘述何者正確？</div>
+      <label><input type="radio" name="p1q2" value="A">法院得依職權裁定停止執行</label>
+      <label><input type="radio" name="p1q2" value="B">法院得依受處分人或訴願人之聲請裁定停止執行，但於公益有重大影響者不在此限</label>
+      <label><input type="radio" name="p1q2" value="C">法院應審查乙將來之訴是否在法律上顯無理由，顯無理由者不得停止</label>
+      <label><input type="radio" name="p1q2" value="D">起訴前不得聲請停止執行，應待起訴後依第 2 項聲請</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 116 條第 3 項：起訴前亦得依受處分人或訴願人之聲請裁定停止執行，但書只有「於公益有重大影響」一個。" data-diag='{"A":"起訴前沒有訴訟繫屬，第 3 項只寫「依受處分人或訴願人之聲請」，沒有依職權。","C":"「原告之訴在法律上顯無理由」是第 2 項的但書；起訴前還沒有原告之訴，第 3 項沒有這個但書。","D":"第 3 項明文允許起訴前聲請，這正是它存在的目的。"}'></div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">3. 丙聲請停止執行，法院審理中發現原處分機關已依職權停止執行。法院應如何處理？</div>
+      <label><input type="radio" name="p1q3" value="A">裁定准許停止執行，以確認機關之停止</label>
+      <label><input type="radio" name="p1q3" value="B">裁定停止訴訟程序，待機關恢復執行再處理</label>
+      <label><input type="radio" name="p1q3" value="C">無庸裁定，逕行結案</label>
+      <label><input type="radio" name="p1q3" value="D">應為駁回聲請之裁定</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 116 條第 4 項後段：如原處分或決定機關已依職權或依聲請停止執行者，應為駁回聲請之裁定。" data-diag='{"A":"機關已停止，聲請已無必要，條文要求駁回而不是准許。","B":"第 116 條第 4 項沒有停止程序的設計，而是直接駁回。","C":"對聲請一定要有裁定；條文明文「應為駁回聲請之裁定」。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 7-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出假扣押保全的是什麼：公法上金錢給付的強制執行，未到期也能聲請</li>
+      <li>找得到管轄法院：本案管轄法院或假扣押標的所在地之地方行政法院，並知道「本案管轄法院」的定義</li>
+      <li>記得第 295 條的 10 日起訴義務，以及逾期的效果是「依聲請撤銷」</li>
+      <li>知道假扣押不當時債權人要賠什麼、怎麼賠（第 296 條）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：假扣押凍的是「錢」</h2>
+    <div class="law"><b class="art">第 293 條</b>Ⅰ 為保全公法上金錢給付之強制執行，得聲請假扣押。<br>Ⅱ 前項聲請，就未到履行期之給付，亦得為之。</div>
+    <p>假扣押的「假」是「暫時」的意思，不是「假的」。情境是：你對對方有一筆<b>公法上金錢債權</b>（例如公法上契約的給付、溢領補助的返還），本案還要打很久，但對方正在脫產。你聲請假扣押，法院裁定後就先把對方的財產凍住，等本案判決確定再依第 305 條強制執行。</p>
+    <p>第 2 項說「未到履行期之給付」也可以。還沒到期不表示不用保全，對方現在就在搬錢，等到期就什麼都沒了。這和第 8 條一般給付訴訟的關係是：本案通常就是一般給付訴訟，假扣押是它的「前哨」。</p>
+    <div class="note">保全程序這一編（第七編）管的是「將來能不能執行」，不是「處分能不能停下來」。前一節的停止執行是防守，這一節的假扣押是進攻方的保險。兩者對象不同，下一節第 299 條會把界線畫清楚。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：向哪一個法院聲請</h2>
+    <div class="law"><b class="art">第 294 條</b>Ⅰ 假扣押之聲請，由管轄本案之行政法院或假扣押標的所在地之地方行政法院管轄。<br>Ⅱ 管轄本案之行政法院為訴訟已繫屬或應繫屬之第一審法院。<br>Ⅲ 假扣押之標的如係債權，以債務人住所或擔保之標的所在地，為假扣押標的所在地。</div>
+    <p>兩個選項，聲請人可以挑。第一是<b>管轄本案之行政法院</b>，第 2 項給了定義：訴訟「已繫屬」或「應繫屬」的第一審法院。也就是說本案還沒起訴也沒關係，看它將來應該在哪個第一審法院起訴。第二是<b>假扣押標的所在地之地方行政法院</b>，方便就近保全。</p>
+    <p>第 3 項處理標的是「債權」的情形。債權沒有實體位置，條文規定以<b>債務人住所</b>或<b>擔保之標的所在地</b>當作標的所在地。注意這裡的債務人是指「被扣押的那筆債權的債務人」，也就是第三債務人。</p>
+    <div class="warn">常錯：寫「假扣押由高等行政法院管轄」或「由地方行政法院專屬管轄」。第 294 條第 1 項是兩個管轄法院擇一，而且「本案管轄法院」可能是高等行政訴訟庭也可能是地方行政訴訟庭，要看本案金額（第 104 條之 1，第 1 課）。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：拿到裁定後，10 日內要起訴</h2>
+    <div class="law"><b class="art">第 295 條</b>假扣押裁定後，尚未提起給付之訴者，應於裁定送達後十日內提起；逾期未起訴者，行政法院應依聲請撤銷假扣押裁定。</div>
+    <p>假扣押是為本案服務的，不能只凍著對方的財產卻不打官司。所以本案尚未起訴的，裁定送達後<b>10 日內</b>要提起給付之訴。逾期的效果是「行政法院<b>應依聲請</b>撤銷」：要有人（通常是債務人）聲請，法院不會自己動手；但一經聲請，法院沒有裁量空間，是「應」撤銷。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>數字</th><th>條文</th><th>內容</th></tr></thead>
+      <tbody>
+        <tr><td><b>10 日</b></td><td>第 295 條</td><td>假扣押裁定送達後起訴的期限（本案尚未起訴時）</td></tr>
+        <tr><td><b>10 日</b></td><td>第 268 條</td><td>對裁定抗告的不變期間，假扣押裁定與停止執行裁定都適用</td></tr>
+        <tr><td><b>1,000 元</b></td><td>第 98 條之 5 第 6 款</td><td>聲請假扣押、假處分或撤銷假扣押、假處分之裁定的裁判費</td></tr>
+        <tr><td><b>1,000 元</b></td><td>第 98 條之 5 第 3 款</td><td>聲請停止執行或撤銷停止執行之裁定的裁判費</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tip">國考用法：第 295 條的 10 日不是「不變期間」的用語，而是起訴義務的期限，效果是撤銷假扣押而不是起訴被駁回。不要和第 106 條的 2 個月不變期間混在一起寫。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：扣錯了要賠，而且可以在本案判決裡一起判</h2>
+    <div class="law"><b class="art">第 296 條</b>Ⅰ 假扣押裁定因自始不當而撤銷，或因前條及民事訴訟法第五百三十條第三項之規定而撤銷者，債權人應賠償債務人因假扣押或供擔保所受之損害。<br>Ⅱ 假扣押所保全之本案請求已起訴者，前項賠償，行政法院於言詞辯論終結前，應依債務人之聲明，於本案判決內命債權人為賠償；債務人未聲明者，應告以得為聲明。</div>
+    <p>假扣押是先凍再說，對債務人的影響很大，所以設了<b>無過失的損害賠償責任</b>：三種撤銷情形（自始不當、第 295 條逾期未起訴、民事訴訟法第 530 條第 3 項債權人自己聲請撤銷），債權人都要賠償債務人因假扣押或供擔保所受的損害，不問債權人有無過失。</p>
+    <p>第 2 項是程序上的方便：本案已經起訴的話，債務人可以在言詞辯論終結前聲明，法院就在<b>本案判決裡</b>一併命債權人賠償，不必另外打一場官司。債務人沒聲明的，法院「應告以得為聲明」，這是闡明義務。</p>
+    <div class="law"><b class="art">第 297 條</b>民事訴訟法第五百二十三條、第五百二十五條至第五百二十八條及第五百三十條之規定，於本編假扣押程序準用之。</div>
+    <p>假扣押的細節（原因、聲請程式、釋明與擔保、裁定內容、撤銷）行政訴訟法沒有重寫，直接準用民事訴訟法的這幾條。考行政訴訟法時知道「有準用、準用哪幾條」就夠了。</p>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　國立 A 大學與公費生丁簽訂公費醫學生契約，約定畢業後服務 6 年，違約應返還公費並加計賠償金共 480 萬元。丁畢業後拒不服務，並開始出售名下不動產、準備移居海外。A 大學尚未起訴。A 大學可以做什麼？向哪個法院聲請？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>公法上契約的金錢給付請求，起訴前可否聲請假扣押；管轄法院如何決定。</dd>
+        <dt>條文</dt><dd>第 8 條第 1 項後段（因公法上契約發生之給付得提給付訴訟）；第 293 條第 1 項（為保全公法上金錢給付之強制執行得聲請假扣押）；第 294 條（管轄本案之行政法院或標的所在地之地方行政法院；本案管轄法院為應繫屬之第一審法院）；第 295 條（裁定送達後 10 日內起訴）。</dd>
+        <dt>涵攝</dt><dd>公費醫學生契約以培育公共醫療人力為目的，屬公法上契約，A 大學對丁的 480 萬元請求是公法上金錢給付。丁出售不動產、準備出國，有日後不能強制執行之虞，A 大學得聲請假扣押。本案尚未起訴，但「應繫屬」的第一審法院可以確定：480 萬元超過 150 萬元，依第 104 條之 1 第 1 項本文由高等行政訴訟庭為第一審，故 A 大學得向該高等行政法院聲請；也可以向丁不動產所在地的地方行政法院聲請。</dd>
+        <dt>結論</dt><dd>A 大學得依第 293 條聲請假扣押，繳納裁判費 1,000 元（第 98 條之 5 第 6 款），管轄法院依第 294 條擇一。裁定送達後 A 大學應於 10 日內提起一般給付訴訟，否則丁得聲請撤銷假扣押裁定（第 295 條）。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　承上，法院於 4 月 1 日將假扣押裁定送達 A 大學，A 大學於 4 月 20 日才起訴。丁有什麼主張？若本案審理後認定 A 大學的請求自始不存在，丁因假扣押無法處分不動產所受的損失怎麼辦？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>逾 10 日起訴的效果；假扣押不當的損害賠償及其程序。</dd>
+        <dt>條文</dt><dd>第 295 條後段：逾期未起訴者，行政法院應依聲請撤銷假扣押裁定。第 296 條第 1 項：因前條規定而撤銷者，債權人應賠償債務人因假扣押或供擔保所受之損害。第 296 條第 2 項：本案已起訴者，法院於言詞辯論終結前應依債務人之聲明於本案判決內命賠償。</dd>
+        <dt>涵攝</dt><dd>4 月 1 日送達，10 日期限至 4 月 11 日，A 大學 4 月 20 日起訴已逾期。丁得聲請法院撤銷假扣押裁定，法院「應」撤銷；但法院不會依職權主動撤銷，丁要自己聲請。假扣押因第 295 條被撤銷後，依第 296 條第 1 項 A 大學應賠償丁的損害，不以 A 大學有過失為必要。由於本案已起訴，丁得於言詞辯論終結前聲明，由法院在本案判決內一併命 A 大學賠償；丁未聲明時，法院應告知其得為聲明。</dd>
+        <dt>結論</dt><dd>丁得聲請撤銷假扣押裁定並請求賠償；賠償可在本案判決內一併解決，不須另行起訴。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">4. 關於行政訴訟法第 293 條假扣押，下列敘述何者正確？</div>
+      <label><input type="radio" name="p2q1" value="A">為保全行政處分之執行，得聲請假扣押</label>
+      <label><input type="radio" name="p2q1" value="B">為保全公法上金錢給付之強制執行，得聲請假扣押，未到履行期之給付亦得為之</label>
+      <label><input type="radio" name="p2q1" value="C">僅已到履行期之公法上金錢給付，始得聲請假扣押</label>
+      <label><input type="radio" name="p2q1" value="D">為保全公法上非金錢給付之強制執行，亦得聲請假扣押</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 293 條第 1 項：為保全公法上金錢給付之強制執行，得聲請假扣押。第 2 項：就未到履行期之給付，亦得為之。" data-diag='{"A":"對行政處分之執行要阻止的是停止執行（第 116 條），假扣押是保全金錢給付的強制執行。","C":"第 293 條第 2 項明文未到履行期亦得聲請。","D":"非金錢的公法上權利保全走第 298 條第 1 項假處分，不是假扣押。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">5. 甲機關對乙有公法上金錢債權 200 萬元，本案尚未起訴，乙住所在臺南，乙對丙銀行的存款債權欲被扣押。依第 294 條，下列何者<b>不是</b>甲得聲請假扣押的法院？</div>
+      <label><input type="radio" name="p2q2" value="A">最高行政法院</label>
+      <label><input type="radio" name="p2q2" value="B">本案應繫屬之第一審行政法院</label>
+      <label><input type="radio" name="p2q2" value="C">乙住所地之地方行政法院</label>
+      <label><input type="radio" name="p2q2" value="D">擔保之標的所在地之地方行政法院（如該債權設有擔保）</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 294 條第 1 項：管轄本案之行政法院或假扣押標的所在地之地方行政法院。第 2 項：本案管轄法院為訴訟已繫屬或應繫屬之第一審法院。第 3 項：標的為債權時，以債務人住所或擔保之標的所在地為標的所在地。最高行政法院是法律審，不是第一審。" data-diag='{"B":"第 294 條第 2 項明定管轄本案之行政法院為訴訟已繫屬或應繫屬之第一審法院，本案未起訴也可以。","C":"第 294 條第 3 項：假扣押標的如係債權，以債務人住所為標的所在地，所以乙住所地的地方行政法院有管轄權。","D":"第 294 條第 3 項另一個選項就是擔保之標的所在地。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">6. 丁取得假扣押裁定，裁定於 5 月 2 日送達，丁遲至 5 月 20 日仍未對債務人戊提起給付之訴。下列何者正確？</div>
+      <label><input type="radio" name="p2q3" value="A">假扣押裁定當然失效，無須任何人聲請</label>
+      <label><input type="radio" name="p2q3" value="B">行政法院應依職權撤銷假扣押裁定</label>
+      <label><input type="radio" name="p2q3" value="C">戊得聲請行政法院撤銷假扣押裁定，法院應撤銷之，丁並應賠償戊因假扣押所受之損害</label>
+      <label><input type="radio" name="p2q3" value="D">丁只要在 30 日內補行起訴，假扣押裁定即不受影響</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 295 條：裁定送達後十日內起訴，逾期未起訴者，行政法院應依聲請撤銷假扣押裁定。第 296 條第 1 項：因前條規定而撤銷者，債權人應賠償債務人因假扣押或供擔保所受之損害。" data-diag='{"A":"第 295 條的效果是「應依聲請撤銷」，不是當然失效，要有人聲請。","B":"條文寫的是依「聲請」撤銷，法院不依職權主動撤銷。","D":"期限是 10 日不是 30 日，而且逾期後債務人隨時可以聲請撤銷。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 7-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>分得清第 298 條第 1 項的保全性假處分與第 2 項的定暫時狀態處分，知道第 3 項「先為一定給付」只接在第 2 項之後</li>
+      <li>背得出第 299 條：能聲請停止執行的，就不能聲請假處分，並能說明這條怎麼切出兩大軌道</li>
+      <li>找得到假處分的管轄法院（第 300 條），記得第 301 條對「擔保代釋明」的限制</li>
+      <li>知道都市計畫審查程序裡的暫時權利保護（第 237 條之 30）準用哪些條文</li>
+      <li>用選擇器判斷任何情境該聲請停止執行、假扣押、假處分還是定暫時狀態處分</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：假處分有兩種，第 3 項只跟著第 2 項</h2>
+    <div class="law"><b class="art">第 298 條</b>Ⅰ 公法上之權利因現狀變更，有不能實現或甚難實現之虞者，為保全強制執行，得聲請假處分。<br>Ⅱ 於爭執之公法上法律關係，為防止發生重大之損害或避免急迫之危險而有必要時，得聲請為定暫時狀態之處分。<br>Ⅲ 前項處分，得命先為一定之給付。<br>Ⅳ 行政法院為假處分裁定前，得訊問當事人、關係人或為其他必要之調查。</div>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>保全性假處分（第 1 項）</th><th>定暫時狀態處分（第 2 項）</th></tr></thead>
+      <tbody>
+        <tr><th>對象</th><td>公法上之<b>權利</b>（金錢以外）</td><td>爭執之公法上<b>法律關係</b></td></tr>
+        <tr><th>要件</th><td>因現狀變更，有不能實現或甚難實現之虞</td><td>為防止發生重大之損害或避免急迫之危險而有必要</td></tr>
+        <tr><th>目的</th><td>保全將來的強制執行（維持現狀）</td><td>暫時定一個法律狀態（可以改變現狀）</td></tr>
+        <tr><th>得命先為給付</th><td>條文未規定</td><td>第 3 項：<b>得命先為一定之給付</b></td></tr>
+        <tr><th>裁定前調查</th><td colspan="2">第 4 項：<b>得</b>訊問當事人、關係人或為其他必要之調查（注意是「得」，不像第 116 條第 4 項的「應」徵詢）</td></tr>
+      </tbody>
+    </table></div>
+    <p>第 1 項是假扣押的非金錢版：你有一個公法上權利（例如請求機關交付某份文件、請求返還扣押物），怕現狀變了就拿不到，所以先凍住現狀。第 2 項野心更大：雙方對某個公法上法律關係有爭執（例如契約關係是否存在、身分是否仍有效），等判決太慢會出大事，法院先暫時定一個狀態，甚至可以命對方<b>先給付</b>（第 3 項，例如先發給生活津貼）。</p>
+    <div class="warn">常錯：把第 3 項「得命先為一定之給付」掛到第 1 項。條文寫「前項處分」，指的是第 2 項定暫時狀態處分。保全性假處分的目的是維持現狀，不會命人先給付。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 299 條是整課的分水嶺</h2>
+    <div class="law"><b class="art">第 299 條</b>得依第一百十六條請求停止原處分或決定之執行者，不得聲請為前條之假處分。</div>
+    <p>暫時權利保護有兩大軌道。<b>軌道一</b>是停止執行：對象是行政處分或決定，功能是消極地「不要動」。<b>軌道二</b>是保全程序：對象是處分以外的公法上金錢給付（假扣押）、公法上權利與法律關係（假處分），功能可以是積極地「先給我」。第 299 條說：只要你爭執的是行政處分、可以走停止執行，就<b>不能</b>轉頭去聲請假處分。立法者要的是「處分的事情只在停止執行這條軌道處理」，避免人民用假處分繞過第 116 條較嚴格的要件。</p>
+    <div class="flow">
+      <div class="step"><b>爭執對象是行政處分或決定</b>只能走第 116 條停止執行（含第 117 條確認無效之訴準用）。第 299 條排除假處分。</div>
+      <div class="step"><b>公法上金錢給付</b>要保全將來的強制執行：第 293 條假扣押。</div>
+      <div class="step"><b>其他公法上權利</b>怕現狀變更不能實現：第 298 條第 1 項假處分。</div>
+      <div class="step"><b>爭執之公法上法律關係</b>要防重大損害、避急迫危險：第 298 條第 2 項定暫時狀態處分，得命先為給付（第 3 項）。</div>
+    </div>
+    <p>有一個地方學說上有爭議，點到為止：<b>課予義務訴訟</b>的情形。甲申請補助被駁回，停止執行「駁回處分」對甲毫無幫助，因為停了駁回也不會變成核准；甲真正需要的是法院暫時命機關先發錢。這能不能用第 298 條第 2、3 項的定暫時狀態處分？文義上甲「得依第 116 條請求停止執行」，第 299 條似乎排除；學說上有認為第 299 條應限於停止執行「有實益」的情形，消極處分的爭議仍得聲請定暫時狀態處分。考試寫到這裡，把兩種看法都點出來即可。</p>
+    <div class="tip">國考用法：遇到暫時權利保護的題目，第一句先判斷「爭執對象是不是行政處分」。是，寫第 116 條與第 299 條排除假處分；不是，再分金錢（第 293 條）或非金錢（第 298 條）。這個順序能幫你避開 80% 的陷阱。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：管轄、釋明與準用</h2>
+    <div class="law"><b class="art">第 300 條</b>假處分之聲請，由管轄本案之行政法院管轄。但有急迫情形時，得由請求標的所在地之地方行政法院管轄。</div>
+    <p>和假扣押（第 294 條）比較：假扣押是兩個法院<b>擇一</b>；假處分原則上只有<b>本案管轄法院</b>，要有「急迫情形」才能改向請求標的所在地之地方行政法院聲請。「本案管轄法院」的定義依第 302 條準用第 294 條第 2 項，仍是訴訟已繫屬或應繫屬之第一審法院。</p>
+    <div class="law"><b class="art">第 301 條</b>關於假處分之請求及原因，非有特別情事，不得命供擔保以代釋明。</div>
+    <p>民事假處分常見「釋明不足，供擔保代替」。行政訴訟法第 301 條反過來限制：假處分的請求與原因要由聲請人<b>釋明</b>，沒有特別情事，法院不能命供擔保來代替釋明。理由是公法事件牽涉公益，不能靠「有錢就能凍」。</p>
+    <div class="law"><b class="art">第 302 條</b>除別有規定外，關於假扣押之規定，於假處分準用之。</div>
+    <div class="law"><b class="art">第 303 條</b>民事訴訟法第五百三十五條及第五百三十六條之規定，於本編假處分程序準用之。</div>
+    <p>所以假扣押那一節的第 295 條 10 日起訴義務、第 296 條損害賠償，在假處分都準用（第 302 條）。第 303 條再準用民事訴訟法關於假處分方法與撤銷的兩條。裁判費與假扣押相同，第 98 條之 5 第 6 款，1,000 元。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：都市計畫也有自己的暫時權利保護</h2>
+    <div class="law"><b class="art">第 237 條之 30</b>Ⅰ 於爭執之都市計畫，為防止發生重大之損害或避免急迫之危險而有必要時，得聲請管轄本案之行政法院暫時停止適用或執行，或為其他必要之處置。<br>Ⅱ 前項情形，準用第二百九十五條至第二百九十七條、第二百九十八條第三項、第四項、第三百零一條及第三百零三條之規定。<br>Ⅲ 行政法院裁定准許第一項之聲請者，準用前條第一項規定。該裁定經廢棄、變更或撤銷者，亦同。</div>
+    <p>都市計畫不是行政處分，不能用第 116 條；它也不是單純的金錢給付或法律關係爭執。所以第 237 條之 30 為都市計畫審查程序設了專屬的暫時保護：<b>暫時停止適用或執行</b>，或為其他必要處置。要件用的是第 298 條第 2 項的語言（重大損害、急迫危險、有必要）。管轄本案之行政法院依第 237 條之 19 是都市計畫區所在地之高等行政法院。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>準用的條文</th><th>內容</th></tr></thead>
+      <tbody>
+        <tr><td>第 295 條至第 297 條</td><td>10 日內起訴、損害賠償、準用民事訴訟法假扣押規定</td></tr>
+        <tr><td>第 298 條第 3、4 項</td><td>得命先為一定之給付；裁定前得訊問、調查</td></tr>
+        <tr><td>第 301 條</td><td>非有特別情事不得命供擔保代釋明</td></tr>
+        <tr><td>第 303 條</td><td>準用民事訴訟法第 535、536 條</td></tr>
+        <tr><td>第 237 條之 29 第 1 項（第 3 項準用）</td><td>准許之裁定正本送達原發布機關，由其依都市計畫發布方式公告；裁定經廢棄、變更、撤銷者亦同</td></tr>
+      </tbody>
+    </table></div>
+    <p>費用上第 98 條之 5 第 7 款單獨列出「第二百三十七條之三十聲請事件」，徵收裁判費 1,000 元。第 10 課講都市計畫審查程序時會再回來。</p>
+  </div>
+
+  <div class="card">
+    <h2>小工具：我該聲請哪一種</h2>
+    <p class="small muted">回答三個問題，看該走哪一條軌道、要件是什麼、向哪個法院聲請、引哪幾條。選到行政處分時會特別標出第 299 條的排他效果。</p>
+    <div class="toolbox">
+      <fieldset><legend>1. 你在爭執的對象是什麼</legend>
+        <label><input type="radio" name="tObj" value="act" checked>行政處分或決定（含駁回申請的處分）</label>
+        <label><input type="radio" name="tObj" value="money">公法上金錢給付（我是債權人，怕對方脫產）</label>
+        <label><input type="radio" name="tObj" value="rel">處分以外的公法上權利或法律關係</label>
+        <label><input type="radio" name="tObj" value="plan">都市計畫</label>
+      </fieldset>
+      <fieldset><legend>2. 本案起訴了嗎</legend>
+        <label><input type="radio" name="tStage" value="pre" checked>還沒起訴（訴願中或準備中）</label>
+        <label><input type="radio" name="tStage" value="pending">已起訴，訴訟繫屬中</label>
+      </fieldset>
+      <fieldset><legend>3. 你想達到什麼目的</legend>
+        <label><input type="radio" name="tAim" value="stop" checked>阻止處分發生效力或被執行</label>
+        <label><input type="radio" name="tAim" value="secure">保全將來的強制執行（維持現狀）</label>
+        <label><input type="radio" name="tAim" value="interim">暫定法律關係，甚至先取得給付</label>
+      </fieldset>
+      <button class="btn" id="tpGo">判斷</button>
+      <div class="result" id="tpRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　己為公立大學學生，因連續兩學期學業成績不及格遭學校作成退學處分。己提起訴願後，向行政法院聲請定暫時狀態處分，請求「暫時保有學生身分並得繼續選課」。法院應如何處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>對行政處分不服，可否以假處分或定暫時狀態處分的方式尋求暫時保護；第 299 條的適用。</dd>
+        <dt>條文</dt><dd>第 299 條：得依第 116 條請求停止原處分之執行者，不得聲請為前條之假處分。第 116 條第 3 項：起訴前得依受處分人或訴願人之聲請裁定停止執行。第 116 條第 5 項：停止執行之裁定得停止原處分之效力。</dd>
+        <dt>涵攝</dt><dd>退學處分是行政處分，己是受處分人兼訴願人，得依第 116 條第 3 項聲請停止執行；停止退學處分的效力，己就能保有學生身分並繼續選課，與他聲請定暫時狀態處分想達到的效果相同，停止執行有實益。既然己「得依第 116 條請求停止執行」，依第 299 條即不得聲請假處分。</dd>
+        <dt>結論</dt><dd>法院應以第 299 條為由駁回己的假處分聲請。己應改依第 116 條第 3 項聲請停止執行，並主張退學將使其失去學籍、學業中斷，屬難於回復之損害且有急迫情事，而停止執行對公益無重大影響。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　辛公司與環保署簽訂公法上契約，受委託辦理某類機動車輛排氣定期檢驗，契約期間至 115 年底。114 年 3 月環保署函稱契約已因辛違約而終止，並通知各車主改至其他檢驗站。辛否認違約，主張契約關係仍存在，但車主已大量流失、員工即將離職。辛可以聲請什麼？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>公法上契約關係存否的爭執，起訴前的暫時權利保護。</dd>
+        <dt>條文</dt><dd>第 298 條第 2 項：於爭執之公法上法律關係，為防止發生重大之損害或避免急迫之危險而有必要時，得聲請為定暫時狀態之處分。第 298 條第 3 項得命先為一定之給付。第 300 條管轄本案之行政法院，急迫時得由請求標的所在地之地方行政法院。第 301 條非有特別情事不得命供擔保代釋明。第 302 條準用第 295 條 10 日起訴。</dd>
+        <dt>涵攝</dt><dd>環保署的終止表示是契約上的意思表示，不是行政處分，辛無從依第 116 條聲請停止執行，第 299 條不生排除效果。雙方對「契約關係是否仍存在」有爭執，屬爭執之公法上法律關係；車主流失、員工離職將使辛即使日後勝訴也難以回復營運，屬重大損害且有急迫危險。辛得聲請定暫時狀態處分，請求法院暫時定「契約關係存在、環保署不得通知車主改站」的狀態。辛須釋明請求與原因，法院非有特別情事不得命供擔保代替。</dd>
+        <dt>結論</dt><dd>辛得依第 298 條第 2 項向管轄本案之行政法院聲請定暫時狀態處分（裁判費 1,000 元，第 98 條之 5 第 6 款）；裁定送達後 10 日內應提起本案訴訟（一般給付或確認法律關係存在之訴），否則環保署得聲請撤銷（第 302 條準用第 295 條）。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="D">
+      <div class="stem">7. 關於第 298 條，下列敘述何者正確？</div>
+      <label><input type="radio" name="p3q1" value="A">保全性假處分（第 1 項）得命相對人先為一定之給付</label>
+      <label><input type="radio" name="p3q1" value="B">定暫時狀態處分以「難於回復之損害且有急迫情事」為要件</label>
+      <label><input type="radio" name="p3q1" value="C">行政法院為假處分裁定前，應先徵詢當事人意見</label>
+      <label><input type="radio" name="p3q1" value="D">於爭執之公法上法律關係，為防止發生重大之損害或避免急迫之危險而有必要時，得聲請定暫時狀態之處分，並得命先為一定之給付</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 298 條第 2 項定暫時狀態處分的要件是「重大之損害或急迫之危險而有必要」；第 3 項「前項處分得命先為一定之給付」接在第 2 項之後。" data-diag='{"A":"第 3 項的「前項處分」是指第 2 項定暫時狀態處分，保全性假處分不命先為給付。","B":"「難於回復之損害且有急迫情事」是第 116 條停止執行的要件；第 298 條第 2 項用「重大之損害或急迫之危險」。","C":"第 298 條第 4 項是「得」訊問當事人、關係人或為其他必要之調查；「應先徵詢」是第 116 條第 4 項。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">8. 甲對市政府命其「限期改善否則斷水斷電」之處分不服，起訴前向行政法院聲請假處分，請求市政府暫不得斷水斷電。法院應如何處理？</div>
+      <label><input type="radio" name="p3q2" value="A">依第 298 條第 1 項准許假處分</label>
+      <label><input type="radio" name="p3q2" value="B">依第 299 條駁回，因甲得依第 116 條請求停止執行</label>
+      <label><input type="radio" name="p3q2" value="C">依第 298 條第 2 項為定暫時狀態處分</label>
+      <label><input type="radio" name="p3q2" value="D">因尚未起訴，裁定駁回並告知起訴後再聲請</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 299 條：得依第 116 條請求停止原處分或決定之執行者，不得聲請為前條之假處分。限期改善處分是行政處分，甲得依第 116 條第 3 項於起訴前聲請停止執行，故不得聲請假處分。" data-diag='{"A":"對象是行政處分，第 299 條排除假處分。","C":"定暫時狀態處分也是第 298 條的假處分，同受第 299 條排除。","D":"起訴前並非不能尋求暫時保護；第 116 條第 3 項允許起訴前聲請停止執行，問題在於甲選錯了工具。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">9. 關於假處分之管轄與釋明，下列何者正確？</div>
+      <label><input type="radio" name="p3q3" value="A">由管轄本案之行政法院管轄，但有急迫情形時得由請求標的所在地之地方行政法院管轄；關於請求及原因非有特別情事不得命供擔保以代釋明</label>
+      <label><input type="radio" name="p3q3" value="B">由管轄本案之行政法院或請求標的所在地之地方行政法院擇一管轄，聲請人得任意選擇</label>
+      <label><input type="radio" name="p3q3" value="C">聲請人釋明不足時，法院應命供擔保以代釋明</label>
+      <label><input type="radio" name="p3q3" value="D">專屬最高行政法院管轄</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 300 條：假處分由管轄本案之行政法院管轄，但有急迫情形時得由請求標的所在地之地方行政法院管轄。第 301 條：非有特別情事，不得命供擔保以代釋明。" data-diag='{"B":"「擇一」是假扣押第 294 條的設計；假處分第 300 條原則只有本案管轄法院，急迫才有但書。","C":"第 301 條剛好相反：非有特別情事，不得命供擔保以代釋明。","D":"保全程序的管轄在第一審法院（第 294 條第 2 項、第 300 條），最高行政法院是法律審。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>章末測驗（選擇 10 題 + 實例 2 題）</h2>
+    <p>選擇題全部作答後按「交卷」，10 題答對 8 題過關。實例題先自己寫，再展開參考答案對照，自評後按「我寫到了」或「要再加強」。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 依第 116 條第 1 項，原處分或決定之執行，與提起行政訴訟的關係為：</div>
+      <label><input type="radio" name="qz1" value="A">因提起行政訴訟而當然停止</label>
+      <label><input type="radio" name="qz1" value="B">除法律另有規定外，不因提起行政訴訟而停止</label>
+      <label><input type="radio" name="qz1" value="C">由原處分機關決定是否停止</label>
+      <label><input type="radio" name="qz1" value="D">經原告聲請即當然停止</label>
+      <div class="fb" data-exp="第 116 條第 1 項：執行不停止原則。停止執行要靠第 2、3 項的法院裁定。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">2. 訴訟繫屬中聲請停止執行，下列何者<b>不是</b>第 116 條第 2 項的要件或但書？</div>
+      <label><input type="radio" name="qz2" value="A">執行將發生難於回復之損害</label>
+      <label><input type="radio" name="qz2" value="B">有急迫情事</label>
+      <label><input type="radio" name="qz2" value="C">原告已供擔保</label>
+      <label><input type="radio" name="qz2" value="D">原告之訴在法律上非顯無理由</label>
+      <div class="fb" data-exp="第 116 條第 2 項沒有供擔保的要求。積極要件是難於回復之損害且有急迫情事，但書是公益重大影響與訴顯無理由。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">3. 起訴前聲請停止執行（第 116 條第 3 項）與繫屬中（第 2 項）的差異，下列何者正確？</div>
+      <label><input type="radio" name="qz3" value="A">起訴前法院得依職權停止執行，繫屬中僅得依聲請</label>
+      <label><input type="radio" name="qz3" value="B">起訴前的但書多了「原告之訴在法律上顯無理由」</label>
+      <label><input type="radio" name="qz3" value="C">起訴前任何利害關係人均得聲請</label>
+      <label><input type="radio" name="qz3" value="D">起訴前限受處分人或訴願人聲請，且但書只有「於公益有重大影響」</label>
+      <div class="fb" data-exp="第 116 條第 3 項：依受處分人或訴願人之聲請，但於公益有重大影響者不在此限。沒有依職權、沒有顯無理由但書。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">4. 關於第 116 條第 4、5 項與第 118、119 條，下列何者正確？</div>
+      <label><input type="radio" name="qz4" value="A">法院裁定前應先徵詢當事人意見；停止執行之裁定得僅停止處分效力之一部份；對停止執行之裁定得抗告</label>
+      <label><input type="radio" name="qz4" value="B">法院裁定前得徵詢當事人意見；停止執行必須停止處分之全部效力</label>
+      <label><input type="radio" name="qz4" value="C">停止執行之裁定不得抗告，但撤銷停止執行之裁定得抗告</label>
+      <label><input type="radio" name="qz4" value="D">撤銷停止執行僅得依聲請為之，法院不得依職權撤銷</label>
+      <div class="fb" data-exp="第 116 條第 4 項「應先徵詢」；第 5 項得停止效力、執行或程序續行之全部或部份；第 118 條得依職權或依聲請撤銷；第 119 條兩種裁定均得抗告。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">5. 第 117 條規定停止執行之規定準用於何種訴訟？</div>
+      <label><input type="radio" name="qz5" value="A">一般給付訴訟</label>
+      <label><input type="radio" name="qz5" value="B">確認公法上法律關係成立或不成立之訴訟</label>
+      <label><input type="radio" name="qz5" value="C">確認行政處分無效之訴訟</label>
+      <label><input type="radio" name="qz5" value="D">課予義務訴訟</label>
+      <div class="fb" data-exp="第 117 條：前條規定，於確認行政處分無效之訴訟準用之。只有這一種。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">6. 甲機關對乙有公法上金錢債權，履行期尚未屆至，乙有脫產之虞。甲得：</div>
+      <label><input type="radio" name="qz6" value="A">聲請停止執行</label>
+      <label><input type="radio" name="qz6" value="B">聲請假扣押，第 293 條第 2 項明定未到履行期之給付亦得為之</label>
+      <label><input type="radio" name="qz6" value="C">待履行期屆至後始得聲請假扣押</label>
+      <label><input type="radio" name="qz6" value="D">聲請定暫時狀態處分命乙先為給付</label>
+      <div class="fb" data-exp="第 293 條：為保全公法上金錢給付之強制執行得聲請假扣押，就未到履行期之給付亦得為之。金錢給付走假扣押，不走假處分。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">7. 第 294 條所稱「管轄本案之行政法院」指：</div>
+      <label><input type="radio" name="qz7" value="A">最高行政法院</label>
+      <label><input type="radio" name="qz7" value="B">高等行政法院高等行政訴訟庭</label>
+      <label><input type="radio" name="qz7" value="C">假扣押標的所在地之地方行政法院</label>
+      <label><input type="radio" name="qz7" value="D">訴訟已繫屬或應繫屬之第一審法院</label>
+      <div class="fb" data-exp="第 294 條第 2 項。本案未起訴也可以，看將來「應繫屬」的第一審法院。標的所在地之地方行政法院是另一個擇一選項，不是「本案管轄法院」的定義。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">8. 丙取得假扣押裁定後逾 10 日未提起給付之訴，債務人丁聲請撤銷。下列何者正確？</div>
+      <label><input type="radio" name="qz8" value="A">法院應撤銷假扣押裁定，丙並應賠償丁因假扣押或供擔保所受之損害</label>
+      <label><input type="radio" name="qz8" value="B">法院得斟酌情形決定是否撤銷</label>
+      <label><input type="radio" name="qz8" value="C">法院應撤銷，但丙無過失時不負賠償責任</label>
+      <label><input type="radio" name="qz8" value="D">丙得請求法院再給 10 日補行起訴</label>
+      <div class="fb" data-exp="第 295 條後段「應依聲請撤銷」；第 296 條第 1 項因前條規定而撤銷者，債權人應賠償債務人所受損害，不以過失為要件。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">9. 戊與機關就公法上契約關係是否存續有爭執，為避免急迫之危險，戊聲請法院暫定契約關係存在並命機關先給付每月津貼。此屬：</div>
+      <label><input type="radio" name="qz9" value="A">第 116 條停止執行</label>
+      <label><input type="radio" name="qz9" value="B">第 293 條假扣押</label>
+      <label><input type="radio" name="qz9" value="C">第 298 條第 2 項定暫時狀態處分，並依第 3 項命先為一定之給付</label>
+      <label><input type="radio" name="qz9" value="D">第 298 條第 1 項保全性假處分</label>
+      <div class="fb" data-exp="爭執的是公法上法律關係（契約存續），目的在暫定狀態並先取得給付，正是第 298 條第 2 項加第 3 項。沒有行政處分，第 299 條不排除。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">10. 關於第 237 條之 30 都市計畫之暫時停止適用或執行，下列何者正確？</div>
+      <label><input type="radio" name="qz10" value="A">應依第 116 條聲請停止執行</label>
+      <label><input type="radio" name="qz10" value="B">為防止發生重大之損害或避免急迫之危險而有必要時，得聲請管轄本案之行政法院暫時停止適用或執行，並準用第 295 條至第 297 條等規定</label>
+      <label><input type="radio" name="qz10" value="C">聲請不徵收裁判費</label>
+      <label><input type="radio" name="qz10" value="D">由都市計畫區所在地之地方行政法院管轄</label>
+      <div class="fb" data-exp="第 237 條之 30 第 1、2 項。都市計畫不是行政處分，不走第 116 條；裁判費依第 98 條之 5 第 7 款 1,000 元；本案管轄法院依第 237 條之 19 是都市計畫區所在地之高等行政法院。"></div>
+    </div>
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>實例題（自評）</h2>
+    <div class="essay" data-id="e1">
+      <div class="stem">實例一　甲為外國籍人士，與國人結婚後取得居留許可。113 年 6 月 1 日移民署以甲「有事實足認係通謀虛偽結婚」為由，撤銷其居留許可並命於 6 月 20 日前出國。甲於 6 月 10 日提起訴願，並於同日向高等行政法院聲請停止執行。移民署答稱甲之訴願顯無理由，且停止執行將影響國境管理之公益。<br>問：(1) 甲得否於起訴前聲請停止執行？法院應審查哪些要件？移民署的兩個抗辯是否成立？(2) 法院裁定前應踐行什麼程序？裁定得停止什麼？(3) 若法院准許，訴願決定後移民署查得甲另涉刑案，移民署有何救濟？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>(1) 爭點</dt><dd>起訴前停止執行的要件與但書範圍。</dd>
+          <dt>條文</dt><dd>第 116 條第 1 項原則不停止；第 3 項起訴前得依受處分人或訴願人之聲請裁定停止執行，但於公益有重大影響者不在此限。</dd>
+          <dt>涵攝</dt><dd>甲是受處分人且已提起訴願，具聲請人資格。命出國一經執行，甲即離開臺灣，婚姻生活、在臺工作與訴訟進行均嚴重受阻，日後縱撤銷處分亦難回復，屬難於回復之損害；6 月 20 日即須出國，有急迫情事。移民署抗辯「訴願顯無理由」不成立，因第 3 項但書只有「公益重大影響」，沒有第 2 項的「原告之訴在法律上顯無理由」，法院不能以此駁回。「影響國境管理公益」須達「重大」程度，單一外國人暫留至本案終結，難認對公益有重大影響，除非移民署釋明甲有具體危害。</dd>
+          <dt>(2)</dt><dd>第 116 條第 4 項：裁定前應先徵詢當事人（甲與移民署）之意見；若移民署已自行暫緩執行，應駁回聲請。第 5 項：法院得停止處分之效力、執行或程序之續行的全部或部份，本題可僅停止「命出國」部分之執行，而不必停止撤銷居留許可之效力，或視情形停止全部效力。裁判費 1,000 元（第 98 條之 5 第 3 款）。</dd>
+          <dt>(3)</dt><dd>第 118 條：停止執行之原因消滅或有其他情事變更，法院得依職權或依聲請撤銷停止執行之裁定。甲另涉刑案屬情事變更，移民署得聲請撤銷；對撤銷與否之裁定，雙方均得依第 119 條抗告，期間為裁定送達後 10 日（第 268 條）。</dd>
+          <dt>加分</dt><dd>說明第 116 條第 3 項之所以沒有「顯無理由」但書，是因為起訴前尚無「原告之訴」可供審查；並以第 1 條保障人民權益之宗旨，論述驅逐出國類處分之執行具有高度不可逆性，應放寬「難於回復」的認定。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+    <div class="essay" data-id="e2">
+      <div class="stem">實例二　乙公司向經濟部申請某項產業補助 300 萬元，經濟部於 113 年 9 月 1 日以不符資格駁回。乙提起訴願。同時乙另與經濟部所屬機構簽有公法上技術移轉契約，該機構通知乙「因前述補助案爭議，暫停履行契約並停止支付第二期款 150 萬元」。乙擔心年度預算執行完畢後補助款與契約款都拿不到。<br>問：(1) 針對駁回補助的處分，乙得聲請何種暫時權利保護？有無爭議？(2) 針對契約款，乙得聲請何種保全？要件與管轄為何？(3) 若反過來是該機構主張乙應返還已撥付之第一期款 150 萬元，而乙正在處分資產，該機構得如何保全？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>(1) 爭點</dt><dd>課予義務訴訟類型的爭議（申請遭駁回）在暫時權利保護上的定位，第 299 條的解釋。</dd>
+          <dt>條文</dt><dd>第 116 條第 3 項；第 298 條第 2、3 項；第 299 條。</dd>
+          <dt>涵攝</dt><dd>駁回處分是行政處分，文義上乙「得依第 116 條請求停止執行」，第 299 條即排除假處分。但停止「駁回」的執行不會使補助變成核准，對乙沒有實益；乙真正需要的是法院暫時命經濟部先撥款，這是第 298 條第 2 項定暫時狀態處分加第 3 項「先為一定之給付」的功能。學說上有認為第 299 條應限縮於停止執行有實益的情形，對消極處分之爭議仍得聲請定暫時狀態處分；另有看法堅守文義，認為涉及行政處分之爭議一律由第 116 條處理。答題時應指出此爭議，並說明無論採何說，乙聲請停止執行均無實益。</dd>
+          <dt>(2)</dt><dd>契約款的停付是機構基於契約所為，不是行政處分，第 299 條不排除保全程序。乙的請求有兩個層次：若乙只是要確保將來拿到 150 萬元且怕機構不付，這是公法上金錢給付，應依第 293 條聲請假扣押（但機構通常無脫產之虞，假扣押實益有限）；若乙要的是「契約關係繼續、機構應繼續履行並先付第二期款」，則屬爭執之公法上法律關係，依第 298 條第 2 項聲請定暫時狀態處分，並依第 3 項請求命先為給付。要件為防止重大損害或避免急迫危險而有必要，須釋明，非有特別情事不得以擔保代釋明（第 301 條）。管轄依第 300 條為管轄本案之行政法院（150 萬元以下，第 104 條之 1 第 1 項第 3 款，地方行政訴訟庭），急迫時得由請求標的所在地之地方行政法院管轄。裁定後 10 日內應起訴（第 302 條準用第 295 條）。</dd>
+          <dt>(3)</dt><dd>機構對乙的 150 萬元返還請求是公法上金錢給付（公法上契約所生），乙正在處分資產，有日後不能強制執行之虞，機構得依第 293 條第 1 項聲請假扣押。管轄依第 294 條：本案應繫屬之第一審法院（地方行政訴訟庭）或假扣押標的所在地之地方行政法院，擇一。裁判費 1,000 元（第 98 條之 5 第 6 款）。裁定送達後 10 日內應提起給付之訴，否則乙得聲請撤銷，機構並依第 296 條負賠償責任。</dd>
+          <dt>加分</dt><dd>以第 1 條「保障人民權益」與有效權利保護的觀點，說明第 299 條的立法目的在避免以假處分規避第 116 條的要件，而非剝奪人民對消極處分的暫時保護；並指出第 237 條之 30 對都市計畫採用與第 298 條第 2 項相同的要件文字，可見立法者對「非處分」爭議一貫採「重大損害／急迫危險」標準。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card">
+    <h2>本課引用條文</h2>
+    <p class="small muted">點開看原文。只收錄本課講到的條文；全文請見全國法規資料庫。</p>
+    <div class="arts">
+      <details><summary>第 1 條 <span>宗旨</span></summary><div class="txt">行政訴訟以保障人民權益，確保國家行政權之合法行使，增進司法功能為宗旨。</div></details>
+      <details><summary>第 6 條 <span>確認訴訟（第 117 條準用之對象）</span></summary><div class="txt">Ⅰ 確認行政處分無效及確認公法上法律關係成立或不成立之訴訟，非原告有即受確認判決之法律上利益者，不得提起之。其確認已執行而無回復原狀可能之行政處分或已消滅之行政處分為違法之訴訟，亦同。
+Ⅱ 確認行政處分無效之訴訟，須已向原處分機關請求確認其無效未被允許，或經請求後於三十日內不為確答者，始得提起之。
+Ⅲ 確認訴訟，於原告得提起或可得提起撤銷訴訟、課予義務訴訟或一般給付訴訟者，不得提起之。但確認行政處分無效之訴訟，不在此限。
+Ⅳ 應提起撤銷訴訟、課予義務訴訟，誤為提起確認行政處分無效之訴訟，其未經訴願程序者，行政法院應以裁定將該事件移送於訴願管轄機關，並以行政法院收受訴狀之時，視為提起訴願。</div></details>
+      <details><summary>第 8 條 <span>一般給付訴訟（假扣押之本案）</span></summary><div class="txt">Ⅰ 人民與中央或地方機關間，因公法上原因發生財產上之給付或請求作成行政處分以外之其他非財產上之給付，得提起給付訴訟。因公法上契約發生之給付，亦同。
+Ⅱ 前項給付訴訟之裁判，以行政處分應否撤銷為據者，應於依第四條第一項或第三項提起撤銷訴訟時，併為請求。原告未為請求者，審判長應告以得為請求。</div></details>
+      <details><summary>第 98 條之 5 <span>聲請之裁判費</span></summary><div class="txt">聲請或聲明，不徵收裁判費。但下列聲請，徵收裁判費新臺幣一千元：
+一、聲請參加訴訟或駁回參加。
+二、聲請回復原狀。
+三、聲請停止執行或撤銷停止執行之裁定。
+四、起訴前聲請證據保全。
+五、聲請重新審理。
+六、聲請假扣押、假處分或撤銷假扣押、假處分之裁定。
+七、第二百三十七條之三十聲請事件。</div></details>
+      <details><summary>第 104 條之 1 第 1 項 <span>通常程序第一審管轄（決定「本案管轄法院」用）</span></summary><div class="txt">Ⅰ 適用通常訴訟程序之事件，以高等行政法院為第一審管轄法院。但下列事件，以地方行政法院為第一審管轄法院：
+一、關於稅捐課徵事件涉訟，所核課之稅額在新臺幣一百五十萬元以下者。
+二、因不服行政機關所為新臺幣一百五十萬元以下之罰鍰或其附帶之其他裁罰性、管制性不利處分而涉訟者。
+三、其他關於公法上財產關係之訴訟，其標的之金額或價額在新臺幣一百五十萬元以下者。
+四、其他依法律規定或經司法院指定由地方行政法院管轄之事件。</div></details>
+      <details><summary>第 106 條第 1 項 <span>起訴之不變期間（與第 295 條 10 日對照）</span></summary><div class="txt">Ⅰ 第四條及第五條訴訟之提起，除本法別有規定外，應於訴願決定書送達後二個月之不變期間內為之。但訴願人以外之利害關係人知悉在後者，自知悉時起算。</div></details>
+      <details><summary>第 116 條 <span>停止執行</span></summary><div class="txt">Ⅰ 原處分或決定之執行，除法律另有規定外，不因提起行政訴訟而停止。
+Ⅱ 行政訴訟繫屬中，行政法院認為原處分或決定之執行，將發生難於回復之損害，且有急迫情事者，得依職權或依聲請裁定停止執行。但於公益有重大影響，或原告之訴在法律上顯無理由者，不得為之。
+Ⅲ 於行政訴訟起訴前，如原處分或決定之執行將發生難於回復之損害，且有急迫情事者，行政法院亦得依受處分人或訴願人之聲請，裁定停止執行。但於公益有重大影響者，不在此限。
+Ⅳ 行政法院為前二項裁定前，應先徵詢當事人之意見。如原處分或決定機關已依職權或依聲請停止執行者，應為駁回聲請之裁定。
+Ⅴ 停止執行之裁定，得停止原處分或決定之效力、處分或決定之執行或程序之續行之全部或部份。</div></details>
+      <details><summary>第 117 條 <span>確認無效之訴準用</span></summary><div class="txt">前條規定，於確認行政處分無效之訴訟準用之。</div></details>
+      <details><summary>第 118 條 <span>撤銷停止執行</span></summary><div class="txt">停止執行之原因消滅，或有其他情事變更之情形，行政法院得依職權或依聲請撤銷停止執行之裁定。</div></details>
+      <details><summary>第 119 條 <span>抗告</span></summary><div class="txt">關於停止執行或撤銷停止執行之裁定，得為抗告。</div></details>
+      <details><summary>第 237 條之 19 <span>都市計畫審查之管轄</span></summary><div class="txt">前條訴訟，專屬都市計畫區所在地之高等行政法院管轄。</div></details>
+      <details><summary>第 237 條之 29 第 1 項 <span>判決之公告（第 237 條之 30 第 3 項準用）</span></summary><div class="txt">Ⅰ 都市計畫經判決宣告無效、失效或違法確定者，判決正本應送達原發布機關，由原發布機關依都市計畫發布方式公告判決主文。</div></details>
+      <details><summary>第 237 條之 30 <span>都市計畫之暫時停止適用或執行</span></summary><div class="txt">Ⅰ 於爭執之都市計畫，為防止發生重大之損害或避免急迫之危險而有必要時，得聲請管轄本案之行政法院暫時停止適用或執行，或為其他必要之處置。
+Ⅱ 前項情形，準用第二百九十五條至第二百九十七條、第二百九十八條第三項、第四項、第三百零一條及第三百零三條之規定。
+Ⅲ 行政法院裁定准許第一項之聲請者，準用前條第一項規定。該裁定經廢棄、變更或撤銷者，亦同。</div></details>
+      <details><summary>第 264 條、第 268 條 <span>抗告之原則與期間</span></summary><div class="txt">第 264 條 對於裁定得為抗告。但別有不許抗告之規定者，不在此限。
+第 268 條 提起抗告，應於裁定送達後十日之不變期間內為之。但送達前之抗告亦有效力。</div></details>
+      <details><summary>第 293 條 <span>假扣押</span></summary><div class="txt">Ⅰ 為保全公法上金錢給付之強制執行，得聲請假扣押。
+Ⅱ 前項聲請，就未到履行期之給付，亦得為之。</div></details>
+      <details><summary>第 294 條 <span>假扣押之管轄</span></summary><div class="txt">Ⅰ 假扣押之聲請，由管轄本案之行政法院或假扣押標的所在地之地方行政法院管轄。
+Ⅱ 管轄本案之行政法院為訴訟已繫屬或應繫屬之第一審法院。
+Ⅲ 假扣押之標的如係債權，以債務人住所或擔保之標的所在地，為假扣押標的所在地。</div></details>
+      <details><summary>第 295 條 <span>10 日內起訴</span></summary><div class="txt">假扣押裁定後，尚未提起給付之訴者，應於裁定送達後十日內提起；逾期未起訴者，行政法院應依聲請撤銷假扣押裁定。</div></details>
+      <details><summary>第 296 條 <span>假扣押之損害賠償</span></summary><div class="txt">Ⅰ 假扣押裁定因自始不當而撤銷，或因前條及民事訴訟法第五百三十條第三項之規定而撤銷者，債權人應賠償債務人因假扣押或供擔保所受之損害。
+Ⅱ 假扣押所保全之本案請求已起訴者，前項賠償，行政法院於言詞辯論終結前，應依債務人之聲明，於本案判決內命債權人為賠償；債務人未聲明者，應告以得為聲明。</div></details>
+      <details><summary>第 297 條 <span>準用民事訴訟法（假扣押）</span></summary><div class="txt">民事訴訟法第五百二十三條、第五百二十五條至第五百二十八條及第五百三十條之規定，於本編假扣押程序準用之。</div></details>
+      <details><summary>第 298 條 <span>假處分、定暫時狀態處分</span></summary><div class="txt">Ⅰ 公法上之權利因現狀變更，有不能實現或甚難實現之虞者，為保全強制執行，得聲請假處分。
+Ⅱ 於爭執之公法上法律關係，為防止發生重大之損害或避免急迫之危險而有必要時，得聲請為定暫時狀態之處分。
+Ⅲ 前項處分，得命先為一定之給付。
+Ⅳ 行政法院為假處分裁定前，得訊問當事人、關係人或為其他必要之調查。</div></details>
+      <details><summary>第 299 條 <span>與停止執行之排他</span></summary><div class="txt">得依第一百十六條請求停止原處分或決定之執行者，不得聲請為前條之假處分。</div></details>
+      <details><summary>第 300 條 <span>假處分之管轄</span></summary><div class="txt">假處分之聲請，由管轄本案之行政法院管轄。但有急迫情形時，得由請求標的所在地之地方行政法院管轄。</div></details>
+      <details><summary>第 301 條 <span>擔保代釋明之限制</span></summary><div class="txt">關於假處分之請求及原因，非有特別情事，不得命供擔保以代釋明。</div></details>
+      <details><summary>第 302 條 <span>準用假扣押規定</span></summary><div class="txt">除別有規定外，關於假扣押之規定，於假處分準用之。</div></details>
+      <details><summary>第 303 條 <span>準用民事訴訟法（假處分）</span></summary><div class="txt">民事訴訟法第五百三十五條及第五百三十六條之規定，於本編假處分程序準用之。</div></details>
+      <details><summary>第 305 條第 1 項 <span>強制執行（保全之終點）</span></summary><div class="txt">Ⅰ 行政訴訟之裁判命債務人為一定之給付，經裁判確定後，債務人不為給付者，債權人得以之為執行名義，聲請地方行政法院強制執行。</div></details>
+    </div>
+  </div>
+  <div class="card">
+    <h2>下一課</h2>
+    <p>第 8 課「審理：言詞辯論、職權調查與證據」回到本案程序本身，講法院怎麼開庭、誰要舉證、證人可不可以拒絕作證。<a href="08_審理與證據.html">前往第 8 課</a>　<a href="00_總覽地圖.html">回總覽地圖</a></p>
+  </div>
+</section>
+
+<footer>行政訴訟法自學教材 · 第 7 課 暫時權利保護：停止執行與保全程序<br>依民國 111 年 6 月 22 日修正條文自行編寫，題目為原創；條文以<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030154" target="_blank" rel="noopener">全國法規資料庫</a>為準。</footer>
+</div>
+
+<script>
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const LESSON_ID = "07", CH = "行政訴訟法 07 暫時權利保護";
+const PROG_KEY = "xzss_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與數學教材共用 study_log_v1，供「學習紀錄」頁讀取）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+let pracCount = 0, pracOk = 0;
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="s4"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok }); pracCount++; if(ok) pracOk++;
+  });
+});
+
+// ===== 章末測驗交卷 =====
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0; const wrong = [];
+  qs.forEach((q,i)=>{
+    const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+    else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+  });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  writeProg({ quiz: { score, total: qs.length } });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+  else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="s4"]').classList.add('done'); }
+  else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+  else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 實例題自評 =====
+document.querySelectorAll('.essay').forEach(es=>{
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 本課專屬工具：我該聲請哪一種 =====
+(function(){
+  const res = document.getElementById('tpRes');
+  function pick(name){ const el = document.querySelector('input[name="'+name+'"]:checked'); return el ? el.value : ''; }
+  const FEE_STOP = '第 98 條之 5 第 3 款：聲請停止執行或撤銷停止執行之裁定，徵收裁判費新臺幣 1,000 元。';
+  const FEE_SEC = '第 98 條之 5 第 6 款：聲請假扣押、假處分或撤銷假扣押、假處分之裁定，徵收裁判費新臺幣 1,000 元。';
+  const FEE_PLAN = '第 98 條之 5 第 7 款：第 237 條之 30 聲請事件，徵收裁判費新臺幣 1,000 元。';
+  function block(title, pill, rows, flags){
+    let h = '<h3>'+title+'　<span class="pill law">'+pill+'</span></h3>';
+    h += '<dl class="step4">' + rows.map(r=>'<dt>'+r[0]+'</dt><dd>'+r[1]+'</dd>').join('') + '</dl>';
+    (flags||[]).forEach(f=>{ h += '<div class="'+f[0]+'" style="margin:.5rem 0 0">'+f[1]+'</div>'; });
+    return h;
+  }
+  document.getElementById('tpGo').addEventListener('click',()=>{
+    const obj = pick('tObj'), stage = pick('tStage'), aim = pick('tAim');
+    let html = '';
+    if(obj === 'act'){
+      const rows = [];
+      if(stage === 'pending'){
+        rows.push(['要件','原處分或決定之執行將發生難於回復之損害，且有急迫情事（第 116 條第 2 項）。']);
+        rows.push(['但書','於公益有重大影響，或原告之訴在法律上顯無理由者，不得為之。']);
+        rows.push(['發動','法院得依職權，或依聲請。']);
+        rows.push(['管轄','本案繫屬之受訴行政法院。']);
+      } else {
+        rows.push(['要件','原處分或決定之執行將發生難於回復之損害，且有急迫情事（第 116 條第 3 項）。']);
+        rows.push(['但書','只有一個：於公益有重大影響者，不在此限。沒有「顯無理由」但書。']);
+        rows.push(['發動','只能依受處分人或訴願人之聲請，法院不得依職權。']);
+        rows.push(['管轄','第 116 條未另設管轄規定；參照第 294 條第 2 項、第 300 條的體例，向本案應繫屬之第一審行政法院聲請。']);
+      }
+      rows.push(['程序','裁定前應先徵詢當事人之意見；機關已自行停止執行者，應駁回聲請（第 116 條第 4 項）。']);
+      rows.push(['效力','得停止處分之效力、執行或程序之續行之全部或部份（第 116 條第 5 項）。']);
+      rows.push(['之後','原因消滅或情事變更得撤銷（第 118 條）；兩種裁定均得抗告（第 119 條），10 日（第 268 條）。']);
+      rows.push(['費用',FEE_STOP]);
+      rows.push(['條文','第 116 條、第 117 條（確認無效之訴準用）、第 118 條、第 119 條、第 98 條之 5 第 3 款。']);
+      const flags = [['warn','<b>第 299 條排他：</b>爭執對象是行政處分或決定，得依第 116 條請求停止執行者，不得聲請第 298 條的假處分或定暫時狀態處分。']];
+      if(aim !== 'stop'){
+        flags.push(['note','你選的目的是「'+(aim==='secure'?'保全將來執行':'暫定法律關係或先取得給付')+'」，但對象是行政處分，條文只給你停止執行這條路。若處分是「駁回申請」的消極處分，停止執行沒有實益，學說上對能否改聲請定暫時狀態處分有爭議，答題時點出即可。']);
+      }
+      html = block('停止執行', '第 116 條', rows, flags);
+    } else if(obj === 'money'){
+      const rows = [
+        ['要件','為保全公法上金錢給付之強制執行（第 293 條第 1 項）；未到履行期之給付亦得聲請（第 2 項）。'],
+        ['管轄','管轄本案之行政法院（訴訟已繫屬或應繫屬之第一審法院），或假扣押標的所在地之地方行政法院，擇一（第 294 條）。標的為債權者，以債務人住所或擔保之標的所在地為標的所在地。'],
+        ['之後', stage==='pre' ? '裁定送達後 10 日內應提起給付之訴，逾期債務人得聲請撤銷，法院應撤銷（第 295 條）。' : '本案已起訴，無第 295 條 10 日起訴問題；債務人得於言詞辯論終結前聲明，由法院於本案判決內命賠償（第 296 條第 2 項）。'],
+        ['賠償','自始不當、第 295 條逾期、民事訴訟法第 530 條第 3 項撤銷者，債權人應賠償債務人所受損害（第 296 條第 1 項）。'],
+        ['準用','民事訴訟法第 523、525–528、530 條（第 297 條）。'],
+        ['費用',FEE_SEC],
+        ['條文','第 293 條至第 297 條、第 98 條之 5 第 6 款。本案通常為第 8 條一般給付訴訟，執行依第 305 條。']
+      ];
+      const flags = [];
+      if(aim === 'stop') flags.push(['warn','如果你其實是「被處分命繳錢的人」想阻止機關來執行，那爭執對象是行政處分，請回到停止執行（第 116 條）。假扣押是債權人用來凍住債務人財產的工具。']);
+      if(aim === 'interim') flags.push(['note','金錢給付走假扣押即可保全將來執行；若你要的是「先拿到錢」，那是第 298 條第 2、3 項定暫時狀態處分的功能，前提是雙方對某個公法上法律關係有爭執，而不只是單純的金錢債權。']);
+      html = block('假扣押', '第 293 條', rows, flags);
+    } else if(obj === 'rel'){
+      const rows = [];
+      let title, pill;
+      if(aim === 'interim'){
+        title = '定暫時狀態處分'; pill = '第 298 條第 2 項';
+        rows.push(['要件','於爭執之公法上法律關係，為防止發生重大之損害或避免急迫之危險而有必要（第 298 條第 2 項）。']);
+        rows.push(['給付','得命先為一定之給付（第 298 條第 3 項）。']);
+      } else {
+        title = '假處分（保全性）'; pill = '第 298 條第 1 項';
+        rows.push(['要件','公法上之權利因現狀變更，有不能實現或甚難實現之虞，為保全強制執行（第 298 條第 1 項）。']);
+        rows.push(['給付','第 3 項「得命先為一定之給付」只接在第 2 項之後，保全性假處分不命先為給付。']);
+      }
+      rows.push(['調查','裁定前得訊問當事人、關係人或為其他必要之調查（第 298 條第 4 項，是「得」）。']);
+      rows.push(['管轄','管轄本案之行政法院；有急迫情形時，得由請求標的所在地之地方行政法院管轄（第 300 條）。']);
+      rows.push(['釋明','非有特別情事，不得命供擔保以代釋明（第 301 條）。']);
+      rows.push(['之後', stage==='pre' ? '準用第 295 條：裁定送達後 10 日內應起訴（第 302 條）。損害賠償準用第 296 條。' : '本案已起訴；損害賠償得於本案判決內一併處理（第 302 條準用第 296 條第 2 項）。']);
+      rows.push(['準用','假扣押之規定（第 302 條）；民事訴訟法第 535、536 條（第 303 條）。']);
+      rows.push(['費用',FEE_SEC]);
+      rows.push(['條文','第 298 條、第 300 條至第 303 條、第 98 條之 5 第 6 款。']);
+      const flags = [['tip','<b>先確認第 299 條：</b>你爭執的真的不是行政處分嗎？若機關的行為其實是處分（例如駁回、撤銷許可、命為一定行為），得依第 116 條停止執行者就不能聲請假處分。']];
+      if(aim === 'stop') flags.push(['warn','你選的目的是「阻止處分發生效力或被執行」，這聽起來像是在爭執行政處分。請重新確認對象：是處分就回到停止執行。']);
+      html = block(title, pill, rows, flags);
+    } else {
+      const rows = [
+        ['要件','於爭執之都市計畫，為防止發生重大之損害或避免急迫之危險而有必要（第 237 條之 30 第 1 項）。'],
+        ['內容','暫時停止適用或執行，或為其他必要之處置。'],
+        ['管轄','管轄本案之行政法院，即都市計畫區所在地之高等行政法院（第 237 條之 19）。'],
+        ['準用','第 295 條至第 297 條（10 日起訴、賠償）、第 298 條第 3、4 項（先為給付、訊問調查）、第 301 條（擔保代釋明限制）、第 303 條（第 237 條之 30 第 2 項）。'],
+        ['公告','裁定准許者，準用第 237 條之 29 第 1 項送達原發布機關公告；裁定經廢棄、變更或撤銷者亦同（第 3 項）。'],
+        ['費用',FEE_PLAN],
+        ['條文','第 237 條之 30、第 237 條之 19、第 98 條之 5 第 7 款。']
+      ];
+      const flags = [['note','都市計畫不是行政處分，不走第 116 條；也不是單純的金錢給付或法律關係，所以立法者另設第 237 條之 30。要件文字與第 298 條第 2 項相同。']];
+      html = block('都市計畫暫時停止適用或執行', '第 237 條之 30', rows, flags);
+    }
+    res.innerHTML = html;
+    res.classList.add('on');
+    logEv({ type:"tool", q:"interim-relief", k:obj+':'+stage+':'+aim });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>行政訴訟法｜第 12 課 再審、重新審理與強制執行</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F4F6F3; --card:#FFFFFF;
+  --ink:#1C2A30; --ink-2:#4B5A62; --ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --law:#5B3A8C; --law-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F; --card:#1D262B;
+    --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+    --rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --law:#B9A0E3; --law-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F; --card:#1D262B;
+  --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+  --rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --law:#B9A0E3; --law-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--blue);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+
+/* hero */
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--law);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--law-soft);color:var(--law);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+/* tabs */
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit}
+nav.tabs button:hover{border-color:var(--blue);color:var(--ink)}
+nav.tabs button.active{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--blue-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--law-soft);border-left:4px solid var(--law);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--law);display:block;margin-bottom:.2em}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.law{background:var(--law-soft);border-color:transparent;color:var(--law)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+
+/* flow / structure diagrams */
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 160px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--blue)}
+.courts{display:grid;grid-template-columns:1fr;gap:8px;margin:.6rem 0 1rem}
+.court{border:1px solid var(--rule);border-radius:10px;padding:.7rem .9rem;background:var(--paper);display:grid;grid-template-columns:7.5em 1fr;gap:.3rem .8rem;align-items:start}
+.court .lv{font-weight:700;color:var(--law)}
+.court .what{font-size:.92rem}
+.court.top{border-color:var(--law)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+/* examples */
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+.step4{display:grid;grid-template-columns:5em 1fr;gap:.25rem .7rem;font-size:.95rem;margin:.3rem 0 .8rem}
+.step4 dt{color:var(--law);font-weight:700}
+.step4 dd{margin:0}
+
+/* interactive tool */
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox select,.toolbox input[type=number],.toolbox input[type=date]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);max-width:100%}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--law)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+
+/* 本課：再審事由翻卡 */
+.flipgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:.6rem 0 .8rem}
+.flip{font:inherit;text-align:left;border:1px solid var(--rule);border-radius:10px;background:var(--card);color:var(--ink);padding:.7rem .8rem;cursor:pointer;min-height:5.6em;font-size:.9rem;line-height:1.55}
+.flip:hover{border-color:var(--law)}
+.flip.on{background:var(--law-soft);border-color:var(--law)}
+.flip b{display:block;color:var(--law);font-size:.8rem;margin-bottom:.15rem}
+.flip .back{display:none}
+.flip.on .front{display:none}
+.flip.on .back{display:block}
+.flip .lim{display:block;margin-top:.35rem;color:var(--warn);font-size:.85rem}
+.flip .lim.ok{color:var(--green)}
+
+/* practice & quiz */
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--law);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+/* 條文速查 */
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">行政訴訟法 · 第 12 課</span>
+  <h1>再審、重新審理與強制執行</h1>
+  <p>四節加章末測驗。判決確定不是終點：原來的當事人可以用<b>再審</b>翻案，被漏掉的第三人可以聲請<b>重新審理</b>，贏了官司但機關不動，就靠<b>強制執行</b>。這是整部法的最後三編，也是國考最愛問「期間怎麼算」「哪個法院管」的地方。</p>
+  <p class="ver">依民國 111 年 6 月 22 日修正條文編寫（多數條文自 112 年 8 月 15 日施行）。自學筆記，非官方；條文以全國法規資料庫為準。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">12-1 再審之訴的事由與期間</button>
+  <button data-t="s2">12-2 再審的程序與效果</button>
+  <button data-t="s3">12-3 重新審理</button>
+  <button data-t="s4">12-4 強制執行</button>
+  <button data-t="s5">章末測驗</button>
+  <button data-t="s6">條文速查</button>
+</nav>
+
+<!-- ═══════════ 12-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出再審是「對確定終局判決的非常救濟」，以及第 273 條第 1 項但書為什麼叫「再審補充性」</li>
+      <li>看到事實，分得出落在第 273 條第 1 項的哪一款，並知道第 7 至 10 款、第 13 款各自多一層要件</li>
+      <li>算得出第 276 條的 30 日不變期間與 5 年上限，說得出哪三款不受 5 年限制</li>
+      <li>知道第 273 條第 2 項憲法法庭情形的起算點與期間扣除方式</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：再審是對「確定判決」開一扇小門，但門口有守衛</h2>
+    <div class="law"><b class="art">第 273 條第 1 項（本文與但書）</b>有下列各款情形之一者，得以再審之訴對於確定終局判決聲明不服。但當事人已依上訴主張其事由經判決為無理由，或知其事由而不為上訴主張者，不在此限：（十四款見下方翻卡）</div>
+    <p>判決確定後有確定力（第 213 條），原則上不能再動。再審是立法者列舉的例外：只有第 273 條寫出來的事由才能用，而且對象必須是<b>確定終局判決</b>。判決還沒確定，走上訴（第 11 課）；確定的是裁定，依第 283 條「聲請再審」。</p>
+    <p>但書是守衛，學說上叫<b>再審補充性</b>：那個事由你在上訴時已經主張過、被判無理由，不能再用再審重來一次；或者你明明知道這個事由卻不上訴，也不行。再審是補破網，不是給放棄上訴的人第二條路。</p>
+    <div class="warn">常錯：把「再審」當成第三審。再審不是上級法院覆審，而是回到<b>原來做判決的法院</b>（第 275 條第 1 項），針對特定瑕疵重開。這也是為什麼它叫「再審之訴」，是一個新的訴，有自己的起訴期間與裁判費。</div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：第 273 條十四款翻卡</h2>
+    <p class="small muted">點一張卡，看它的白話說明與附帶限制。紅字是限制，綠字是優惠（不受 5 年上限）。最後一張是第 2 項的憲法法庭事由。建議先猜再翻。</p>
+    <div class="toolbox">
+      <div class="flipgrid" id="flipGrid"></div>
+      <button class="btn small secondary" id="flipAll">全部翻開／蓋回</button>
+    </div>
+    <div class="tip">記法：1 至 2 款是判決本身出錯；3 至 4 款是法院組成有問題；5 至 6 款是當事人程序保障被剝奪（所以不受 5 年限制）；7 至 10 款涉及犯罪或違背職務（所以第 3 項要求「經判決確定」）；11 至 12 款是判決基礎被動搖或有重複裁判；13 至 14 款是證物問題（第 13 款另有第 4 項的非可歸責要件）。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 7 至 10 款與第 13 款，各自多一道門</h2>
+    <div class="law"><b class="art">第 273 條第 3 項</b>第一項第七款至第十款情形之證明，以經判決確定，或其刑事、懲戒訴訟不能開始、續行或判決不受理、免議非因證據不足者為限，得提起再審之訴。</div>
+    <p>第 7 至 10 款（法官犯罪或違背職務、代理人或他造犯罪、證物偽造變造、證人鑑定人通譯虛偽陳述）都牽涉別人有沒有犯罪。行政法院不自己認定，要拿<b>確定的刑事或懲戒判決</b>來證明。例外是那個程序開不了、走不下去、不受理或免議，而且原因不是「證據不足」，例如被告死亡或追訴權時效消滅。</p>
+    <div class="law"><b class="art">第 273 條第 4 項</b>第一項第十三款情形，以當事人非因可歸責於己之事由，不能於該訴訟言詞辯論終結前提出者為限，得提起再審之訴。</div>
+    <p>第 13 款「發現未經斟酌之證物」有兩層限制：款文本身要求「如經斟酌可受較有利益之判決」；第 4 項再要求你<b>非因可歸責於己</b>而不能在言詞辯論終結前提出。手上早就有、只是忘了交，不算。</p>
+    <div class="note">第 13 款和第 14 款常被混。第 13 款是當事人<b>發現</b>新證物（法院沒看過）；第 14 款是證物<b>已經在卷內</b>，法院漏未斟酌。前者卡第 4 項，後者不卡，但要「足以影響於判決之重要證物」。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：憲法法庭的裁判也能開再審，第 274 條把範圍再延伸</h2>
+    <div class="law"><b class="art">第 273 條第 2 項</b>確定終局判決所適用之法規範，經憲法法庭判決宣告違憲，或適用法規範所表示之見解，與憲法法庭統一見解之裁判有異者，其聲請人亦得提起再審之訴。</div>
+    <p>兩種情形：判決用的法規範被憲法法庭宣告違憲；或判決對法規範的見解跟憲法法庭的統一見解不同。只有「其聲請人」能提，也就是去憲法法庭聲請的那個人，不是所有被同一法規範影響的人。</p>
+    <div class="law"><b class="art">第 274 條</b>為判決基礎之裁判，如有前條所定之情形者，得據以對於該判決提起再審之訴。</div>
+    <p>判決本身沒問題，但它所依據的另一個裁判（例如前提問題的裁定）有第 273 條事由，也可以對這個判決提再審。瑕疵會沿著「判決基礎」往下傳。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：第 276 條，30 日與 5 年</h2>
+    <div class="law"><b class="art">第 276 條</b>Ⅰ 再審之訴應於三十日之不變期間內提起。<br>Ⅱ 前項期間自判決確定時起算，判決於送達前確定者，自送達時起算；其再審事由發生或知悉在後者，均自知悉時起算。<br>Ⅲ 依第二百七十三條第二項提起再審之訴者，第一項期間自裁判送達之翌日起算。<br>Ⅳ 再審之訴自判決確定時起，如已逾五年者，不得提起。但以第二百七十三條第一項第五款、第六款或第十二款情形為再審事由者，不在此限。<br>Ⅴ 對於再審確定判決不服，復提起再審之訴者，前項所定期間，自原判決確定時起算。但再審之訴有理由者，自該再審判決確定時起算。<br>Ⅵ 第二百七十三條第二項之情形，自聲請案件繫屬之日起至裁判送達聲請人之日止，不計入第四項所定期間。</div>
+    <div class="flow">
+      <div class="step"><b>30 日不變期間</b>起算點三選一：判決確定時；送達前就確定的，自送達時；事由發生或知悉在後的，自知悉時。</div>
+      <div class="step"><b>5 年絕對上限</b>自判決確定時起算，不管你何時知悉。例外三款：第 5、6、12 款。</div>
+      <div class="step"><b>憲法法庭情形</b>30 日自憲法法庭裁判送達之翌日起算；聲請案繫屬到裁判送達這段時間，不計入 5 年。</div>
+    </div>
+    <div class="warn">常錯一：「知悉在後就重新起算 5 年」。錯。知悉在後只影響 30 日的起算點，5 年上限仍從判決確定時起算，知悉太晚就是不能提。常錯二：把例外三款記成「第 7 至 10 款」。不受 5 年限制的是第 5 款（未經合法代理）、第 6 款（指為所在不明）、第 12 款（前已有確定判決），都是程序保障或一事不再理被破壞的情形。</div>
+    <div class="tip">第 5 項處理「對再審判決再提再審」：5 年仍從<b>原判決</b>確定時起算，不會因為你提了一次再審就延長；但如果前一次再審有理由（原判決被廢棄了），才從再審判決確定時重新起算。</div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：再審期間計算</h2>
+    <p class="small muted">選事由類型、輸入日期，算出 30 日末日與 5 年上限。計算依第 88 條第 3 項（期間之計算依民法）採始日不計入，未扣在途期間（第 89 條），末日為休息日時依民法規定以次日代之，請自行調整。</p>
+    <div class="toolbox">
+      <fieldset><legend>再審事由類型</legend>
+        <label><input type="radio" name="rsType" value="gen" checked>一般事由（第 273 條第 1 項各款，受 5 年限制）</label>
+        <label><input type="radio" name="rsType" value="excl">第 273 條第 1 項第 5、6、12 款（不受 5 年限制）</label>
+        <label><input type="radio" name="rsType" value="cc">第 273 條第 2 項憲法法庭裁判</label>
+      </fieldset>
+      <fieldset id="rsGen"><legend>日期</legend>
+        <label>原判決確定日（送達前確定者填送達日）<input type="date" id="rsFinal" value="2024-03-15"></label><br>
+        <label>再審事由發生或知悉日（知悉在後才填，否則留空）<input type="date" id="rsKnow"></label>
+      </fieldset>
+      <fieldset id="rsCC"><legend>日期</legend>
+        <label>原判決確定日<input type="date" id="rsFinal2" value="2021-06-01"></label><br>
+        <label>憲法法庭聲請案件繫屬日<input type="date" id="rsPend" value="2021-09-01"></label><br>
+        <label>憲法法庭裁判送達聲請人日<input type="date" id="rsServ" value="2024-05-20"></label>
+      </fieldset>
+      <button class="btn" id="rsGo">計算</button>
+      <div class="result" id="rsRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲於高等行政法院敗訴，上訴時主張原判決適用稅捐稽徵法某條顯有錯誤，最高行政法院認上訴無理由駁回確定。甲三週後以同一「適用法規顯有錯誤」為由，對最高行政法院判決提起再審。法院應如何處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>已在上訴審主張過的事由，能否作為再審事由（再審補充性）。</dd>
+        <dt>條文</dt><dd>第 273 條第 1 項第 1 款與但書：當事人已依上訴主張其事由經判決為無理由者，不得據以再審。第 278 條第 1 項：再審之訴不合法者，以裁定駁回。</dd>
+        <dt>涵攝</dt><dd>甲主張的事由與上訴理由完全相同，且已經最高行政法院審酌並判決為無理由。依但書，該事由不得再據以提起再審之訴。學說上多認為但書屬再審之訴的合法要件，欠缺時屬不合法。</dd>
+        <dt>結論</dt><dd>法院應依第 278 條第 1 項以裁定駁回。甲若對最高行政法院判決本身的法律適用不服，再審不是出路；除非符合第 273 條第 2 項（憲法法庭宣告違憲），否則確定判決就此定案。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙之撤銷訴訟判決於 106 年 4 月 1 日確定。112 年 3 月 1 日乙才發現一份對自己有利、當年因機關未提供而無法取得的證物。乙於 112 年 3 月 20 日提起再審。合法嗎？若乙發現的是「就同一訴訟標的在前已有確定判決」，結論有無不同？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>第 13 款事由知悉在後的 30 日起算，與第 276 條第 4 項 5 年上限的關係；第 12 款的例外。</dd>
+        <dt>條文</dt><dd>第 273 條第 1 項第 13 款、第 4 項；第 276 條第 2 項、第 4 項及其但書。</dd>
+        <dt>涵攝</dt><dd>證物因機關未提供而無法取得，屬非可歸責於乙，符合第 4 項。30 日自知悉日 112 年 3 月 1 日起算，3 月 20 日起訴未逾 30 日。但 5 年上限自判決確定日 106 年 4 月 1 日起算，至 111 年 4 月 1 日屆滿，112 年 3 月 20 日已逾 5 年。第 13 款不在但書例外之列。若事由是第 12 款，依第 4 項但書不受 5 年限制，只要 30 日內提起即合法。</dd>
+        <dt>結論</dt><dd>以第 13 款提起者，逾 5 年，不合法，依第 278 條第 1 項裁定駁回；以第 12 款提起者，合法。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">1. 甲收到高等行政法院第一審敗訴判決時，即發現判決理由與主文顯有矛盾，但甲因認為上訴麻煩而未上訴，判決確定。兩週後甲以該矛盾為由提起再審之訴。法院應如何處理？</div>
+      <label><input type="radio" name="p1q1" value="A">再審有理由，因判決理由與主文矛盾為第 273 條第 1 項第 2 款事由</label>
+      <label><input type="radio" name="p1q1" value="B">再審不合法，因甲知其事由而不為上訴主張，依第 273 條第 1 項但書不得再審</label>
+      <label><input type="radio" name="p1q1" value="C">應命甲先聲請回復原狀補提上訴</label>
+      <label><input type="radio" name="p1q1" value="D">應轉換為抗告程序處理</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 273 條第 1 項但書：知其事由而不為上訴主張者，不得以再審之訴聲明不服。再審是補充性救濟，不是放棄上訴後的替代路。" data-diag='{"A":"第 2 款確實是再審事由，但你漏看了但書：甲早就知道卻不上訴，被但書擋下。","C":"回復原狀（第 91 條）要有天災或不應歸責於己的事由，甲是自己不想上訴，沒有回復原狀的空間。","D":"判決的救濟是上訴或再審，抗告是對裁定的救濟（第 264 條），對象不對。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">2. 乙主張原確定判決所憑的鑑定人就鑑定為虛偽陳述，欲提起再審。該鑑定人涉犯偽證罪，目前仍在檢察官偵查中。下列何者正確？</div>
+      <label><input type="radio" name="p1q2" value="A">乙得逕行提起再審，由行政法院自行認定鑑定是否虛偽</label>
+      <label><input type="radio" name="p1q2" value="B">須該鑑定人經刑事判決確定，或刑事訴訟不能開始、續行、不受理、免議且非因證據不足，乙始得提起再審</label>
+      <label><input type="radio" name="p1q2" value="C">只要乙已對鑑定人提出刑事告訴，即得提起再審</label>
+      <label><input type="radio" name="p1q2" value="D">鑑定虛偽屬第 273 條第 1 項第 13 款「發現未經斟酌之證物」，須證明非可歸責</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="鑑定人虛偽陳述是第 273 條第 1 項第 10 款。第 3 項要求第 7 至 10 款以經判決確定，或刑事、懲戒訴訟不能開始、續行或判決不受理、免議非因證據不足者為限。偵查中尚未達此標準。" data-diag='{"A":"第 3 項明文不讓行政法院自行認定第 7 至 10 款的犯罪事實，要拿確定判決來。","C":"提告只是開始，第 3 項要的是「經判決確定」或程序不能進行且非因證據不足。","D":"虛偽鑑定是第 10 款，不是第 13 款；第 4 項的非可歸責要件只適用於第 13 款。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">3. 丙之判決於 113 年 3 月 1 日確定並於同日送達。丙於 113 年 5 月 10 日始知悉為判決基礎之證人作虛偽證言，該證人已於 113 年 4 月經刑事判決確定。不計在途期間，丙最遲應於何日提起再審之訴？</div>
+      <label><input type="radio" name="p1q3" value="A">113 年 3 月 31 日</label>
+      <label><input type="radio" name="p1q3" value="B">113 年 6 月 9 日</label>
+      <label><input type="radio" name="p1q3" value="C">113 年 8 月 10 日</label>
+      <label><input type="radio" name="p1q3" value="D">118 年 3 月 1 日</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 276 條第 2 項：再審事由發生或知悉在後者，自知悉時起算。自 5 月 10 日起算 30 日（始日不計入），末日為 6 月 9 日。5 年上限至 118 年 3 月 1 日，本件未逾。" data-diag='{"A":"這是從判決確定日起算 30 日。但丙知悉在後，第 276 條第 2 項改自知悉時起算。","C":"30 日是不變期間，不是 3 個月。3 個月是訴願法的用語，別混進來。","D":"5 年是絕對上限，不是提起期間。30 日內沒提，就算還在 5 年內也不能提。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 12-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>依第 275 條判斷再審之訴該向哪個法院提，特別是第 3 項「回到原第一審」的例外</li>
+      <li>寫得出再審訴狀四款事項，算得出再審裁判費</li>
+      <li>分得清三種駁回：不合法（裁定）、顯無理由（判決、可不辯論）、有理由但原判決正當（判決）</li>
+      <li>說得出再審判決對善意第三人的效力，以及裁定確定後怎麼「聲請再審」</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：第 275 條管轄，原則回原法院，例外回原第一審</h2>
+    <div class="law"><b class="art">第 275 條</b>Ⅰ 再審之訴專屬為判決之原行政法院管轄。<br>Ⅱ 對於審級不同之行政法院就同一事件所為之判決提起再審之訴者，專屬上級行政法院合併管轄之。<br>Ⅲ 對於上訴審行政法院之判決，本於第二百七十三條第一項第九款至第十四款事由聲明不服者，雖有前二項之情形，仍專屬原第一審行政法院管轄。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>你對哪個判決不服</th><th>事由</th><th>管轄法院</th><th>依據</th></tr></thead>
+      <tbody>
+        <tr><td>只對第一審判決（例如未上訴而確定）</td><td>任何款</td><td>該第一審法院</td><td>第 275 條第 1 項</td></tr>
+        <tr><td>只對上訴審判決</td><td>第 1 至 8 款、第 2 項</td><td>該上訴審法院</td><td>第 275 條第 1 項</td></tr>
+        <tr><td>同時對第一審與上訴審判決</td><td>第 1 至 8 款、第 2 項</td><td>上級法院合併管轄</td><td>第 275 條第 2 項</td></tr>
+        <tr><td>對上訴審判決（含同時對兩審）</td><td><b>第 9 至 14 款</b></td><td><b>原第一審法院</b></td><td>第 275 條第 3 項</td></tr>
+      </tbody>
+    </table></div>
+    <p>第 3 項的道理：第 9 至 14 款（證物偽造、虛偽陳述、判決基礎變更、重複裁判、新證物、漏未斟酌證物）都是<b>事實認定層面</b>的問題。最高行政法院是法律審，不調查事實，所以交回會調查事實的原第一審法院。</p>
+    <div class="warn">常錯：管轄是「專屬」。再審之訴提到錯的法院，不是當事人可以合意改的（第 17 條管轄恆定與專屬管轄的差別，見第 4 課）。考題常問「向最高行政法院對其上訴審判決以第 13 款提再審」，答案是專屬原第一審高等行政法院。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：訴狀要寫什麼、要繳多少錢</h2>
+    <div class="law"><b class="art">第 277 條</b>Ⅰ 再審之訴，應以訴狀表明下列各款事項，提出於管轄行政法院為之：<br>一、當事人。<br>二、聲明不服之判決及提起再審之訴之陳述。<br>三、應於如何程度廢棄原判決及就本案如何判決之聲明。<br>四、再審理由及關於再審理由並遵守不變期間之證據。<br>Ⅱ 再審訴狀內，宜記載準備本案言詞辯論之事項，並添具確定終局判決繕本或影本。</div>
+    <p>第 4 款是重點：不只寫再審理由，還要附上<b>遵守不變期間的證據</b>，例如你是哪一天知悉的。沒寫再審理由，是訴狀不合程式，屬不合法。第 2 項用「宜」，是訓示規定，沒附繕本不會因此被駁。</p>
+    <div class="law"><b class="art">第 98 條之 3</b>Ⅰ 再審之訴，按起訴法院之審級，依第九十八條第二項及前條第一項規定徵收裁判費。<br>Ⅱ 對於確定之裁定聲請再審者，徵收裁判費新臺幣一千元。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>再審對象</th><th>裁判費</th><th>怎麼算</th></tr></thead>
+      <tbody>
+        <tr><td>第一審通常程序確定判決</td><td>4,000 元</td><td>第 98 條第 2 項前段</td></tr>
+        <tr><td>第一審簡易程序確定判決</td><td>2,000 元</td><td>第 98 條第 2 項後段</td></tr>
+        <tr><td>上訴審確定判決</td><td>6,000 元（簡易事件上訴審 3,000 元）</td><td>第 98 條之 2 第 1 項：加徵二分之一</td></tr>
+        <tr><td>確定裁定（第 283 條聲請再審）</td><td>1,000 元</td><td>第 98 條之 3 第 2 項</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：三種駁回、一個範圍、一個準用</h2>
+    <div class="law"><b class="art">第 278 條</b>Ⅰ 再審之訴不合法者，行政法院應以裁定駁回之。<br>Ⅱ 再審之訴顯無再審理由者，得不經言詞辯論，以判決駁回之。</div>
+    <div class="law"><b class="art">第 280 條</b>再審之訴雖有再審理由，行政法院如認原判決為正當者，應以判決駁回之。</div>
+    <div class="flow">
+      <div class="step"><b>第一關：合法性</b>期間、管轄、訴狀程式、但書補充性、第 274 條之 1 一事不再理。不合法，<b>裁定</b>駁回（第 278 條第 1 項）。</div>
+      <div class="step"><b>第二關：有無再審理由</b>顯無理由，得不經言詞辯論以<b>判決</b>駁回（第 278 條第 2 項）。有理由，進入本案。</div>
+      <div class="step"><b>第三關：本案再審</b>辯論與裁判以聲明不服部分為限（第 279 條）。審了之後原判決仍屬正當，以<b>判決</b>駁回（第 280 條）；不正當才廢棄改判。</div>
+    </div>
+    <p>記住裁定與判決的分野：合法要件沒過用裁定；有沒有理由是實體問題，用判決。第 280 條是考題最愛：有再審事由不等於會改判，法院要重新看一次，如果結論一樣，仍然駁回，而且原判決效力不動。</p>
+    <div class="law"><b class="art">第 274 條之 1</b>再審之訴，行政法院認無再審理由，判決駁回後，不得以同一事由對於原確定判決或駁回再審之訴之確定判決，更行提起再審之訴。</div>
+    <p>再審被「判決」駁回之後，同一事由就用完了，不能對原判決再提，也不能對那個駁回再審的判決再提。注意條文限於「認無再審理由，判決駁回」，被裁定駁回（例如逾期）不在此條，但逾期的事由通常也不會再合法。</p>
+    <div class="law"><b class="art">第 281 條</b>除本編別有規定外，再審之訴訟程序準用關於各該審級訴訟程序之規定。</div>
+    <div class="tip">國考用法：題目問「再審之訴訴狀未記載再審理由，法院應如何處理」。答：不合法，但依第 281 條準用第 107 條第 1 項但書，可以補正者審判長應先定期間命補正，逾期未補正再以裁定駁回。不要直接寫「裁定駁回」就結束。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：再審判決的效力邊界，與裁定的再審</h2>
+    <div class="law"><b class="art">第 282 條</b>再審之訴之判決，對第三人因信賴確定終局判決以善意取得之權利無影響。但顯於公益有重大妨害者，不在此限。</div>
+    <p>原判決確定後，有第三人相信它、善意取得了權利（例如依判決結果受配的土地權利），之後再審把原判決翻掉，<b>不影響</b>那個第三人的權利。這是交易安全對實體正義的讓步。但書例外：顯於公益有重大妨害時，第三人的權利也要讓。</p>
+    <div class="law"><b class="art">第 283 條</b>裁定已經確定，而有第二百七十三條之情形者，得準用本編之規定，聲請再審。</div>
+    <p>判決用「再審之訴」，裁定用「聲請再審」。兩者事由相同（第 273 條），程序準用，裁判費不同（第 98 條之 3 第 2 項，1,000 元）。</p>
+    <div class="note">特別程序裡也有再審的影子。第 237 條之 16 第 3 項：收容聲請事件之裁定已確定，而有第 273 條之情形者，得準用第五編之規定聲請再審。所以收容裁定也走第 283 條那條路。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　丙於地方行政法院第一審敗訴，上訴後高等行政法院維持原判決確定。丙擬以「為判決基礎之行政處分，依其後之確定行政處分已變更」為由提起再審。應向哪個法院提起？若丙改以「適用法規顯有錯誤」為由，同時對第一審與第二審判決提起再審，管轄有無不同？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>第 275 條三項的適用順序。</dd>
+        <dt>條文</dt><dd>第 273 條第 1 項第 11 款、第 1 款；第 275 條第 1、2、3 項。</dd>
+        <dt>涵攝</dt><dd>第 11 款屬第 275 條第 3 項列舉的第 9 至 14 款事由，對上訴審判決以此聲明不服，雖對象是高等行政法院的第二審判決，仍專屬原第一審即地方行政法院管轄。改以第 1 款為由並同時對兩審判決提起，則落入第 2 項：審級不同的判決，專屬上級行政法院合併管轄，由高等行政法院管轄。</dd>
+        <dt>結論</dt><dd>第 11 款：地方行政法院。第 1 款同時對兩審判決：高等行政法院合併管轄。注意本件是地方庭起算的案件，上訴審終審是高等行政法院（第 263 條之 1），再審的「上級法院」也就是高等行政法院，不會跳到最高行政法院。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　丁對確定判決提起再審，主張原判決漏未斟酌卷內一份重要證物（第 14 款）。法院審理後認為該證物確實漏未斟酌，但斟酌後原判決結論並無不同。法院應以何種裁判終結？丁可否之後再以同一證物漏未斟酌為由提起再審？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>有再審事由但原判決正當時的裁判形式；第 274 條之 1 的範圍。</dd>
+        <dt>條文</dt><dd>第 280 條；第 274 條之 1。</dd>
+        <dt>涵攝</dt><dd>法院已進入本案審理，確認再審事由存在（第 14 款），但重新斟酌後原判決仍屬正當。第 280 條規定此時應以「判決」駁回，不是裁定。第 274 條之 1 的文義是「認無再審理由，判決駁回」；本件是有再審理由但原判決正當，是否屬第 274 條之 1 的「無再審理由」，學說上有不同理解。但無論如何，同一證物已經過實質審酌，再以同一事由提起已無再審利益。</dd>
+        <dt>結論</dt><dd>以判決駁回再審之訴，原確定判決效力不受影響。丁再以同一事由提起，法院得認其不合法或顯無理由駁回。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">4. 戊對最高行政法院駁回上訴的確定判決，以「發現未經斟酌之證物」為由提起再審之訴。管轄法院為何？</div>
+      <label><input type="radio" name="p2q1" value="A">最高行政法院，因再審專屬為判決之原法院管轄</label>
+      <label><input type="radio" name="p2q1" value="B">原第一審高等行政法院，因第 13 款事由依第 275 條第 3 項專屬原第一審法院管轄</label>
+      <label><input type="radio" name="p2q1" value="C">由戊於最高行政法院與高等行政法院間擇一提起</label>
+      <label><input type="radio" name="p2q1" value="D">地方行政法院，因新證物屬事實問題應由最低審級調查</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 275 條第 3 項：對於上訴審判決本於第 273 條第 1 項第 9 至 14 款事由聲明不服者，仍專屬原第一審行政法院管轄。發現新證物是第 13 款，落在這個範圍。" data-diag='{"A":"第 1 項是原則，但第 3 項對第 9 至 14 款另有規定，法律審不適合處理新證物。","C":"再審管轄是專屬管轄，沒有讓當事人選的空間。","D":"原第一審是哪一庭要看原案件：最高行政法院的案子來自高等行政法院第一審，不是地方行政法院。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">5. 己提起再審，法院審理後認確有第 273 條第 1 項第 14 款事由，但斟酌該證物後認原判決仍屬正當。法院應如何裁判？</div>
+      <label><input type="radio" name="p2q2" value="A">廢棄原判決，自為判決維持相同結論</label>
+      <label><input type="radio" name="p2q2" value="B">以判決駁回再審之訴</label>
+      <label><input type="radio" name="p2q2" value="C">以裁定駁回再審之訴</label>
+      <label><input type="radio" name="p2q2" value="D">不經言詞辯論以判決駁回，因屬顯無再審理由</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 280 條：再審之訴雖有再審理由，行政法院如認原判決為正當者，應以判決駁回之。原判決不廢棄。" data-diag='{"A":"原判決既然正當，就沒有廢棄的理由；第 280 條直接駁回，原判決留著。","C":"裁定駁回是給不合法的再審（第 278 條第 1 項）。本件已進入實體審查，用判決。","D":"第 278 條第 2 項是「顯無再審理由」才能不辯論駁回。本件是有再審理由，法院已經實質審了。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">6. 庚對高等行政法院通常程序第一審確定判決提起再審之訴，應徵收裁判費多少？</div>
+      <label><input type="radio" name="p2q3" value="A">4,000 元</label>
+      <label><input type="radio" name="p2q3" value="B">6,000 元</label>
+      <label><input type="radio" name="p2q3" value="C">1,000 元</label>
+      <label><input type="radio" name="p2q3" value="D">不徵收，因再審非新起訴</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 98 條之 3 第 1 項：再審之訴按起訴法院之審級，依第 98 條第 2 項及第 98 條之 2 第 1 項徵收。對第一審通常程序判決再審，依第 98 條第 2 項為 4,000 元。" data-diag='{"B":"6,000 元是對上訴審確定判決提再審時加徵二分之一的結果，本件是第一審判決。","C":"1,000 元是對確定裁定聲請再審（第 98 條之 3 第 2 項），對象是裁定不是判決。","D":"再審之訴是獨立的訴，第 98 條之 3 明文徵收裁判費。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 12-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出重新審理的四個要件：誰（第三人）、對什麼判決（撤銷或變更原處分或決定）、為什麼沒參加（非可歸責）、結果（不能提出影響判決的攻防方法）</li>
+      <li>算得出 30 日不變期間（自知悉確定判決）與 1 年上限（自判決確定）</li>
+      <li>講得出重新審理用「裁定」開啟、開啟後「回復原訴訟程序」、聲請人「當然參加」這三個關鍵字</li>
+      <li>能列一張表比較再審與重新審理</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：重新審理是給「被判決波及卻沒機會說話」的第三人</h2>
+    <div class="law"><b class="art">第 284 條</b>Ⅰ 因撤銷或變更原處分或決定之判決，而權利受損害之第三人，如非可歸責於己之事由，未參加訴訟，致不能提出足以影響判決結果之攻擊或防禦方法者，得對於確定終局判決聲請重新審理。<br>Ⅱ 前項聲請，應於知悉確定判決之日起三十日之不變期間內為之。但自判決確定之日起已逾一年者，不得聲請。</div>
+    <p>典型場景：乙拿到建照，鄰人甲提撤銷訴訟，法院沒依第 42 條命乙參加，判決撤銷建照確定。乙不是當事人，不能上訴、不能再審，但建照沒了。第 284 條給乙一條路。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>要件</th><th>內容</th><th>陷阱</th></tr></thead>
+      <tbody>
+        <tr><td>主體</td><td>權利受損害之<b>第三人</b></td><td>原訴訟的當事人不能聲請，他們走再審</td></tr>
+        <tr><td>客體</td><td><b>撤銷或變更</b>原處分或決定之判決</td><td>給付、確認判決不在範圍；駁回撤銷訴訟的判決也不在</td></tr>
+        <tr><td>原因</td><td><b>非可歸責於己</b>未參加訴訟</td><td>法院已命參加而不理、或明知訴訟存在卻不聲請參加，是可歸責</td></tr>
+        <tr><td>結果</td><td>致<b>不能提出足以影響判決結果</b>之攻擊或防禦方法</td><td>就算參加了也提不出什麼，不符合</td></tr>
+        <tr><td>期間</td><td>知悉確定判決之日起 <b>30 日</b>；判決確定之日起 <b>1 年</b>上限</td><td>再審是 5 年，這裡是 1 年，差四年</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：把第 284 條的 30 日起算點寫成「判決確定時」。條文明定是「知悉確定判決之日」，因為第三人本來就不在訴訟裡，不會收到判決。上限才用判決確定日。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：程序走裁定，開啟後回到原程序</h2>
+    <div class="law"><b class="art">第 285 條</b>重新審理之聲請準用第二百七十五條第一項、第二項管轄之規定。</div>
+    <p>管轄準用再審的第 1、2 項：原法院專屬；審級不同合併時上級法院管。注意<b>沒有準用第 3 項</b>，所以沒有「第 9 至 14 款回原第一審」的問題，重新審理本來也沒有分款。</p>
+    <div class="law"><b class="art">第 286 條第 1 項</b>聲請重新審理，應以聲請狀表明下列各款事項，提出於管轄行政法院為之：<br>一、聲請人及原訴訟之兩造當事人。<br>二、聲請重新審理之事件，及聲請重新審理之陳述。<br>三、就本案應為如何判決之聲明。<br>四、聲請理由及關於聲請理由並遵守不變期間之證據。</div>
+    <div class="law"><b class="art">第 287 條</b>聲請重新審理不合法者，行政法院應以裁定駁回之。</div>
+    <div class="law"><b class="art">第 288 條</b>行政法院認為第二百八十四條第一項之聲請有理由者，應以裁定命為重新審理；認為無理由者，應以裁定駁回之。</div>
+    <div class="flow">
+      <div class="step"><b>聲請狀</b>第 286 條四款。第 1 款要寫原訴訟兩造，因為聲請人不是他們。</div>
+      <div class="step"><b>不合法 → 裁定駁回</b>第 287 條。逾 30 日、逾 1 年、非第三人等。</div>
+      <div class="step"><b>有無理由 → 都用裁定</b>第 288 條。有理由，裁定命重新審理；無理由，裁定駁回。對裁定可抗告（第 264 條，10 日，第 268 條）。</div>
+      <div class="step"><b>裁定確定 → 回復原訴訟程序</b>第 290 條。依其審級更為審判，聲請人當然參加。</div>
+    </div>
+    <div class="law"><b class="art">第 290 條</b>Ⅰ 開始重新審理之裁定確定後，應即回復原訴訟程序，依其審級更為審判。<br>Ⅱ 聲請人於回復原訴訟程序後，當然參加訴訟。</div>
+    <p>跟再審最大的差別在這裡。再審是一個新的訴，法院就再審之訴做判決；重新審理是用裁定<b>把原來的訴訟程序叫回來</b>，聲請人變成參加人，法院再就原來的案子重新判。這也是為什麼第 288 條用裁定而不是判決。</p>
+    <div class="law"><b class="art">第 289 條</b>Ⅰ 聲請人於前二條裁定確定前得撤回其聲請。<br>Ⅱ 撤回聲請者，喪失其聲請權。<br>Ⅲ 聲請之撤回，得以書狀或言詞為之。</div>
+    <div class="tip">第 289 條第 2 項是陷阱句：撤回聲請就<b>喪失聲請權</b>，不能再聲請一次。跟撤回起訴（第 113 條以下）不同，起訴撤回後在期間內還能再起訴（終局判決後撤回除外）。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：聲請期間不停止執行，判決效力有保留</h2>
+    <div class="law"><b class="art">第 291 條</b>聲請重新審理無停止原確定判決執行之效力。但行政法院認有必要時，得命停止執行。</div>
+    <p>聲請重新審理，原判決照常執行，例如撤銷建照的判決確定後，機關依第 304 條應即為必要處置，不會因為乙聲請重新審理就卡住。要擋，得由法院依但書「認有必要」命停止執行。</p>
+    <div class="law"><b class="art">第 292 條</b>第二百八十二條之規定於重新審理準用之。</div>
+    <p>重新審理後若改判，對第三人因信賴原確定判決善意取得的權利仍無影響，但顯於公益有重大妨害者除外，與再審同。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：再審與重新審理的比較表</h2>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>再審之訴（第 273 至 283 條）</th><th>重新審理（第 284 至 292 條）</th></tr></thead>
+      <tbody>
+        <tr><th>誰可以</th><td>原訴訟當事人（第 273 條第 2 項為憲法法庭聲請人）</td><td>權利受損害且非可歸責未參加之<b>第三人</b></td></tr>
+        <tr><th>對什麼</th><td>任何確定終局判決（裁定依第 283 條聲請再審）</td><td>撤銷或變更原處分或決定之確定判決</td></tr>
+        <tr><th>事由</th><td>第 273 條列舉十四款加第 2 項</td><td>單一：非可歸責未參加致不能提出攻防方法</td></tr>
+        <tr><th>30 日起算</th><td>判決確定、送達或知悉事由時（第 276 條第 2 項）</td><td>知悉確定判決之日（第 284 條第 2 項）</td></tr>
+        <tr><th>絕對上限</th><td>5 年，第 5、6、12 款除外</td><td>1 年，無例外</td></tr>
+        <tr><th>管轄</th><td>第 275 條三項</td><td>準用第 275 條第 1、2 項（第 285 條）</td></tr>
+        <tr><th>怎麼開啟</th><td>提起「再審之訴」，法院以判決終結</td><td>聲請，法院以<b>裁定</b>命重新審理（第 288 條）</td></tr>
+        <tr><th>開啟後</th><td>就再審之訴本案審判（第 279 條範圍限制）</td><td>回復原訴訟程序，聲請人<b>當然參加</b>（第 290 條）</td></tr>
+        <tr><th>裁判費</th><td>第 98 條之 3</td><td>聲請原則不徵（第 98 條之 5 本文）</td></tr>
+        <tr><th>善意第三人</th><td>第 282 條</td><td>準用第 282 條（第 292 條）</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　市政府核發乙公司工廠設立許可，鄰近居民甲提起撤銷訴訟。訴訟中法院未命乙參加，乙亦不知有此訴訟。判決撤銷許可，於 113 年 2 月 1 日確定。乙於 113 年 6 月 10 日經市政府通知始知悉判決，於 6 月 25 日向法院聲請重新審理。合法嗎？若乙改提再審之訴，可否？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>第三人對撤銷判決的救濟途徑；第 284 條要件與期間。</dd>
+        <dt>條文</dt><dd>第 284 條第 1、2 項；第 273 條第 1 項（再審主體）。</dd>
+        <dt>涵攝</dt><dd>乙是許可的受益人，判決撤銷許可使其權利受損害，為第三人。法院未依第 42 條命乙參加，乙又不知訴訟存在，未參加非可歸責於己；若參加，可提出工廠符合環保規範等攻防方法，足以影響判決結果。期間：自知悉確定判決之日 6 月 10 日起算 30 日，至 7 月 10 日，6 月 25 日聲請未逾；自判決確定日 113 年 2 月 1 日起未逾 1 年。乙不是原訴訟當事人，不符合第 273 條第 1 項「當事人」要件，不能提再審。</dd>
+        <dt>結論</dt><dd>聲請合法。法院認有理由者，依第 288 條以裁定命重新審理；裁定確定後回復原訴訟程序，乙依第 290 條第 2 項當然參加。再審之訴則因主體不適格而不合法。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　承上，法院裁定命重新審理，裁定尚未確定。乙擔心訴訟成本，具狀撤回聲請。一週後乙反悔，於 30 日期間內再次聲請。法院應如何處理？重新審理期間，市政府得否依原確定判決廢止許可？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>第 289 條撤回的效果；第 291 條執行力。</dd>
+        <dt>條文</dt><dd>第 289 條第 1、2 項；第 291 條；第 304 條。</dd>
+        <dt>涵攝</dt><dd>第 288 條裁定確定前得撤回聲請，乙的撤回合法。但第 289 條第 2 項明定撤回者喪失聲請權，再次聲請欠缺聲請權，不合法。至於執行：第 291 條本文規定聲請重新審理無停止原確定判決執行之效力，市政府依第 304 條仍應為實現判決內容之必要處置；除非行政法院依第 291 條但書認有必要而命停止執行。</dd>
+        <dt>結論</dt><dd>第二次聲請應依第 287 條以裁定駁回。市政府得繼續執行，乙應另向法院聲請命停止執行。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="A">
+      <div class="stem">7. 甲獲工廠設立許可，第三人乙提起撤銷訴訟獲勝訴確定。甲於訴訟中未被命參加亦不知訴訟存在。甲得循何途徑救濟？</div>
+      <label><input type="radio" name="p3q1" value="A">依第 284 條聲請重新審理，因其為權利受損害且非可歸責未參加之第三人</label>
+      <label><input type="radio" name="p3q1" value="B">依第 273 條提起再審之訴，因其為原處分之相對人</label>
+      <label><input type="radio" name="p3q1" value="C">無救濟途徑，因確定判決對未參加之第三人不生效力</label>
+      <label><input type="radio" name="p3q1" value="D">提起上訴，因其上訴期間尚未起算</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 284 條第 1 項：因撤銷或變更原處分之判決而權利受損害之第三人，非可歸責於己未參加訴訟致不能提出攻防方法者，得聲請重新審理。" data-diag='{"B":"再審的主體是原訴訟當事人。甲是處分相對人，但不是訴訟當事人，再審大門不開。","C":"第 215 條撤銷判決對第三人亦有效力，甲的許可確實被撤了。正因為有效力，才需要第 284 條。","D":"上訴是當事人的權利，而且有 20 日不變期間。甲不是當事人，無從上訴。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">8. 丙於 113 年 1 月 20 日知悉某撤銷判決已確定，該判決於 111 年 12 月 1 日確定。丙欲聲請重新審理，下列何者正確？</div>
+      <label><input type="radio" name="p3q2" value="A">得於 113 年 2 月 19 日前聲請</label>
+      <label><input type="radio" name="p3q2" value="B">不得聲請，因自判決確定之日起已逾一年</label>
+      <label><input type="radio" name="p3q2" value="C">得於 116 年 12 月 1 日前聲請</label>
+      <label><input type="radio" name="p3q2" value="D">得於 113 年 2 月 19 日前聲請，但須釋明知悉在後之原因</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 284 條第 2 項但書：自判決確定之日起已逾一年者，不得聲請。111 年 12 月 1 日確定，至 112 年 12 月 1 日屆滿一年，113 年 1 月知悉已太晚。" data-diag='{"A":"30 日自知悉起算沒錯，但先被 1 年上限擋住了。兩個期間都要過。","C":"5 年是再審的上限（第 276 條第 4 項），重新審理是 1 年。差四年，是本課最容易被考的數字。","D":"釋明的問題還排不到，1 年上限已經過了。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">9. 行政法院認重新審理之聲請有理由，應如何處理？</div>
+      <label><input type="radio" name="p3q3" value="A">以判決廢棄原確定判決並自為判決</label>
+      <label><input type="radio" name="p3q3" value="B">以裁定命為重新審理，裁定確定後回復原訴訟程序，聲請人當然參加訴訟</label>
+      <label><input type="radio" name="p3q3" value="C">以裁定撤銷原確定判決，命原告重新起訴</label>
+      <label><input type="radio" name="p3q3" value="D">以判決命為重新審理，並通知聲請人得聲請參加</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 288 條：有理由者以裁定命為重新審理。第 290 條：裁定確定後回復原訴訟程序，依其審級更為審判；聲請人當然參加。" data-diag='{"A":"這是再審改判的模式。重新審理不是新的訴，法院不在此階段判本案，而是用裁定把原程序叫回來。","C":"原確定判決不是被「撤銷」，而是原程序回復後由法院更為審判。也沒有要原告重新起訴。","D":"是裁定，不是判決；聲請人是「當然」參加，不用再聲請。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 12-4 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出撤銷判決確定後關係機關的義務（第 304 條），以及它跟第 216 條的關係</li>
+      <li>知道什麼可以當執行名義、向哪個法院聲請、法院先做什麼（第 305 條）</li>
+      <li>講得出地方行政法院可以囑託誰執行、準用哪部法律（第 306 條）</li>
+      <li>分得出債務人異議之訴與其餘強制執行訴訟各歸哪個法院（第 307 條）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：撤銷判決不用「執行」，機關自己要動</h2>
+    <div class="law"><b class="art">第 304 條</b>撤銷判決確定者，關係機關應即為實現判決內容之必要處置。</div>
+    <p>撤銷判決是形成判決，判決一確定處分就消滅，沒有什麼好「強制執行」的。但處分消滅後常有後續，例如已經繳的罰鍰要退、已經註銷的執照要回復。第 304 條要關係機關<b>應即</b>為必要處置，不等人民來聲請。</p>
+    <div class="law"><b class="art">第 216 條第 1、2 項</b>Ⅰ 撤銷或變更原處分或決定之判決，就其事件有拘束各關係機關之效力。<br>Ⅱ 原處分或決定經判決撤銷後，機關須重為處分或決定者，應依判決意旨為之。</div>
+    <p>第 216 條講判決的拘束力（第 9 課），第 304 條講拘束力的落實。兩條放在一起用：機關不只不能違反判決意旨（第 216 條），還有積極作為義務（第 304 條）。機關若不動，人民要再走一次課予義務或一般給付訴訟，再拿到給付判決後才能依第 305 條執行。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 305 條，誰拿什麼去哪裡執行</h2>
+    <div class="law"><b class="art">第 305 條</b>Ⅰ 行政訴訟之裁判命債務人為一定之給付，經裁判確定後，債務人不為給付者，債權人得以之為執行名義，聲請地方行政法院強制執行。<br>Ⅱ 地方行政法院應先定相當期間通知債務人履行；逾期不履行者，強制執行。<br>Ⅲ 債務人為中央或地方機關或其他公法人者，並應通知其上級機關督促其如期履行。<br>Ⅳ 依本法成立之和解或調解，及其他依本法所為之裁定得為強制執行者，或科處罰鍰之裁定，均得為執行名義。</div>
+    <div class="flow">
+      <div class="step"><b>執行名義</b>命一定給付的確定裁判；和解、調解；得為強制執行的裁定；科處罰鍰的裁定（第 1、4 項）。</div>
+      <div class="step"><b>執行法院</b>一律是<b>地方行政法院</b>，不管執行名義是哪一審作成（第 1 項）。</div>
+      <div class="step"><b>先通知</b>定相當期間通知債務人履行，逾期才執行（第 2 項）。債務人是機關，再通知其上級機關督促（第 3 項）。</div>
+    </div>
+    <p>第 2、3 項是行政訴訟強制執行的特色。民事執行拿到執行名義就能查封，這裡要先給一段履行期間；債務人是機關的話，還加一道「告狀給上級」的督促機制，因為對機關直接查封公有財產有困難。</p>
+    <div class="warn">常錯：「撤銷判決也可以聲請地方行政法院強制執行」。第 305 條第 1 項的對象是「命債務人為一定之給付」的裁判。撤銷判決不是給付裁判，走第 304 條。另一個常錯：以為執行名義是哪一審作成就向哪一審聲請執行。執行一律由地方行政法院辦（第 305 條第 1 項），審級只在第 307 條債務人異議之訴才有意義。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：第 306 條，地方行政法院自己不執行，囑託別人</h2>
+    <div class="law"><b class="art">第 306 條</b>Ⅰ 地方行政法院為辦理行政訴訟強制執行事務，得囑託地方法院民事執行處或行政機關代為執行。<br>Ⅱ 執行程序，除本法別有規定外，應視執行機關為法院或行政機關而分別準用強制執行法或行政執行法之規定。<br>Ⅲ 債務人對第一項囑託代為執行之執行名義有異議者，由地方行政法院裁定之。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>囑託誰</th><th>準用哪部法</th><th>典型情形</th></tr></thead>
+      <tbody>
+        <tr><td>地方法院民事執行處</td><td>強制執行法</td><td>對人民的金錢給付，例如判決命人民返還溢領補助</td></tr>
+        <tr><td>行政機關（例如行政執行分署）</td><td>行政執行法</td><td>公法上金錢給付的行政執行體系較熟</td></tr>
+      </tbody>
+    </table></div>
+    <p>第 3 項：債務人對「囑託代為執行的執行名義」有異議，不是找民事執行處或行政機關，而是回到<b>地方行政法院裁定</b>。這是對執行名義本身（例如主張該裁定不得為執行名義）的程序異議，用裁定解決；跟第 307 條用「訴」解決的實體異議不同。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：第 307 條，兩種訴訟分給兩套法院</h2>
+    <div class="law"><b class="art">第 307 條</b>債務人異議之訴，依作成執行名義之第一審行政法院，分別由地方行政法院或高等行政法院受理；其餘有關強制執行之訴訟，由普通法院受理。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>訴訟</th><th>主張什麼</th><th>受理法院</th></tr></thead>
+      <tbody>
+        <tr><td><b>債務人異議之訴</b></td><td>執行名義成立後有消滅或妨礙債權人請求的事由（例如已清償、已抵銷）</td><td>作成執行名義之<b>第一審行政法院</b>：原案第一審在地方庭就地方行政法院，在高等庭就高等行政法院</td></tr>
+        <tr><td>其餘有關強制執行之訴訟</td><td>例如第三人異議之訴（第三人主張執行標的物是他的）、分配表異議之訴</td><td><b>普通法院</b></td></tr>
+      </tbody>
+    </table></div>
+    <p>分配的邏輯：債務人異議之訴爭的是公法上請求權還在不在，那是行政法院擅長的事；其餘執行爭議多是誰有所有權、怎麼分配等私法問題，交給普通法院。注意「第一審」三個字：即使執行名義是最高行政法院的判決，債務人異議之訴也回到原案的第一審法院，不會去最高行政法院。</p>
+    <div class="tip">國考用法：題目給「執行名義為高等行政法院第一審判決，經最高行政法院維持確定」。問債務人異議之訴管轄，答高等行政法院（作成執行名義之第一審）。問執行法院，答地方行政法院（第 305 條第 1 項）。問第三人異議之訴，答普通法院。三個問題三個答案，不要混。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲提起一般給付訴訟，高等行政法院判決命某部給付甲退休金差額 80 萬元，上訴後最高行政法院駁回確定。確定後三個月，某部仍未給付。甲應如何取得給付？法院收到聲請後第一步做什麼？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>給付判決確定後對機關的強制執行程序。</dd>
+        <dt>條文</dt><dd>第 305 條第 1、2、3 項；第 306 條第 1 項。</dd>
+        <dt>涵攝</dt><dd>確定判決命某部為金錢給付，某部不為給付，甲得以該判決為執行名義，聲請地方行政法院強制執行。不是向作成判決的高等行政法院或最高行政法院聲請。地方行政法院依第 2 項先定相當期間通知某部履行；因債務人為中央機關，依第 3 項並通知其上級機關督促如期履行。逾期不履行，始進入強制執行，得依第 306 條第 1 項囑託民事執行處或行政機關代為執行。</dd>
+        <dt>結論</dt><dd>向地方行政法院聲請強制執行；法院先通知履行並通知上級機關督促，逾期再執行。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　承上，執行中某部主張已於判決確定後將 80 萬元匯入甲帳戶，請求權已消滅，欲提起訴訟排除執行。另有第三人乙主張被查封的某筆財產實為其所有。兩個訴訟各由哪個法院受理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>第 307 條的審判權分配。</dd>
+        <dt>條文</dt><dd>第 307 條前段與後段。</dd>
+        <dt>涵攝</dt><dd>某部主張執行名義成立後請求權因清償而消滅，是債務人異議之訴。依第 307 條前段，由作成執行名義之第一審行政法院受理；本件第一審為高等行政法院，故由高等行政法院受理，雖然確定判決是最高行政法院作成的。乙是第三人，主張對執行標的物有所有權，屬「其餘有關強制執行之訴訟」，依後段由普通法院受理。</dd>
+        <dt>結論</dt><dd>債務人異議之訴：高等行政法院。第三人異議之訴：普通法院。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">10. 丁獲地方行政法院判決命某市政府給付補助款 30 萬元，判決確定後市政府不履行。丁應如何處理？</div>
+      <label><input type="radio" name="p4q1" value="A">向高等行政法院聲請強制執行，因其為地方行政法院之上級法院</label>
+      <label><input type="radio" name="p4q1" value="B">以確定判決為執行名義，聲請地方行政法院強制執行</label>
+      <label><input type="radio" name="p4q1" value="C">直接向地方法院民事執行處聲請強制執行</label>
+      <label><input type="radio" name="p4q1" value="D">另行提起課予義務訴訟請求市政府作成給付處分</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 305 條第 1 項：裁判命債務人為一定之給付，確定後不為給付者，債權人得以之為執行名義，聲請地方行政法院強制執行。" data-diag='{"A":"執行法院一律是地方行政法院，與作成判決的審級無關。","C":"民事執行處是地方行政法院「囑託」代為執行的對象（第 306 條第 1 項），人民不能直接找它。","D":"已經有確定的給付判決，不需要再起訴，直接執行。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">11. 地方行政法院受理對某部的強制執行聲請後，依第 305 條應先如何處理？</div>
+      <label><input type="radio" name="p4q2" value="A">立即囑託民事執行處查封該部財產</label>
+      <label><input type="radio" name="p4q2" value="B">先定相當期間通知該部履行，並通知其上級機關督促如期履行；逾期不履行再強制執行</label>
+      <label><input type="radio" name="p4q2" value="C">移送普通法院執行</label>
+      <label><input type="radio" name="p4q2" value="D">命債權人先提供擔保</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 305 條第 2 項：應先定相當期間通知債務人履行；逾期不履行者，強制執行。第 3 項：債務人為中央或地方機關或其他公法人者，並應通知其上級機關督促其如期履行。" data-diag='{"A":"第 2 項要求先定期間通知履行，不能跳過直接執行。","C":"行政訴訟的強制執行由地方行政法院辦理（第 305 條第 1 項），只是可以囑託別人代為執行，不是移送。","D":"擔保是保全程序（假扣押、假處分）的機制，確定判決的執行不需要。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">12. 執行名義為高等行政法院第一審判決，經最高行政法院判決維持而確定。債務人機關主張債權已因抵銷而消滅，提起債務人異議之訴。應由何法院受理？</div>
+      <label><input type="radio" name="p4q3" value="A">地方行政法院，因其為執行法院</label>
+      <label><input type="radio" name="p4q3" value="B">高等行政法院，因其為作成執行名義之第一審行政法院</label>
+      <label><input type="radio" name="p4q3" value="C">普通法院，因屬有關強制執行之訴訟</label>
+      <label><input type="radio" name="p4q3" value="D">最高行政法院，因確定判決由其作成</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 307 條前段：債務人異議之訴，依作成執行名義之第一審行政法院，分別由地方行政法院或高等行政法院受理。本件第一審是高等行政法院。" data-diag='{"A":"執行法院與受理債務人異議之訴的法院是兩回事。第 307 條看的是原案「第一審」在哪。","C":"普通法院受理的是「其餘」有關強制執行之訴訟，例如第三人異議之訴；債務人異議之訴明文留給行政法院。","D":"第 307 條寫的是「第一審」行政法院，最高行政法院不是第一審。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card goal">
+    <h2>章末測驗（選擇 10 題 + 實例 2 題）</h2>
+    <p>選擇題全部作答後按「交卷」，10 題答對 8 題過關。實例題先自己寫，再展開參考答案對照，自評後按「我寫到了」或「要再加強」。這是最後一課，過關後到綜合練習場把 12 課混在一起練。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="C">
+      <div class="stem">1. 關於第 273 條第 1 項但書，下列何者正確？</div>
+      <label><input type="radio" name="qz1" value="A">當事人曾提起上訴者，一律不得再提起再審</label>
+      <label><input type="radio" name="qz1" value="B">當事人未提起上訴者，一律不得再提起再審</label>
+      <label><input type="radio" name="qz1" value="C">當事人已依上訴主張其事由經判決為無理由，或知其事由而不為上訴主張者，不得以該事由提起再審</label>
+      <label><input type="radio" name="qz1" value="D">再審事由限於判決確定後才發生者</label>
+      <div class="fb" data-exp="但書擋的是「同一事由」已經在上訴審主張過被駁、或知道卻不上訴。曾上訴但主張的是別的事由、或不知事由而未上訴，不受但書限制。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">2. 甲以「發現未經斟酌之證物」為由提起再審，除須證明如經斟酌可受較有利益之判決外，依第 273 條第 4 項尚須：</div>
+      <label><input type="radio" name="qz2" value="A">該證物經刑事判決確定為真正</label>
+      <label><input type="radio" name="qz2" value="B">甲非因可歸責於己之事由，不能於該訴訟言詞辯論終結前提出</label>
+      <label><input type="radio" name="qz2" value="C">該證物為原判決漏未斟酌之卷內證物</label>
+      <label><input type="radio" name="qz2" value="D">他造對該證物之真正無爭執</label>
+      <div class="fb" data-exp="第 273 條第 4 項是第 13 款的專屬要件。刑事判決確定是第 3 項對第 7 至 10 款的要求；卷內漏未斟酌是第 14 款。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">3. 依第 276 條第 4 項，下列何款再審事由<b>不受</b>「自判決確定時起逾五年不得提起」之限制？</div>
+      <label><input type="radio" name="qz3" value="A">第 1 款適用法規顯有錯誤</label>
+      <label><input type="radio" name="qz3" value="B">第 6 款當事人知他造應為送達之處所，指為所在不明而與涉訟</label>
+      <label><input type="radio" name="qz3" value="C">第 9 款為判決基礎之證物係偽造或變造</label>
+      <label><input type="radio" name="qz3" value="D">第 13 款當事人發現未經斟酌之證物</label>
+      <div class="fb" data-exp="第 276 條第 4 項但書：第 5 款、第 6 款、第 12 款不受 5 年限制。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. 乙之確定判決所適用之法規範，經乙聲請後由憲法法庭判決宣告違憲。乙提起再審之訴的 30 日期間自何時起算？</div>
+      <label><input type="radio" name="qz4" value="A">原判決確定時</label>
+      <label><input type="radio" name="qz4" value="B">憲法法庭判決宣示時</label>
+      <label><input type="radio" name="qz4" value="C">憲法法庭判決公告時</label>
+      <label><input type="radio" name="qz4" value="D">憲法法庭裁判送達之翌日</label>
+      <div class="fb" data-exp="第 276 條第 3 項：依第 273 條第 2 項提起再審之訴者，期間自裁判送達之翌日起算。第 6 項另規定聲請案繫屬至裁判送達期間不計入 5 年。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">5. 丙提起再審之訴，經行政法院認無再審理由以判決駁回確定。丙再以同一事由對原確定判決提起再審。法院應：</div>
+      <label><input type="radio" name="qz5" value="A">受理並重新審查該事由</label>
+      <label><input type="radio" name="qz5" value="B">受理，但限於對駁回再審之確定判決部分</label>
+      <label><input type="radio" name="qz5" value="C">駁回，因第 274 條之 1 禁止以同一事由對原確定判決或駁回再審之確定判決更行提起再審</label>
+      <label><input type="radio" name="qz5" value="D">移送上級行政法院</label>
+      <div class="fb" data-exp="第 274 條之 1：認無再審理由判決駁回後，不得以同一事由對原確定判決或駁回再審之訴之確定判決更行提起再審之訴。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">6. 關於再審之訴判決的效力，下列何者正確？</div>
+      <label><input type="radio" name="qz6" value="A">對第三人因信賴確定終局判決以善意取得之權利無影響，但顯於公益有重大妨害者不在此限</label>
+      <label><input type="radio" name="qz6" value="B">對所有第三人均有效力，不問善意惡意</label>
+      <label><input type="radio" name="qz6" value="C">對第三人一律無效力</label>
+      <label><input type="radio" name="qz6" value="D">對第三人善意取得之權利無影響，且無任何例外</label>
+      <div class="fb" data-exp="第 282 條本文與但書。第 292 條使重新審理準用之。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">7. 丁對已確定之裁定，主張有第 273 條之情形。下列何者正確？</div>
+      <label><input type="radio" name="qz7" value="A">裁定不得再審，僅得抗告</label>
+      <label><input type="radio" name="qz7" value="B">得準用再審之規定「聲請再審」，徵收裁判費 1,000 元</label>
+      <label><input type="radio" name="qz7" value="C">應提起「再審之訴」，徵收裁判費 4,000 元</label>
+      <label><input type="radio" name="qz7" value="D">應聲請重新審理</label>
+      <div class="fb" data-exp="第 283 條：裁定已經確定而有第 273 條之情形者，得準用本編之規定聲請再審。第 98 條之 3 第 2 項：對於確定之裁定聲請再審者，徵收裁判費 1,000 元。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">8. 依第 284 條第 1 項，第三人得聲請重新審理的判決限於：</div>
+      <label><input type="radio" name="qz8" value="A">任何確定終局判決</label>
+      <label><input type="radio" name="qz8" value="B">撤銷或變更原處分或決定之判決</label>
+      <label><input type="radio" name="qz8" value="C">命機關為一定給付之判決</label>
+      <label><input type="radio" name="qz8" value="D">確認公法上法律關係成立之判決</label>
+      <div class="fb" data-exp="第 284 條第 1 項明定「因撤銷或變更原處分或決定之判決，而權利受損害之第三人」。這是因為撤銷判決依第 215 條對第三人亦有效力，第三人最可能被波及。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">9. 關於聲請重新審理對原確定判決執行的影響，下列何者正確？</div>
+      <label><input type="radio" name="qz9" value="A">當然停止執行</label>
+      <label><input type="radio" name="qz9" value="B">經聲請人聲請即應停止執行</label>
+      <label><input type="radio" name="qz9" value="C">無停止執行之效力，但行政法院認有必要時得命停止執行</label>
+      <label><input type="radio" name="qz9" value="D">於開始重新審理之裁定確定前不得執行</label>
+      <div class="fb" data-exp="第 291 條：聲請重新審理無停止原確定判決執行之效力。但行政法院認有必要時，得命停止執行。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">10. 關於行政訴訟強制執行，下列何者正確？</div>
+      <label><input type="radio" name="qz10" value="A">撤銷判決確定後，債權人得以之為執行名義聲請地方行政法院強制執行</label>
+      <label><input type="radio" name="qz10" value="B">第三人異議之訴由地方行政法院受理</label>
+      <label><input type="radio" name="qz10" value="C">地方行政法院應自行執行，不得囑託其他機關</label>
+      <label><input type="radio" name="qz10" value="D">地方行政法院得囑託地方法院民事執行處或行政機關代為執行，債務人對囑託執行之執行名義有異議者由地方行政法院裁定</label>
+      <div class="fb" data-exp="第 306 條第 1、3 項。撤銷判決走第 304 條由關係機關自為處置，不是第 305 條的執行名義；第三人異議之訴屬「其餘有關強制執行之訴訟」，由普通法院受理（第 307 條後段）。"></div>
+    </div>
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>實例題（自評）</h2>
+    <div class="essay" data-id="e1">
+      <div class="stem">實例一　甲不服國稅局核定補稅 300 萬元，經復查、訴願後向高等行政法院提起撤銷訴訟，敗訴；上訴後最高行政法院於 112 年 6 月 1 日判決駁回，判決同日送達並確定。113 年 2 月 1 日，甲得知原判決所憑的鑑定人就關鍵鑑定為虛偽陳述，該鑑定人已於 113 年 1 月 15 日經刑事判決確定。<br>問：(1) 甲得否提起再審？事由與附加要件為何？(2) 應向哪一個法院提起？(3) 最遲應於何時提起（不計在途期間）？5 年上限至何時？(4) 若法院認再審有理由但原判決仍屬正當，應如何裁判？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>(1)</dt><dd>鑑定人就為判決基礎之鑑定為虛偽陳述，屬第 273 條第 1 項第 10 款。第 7 至 10 款依第 3 項須以經判決確定為限；本件刑事判決已於 113 年 1 月 15 日確定，要件具備。甲於原審無從知悉此事由，不受第 1 項但書限制。</dd>
+          <dt>(2)</dt><dd>甲不服的是最高行政法院的上訴審判決，依第 275 條第 1 項原應由最高行政法院管轄；但第 10 款屬第 275 條第 3 項列舉的第 9 至 14 款，仍專屬原第一審即高等行政法院管轄。</dd>
+          <dt>(3)</dt><dd>第 276 條第 2 項：再審事由發生或知悉在後者，自知悉時起算 30 日。甲 113 年 2 月 1 日知悉，始日不計入，末日為 113 年 3 月 2 日（113 年 2 月有 29 日）。5 年上限依第 4 項自判決確定日 112 年 6 月 1 日起算至 117 年 6 月 1 日，本件未逾。</dd>
+          <dt>(4)</dt><dd>第 280 條：再審之訴雖有再審理由，行政法院如認原判決為正當者，應以判決駁回之。用判決不用裁定，原判決效力不受影響。依第 274 條之 1，甲不得再以同一事由提起再審。</dd>
+          <dt>加分</dt><dd>說明再審裁判費依第 98 條之 3 第 1 項按起訴法院審級徵收，本件由高等行政法院第一審管轄，徵 4,000 元；並點出第 275 條第 3 項的立法考量是法律審不宜調查事實。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+    <div class="essay" data-id="e2">
+      <div class="stem">實例二　某市政府核發乙建築執照，鄰人丙提起撤銷訴訟。法院未命乙參加，乙亦不知有訴訟。高等行政法院判決撤銷建照，於 113 年 3 月 1 日確定。乙於 113 年 7 月 1 日經市政府通知停工始知悉判決，於 7 月 20 日向法院聲請重新審理。另，丙先前另案獲地方行政法院判決命市政府給付 20 萬元確定，市政府逾兩個月未付。<br>問：(1) 乙為何不能提起再審？其聲請重新審理是否合法？(2) 法院認聲請有理由時如何處理，程序如何進行？(3) 聲請期間市政府得否依原判決續為停工等處置？(4) 丙應如何取得 20 萬元？若市政府主張已清償而提起債務人異議之訴，由何法院受理？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>(1)</dt><dd>再審之訴的主體是原訴訟當事人（第 273 條第 1 項「當事人」），乙非當事人，不得提起。乙為因撤銷原處分之判決而權利受損害之第三人，法院未依第 42 條命其參加且乙不知訴訟，未參加非可歸責於己，參加後可提出建照合法之攻防方法，符合第 284 條第 1 項。期間：自知悉確定判決之日 7 月 1 日起 30 日至 7 月 31 日，7 月 20 日聲請未逾；自判決確定日 113 年 3 月 1 日起未逾 1 年。聲請合法。管轄依第 285 條準用第 275 條第 1 項，為原判決之高等行政法院。</dd>
+          <dt>(2)</dt><dd>第 288 條：有理由者以裁定命為重新審理。裁定確定後，依第 290 條第 1 項回復原訴訟程序，依其審級更為審判；乙依第 2 項當然參加訴訟。法院重新審理後若認原判決正當，再審改判的結果對善意第三人之權利依第 292 條準用第 282 條無影響。</dd>
+          <dt>(3)</dt><dd>第 291 條本文：聲請重新審理無停止原確定判決執行之效力，市政府依第 304 條應即為實現判決內容之必要處置，停工處置合法。乙得請求行政法院依第 291 條但書認有必要時命停止執行。</dd>
+          <dt>(4)</dt><dd>丙以確定給付判決為執行名義，依第 305 條第 1 項聲請地方行政法院強制執行；法院依第 2 項先定相當期間通知履行，並依第 3 項通知市政府之上級機關督促。市政府主張清償為執行名義成立後消滅請求之事由，屬債務人異議之訴，依第 307 條前段由作成執行名義之第一審行政法院即地方行政法院受理。</dd>
+          <dt>加分</dt><dd>可引第 1 條保障人民權益宗旨，說明第 284 條填補第 215 條撤銷判決對第三人效力與第三人程序保障間的落差；並比較重新審理 1 年上限與再審 5 年上限之差異，指出立法者對撤銷判決安定性的較高要求。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="s6" class="panel">
+  <div class="card">
+    <h2>本課引用條文</h2>
+    <p class="small muted">點開看原文。只收錄本課講到的條文；全文請見全國法規資料庫。</p>
+    <div class="arts">
+      <details><summary>第 42 條 <span>獨立參加（第 5 課）</span></summary><div class="txt">Ⅰ 行政法院認為撤銷訴訟之結果，第三人之權利或法律上利益將受損害者，得依職權命其獨立參加訴訟，並得因該第三人之聲請，裁定允許其參加。
+Ⅱ 前項參加，準用第三十九條第三款規定。參加人並得提出獨立之攻擊或防禦方法。
+Ⅲ 前二項規定，於其他訴訟準用之。
+Ⅳ 訴願人已向行政法院提起撤銷訴訟，利害關係人就同一事件再行起訴者，視為第一項之參加。</div></details>
+      <details><summary>第 88 條、第 89 條 <span>期間計算、在途期間</span></summary><div class="txt">第 88 條 Ⅰ 期間，除法定者外，由行政法院或審判長酌量情形定之。Ⅱ 行政法院或審判長所定期間，自送達定期間之文書時起算，無庸送達者，自宣示定期間之裁判時起算。Ⅲ 期間之計算，依民法之規定。
+第 89 條 Ⅰ 當事人不在行政法院所在地住居者，計算法定期間，應扣除其在途之期間，但有訴訟代理人住居行政法院所在地，得為期間內應為之訴訟行為者，不在此限。Ⅱ 前項應扣除之在途期間，由司法院定之。</div></details>
+      <details><summary>第 91 條 <span>回復原狀</span></summary><div class="txt">Ⅰ 因天災或其他不應歸責於己之事由，致遲誤不變期間者，於其原因消滅後一個月內，如該不變期間少於一個月者，於相等之日數內，得聲請回復原狀。
+Ⅱ 前項期間不得伸長或縮短之。
+Ⅲ 遲誤不變期間已逾一年者，不得聲請回復原狀，遲誤第一百零六條之起訴期間已逾三年者，亦同。
+Ⅳ 第一項之聲請應以書狀為之，並釋明遲誤期間之原因及其消滅時期。</div></details>
+      <details><summary>第 98 條第 2 項、第 98 條之 2 第 1 項、第 98 條之 3、第 98 條之 5 本文 <span>裁判費</span></summary><div class="txt">第 98 條 Ⅱ 起訴，按件徵收裁判費新臺幣四千元。適用簡易訴訟程序之事件，徵收裁判費新臺幣二千元。
+第 98 條之 2 Ⅰ 上訴，依第九十八條第二項規定，加徵裁判費二分之一。
+第 98 條之 3 Ⅰ 再審之訴，按起訴法院之審級，依第九十八條第二項及前條第一項規定徵收裁判費。Ⅱ 對於確定之裁定聲請再審者，徵收裁判費新臺幣一千元。
+第 98 條之 5 本文 聲請或聲明，不徵收裁判費。</div></details>
+      <details><summary>第 107 條第 1 項本文與但書 <span>起訴之駁回與補正</span></summary><div class="txt">Ⅰ 原告之訴，有下列各款情形之一者，行政法院應以裁定駁回之。但其情形可以補正者，審判長應先定期間命補正：（各款略，見第 6 課）</div></details>
+      <details><summary>第 213 條、第 215 條、第 216 條 <span>判決之確定力、對第三人效力、拘束力</span></summary><div class="txt">第 213 條 訴訟標的於確定之終局判決中經裁判者，有確定力。
+第 215 條 撤銷或變更原處分或決定之判決，對第三人亦有效力。
+第 216 條 Ⅰ 撤銷或變更原處分或決定之判決，就其事件有拘束各關係機關之效力。Ⅱ 原處分或決定經判決撤銷後，機關須重為處分或決定者，應依判決意旨為之。Ⅲ 前二項判決，如係指摘機關適用法律之見解有違誤時，該機關即應受判決之拘束，不得為相左或歧異之決定或處分。Ⅳ 前三項之規定，於其他訴訟準用之。</div></details>
+      <details><summary>第 237 條之 16 第 3 項 <span>收容裁定之再審</span></summary><div class="txt">Ⅲ 收容聲請事件之裁定已確定，而有第二百七十三條之情形者，得準用第五編之規定，聲請再審。</div></details>
+      <details><summary>第 264 條、第 268 條 <span>抗告</span></summary><div class="txt">第 264 條 對於裁定得為抗告。但別有不許抗告之規定者，不在此限。
+第 268 條 提起抗告，應於裁定送達後十日之不變期間內為之。但送達前之抗告亦有效力。</div></details>
+      <details><summary>第 273 條 <span>再審事由</span></summary><div class="txt">Ⅰ 有下列各款情形之一者，得以再審之訴對於確定終局判決聲明不服。但當事人已依上訴主張其事由經判決為無理由，或知其事由而不為上訴主張者，不在此限：
+一、適用法規顯有錯誤。
+二、判決理由與主文顯有矛盾。
+三、判決法院之組織不合法。
+四、依法律或裁判應迴避之法官參與裁判。
+五、當事人於訴訟未經合法代理或代表。但當事人知訴訟代理權有欠缺而未於該訴訟言詞辯論終結前爭執者，不在此限。
+六、當事人知他造應為送達之處所，指為所在不明而與涉訟。但他造已承認其訴訟程序者，不在此限。
+七、參與裁判之法官關於該訴訟違背職務，犯刑事上之罪已經證明，或關於該訴訟違背職務受懲戒處分，足以影響原判決。
+八、當事人之代理人、代表人、管理人或他造或其代理人、代表人、管理人關於該訴訟有刑事上應罰之行為，影響於判決。
+九、為判決基礎之證物係偽造或變造。
+十、證人、鑑定人或通譯就為判決基礎之證言、鑑定或通譯為虛偽陳述。
+十一、為判決基礎之民事或刑事判決及其他裁判或行政處分，依其後之確定裁判或行政處分已變更。
+十二、當事人發現就同一訴訟標的在前已有確定判決、和解或調解或得使用該判決、和解或調解。
+十三、當事人發現未經斟酌之證物或得使用該證物。但以如經斟酌可受較有利益之判決為限。
+十四、原判決就足以影響於判決之重要證物漏未斟酌。
+Ⅱ 確定終局判決所適用之法規範，經憲法法庭判決宣告違憲，或適用法規範所表示之見解，與憲法法庭統一見解之裁判有異者，其聲請人亦得提起再審之訴。
+Ⅲ 第一項第七款至第十款情形之證明，以經判決確定，或其刑事、懲戒訴訟不能開始、續行或判決不受理、免議非因證據不足者為限，得提起再審之訴。
+Ⅳ 第一項第十三款情形，以當事人非因可歸責於己之事由，不能於該訴訟言詞辯論終結前提出者為限，得提起再審之訴。</div></details>
+      <details><summary>第 274 條 <span>判決基礎之裁判有再審事由</span></summary><div class="txt">為判決基礎之裁判，如有前條所定之情形者，得據以對於該判決提起再審之訴。</div></details>
+      <details><summary>第 274 條之 1 <span>同一事由不得更行再審</span></summary><div class="txt">再審之訴，行政法院認無再審理由，判決駁回後，不得以同一事由對於原確定判決或駁回再審之訴之確定判決，更行提起再審之訴。</div></details>
+      <details><summary>第 275 條 <span>再審管轄</span></summary><div class="txt">Ⅰ 再審之訴專屬為判決之原行政法院管轄。
+Ⅱ 對於審級不同之行政法院就同一事件所為之判決提起再審之訴者，專屬上級行政法院合併管轄之。
+Ⅲ 對於上訴審行政法院之判決，本於第二百七十三條第一項第九款至第十四款事由聲明不服者，雖有前二項之情形，仍專屬原第一審行政法院管轄。</div></details>
+      <details><summary>第 276 條 <span>再審期間</span></summary><div class="txt">Ⅰ 再審之訴應於三十日之不變期間內提起。
+Ⅱ 前項期間自判決確定時起算，判決於送達前確定者，自送達時起算；其再審事由發生或知悉在後者，均自知悉時起算。
+Ⅲ 依第二百七十三條第二項提起再審之訴者，第一項期間自裁判送達之翌日起算。
+Ⅳ 再審之訴自判決確定時起，如已逾五年者，不得提起。但以第二百七十三條第一項第五款、第六款或第十二款情形為再審事由者，不在此限。
+Ⅴ 對於再審確定判決不服，復提起再審之訴者，前項所定期間，自原判決確定時起算。但再審之訴有理由者，自該再審判決確定時起算。
+Ⅵ 第二百七十三條第二項之情形，自聲請案件繫屬之日起至裁判送達聲請人之日止，不計入第四項所定期間。</div></details>
+      <details><summary>第 277 條 <span>再審訴狀</span></summary><div class="txt">Ⅰ 再審之訴，應以訴狀表明下列各款事項，提出於管轄行政法院為之：
+一、當事人。
+二、聲明不服之判決及提起再審之訴之陳述。
+三、應於如何程度廢棄原判決及就本案如何判決之聲明。
+四、再審理由及關於再審理由並遵守不變期間之證據。
+Ⅱ 再審訴狀內，宜記載準備本案言詞辯論之事項，並添具確定終局判決繕本或影本。</div></details>
+      <details><summary>第 278 條 <span>不合法與顯無理由之駁回</span></summary><div class="txt">Ⅰ 再審之訴不合法者，行政法院應以裁定駁回之。
+Ⅱ 再審之訴顯無再審理由者，得不經言詞辯論，以判決駁回之。</div></details>
+      <details><summary>第 279 條 <span>辯論與裁判之範圍</span></summary><div class="txt">本案之辯論及裁判，以聲明不服之部分為限。</div></details>
+      <details><summary>第 280 條 <span>原判決正當之駁回</span></summary><div class="txt">再審之訴雖有再審理由，行政法院如認原判決為正當者，應以判決駁回之。</div></details>
+      <details><summary>第 281 條 <span>準用各審級程序</span></summary><div class="txt">除本編別有規定外，再審之訴訟程序準用關於各該審級訴訟程序之規定。</div></details>
+      <details><summary>第 282 條 <span>對善意第三人之效力</span></summary><div class="txt">再審之訴之判決，對第三人因信賴確定終局判決以善意取得之權利無影響。但顯於公益有重大妨害者，不在此限。</div></details>
+      <details><summary>第 283 條 <span>裁定之聲請再審</span></summary><div class="txt">裁定已經確定，而有第二百七十三條之情形者，得準用本編之規定，聲請再審。</div></details>
+      <details><summary>第 284 條 <span>重新審理之要件與期間</span></summary><div class="txt">Ⅰ 因撤銷或變更原處分或決定之判決，而權利受損害之第三人，如非可歸責於己之事由，未參加訴訟，致不能提出足以影響判決結果之攻擊或防禦方法者，得對於確定終局判決聲請重新審理。
+Ⅱ 前項聲請，應於知悉確定判決之日起三十日之不變期間內為之。但自判決確定之日起已逾一年者，不得聲請。</div></details>
+      <details><summary>第 285 條 <span>重新審理之管轄</span></summary><div class="txt">重新審理之聲請準用第二百七十五條第一項、第二項管轄之規定。</div></details>
+      <details><summary>第 286 條 <span>聲請狀</span></summary><div class="txt">Ⅰ 聲請重新審理，應以聲請狀表明下列各款事項，提出於管轄行政法院為之：
+一、聲請人及原訴訟之兩造當事人。
+二、聲請重新審理之事件，及聲請重新審理之陳述。
+三、就本案應為如何判決之聲明。
+四、聲請理由及關於聲請理由並遵守不變期間之證據。
+Ⅱ 聲請狀內，宜記載準備本案言詞辯論之事項。</div></details>
+      <details><summary>第 287 條 <span>不合法之駁回</span></summary><div class="txt">聲請重新審理不合法者，行政法院應以裁定駁回之。</div></details>
+      <details><summary>第 288 條 <span>有無理由之裁定</span></summary><div class="txt">行政法院認為第二百八十四條第一項之聲請有理由者，應以裁定命為重新審理；認為無理由者，應以裁定駁回之。</div></details>
+      <details><summary>第 289 條 <span>聲請之撤回</span></summary><div class="txt">Ⅰ 聲請人於前二條裁定確定前得撤回其聲請。
+Ⅱ 撤回聲請者，喪失其聲請權。
+Ⅲ 聲請之撤回，得以書狀或言詞為之。</div></details>
+      <details><summary>第 290 條 <span>回復原訴訟程序</span></summary><div class="txt">Ⅰ 開始重新審理之裁定確定後，應即回復原訴訟程序，依其審級更為審判。
+Ⅱ 聲請人於回復原訴訟程序後，當然參加訴訟。</div></details>
+      <details><summary>第 291 條 <span>不停止執行</span></summary><div class="txt">聲請重新審理無停止原確定判決執行之效力。但行政法院認有必要時，得命停止執行。</div></details>
+      <details><summary>第 292 條 <span>準用第 282 條</span></summary><div class="txt">第二百八十二條之規定於重新審理準用之。</div></details>
+      <details><summary>第 304 條 <span>撤銷判決確定後之處置</span></summary><div class="txt">撤銷判決確定者，關係機關應即為實現判決內容之必要處置。</div></details>
+      <details><summary>第 305 條 <span>執行名義與執行法院</span></summary><div class="txt">Ⅰ 行政訴訟之裁判命債務人為一定之給付，經裁判確定後，債務人不為給付者，債權人得以之為執行名義，聲請地方行政法院強制執行。
+Ⅱ 地方行政法院應先定相當期間通知債務人履行；逾期不履行者，強制執行。
+Ⅲ 債務人為中央或地方機關或其他公法人者，並應通知其上級機關督促其如期履行。
+Ⅳ 依本法成立之和解或調解，及其他依本法所為之裁定得為強制執行者，或科處罰鍰之裁定，均得為執行名義。</div></details>
+      <details><summary>第 306 條 <span>囑託執行與準用法律</span></summary><div class="txt">Ⅰ 地方行政法院為辦理行政訴訟強制執行事務，得囑託地方法院民事執行處或行政機關代為執行。
+Ⅱ 執行程序，除本法別有規定外，應視執行機關為法院或行政機關而分別準用強制執行法或行政執行法之規定。
+Ⅲ 債務人對第一項囑託代為執行之執行名義有異議者，由地方行政法院裁定之。</div></details>
+      <details><summary>第 307 條 <span>強制執行相關訴訟之審判權</span></summary><div class="txt">債務人異議之訴，依作成執行名義之第一審行政法院，分別由地方行政法院或高等行政法院受理；其餘有關強制執行之訴訟，由普通法院受理。</div></details>
+    </div>
+  </div>
+  <div class="card">
+    <h2>十二課讀完了</h2>
+    <p>這是最後一課。接下來到「綜合練習場」把十二課混在一起練：先判斷該提哪一種訴，再做跨章混合題，弱點頁會告訴你哪一課要回頭讀。<a href="綜合練習場.html">前往綜合練習場</a>　<a href="00_總覽地圖.html">回總覽地圖</a></p>
+  </div>
+</section>
+
+<footer>行政訴訟法自學教材 · 第 12 課 再審、重新審理與強制執行<br>依民國 111 年 6 月 22 日修正條文自行編寫，題目為原創；條文以<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030154" target="_blank" rel="noopener">全國法規資料庫</a>為準。</footer>
+</div>
+
+<script>
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const LESSON_ID = "12", CH = "行政訴訟法 12 再審重新審理與執行";
+const PROG_KEY = "xzss_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與數學教材共用 study_log_v1，供「學習紀錄」頁讀取）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+let pracCount = 0, pracOk = 0;
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="s5"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok }); pracCount++; if(ok) pracOk++;
+  });
+});
+
+// ===== 章末測驗交卷 =====
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0; const wrong = [];
+  qs.forEach((q,i)=>{
+    const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+    else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+  });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  writeProg({ quiz: { score, total: qs.length } });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+  else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="s5"]').classList.add('done'); }
+  else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+  else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 實例題自評 =====
+document.querySelectorAll('.essay').forEach(es=>{
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 本課專屬工具 1：第 273 條十四款翻卡 =====
+(function(){
+  const K = [
+    { n:'第 1 款', t:'適用法規顯有錯誤', w:'法院用錯法條、或對法條的解釋明顯違反法律規定。單純見解不同不算，要「顯有」錯誤。', l:'受第 1 項但書限制：上訴時主張過被駁、或知道卻不上訴，不能再用。受 5 年上限。' },
+    { n:'第 2 款', t:'判決理由與主文顯有矛盾', w:'理由寫 A，主文判 B，兩者對不起來。', l:'受但書限制。受 5 年上限。' },
+    { n:'第 3 款', t:'判決法院之組織不合法', w:'例如應合議審判卻由獨任法官判決。', l:'受但書限制。受 5 年上限。' },
+    { n:'第 4 款', t:'依法律或裁判應迴避之法官參與裁判', w:'有迴避事由（第 4 課）的法官沒迴避，還參與判決。', l:'受但書限制。受 5 年上限。' },
+    { n:'第 5 款', t:'當事人於訴訟未經合法代理或代表', w:'無訴訟能力人沒有法定代理人、或代理權有欠缺。', l:'款文但書：知代理權有欠缺而未於言詞辯論終結前爭執者，不得主張。', ok:'第 276 條第 4 項但書：不受 5 年限制。' },
+    { n:'第 6 款', t:'當事人知他造應為送達之處所，指為所在不明而與涉訟', w:'明知對方住哪，卻騙法院說找不到人，讓對方沒機會應訴。', l:'款文但書：他造已承認其訴訟程序者，不得主張。', ok:'第 276 條第 4 項但書：不受 5 年限制。' },
+    { n:'第 7 款', t:'參與裁判之法官關於該訴訟違背職務犯罪或受懲戒，足以影響原判決', w:'法官在這件案子收賄、或因此案違背職務被懲戒。', l:'第 273 條第 3 項：須經判決確定，或刑事、懲戒訴訟不能開始、續行、不受理、免議且非因證據不足。' },
+    { n:'第 8 款', t:'當事人之代理人、代表人、管理人或他造等關於該訴訟有刑事上應罰之行為，影響於判決', w:'例如他造在訴訟中偽造文書、對證人恫嚇。', l:'第 273 條第 3 項：須經判決確定（或程序不能進行且非因證據不足）。' },
+    { n:'第 9 款', t:'為判決基礎之證物係偽造或變造', w:'法院憑來判決的那份文件是假的。', l:'第 273 條第 3 項：須經判決確定。對上訴審判決以此為由，管轄回原第一審（第 275 條第 3 項）。' },
+    { n:'第 10 款', t:'證人、鑑定人或通譯就為判決基礎之證言、鑑定或通譯為虛偽陳述', w:'證人說謊、鑑定造假、翻譯亂翻，而法院採信了。', l:'第 273 條第 3 項：須經判決確定。管轄回原第一審（第 275 條第 3 項）。' },
+    { n:'第 11 款', t:'為判決基礎之民事或刑事判決及其他裁判或行政處分，依其後之確定裁判或行政處分已變更', w:'判決的前提是另一個裁判或處分，那個前提後來被改了。', l:'管轄回原第一審（第 275 條第 3 項）。受 5 年上限。' },
+    { n:'第 12 款', t:'當事人發現就同一訴訟標的在前已有確定判決、和解或調解或得使用該判決、和解或調解', w:'同一件事早就判過了（或和解、調解過），後判決違反一事不再理。', l:'管轄回原第一審（第 275 條第 3 項）。', ok:'第 276 條第 4 項但書：不受 5 年限制。' },
+    { n:'第 13 款', t:'當事人發現未經斟酌之證物或得使用該證物', w:'找到法院沒看過的新證據。', l:'款文但書：以如經斟酌可受較有利益之判決為限。第 273 條第 4 項：須非因可歸責於己不能於言詞辯論終結前提出。管轄回原第一審（第 275 條第 3 項）。' },
+    { n:'第 14 款', t:'原判決就足以影響於判決之重要證物漏未斟酌', w:'證據就在卷內，法院卻沒看。', l:'要「足以影響於判決」的「重要」證物。管轄回原第一審（第 275 條第 3 項）。受 5 年上限。' },
+    { n:'第 2 項', t:'憲法法庭宣告違憲，或見解與憲法法庭統一見解之裁判有異', w:'判決用的法規範被宣告違憲，或判決見解跟憲法法庭的統一見解不同。', l:'限「其聲請人」。30 日自裁判送達之翌日起算（第 276 條第 3 項）。', ok:'聲請案繫屬至裁判送達期間不計入 5 年（第 276 條第 6 項）。' }
+  ];
+  const grid = document.getElementById('flipGrid');
+  K.forEach(k=>{
+    const b = document.createElement('button'); b.type='button'; b.className='flip'; b.setAttribute('aria-pressed','false');
+    b.innerHTML = '<span class="front"><b>'+k.n+'</b>'+k.t+'</span><span class="back"><b>'+k.n+'　白話</b>'+k.w+'<span class="lim">'+k.l+'</span>'+(k.ok?'<span class="lim ok">'+k.ok+'</span>':'')+'</span>';
+    b.addEventListener('click',()=>{ const on = b.classList.toggle('on'); b.setAttribute('aria-pressed', on?'true':'false'); if(on) logEv({ type:"tool", q:"rs-273-flip", k:k.n }); });
+    grid.appendChild(b);
+  });
+  document.getElementById('flipAll').addEventListener('click',()=>{
+    const cards = grid.querySelectorAll('.flip'); const allOn = [...cards].every(c=>c.classList.contains('on'));
+    cards.forEach(c=>{ c.classList.toggle('on', !allOn); c.setAttribute('aria-pressed', !allOn?'true':'false'); });
+    logEv({ type:"tool", q:"rs-273-flip", k: allOn?'close-all':'open-all' });
+  });
+})();
+
+// ===== 本課專屬工具 2：再審期間計算（第 276 條）=====
+(function(){
+  const boxGen = document.getElementById('rsGen'), boxCC = document.getElementById('rsCC'), res = document.getElementById('rsRes');
+  function type(){ const r = document.querySelector('input[name="rsType"]:checked'); return r ? r.value : 'gen'; }
+  function sync(){ const cc = type()==='cc'; boxGen.style.display = cc ? 'none' : ''; boxCC.style.display = cc ? '' : 'none'; }
+  document.querySelectorAll('input[name="rsType"]').forEach(r=>r.addEventListener('change', sync)); sync();
+  function parse(id){ const v = document.getElementById(id).value; if(!v) return null; const p = v.split('-').map(Number); if(p.length!==3 || p.some(isNaN)) return null; return new Date(p[0], p[1]-1, p[2]); }
+  function addDays(d,n){ const x = new Date(d); x.setDate(x.getDate()+n); return x; }
+  function addYears(d,n){ const x = new Date(d); x.setFullYear(x.getFullYear()+n); return x; }
+  function days(a,b){ return Math.round((b-a)/86400000); }
+  function fmt(d){ const y=d.getFullYear(), m=d.getMonth()+1, dd=d.getDate(); return y+'-'+String(m).padStart(2,'0')+'-'+String(dd).padStart(2,'0')+'（民國 '+(y-1911)+' 年 '+m+' 月 '+dd+' 日）'; }
+  document.getElementById('rsGo').addEventListener('click',()=>{
+    const t = type(); let html = '';
+    if(t === 'cc'){
+      const fin = parse('rsFinal2'), pend = parse('rsPend'), serv = parse('rsServ');
+      if(!fin || !pend || !serv){ res.innerHTML = '<p class="small" style="margin:0">三個日期都要填。</p>'; res.classList.add('on'); return; }
+      if(serv < pend){ res.innerHTML = '<p class="small" style="margin:0">裁判送達日不能早於繫屬日。</p>'; res.classList.add('on'); return; }
+      const end30 = addDays(serv, 30), excluded = days(pend, serv), cap = addDays(addYears(fin, 5), excluded);
+      html += '<h3>30 日末日：'+fmt(end30)+'</h3>';
+      html += '<p class="small" style="margin:0 0 .4em"><b>依據：</b>第 276 條第 3 項，自憲法法庭裁判送達之翌日起算；以送達翌日為第 1 日，第 30 日即送達日加 30 日。</p>';
+      html += '<p class="small" style="margin:0 0 .4em"><b>5 年上限：</b>'+fmt(cap)+'。第 276 條第 4 項自原判決確定日 '+fmt(fin)+' 起算 5 年，再依第 6 項加回聲請案繫屬至裁判送達的 '+excluded+' 日（不計入）。</p>';
+      html += '<p class="small muted" style="margin:0">'+(end30 > cap ? '注意：30 日末日已超過 5 年上限，實際最後一日為 5 年上限之末日。' : '30 日末日在 5 年上限之內，以 30 日末日為準。')+'　第 273 條第 2 項限「其聲請人」始得提起。</p>';
+    } else {
+      const fin = parse('rsFinal'), know = parse('rsKnow');
+      if(!fin){ res.innerHTML = '<p class="small" style="margin:0">請填原判決確定日。</p>'; res.classList.add('on'); return; }
+      const later = know && know > fin;
+      const start = later ? know : fin, end30 = addDays(start, 30);
+      html += '<h3>30 日末日：'+fmt(end30)+'</h3>';
+      html += '<p class="small" style="margin:0 0 .4em"><b>起算：</b>'+(later ? '第 276 條第 2 項後段，再審事由發生或知悉在後，自知悉日 '+fmt(know)+' 起算。' : '第 276 條第 2 項前段，自判決確定（或送達）日 '+fmt(fin)+' 起算。'+(know ? '你填的知悉日不晚於確定日，不適用知悉在後。' : ''))+'　始日不計入，第 30 日為末日。</p>';
+      if(t === 'gen'){
+        const cap = addYears(fin, 5);
+        html += '<p class="small" style="margin:0 0 .4em"><b>5 年上限：</b>'+fmt(cap)+'。第 276 條第 4 項本文，自判決確定時起算，知悉在後也不延長。</p>';
+        html += '<p class="small muted" style="margin:0">'+(end30 > cap ? '注意：30 日末日已超過 5 年上限，依第 4 項不得提起（除非事由屬第 5、6、12 款）。' : '30 日末日在 5 年上限之內，以 30 日末日為準。')+'</p>';
+      } else {
+        html += '<p class="small" style="margin:0 0 .4em"><b>5 年上限：</b>無。第 276 條第 4 項但書，以第 273 條第 1 項第 5 款、第 6 款或第 12 款為再審事由者，不受 5 年限制。</p>';
+        html += '<p class="small muted" style="margin:0">仍須遵守 30 日不變期間；第 5、6 款另有款文但書（知代理權欠缺未爭執、他造已承認程序者不得主張）。</p>';
+      }
+    }
+    res.innerHTML = html; res.classList.add('on');
+    logEv({ type:"tool", q:"rs-276-calc", k:t });
+  });
+})();
+</script>
+</body>
+</html>

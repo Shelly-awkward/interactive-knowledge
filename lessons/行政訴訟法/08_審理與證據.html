@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>行政訴訟法｜第 8 課 審理：言詞辯論、職權調查與證據</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F4F6F3; --card:#FFFFFF;
+  --ink:#1C2A30; --ink-2:#4B5A62; --ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --law:#5B3A8C; --law-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F; --card:#1D262B;
+    --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+    --rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --law:#B9A0E3; --law-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F; --card:#1D262B;
+  --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+  --rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --law:#B9A0E3; --law-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--blue);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+
+/* hero */
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--law);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--law-soft);color:var(--law);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+/* tabs */
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit}
+nav.tabs button:hover{border-color:var(--blue);color:var(--ink)}
+nav.tabs button.active{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--blue-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--law-soft);border-left:4px solid var(--law);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--law);display:block;margin-bottom:.2em}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.law{background:var(--law-soft);border-color:transparent;color:var(--law)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+
+/* flow / structure diagrams */
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 160px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--blue)}
+.courts{display:grid;grid-template-columns:1fr;gap:8px;margin:.6rem 0 1rem}
+.court{border:1px solid var(--rule);border-radius:10px;padding:.7rem .9rem;background:var(--paper);display:grid;grid-template-columns:7.5em 1fr;gap:.3rem .8rem;align-items:start}
+.court .lv{font-weight:700;color:var(--law)}
+.court .what{font-size:.92rem}
+.court.top{border-color:var(--law)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+/* examples */
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+.step4{display:grid;grid-template-columns:5em 1fr;gap:.25rem .7rem;font-size:.95rem;margin:.3rem 0 .8rem}
+.step4 dt{color:var(--law);font-weight:700}
+.step4 dd{margin:0}
+
+/* interactive tool */
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox select,.toolbox input[type=number]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--law)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+
+/* practice & quiz */
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--law);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+/* 條文速查 */
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">行政訴訟法 · 第 8 課</span>
+  <h1>審理：言詞辯論、職權調查與證據</h1>
+  <p>四節加章末測驗。案子進了法院之後，法庭上到底在做什麼？這一課回答四件事：言詞辯論怎麼開始、誰在指揮；法院「依職權調查」到底查到哪裡、查不出來時誰倒楣；證人、鑑定人、文書各自有什麼義務與拒絕權；還沒起訴證據就要消失時怎麼辦。</p>
+  <p class="ver">依民國 111 年 6 月 22 日修正條文編寫（多數條文自 112 年 8 月 15 日施行）。自學筆記，非官方；條文以全國法規資料庫為準。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">8-1 言詞辯論與審判長的職權</button>
+  <button data-t="s2">8-2 職權調查主義與舉證責任</button>
+  <button data-t="s3">8-3 證人、鑑定人與文書</button>
+  <button data-t="s4">8-4 保全證據</button>
+  <button data-t="s5">章末測驗</button>
+  <button data-t="s6">條文速查</button>
+</nav>
+
+<!-- ═══════════ 8-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出言詞辯論從哪裡開始（第 122 條）、誰在指揮（第 124 條）、書狀什麼時候交（第 120 條）</li>
+      <li>分得清第 121 條第 1 項「言詞辯論前」的五款處置與第 2 項「言詞辯論時」的差別，記得「暫留置」</li>
+      <li>背得出第 125 條之 1 失權的三個要件，知道第 125 條之 2 司法事務官說明後必須給辯論機會</li>
+      <li>知道合併辯論（第 127 條）、遠距審理（第 130 條之 1）與筆錄（第 128 條至第 130 條）的規定</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：開庭前先交書狀，法院也可以先動手</h2>
+    <div class="law"><b class="art">第 120 條</b>Ⅰ 原告因準備言詞辯論之必要，應提出準備書狀。<br>Ⅱ 被告因準備言詞辯論，宜於未逾就審期間二分之一以前，提出答辯狀。</div>
+    <p>兩項的語氣不同。原告是「應」提出準備書狀；被告是「宜」在就審期間過一半之前提出答辯狀，是訓示規定，遲交沒有直接的失權效果。<b>就審期間</b>白話說是從收到開庭通知到開庭日之間、留給當事人準備的那段時間。</p>
+    <div class="law"><b class="art">第 121 條</b>Ⅰ 行政法院因使辯論易於終結，認為必要時，得於言詞辯論前，為下列各款之處置：<br>一、命當事人、法定代理人、代表人或管理人本人到場。<br>二、命當事人提出圖案、表冊、外國文文書之譯本或其他文書、物件。<br>三、行勘驗、鑑定或囑託機關、團體為調查。<br>四、通知證人或鑑定人，及調取或命第三人提出文書、物件。<br>五、使受命法官或受託法官調查證據。<br>Ⅱ 行政法院因闡明或確定訴訟關係，於言詞辯論時，得為前項第一款至第三款之處置，並得將當事人或第三人提出之文書、物件暫留置之。</div>
+    <p>第 1 項是「開庭前」為了讓辯論容易終結所做的準備，五款都是法院可以主動做的事。第 2 項是「開庭時」，目的換成闡明或確定訴訟關係，只能做前三款，但多了一個權力：把當事人或第三人提出的文書、物件<b>暫留置</b>。</p>
+    <div class="warn">常錯：把第 2 項寫成「五款都可以」。言詞辯論時只有第一款至第三款，第四款（通知證人、調取文書）與第五款（受命法官調查）不在第 2 項範圍。考題愛用「審判長於言詞辯論時命受命法官調查證據」當錯誤選項。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：言詞辯論怎麼開始、怎麼講、誰說了算</h2>
+    <div class="law"><b class="art">第 122 條</b>Ⅰ 言詞辯論，以當事人聲明起訴之事項為始。<br>Ⅱ 當事人應就訴訟關係為事實上及法律上之陳述。<br>Ⅲ 當事人不得引用文件以代言詞陳述。但以舉文件之辭句為必要時，得朗讀其必要之部分。</div>
+    <p>辯論的第一步是原告「聲明起訴之事項」，也就是說出自己要法院判什麼。接著雙方就事實與法律陳述。第 3 項是言詞審理原則的落實：不能說一句「如書狀所載」就坐下，但引用文件字句時可以朗讀必要部分。</p>
+    <div class="law"><b class="art">第 124 條</b>Ⅰ 審判長開始、指揮及終結言詞辯論，並宣示行政法院之裁判。<br>Ⅱ 審判長對於不服從言詞辯論之指揮者，得禁止發言。<br>Ⅲ 言詞辯論須續行者，審判長應速定其期日。</div>
+    <p>開始、指揮、終結、宣示裁判四件事都是審判長的。不服從指揮可以被禁止發言；需要續行時審判長「應速定」期日。</p>
+    <div class="law"><b class="art">第 122 條之 1</b>Ⅰ 當事人、證人、鑑定人或其他訴訟關係人如不通曉中華民國語言，行政法院應用通譯；法官不通曉訴訟關係人所用之方言者，亦同。<br>Ⅱ 前項訴訟關係人如為聽覺、聲音或語言障礙者，行政法院應用通譯。但亦得以文字發問或使其以文字陳述。<br>Ⅲ 前二項之通譯，準用關於鑑定人之規定。<br>Ⅳ 有第二項情形者，其訴訟關係人之配偶、直系或三親等內旁系血親、家長、家屬、醫師、心理師、輔導人員、社工人員或其信賴之人，經審判長許可後，得陪同在場。</div>
+    <p>第 122 條之 1 是 111 年新增。語言不通「應」用通譯，聽語障礙者也「應」用通譯，但可改用文字；陪同在場要經審判長許可。通譯準用鑑定人的規定，所以通譯也要具結、也可以被聲請迴避。</p>
+    <div class="law"><b class="art">第 123 條</b>Ⅰ 行政法院調查證據，除別有規定外，於言詞辯論期日行之。<br>Ⅱ 當事人應依第二編第一章第四節之規定，聲明所用之證據。</div>
+    <div class="tip">國考用法：第 123 條第 1 項「調查證據於言詞辯論期日行之」是直接審理原則；例外是第 121 條第 1 項第 5 款、第 139 條的受命法官調查與第 138 條囑託調查，調查結果要依第 141 條告知當事人辯論，才能補回直接審理的缺口。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：審判長的闡明義務，與不配合的失權效果</h2>
+    <div class="law"><b class="art">第 125 條第 3 項至第 5 項</b>Ⅲ 審判長應注意使當事人得為事實上及法律上適當完全之辯論。<br>Ⅳ 審判長應向當事人發問或告知，令其陳述事實、聲明證據，或為其他必要之聲明及陳述；其所聲明、陳述或訴訟類型有不明瞭或不完足者，應令其敘明或補充之。<br>Ⅴ 陪席法官告明審判長後，得向當事人發問或告知。</div>
+    <p>第 3、4 項合稱<b>闡明義務</b>：當事人講不清楚、漏了證據、甚至連訴訟類型都選錯，審判長「應」令其敘明或補充。「訴訟類型」四個字是行政訴訟法特有的，民事訴訟法沒有，因為行政訴訟類型多、選錯的後果重。第 5 項陪席法官要先告明審判長才能發問。</p>
+    <div class="law"><b class="art">第 125 條之 1</b>Ⅰ 審判長得於徵詢當事人之意見後，定期間命其為下列事項：<br>一、陳述事實或指出證據方法。<br>二、提出其依法負提出義務之文書或物件。<br>Ⅱ 當事人逾前項期間，遲延陳述事實、指出或提出證據方法，符合下列情形者，除法律別有規定外，行政法院得不予斟酌，逕依調查結果裁判之：<br>一、其遲延有礙訴訟之終結。<br>二、當事人未能釋明其遲延係不可歸責於己。<br>三、審判長已告知其遲延之效果。</div>
+    <p>這是 111 年新增的<b>失權</b>規定。流程是：審判長徵詢意見、定期間、告知效果；當事人逾期才提出，而且三個要件<b>全部具備</b>，法院「得」不予斟酌。注意是「得」不是「應」，法院仍有裁量；也沒有要求他造異議。</p>
+    <div class="warn">常錯：以為失權跟職權調查互相矛盾。第 125 條之 1 限制的是「當事人遲延提出的東西法院可以不理」，法院自己依第 125 條第 1 項、第 133 條查到的事實與證據不受影響。學說上有認為兩者有緊張關係，考試寫到「得不予斟酌仍受職權調查原則節制」就夠了。</div>
+    <div class="law"><b class="art">第 125 條之 2</b>Ⅰ 行政法院為使訴訟關係明確，必要時得命司法事務官就事實上及法律上之事項，基於專業知識對當事人為說明。<br>Ⅱ 行政法院因司法事務官提供而獲知之特殊專業知識，應予當事人辯論之機會，始得採為裁判之基礎。</div>
+    <p>司法事務官（例如具醫療、工程、會計背景者）可以對當事人說明專業事項。但法院從他那裡得到的特殊專業知識，<b>必須先給當事人辯論機會</b>才能拿來裁判，否則就是突襲性裁判。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：受命法官、合併辯論、筆錄與遠距審理</h2>
+    <div class="law"><b class="art">第 126 條</b>Ⅰ 凡依本法使受命法官為行為者，由審判長指定之。<br>Ⅱ 行政法院應為之囑託，除別有規定外，由審判長行之。</div>
+    <div class="law"><b class="art">第 127 條</b>Ⅰ 分別提起之數宗訴訟係基於同一或同種類之事實上或法律上之原因者，行政法院得命合併辯論。<br>Ⅱ 命合併辯論之數宗訴訟，得合併裁判之。</div>
+    <p>合併辯論的門檻是「同一或同種類」的事實上或法律上原因，兩個「得」字表示都是法院裁量。常見情境是幾十個住戶各自對同一個徵收處分起訴。</p>
+    <div class="law"><b class="art">第 129 條第 1 款至第 3 款</b>言詞辯論筆錄內，應記載辯論進行之要領，並將下列各款事項記載明確：<br>一、訴訟標的之捨棄、認諾、自認及訴之撤回。<br>二、證據之聲明或撤回，及對於違背訴訟程序規定之異議。<br>三、當事人所為其他重要聲明或陳述，及經告知而不為聲明或陳述之情形。</div>
+    <p>第 128 條規定筆錄的形式記載（處所日期、法官書記官通譯姓名、訴訟事件、到場人、公開與否），第 129 條規定實質記載。第 130 條：第 129 條第 1 款至第 6 款的事項，應依聲請於法庭朗讀或令閱覽；關係人有異議，書記官得更正補充，認異議不當應附記。</p>
+    <div class="law"><b class="art">第 130 條之 1</b>Ⅰ 當事人、代表人、管理人、代理人、輔佐人、證人、鑑定人或其他關係人之所在處所或所在地法院與行政法院間，有聲音及影像相互傳送之科技設備而得直接審理者，行政法院認為適當時，得依聲請或依職權以該設備審理之。<br>Ⅱ 前項情形，其期日通知書記載之應到處所為該設備所在處所。<br>Ⅲ 依第一項進行程序之筆錄及其他文書，須陳述人簽名者，由行政法院傳送至陳述人所在處所，經陳述人確認內容並簽名後，將筆錄及其他文書以電信傳真或其他科技設備傳回行政法院。</div>
+    <p>遠距審理三個重點：對象包含證人、鑑定人等所有關係人；法院「認為適當時」得依聲請<b>或依職權</b>為之，不需兩造同意；需要簽名的筆錄由法院傳過去、本人簽完再傳回來。</p>
+    <div class="note">第 131 條把審判長的許多權限（含第 121 條第 1 項第 1 款至第 4 款、第 125 條、第 125 條之 1、第 130 條之 1 等）準用到受命法官行準備程序時；第 132 條則準用民事訴訟法關於言詞辯論的一串條文。考題不會考清單，但會考「受命法官行準備程序時可不可以做某事」，答案多半在第 131 條。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲訴請撤銷罰鍰處分。審判長徵詢兩造意見後，定 20 日命被告機關提出作成處分所依據的採樣紀錄，並告知逾期提出法院得不予斟酌。被告逾期未提出，於言詞辯論期日當庭才提出 3 份紀錄。法院得否不予斟酌？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>第 125 條之 1 第 2 項失權的三要件是否齊備，以及失權與職權調查的關係。</dd>
+        <dt>條文</dt><dd>第 125 條之 1 第 1 項第 2 款（提出其依法負提出義務之文書）、第 2 項三款；第 164 條第 1 項（機關為當事人時有提出義務）。</dd>
+        <dt>涵攝</dt><dd>採樣紀錄是機關掌管且機關為當事人的文書，屬第 164 條第 1 項的提出義務，審判長得依第 125 條之 1 第 1 項第 2 款定期命提出。被告逾期，須再檢查：(1) 當庭提出 3 份新文書，甲無從準備反駁，有礙訴訟終結；(2) 被告未釋明遲延不可歸責於己；(3) 審判長已告知效果。三要件齊備。</dd>
+        <dt>結論</dt><dd>法院「得」不予斟酌該 3 份紀錄，逕依調查結果裁判，但這是裁量而非義務。若法院認為該紀錄對認定處分合法與否至關重要，仍得依第 133 條職權調查；若不予斟酌後處分要件事實真偽不明，依第 136 條準用民事訴訟法第 277 條，不利益由主張處分合法的被告承擔（8-2 會講）。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙的訴訟代理人於言詞辯論時，對審判長的每個問題都回答「詳如書狀所載」，審判長要求以言詞陳述，代理人仍拒絕並持續插話。審判長可以怎麼做？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>言詞陳述義務與審判長的指揮權。</dd>
+        <dt>條文</dt><dd>第 122 條第 2 項、第 3 項；第 124 條第 1 項、第 2 項；第 125 條第 4 項。</dd>
+        <dt>涵攝</dt><dd>第 122 條第 3 項明定不得引用文件以代言詞陳述，只有舉文件辭句為必要時可以朗讀必要部分，「詳如書狀所載」不是合法的陳述方式。審判長依第 125 條第 4 項應令其敘明；代理人不服從指揮，審判長依第 124 條第 2 項得禁止其發言。</dd>
+        <dt>結論</dt><dd>審判長得先依第 125 條第 4 項發問並令其陳述，仍不服從者得禁止發言。至於乙因此未為適當完全之辯論的不利益，由乙自行承擔；第 129 條第 3 款會把「經告知而不為聲明或陳述之情形」記明筆錄，作為日後上訴審查的依據。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">1. 依第 120 條，被告的答辯狀「宜」於何時以前提出？</div>
+      <label><input type="radio" name="p1q1" value="A">就審期間屆滿以前</label>
+      <label><input type="radio" name="p1q1" value="B">未逾就審期間二分之一以前</label>
+      <label><input type="radio" name="p1q1" value="C">言詞辯論期日三日以前</label>
+      <label><input type="radio" name="p1q1" value="D">收受起訴狀繕本後十日以內</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 120 條第 2 項：被告因準備言詞辯論，宜於未逾就審期間二分之一以前，提出答辯狀。注意是「宜」，訓示規定。" data-diag='{"A":"只要在開庭前交，答辯狀就失去讓原告準備的功能，條文把時點提前到就審期間的一半。","C":"三日是其他程序法常見的數字，第 120 條沒有這個規定。","D":"十日是寄存送達生效的天數（第 73 條），跟答辯狀無關。"}'></div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">2. 下列何者<b>不是</b>第 125 條之 1 第 2 項法院得不予斟酌當事人遲延陳述或提出證據方法的要件？</div>
+      <label><input type="radio" name="p1q2" value="A">其遲延有礙訴訟之終結</label>
+      <label><input type="radio" name="p1q2" value="B">當事人未能釋明其遲延係不可歸責於己</label>
+      <label><input type="radio" name="p1q2" value="C">審判長已告知其遲延之效果</label>
+      <label><input type="radio" name="p1q2" value="D">他造當事人已就該遲延聲明異議</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 125 條之 1 第 2 項三款：有礙訴訟終結、未能釋明不可歸責、審判長已告知效果。他造異議不是要件。" data-diag='{"A":"這是第 1 款。","B":"這是第 2 款，而且是「釋明」不是「證明」。","C":"這是第 3 款，審判長沒告知效果就不能失權。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">3. 關於第 130 條之 1 的遠距審理，下列何者正確？</div>
+      <label><input type="radio" name="p1q3" value="A">法院認為適當時，得依聲請或依職權以聲音及影像相互傳送之科技設備審理</label>
+      <label><input type="radio" name="p1q3" value="B">須經兩造當事人同意始得為之</label>
+      <label><input type="radio" name="p1q3" value="C">僅限於對證人、鑑定人之訊問，當事人本人仍應到庭</label>
+      <label><input type="radio" name="p1q3" value="D">以該設備製作之筆錄無須陳述人簽名</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 130 條之 1 第 1 項：行政法院認為適當時，得依聲請或依職權以該設備審理之。對象包含當事人、代理人、證人、鑑定人等；第 3 項規定須簽名之文書由法院傳送、陳述人簽名後傳回。" data-diag='{"B":"條文沒有「經當事人同意」的要件，關鍵是法院「認為適當」。","C":"第 1 項列舉的對象從當事人、代表人、代理人、輔佐人到證人、鑑定人都有。","D":"第 3 項明定須陳述人簽名者，由法院傳送至陳述人所在處所簽名後傳回。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 8-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出第 125 條第 1 項與第 133 條兩個「職權調查」各管什麼</li>
+      <li>解釋得出：職權調查主義下為什麼還有舉證責任，第 136 條準用民事訴訟法第 277 條在什麼時候出場</li>
+      <li>知道第 134 條自認、第 135 條妨礙證據、第 137 條習慣與外國法的特別規則</li>
+      <li>知道調查證據的程序條文：囑託（第 138 條）、受命法官（第 139 條）、筆錄（第 140 條）、告知辯論（第 141 條）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：兩個「職權」，一個管事實、一個管證據</h2>
+    <div class="law"><b class="art">第 125 條第 1 項、第 2 項</b>Ⅰ 行政法院應依職權調查事實關係，不受當事人事實主張及證據聲明之拘束。<br>Ⅱ 前項調查，當事人應協力為之。</div>
+    <div class="law"><b class="art">第 133 條</b>行政法院應依職權調查證據。</div>
+    <p>這兩條合起來叫<b>職權調查主義</b>（或職權探知主義）。第 125 條第 1 項講的是「事實關係」：當事人沒主張的事實法院也可以查，當事人沒聲明的證據法院也可以調查。第 133 條講的是「證據」：法院「應」主動調查，而不是坐等雙方提出。理由回到第 1 條，行政訴訟還要「確保國家行政權之合法行使」，不能讓事實認定完全交給雙方的攻防技巧。</p>
+    <p>但第 125 條第 2 項馬上接了一句「當事人應協力為之」。職權調查不是法院包辦，當事人握有的資料、知道的事實仍要提供，不配合的後果就是第 125 條之 1 的失權、第 135 條與第 165 條的擬制。</p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>民事訴訟（辯論主義）</th><th>行政訴訟（職權調查主義）</th></tr></thead>
+      <tbody>
+        <tr><th>當事人沒主張的事實</th><td>法院不能採為裁判基礎</td><td>法院得依職權調查（§125 I）</td></tr>
+        <tr><th>當事人沒聲明的證據</th><td>原則不調查</td><td>法院應依職權調查（§133）</td></tr>
+        <tr><th>他造自認的事實</th><td>免予舉證，法院受拘束</td><td>仍應調查其他必要之證據（§134）</td></tr>
+        <tr><th>事實真偽不明時</th><td>依民訴 §277 分配舉證責任</td><td>仍依 §136 準用民訴 §277 分配</td></tr>
+        <tr><th>當事人的角色</th><td>主導事實與證據</td><td>協力義務（§125 II），遲延有失權（§125-1）</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tip">國考用法：寫職權調查主義時，一定要同時寫出「第 125 條第 1 項」與「第 133 條」兩條，再補「第 125 條第 2 項協力義務」。只寫一條會被當成沒讀熟。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：職權調查不等於沒有舉證責任</h2>
+    <div class="law"><b class="art">第 136 條</b>除本法有規定者外，民事訴訟法第二百七十七條之規定於本節準用之。</div>
+    <p>民事訴訟法第 277 條：「當事人主張有利於己之事實者，就其事實有舉證之責任。但法律別有規定，或依其情形顯失公平者，不在此限。」這條在行政訴訟裡仍然適用，很多人覺得矛盾：法院都自己查了，還要誰舉證？</p>
+    <p>關鍵是把舉證責任拆成兩層。<b>主觀舉證責任</b>（提出證據的責任）在職權調查下被大幅淡化，因為法院會自己查。<b>客觀舉證責任</b>（事實真偽不明時誰承擔不利益）則永遠存在，因為法院再怎麼查，總有查不出來的時候，而法院不能拒絕裁判。這時第 136 條準用第 277 條就出場：主張對自己有利之事實的那一方，承擔該事實真偽不明的不利益。</p>
+    <div class="flow">
+      <div class="step"><b>第一步</b>法院依第 125 條第 1 項、第 133 條職權調查，當事人依第 125 條第 2 項協力。</div>
+      <div class="step"><b>第二步</b>依第 189 條第 1 項斟酌全辯論意旨及調查證據結果，依論理及經驗法則判斷事實真偽。</div>
+      <div class="step"><b>第三步</b>仍真偽不明？依第 136 條準用民訴第 277 條，由主張該事實對己有利之一方承擔不利益。</div>
+    </div>
+    <p>套到常見案型：罰鍰等不利處分，構成要件事實的存在對機關有利，真偽不明的不利益由機關承擔，處分應撤銷。人民申請許可或給付，請求權要件事實的存在對人民有利，真偽不明由人民承擔。第 277 條但書「顯失公平」則留給證據偏在一方等特殊情形調整。</p>
+    <div class="warn">常錯：「行政訴訟採職權調查主義，故無舉證責任之適用」，或「舉證責任一律由行政機關負擔」。兩句都錯。第 136 條明文準用第 277 條，分配標準是「主張有利於己之事實者」，不是看誰是機關。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：自認不算數、毀證有擬制、外國法要舉證</h2>
+    <div class="law"><b class="art">第 134 條</b>當事人主張之事實，雖經他造自認，行政法院仍應調查其他必要之證據。</div>
+    <p>民事訴訟裡自認的事實不用證明，行政訴訟不同：他造承認了，法院「仍應」調查其他必要證據。這是職權調查主義的直接推論，也是避免當事人以自認架空公法秩序。</p>
+    <div class="law"><b class="art">第 135 條</b>Ⅰ 當事人因妨礙他造使用，故意將證據滅失、隱匿或致礙難使用者，行政法院得審酌情形認他造關於該證據之主張或依該證據應證之事實為真實。<br>Ⅱ 前項情形，於裁判前應令當事人有辯論之機會。</div>
+    <p>三個要件：目的是「妨礙他造使用」、主觀上「故意」、行為是「滅失、隱匿或致礙難使用」。效果是法院「得」認他造的主張或應證事實為真實，是裁量而非當然擬制，而且裁判前「應」給辯論機會。</p>
+    <div class="law"><b class="art">第 137 條</b>習慣及外國之現行法為行政法院所不知者，當事人有舉證之責任。但行政法院得依職權調查之。</div>
+    <p>法院知法，但習慣與外國現行法例外：法院不知道時由當事人舉證，法院也「得」自己查。注意這條說的是「外國之現行法」，國內法令不在內。</p>
+    <div class="tip">三個「裁判前應令當事人有辯論之機會」的條文長得一樣：第 135 條第 2 項（妨礙證據）、第 165 條第 2 項（當事人不提出文書）、再加第 125 條之 2 第 2 項（司法事務官說明）與第 162 條第 2 項（法律專業意見）。選擇題常把「得」「應」互換，記住：給辯論機會是「應」，認定為真實是「得」。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：調查證據的程序：誰去查、怎麼記、查完要幹嘛</h2>
+    <div class="law"><b class="art">第 138 條</b>行政法院得囑託普通法院或其他機關、學校、團體調查證據。</div>
+    <div class="law"><b class="art">第 139 條</b>行政法院認為適當時，得使庭員一人為受命法官或囑託他行政法院指定法官調查證據。</div>
+    <div class="law"><b class="art">第 141 條</b>Ⅰ 調查證據之結果，應告知當事人為辯論。<br>Ⅱ 於受訴行政法院外調查證據者，當事人應於言詞辯論時陳述其調查之結果。但審判長得令行政法院書記官朗讀調查證據筆錄代之。</div>
+    <p>原則上調查證據在言詞辯論期日由合議庭自己做（第 123 條第 1 項）。例外有三條路：囑託普通法院、機關、學校、團體（第 138 條）；由庭員一人當受命法官、或囑託他行政法院的法官當受託法官（第 139 條）；言詞辯論前由受訴法院先調查。</p>
+    <p>走例外路線時，第 140 條要求書記官製作調查證據筆錄並準用第 128 條至第 130 條，受託法官的筆錄要送交受訴法院。最後第 141 條把缺口補回來：調查結果「應」告知當事人辯論，法院外調查的結果由當事人在言詞辯論時陳述，或由書記官朗讀筆錄代替。</p>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　環保局以甲工廠排放廢水超標為由處罰鍰 50 萬元，唯一證據是一份檢測報告。甲否認，主張採樣當天工廠停工。法院審理後對採樣程序是否合規有疑，命環保局提出採樣紀錄，環保局稱已銷毀。法院該怎麼認定？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>職權調查的範圍、文書不提出的效果，以及事實真偽不明時的舉證責任分配。</dd>
+        <dt>條文</dt><dd>第 133 條（職權調查證據）；第 164 條第 1 項（機關為當事人時有提出文書義務）；第 165 條（不從提出之命的擬制）；第 136 條準用民事訴訟法第 277 條。</dd>
+        <dt>涵攝</dt><dd>法院不受環保局只提一份報告的拘束，應依第 133 條職權調查，例如命提出採樣紀錄、訊問採樣人員、囑託鑑定。採樣紀錄是機關掌管且機關為當事人的文書，環保局有提出義務；若無正當理由不提出，法院依第 165 條第 1 項得認甲關於該文書的主張（採樣不合規）為真實，裁判前應令辯論。若法院選擇不擬制、調查後仍無法認定採樣是否合規，則「排放超標」這個對環保局有利的處罰要件事實真偽不明，依第 136 條準用第 277 條，不利益歸環保局。</dd>
+        <dt>結論</dt><dd>法院應先盡職權調查義務；調查後仍真偽不明時，由主張處分合法的環保局承擔不利益，撤銷罰鍰處分。「已銷毀」如果是為了妨礙甲使用而故意為之，另有第 135 條的適用。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙申請某項津貼被駁回，提起課予義務訴訟。審理中乙當庭自認「我名下另有一筆 0.5 公頃的建地」，被告機關主張依該自認即可認定乙不符資格，無庸再調查。法院可以直接採用嗎？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>行政訴訟中自認的效力。</dd>
+        <dt>條文</dt><dd>第 134 條；第 125 條第 1 項；第 129 條第 1 款（自認應記明筆錄）。</dd>
+        <dt>涵攝</dt><dd>民事訴訟中自認可免除他造的舉證責任，但第 134 條明定「雖經他造自認，行政法院仍應調查其他必要之證據」。乙的自認要記明筆錄，是重要的證據資料，但法院仍應調取地籍資料等必要證據，確認該筆土地是否確實存在、面積多少、是否在法規排除範圍。</dd>
+        <dt>結論</dt><dd>法院不得僅憑自認認定事實，應依第 134 條調查其他必要證據後，依第 189 條第 1 項判斷。若調查結果與自認一致，自可認定乙不符資格而駁回其訴。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="A">
+      <div class="stem">4. 關於行政訴訟的職權調查主義，下列何者正確？</div>
+      <label><input type="radio" name="p2q1" value="A">法院應依職權調查事實關係，不受當事人事實主張及證據聲明之拘束</label>
+      <label><input type="radio" name="p2q1" value="B">法院僅得就當事人聲明之證據為調查</label>
+      <label><input type="radio" name="p2q1" value="C">既由法院依職權調查，當事人即無協力義務</label>
+      <label><input type="radio" name="p2q1" value="D">當事人自認之事實，法院應逕採為裁判基礎</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 125 條第 1 項原文。第 2 項規定當事人應協力；第 133 條法院應依職權調查證據；第 134 條自認後仍應調查其他必要證據。" data-diag='{"B":"這是辯論主義的講法，第 133 條規定法院應依職權調查證據，不以當事人聲明為限。","C":"第 125 條第 2 項明文：前項調查，當事人應協力為之。","D":"第 134 條：雖經他造自認，仍應調查其他必要之證據。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">5. 法院依職權調查後，處分構成要件事實仍然真偽不明。法院應如何處理？</div>
+      <label><input type="radio" name="p2q2" value="A">一律為有利於人民之認定，因行政訴訟以保障人民權益為宗旨</label>
+      <label><input type="radio" name="p2q2" value="B">依第 136 條準用民事訴訟法第 277 條，由主張該事實有利於己之一方承擔不利益</label>
+      <label><input type="radio" name="p2q2" value="C">續行調查至能認定為止，不得逕行裁判</label>
+      <label><input type="radio" name="p2q2" value="D">一律由被告機關承擔不利益，因機關掌握資料</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 136 條：除本法有規定者外，民事訴訟法第 277 條於本節準用之。職權調查解決的是誰去查，客觀舉證責任解決的是查不出來誰倒楣。" data-diag='{"A":"第 1 條是解釋方向，不是舉證責任的分配規則；人民請求給付時要件事實真偽不明，不利益仍歸人民。","C":"法院不能拒絕裁判，調查有盡頭，所以才需要客觀舉證責任。","D":"分配標準是「主張有利於己之事實者」，不是看誰是機關；處罰處分的要件事實通常由機關承擔，是適用結果，不是規則本身。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">6. 丙為妨礙原告丁使用，於訴訟中故意將唯一一份契約原本燒毀。依第 135 條，法院：</div>
+      <label><input type="radio" name="p2q3" value="A">應認丁關於該契約之主張為真實</label>
+      <label><input type="radio" name="p2q3" value="B">得審酌情形認丁關於該證據之主張或應證事實為真實，但裁判前應令當事人有辯論之機會</label>
+      <label><input type="radio" name="p2q3" value="C">得以裁定處丙新臺幣三萬元以下罰鍰</label>
+      <label><input type="radio" name="p2q3" value="D">僅得依自由心證判斷，不得因此為不利於丙之認定</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 135 條第 1 項「得審酌情形認……為真實」，第 2 項「於裁判前應令當事人有辯論之機會」。" data-diag='{"A":"條文是「得」，法院有裁量，不是當然擬制。","C":"三萬元罰鍰是對證人（第 143、148 條）與第三人不提出文書（第 169 條）的制裁，當事人毀證的效果是擬制，不是罰鍰。","D":"第 135 條就是允許法院因此為不利認定的明文依據。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 8-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>記得證人義務與不到場的制裁數字：3 萬、6 萬、拘提（第 142 條、第 143 條）</li>
+      <li>分得清三種拒絕證言（第 144 條職務秘密要同意、第 145 條刑事訴追或恥辱、第 146 條業務與技術秘密）與拒絕的效果（第 148 條）</li>
+      <li>分得清「不得令具結」（第 150 條）、「得不令具結」（第 151 條）、「得拒絕具結」（第 152 條）</li>
+      <li>說得出鑑定人跟證人的四個差別：揭露義務、不得拘提、拒絕鑑定、報酬（第 157 條至第 160 條）</li>
+      <li>知道第 163 條五款文書提出義務、第 164 條機關文書、第 165 條擬制，以及第三人文書的第 166 條至第 170 條</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：人人都有作證義務，不來有代價</h2>
+    <div class="law"><b class="art">第 142 條</b>除法律別有規定外，不問何人，於他人之行政訴訟有為證人之義務。</div>
+    <div class="law"><b class="art">第 143 條</b>Ⅰ 證人受合法之通知，無正當理由而不到場者，行政法院得以裁定處新臺幣三萬元以下罰鍰。<br>Ⅱ 證人已受前項裁定，經再次通知仍不到場者，得再處新臺幣六萬元以下罰鍰，並得拘提之。<br>Ⅲ 拘提證人，準用刑事訴訟法關於拘提被告之規定；證人為現役軍人者，應以拘票囑託該管長官執行。<br>Ⅳ 處證人罰鍰之裁定，得為抗告，抗告中應停止執行。</div>
+    <p>階梯式制裁：第一次不到 3 萬以下，第二次 6 萬以下「並得拘提」。拘提要到第二次才能用，罰鍰裁定可抗告且抗告中停止執行。</p>
+    <div class="law"><b class="art">第 143 條之 1 第 3 項、第 5 項</b>Ⅲ 經當事人同意者，證人亦得於行政法院外以書狀為陳述。<br>Ⅴ 證人以書狀為陳述者，仍應具結，並將結文附於書狀，經公證人認證後提出。其依第一百三十條之一為訊問者，亦應於訊問前或訊問後具結。</div>
+    <p>第 143 條之 1 給了三種不到庭作證的方式：到證人所在處所訊問（第 1 項）、會同證人於公證人前作成陳述書狀（第 2 項）、經當事人同意以書狀陳述（第 3 項）。書狀陳述仍要具結，結文附於書狀並經公證人認證；法院認為需要說明或一造聲請發問時，仍得通知到場（第 4 項）。</p>
+    <p>第 154 條：當事人得就應證事實及證言信用的事項，聲請審判長發問，或向審判長陳明後自行發問；與應證事實無關、重複、誘導、侮辱證人的發問，審判長得限制或禁止，有異議由法院裁定。第 155 條：證人有法定日費旅費，但被拘提或無正當理由拒絕具結或證言者不給。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：三種可以不說的情形，與硬不說的代價</h2>
+    <div class="law"><b class="art">第 144 條</b>Ⅰ 以公務員、中央民意代表或曾為公務員、中央民意代表之人為證人，而就其職務上應守秘密之事項訊問者，應得該監督長官或民意機關之同意。<br>Ⅱ 前項同意，除有妨害國家高度機密者外，不得拒絕。<br>Ⅲ 以受公務機關委託承辦公務之人為證人者，準用前二項之規定。</div>
+    <div class="law"><b class="art">第 145 條</b>證人恐因陳述致自己或下列之人受刑事訴追或蒙恥辱者，得拒絕證言：<br>一、證人之配偶、前配偶或四親等內之血親、三親等內之姻親或曾有此親屬關係或與證人訂有婚約者。<br>二、證人之監護人或受監護人。</div>
+    <div class="law"><b class="art">第 146 條</b>Ⅰ 證人有下列各款情形之一者，得拒絕證言：<br>一、證人有第一百四十四條之情形。<br>二、證人為醫師、藥師、藥商、心理師、助產士、宗教師、律師、會計師或其他從事相類業務之人或其業務上佐理人或曾任此等職務之人，就其因業務所知悉有關他人秘密之事項受訊問。<br>三、關於技術上或職業上之秘密受訊問。<br>Ⅱ 前項規定，於證人秘密之責任已經免除者，不適用之。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>條文</th><th>保護什麼</th><th>誰可以拒絕</th><th>限制</th></tr></thead>
+      <tbody>
+        <tr><td>§144</td><td>職務秘密</td><td>公務員、中央民意代表、曾任者、受委託承辦公務之人</td><td>要「監督長官或民意機關同意」才能問；長官除妨害國家高度機密外不得拒絕同意。未得同意時證人依 §146 I 1 得拒絕證言</td></tr>
+        <tr><td>§145</td><td>證人自己與親屬免於刑事訴追、恥辱</td><td>任何證人</td><td>親屬範圍以「證人」為中心：配偶、前配偶、四親等內血親、三親等內姻親、曾有此關係、訂有婚約、監護關係</td></tr>
+        <tr><td>§146 I 2</td><td>業務上知悉的他人秘密</td><td>醫師、藥師、藥商、心理師、助產士、宗教師、律師、會計師或相類業務之人、佐理人、曾任者</td><td>§146 II：秘密之責任已經免除者（例如病人同意）不得再拒絕</td></tr>
+        <tr><td>§146 I 3</td><td>技術上或職業上之秘密</td><td>任何證人</td><td>同受 §146 II 限制</td></tr>
+      </tbody>
+    </table></div>
+    <div class="law"><b class="art">第 148 條</b>Ⅰ 證人不陳明拒絕之原因事實而拒絕證言，或以拒絕為不當之裁定已確定而仍拒絕證言者，行政法院得以裁定處新臺幣三萬元以下罰鍰。<br>Ⅱ 前項裁定得為抗告，抗告中應停止執行。</div>
+    <p>拒絕證言不是說一句「我不想說」就好，要<b>陳明原因事實</b>；法院認為拒絕不當會裁定，裁定確定後仍拒絕，處 3 萬元以下罰鍰。第 147 條另課審判長一個義務：有第 145 條、第 146 條情形的，應於訊問前或知有該情形時告知證人得拒絕。</p>
+    <div class="warn">常錯一：把 §146 II「責任已免除不適用」套到 §145。第 2 項寫的是「前項規定」，只限第 146 條；親屬會受刑事訴追的拒絕權不會因為「免除」而消失。常錯二：§144 的「同意」是監督長官給的，不是證人自己決定；長官「不得拒絕」同意，除非妨害國家高度機密。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：具結的三種狀態：不得令、得不令、得拒絕</h2>
+    <div class="law"><b class="art">第 149 條</b>Ⅰ 審判長於訊問前，應命證人各別具結。但其應否具結有疑義者，於訊問後行之。<br>Ⅱ 審判長於證人具結前，應告以具結之義務及偽證之處罰。<br>Ⅲ 證人以書狀為陳述者，不適用前二項之規定。</div>
+    <div class="law"><b class="art">第 150 條</b>以未滿十六歲或因精神或其他心智障礙，致不解具結意義及其效果之人為證人者，不得令其具結。</div>
+    <div class="law"><b class="art">第 151 條</b>以下列各款之人為證人者，得不令其具結：<br>一、證人為當事人之配偶、前配偶或四親等內之血親、三親等內之姻親或曾有此親屬關係或與當事人訂有婚約。<br>二、有第一百四十五條情形而不拒絕證言。<br>三、當事人之受雇人或同居人。</div>
+    <div class="law"><b class="art">第 152 條</b>證人就與自己或第一百四十五條所列之人有直接利害關係之事項受訊問者，得拒絕具結。</div>
+    <p><b>具結</b>白話說是證人簽名保證「我說的是實話，說謊願受偽證罪處罰」。原則是訊問前各別具結、先告知義務與偽證處罰。三種例外的主詞不同：第 150 條是法院「不得令」（未滿十六歲、不解具結意義者），第 151 條是法院「得不令」（裁量），第 152 條是證人「得拒絕」。第 153 條：拒絕具結準用第 148 條，無正當理由拒絕同樣 3 萬元以下罰鍰。</p>
+    <div class="warn">常錯：§145 和 §151 第 1 款的親屬清單一模一樣，但中心人物不同。§145 是「證人的」親屬會受刑事訴追（拒絕證言事由）；§151 第 1 款是證人本人是「當事人的」親屬（得不令具結事由）。原告的配偶出庭作證，不能只因配偶身分拒絕證言，但法院得不令其具結。</div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：這個證人可不可以不說、要不要具結</h2>
+    <p class="small muted">選證人的身分與被問的問題性質，看第 144 條至第 146 條、第 149 條至第 153 條怎麼套，以及硬拒絕的效果（第 148 條）。</p>
+    <div class="toolbox">
+      <fieldset><legend>證人身分</legend>
+        <select id="wtRole">
+          <option value="official">公務員、中央民意代表（或曾任）、受公務機關委託承辦公務之人</option>
+          <option value="prof">醫師、藥師、心理師、律師、會計師等從事相類業務之人（或其佐理人、曾任者）</option>
+          <option value="kin">當事人之配偶、前配偶、四親等內血親、三親等內姻親（或曾有此關係、訂有婚約）</option>
+          <option value="emp">當事人之受雇人或同居人</option>
+          <option value="minor">未滿十六歲，或因精神、心智障礙不解具結意義及效果之人</option>
+          <option value="plain">與當事人無特殊關係的一般人</option>
+        </select>
+      </fieldset>
+      <fieldset><legend>被訊問事項的性質</legend>
+        <select id="wtQ">
+          <option value="duty">職務上應守秘密之事項</option>
+          <option value="biz">因業務所知悉有關他人秘密之事項</option>
+          <option value="tech">技術上或職業上之秘密</option>
+          <option value="crime">陳述會使證人自己或其配偶、四親等內血親等第 145 條所列之人受刑事訴追或蒙恥辱</option>
+          <option value="interest">與證人自己或第 145 條所列之人有直接利害關係之事項（但無刑事訴追之虞）</option>
+          <option value="none">一般事項，以上皆非</option>
+        </select>
+      </fieldset>
+      <fieldset><legend>附加條件</legend>
+        <label><input type="checkbox" id="wtConsent">監督長官或民意機關已同意（第 144 條）</label>
+        <label><input type="checkbox" id="wtWaived">秘密之責任已經免除，例如本人同意揭露（第 146 條第 2 項）</label>
+      </fieldset>
+      <button class="btn" id="wtGo">判斷</button>
+      <div class="result" id="wtRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：鑑定人準用證人，但有四個不一樣</h2>
+    <div class="law"><b class="art">第 156 條</b>鑑定，除別有規定外，準用本法關於人證之規定。</div>
+    <div class="law"><b class="art">第 157 條</b>Ⅰ 從事於鑑定所需之學術、技藝或職業，或經機關委任有鑑定職務者，於他人之行政訴訟有為鑑定人之義務。<br>Ⅱ 鑑定人應於選任前揭露下列資訊；其經選任後發現者，應即時向審判長及當事人揭露之：<br>一、學經歷、專業領域及本於其專業學識經驗曾參與訴訟、非訟或法院調解程序之案例。<br>二、關於專業學識經驗及相關資料之準備或提出，曾與當事人、輔助參加人、輔佐人或其代理人有分工或合作關係。<br>三、關於專業學識經驗及相關資料之準備或提出，曾受當事人、輔助參加人、輔佐人或其代理人之金錢報酬或資助及其金額或價值。<br>四、關於該事件，有其他提供金錢報酬或資助者之身分及其金額或價值。<br>五、有其他情事足認有不能公正、獨立執行職務之虞。</div>
+    <p>證人是「親身見聞」事實的人，無可替代；鑑定人是用「專業知識」協助法院判斷的人，可以換人。這個差別解釋了底下的所有不同。第 157 條第 2 項的五款揭露義務是 111 年新增，重點是利益衝突：合作關係、金錢報酬資助及其金額、其他不能公正獨立之虞。</p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>證人</th><th>鑑定人</th></tr></thead>
+      <tbody>
+        <tr><th>義務來源</th><td>不問何人（§142）</td><td>從事鑑定所需之學術技藝職業，或經機關委任有鑑定職務者（§157 I）</td></tr>
+        <tr><th>不到場</th><td>罰鍰 3 萬、再罰 6 萬並得拘提（§143）</td><td>罰鍰準用，但<b>不得拘提</b>（§158）</td></tr>
+        <tr><th>拒絕</th><td>限 §144–§146 事由</td><td>理由不合拒絕證言規定，法院認為正當者亦得免除（§159）</td></tr>
+        <tr><th>費用</th><td>法定日費旅費（§155）</td><td>日費旅費外得請求相當報酬，費用得預行酌給，裁定得抗告（§160）</td></tr>
+        <tr><th>揭露義務</th><td>無</td><td>選任前五款揭露（§157 II）</td></tr>
+      </tbody>
+    </table></div>
+    <div class="law"><b class="art">第 162 條</b>Ⅰ 行政法院認有必要時，得就訴訟事件之專業法律問題徵詢從事該學術研究之人，以書面或於審判期日到場陳述其法律上意見。<br>Ⅱ 前項意見，於裁判前應告知當事人使為辯論。<br>Ⅲ 第一項陳述意見之人，準用鑑定人之規定。但不得令其具結。</div>
+    <p>第 161 條：囑託機關、學校、團體鑑定時，準用第 160 條與民事訴訟法第 335 條至第 337 條，鑑定書的說明由該機關指定之人為之。第 162 條的「法律專業意見」是另一種制度：法院就專業法律問題問學者，準用鑑定人但<b>不得令其具結</b>，意見要先告知當事人辯論。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 5：文書：當事人不交會被擬制，第三人不交會被罰</h2>
+    <div class="law"><b class="art">第 163 條</b>下列各款文書，當事人有提出之義務：<br>一、該當事人於訴訟程序中曾經引用者。<br>二、他造依法律規定，得請求交付或閱覽者。<br>三、為他造之利益而作者。<br>四、就與本件訴訟關係有關之事項所作者。<br>五、商業帳簿。</div>
+    <div class="law"><b class="art">第 164 條</b>Ⅰ 公務員或機關掌管之文書，行政法院得調取之。如該機關為當事人時，並有提出之義務。<br>Ⅱ 前項情形，除有妨害國家高度機密者外，不得拒絕。</div>
+    <div class="law"><b class="art">第 165 條</b>Ⅰ 當事人無正當理由不從提出文書之命者，行政法院得審酌情形認他造關於該文書之主張或依該文書應證之事實為真實。<br>Ⅱ 前項情形，於裁判前應令當事人有辯論之機會。</div>
+    <p>第 163 條第 4 款「與本件訴訟關係有關之事項所作者」範圍很寬，實質上使當事人持有的相關文書都有提出義務。第 164 條針對機關：不是當事人的機關，法院「得調取」；是當事人的機關，「有提出之義務」，兩種情形都只有「妨害國家高度機密」才能拒絕。當事人不交的效果是第 165 條的擬制，與第 135 條結構相同。</p>
+    <div class="law"><b class="art">第 169 條</b>Ⅰ 第三人無正當理由不從提出文書之命者，行政法院得以裁定處新臺幣三萬元以下罰鍰；於必要時，並得為強制處分。<br>Ⅱ 前項強制處分之執行，適用第三百零六條規定。<br>Ⅲ 第一項裁定得為抗告，抗告中應停止執行。</div>
+    <p>文書在第三人手上時：舉證人聲請並釋明文書在第三人手上及其提出義務的原因（第 166 條）；法院認應證事實重要且聲請正當，應裁定命提出，裁定前給第三人陳述意見的機會（第 167 條）；第三人的提出義務準用第 144 條至第 147 條及第 163 條第 2 款至第 5 款（第 168 條），所以第三人也可以主張職務秘密、業務秘密。第三人不交的效果不是擬制而是<b>罰鍰 3 萬元以下與強制處分</b>，因為第三人不是當事人，擬制對他沒意義；第 170 條讓第三人請求費用。</p>
+    <p>第 171 條、第 172 條處理文書真偽：核對筆跡或印跡，適用勘驗規定；無適當筆跡可比對時，法院得指定文字命作成名義人書寫，不從者準用第 165 條或第 169 條。第 173 條把文書規定準用到有相同效用的物件，並允許須以科技設備呈現的內容只提出書面並證明與原件相符。第 174 條：第 164 條至第 170 條於勘驗準用之。</p>
+    <div class="tip">國考用法：遇到「某人不交東西」的題目，先問他是當事人還是第三人。當事人：§135（毀證）、§165（不交文書）、§172 II（不寫字）都是「得認他造主張為真實」加「裁判前應令辯論」。第三人：§169 罰鍰 3 萬以下、強制處分、抗告停止執行。證人：§143、§148、§153 罰鍰 3 萬以下。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲訴請撤銷衛生局的罰鍰處分，聲請訊問衛生局承辦科員乙，問的是內部審查會議中各委員的意見。衛生局函覆法院「本件涉及職務秘密，不同意乙作證」。法院怎麼處理？乙到庭後能否拒絕證言？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>公務員就職務秘密作證的同意權與其界限，以及未得同意時證人的拒絕權。</dd>
+        <dt>條文</dt><dd>第 144 條第 1 項、第 2 項；第 146 條第 1 項第 1 款；第 147 條；第 148 條。</dd>
+        <dt>涵攝</dt><dd>乙是公務員，審查會議內容屬職務上應守秘密之事項，訊問應得監督長官同意（第 144 條第 1 項）。但第 2 項規定「除有妨害國家高度機密者外，不得拒絕」，衛生局的審查會議意見顯然不是國家高度機密，衛生局的拒絕於法無據。若衛生局仍不同意，乙即屬「有第 144 條之情形」，依第 146 條第 1 項第 1 款得拒絕證言，審判長應依第 147 條告知；乙若拒絕，須陳明原因事實，否則有第 148 條罰鍰。</dd>
+        <dt>結論</dt><dd>法院應函請衛生局依第 144 條第 2 項同意；衛生局為本件被告，又負第 164 條第 1 項提出會議紀錄的義務，無正當理由不提出者，法院得依第 165 條認甲關於該文書之主張為真實。乙在得同意前得拒絕證言，得同意後即不得再以職務秘密為由拒絕。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　丙公司訴請撤銷補稅處分，法院命丙提出 110 年度商業帳簿，丙稱帳簿已交由會計師丁保管而拒不提出。法院得命丁提出嗎？丁可否以業務秘密拒絕？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>商業帳簿的提出義務、第三人文書的程序，與第三人援用業務秘密的界限。</dd>
+        <dt>條文</dt><dd>第 163 條第 5 款；第 165 條；第 166 條、第 167 條；第 168 條準用第 146 條第 1 項第 2 款、第 2 項；第 169 條。</dd>
+        <dt>涵攝</dt><dd>商業帳簿是第 163 條第 5 款的法定提出義務文書，丙把帳簿交給丁保管並不免除自己的義務，丙無正當理由不提出，法院得依第 165 條認稽徵機關關於帳簿內容的主張為真實。稽徵機關或法院另可走第 166 條，釋明帳簿在丁處並聲請命丁提出；法院認應證事實重要且聲請正當，依第 167 條裁定前應使丁有陳述意見的機會。丁是會計師，第 168 條準用第 146 條第 1 項第 2 款，但帳簿是丙的秘密，丙本身就有提出義務，秘密的保護已無正當性；若丙免除丁的保密責任，依第 146 條第 2 項丁更不得拒絕。</dd>
+        <dt>結論</dt><dd>法院得命丁提出，丁無正當理由不從者，依第 169 條得處 3 萬元以下罰鍰並於必要時為強制處分。丙本人則面臨第 165 條的擬制。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">7. 證人戊受合法通知，無正當理由第一次未到場。法院得為如何之處置？</div>
+      <label><input type="radio" name="p3q1" value="A">處新臺幣三萬元以下罰鍰，並得逕行拘提</label>
+      <label><input type="radio" name="p3q1" value="B">處新臺幣三萬元以下罰鍰</label>
+      <label><input type="radio" name="p3q1" value="C">處新臺幣六萬元以下罰鍰</label>
+      <label><input type="radio" name="p3q1" value="D">僅得再次通知，不得科處罰鍰</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 143 條第 1 項：第一次無正當理由不到場，得處三萬元以下罰鍰。再次通知仍不到場，才能再處六萬元以下罰鍰並得拘提（第 2 項）。" data-diag='{"A":"拘提要到第 2 項「經再次通知仍不到場」才能用。","C":"六萬元是第二次不到場的上限。","D":"第一次不到場就可以處罰鍰，不需要先再通知一次。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">8. 原告己的配偶庚被傳為證人，所問事項與庚及其親屬均無刑事訴追或恥辱之虞。下列何者正確？</div>
+      <label><input type="radio" name="p3q2" value="A">庚得依第 145 條以配偶身分拒絕證言</label>
+      <label><input type="radio" name="p3q2" value="B">庚不得拒絕證言，但法院得不令其具結</label>
+      <label><input type="radio" name="p3q2" value="C">法院不得令庚具結</label>
+      <label><input type="radio" name="p3q2" value="D">庚得依第 152 條拒絕具結</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="配偶身分不是拒絕證言事由；第 145 條要有刑事訴追或蒙恥辱之虞。但庚是當事人之配偶，第 151 條第 1 款法院得不令其具結。" data-diag='{"A":"第 145 條保護的是證人及其親屬免於刑事訴追或恥辱，題目已排除這個情形，單純的配偶身分不在內。","C":"「不得令具結」是第 150 條，限未滿十六歲或不解具結意義者；配偶是第 151 條的「得不令」。","D":"第 152 條以「直接利害關係之事項」為要件，不是以身分為要件。"}'></div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">9. 關於鑑定人與法律專業意見，下列何者正確？</div>
+      <label><input type="radio" name="p3q3" value="A">鑑定人受合法通知無正當理由不到場，經再次通知仍不到場者，得拘提之</label>
+      <label><input type="radio" name="p3q3" value="B">鑑定人拒絕鑑定之理由不合於拒絕證言之規定者，法院一律不得免除其鑑定義務</label>
+      <label><input type="radio" name="p3q3" value="C">法院依第 162 條徵詢學者之法律上意見，應令其具結</label>
+      <label><input type="radio" name="p3q3" value="D">鑑定人應於選任前揭露曾受當事人之金錢報酬或資助及其金額或價值</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 157 條第 2 項第 3 款。第 158 條鑑定人不得拘提；第 159 條理由不合拒絕證言規定但法院認為正當者亦得免除；第 162 條第 3 項不得令陳述法律意見之人具結。" data-diag='{"A":"第 158 條：鑑定人不得拘提。鑑定人可替代，不需要強制到場。","B":"第 159 條反過來：法院認為正當者亦得免除其鑑定義務。","C":"第 162 條第 3 項但書：不得令其具結。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 8-4 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出保全證據在做什麼：證據快沒了，先把它固定下來，起訴前就可以聲請</li>
+      <li>記得第 175 條的管轄：起訴後向受訴法院，起訴前向受訊問人住居地或證物所在地的地方行政法院，急迫時起訴後也可向地方行政法院</li>
+      <li>知道第 175 條之 1 司法事務官協助，以及第 176 條把保全證據的要件與程序準用民事訴訟法</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：保全證據不是保全權利</h2>
+    <p>第 7 課的假扣押、假處分、停止執行保全的是「權利」，怕判決下來已經沒東西可執行。保全證據保全的是「證據」，怕開庭時證人已經過世、現場已經被整地、文件已經被銷毀。兩者可以同時聲請，但條文、管轄、要件都不同。</p>
+    <div class="law"><b class="art">第 176 條（節錄）</b>民事訴訟法……第三百六十八條、第三百七十條至第三百七十六條之二之規定，於本節準用之。</div>
+    <p>行政訴訟法只用第 175 條規定管轄、第 175 條之 1 規定司法事務官協助，其餘要件與程序都透過第 176 條準用民事訴訟法第 368 條、第 370 條至第 376 條之 2。民事訴訟法第 368 條的要件白話說有兩類：證據有滅失或礙難使用之虞、或經他造同意；就確定事、物之現狀有法律上利益並有必要時，也可以聲請鑑定、勘驗或保全書證。</p>
+    <div class="note">第 176 條的準用清單裡沒有民事訴訟法第 369 條（管轄），因為行政訴訟法第 175 條自己規定了。看到準用條文時，先確認本法有沒有自己的規定，有的話本法優先。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 175 條的管轄，看「起訴了沒」</h2>
+    <div class="law"><b class="art">第 175 條</b>Ⅰ 保全證據之聲請，在起訴後，向受訴行政法院為之；在起訴前，向受訊問人住居地或證物所在地之地方行政法院為之。<br>Ⅱ 遇有急迫情形時，於起訴後，亦得向前項地方行政法院聲請保全證據。</div>
+    <div class="flow">
+      <div class="step"><b>起訴前</b>受訊問人住居地或證物所在地之<b>地方行政法院</b>。不管本案將來是高等庭還是地方庭管轄。</div>
+      <div class="step"><b>起訴後</b>受訴行政法院，也就是本案繫屬的那個法院。</div>
+      <div class="step"><b>起訴後但急迫</b>亦得向受訊問人住居地或證物所在地之地方行政法院聲請，因為它離證據最近。</div>
+    </div>
+    <p>「地方行政法院」依第 3 條之 1 是高等行政法院地方行政訴訟庭。起訴前還不知道受訴法院是誰，所以一律交給離證據最近的地方行政訴訟庭；起訴後原則回到受訴法院，但急迫時保留地方庭這條路。</p>
+    <div class="warn">常錯：起訴前的保全證據聲請，寫成「向將來受訴之高等行政法院」或「向被告機關所在地之法院」。第 175 條第 1 項後段的連結點是受訊問人住居地或證物所在地，跟被告機關所在地（第 13 條的本案管轄）無關。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：誰來做、做完怎麼用</h2>
+    <div class="law"><b class="art">第 175 條之 1</b>行政法院於保全證據時，得命司法事務官協助調查證據。</div>
+    <p>保全證據往往要到現場勘驗、清點文件，第 175 條之 1 允許法院命司法事務官協助調查證據。注意是「協助調查」，准駁的裁定仍由法院作成。</p>
+    <p>程序面準用民事訴訟法：聲請要表明他造、應保全的證據、應證事實與理由；保全證據程序中調查的結果，在本案訴訟中依第 141 條告知當事人為辯論，才能採為裁判基礎。保全證據也不限於勘驗，訊問證人、鑑定、保全書證都可以。</p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>保全證據</th><th>妨礙證據之擬制（§135）</th><th>假處分（第 7 課）</th></tr></thead>
+      <tbody>
+        <tr><th>時點</th><td>事前，證據還在</td><td>事後，證據已被毀</td><td>本案判決前</td></tr>
+        <tr><th>對象</th><td>證據方法</td><td>當事人的毀證行為</td><td>公法上權利或法律關係</td></tr>
+        <tr><th>效果</th><td>先調查固定，供本案使用</td><td>得認他造主張為真實</td><td>暫時保護權利現狀</td></tr>
+        <tr><th>管轄</th><td>§175</td><td>受訴法院</td><td>§300（本案管轄法院；急迫時請求標的所在地之地方行政法院）</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲欲對環保局的停工處分提起撤銷訴訟，但尚在訴願中。甲得知環保局採樣的排水口下週將因道路工程被填平。甲可以怎麼辦？向誰聲請？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>起訴前保全證據的管轄與方式。</dd>
+        <dt>條文</dt><dd>第 175 條第 1 項後段；第 175 條之 1；第 176 條準用民事訴訟法第 368 條。</dd>
+        <dt>涵攝</dt><dd>排水口的現狀是將來爭執採樣是否合規的重要證據，一旦填平即「礙難使用」，符合保全要件。甲尚未起訴，依第 175 條第 1 項後段，應向證物所在地的地方行政法院（高等行政法院地方行政訴訟庭）聲請保全證據，請求勘驗或鑑定；法院得命司法事務官協助調查。</dd>
+        <dt>結論</dt><dd>甲得於起訴前向排水口所在地之地方行政法院聲請保全證據。本案將來是否由高等行政訴訟庭管轄，不影響起訴前保全證據的管轄。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙的撤銷訴訟已繫屬於臺北高等行政法院高等行政訴訟庭，關鍵證人丙住在臺東，年逾九十且病危。乙應向何法院聲請保全證據訊問丙？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>起訴後保全證據的管轄與急迫情形的例外。</dd>
+        <dt>條文</dt><dd>第 175 條第 1 項前段、第 2 項。</dd>
+        <dt>涵攝</dt><dd>本案已起訴，原則上向受訴的臺北高等行政法院聲請。但丙病危屬急迫情形，第 2 項允許於起訴後亦得向受訊問人住居地的地方行政法院聲請，由管轄臺東的地方行政訴訟庭就近訊問。</dd>
+        <dt>結論</dt><dd>乙得選擇向受訴法院，或依第 175 條第 2 項向丙住居地之地方行政法院聲請。訊問結果作成筆錄後，在本案依第 141 條告知兩造為辯論。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">10. 丁尚未起訴，欲聲請保全證據。依第 175 條，應向何法院聲請？</div>
+      <label><input type="radio" name="p4q1" value="A">將來受訴之高等行政法院</label>
+      <label><input type="radio" name="p4q1" value="B">被告機關所在地之高等行政法院</label>
+      <label><input type="radio" name="p4q1" value="C">受訊問人住居地或證物所在地之地方行政法院</label>
+      <label><input type="radio" name="p4q1" value="D">最高行政法院</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 175 條第 1 項後段：在起訴前，向受訊問人住居地或證物所在地之地方行政法院為之。" data-diag='{"A":"起訴前還沒有受訴法院，條文交給離證據最近的地方行政法院。","B":"被告機關所在地是第 13 條本案管轄的連結點，不是保全證據的。","D":"最高行政法院是法律審，不處理證據保全。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">11. 戊的訴訟已繫屬於高等行政法院高等行政訴訟庭，遇有急迫情形須保全證據。下列何者正確？</div>
+      <label><input type="radio" name="p4q2" value="A">得向受訴法院聲請，亦得向受訊問人住居地或證物所在地之地方行政法院聲請</label>
+      <label><input type="radio" name="p4q2" value="B">僅得向受訴法院聲請</label>
+      <label><input type="radio" name="p4q2" value="C">僅得向地方行政法院聲請，受訴法院不得受理</label>
+      <label><input type="radio" name="p4q2" value="D">應先向受訴法院聲請，經駁回後始得向地方行政法院聲請</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 175 條第 1 項前段：起訴後向受訴行政法院。第 2 項：遇有急迫情形時，於起訴後，亦得向前項地方行政法院聲請。「亦得」表示兩者並存。" data-diag='{"B":"第 2 項為急迫情形開了地方行政法院這條路。","C":"第 2 項是「亦得」，受訴法院的管轄並未被排除。","D":"條文沒有先後順序的要求。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">12. 關於保全證據程序中司法事務官的角色，依第 175 條之 1，下列何者正確？</div>
+      <label><input type="radio" name="p4q3" value="A">司法事務官得自行裁定准許保全證據</label>
+      <label><input type="radio" name="p4q3" value="B">行政法院得命司法事務官協助調查證據</label>
+      <label><input type="radio" name="p4q3" value="C">保全證據應由司法事務官為之，法官不得親自調查</label>
+      <label><input type="radio" name="p4q3" value="D">司法事務官僅得就法律問題對當事人為說明</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 175 條之 1：行政法院於保全證據時，得命司法事務官協助調查證據。是「協助」，裁定仍由法院為之。" data-diag='{"A":"准駁保全證據的裁定是法院的權限，司法事務官只是協助調查。","C":"條文是「得命」，法院當然可以自己調查。","D":"對當事人說明事實上及法律上事項是第 125 條之 2 的功能，與第 175 條之 1 的協助調查不同。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card goal">
+    <h2>章末測驗（選擇 10 題 + 實例 2 題）</h2>
+    <p>選擇題全部作答後按「交卷」，10 題答對 8 題過關。實例題先自己寫，再展開參考答案對照，自評後按「我寫到了」或「要再加強」。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="C">
+      <div class="stem">1. 依第 122 條第 1 項，言詞辯論以何者為始？</div>
+      <label><input type="radio" name="qz1" value="A">審判長朗讀起訴狀</label>
+      <label><input type="radio" name="qz1" value="B">被告為答辯之聲明</label>
+      <label><input type="radio" name="qz1" value="C">當事人聲明起訴之事項</label>
+      <label><input type="radio" name="qz1" value="D">法院調查證據</label>
+      <div class="fb" data-exp="第 122 條第 1 項：言詞辯論，以當事人聲明起訴之事項為始。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">2. 關於第 121 條，下列何者正確？</div>
+      <label><input type="radio" name="qz2" value="A">法院於言詞辯論時得為第 1 項五款之全部處置</label>
+      <label><input type="radio" name="qz2" value="B">法院於言詞辯論時得將當事人或第三人提出之文書、物件暫留置之</label>
+      <label><input type="radio" name="qz2" value="C">言詞辯論前之處置以當事人聲請為限</label>
+      <label><input type="radio" name="qz2" value="D">命當事人本人到場僅得於言詞辯論前為之</label>
+      <div class="fb" data-exp="第 121 條第 2 項：於言詞辯論時得為第 1 項第 1 款至第 3 款之處置，並得將文書、物件暫留置。第 1 項是法院「認為必要時」得為，不以聲請為限；命本人到場是第 1 款，言詞辯論時也可以。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">3. 法院因司法事務官之說明而獲知特殊專業知識。依第 125 條之 2，法院：</div>
+      <label><input type="radio" name="qz3" value="A">得逕採為裁判基礎</label>
+      <label><input type="radio" name="qz3" value="B">應命司法事務官具結後始得採用</label>
+      <label><input type="radio" name="qz3" value="C">應另行選任鑑定人</label>
+      <label><input type="radio" name="qz3" value="D">應予當事人辯論之機會，始得採為裁判之基礎</label>
+      <div class="fb" data-exp="第 125 條之 2 第 2 項：應予當事人辯論之機會，始得採為裁判之基礎。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">4. 原告主張之事實經被告機關自認。依第 134 條，法院：</div>
+      <label><input type="radio" name="qz4" value="A">仍應調查其他必要之證據</label>
+      <label><input type="radio" name="qz4" value="B">應以該事實為真實，無庸調查</label>
+      <label><input type="radio" name="qz4" value="C">得命被告撤回自認</label>
+      <label><input type="radio" name="qz4" value="D">應命原告就該事實舉證</label>
+      <div class="fb" data-exp="第 134 條：當事人主張之事實，雖經他造自認，行政法院仍應調查其他必要之證據。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">5. 訴訟中須適用某外國之現行法，而為法院所不知。依第 137 條：</div>
+      <label><input type="radio" name="qz5" value="A">法院應依職權調查，當事人無舉證責任</label>
+      <label><input type="radio" name="qz5" value="B">當事人有舉證之責任，法院不得依職權調查</label>
+      <label><input type="radio" name="qz5" value="C">當事人有舉證之責任，但法院得依職權調查</label>
+      <label><input type="radio" name="qz5" value="D">應囑託外交部查明，當事人不得舉證</label>
+      <div class="fb" data-exp="第 137 條：習慣及外國之現行法為行政法院所不知者，當事人有舉證之責任。但行政法院得依職權調查之。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">6. 以公務員為證人，就其職務上應守秘密之事項訊問。關於監督長官之同意，下列何者正確？</div>
+      <label><input type="radio" name="qz6" value="A">監督長官得自由裁量是否同意</label>
+      <label><input type="radio" name="qz6" value="B">除有妨害國家高度機密者外，不得拒絕同意</label>
+      <label><input type="radio" name="qz6" value="C">無須同意，公務員應依第 142 條作證</label>
+      <label><input type="radio" name="qz6" value="D">同意權屬於證人本人</label>
+      <div class="fb" data-exp="第 144 條第 1 項應得監督長官或民意機關同意；第 2 項：前項同意，除有妨害國家高度機密者外，不得拒絕。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">7. 證人不陳明拒絕之原因事實而拒絕證言。依第 148 條，法院：</div>
+      <label><input type="radio" name="qz7" value="A">得以裁定處新臺幣三萬元以下罰鍰，該裁定得抗告，抗告中應停止執行</label>
+      <label><input type="radio" name="qz7" value="B">得以裁定處新臺幣六萬元以下罰鍰並拘提之</label>
+      <label><input type="radio" name="qz7" value="C">得認他造關於應證事實之主張為真實</label>
+      <label><input type="radio" name="qz7" value="D">不得處罰，僅得不發給日費旅費</label>
+      <div class="fb" data-exp="第 148 條第 1 項三萬元以下罰鍰，第 2 項得抗告、抗告中停止執行。六萬元與拘提是第 143 條第 2 項不到場的制裁；擬制是對當事人的第 135、165 條。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">8. 以 15 歲之人為證人。關於具結，下列何者正確？</div>
+      <label><input type="radio" name="qz8" value="A">應命其具結</label>
+      <label><input type="radio" name="qz8" value="B">得不令其具結</label>
+      <label><input type="radio" name="qz8" value="C">不得令其具結</label>
+      <label><input type="radio" name="qz8" value="D">其得拒絕具結</label>
+      <div class="fb" data-exp="第 150 條：以未滿十六歲或因精神或其他心智障礙，致不解具結意義及其效果之人為證人者，不得令其具結。「得不令」是第 151 條，「得拒絕」是第 152 條。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">9. 第三人無正當理由不從法院提出文書之命。依第 169 條，法院：</div>
+      <label><input type="radio" name="qz9" value="A">得認舉證人關於該文書之主張為真實</label>
+      <label><input type="radio" name="qz9" value="B">得拘提該第三人</label>
+      <label><input type="radio" name="qz9" value="C">僅得再次命其提出</label>
+      <label><input type="radio" name="qz9" value="D">得以裁定處新臺幣三萬元以下罰鍰，必要時並得為強制處分</label>
+      <div class="fb" data-exp="第 169 條第 1 項。擬制為真實是對「當事人」不提出文書的第 165 條效果；第三人不是當事人，所以用罰鍰與強制處分。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">10. 起訴前聲請保全證據，依第 175 條第 1 項應向何法院為之？</div>
+      <label><input type="radio" name="qz10" value="A">受訴行政法院</label>
+      <label><input type="radio" name="qz10" value="B">受訊問人住居地或證物所在地之地方行政法院</label>
+      <label><input type="radio" name="qz10" value="C">被告機關所在地之高等行政法院</label>
+      <label><input type="radio" name="qz10" value="D">聲請人住所地之高等行政法院</label>
+      <div class="fb" data-exp="第 175 條第 1 項後段：在起訴前，向受訊問人住居地或證物所在地之地方行政法院為之。"></div>
+    </div>
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>實例題（自評）</h2>
+    <div class="essay" data-id="e1">
+      <div class="stem">實例一　甲公司因排放廢氣遭環保局處罰鍰 80 萬元，訴願駁回後提起撤銷訴訟。審判長徵詢兩造意見後，定 30 日命環保局提出稽查當日之儀器校正紀錄，並告知逾期不提出法院得不予斟酌。環保局逾期 2 個月，於第二次言詞辯論期日始提出該紀錄。甲主張法院應不予斟酌；環保局則主張行政訴訟採職權調查主義，法院無論如何均應審酌該紀錄。<br>問：(1) 法院得否不予斟酌該紀錄？要件為何？(2) 若法院不予斟酌，而「儀器當日是否經校正」此一事實無從認定，法院應如何判決？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>爭點</dt><dd>(1) 第 125 條之 1 失權的要件與性質，及其與第 125 條第 1 項、第 133 條職權調查的關係。(2) 職權調查後事實真偽不明時的客觀舉證責任分配。</dd>
+          <dt>條文</dt><dd>第 125 條之 1 第 1 項第 2 款、第 2 項三款；第 164 條第 1 項；第 125 條第 1 項、第 2 項；第 133 條；第 136 條準用民事訴訟法第 277 條；第 189 條第 1 項。</dd>
+          <dt>涵攝</dt><dd>(1) 校正紀錄是機關掌管且機關為當事人之文書，依第 164 條第 1 項有提出義務，審判長得依第 125 條之 1 第 1 項第 2 款定期命提出，程序上已徵詢意見並告知效果。環保局逾期 2 個月才在第二次期日提出，使甲無從準備且須再開期日，有礙訴訟終結；環保局未釋明不可歸責；審判長已告知效果，三要件齊備，法院「得」不予斟酌。環保局的主張錯在把職權調查當成當事人協力義務的免除：第 125 條第 2 項明定當事人應協力，第 125 條之 1 正是協力義務的制裁規定。但法院也不是必須排除，若認該紀錄對處分合法性至關重要，仍得依第 133 條職權調查，這是裁量。(2) 法院先依第 189 條第 1 項斟酌全辯論意旨判斷；仍真偽不明時，依第 136 條準用第 277 條，「儀器已校正、檢測結果可信」是處罰構成要件的事實，對環保局有利，由環保局承擔真偽不明的不利益。</dd>
+          <dt>結論</dt><dd>(1) 三要件齊備，法院得不予斟酌，但屬裁量，且不影響法院依職權另行調查。(2) 排放超標的要件事實無法認定時，不利益歸環保局，法院應撤銷罰鍰處分。</dd>
+          <dt>加分</dt><dd>可指出第 125 條之 1 為 111 年新增，立法目的在促進訴訟集中審理、避免當事人以遲延提出突襲他造；學說上有認為其與職權調查主義存在緊張關係，因此條文採「得」而非「應」，並保留「除法律別有規定外」的空間。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+    <div class="essay" data-id="e2">
+      <div class="stem">實例二　乙申請建築執照遭市政府駁回，提起課予義務訴訟。乙聲請訊問三位證人：(a) 市政府都市發展局承辦人丙，問審查會議中各委員對本案之意見；(b) 乙之律師丁，問乙曾向其諮詢之事項；(c) 乙之 15 歲兒子戊，問申請當時現場之狀況。市政府以「涉及職務秘密」為由不同意丙作證。<br>問：就丙、丁、戊三人，分別說明得否拒絕證言、應否具結，以及無正當理由拒絕時之效果。</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>爭點</dt><dd>三種不同身分證人的拒絕證言事由、具結規定與制裁。</dd>
+          <dt>條文</dt><dd>第 142 條；第 144 條；第 145 條；第 146 條；第 147 條；第 148 條；第 149 條至第 153 條；第 189 條第 1 項。</dd>
+          <dt>涵攝</dt><dd>(a) 丙是公務員，審查會議意見屬職務上應守秘密之事項，訊問應得監督長官同意（第 144 條第 1 項），但第 2 項規定除妨害國家高度機密外不得拒絕，建照審查會議顯非國家高度機密，市政府不同意於法無據，法院應函請同意。在未得同意前，丙依第 146 條第 1 項第 1 款得拒絕證言，審判長應依第 147 條告知；得同意後丙不得再拒絕，應依第 149 條具結。(b) 丁是律師，就因業務知悉的他人秘密受訊問，依第 146 條第 1 項第 2 款得拒絕證言；但本件是乙自己聲請訊問丁，秘密的主人乙已免除丁的保密責任，依第 146 條第 2 項丁不得拒絕。丁與乙無親屬關係，應依第 149 條具結。(c) 戊未滿十六歲，仍有第 142 條的作證義務，但依第 150 條不得令其具結；戊是乙之四親等內血親，縱已滿十六歲也屬第 151 條第 1 款得不令具結之人。戊未具結的證言仍是證據，由法院依第 189 條第 1 項判斷其證明力。三人若無正當理由拒絕證言或拒絕具結，依第 148 條、第 153 條得處三萬元以下罰鍰，並依第 155 條第 1 項但書不發給日費旅費。</dd>
+          <dt>結論</dt><dd>丙：得同意前得拒絕、得同意後不得拒絕，應具結。丁：因乙已免除保密責任，不得拒絕，應具結。戊：不得拒絕證言，但不得令其具結。</dd>
+          <dt>加分</dt><dd>可說明第 144 條第 2 項「不得拒絕」的設計是第 1 條「確保國家行政權之合法行使」的體現，機關不能用職務秘密把自己的決策過程藏起來；另可指出本件機關為被告，會議紀錄依第 164 條第 1 項有提出義務，拒不提出有第 165 條的擬制。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="s6" class="panel">
+  <div class="card">
+    <h2>本課引用條文</h2>
+    <p class="small muted">點開看原文。收錄第 120 條至第 176 條全部條文，以及本課順帶引用的第 1 條、第 3 條之 1、第 13 條、第 73 條、第 189 條、第 300 條；全文請見全國法規資料庫。</p>
+    <div class="arts">
+      <details><summary>第 120 條 <span>準備書狀與答辯狀</span></summary><div class="txt">Ⅰ 原告因準備言詞辯論之必要，應提出準備書狀。
+Ⅱ 被告因準備言詞辯論，宜於未逾就審期間二分之一以前，提出答辯狀。</div></details>
+      <details><summary>第 121 條 <span>言詞辯論前之處置、暫留置</span></summary><div class="txt">Ⅰ 行政法院因使辯論易於終結，認為必要時，得於言詞辯論前，為下列各款之處置：
+一、命當事人、法定代理人、代表人或管理人本人到場。
+二、命當事人提出圖案、表冊、外國文文書之譯本或其他文書、物件。
+三、行勘驗、鑑定或囑託機關、團體為調查。
+四、通知證人或鑑定人，及調取或命第三人提出文書、物件。
+五、使受命法官或受託法官調查證據。
+Ⅱ 行政法院因闡明或確定訴訟關係，於言詞辯論時，得為前項第一款至第三款之處置，並得將當事人或第三人提出之文書、物件暫留置之。</div></details>
+      <details><summary>第 122 條 <span>言詞辯論之開始與陳述</span></summary><div class="txt">Ⅰ 言詞辯論，以當事人聲明起訴之事項為始。
+Ⅱ 當事人應就訴訟關係為事實上及法律上之陳述。
+Ⅲ 當事人不得引用文件以代言詞陳述。但以舉文件之辭句為必要時，得朗讀其必要之部分。</div></details>
+      <details><summary>第 122 條之 1 <span>通譯與陪同</span></summary><div class="txt">Ⅰ 當事人、證人、鑑定人或其他訴訟關係人如不通曉中華民國語言，行政法院應用通譯；法官不通曉訴訟關係人所用之方言者，亦同。
+Ⅱ 前項訴訟關係人如為聽覺、聲音或語言障礙者，行政法院應用通譯。但亦得以文字發問或使其以文字陳述。
+Ⅲ 前二項之通譯，準用關於鑑定人之規定。
+Ⅳ 有第二項情形者，其訴訟關係人之配偶、直系或三親等內旁系血親、家長、家屬、醫師、心理師、輔導人員、社工人員或其信賴之人，經審判長許可後，得陪同在場。</div></details>
+      <details><summary>第 123 條 <span>調查證據之期日與聲明</span></summary><div class="txt">Ⅰ 行政法院調查證據，除別有規定外，於言詞辯論期日行之。
+Ⅱ 當事人應依第二編第一章第四節之規定，聲明所用之證據。</div></details>
+      <details><summary>第 124 條 <span>審判長之指揮</span></summary><div class="txt">Ⅰ 審判長開始、指揮及終結言詞辯論，並宣示行政法院之裁判。
+Ⅱ 審判長對於不服從言詞辯論之指揮者，得禁止發言。
+Ⅲ 言詞辯論須續行者，審判長應速定其期日。</div></details>
+      <details><summary>第 125 條 <span>職權調查事實、協力、闡明</span></summary><div class="txt">Ⅰ 行政法院應依職權調查事實關係，不受當事人事實主張及證據聲明之拘束。
+Ⅱ 前項調查，當事人應協力為之。
+Ⅲ 審判長應注意使當事人得為事實上及法律上適當完全之辯論。
+Ⅳ 審判長應向當事人發問或告知，令其陳述事實、聲明證據，或為其他必要之聲明及陳述；其所聲明、陳述或訴訟類型有不明瞭或不完足者，應令其敘明或補充之。
+Ⅴ 陪席法官告明審判長後，得向當事人發問或告知。</div></details>
+      <details><summary>第 125 條之 1 <span>定期間命陳述與失權</span></summary><div class="txt">Ⅰ 審判長得於徵詢當事人之意見後，定期間命其為下列事項：
+一、陳述事實或指出證據方法。
+二、提出其依法負提出義務之文書或物件。
+Ⅱ 當事人逾前項期間，遲延陳述事實、指出或提出證據方法，符合下列情形者，除法律別有規定外，行政法院得不予斟酌，逕依調查結果裁判之：
+一、其遲延有礙訴訟之終結。
+二、當事人未能釋明其遲延係不可歸責於己。
+三、審判長已告知其遲延之效果。</div></details>
+      <details><summary>第 125 條之 2 <span>司法事務官說明</span></summary><div class="txt">Ⅰ 行政法院為使訴訟關係明確，必要時得命司法事務官就事實上及法律上之事項，基於專業知識對當事人為說明。
+Ⅱ 行政法院因司法事務官提供而獲知之特殊專業知識，應予當事人辯論之機會，始得採為裁判之基礎。</div></details>
+      <details><summary>第 126 條 <span>受命法官、囑託</span></summary><div class="txt">Ⅰ 凡依本法使受命法官為行為者，由審判長指定之。
+Ⅱ 行政法院應為之囑託，除別有規定外，由審判長行之。</div></details>
+      <details><summary>第 127 條 <span>合併辯論、合併裁判</span></summary><div class="txt">Ⅰ 分別提起之數宗訴訟係基於同一或同種類之事實上或法律上之原因者，行政法院得命合併辯論。
+Ⅱ 命合併辯論之數宗訴訟，得合併裁判之。</div></details>
+      <details><summary>第 128 條 <span>言詞辯論筆錄應記載事項</span></summary><div class="txt">行政法院書記官應作言詞辯論筆錄，記載下列各款事項：
+一、辯論之處所及年、月、日。
+二、法官、書記官及通譯姓名。
+三、訴訟事件。
+四、到場當事人、法定代理人、代表人、管理人、訴訟代理人、輔佐人及其他經通知到場之人姓名。
+五、辯論之公開或不公開；如不公開者，其理由。</div></details>
+      <details><summary>第 129 條 <span>筆錄記載辯論要領</span></summary><div class="txt">言詞辯論筆錄內，應記載辯論進行之要領，並將下列各款事項記載明確：
+一、訴訟標的之捨棄、認諾、自認及訴之撤回。
+二、證據之聲明或撤回，及對於違背訴訟程序規定之異議。
+三、當事人所為其他重要聲明或陳述，及經告知而不為聲明或陳述之情形。
+四、依本法規定應記載筆錄之其他聲明或陳述。
+五、證人或鑑定人之陳述，及勘驗所得之結果。
+六、審判長命令記載之事項。
+七、不作裁判書附卷之裁判。
+八、裁判之宣示。</div></details>
+      <details><summary>第 130 條 <span>筆錄之朗讀閱覽與異議</span></summary><div class="txt">Ⅰ 筆錄或筆錄內所引用附卷或作為附件之文書內所記前條第一款至第六款事項，應依聲請於法庭向關係人朗讀或令其閱覽，並於筆錄內附記其事由。
+Ⅱ 關係人對於筆錄所記有異議者，行政法院書記官得更正或補充之。如以異議為不當，應於筆錄內附記其異議。
+Ⅲ 以機器記錄言詞辯論之進行者，其實施辦法由司法院定之。</div></details>
+      <details><summary>第 130 條之 1 <span>遠距審理</span></summary><div class="txt">Ⅰ 當事人、代表人、管理人、代理人、輔佐人、證人、鑑定人或其他關係人之所在處所或所在地法院與行政法院間，有聲音及影像相互傳送之科技設備而得直接審理者，行政法院認為適當時，得依聲請或依職權以該設備審理之。
+Ⅱ 前項情形，其期日通知書記載之應到處所為該設備所在處所。
+Ⅲ 依第一項進行程序之筆錄及其他文書，須陳述人簽名者，由行政法院傳送至陳述人所在處所，經陳述人確認內容並簽名後，將筆錄及其他文書以電信傳真或其他科技設備傳回行政法院。
+Ⅳ 第一項之審理及前項文書傳送之辦法，由司法院定之。</div></details>
+      <details><summary>第 131 條 <span>受命法官準備程序之準用</span></summary><div class="txt">第四十九條第三項至第六項、第四十九條之一第四項、第八項、第四十九條之二第一項、第五十五條、第六十六條第一項、第六十七條但書、第一百條第一項前段、第二項、第一百零七條第一項但書、第二項、第三項但書、第一百十條第四項、第一百二十一條第一項第一款至第四款、第二項、第一百二十二條之一、第一百二十四條、第一百二十五條、第一百二十五條之一、第一百二十五條之二、第一百三十條之一及民事訴訟法第四十九條、第七十五條第一項、第一百二十條第一項、第一百二十一條第一項、第二項、第二百條、第二百零八條、第二百十三條第二項、第二百十三條之一、第二百十四條、第二百十七條、第二百六十八條、第二百六十八條之一第二項、第三項、第二百六十八條之二第一項、第三百七十一條第一項、第二項及第三百七十二條關於法院或審判長權限之規定，於受命法官行準備程序時準用之。</div></details>
+      <details><summary>第 132 條 <span>言詞辯論準用民事訴訟法</span></summary><div class="txt">民事訴訟法第一百九十五條至第一百九十七條、第二百條、第二百零一條、第二百零四條、第二百零六條、第二百零八條、第二百十條、第二百十一條、第二百十三條第二項、第二百十四條、第二百十五條、第二百十七條至第二百十九條、第二百六十五條至第二百六十八條之一、第二百六十八條之二、第二百七十條第一項、第二百七十條之一至第二百七十一條之一、第二百七十三條至第二百七十六條之規定，於本節準用之。</div></details>
+      <details><summary>第 133 條 <span>職權調查證據</span></summary><div class="txt">行政法院應依職權調查證據。</div></details>
+      <details><summary>第 134 條 <span>自認仍應調查</span></summary><div class="txt">當事人主張之事實，雖經他造自認，行政法院仍應調查其他必要之證據。</div></details>
+      <details><summary>第 135 條 <span>妨礙證據之擬制</span></summary><div class="txt">Ⅰ 當事人因妨礙他造使用，故意將證據滅失、隱匿或致礙難使用者，行政法院得審酌情形認他造關於該證據之主張或依該證據應證之事實為真實。
+Ⅱ 前項情形，於裁判前應令當事人有辯論之機會。</div></details>
+      <details><summary>第 136 條 <span>準用民訴第 277 條舉證責任</span></summary><div class="txt">除本法有規定者外，民事訴訟法第二百七十七條之規定於本節準用之。</div></details>
+      <details><summary>第 137 條 <span>習慣及外國法之舉證</span></summary><div class="txt">習慣及外國之現行法為行政法院所不知者，當事人有舉證之責任。但行政法院得依職權調查之。</div></details>
+      <details><summary>第 138 條 <span>囑託調查證據</span></summary><div class="txt">行政法院得囑託普通法院或其他機關、學校、團體調查證據。</div></details>
+      <details><summary>第 139 條 <span>受命法官、受託法官調查</span></summary><div class="txt">行政法院認為適當時，得使庭員一人為受命法官或囑託他行政法院指定法官調查證據。</div></details>
+      <details><summary>第 140 條 <span>調查證據筆錄</span></summary><div class="txt">Ⅰ 受訴行政法院於言詞辯論前調查證據，或由受命法官、受託法官調查證據者，行政法院書記官應作調查證據筆錄。
+Ⅱ 第一百二十八條至第一百三十條之規定，於前項筆錄準用之。
+Ⅲ 受託法官調查證據筆錄，應送交受訴行政法院。</div></details>
+      <details><summary>第 141 條 <span>調查結果告知辯論</span></summary><div class="txt">Ⅰ 調查證據之結果，應告知當事人為辯論。
+Ⅱ 於受訴行政法院外調查證據者，當事人應於言詞辯論時陳述其調查之結果。但審判長得令行政法院書記官朗讀調查證據筆錄代之。</div></details>
+      <details><summary>第 142 條 <span>證人義務</span></summary><div class="txt">除法律別有規定外，不問何人，於他人之行政訴訟有為證人之義務。</div></details>
+      <details><summary>第 143 條 <span>證人不到場之罰鍰與拘提</span></summary><div class="txt">Ⅰ 證人受合法之通知，無正當理由而不到場者，行政法院得以裁定處新臺幣三萬元以下罰鍰。
+Ⅱ 證人已受前項裁定，經再次通知仍不到場者，得再處新臺幣六萬元以下罰鍰，並得拘提之。
+Ⅲ 拘提證人，準用刑事訴訟法關於拘提被告之規定；證人為現役軍人者，應以拘票囑託該管長官執行。
+Ⅳ 處證人罰鍰之裁定，得為抗告，抗告中應停止執行。</div></details>
+      <details><summary>第 143 條之 1 <span>所在處所訊問、書狀陳述</span></summary><div class="txt">Ⅰ 證人不能到場，或有其他必要情形時，得就其所在處所訊問之。
+Ⅱ 證人須依據文書、資料為陳述，或依事件之性質、證人之狀況，經行政法院認為適當者，得命當事人會同證人於公證人前作成陳述書狀。
+Ⅲ 經當事人同意者，證人亦得於行政法院外以書狀為陳述。
+Ⅳ 依前二項為陳述後，如認證人之書狀陳述須加說明，或經當事人之一造聲請對證人為必要之發問者，行政法院仍得通知該證人到場陳述。
+Ⅴ 證人以書狀為陳述者，仍應具結，並將結文附於書狀，經公證人認證後提出。其依第一百三十條之一為訊問者，亦應於訊問前或訊問後具結。</div></details>
+      <details><summary>第 144 條 <span>公務員職務秘密</span></summary><div class="txt">Ⅰ 以公務員、中央民意代表或曾為公務員、中央民意代表之人為證人，而就其職務上應守秘密之事項訊問者，應得該監督長官或民意機關之同意。
+Ⅱ 前項同意，除有妨害國家高度機密者外，不得拒絕。
+Ⅲ 以受公務機關委託承辦公務之人為證人者，準用前二項之規定。</div></details>
+      <details><summary>第 145 條 <span>拒絕證言：刑事訴追或蒙恥辱</span></summary><div class="txt">證人恐因陳述致自己或下列之人受刑事訴追或蒙恥辱者，得拒絕證言：
+一、證人之配偶、前配偶或四親等內之血親、三親等內之姻親或曾有此親屬關係或與證人訂有婚約者。
+二、證人之監護人或受監護人。</div></details>
+      <details><summary>第 146 條 <span>拒絕證言：業務、技術或職業秘密</span></summary><div class="txt">Ⅰ 證人有下列各款情形之一者，得拒絕證言：
+一、證人有第一百四十四條之情形。
+二、證人為醫師、藥師、藥商、心理師、助產士、宗教師、律師、會計師或其他從事相類業務之人或其業務上佐理人或曾任此等職務之人，就其因業務所知悉有關他人秘密之事項受訊問。
+三、關於技術上或職業上之秘密受訊問。
+Ⅱ 前項規定，於證人秘密之責任已經免除者，不適用之。</div></details>
+      <details><summary>第 147 條 <span>拒絕證言之告知</span></summary><div class="txt">依前二條規定，得拒絕證言者，審判長應於訊問前或知有該項情形時告知之。</div></details>
+      <details><summary>第 148 條 <span>無理由拒絕證言之罰鍰</span></summary><div class="txt">Ⅰ 證人不陳明拒絕之原因事實而拒絕證言，或以拒絕為不當之裁定已確定而仍拒絕證言者，行政法院得以裁定處新臺幣三萬元以下罰鍰。
+Ⅱ 前項裁定得為抗告，抗告中應停止執行。</div></details>
+      <details><summary>第 149 條 <span>具結</span></summary><div class="txt">Ⅰ 審判長於訊問前，應命證人各別具結。但其應否具結有疑義者，於訊問後行之。
+Ⅱ 審判長於證人具結前，應告以具結之義務及偽證之處罰。
+Ⅲ 證人以書狀為陳述者，不適用前二項之規定。</div></details>
+      <details><summary>第 150 條 <span>不得令具結</span></summary><div class="txt">以未滿十六歲或因精神或其他心智障礙，致不解具結意義及其效果之人為證人者，不得令其具結。</div></details>
+      <details><summary>第 151 條 <span>得不令具結</span></summary><div class="txt">以下列各款之人為證人者，得不令其具結：
+一、證人為當事人之配偶、前配偶或四親等內之血親、三親等內之姻親或曾有此親屬關係或與當事人訂有婚約。
+二、有第一百四十五條情形而不拒絕證言。
+三、當事人之受雇人或同居人。</div></details>
+      <details><summary>第 152 條 <span>拒絕具結</span></summary><div class="txt">證人就與自己或第一百四十五條所列之人有直接利害關係之事項受訊問者，得拒絕具結。</div></details>
+      <details><summary>第 153 條 <span>拒絕具結準用第 148 條</span></summary><div class="txt">第一百四十八條之規定，於證人拒絕具結者準用之。</div></details>
+      <details><summary>第 154 條 <span>對證人之發問</span></summary><div class="txt">Ⅰ 當事人得就應證事實及證言信用之事項，聲請審判長對於證人為必要之發問，或向審判長陳明後自行發問。
+Ⅱ 前項之發問，與應證事實無關、重複發問、誘導發問、侮辱證人或有其他不當情形，審判長得依聲請或依職權限制或禁止。
+Ⅲ 關於發問之限制或禁止有異議者，行政法院應就其異議為裁定。</div></details>
+      <details><summary>第 155 條 <span>證人日費旅費</span></summary><div class="txt">Ⅰ 行政法院應發給證人法定之日費及旅費；證人亦得於訊問完畢後請求之。但被拘提或無正當理由拒絕具結或證言者，不在此限。
+Ⅱ 前項關於日費及旅費之裁定，得為抗告。
+Ⅲ 證人所需之旅費，得依其請求預行酌給之。</div></details>
+      <details><summary>第 156 條 <span>鑑定準用人證</span></summary><div class="txt">鑑定，除別有規定外，準用本法關於人證之規定。</div></details>
+      <details><summary>第 157 條 <span>鑑定義務與揭露</span></summary><div class="txt">Ⅰ 從事於鑑定所需之學術、技藝或職業，或經機關委任有鑑定職務者，於他人之行政訴訟有為鑑定人之義務。
+Ⅱ 鑑定人應於選任前揭露下列資訊；其經選任後發現者，應即時向審判長及當事人揭露之：
+一、學經歷、專業領域及本於其專業學識經驗曾參與訴訟、非訟或法院調解程序之案例。
+二、關於專業學識經驗及相關資料之準備或提出，曾與當事人、輔助參加人、輔佐人或其代理人有分工或合作關係。
+三、關於專業學識經驗及相關資料之準備或提出，曾受當事人、輔助參加人、輔佐人或其代理人之金錢報酬或資助及其金額或價值。
+四、關於該事件，有其他提供金錢報酬或資助者之身分及其金額或價值。
+五、有其他情事足認有不能公正、獨立執行職務之虞。</div></details>
+      <details><summary>第 158 條 <span>鑑定人不得拘提</span></summary><div class="txt">鑑定人不得拘提。</div></details>
+      <details><summary>第 159 條 <span>拒絕鑑定</span></summary><div class="txt">鑑定人拒絕鑑定，雖其理由不合於本法關於拒絕證言之規定，如行政法院認為正當者，亦得免除其鑑定義務。</div></details>
+      <details><summary>第 160 條 <span>鑑定人報酬</span></summary><div class="txt">Ⅰ 鑑定人於法定之日費、旅費外，得請求相當之報酬。
+Ⅱ 鑑定所需費用，得依鑑定人之請求預行酌給之。
+Ⅲ 關於前二項請求之裁定，得為抗告。</div></details>
+      <details><summary>第 161 條 <span>囑託機關鑑定</span></summary><div class="txt">行政法院依第一百三十八條之規定，囑託機關、學校或團體陳述鑑定意見或審查之者，準用第一百六十條及民事訴訟法第三百三十五條至第三百三十七條之規定。其鑑定書之說明，由該機關、學校或團體所指定之人為之。</div></details>
+      <details><summary>第 162 條 <span>法律專業意見</span></summary><div class="txt">Ⅰ 行政法院認有必要時，得就訴訟事件之專業法律問題徵詢從事該學術研究之人，以書面或於審判期日到場陳述其法律上意見。
+Ⅱ 前項意見，於裁判前應告知當事人使為辯論。
+Ⅲ 第一項陳述意見之人，準用鑑定人之規定。但不得令其具結。</div></details>
+      <details><summary>第 163 條 <span>當事人文書提出義務</span></summary><div class="txt">下列各款文書，當事人有提出之義務：
+一、該當事人於訴訟程序中曾經引用者。
+二、他造依法律規定，得請求交付或閱覽者。
+三、為他造之利益而作者。
+四、就與本件訴訟關係有關之事項所作者。
+五、商業帳簿。</div></details>
+      <details><summary>第 164 條 <span>機關文書之調取</span></summary><div class="txt">Ⅰ 公務員或機關掌管之文書，行政法院得調取之。如該機關為當事人時，並有提出之義務。
+Ⅱ 前項情形，除有妨害國家高度機密者外，不得拒絕。</div></details>
+      <details><summary>第 165 條 <span>不提出文書之擬制</span></summary><div class="txt">Ⅰ 當事人無正當理由不從提出文書之命者，行政法院得審酌情形認他造關於該文書之主張或依該文書應證之事實為真實。
+Ⅱ 前項情形，於裁判前應令當事人有辯論之機會。</div></details>
+      <details><summary>第 166 條 <span>第三人文書之聲請</span></summary><div class="txt">Ⅰ 聲明書證係使用第三人所執之文書者，應聲請行政法院命第三人提出或定由舉證人提出之期間。
+Ⅱ 民事訴訟法第三百四十二條第二項、第三項之規定，於前項聲請準用之。
+Ⅲ 文書為第三人所執之事由及第三人有提出義務之原因，應釋明之。</div></details>
+      <details><summary>第 167 條 <span>命第三人提出之裁定</span></summary><div class="txt">Ⅰ 行政法院認應證之事實重要且舉證人之聲請正當者，應以裁定命第三人提出文書或定由舉證人提出文書之期間。
+Ⅱ 行政法院為前項裁定前，應使該第三人有陳述意見之機會。</div></details>
+      <details><summary>第 168 條 <span>第三人提出義務之準用</span></summary><div class="txt">關於第三人提出文書之義務，準用第一百四十四條至第一百四十七條及第一百六十三條第二款至第五款之規定。</div></details>
+      <details><summary>第 169 條 <span>第三人不提出之罰鍰與強制處分</span></summary><div class="txt">Ⅰ 第三人無正當理由不從提出文書之命者，行政法院得以裁定處新臺幣三萬元以下罰鍰；於必要時，並得為強制處分。
+Ⅱ 前項強制處分之執行，適用第三百零六條規定。
+Ⅲ 第一項裁定得為抗告，抗告中應停止執行。</div></details>
+      <details><summary>第 170 條 <span>第三人之費用</span></summary><div class="txt">Ⅰ 第三人得請求提出文書之費用。
+Ⅱ 第一百五十五條之規定，於前項情形準用之。</div></details>
+      <details><summary>第 171 條 <span>文書真偽之核對</span></summary><div class="txt">Ⅰ 文書之真偽，得依核對筆跡或印跡證之。
+Ⅱ 行政法院得命當事人或第三人提出文書，以供核對。核對筆跡或印跡，適用關於勘驗之規定。</div></details>
+      <details><summary>第 172 條 <span>指定文字書寫核對</span></summary><div class="txt">Ⅰ 無適當之筆跡可供核對者，行政法院得指定文字，命該文書之作成名義人書寫，以供核對。
+Ⅱ 文書之作成名義人無正當理由不從前項之命者，準用第一百六十五條或第一百六十九條之規定。
+Ⅲ 因供核對所書寫之文字應附於筆錄；其他供核對之文件不須發還者，亦同。</div></details>
+      <details><summary>第 173 條 <span>準文書、科技設備呈現</span></summary><div class="txt">Ⅰ 本法關於文書之規定，於文書外之物件，有與文書相同之效用者，準用之。
+Ⅱ 文書或前項物件，須以科技設備始能呈現其內容或提出原件有事實上之困難者，得僅提出呈現其內容之書面並證明其內容與原件相符。</div></details>
+      <details><summary>第 174 條 <span>勘驗之準用</span></summary><div class="txt">第一百六十四條至第一百七十條之規定，於勘驗準用之。</div></details>
+      <details><summary>第 175 條 <span>保全證據之管轄</span></summary><div class="txt">Ⅰ 保全證據之聲請，在起訴後，向受訴行政法院為之；在起訴前，向受訊問人住居地或證物所在地之地方行政法院為之。
+Ⅱ 遇有急迫情形時，於起訴後，亦得向前項地方行政法院聲請保全證據。</div></details>
+      <details><summary>第 175 條之 1 <span>司法事務官協助</span></summary><div class="txt">行政法院於保全證據時，得命司法事務官協助調查證據。</div></details>
+      <details><summary>第 176 條 <span>證據準用民事訴訟法</span></summary><div class="txt">民事訴訟法第二百十五條、第二百十七條至第二百十九條、第二百七十八條、第二百八十一條、第二百八十二條、第二百八十四條至第二百八十六條、第二百九十一條至第二百九十三條、第二百九十五條、第二百九十六條、第二百九十六條之一、第二百九十八條至第三百零一條、第三百零四條、第三百零九條、第三百十條、第三百十三條、第三百十三條之一、第三百十六條至第三百十九條、第三百二十一條、第三百二十二條、第三百二十五條至第三百二十七條、第三百三十一條至第三百三十七條、第三百三十九條、第三百四十一條至第三百四十三條、第三百五十二條至第三百五十八條、第三百六十一條、第三百六十四條至第三百六十六條、第三百六十八條、第三百七十條至第三百七十六條之二之規定，於本節準用之。</div></details>
+      <details><summary>第 1 條 <span>宗旨</span></summary><div class="txt">行政訴訟以保障人民權益，確保國家行政權之合法行使，增進司法功能為宗旨。</div></details>
+      <details><summary>第 3 條之 1 <span>法院名稱</span></summary><div class="txt">本法所稱高等行政法院，指高等行政法院高等行政訴訟庭；所稱地方行政法院，指高等行政法院地方行政訴訟庭。</div></details>
+      <details><summary>第 13 條 <span>普通審判籍：公法人、機關、法人</span></summary><div class="txt">Ⅰ 對於公法人之訴訟，由其公務所所在地之行政法院管轄。其以公法人之機關為被告時，由該機關所在地之行政法院管轄。
+Ⅱ 對於私法人或其他得為訴訟當事人之團體之訴訟，由其主事務所或主營業所所在地之行政法院管轄。
+Ⅲ 對於外國法人或其他得為訴訟當事人之團體之訴訟，由其在中華民國之主事務所或主營業所所在地之行政法院管轄。</div></details>
+      <details><summary>第 73 條 <span>寄存送達</span></summary><div class="txt">Ⅰ 送達不能依前二條規定為之者，得將文書寄存於送達地之自治或警察機關，並作送達通知書二份，一份黏貼於應受送達人住居所、事務所或營業所門首，一份交由鄰居轉交或置於應受送達人之信箱或其他適當之處所，以為送達。
+Ⅱ 前項情形，如係以郵務人員為送達人者，得將文書寄存於附近之郵務機構。
+Ⅲ 寄存送達，自寄存之日起，經十日發生效力。
+Ⅳ 寄存之文書自寄存之日起，寄存機關或機構應保存二個月。</div></details>
+      <details><summary>第 189 條 <span>自由心證</span></summary><div class="txt">Ⅰ 行政法院為裁判時，應斟酌全辯論意旨及調查證據之結果，依論理及經驗法則判斷事實之真偽。但別有規定者，不在此限。
+Ⅱ 當事人已證明受有損害而不能證明其數額或證明顯有重大困難者，法院應審酌一切情況，依所得心證定其數額。
+Ⅲ 得心證之理由，應記明於判決。</div></details>
+      <details><summary>第 300 條 <span>假處分之管轄</span></summary><div class="txt">假處分之聲請，由管轄本案之行政法院管轄。但有急迫情形時，得由請求標的所在地之地方行政法院管轄。</div></details>
+    </div>
+  </div>
+  <div class="card">
+    <h2>下一課</h2>
+    <p>第 9 課「裁判與終結：判決、效力、和解、調解與訴訟停止」會接著講法院查完之後怎麼判、判決的效力到哪裡，以及不用判決就結案的和解與調解。<a href="09_裁判與終結.html">前往第 9 課</a>　<a href="00_總覽地圖.html">回總覽地圖</a></p>
+  </div>
+</section>
+
+<footer>行政訴訟法自學教材 · 第 8 課 審理：言詞辯論、職權調查與證據<br>依民國 111 年 6 月 22 日修正條文自行編寫，題目為原創；條文以<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030154" target="_blank" rel="noopener">全國法規資料庫</a>為準。</footer>
+</div>
+
+<script>
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const LESSON_ID = "08", CH = "行政訴訟法 08 審理與證據";
+const PROG_KEY = "xzss_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與數學教材共用 study_log_v1，供「學習紀錄」頁讀取）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+let pracCount = 0, pracOk = 0;
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="s5"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok }); pracCount++; if(ok) pracOk++;
+  });
+});
+
+// ===== 章末測驗交卷 =====
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0; const wrong = [];
+  qs.forEach((q,i)=>{
+    const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+    else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+  });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  writeProg({ quiz: { score, total: qs.length } });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+  else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="s5"]').classList.add('done'); }
+  else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+  else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 實例題自評 =====
+document.querySelectorAll('.essay').forEach(es=>{
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 本課專屬工具：拒絕證言／拒絕具結情境判斷器 =====
+(function(){
+  const role = document.getElementById('wtRole'), q = document.getElementById('wtQ'),
+        consent = document.getElementById('wtConsent'), waived = document.getElementById('wtWaived'),
+        res = document.getElementById('wtRes');
+  const ROLE_NAME = {
+    official:'公務員、中央民意代表（或曾任）、受委託承辦公務之人', prof:'醫師、律師、會計師等業務人員',
+    kin:'當事人之配偶或親屬', emp:'當事人之受雇人或同居人', minor:'未滿十六歲或不解具結意義之人', plain:'一般第三人'
+  };
+  function decide(){
+    const r = role.value, k = q.value;
+    let may = false, basis = '', note = '';
+    // ---- 可否拒絕證言 ----
+    if(k === 'duty'){
+      if(r === 'official'){
+        if(consent.checked){ may = false; basis = '第 144 條第 1 項的同意已取得，「第 144 條之情形」已不存在，不得再依第 146 條第 1 項第 1 款拒絕證言。'; }
+        else { may = true; basis = '第 144 條第 1 項：就職務上應守秘密之事項訊問，應得監督長官或民意機關之同意。未得同意即屬「有第 144 條之情形」，依第 146 條第 1 項第 1 款得拒絕證言。'; note = '第 144 條第 2 項：長官除有妨害國家高度機密者外，不得拒絕同意。法院應先函請同意，而不是放棄這個證人。受委託承辦公務之人依第 3 項準用。'; }
+      } else {
+        may = false; basis = '「職務上應守秘密之事項」的拒絕權（第 144 條、第 146 條第 1 項第 1 款）只給公務員、中央民意代表、曾任者與受委託承辦公務之人。其他人沒有這一款可用。'; note = '如果事項同時屬於第 146 條第 1 項第 3 款「技術上或職業上之秘密」，請改選那一項判斷。';
+      }
+    } else if(k === 'biz'){
+      if(r === 'prof'){
+        if(waived.checked){ may = false; basis = '第 146 條第 2 項：前項規定，於證人秘密之責任已經免除者，不適用之。秘密的主人已同意揭露，不得再拒絕。'; }
+        else { may = true; basis = '第 146 條第 1 項第 2 款：醫師、藥師、藥商、心理師、助產士、宗教師、律師、會計師或其他從事相類業務之人、其業務上佐理人或曾任此等職務之人，就因業務所知悉有關他人秘密之事項受訊問，得拒絕證言。'; note = '若秘密的主人（病人、委託人）免除其保密責任，依第 146 條第 2 項即不得拒絕。'; }
+      } else {
+        may = false; basis = '第 146 條第 1 項第 2 款是列舉特定業務之人，所選身分不在列舉或「相類業務」之內，不能用這一款拒絕。'; note = '若所知悉的秘密其實是證人自己的技術或職業秘密，可改用第 146 條第 1 項第 3 款。';
+      }
+    } else if(k === 'tech'){
+      if(waived.checked){ may = false; basis = '第 146 條第 2 項：秘密之責任已經免除者，不適用第 1 項。'; }
+      else { may = true; basis = '第 146 條第 1 項第 3 款：關於技術上或職業上之秘密受訊問，得拒絕證言。不限身分，任何證人都可以主張。'; note = '但同受第 146 條第 2 項限制：責任已免除者不得拒絕。'; }
+    } else if(k === 'crime'){
+      may = true; basis = '第 145 條：證人恐因陳述致自己或其配偶、前配偶、四親等內血親、三親等內姻親、曾有此親屬關係或訂有婚約者、監護人或受監護人受刑事訴追或蒙恥辱，得拒絕證言。'; note = '第 145 條以「證人」為中心看親屬關係，與證人跟當事人是什麼關係無關。第 146 條第 2 項「責任免除」不適用於第 145 條。';
+    } else if(k === 'interest'){
+      may = false; basis = '「有直接利害關係」只是第 152 條拒絕「具結」的事由，不是拒絕「證言」的事由。沒有刑事訴追或恥辱之虞，依第 142 條仍有作證義務。';
+    } else {
+      may = false; basis = '第 142 條：除法律別有規定外，不問何人，於他人之行政訴訟有為證人之義務。所選事項不屬第 144 條至第 146 條任何一款。';
+      if(r === 'kin') note = '當事人的配偶或親屬，身分本身不是拒絕證言的事由（第 145 條要有刑事訴追或恥辱之虞），但會影響具結，見下方。';
+    }
+    // ---- 具結 ----
+    let oath = '', oathBasis = '';
+    if(r === 'minor'){ oath = '不得令其具結'; oathBasis = '第 150 條：未滿十六歲或因精神或其他心智障礙致不解具結意義及其效果之人，不得令其具結。這是法院的禁止規定，不是裁量。其證言仍是證據，由法院依第 189 條第 1 項判斷證明力。'; }
+    else if(k === 'interest'){ oath = '證人得拒絕具結'; oathBasis = '第 152 條：就與自己或第 145 條所列之人有直接利害關係之事項受訊問者，得拒絕具結。拒絕不當之裁定確定仍拒絕者，依第 153 條準用第 148 條處三萬元以下罰鍰。'; if(r === 'kin') oathBasis += ' 另因證人為當事人之親屬，法院亦得依第 151 條第 1 款不令其具結。'; }
+    else if(k === 'crime' && may){ oath = '若證人選擇不拒絕證言而陳述，法院得不令其具結'; oathBasis = '第 151 條第 2 款：有第 145 條情形而不拒絕證言者，得不令其具結。這是法院裁量。'; }
+    else if(r === 'kin'){ oath = '法院得不令其具結'; oathBasis = '第 151 條第 1 款：證人為當事人之配偶、前配偶或四親等內之血親、三親等內之姻親或曾有此親屬關係或與當事人訂有婚約者，得不令其具結。是「得」，法院仍可命其具結。'; }
+    else if(r === 'emp'){ oath = '法院得不令其具結'; oathBasis = '第 151 條第 3 款：當事人之受雇人或同居人，得不令其具結。'; }
+    else { oath = '應具結'; oathBasis = '第 149 條第 1 項：審判長於訊問前應命證人各別具結，應否具結有疑義者於訊問後行之；第 2 項：具結前應告以具結之義務及偽證之處罰。以書狀陳述者依第 143 條之 1 第 5 項仍應具結，結文附於書狀經公證人認證。'; }
+    // ---- 拒絕之效果 ----
+    let effect;
+    if(may){
+      effect = '得拒絕，但要<b>陳明拒絕之原因事實</b>。審判長依第 147 條應於訊問前或知有該情形時告知得拒絕。不陳明原因事實而拒絕，或法院以拒絕為不當之裁定已確定而仍拒絕者，依第 148 條第 1 項得處新臺幣三萬元以下罰鍰；該裁定得抗告，抗告中應停止執行（第 2 項）。';
+    } else {
+      effect = '不得拒絕證言。若仍拒絕即屬無正當理由，依第 148 條第 1 項得處新臺幣三萬元以下罰鍰（裁定得抗告，抗告中停止執行），並依第 155 條第 1 項但書不發給日費旅費。拒絕具結而無正當理由者，依第 153 條準用第 148 條。';
+    }
+    res.innerHTML = '<h3>' + (may ? '得拒絕證言' : '不得拒絕證言') + '　<span class="pill law">' + ROLE_NAME[r] + '</span></h3>' +
+      '<p class="small" style="margin:0 0 .5em"><b>依據：</b>' + basis + (note ? '<br><b>注意：</b>' + note : '') + '</p>' +
+      '<p class="small" style="margin:0 0 .5em"><b>具結：</b>' + oath + '。' + oathBasis + '</p>' +
+      '<p class="small muted" style="margin:0"><b>拒絕的效果：</b>' + effect + '</p>';
+    res.classList.add('on');
+    logEv({ type:"tool", q:"refusal", k: r + ':' + k + (consent.checked ? ':consent' : '') + (waived.checked ? ':waived' : '') });
+  }
+  document.getElementById('wtGo').addEventListener('click', decide);
+})();
+</script>
+</body>
+</html>

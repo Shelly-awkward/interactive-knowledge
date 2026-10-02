@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>行政訴訟法｜第 5 課 多數當事人與代理</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F4F6F3; --card:#FFFFFF;
+  --ink:#1C2A30; --ink-2:#4B5A62; --ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --law:#5B3A8C; --law-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F; --card:#1D262B;
+    --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+    --rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --law:#B9A0E3; --law-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F; --card:#1D262B;
+  --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+  --rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --law:#B9A0E3; --law-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--blue);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+
+/* hero */
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--law);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--law-soft);color:var(--law);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+/* tabs */
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit}
+nav.tabs button:hover{border-color:var(--blue);color:var(--ink)}
+nav.tabs button.active{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--blue-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--law-soft);border-left:4px solid var(--law);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--law);display:block;margin-bottom:.2em}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.law{background:var(--law-soft);border-color:transparent;color:var(--law)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+
+/* flow / structure diagrams */
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 160px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--blue)}
+.courts{display:grid;grid-template-columns:1fr;gap:8px;margin:.6rem 0 1rem}
+.court{border:1px solid var(--rule);border-radius:10px;padding:.7rem .9rem;background:var(--paper);display:grid;grid-template-columns:7.5em 1fr;gap:.3rem .8rem;align-items:start}
+.court .lv{font-weight:700;color:var(--law)}
+.court .what{font-size:.92rem}
+.court.top{border-color:var(--law)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+/* examples */
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+.step4{display:grid;grid-template-columns:5em 1fr;gap:.25rem .7rem;font-size:.95rem;margin:.3rem 0 .8rem}
+.step4 dt{color:var(--law);font-weight:700}
+.step4 dd{margin:0}
+
+/* interactive tool */
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox select,.toolbox input[type=number]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--law)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+
+/* practice & quiz */
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--law);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+/* 條文速查 */
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">行政訴訟法 · 第 5 課</span>
+  <h1>多數當事人與代理</h1>
+  <p>三節加章末測驗。前一課講「誰能當當事人」，這一課講「人多了怎麼辦」：好幾個人一起告或一起被告（共同訴訟）、案外的第三人被拉進來（訴訟參加）、以及當事人不自己出面而委任代理人（訴訟代理人與輔佐人）。111 年修法新增的第 49 條之 1 強制律師代理，是這一課的考試重心。</p>
+  <p class="ver">依民國 111 年 6 月 22 日修正條文編寫（多數條文自 112 年 8 月 15 日施行）。自學筆記，非官方；條文以全國法規資料庫為準。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">5-1 共同訴訟</button>
+  <button data-t="s2">5-2 訴訟參加</button>
+  <button data-t="s3">5-3 訴訟代理人、強制律師代理與輔佐人</button>
+  <button data-t="s4">章末測驗</button>
+  <button data-t="s5">條文速查</button>
+</nav>
+
+<!-- ═══════════ 5-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>背得出第 37 條第 1 項三款共同訴訟的要件，並知道第 2 項的管轄限制只綁第三款</li>
+      <li>分得清「普通共同訴訟」與「必要共同訴訟」：前者各自獨立（第 38 條），後者合一確定（第 39 條）</li>
+      <li>遇到「共同訴訟人中一人撤回、一人上訴、一人死亡」的題目，能依第 39 條三款判斷效力及不及於全體</li>
+      <li>記得第 40 條：每個共同訴訟人都有續行訴訟權，法院指定期日要通知每一個人</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：第 37 條，什麼情形可以一起告</h2>
+    <div class="law"><b class="art">第 37 條</b>Ⅰ 二人以上於下列各款情形，得為共同訴訟人，一同起訴或一同被訴：<br>一、為訴訟標的之行政處分係二以上機關共同為之者。<br>二、為訴訟標的之權利、義務或法律上利益，為其所共同者。<br>三、為訴訟標的之權利、義務或法律上利益，於事實上或法律上有同一或同種類之原因者。<br>Ⅱ 依前項第三款同種類之事實上或法律上原因行共同訴訟者，以被告之住居所、公務所、機關、主事務所或主營業所所在地在同一行政法院管轄區域內者為限。</div>
+    <p>「共同訴訟」白話說就是原告有好幾個、或被告有好幾個，大家在同一個程序裡一起打。第 37 條第 1 項列了三種可以合在一起的情形：<b>第 1 款</b>是處分由兩個以上機關共同作成（被告端多數）；<b>第 2 款</b>是權利義務「共同」，例如土地共有人一起告徵收處分；<b>第 3 款</b>最寬，只要原因「同一或同種類」就行，例如一批攤商在同一天被同一機關開同種類罰單。</p>
+    <p>第 2 項是給第 3 款的「煞車」。同種類原因的案件彼此其實各自獨立，為了避免原告隨便湊在一起把被告拉到遙遠的法院，條文要求<b>被告</b>的所在地要在同一個行政法院管轄區域內。注意：綁的是被告，不是原告；而且只綁「同種類」，不綁「同一」原因。</p>
+    <div class="warn">常錯：把第 37 條第 2 項讀成「共同訴訟人都要住同一區域」。條文看的是<b>被告</b>之住居所、公務所、機關、主事務所或主營業所所在地，而且只適用於第 1 項第 3 款「同種類」原因的情形。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：普通共同訴訟，各打各的（第 38 條）</h2>
+    <div class="law"><b class="art">第 38 條</b>共同訴訟中，一人之行為或他造對於共同訴訟人中一人之行為及關於其一人所生之事項，除別有規定外，其利害不及於他共同訴訟人。</div>
+    <p>第 37 條只是說「可以」一起告，不代表大家命運綁在一起。原則上這叫<b>普通共同訴訟</b>：每個共同訴訟人跟對造之間，仍然是各自獨立的訴訟，只是放在同一個程序審。所以甲撤回起訴、甲自認、甲被判敗訴，都跟乙無關；對造對甲做的行為（例如只對甲上訴），也不影響乙。</p>
+    <p>「除別有規定外」就是在預告第 39 條。只有訴訟標的「必須合一確定」的情形，才改走第 39 條的規則。</p>
+    <div class="tip">國考用法：題目給一群人依第 37 條第 1 項第 3 款一起告，然後問其中一人的行為對其他人有無影響。先判斷這是不是「必須合一確定」；同種類罰鍰一人一張，各自獨立，答第 38 條「利害不及於他共同訴訟人」。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：必要共同訴訟，一人行為及於全體（第 39 條）</h2>
+    <div class="law"><b class="art">第 39 條</b>訴訟標的對於共同訴訟之各人，必須合一確定者，適用下列各款之規定：<br>一、共同訴訟人中一人之行為有利益於共同訴訟人者，其效力及於全體；不利益者，對於全體不生效力。<br>二、他造對於共同訴訟人中一人之行為，其效力及於全體。<br>三、共同訴訟人中之一人，生有訴訟當然停止或裁定停止之原因者，其當然停止或裁定停止之效力及於全體。</div>
+    <p>「必須合一確定」白話說是：判決結果對這幾個人<b>不能有不同答案</b>。例如同一個處分對共有人全體作成，不可能對甲有效、對乙無效。這種情形叫<b>必要共同訴訟</b>，法律用三款讓大家的程序步調一致。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>情形</th><th>第 39 條</th><th>結果</th><th>例</th></tr></thead>
+      <tbody>
+        <tr><td>共同訴訟人中一人的行為，對大家<b>有利</b></td><td>第 1 款前段</td><td>效力及於全體</td><td>乙一人提出上訴，視為全體上訴</td></tr>
+        <tr><td>共同訴訟人中一人的行為，對大家<b>不利</b></td><td>第 1 款後段</td><td>對全體不生效力</td><td>乙一人撤回起訴、自認、捨棄，不生效力</td></tr>
+        <tr><td><b>他造</b>對共同訴訟人中一人的行為</td><td>第 2 款</td><td>效力及於全體</td><td>被告機關只對乙提出上訴，效力及於甲、丙</td></tr>
+        <tr><td>一人生有<b>當然停止或裁定停止</b>原因</td><td>第 3 款</td><td>停止效力及於全體</td><td>乙死亡而訴訟當然停止，全案一起停</td></tr>
+      </tbody>
+    </table></div>
+    <p>第 1 款「有利益／不利益」怎麼判斷？看那個行為對共同訴訟人在訴訟上的地位是加分還是扣分：上訴、抗告、提出攻擊防禦方法是有利；撤回、捨棄、認諾、自認、和解是不利。這個判斷跟第 51 條特別委任事項那張清單很像，可以一起記。</p>
+    <div class="warn">常錯：第 39 條第 2 款沒有「有利／不利」的區分。他造對一人的行為，不管好壞<b>一律</b>及於全體；只有第 1 款（共同訴訟人自己的行為）才分有利不利。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：第 40 條，每個人都能把案子推下去</h2>
+    <div class="law"><b class="art">第 40 條</b>Ⅰ 共同訴訟人各有續行訴訟之權。<br>Ⅱ 行政法院指定期日者，應通知各共同訴訟人到場。</div>
+    <p>兩句話，兩個考點。第 1 項：不管是普通還是必要共同訴訟，<b>每一個</b>共同訴訟人都有權聲請續行訴訟、聲請指定期日，不必取得其他人同意。第 2 項：法院開庭要通知<b>每一位</b>共同訴訟人，只通知其中一人是程序瑕疵。</p>
+    <div class="note">把 5-1 整節收成一句：第 37 條管「能不能一起告」，第 38 條是原則（各自獨立），第 39 條是例外（合一確定），第 40 條管「程序怎麼一起走」。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲、乙、丙三人分別於 113 年 3 月在臺中市不同地點擺攤，均遭臺中市政府依同一法條各處罰鍰 6,000 元。三人想一起告。可以嗎？訴訟中甲撤回起訴，對乙、丙有無影響？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>同種類原因的多數原告能否共同訴訟；共同訴訟人一人撤回的效力。</dd>
+        <dt>條文</dt><dd>第 37 條第 1 項第 3 款、第 2 項；第 38 條。</dd>
+        <dt>涵攝</dt><dd>三張罰單是三個獨立處分，但事實上與法律上原因屬「同種類」，符合第 37 條第 1 項第 3 款。被告都是臺中市政府，同一行政法院管轄區域，第 2 項的限制也過關。三個處分各自獨立，判決對甲有效、對乙無效並不矛盾，不是「必須合一確定」，屬普通共同訴訟。</dd>
+        <dt>結論</dt><dd>得為共同訴訟人一同起訴。甲撤回起訴，依第 38 條其利害不及於乙、丙，乙、丙的訴訟照常進行。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　甲、乙共有一筆土地，縣政府作成徵收處分。兩人經訴願後共同提起撤銷訴訟。一審敗訴，只有乙在 20 日內提出上訴，甲沒有。另外，乙在訴訟中死亡。各該如何處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>共有人對同一徵收處分的撤銷訴訟是否為必要共同訴訟；一人上訴、一人死亡的效力。</dd>
+        <dt>條文</dt><dd>第 37 條第 1 項第 2 款；第 39 條第 1 款、第 3 款。</dd>
+        <dt>涵攝</dt><dd>徵收處分的對象是這筆共有土地，所有權為甲、乙所共同，屬第 37 條第 1 項第 2 款。處分不可能對甲有效而對乙被撤銷，訴訟標的對兩人必須合一確定，是必要共同訴訟。乙一人上訴是有利於共同訴訟人的行為，依第 39 條第 1 款前段效力及於全體，甲也成為上訴人。乙死亡發生當然停止原因，依第 3 款效力及於全體。</dd>
+        <dt>結論</dt><dd>全案視為甲、乙均已上訴；乙死亡後整個訴訟程序當然停止，待其繼承人承受訴訟後續行。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="D">
+      <div class="stem">1. 依第 37 條第 1 項，下列何者<b>不是</b>條文明定得為共同訴訟人的情形？</div>
+      <label><input type="radio" name="p1q1" value="A">為訴訟標的之行政處分係二以上機關共同為之</label>
+      <label><input type="radio" name="p1q1" value="B">為訴訟標的之權利、義務或法律上利益為其所共同</label>
+      <label><input type="radio" name="p1q1" value="C">為訴訟標的之權利、義務或法律上利益於事實上或法律上有同種類之原因</label>
+      <label><input type="radio" name="p1q1" value="D">共同訴訟人之住所均在同一行政法院管轄區域內</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 37 條第 1 項三款：二以上機關共同作成處分、權利義務共同、同一或同種類原因。住所在同一區域不是要件，第 2 項只是對第 3 款加上「被告所在地同一管轄區域」的限制。" data-diag='{"A":"這是第 37 條第 1 項第 1 款，機關端多數的典型。","B":"這是第 1 項第 2 款，例如共有人一起告。","C":"這是第 1 項第 3 款，同一或同種類原因都算。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">2. 甲在臺北市、乙在高雄市分別受不同機關以同種類原因處罰鍰，二人欲向臺北高等行政法院一同起訴。依第 37 條第 2 項，下列何者正確？</div>
+      <label><input type="radio" name="p1q2" value="A">得共同起訴，因原因同種類即可</label>
+      <label><input type="radio" name="p1q2" value="B">不得共同起訴，因被告機關所在地不在同一行政法院管轄區域內</label>
+      <label><input type="radio" name="p1q2" value="C">不得共同起訴，因原告住所不在同一行政法院管轄區域內</label>
+      <label><input type="radio" name="p1q2" value="D">得共同起訴，但應由原告住所地之法院管轄</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 37 條第 2 項：依第 1 項第 3 款同種類原因行共同訴訟者，以被告之住居所、公務所、機關、主事務所或主營業所所在地在同一行政法院管轄區域內者為限。看的是被告機關的所在地。" data-diag='{"A":"同種類原因只滿足第 1 項第 3 款，還要過第 2 項的被告所在地限制。","C":"第 2 項綁的是被告所在地，不是原告住所。","D":"第 2 項是共同訴訟的限制，不是管轄的分配規定；原告住所地也不是機關為被告時的一般管轄依據。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">3. 甲、乙為必要共同訴訟之共同原告。第一審判決敗訴後，被告機關只對乙提出上訴；同時乙一人向法院表示撤回起訴。依第 39 條，下列何者正確？</div>
+      <label><input type="radio" name="p1q3" value="A">被告對乙的上訴效力不及於甲；乙的撤回對乙生效</label>
+      <label><input type="radio" name="p1q3" value="B">被告對乙的上訴效力及於甲；乙的撤回對全體生效</label>
+      <label><input type="radio" name="p1q3" value="C">被告對乙的上訴效力及於甲；乙的撤回對全體不生效力</label>
+      <label><input type="radio" name="p1q3" value="D">被告對乙的上訴效力不及於甲；乙的撤回對全體不生效力</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 39 條第 2 款：他造對於共同訴訟人中一人之行為，其效力及於全體。第 1 款後段：共同訴訟人中一人之不利益行為，對於全體不生效力。撤回起訴是不利益行為。" data-diag='{"A":"這是第 38 條普通共同訴訟的結果；必要共同訴訟走第 39 條，他造對一人的行為及於全體。","B":"撤回是不利益行為，第 39 條第 1 款後段規定對全體不生效力，不是對全體生效。","D":"第 39 條第 2 款不分有利不利，他造對一人的行為一律及於全體。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 5-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>分得清三種參加：第 41 條必要參加、第 42 條獨立參加、第 44 條輔助參加，各自的要件、發動方式與地位</li>
+      <li>知道第 42 條第 4 項「再行起訴視為參加」與第 47 條「不參加也受判決效力」兩個常考細節</li>
+      <li>說得出參加書狀要寫什麼（第 43 條）、命參加裁定怎麼救濟（第 43 條第 3 項、第 45 條第 3 項）</li>
+      <li>記得第 23 條：依第 41、42 條參加的人是「當事人」，第 44 條的參加人不是</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：第 41 條必要參加，法院「應」命參加</h2>
+    <div class="law"><b class="art">第 41 條</b>訴訟標的對於第三人及當事人一造必須合一確定者，行政法院應以裁定命該第三人參加訴訟。</div>
+    <div class="law"><b class="art">第 46 條</b>第四十一條之參加訴訟，準用第三十九條之規定。</div>
+    <p>「訴訟參加」白話說是把案外的第三人拉進已經進行中的訴訟。第 41 條處理的情形跟 5-1 的必要共同訴訟是同一個邏輯：訴訟標的對第三人與一造<b>必須合一確定</b>，本來就該一起告，結果有人沒被列進來。法院不能放著不管，條文用「<b>應</b>」字：必須以裁定命該第三人參加。</p>
+    <p>參加之後，第 46 條準用第 39 條，所以參加人與其所附隨的一造之間，適用「有利及於全體、不利不生效力」那套規則。這種參加人依第 23 條是<b>訴訟當事人</b>。</p>
+    <div class="law"><b class="art">第 23 條</b>訴訟當事人謂原告、被告及依第四十一條與第四十二條參加訴訟之人。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 42 條獨立參加，保護會被判決打到的第三人</h2>
+    <div class="law"><b class="art">第 42 條</b>Ⅰ 行政法院認為撤銷訴訟之結果，第三人之權利或法律上利益將受損害者，得依職權命其獨立參加訴訟，並得因該第三人之聲請，裁定允許其參加。<br>Ⅱ 前項參加，準用第三十九條第三款規定。參加人並得提出獨立之攻擊或防禦方法。<br>Ⅲ 前二項規定，於其他訴訟準用之。<br>Ⅳ 訴願人已向行政法院提起撤銷訴訟，利害關係人就同一事件再行起訴者，視為第一項之參加。</div>
+    <p>典型場景：鄰人甲告縣政府，要撤銷發給丁的建造執照。丁不是當事人，但建照一旦被撤銷，丁的權利直接受損。第 42 條讓丁進場：法院<b>得</b>依職權命丁參加，丁也<b>得聲請</b>參加由法院裁定允許。注意這裡是「得」，跟第 41 條的「應」不同。</p>
+    <p>為什麼叫「獨立」參加？因為丁跟被告機關的立場不一定一致，第 2 項明文丁<b>得提出獨立之攻擊或防禦方法</b>，不必跟著被告走。第 2 項只準用第 39 條第 3 款（停止效力及於全體），不準用第 1、2 款，所以丁的行為不受「不利益對全體不生效力」那套綁住。第 3 項把這套規則延伸到撤銷訴訟以外的訴訟。</p>
+    <div class="tip">第 4 項是細節題常客。訴願人甲已經提了撤銷訴訟，利害關係人丁就同一事件又來起訴，法院不另開一案，而是把丁的起訴<b>視為第 1 項之參加</b>。考點：是「視為參加」，不是「裁定駁回重複起訴」，也不是「合併審理」。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：第 43 條參加書狀，被駁回了怎麼辦</h2>
+    <div class="law"><b class="art">第 43 條</b>Ⅰ 第三人依前條規定聲請參加訴訟者，應向本訴訟繫屬之行政法院提出參加書狀，表明下列各款事項：<br>一、本訴訟及當事人。<br>二、參加人之權利或法律上利益，因撤銷訴訟之結果將受如何之損害。<br>三、參加訴訟之陳述。<br>Ⅱ 行政法院認前項聲請不合前條規定者，應以裁定駁回之。<br>Ⅲ 關於前項裁定，得為抗告。<br>Ⅳ 駁回參加之裁定未確定前，參加人得為訴訟行為。</div>
+    <p>第三人依第 42 條聲請參加時，要向<b>本訴訟繫屬的法院</b>提參加書狀，寫三件事：這是哪個案子、我會受什麼損害、我要說什麼。法院認為不符第 42 條要件（例如根本不會受損害），裁定駁回；第三人對駁回裁定<b>得抗告</b>。第 4 項很實用：駁回裁定還沒確定前，參加人照樣可以做訴訟行為，不會因為抗告中而卡住。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：第 44 條輔助參加，幫一邊的「助手」</h2>
+    <div class="law"><b class="art">第 44 條</b>Ⅰ 行政法院認其他行政機關有輔助一造之必要者，得命其參加訴訟。<br>Ⅱ 前項行政機關或有利害關係之第三人亦得聲請參加。</div>
+    <div class="law"><b class="art">第 48 條</b>民事訴訟法第五十九條至第六十一條、第六十三條至第六十七條之規定，於第四十四條之參加訴訟準用之。</div>
+    <p>第 44 條的參加人不是來爭自己的權利，而是來<b>幫一造</b>。第 1 項的對象是「其他行政機關」，例如主管法規解釋的上級機關，法院得命其參加；第 2 項放寬到該機關自己聲請，以及<b>有利害關係之第三人</b>聲請。這種參加準用民事訴訟法的從參加規定（第 48 條），參加人地位從屬於被輔助的一造，<b>不是</b>第 23 條的訴訟當事人。</p>
+    <div class="warn">常錯：看到「第三人」就選第 42 條。第 44 條第 2 項的「有利害關係之第三人」也可以聲請參加，差別在要件：第 42 條要「撤銷訴訟之結果將損害其權利或法律上利益」，地位是獨立的當事人；第 44 條只要「有利害關係」、目的是輔助一造，地位是從參加人。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 5：命參加的裁定與判決效力（第 45 條、第 47 條）</h2>
+    <div class="law"><b class="art">第 45 條</b>Ⅰ 命參加之裁定應記載訴訟程度及命參加理由，送達於訴訟當事人。<br>Ⅱ 行政法院為前項裁定前，應命當事人或第三人以書狀或言詞為陳述。<br>Ⅲ 對於命參加訴訟之裁定，不得聲明不服。</div>
+    <div class="law"><b class="art">第 47 條</b>判決對於經行政法院依第四十一條及第四十二條規定，裁定命其參加或許其參加而未為參加者，亦有效力。</div>
+    <p>命參加裁定要寫清楚「案子進行到哪裡」與「為什麼命你參加」，而且裁定前要先讓當事人或第三人陳述意見。對命參加裁定<b>不得聲明不服</b>；對照第 43 條第 3 項，駁回參加聲請的裁定才能抗告。兩個方向的救濟剛好相反，是選擇題最愛的對照組。</p>
+    <p>第 47 條補上最後一塊：法院依第 41、42 條裁定命參加或許可參加後，第三人自己不來，判決對他<b>照樣有效</b>。這跟第 284 條重新審理對照著讀：第 284 條第 1 項救的是「非可歸責於己之事由未參加」的第三人；法院已經命你參加你不來，就不是不可歸責。</p>
+  </div>
+
+  <div class="card">
+    <h2>三種參加比較表</h2>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>第 41 條 必要參加</th><th>第 42 條 獨立參加</th><th>第 44 條 輔助參加</th></tr></thead>
+      <tbody>
+        <tr><th>要件</th><td>訴訟標的對第三人及當事人一造必須合一確定</td><td>撤銷訴訟（其他訴訟準用）之結果，第三人之權利或法律上利益將受損害</td><td>其他行政機關有輔助一造之必要；或有利害關係之第三人</td></tr>
+        <tr><th>發動</th><td>法院<b>應</b>以裁定命參加（職權，無裁量）</td><td>法院<b>得</b>依職權命參加；第三人<b>得聲請</b>，法院裁定允許（§43 書狀）</td><td>法院<b>得</b>命機關參加；機關或利害關係第三人<b>得聲請</b></td></tr>
+        <tr><th>準用第 39 條</th><td>全部準用（§46）</td><td>只準用第 3 款（§42 II）</td><td>不準用；準用民事訴訟法從參加規定（§48）</td></tr>
+        <tr><th>攻擊防禦</th><td>依 §39 第 1 款，有利及於全體、不利不生效力</td><td>得提出<b>獨立</b>之攻擊或防禦方法（§42 II）</td><td>從屬於被輔助之一造</td></tr>
+        <tr><th>是否為當事人</th><td>是（§23）</td><td>是（§23）</td><td>否</td></tr>
+        <tr><th>命參加裁定的救濟</th><td>不得聲明不服（§45 III）</td><td>命參加：不得聲明不服（§45 III）；駁回聲請：得抗告（§43 III）</td><td>不得聲明不服（§45 III）</td></tr>
+        <tr><th>命參加而不參加</th><td>判決仍有效力（§47）</td><td>判決仍有效力（§47）</td><td>§47 未列第 44 條</td></tr>
+        <tr><th>特別規定</th><td>—</td><td>利害關係人再行起訴視為參加（§42 IV）</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　縣政府核發建造執照給丁。鄰人甲經訴願後提起撤銷訴訟。丁想參與訴訟並主張建照合法。丁用哪一條參加？法院駁回丁的聲請，丁能怎麼辦？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>處分受益人在第三人提起的撤銷訴訟中如何參加；駁回參加之救濟。</dd>
+        <dt>條文</dt><dd>第 42 條第 1 項、第 2 項；第 43 條。</dd>
+        <dt>涵攝</dt><dd>建照一旦被撤銷，丁的權利直接受損，符合「撤銷訴訟之結果，第三人之權利或法律上利益將受損害」。丁得依第 42 條第 1 項聲請參加，依第 43 條第 1 項向本訴訟繫屬的法院提出參加書狀，表明本訴訟及當事人、將受如何之損害、參加之陳述。丁與被告縣政府立場未必相同，依第 42 條第 2 項得提出獨立之攻擊防禦方法。</dd>
+        <dt>結論</dt><dd>丁依第 42 條獨立參加。法院駁回其聲請，依第 43 條第 3 項得抗告；依第 4 項，駁回裁定未確定前丁仍得為訴訟行為。法院也可以不等丁聲請，依職權命丁參加，該裁定依第 45 條第 3 項不得聲明不服。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　承上，法院未命丁參加，丁也不知情，判決撤銷建照確定。丁才知道。丁有何救濟？如果法院當初已裁定命丁參加而丁置之不理，結論有無不同？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>撤銷判決對未參加第三人的效力，以及第 47 條與第 284 條的分工。</dd>
+        <dt>條文</dt><dd>第 215 條；第 284 條第 1 項、第 2 項；第 47 條。</dd>
+        <dt>涵攝</dt><dd>撤銷原處分的判決依第 215 條對第三人亦有效力，丁的建照確實被撤銷了。但丁因非可歸責於己之事由未參加訴訟，致不能提出足以影響判決結果之攻擊防禦方法，符合第 284 條第 1 項聲請重新審理的要件，應於知悉確定判決之日起 30 日不變期間內聲請，且不得逾判決確定後 1 年。反之，若法院已依第 42 條裁定命丁參加而丁不參加，依第 47 條判決對丁亦有效力，而且未參加是可歸責於丁自己，不符第 284 條「非可歸責於己」。</dd>
+        <dt>結論</dt><dd>未受通知的丁得聲請重新審理；經命參加而不理的丁，只能接受判決結果。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">4. 行政法院認為撤銷訴訟之結果，第三人之權利將受損害。依第 42 條第 1 項，法院應如何處理？</div>
+      <label><input type="radio" name="p2q1" value="A">應以裁定命該第三人參加訴訟</label>
+      <label><input type="radio" name="p2q1" value="B">得依職權命其獨立參加，並得因其聲請裁定允許參加</label>
+      <label><input type="radio" name="p2q1" value="C">僅得於第三人聲請時裁定允許參加，不得依職權命參加</label>
+      <label><input type="radio" name="p2q1" value="D">應命第三人另行起訴，不得參加</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 42 條第 1 項：得依職權命其獨立參加訴訟，並得因該第三人之聲請，裁定允許其參加。「得」不是「應」，且職權與聲請兩條路都開。" data-diag='{"A":"「應以裁定命參加」是第 41 條必要參加的用語，要件是必須合一確定。","C":"第 42 條第 1 項前段明文法院得依職權命其參加。","D":"第 42 條第 4 項反過來規定：利害關係人再行起訴者，視為參加。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">5. 丁依第 42 條聲請參加，行政法院以裁定駁回。下列何者正確？</div>
+      <label><input type="radio" name="p2q2" value="A">對駁回裁定不得聲明不服</label>
+      <label><input type="radio" name="p2q2" value="B">得抗告，抗告中丁不得為任何訴訟行為</label>
+      <label><input type="radio" name="p2q2" value="C">得抗告，且駁回裁定未確定前丁仍得為訴訟行為</label>
+      <label><input type="radio" name="p2q2" value="D">得提起再審之訴</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 43 條第 3 項：關於駁回參加之裁定，得為抗告。第 4 項：駁回參加之裁定未確定前，參加人得為訴訟行為。" data-diag='{"A":"不得聲明不服的是「命參加」的裁定（第 45 條第 3 項），駁回參加聲請的裁定依第 43 條第 3 項得抗告。","B":"第 43 條第 4 項明文駁回裁定未確定前，參加人得為訴訟行為。","D":"再審是對確定終局判決的救濟，對裁定不服是抗告。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">6. 關於第 44 條的參加，下列敘述何者正確？</div>
+      <label><input type="radio" name="p2q3" value="A">行政法院認其他行政機關有輔助一造之必要者，得命其參加；有利害關係之第三人亦得聲請參加</label>
+      <label><input type="radio" name="p2q3" value="B">參加人依第 23 條為訴訟當事人</label>
+      <label><input type="radio" name="p2q3" value="C">僅行政機關得為第 44 條之參加人，第三人不得聲請</label>
+      <label><input type="radio" name="p2q3" value="D">參加後準用第 39 條之規定</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 44 條第 1 項：認其他行政機關有輔助一造之必要者，得命其參加；第 2 項：前項行政機關或有利害關係之第三人亦得聲請參加。" data-diag='{"B":"第 23 條只把第 41 條與第 42 條的參加人列為當事人，第 44 條的參加人不是。","C":"第 44 條第 2 項明文有利害關係之第三人亦得聲請參加。","D":"準用第 39 條的是第 41 條參加（第 46 條全部準用）與第 42 條參加（只準用第 3 款）；第 44 條參加依第 48 條準用民事訴訟法從參加規定。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 5-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>記得第 49 條的數字與原則：代理人不逾 3 人、複代理人不逾 1 人、以律師為原則、非律師四款要審判長許可</li>
+      <li>看到事件類型與審級，能依第 49 條之 1 第 1 項五款判斷是否強制委任律師，並說出第 3 項、第 4 項、第 6 項的例外</li>
+      <li>說得出未委任律師的後果：原告側第 7 項「命補正、逾期駁回」，被告側第 8 項「得命補正」，第 9 項追認溯及</li>
+      <li>分得清一般代理權與第 51 條特別委任事項，記得第 54 條的 15 日與第 55 條的 2 人</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：第 49 條，誰能當訴訟代理人、能有幾個</h2>
+    <div class="law"><b class="art">第 49 條</b>Ⅰ 當事人得委任代理人為訴訟行為。但每一當事人委任之訴訟代理人不得逾三人。<br>Ⅱ 行政訴訟應以律師為訴訟代理人。非律師具有下列情形之一者，亦得為訴訟代理人：<br>一、稅務行政事件，具備會計師資格。<br>二、專利行政事件，具備專利師資格或依法得為專利代理人。<br>三、當事人為公法人、中央或地方機關、公法上之非法人團體時，其所屬專任人員辦理法制、法務、訴願業務或與訴訟事件相關業務。<br>四、交通裁決事件，原告為自然人時，其配偶、三親等內之血親或二親等內之姻親；原告為法人或非法人團體時，其所屬人員辦理與訴訟事件相關業務。<br>Ⅲ 委任前項之非律師為訴訟代理人者，應得審判長許可。<br>Ⅳ 第二項之非律師為訴訟代理人，審判長許其為本案訴訟行為者，視為已有前項之許可。<br>Ⅴ 前二項之許可，審判長得隨時以裁定撤銷之，並應送達於為訴訟委任之人。<br>Ⅵ 訴訟代理人委任複代理人者，不得逾一人。前四項之規定，於複代理人適用之。</div>
+    <p>「訴訟代理人」是代替當事人做訴訟行為的人，當事人自己仍然是當事人。第 49 條的架構：<b>可以委任，但有上限</b>（每一當事人 3 人）；<b>原則律師</b>，非律師只有四款例外，而且要<b>審判長許可</b>；代理人可以再委任<b>複代理人</b>，上限 1 人。</p>
+    <p>四款非律師各有對應的事件類型：會計師配稅務事件、專利師配專利事件、機關的法制人員配機關自己當當事人的案子、親屬配交通裁決事件。考題常把「稅務事件」跟「專利師」交叉亂配，或把親屬代理擴張到所有事件。</p>
+    <div class="warn">常錯：第 49 條第 2 項第 4 款的親屬代理（配偶、三親等內血親、二親等內姻親）<b>只限交通裁決事件</b>的原告為自然人時。其他事件找親戚當代理人，不在四款之內。</div>
+    <div class="note">第 49 條講的是「誰<b>可以</b>當代理人」。下一張卡的第 49 條之 1 講的是「哪些事件<b>必須</b>找律師」。兩條分開記，才不會把「律師原則」誤讀成「全面強制律師代理」。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 49 條之 1，強制律師代理的五款事件</h2>
+    <div class="law"><b class="art">第 49 條之 1 第 1 項、第 2 項</b>Ⅰ 下列各款事件及其程序進行中所生之其他事件，當事人應委任律師為訴訟代理人：<br>一、高等行政法院管轄之環境保護、土地爭議之第一審通常訴訟程序事件及都市計畫審查程序事件。<br>二、高等行政法院管轄之通常訴訟程序上訴事件。<br>三、向最高行政法院提起之事件。<br>四、適用通常訴訟程序或都市計畫審查程序之再審事件。<br>五、適用通常訴訟程序或都市計畫審查程序之聲請重新審理及其再審事件。<br>Ⅱ 前項情形，不因訴之減縮、一部撤回、變更或程序誤用而受影響。前項第一款之事件範圍由司法院以命令定之。</div>
+    <p>111 年修法把強制律師代理放進來，但<b>不是全面強制</b>。第 1 項用五款圈出範圍，可以用「審級」來記：</p>
+    <div class="flow">
+      <div class="step"><b>第一審</b>只有三種：高等行政法院管轄的環境保護、土地爭議（通常程序），加上都市計畫審查程序事件。一般的撤銷罰鍰、稅捐、公務員事件，第一審不強制。</div>
+      <div class="step"><b>上訴高等行政法院</b>只有「通常訴訟程序」的上訴事件（第 2 款）。簡易程序、交通裁決事件的上訴到高等行政法院，不強制。</div>
+      <div class="step"><b>向最高行政法院提起</b>的事件一律強制（第 3 款），上訴、抗告都算。</div>
+      <div class="step"><b>再審、重新審理</b>只要原事件適用通常程序或都市計畫審查程序，就強制（第 4、5 款）。</div>
+    </div>
+    <p>第 1 項開頭「及其程序進行中所生之其他事件」要注意：本案強制，附帶發生的聲請（例如停止執行、保全證據）跟著強制。第 2 項則堵住規避路線：原告把訴之聲明縮小、撤回一部、變更，或法院發現程序用錯了，都<b>不影響</b>原本的強制代理。</p>
+    <div class="tip">國考用法：題目給「罰鍰 200 萬元之撤銷訴訟，第一審在高等行政法院」然後問要不要律師。答案是不用，因為第 1 款只列環保、土地爭議與都市計畫，不是「所有高等行政法院第一審」。同一案上訴到最高行政法院就要（第 3 款）。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：例外與替代方案（第 49 條之 1 第 3 項至第 6 項、第 49 條之 2、第 49 條之 3）</h2>
+    <div class="law"><b class="art">第 49 條之 1 第 3 項至第 6 項</b>Ⅲ 第一項情形，符合下列各款之一者，當事人得不委任律師為訴訟代理人：<br>一、當事人或其代表人、管理人、法定代理人具備法官、檢察官、律師資格或為教育部審定合格之大學或獨立學院公法學教授、副教授。<br>二、稅務行政事件，當事人或其代表人、管理人、法定代理人具備前條第二項第一款規定之資格。<br>三、專利行政事件，當事人或其代表人、管理人、法定代理人具備前條第二項第二款規定之資格。<br>Ⅳ 第一項各款事件，非律師具有下列情形之一，經本案之行政法院認為適當者，亦得為訴訟代理人：<br>一、當事人之配偶、三親等內之血親、二親等內之姻親具備律師資格。<br>二、符合前條第二項第一款、第二款或第三款規定。<br>Ⅴ 前二項情形，應於提起或委任時釋明之。<br>Ⅵ 第一項規定，於下列各款事件不適用之：<br>一、聲請訴訟救助及其抗告。<br>二、聲請選任律師為訴訟代理人。<br>三、聲請核定律師酬金。</div>
+    <p>三層例外，性質不同。<b>第 3 項</b>是「本人自己夠格，不用請律師」：當事人（或其代表人、管理人、法定代理人）是法官、檢察官、律師或公法學教授、副教授；稅務事件有會計師資格；專利事件有專利師資格。<b>第 4 項</b>是「找非律師代理，但要法院認為適當」：具律師資格的配偶或近親，或第 49 條第 2 項前三款的人（會計師、專利師、機關法制人員）。兩者都要在提起或委任時<b>釋明</b>（第 5 項）。</p>
+    <p><b>第 6 項</b>是三件跟「請律師」本身有關的程序事件：聲請訴訟救助及其抗告、聲請選任律師、聲請核定律師酬金。這些事件不適用強制代理，道理很直接：還沒有律師才來聲請，不能要求先有律師。</p>
+    <div class="law"><b class="art">第 49 條之 2</b>Ⅰ 前條第一項事件，訴訟代理人得偕同當事人於期日到場，經審判長許可後，當事人得以言詞為陳述。<br>Ⅱ 前項情形，當事人得依法自為下列訴訟行為：<br>一、自認。<br>二、成立和解或調解。<br>三、撤回起訴或聲請。<br>四、撤回上訴或抗告。</div>
+    <div class="law"><b class="art">第 49 條之 3</b>Ⅰ 第四十九條之一第一項事件，當事人無資力委任訴訟代理人者，得依訴訟救助之規定，聲請行政法院為其選任律師為訴訟代理人。<br>Ⅱ 當事人提起上訴或抗告依前項規定聲請者，原行政法院應將訴訟卷宗送交上級審行政法院。<br>Ⅲ 第一項選任律師為訴訟代理人之辦法，由司法院參酌法務部及全國律師聯合會等意見定之。</div>
+    <p>第 49 條之 2 回答「強制代理後，當事人本人就不能講話了嗎」：律師可以帶著當事人到庭，經審判長許可當事人得以言詞陳述；而且<b>自認、和解調解、撤回起訴或聲請、撤回上訴或抗告</b>這四件處分權的事，當事人可以自己做。第 49 條之 3 回答「沒錢請律師怎麼辦」：依訴訟救助的規定聲請法院選任律師。無資力的判斷標準見第 101 條。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：沒委任律師會怎樣（第 49 條之 1 第 7 項至第 9 項）</h2>
+    <div class="law"><b class="art">第 49 條之 1 第 7 項至第 9 項</b>Ⅶ 原告、上訴人、聲請人或抗告人未依第一項至第四項規定委任訴訟代理人，或雖依第四項規定委任，行政法院認為不適當者，應先定期間命補正。逾期未補正，亦未依第四十九條之三為聲請者，應以裁定駁回之。<br>Ⅷ 被告、被上訴人、相對人或依第四十一條及第四十二條參加訴訟之人未依第一項至第四項規定委任訴訟代理人，或雖依第四項規定委任，本案之行政法院認為不適當者，審判長得先定期間命補正。<br>Ⅸ 當事人依前二項規定補正者，其訴訟行為經訴訟代理人追認，溯及於行為時發生效力；逾期補正者，自追認時起發生效力。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>誰沒委任</th><th>法院怎麼做</th><th>最後結果</th></tr></thead>
+      <tbody>
+        <tr><td>原告、上訴人、聲請人、抗告人（發動程序的一方）</td><td><b>應</b>先定期間命補正（第 7 項）</td><td>逾期未補正、也沒依第 49 條之 3 聲請選任律師：<b>裁定駁回</b></td></tr>
+        <tr><td>被告、被上訴人、相對人、依第 41、42 條參加之人</td><td>審判長<b>得</b>先定期間命補正（第 8 項）</td><td>條文沒有駁回的制裁，程序照走</td></tr>
+        <tr><td>兩者補正後</td><td>代理人追認先前的訴訟行為（第 9 項）</td><td>期間內補正：<b>溯及</b>行為時生效；逾期補正：自追認時起生效</td></tr>
+      </tbody>
+    </table></div>
+    <p>第 7 項與第 8 項的差別是考點：發動程序的一方不補正會被駁回，被動的一方不會。另一個細節：第 7 項的駁回有兩個條件要同時成立，「逾期未補正」加上「亦未依第 49 條之 3 聲請」，只要當事人有去聲請選任律師，就不能駁回。</p>
+  </div>
+
+  <div class="card">
+    <h2>小工具：這件案子要不要強制委任律師</h2>
+    <p class="small muted">選事件類型、審級與當事人地位，勾選可能適用的例外，看第 49 條之 1 怎麼說。第 1 款環保、土地爭議的事件範圍由司法院以命令定之，工具以條文文字為準。</p>
+    <div class="toolbox">
+      <fieldset><legend>事件類型</legend>
+        <select id="laType">
+          <option value="env">環境保護事件（通常訴訟程序，高等行政法院第一審）</option>
+          <option value="land">土地爭議事件（通常訴訟程序，高等行政法院第一審）</option>
+          <option value="plan">都市計畫審查程序事件</option>
+          <option value="tax">稅務行政事件（通常訴訟程序）</option>
+          <option value="patent">專利行政事件（通常訴訟程序）</option>
+          <option value="normal">其他通常訴訟程序事件（例：撤銷 200 萬元罰鍰）</option>
+          <option value="simple">簡易訴訟程序事件</option>
+          <option value="traffic">交通裁決事件</option>
+          <option value="detain">收容聲請事件</option>
+          <option value="aid">聲請訴訟救助／聲請選任律師／聲請核定律師酬金</option>
+        </select>
+      </fieldset>
+      <fieldset><legend>審級或程序</legend>
+        <select id="laLevel">
+          <option value="first">第一審</option>
+          <option value="appealHigh">上訴（或抗告）至高等行政法院</option>
+          <option value="appealSup">上訴或抗告至最高行政法院</option>
+          <option value="retrial">再審</option>
+          <option value="rehear">聲請重新審理</option>
+        </select>
+      </fieldset>
+      <fieldset><legend>當事人地位</legend>
+        <label><input type="radio" name="laRole" value="active" checked>原告、上訴人、聲請人或抗告人</label>
+        <label><input type="radio" name="laRole" value="passive">被告、被上訴人、相對人或第 41、42 條參加人</label>
+      </fieldset>
+      <fieldset><legend>例外情形（可複選）</legend>
+        <label><input type="checkbox" id="laSelf">當事人本人（或代表人、管理人、法定代理人）具法官、檢察官、律師資格或為公法學教授、副教授</label>
+        <label><input type="checkbox" id="laCpa">當事人本人具會計師資格</label>
+        <label><input type="checkbox" id="laPat">當事人本人具專利師資格</label>
+        <label><input type="checkbox" id="laKin">配偶或三親等內血親、二親等內姻親具律師資格，願意代理</label>
+        <label><input type="checkbox" id="laStaff">當事人為機關，擬由所屬辦理法制、法務、訴願業務之專任人員代理</label>
+        <label><input type="checkbox" id="laPoor">無資力委任律師</label>
+      </fieldset>
+      <button class="btn" id="laGo">判斷</button>
+      <div class="result" id="laRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 5：委任書、代理權範圍與終止（第 50 條至第 54 條）</h2>
+    <div class="law"><b class="art">第 50 條</b>訴訟代理人應於最初為訴訟行為時提出委任書。但由當事人以言詞委任經行政法院書記官記明筆錄者，不在此限。</div>
+    <div class="law"><b class="art">第 51 條</b>Ⅰ 訴訟代理人就其受委任之事件，有為一切訴訟行為之權。但捨棄、認諾、撤回、和解、提起反訴、上訴或再審之訴及選任代理人，非受特別委任不得為之。<br>Ⅱ 關於強制執行之行為或領取所爭物，準用前項但書之規定。<br>Ⅲ 如於第一項之代理權加以限制者，應於前條之委任書或筆錄內表明。</div>
+    <p>代理權的範圍是「概括授權加上例外保留」。原則上代理人可以做一切訴訟行為；但第 51 條第 1 項但書列的事項，因為會直接處分當事人的實體權利或結束訴訟，要<b>特別委任</b>：捨棄、認諾、撤回、和解、提起反訴、上訴或再審之訴、選任代理人。第 2 項再加兩項：強制執行行為、領取所爭物。要限制代理權，必須寫在委任書或筆錄裡（第 3 項），沒寫就視為沒有限制。</p>
+    <div class="law"><b class="art">第 52 條</b>Ⅰ 訴訟代理人有二人以上者，均得單獨代理當事人。<br>Ⅱ 違反前項之規定而為委任者，仍得單獨代理之。</div>
+    <div class="law"><b class="art">第 53 條</b>訴訟代理權不因本人死亡、破產或訴訟能力喪失而消滅。法定代理有變更或機關經裁撤、改組者，亦同。</div>
+    <div class="law"><b class="art">第 54 條</b>Ⅰ 訴訟委任之終止，應以書狀提出於行政法院，由行政法院送達於他造。<br>Ⅱ 由訴訟代理人終止委任者，自為終止之意思表示之日起十五日內，仍應為防衛本人權利所必要之行為。</div>
+    <p>三個「穩定程序」的規定。第 52 條：代理人兩個以上<b>各自單獨</b>代理，就算當事人約定要共同代理，法院也不理會。第 53 條：本人死亡、破產、喪失訴訟能力、法定代理變更、機關裁撤改組，代理權都<b>不消滅</b>，案子不會因此卡住。第 54 條：終止委任要用書狀向法院提出，由法院送達他造；代理人自己辭任的，<b>15 日</b>內還要做防衛本人權利所必要的行為，不能說走就走。</p>
+    <div class="warn">常錯：把第 53 條反過來記成「本人死亡代理權消滅」。民法上的意定代理原則上因本人死亡而消滅，但訴訟代理權為了程序安定特別規定不消滅。另一個：第 54 條第 2 項的 15 日只適用於<b>代理人</b>終止委任，當事人自己終止委任不適用。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 6：輔佐人（第 55 條、第 56 條）</h2>
+    <div class="law"><b class="art">第 55 條</b>Ⅰ 當事人或訴訟代理人經審判長之許可，得於期日偕同輔佐人到場。但人數不得逾二人。<br>Ⅱ 審判長認為必要時亦得命當事人或訴訟代理人偕同輔佐人到場。<br>Ⅲ 前二項之輔佐人，審判長認為不適當時，得撤銷其許可或禁止其續為訴訟行為。</div>
+    <div class="law"><b class="art">第 56 條</b>民事訴訟法第七十二條、第七十五條及第七十七條之規定，於本節準用之。</div>
+    <p>「輔佐人」不是代理人，是陪當事人或代理人到庭、在旁邊補充說明的人（例如懂技術的工程師、懂帳的會計）。所以輔佐人只在<b>期日</b>出現、要<b>偕同</b>當事人或代理人到場、要經<b>審判長許可</b>、人數不逾 <b>2 人</b>。審判長也可以主動命當事人帶輔佐人來，認為不適當時可以撤銷許可。</p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>訴訟代理人</th><th>輔佐人</th></tr></thead>
+      <tbody>
+        <tr><th>條文</th><td>第 49 條至第 54 條</td><td>第 55 條</td></tr>
+        <tr><th>人數上限</th><td>每一當事人 3 人；複代理人 1 人</td><td>2 人</td></tr>
+        <tr><th>資格</th><td>律師為原則；非律師四款經審判長許可</td><td>條文無資格限制，但審判長認為不適當得撤銷許可</td></tr>
+        <tr><th>能否單獨行動</th><td>能，代理當事人為訴訟行為</td><td>不能，須偕同當事人或代理人到場</td></tr>
+        <tr><th>需不需要委任書</th><td>要（第 50 條）</td><td>不要，但要審判長許可</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲公司不服環保局所處 120 萬元罰鍰，經訴願後向地方行政法院起訴，由公司法務（非律師）代理，一審敗訴。甲公司欲上訴高等行政法院，仍由法務上訴。法院應如何處理？若甲公司是被上訴人，結論有無不同？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>通常訴訟程序上訴事件的強制律師代理；原告側與被告側未委任的不同效果。</dd>
+        <dt>條文</dt><dd>第 49 條之 1 第 1 項第 2 款、第 4 項、第 7 項、第 8 項；第 49 條之 3。</dd>
+        <dt>涵攝</dt><dd>120 萬元罰鍰超過 50 萬元、未逾 150 萬元，第一審在地方行政法院但適用通常訴訟程序；第一審不在第 49 條之 1 第 1 項第 1 款的範圍（第 1 款限於高等行政法院管轄之環保、土地爭議事件），不強制。上訴高等行政法院則屬第 2 款「高等行政法院管轄之通常訴訟程序上訴事件」，應委任律師。甲公司是私法人，公司法務不符第 49 條第 2 項第 3 款（限公法人、機關、公法上非法人團體的專任人員），也不符第 49 條之 1 第 4 項各款。</dd>
+        <dt>結論</dt><dd>甲公司為上訴人，依第 7 項法院應先定期間命補正；逾期未補正、亦未依第 49 條之 3 聲請選任律師者，以裁定駁回上訴。若甲公司是被上訴人，依第 8 項審判長「得」定期間命補正，不補正也沒有駁回的效果。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙委任律師丙為訴訟代理人，委任書未載任何限制。訴訟中丙未經乙同意與被告機關成立和解；另丙於 5 月 1 日以書狀終止委任，5 月 10 日被告機關提出新證據，丙未為任何回應。乙主張和解無效、丙應負責。有無理由？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>和解是否需特別委任；代理人終止委任後的義務。</dd>
+        <dt>條文</dt><dd>第 51 條第 1 項但書、第 3 項；第 54 條第 2 項。</dd>
+        <dt>涵攝</dt><dd>和解是第 51 條第 1 項但書列舉的事項，非受特別委任不得為之。委任書沒有記載特別委任，丙無權成立和解，乙的主張有理由。第 54 條第 2 項：由訴訟代理人終止委任者，自為終止之意思表示之日起 15 日內，仍應為防衛本人權利所必要之行為。5 月 10 日仍在 15 日內，丙對新證據置之不理，違反此一義務。</dd>
+        <dt>結論</dt><dd>丙成立和解逾越代理權；丙在終止委任後 15 日內仍負防衛義務。至於丙對乙的賠償責任，屬委任契約的實體問題，不在行政訴訟法範圍。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">7. 甲就同一事件委任律師 A、B、C、D 四人為訴訟代理人，A 另委任 E、F 為複代理人。依第 49 條，下列何者正確？</div>
+      <label><input type="radio" name="p3q1" value="A">訴訟代理人與複代理人人數均無限制</label>
+      <label><input type="radio" name="p3q1" value="B">每一當事人之訴訟代理人不得逾三人，複代理人不得逾一人，甲與 A 的委任均有違反</label>
+      <label><input type="radio" name="p3q1" value="C">訴訟代理人不得逾三人，但複代理人人數不受限制</label>
+      <label><input type="radio" name="p3q1" value="D">訴訟代理人不得逾二人，複代理人不得逾一人</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 49 條第 1 項但書：每一當事人委任之訴訟代理人不得逾三人。第 6 項：訴訟代理人委任複代理人者，不得逾一人。" data-diag='{"A":"第 49 條第 1 項但書與第 6 項都有人數上限。","C":"第 49 條第 6 項前段明定複代理人不得逾一人。","D":"訴訟代理人的上限是三人（第 49 條第 1 項但書），二人是把輔佐人的上限（第 55 條）記混了。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">8. 下列何種情形，依第 49 條之 1 第 1 項，當事人<b>應</b>委任律師為訴訟代理人？</div>
+      <label><input type="radio" name="p3q2" value="A">不服 30 萬元罰鍰之簡易訴訟程序事件，上訴至高等行政法院</label>
+      <label><input type="radio" name="p3q2" value="B">不服 200 萬元罰鍰之撤銷訴訟，第一審在高等行政法院</label>
+      <label><input type="radio" name="p3q2" value="C">不服 100 萬元罰鍰之通常訴訟程序事件，自地方行政法院上訴至高等行政法院</label>
+      <label><input type="radio" name="p3q2" value="D">交通裁決事件上訴至高等行政法院</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 49 條之 1 第 1 項第 2 款：高等行政法院管轄之通常訴訟程序上訴事件。100 萬元罰鍰適用通常程序、由地方行政法院第一審，上訴高等行政法院時落入第 2 款。" data-diag='{"A":"第 2 款限於「通常訴訟程序」的上訴事件，簡易程序上訴不在其中。","B":"第 1 款只列高等行政法院管轄之環境保護、土地爭議及都市計畫審查事件，一般罰鍰事件的第一審不強制。","D":"交通裁決事件不適用通常訴訟程序，其上訴不在第 2 款範圍；第 49 條第 2 項第 4 款還特別允許親屬代理。"}'></div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">9. 乙委任律師為訴訟代理人，委任書未載特別委任。下列何種行為，該律師<b>無須</b>特別委任即得為之？</div>
+      <label><input type="radio" name="p3q3" value="A">與被告機關成立和解</label>
+      <label><input type="radio" name="p3q3" value="B">對第一審判決提起上訴</label>
+      <label><input type="radio" name="p3q3" value="C">撤回起訴</label>
+      <label><input type="radio" name="p3q3" value="D">聲請調查證據</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 51 條第 1 項：訴訟代理人有為一切訴訟行為之權，但捨棄、認諾、撤回、和解、提起反訴、上訴或再審之訴及選任代理人，非受特別委任不得為之。聲請調查證據是一般訴訟行為。" data-diag='{"A":"和解在第 51 條第 1 項但書之列，要特別委任。","B":"提起上訴在第 51 條第 1 項但書之列，要特別委任。","C":"撤回在第 51 條第 1 項但書之列，要特別委任。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>章末測驗（選擇 10 題 + 實例 2 題）</h2>
+    <p>選擇題全部作答後按「交卷」，10 題答對 8 題過關。實例題先自己寫，再展開參考答案對照，自評後按「我寫到了」或「要再加強」。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="A">
+      <div class="stem">1. 某處分由內政部與財政部共同作成，甲欲一併對兩機關提起撤銷訴訟。其依據為：</div>
+      <label><input type="radio" name="qz1" value="A">第 37 條第 1 項第 1 款，為訴訟標的之行政處分係二以上機關共同為之</label>
+      <label><input type="radio" name="qz1" value="B">第 37 條第 1 項第 2 款，權利義務為其所共同</label>
+      <label><input type="radio" name="qz1" value="C">第 37 條第 1 項第 3 款，有同種類之原因</label>
+      <label><input type="radio" name="qz1" value="D">第 24 條，應以上級機關為唯一被告</label>
+      <div class="fb" data-exp="第 37 條第 1 項第 1 款就是為處分由二以上機關共同作成的情形設計的，兩機關得一同被訴。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">2. 甲、乙依第 37 條第 1 項第 3 款就各自受處之罰鍰共同起訴。甲於言詞辯論時自認違規事實。對乙的效力為：</div>
+      <label><input type="radio" name="qz2" value="A">效力及於乙，因共同訴訟人行為效力及於全體</label>
+      <label><input type="radio" name="qz2" value="B">自認為不利益行為，對全體不生效力，甲亦不受拘束</label>
+      <label><input type="radio" name="qz2" value="C">利害不及於乙，甲自己仍受自認拘束</label>
+      <label><input type="radio" name="qz2" value="D">法院應命乙補正是否同意自認</label>
+      <div class="fb" data-exp="同種類罰鍰各自獨立，不是必須合一確定，屬普通共同訴訟。第 38 條：一人之行為，其利害不及於他共同訴訟人。甲自己的自認對甲有效。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">3. 必要共同訴訟之共同原告甲、乙中，乙受破產宣告而生訴訟當然停止之原因。依第 39 條：</div>
+      <label><input type="radio" name="qz3" value="A">僅乙部分停止，甲部分續行</label>
+      <label><input type="radio" name="qz3" value="B">當然停止之效力及於全體</label>
+      <label><input type="radio" name="qz3" value="C">法院應裁定駁回乙之訴</label>
+      <label><input type="radio" name="qz3" value="D">由甲決定是否停止</label>
+      <div class="fb" data-exp="第 39 條第 3 款：共同訴訟人中之一人，生有訴訟當然停止或裁定停止之原因者，其效力及於全體。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. 關於第 40 條，下列何者正確？</div>
+      <label><input type="radio" name="qz4" value="A">僅必要共同訴訟之共同訴訟人有續行訴訟之權</label>
+      <label><input type="radio" name="qz4" value="B">續行訴訟須經全體共同訴訟人同意</label>
+      <label><input type="radio" name="qz4" value="C">法院指定期日，通知共同訴訟人中一人即生效力</label>
+      <label><input type="radio" name="qz4" value="D">共同訴訟人各有續行訴訟之權；法院指定期日應通知各共同訴訟人到場</label>
+      <div class="fb" data-exp="第 40 條第 1 項：共同訴訟人各有續行訴訟之權。第 2 項：行政法院指定期日者，應通知各共同訴訟人到場。不分普通或必要。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">5. 訴訟標的對於第三人及當事人一造必須合一確定。依第 41 條，行政法院：</div>
+      <label><input type="radio" name="qz5" value="A">應以裁定命該第三人參加訴訟</label>
+      <label><input type="radio" name="qz5" value="B">得依職權命其獨立參加訴訟</label>
+      <label><input type="radio" name="qz5" value="C">應以裁定駁回原告之訴</label>
+      <label><input type="radio" name="qz5" value="D">應命原告追加該第三人為被告</label>
+      <div class="fb" data-exp="第 41 條用「應」字：行政法院應以裁定命該第三人參加訴訟。「得依職權命其獨立參加」是第 42 條的用語。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">6. 訴願人甲已就某處分提起撤銷訴訟，利害關係人丁就同一事件又向行政法院起訴。依第 42 條第 4 項：</div>
+      <label><input type="radio" name="qz6" value="A">法院應以重複起訴為由裁定駁回丁之訴</label>
+      <label><input type="radio" name="qz6" value="B">丁之起訴視為第 42 條第 1 項之參加</label>
+      <label><input type="radio" name="qz6" value="C">法院應將兩案合併為共同訴訟</label>
+      <label><input type="radio" name="qz6" value="D">丁之起訴視為第 44 條之輔助參加</label>
+      <div class="fb" data-exp="第 42 條第 4 項：訴願人已向行政法院提起撤銷訴訟，利害關係人就同一事件再行起訴者，視為第一項之參加。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">7. 關於訴訟參加的裁定與效力，下列何者正確？</div>
+      <label><input type="radio" name="qz7" value="A">對命參加之裁定得抗告</label>
+      <label><input type="radio" name="qz7" value="B">判決對經裁定命參加而未參加者不生效力</label>
+      <label><input type="radio" name="qz7" value="C">命參加之裁定應記載訴訟程度及命參加理由，對該裁定不得聲明不服</label>
+      <label><input type="radio" name="qz7" value="D">法院為命參加裁定前，無須命當事人或第三人陳述</label>
+      <div class="fb" data-exp="第 45 條第 1 項、第 3 項。裁定前應命當事人或第三人陳述（第 2 項）；判決對經命參加而未參加者亦有效力（第 47 條）。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">8. 下列何種事件，依第 49 條之 1 當事人<b>應</b>委任律師為訴訟代理人？</div>
+      <label><input type="radio" name="qz8" value="A">聲請訴訟救助之抗告</label>
+      <label><input type="radio" name="qz8" value="B">聲請選任律師為訴訟代理人</label>
+      <label><input type="radio" name="qz8" value="C">聲請核定律師酬金</label>
+      <label><input type="radio" name="qz8" value="D">對高等行政法院通常訴訟程序第一審判決向最高行政法院提起上訴</label>
+      <div class="fb" data-exp="第 49 條之 1 第 1 項第 3 款：向最高行政法院提起之事件。A、B、C 三者正是第 6 項列舉不適用強制代理的事件。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">9. 上訴人於強制律師代理事件未委任律師。依第 49 條之 1 第 7 項，法院應：</div>
+      <label><input type="radio" name="qz9" value="A">逕以裁定駁回上訴</label>
+      <label><input type="radio" name="qz9" value="B">先定期間命補正；逾期未補正亦未依第 49 條之 3 聲請選任律師者，裁定駁回</label>
+      <label><input type="radio" name="qz9" value="C">得定期間命補正，不補正亦不得駁回</label>
+      <label><input type="radio" name="qz9" value="D">依職權為其選任律師</label>
+      <div class="fb" data-exp="第 49 條之 1 第 7 項。「得命補正、無駁回效果」是第 8 項對被告側的規定。選任律師須當事人依第 49 條之 3 聲請。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">10. 關於訴訟代理人與輔佐人，下列敘述何者正確？</div>
+      <label><input type="radio" name="qz10" value="A">訴訟代理人有二人以上者，應共同代理當事人</label>
+      <label><input type="radio" name="qz10" value="B">訴訟代理權因本人死亡而消滅</label>
+      <label><input type="radio" name="qz10" value="C">由訴訟代理人終止委任者，自為終止之意思表示之日起十五日內，仍應為防衛本人權利所必要之行為</label>
+      <label><input type="radio" name="qz10" value="D">偕同到場之輔佐人人數不得逾三人</label>
+      <div class="fb" data-exp="第 54 條第 2 項。第 52 條第 1 項：均得單獨代理；第 53 條：不因本人死亡而消滅；第 55 條第 1 項但書：輔佐人不得逾二人。"></div>
+    </div>
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>實例題（自評）</h2>
+    <div class="essay" data-id="e1">
+      <div class="stem">實例一　甲、乙、丙三人共有一筆農地，縣政府於 113 年 2 月作成徵收處分。甲、乙經訴願後於 113 年 6 月共同提起撤銷訴訟，丙未起訴。訴訟中乙向法院具狀撤回起訴。<br>問：(1) 甲、乙共同起訴的依據為何？屬普通或必要共同訴訟？(2) 乙撤回起訴的效力如何？(3) 法院對未起訴的丙應如何處理？若丙經法院裁定命參加而不參加，判決對丙有無效力？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>爭點</dt><dd>共有人對同一徵收處分提起撤銷訴訟的共同訴訟類型；必要共同訴訟中一人撤回的效力；未起訴共有人的訴訟參加與判決效力。</dd>
+          <dt>條文</dt><dd>第 37 條第 1 項第 2 款；第 39 條第 1 款；第 41 條、第 46 條、第 47 條；第 45 條。</dd>
+          <dt>涵攝</dt><dd>(1) 徵收處分以共有農地為對象，所有權為甲、乙、丙所共同，符合第 37 條第 1 項第 2 款。同一徵收處分不可能對甲撤銷、對乙維持，訴訟標的對共有人必須合一確定，屬必要共同訴訟，適用第 39 條。(2) 撤回起訴是不利益於共同訴訟人的行為，依第 39 條第 1 款後段對全體不生效力，乙仍為原告。(3) 訴訟標的對第三人丙及原告一造必須合一確定，法院依第 41 條應以裁定命丙參加，裁定前依第 45 條第 2 項應命當事人或丙陳述；依第 46 條準用第 39 條。丙經命參加而不參加，依第 47 條判決對丙亦有效力。</dd>
+          <dt>結論</dt><dd>甲、乙為必要共同訴訟；乙的撤回不生效力；法院應命丙參加，判決對未參加的丙仍有效力。</dd>
+          <dt>加分</dt><dd>可指出必要共同訴訟與第 41 條必要參加是同一個「合一確定」概念的兩面：起訴時就一起告是前者，漏了人再補進來是後者，立法目的都是避免對同一處分出現矛盾裁判，呼應第 1 條「增進司法功能」。學說上對於共有人是否一律構成必要共同訴訟有不同看法，可點到為止。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+    <div class="essay" data-id="e2">
+      <div class="stem">實例二　丁公司向高等行政法院提起都市計畫審查訴訟，請求宣告某都市計畫無效。丁公司由其法務主管戊（非律師，但戊之配偶己為執業律師）具狀起訴。另有鄰地所有人庚，認為該都市計畫若被宣告無效將損及其權益，具狀聲請參加訴訟。<br>問：(1) 本件是否應委任律師？戊能否代理？己能否代理？丁公司若無資力，有何途徑？(2) 丁公司未依規定委任，法院應如何處理？(3) 庚應以何種方式參加？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>爭點</dt><dd>都市計畫審查程序事件的強制律師代理、例外、未委任的效果，以及第三人在此類訴訟的參加方式。</dd>
+          <dt>條文</dt><dd>第 49 條之 1 第 1 項第 1 款、第 3 項、第 4 項、第 5 項、第 7 項；第 49 條第 2 項第 3 款；第 49 條之 3；第 42 條第 1 項、第 3 項；第 43 條。</dd>
+          <dt>涵攝</dt><dd>(1) 都市計畫審查程序事件列在第 49 條之 1 第 1 項第 1 款，丁公司應委任律師。戊是私法人的法務人員，不符第 49 條第 2 項第 3 款（限公法人、機關、公法上非法人團體的專任人員），也不符第 49 條之 1 第 3 項、第 4 項。己雖具律師資格，但第 4 項第 1 款要求的是「當事人」的配偶，己是戊的配偶而非丁公司的配偶，不能走第 4 項；己要代理就是以律師身分受委任，依第 1 項本文即可。丁公司無資力者，依第 49 條之 3 第 1 項得依訴訟救助之規定聲請法院選任律師，此聲請本身依第 6 項第 2 款不適用強制代理。(2) 丁公司為原告，依第 7 項法院應先定期間命補正；逾期未補正且未依第 49 條之 3 聲請者，以裁定駁回。補正後戊先前的起訴行為經律師追認，依第 9 項溯及於行為時生效。(3) 庚主張宣告無效的結果將損害其權利或法律上利益，屬第 42 條第 1 項的情形，依第 3 項於其他訴訟準用，應依第 43 條第 1 項提出參加書狀聲請獨立參加；庚是第 42 條參加人，依第 8 項未委任律師時審判長得命補正。</dd>
+          <dt>結論</dt><dd>本件強制律師代理；戊不得代理，己得以律師身分受委任；無資力得聲請選任律師；未補正者裁定駁回；庚依第 42 條、第 43 條聲請獨立參加。</dd>
+          <dt>加分</dt><dd>可說明第 49 條之 1 選擇以「事件類型加審級」劃定範圍的理由：環保、土地、都市計畫事件專業度高且影響範圍大，上訴審與最高行政法院則偏重法律爭點，由律師代理有助於爭點整理，與第 1 條「增進司法功能」相呼應；同時以第 49 條之 3 的選任律師制度平衡「保障人民權益」。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card">
+    <h2>本課引用條文</h2>
+    <p class="small muted">點開看原文。只收錄本課講到的條文；全文請見全國法規資料庫。</p>
+    <div class="arts">
+      <details><summary>第 1 條 <span>宗旨</span></summary><div class="txt">行政訴訟以保障人民權益，確保國家行政權之合法行使，增進司法功能為宗旨。</div></details>
+      <details><summary>第 23 條 <span>訴訟當事人</span></summary><div class="txt">訴訟當事人謂原告、被告及依第四十一條與第四十二條參加訴訟之人。</div></details>
+      <details><summary>第 24 條 <span>被告機關</span></summary><div class="txt">經訴願程序之行政訴訟，其被告為下列機關：
+一、駁回訴願時之原處分機關。
+二、撤銷或變更原處分時，為撤銷或變更之機關。</div></details>
+      <details><summary>第 37 條 <span>共同訴訟之要件</span></summary><div class="txt">Ⅰ 二人以上於下列各款情形，得為共同訴訟人，一同起訴或一同被訴：
+一、為訴訟標的之行政處分係二以上機關共同為之者。
+二、為訴訟標的之權利、義務或法律上利益，為其所共同者。
+三、為訴訟標的之權利、義務或法律上利益，於事實上或法律上有同一或同種類之原因者。
+Ⅱ 依前項第三款同種類之事實上或法律上原因行共同訴訟者，以被告之住居所、公務所、機關、主事務所或主營業所所在地在同一行政法院管轄區域內者為限。</div></details>
+      <details><summary>第 38 條 <span>普通共同訴訟</span></summary><div class="txt">共同訴訟中，一人之行為或他造對於共同訴訟人中一人之行為及關於其一人所生之事項，除別有規定外，其利害不及於他共同訴訟人。</div></details>
+      <details><summary>第 39 條 <span>必要共同訴訟</span></summary><div class="txt">訴訟標的對於共同訴訟之各人，必須合一確定者，適用下列各款之規定：
+一、共同訴訟人中一人之行為有利益於共同訴訟人者，其效力及於全體；不利益者，對於全體不生效力。
+二、他造對於共同訴訟人中一人之行為，其效力及於全體。
+三、共同訴訟人中之一人，生有訴訟當然停止或裁定停止之原因者，其當然停止或裁定停止之效力及於全體。</div></details>
+      <details><summary>第 40 條 <span>續行訴訟權、通知到場</span></summary><div class="txt">Ⅰ 共同訴訟人各有續行訴訟之權。
+Ⅱ 行政法院指定期日者，應通知各共同訴訟人到場。</div></details>
+      <details><summary>第 41 條 <span>必要參加</span></summary><div class="txt">訴訟標的對於第三人及當事人一造必須合一確定者，行政法院應以裁定命該第三人參加訴訟。</div></details>
+      <details><summary>第 42 條 <span>獨立參加</span></summary><div class="txt">Ⅰ 行政法院認為撤銷訴訟之結果，第三人之權利或法律上利益將受損害者，得依職權命其獨立參加訴訟，並得因該第三人之聲請，裁定允許其參加。
+Ⅱ 前項參加，準用第三十九條第三款規定。參加人並得提出獨立之攻擊或防禦方法。
+Ⅲ 前二項規定，於其他訴訟準用之。
+Ⅳ 訴願人已向行政法院提起撤銷訴訟，利害關係人就同一事件再行起訴者，視為第一項之參加。</div></details>
+      <details><summary>第 43 條 <span>參加書狀、駁回與抗告</span></summary><div class="txt">Ⅰ 第三人依前條規定聲請參加訴訟者，應向本訴訟繫屬之行政法院提出參加書狀，表明下列各款事項：
+一、本訴訟及當事人。
+二、參加人之權利或法律上利益，因撤銷訴訟之結果將受如何之損害。
+三、參加訴訟之陳述。
+Ⅱ 行政法院認前項聲請不合前條規定者，應以裁定駁回之。
+Ⅲ 關於前項裁定，得為抗告。
+Ⅳ 駁回參加之裁定未確定前，參加人得為訴訟行為。</div></details>
+      <details><summary>第 44 條 <span>輔助參加</span></summary><div class="txt">Ⅰ 行政法院認其他行政機關有輔助一造之必要者，得命其參加訴訟。
+Ⅱ 前項行政機關或有利害關係之第三人亦得聲請參加。</div></details>
+      <details><summary>第 45 條 <span>命參加之裁定</span></summary><div class="txt">Ⅰ 命參加之裁定應記載訴訟程度及命參加理由，送達於訴訟當事人。
+Ⅱ 行政法院為前項裁定前，應命當事人或第三人以書狀或言詞為陳述。
+Ⅲ 對於命參加訴訟之裁定，不得聲明不服。</div></details>
+      <details><summary>第 46 條 <span>必要參加準用第 39 條</span></summary><div class="txt">第四十一條之參加訴訟，準用第三十九條之規定。</div></details>
+      <details><summary>第 47 條 <span>判決對未參加者之效力</span></summary><div class="txt">判決對於經行政法院依第四十一條及第四十二條規定，裁定命其參加或許其參加而未為參加者，亦有效力。</div></details>
+      <details><summary>第 48 條 <span>輔助參加準用民事訴訟法</span></summary><div class="txt">民事訴訟法第五十九條至第六十一條、第六十三條至第六十七條之規定，於第四十四條之參加訴訟準用之。</div></details>
+      <details><summary>第 49 條 <span>訴訟代理人之資格與人數</span></summary><div class="txt">Ⅰ 當事人得委任代理人為訴訟行為。但每一當事人委任之訴訟代理人不得逾三人。
+Ⅱ 行政訴訟應以律師為訴訟代理人。非律師具有下列情形之一者，亦得為訴訟代理人：
+一、稅務行政事件，具備會計師資格。
+二、專利行政事件，具備專利師資格或依法得為專利代理人。
+三、當事人為公法人、中央或地方機關、公法上之非法人團體時，其所屬專任人員辦理法制、法務、訴願業務或與訴訟事件相關業務。
+四、交通裁決事件，原告為自然人時，其配偶、三親等內之血親或二親等內之姻親；原告為法人或非法人團體時，其所屬人員辦理與訴訟事件相關業務。
+Ⅲ 委任前項之非律師為訴訟代理人者，應得審判長許可。
+Ⅳ 第二項之非律師為訴訟代理人，審判長許其為本案訴訟行為者，視為已有前項之許可。
+Ⅴ 前二項之許可，審判長得隨時以裁定撤銷之，並應送達於為訴訟委任之人。
+Ⅵ 訴訟代理人委任複代理人者，不得逾一人。前四項之規定，於複代理人適用之。</div></details>
+      <details><summary>第 49 條之 1 <span>強制律師代理</span></summary><div class="txt">Ⅰ 下列各款事件及其程序進行中所生之其他事件，當事人應委任律師為訴訟代理人：
+一、高等行政法院管轄之環境保護、土地爭議之第一審通常訴訟程序事件及都市計畫審查程序事件。
+二、高等行政法院管轄之通常訴訟程序上訴事件。
+三、向最高行政法院提起之事件。
+四、適用通常訴訟程序或都市計畫審查程序之再審事件。
+五、適用通常訴訟程序或都市計畫審查程序之聲請重新審理及其再審事件。
+Ⅱ 前項情形，不因訴之減縮、一部撤回、變更或程序誤用而受影響。前項第一款之事件範圍由司法院以命令定之。
+Ⅲ 第一項情形，符合下列各款之一者，當事人得不委任律師為訴訟代理人：
+一、當事人或其代表人、管理人、法定代理人具備法官、檢察官、律師資格或為教育部審定合格之大學或獨立學院公法學教授、副教授。
+二、稅務行政事件，當事人或其代表人、管理人、法定代理人具備前條第二項第一款規定之資格。
+三、專利行政事件，當事人或其代表人、管理人、法定代理人具備前條第二項第二款規定之資格。
+Ⅳ 第一項各款事件，非律師具有下列情形之一，經本案之行政法院認為適當者，亦得為訴訟代理人：
+一、當事人之配偶、三親等內之血親、二親等內之姻親具備律師資格。
+二、符合前條第二項第一款、第二款或第三款規定。
+Ⅴ 前二項情形，應於提起或委任時釋明之。
+Ⅵ 第一項規定，於下列各款事件不適用之：
+一、聲請訴訟救助及其抗告。
+二、聲請選任律師為訴訟代理人。
+三、聲請核定律師酬金。
+Ⅶ 原告、上訴人、聲請人或抗告人未依第一項至第四項規定委任訴訟代理人，或雖依第四項規定委任，行政法院認為不適當者，應先定期間命補正。逾期未補正，亦未依第四十九條之三為聲請者，應以裁定駁回之。
+Ⅷ 被告、被上訴人、相對人或依第四十一條及第四十二條參加訴訟之人未依第一項至第四項規定委任訴訟代理人，或雖依第四項規定委任，本案之行政法院認為不適當者，審判長得先定期間命補正。
+Ⅸ 當事人依前二項規定補正者，其訴訟行為經訴訟代理人追認，溯及於行為時發生效力；逾期補正者，自追認時起發生效力。</div></details>
+      <details><summary>第 49 條之 2 <span>當事人偕同到場與自為訴訟行為</span></summary><div class="txt">Ⅰ 前條第一項事件，訴訟代理人得偕同當事人於期日到場，經審判長許可後，當事人得以言詞為陳述。
+Ⅱ 前項情形，當事人得依法自為下列訴訟行為：
+一、自認。
+二、成立和解或調解。
+三、撤回起訴或聲請。
+四、撤回上訴或抗告。</div></details>
+      <details><summary>第 49 條之 3 <span>無資力聲請選任律師</span></summary><div class="txt">Ⅰ 第四十九條之一第一項事件，當事人無資力委任訴訟代理人者，得依訴訟救助之規定，聲請行政法院為其選任律師為訴訟代理人。
+Ⅱ 當事人提起上訴或抗告依前項規定聲請者，原行政法院應將訴訟卷宗送交上級審行政法院。
+Ⅲ 第一項選任律師為訴訟代理人之辦法，由司法院參酌法務部及全國律師聯合會等意見定之。</div></details>
+      <details><summary>第 50 條 <span>委任書</span></summary><div class="txt">訴訟代理人應於最初為訴訟行為時提出委任書。但由當事人以言詞委任經行政法院書記官記明筆錄者，不在此限。</div></details>
+      <details><summary>第 51 條 <span>代理權範圍與特別委任</span></summary><div class="txt">Ⅰ 訴訟代理人就其受委任之事件，有為一切訴訟行為之權。但捨棄、認諾、撤回、和解、提起反訴、上訴或再審之訴及選任代理人，非受特別委任不得為之。
+Ⅱ 關於強制執行之行為或領取所爭物，準用前項但書之規定。
+Ⅲ 如於第一項之代理權加以限制者，應於前條之委任書或筆錄內表明。</div></details>
+      <details><summary>第 52 條 <span>單獨代理</span></summary><div class="txt">Ⅰ 訴訟代理人有二人以上者，均得單獨代理當事人。
+Ⅱ 違反前項之規定而為委任者，仍得單獨代理之。</div></details>
+      <details><summary>第 53 條 <span>代理權不消滅</span></summary><div class="txt">訴訟代理權不因本人死亡、破產或訴訟能力喪失而消滅。法定代理有變更或機關經裁撤、改組者，亦同。</div></details>
+      <details><summary>第 54 條 <span>終止委任</span></summary><div class="txt">Ⅰ 訴訟委任之終止，應以書狀提出於行政法院，由行政法院送達於他造。
+Ⅱ 由訴訟代理人終止委任者，自為終止之意思表示之日起十五日內，仍應為防衛本人權利所必要之行為。</div></details>
+      <details><summary>第 55 條 <span>輔佐人</span></summary><div class="txt">Ⅰ 當事人或訴訟代理人經審判長之許可，得於期日偕同輔佐人到場。但人數不得逾二人。
+Ⅱ 審判長認為必要時亦得命當事人或訴訟代理人偕同輔佐人到場。
+Ⅲ 前二項之輔佐人，審判長認為不適當時，得撤銷其許可或禁止其續為訴訟行為。</div></details>
+      <details><summary>第 56 條 <span>準用民事訴訟法</span></summary><div class="txt">民事訴訟法第七十二條、第七十五條及第七十七條之規定，於本節準用之。</div></details>
+      <details><summary>第 101 條 <span>訴訟救助之要件</span></summary><div class="txt">當事人無資力支出訴訟費用者，行政法院應依聲請，以裁定准予訴訟救助。但顯無勝訴之望者，不在此限。</div></details>
+      <details><summary>第 215 條 <span>撤銷判決對第三人之效力</span></summary><div class="txt">撤銷或變更原處分或決定之判決，對第三人亦有效力。</div></details>
+      <details><summary>第 237 條之 19 <span>都市計畫審查之專屬管轄</span></summary><div class="txt">前條訴訟，專屬都市計畫區所在地之高等行政法院管轄。</div></details>
+      <details><summary>第 263 條之 4 第 1 項 <span>統一見解之移送</span></summary><div class="txt">Ⅰ 高等行政法院受理上訴事件，認有確保裁判見解統一之必要者，應以裁定敘明理由移送最高行政法院裁判之。</div></details>
+      <details><summary>第 284 條第 1 項、第 2 項 <span>重新審理</span></summary><div class="txt">Ⅰ 因撤銷或變更原處分或決定之判決，而權利受損害之第三人，如非可歸責於己之事由，未參加訴訟，致不能提出足以影響判決結果之攻擊或防禦方法者，得對於確定終局判決聲請重新審理。
+Ⅱ 前項聲請，應於知悉確定判決之日起三十日之不變期間內為之。但自判決確定之日起已逾一年者，不得聲請。</div></details>
+    </div>
+  </div>
+  <div class="card">
+    <h2>下一課</h2>
+    <p>第 6 課「起訴：書狀、送達、期間、費用與起訴要件」進入訴訟程序本身：書狀怎麼寫、送達怎麼算、2 個月的不變期間怎麼數，以及第 107 條十一款駁回事由。<a href="06_起訴程序.html">前往第 6 課</a>　<a href="00_總覽地圖.html">回總覽地圖</a></p>
+  </div>
+</section>
+
+<footer>行政訴訟法自學教材 · 第 5 課 多數當事人與代理<br>依民國 111 年 6 月 22 日修正條文自行編寫，題目為原創；條文以<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030154" target="_blank" rel="noopener">全國法規資料庫</a>為準。</footer>
+</div>
+
+<script>
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const LESSON_ID = "05", CH = "行政訴訟法 05 多數當事人與代理";
+const PROG_KEY = "xzss_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與數學教材共用 study_log_v1，供「學習紀錄」頁讀取）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+let pracCount = 0, pracOk = 0;
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="s4"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok }); pracCount++; if(ok) pracOk++;
+  });
+});
+
+// ===== 章末測驗交卷 =====
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0; const wrong = [];
+  qs.forEach((q,i)=>{
+    const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+    else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+  });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  writeProg({ quiz: { score, total: qs.length } });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+  else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="s4"]').classList.add('done'); }
+  else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+  else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 實例題自評 =====
+document.querySelectorAll('.essay').forEach(es=>{
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 本課專屬工具：這件案子要不要強制委任律師（第 49 條之 1）=====
+(function(){
+  const type = document.getElementById('laType'), level = document.getElementById('laLevel'), res = document.getElementById('laRes');
+  const TYPE_NAME = { env:'環境保護事件', land:'土地爭議事件', plan:'都市計畫審查程序事件', tax:'稅務行政事件', patent:'專利行政事件', normal:'通常訴訟程序事件', simple:'簡易訴訟程序事件', traffic:'交通裁決事件', detain:'收容聲請事件', aid:'聲請訴訟救助、選任律師或核定律師酬金' };
+  const ORDINARY = ['env','land','plan','tax','patent','normal']; // 適用通常訴訟程序或都市計畫審查程序
+  function chk(id){ const el = document.getElementById(id); return el && el.checked; }
+  document.getElementById('laGo').addEventListener('click',()=>{
+    const t = type.value, lv = level.value;
+    const role = (document.querySelector('input[name="laRole"]:checked')||{}).value || 'active';
+    let must = null, basis = '', notes = [];
+    if(t === 'aid'){
+      must = false;
+      basis = '第 49 條之 1 第 6 項：聲請訴訟救助及其抗告、聲請選任律師為訴訟代理人、聲請核定律師酬金，不適用第 1 項強制律師代理的規定。理由很直接：這些程序就是為了「還沒有律師」的人設計的。';
+    } else if(lv === 'appealSup'){
+      must = true;
+      basis = '第 49 條之 1 第 1 項第 3 款：向最高行政法院提起之事件。不分事件類型，上訴、抗告都算。';
+      if(t==='simple'||t==='traffic'||t==='detain') notes.push('提醒：簡易程序、交通裁決、收容聲請事件的上訴審或抗告審原則上在高等行政法院終結，一般不會「向最高行政法院提起」；只在高等行政法院依第 263 條之 4 裁定移送最高行政法院等例外情形才會到最高行政法院。');
+    } else if(lv === 'first'){
+      if(t==='env'||t==='land'){ must = true; basis = '第 49 條之 1 第 1 項第 1 款：高等行政法院管轄之環境保護、土地爭議之第一審通常訴訟程序事件。注意第 2 項後段：第 1 款的事件範圍由司法院以命令定之，個案要對照該命令。'; }
+      else if(t==='plan'){ must = true; basis = '第 49 條之 1 第 1 項第 1 款：都市計畫審查程序事件。'; }
+      else { must = false; basis = '第一審只有三種事件強制律師代理：高等行政法院管轄的環境保護、土地爭議之通常訴訟程序事件，以及都市計畫審查程序事件（第 49 條之 1 第 1 項第 1 款）。'+TYPE_NAME[t]+'的第一審不在其中，不強制。仍須注意第 49 條第 2 項：代理人以律師為原則，非律師只有四款且應得審判長許可。'; }
+    } else if(lv === 'appealHigh'){
+      if(t==='plan'){ must = true; basis = '都市計畫審查程序事件以高等行政法院為第一審（第 237 條之 19 專屬管轄），對其判決的上訴是向最高行政法院提起，屬第 49 條之 1 第 1 項第 3 款。'; }
+      else if(ORDINARY.includes(t)){ must = true; basis = '第 49 條之 1 第 1 項第 2 款：高等行政法院管轄之通常訴訟程序上訴事件。地方行政法院以通常程序審理的第一審判決，上訴到高等行政法院時落入本款。'; }
+      else { must = false; basis = '第 49 條之 1 第 1 項第 2 款限於「通常訴訟程序」的上訴事件。'+TYPE_NAME[t]+'的上訴或抗告到高等行政法院，不在五款之內，不強制。'; if(t==='traffic') notes.push('交通裁決事件還有第 49 條第 2 項第 4 款：原告為自然人時，配偶、三親等內之血親或二親等內之姻親得經審判長許可為訴訟代理人。'); }
+    } else if(lv === 'retrial'){
+      if(ORDINARY.includes(t)){ must = true; basis = '第 49 條之 1 第 1 項第 4 款：適用通常訴訟程序或都市計畫審查程序之再審事件。'; }
+      else { must = false; basis = '第 49 條之 1 第 1 項第 4 款只涵蓋適用通常訴訟程序或都市計畫審查程序的再審事件。'+TYPE_NAME[t]+'的再審不在其中。'; }
+    } else {
+      if(ORDINARY.includes(t)){ must = true; basis = '第 49 條之 1 第 1 項第 5 款：適用通常訴訟程序或都市計畫審查程序之聲請重新審理及其再審事件。'; }
+      else { must = false; basis = '第 49 條之 1 第 1 項第 5 款只涵蓋適用通常訴訟程序或都市計畫審查程序的聲請重新審理事件。'+TYPE_NAME[t]+'不在其中。'; }
+    }
+    let html = '<h3>'+(must ? '應委任律師為訴訟代理人' : '不強制委任律師')+'　<span class="pill '+(must?'warn':'green')+'">'+TYPE_NAME[t]+'</span></h3>';
+    html += '<p class="small" style="margin:0 0 .4em"><b>依據：</b>'+basis+'</p>';
+    if(must){
+      html += '<p class="small" style="margin:0 0 .4em"><b>第 2 項：</b>訴之減縮、一部撤回、變更或程序誤用，都不影響強制代理。本案程序進行中所生之其他事件（第 1 項本文）也一併強制。</p>';
+      const ex = [];
+      if(chk('laSelf')) ex.push('第 3 項第 1 款：當事人或其代表人、管理人、法定代理人具法官、檢察官、律師資格或為公法學教授、副教授，<b>得不委任律師</b>。');
+      if(chk('laCpa')) ex.push(t==='tax' ? '第 3 項第 2 款：稅務行政事件，當事人本人具會計師資格，<b>得不委任律師</b>。' : '會計師資格只在<b>稅務行政事件</b>才構成第 3 項第 2 款的例外，本件不是稅務事件，不能援用。');
+      if(chk('laPat')) ex.push(t==='patent' ? '第 3 項第 3 款：專利行政事件，當事人本人具專利師資格，<b>得不委任律師</b>。' : '專利師資格只在<b>專利行政事件</b>才構成第 3 項第 3 款的例外，本件不是專利事件，不能援用。');
+      if(chk('laKin')) ex.push('第 4 項第 1 款：當事人之配偶、三親等內之血親、二親等內之姻親具備律師資格者，<b>經本案之行政法院認為適當</b>，亦得為訴訟代理人。注意是「法院認為適當」，不是當然可以。');
+      if(chk('laStaff')) ex.push('第 4 項第 2 款（符合第 49 條第 2 項第 3 款）：機關所屬辦理法制、法務、訴願業務之專任人員，<b>經本案之行政法院認為適當</b>，亦得為訴訟代理人。');
+      if(chk('laPoor')) ex.push('第 49 條之 3 第 1 項：無資力委任訴訟代理人者，得依訴訟救助之規定聲請法院選任律師。提起上訴或抗告而聲請者，原法院應將卷宗送交上級審（第 2 項）。這個聲請本身依第 6 項第 2 款不適用強制代理。');
+      if(ex.length){ html += '<p class="small" style="margin:0 0 .2em"><b>你勾的例外：</b></p><ul class="small" style="margin:0 0 .4em">'+ex.map(x=>'<li>'+x+'</li>').join('')+'</ul>'; if(chk('laSelf')||chk('laCpa')||chk('laPat')||chk('laKin')||chk('laStaff')) html += '<p class="small" style="margin:0 0 .4em"><b>第 5 項：</b>第 3 項、第 4 項的情形，應於提起或委任時釋明。</p>'; }
+      else html += '<p class="small muted" style="margin:0 0 .4em">沒有勾任何例外。可回頭勾選第 3 項（本人資格）、第 4 項（經法院認為適當之非律師）或第 49 條之 3（無資力）看結果。</p>';
+      if(role==='active') html += '<p class="small" style="margin:0 0 .4em"><b>未委任的效果（第 7 項）：</b>你是原告、上訴人、聲請人或抗告人，法院<b>應</b>先定期間命補正；逾期未補正，<b>且</b>未依第 49 條之 3 聲請選任律師者，以裁定駁回。</p>';
+      else html += '<p class="small" style="margin:0 0 .4em"><b>未委任的效果（第 8 項）：</b>你是被告、被上訴人、相對人或第 41、42 條參加人，審判長<b>得</b>先定期間命補正；條文沒有駁回的制裁。</p>';
+      html += '<p class="small" style="margin:0 0 .4em"><b>補正後（第 9 項）：</b>先前的訴訟行為經訴訟代理人追認，溯及於行為時生效；逾期補正者，自追認時起生效。</p>';
+      html += '<p class="small muted" style="margin:0"><b>第 49 條之 2：</b>律師得偕同當事人到場，經審判長許可當事人得以言詞陳述；自認、成立和解或調解、撤回起訴或聲請、撤回上訴或抗告，當事人得自為之。</p>';
+    } else {
+      html += '<p class="small muted" style="margin:0">不強制不代表隨便誰都能代理：第 49 條第 1 項每一當事人代理人不逾三人；第 2 項以律師為原則，非律師四款（會計師配稅務、專利師配專利、機關法制人員、交通裁決事件的親屬）應得審判長許可。</p>';
+    }
+    res.innerHTML = html;
+    res.classList.add('on');
+    logEv({ type:"tool", q:"mandatory-lawyer", k:t+':'+lv+':'+role });
+  });
+})();
+</script>
+</body>
+</html>

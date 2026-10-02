@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>行政訴訟法｜第 4 課 管轄與當事人</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F4F6F3; --card:#FFFFFF;
+  --ink:#1C2A30; --ink-2:#4B5A62; --ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --law:#5B3A8C; --law-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F; --card:#1D262B;
+    --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+    --rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --law:#B9A0E3; --law-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F; --card:#1D262B;
+  --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+  --rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --law:#B9A0E3; --law-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--blue);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+
+/* hero */
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--law);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--law-soft);color:var(--law);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+/* tabs */
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit}
+nav.tabs button:hover{border-color:var(--blue);color:var(--ink)}
+nav.tabs button.active{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--blue-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--law-soft);border-left:4px solid var(--law);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--law);display:block;margin-bottom:.2em}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.law{background:var(--law-soft);border-color:transparent;color:var(--law)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+
+/* flow / structure diagrams */
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 160px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--blue)}
+.courts{display:grid;grid-template-columns:1fr;gap:8px;margin:.6rem 0 1rem}
+.court{border:1px solid var(--rule);border-radius:10px;padding:.7rem .9rem;background:var(--paper);display:grid;grid-template-columns:7.5em 1fr;gap:.3rem .8rem;align-items:start}
+.court .lv{font-weight:700;color:var(--law)}
+.court .what{font-size:.92rem}
+.court.top{border-color:var(--law)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+/* examples */
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+.step4{display:grid;grid-template-columns:5em 1fr;gap:.25rem .7rem;font-size:.95rem;margin:.3rem 0 .8rem}
+.step4 dt{color:var(--law);font-weight:700}
+.step4 dd{margin:0}
+
+/* interactive tool */
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox select,.toolbox input[type=number]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--law)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+
+/* practice & quiz */
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--law);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+/* 條文速查 */
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">行政訴訟法 · 第 4 課</span>
+  <h1>管轄與當事人</h1>
+  <p>四節加章末測驗。前三課決定了「告什麼、提哪一種訴」，這一課決定「向哪一個法院告、誰可以當原告被告」。管轄看第 13 條到第 21 條，當事人看第 22 條到第 36 條。這兩塊在考題裡常被包在同一個案例裡，一次問你法院、被告、還有誰能出面。</p>
+  <p class="ver">依民國 111 年 6 月 22 日修正條文編寫（多數條文自 112 年 8 月 15 日施行）。自學筆記，非官方；條文以全國法規資料庫為準。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">4-1 土地管轄與特別管轄</button>
+  <button data-t="s2">4-2 指定管轄、管轄恆定與法官迴避</button>
+  <button data-t="s3">4-3 當事人能力、訴訟能力與被告機關</button>
+  <button data-t="s4">4-4 選定當事人與公益社團訴訟</button>
+  <button data-t="s5">章末測驗</button>
+  <button data-t="s6">條文速查</button>
+</nav>
+
+<!-- ═══════════ 4-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>分得清審判權、事務管轄、土地管轄三層問題，知道這一課只處理第三層</li>
+      <li>看到被告是公法人、機關、私法人、外國法人或自然人，說得出第 13、14 條對應哪一項</li>
+      <li>記得第 14 條第 2 項的四層順位：住所、居所、最後住所、中央政府所在地</li>
+      <li>分得清第 15 條第 1 項的「專屬」與第 15 條第 2 項到第 15 條之 3 的「得由」</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：管轄是第三層問題</h2>
+    <p>一件案子要進到某個行政法院的某一庭，要過三關。第一關<b>審判權</b>：是不是公法爭議（第 2 條，第 1 課）。第二關<b>事務管轄</b>：第一審在高等行政訴訟庭還是地方行政訴訟庭（第 104 條之 1、第 229 條，第 1 課已講）。第三關<b>土地管轄</b>：全國三個高等行政法院，到底是臺北、臺中還是高雄那一個。這一節講第三關。</p>
+    <div class="flow">
+      <div class="step"><b>審判權</b>第 2 條。不屬行政訴訟審判權而不能移送者，依第 107 條第 1 項第 1 款裁定駁回。</div>
+      <div class="step"><b>事務管轄</b>第 104 條之 1、第 229 條。看程序種類與金額（150 萬、50 萬）。<a href="01_導論與法院架構.html#s2">回第 1 課 1-2</a>。</div>
+      <div class="step"><b>土地管轄</b>第 13 條至第 15 條之 3。看被告是誰、事件是什麼。無管轄權又不能指定、不能移送者，第 107 條第 1 項第 2 款裁定駁回。</div>
+    </div>
+    <div class="note">土地管轄條文裡「行政法院」是指哪一個？依第 3 條之 1，高等行政法院與地方行政法院都是「行政法院」。所以第 13 條說「由該機關所在地之行政法院管轄」，是先依土地管轄找到那一個高等行政法院，再依事務管轄決定進高等庭或地方庭。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 13 條，被告是「組織」時看所在地</h2>
+    <div class="law"><b class="art">第 13 條</b>Ⅰ 對於公法人之訴訟，由其公務所所在地之行政法院管轄。其以公法人之機關為被告時，由該機關所在地之行政法院管轄。<br>Ⅱ 對於私法人或其他得為訴訟當事人之團體之訴訟，由其主事務所或主營業所所在地之行政法院管轄。<br>Ⅲ 對於外國法人或其他得為訴訟當事人之團體之訴訟，由其在中華民國之主事務所或主營業所所在地之行政法院管轄。</div>
+    <p>行政訴訟的被告多半是機關，所以第 13 條第 1 項後段是最常用的一句：<b>以機關為被告，由該機關所在地的行政法院管轄</b>。這叫「以原就被」：原告要到被告的地盤去告。公法人本身被告（例如告某縣、某鄉而不是縣政府、鄉公所）則看公務所所在地。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>被告</th><th>管轄法院</th><th>條文</th></tr></thead>
+      <tbody>
+        <tr><td>公法人（國家、地方自治團體、農田水利會等）</td><td>公務所所在地</td><td>第 13 條第 1 項前段</td></tr>
+        <tr><td>公法人之機關（部、署、局、縣政府、鄉公所）</td><td>該機關所在地</td><td>第 13 條第 1 項後段</td></tr>
+        <tr><td>私法人、非法人團體（公司、協會、受託行使公權力之團體）</td><td>主事務所或主營業所所在地</td><td>第 13 條第 2 項</td></tr>
+        <tr><td>外國法人、外國團體</td><td>在中華民國之主事務所或主營業所所在地</td><td>第 13 條第 3 項</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：寫成「原告住所地」。第 13、14 條都是看<b>被告</b>。原告住所地會變成管轄依據的，是第 15 條之 2（保險事件之被保險人、受益人）、第 15 條之 3（原住民）與第 237 條之 2（交通裁決），而且都是「得由」，不是唯一。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：第 14 條，被告是自然人時的四層順位</h2>
+    <div class="law"><b class="art">第 14 條</b>Ⅰ 前條以外之訴訟，由被告住所地之行政法院管轄，其住所地之行政法院不能行使職權者，由其居所地之行政法院管轄。<br>Ⅱ 被告在中華民國現無住所或住所不明者，以其在中華民國之居所，視為其住所；無居所或居所不明者，以其在中華民國最後之住所，視為其住所；無最後住所者，以中央政府所在地，視為其最後住所地。<br>Ⅲ 訴訟事實發生於被告居所地者，得由其居所地之行政法院管轄。</div>
+    <p>什麼時候被告是自然人？機關告人民的時候（例如依第 8 條請求人民返還溢領的補助款），或人民告受託行使公權力的個人（第 25 條）。順位是：<b>住所 → 居所 → 最後住所 → 中央政府所在地</b>，前一個找不到才往下。</p>
+    <p>第 3 項是補充的「得由」：如果<b>訴訟事實發生在被告的居所地</b>，居所地法院也有管轄權，原告可以選。注意條文限定在「被告居所地」，不是任何訴訟事實發生地都可以。</p>
+    <div class="tip">國考用法：題目給「被告在國內無住所、有居所、事實發生在居所地」這種堆疊條件時，先用第 2 項把「視為住所」確定下來，再看第 3 項有沒有多出一個可選的法院。兩項結論可能指向同一個法院，那就只有一個答案。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：第 15 條到第 15 條之 3，一個專屬，其餘「得由」</h2>
+    <div class="law"><b class="art">第 15 條</b>Ⅰ 因不動產徵收、徵用或撥用之訴訟，專屬不動產所在地之行政法院管轄。<br>Ⅱ 除前項情形外，其他有關不動產之公法上權利或法律關係涉訟者，得由不動產所在地之行政法院管轄。</div>
+    <div class="law"><b class="art">第 15 條之 1</b>關於公務員職務關係之訴訟，得由公務員職務所在地之行政法院管轄。</div>
+    <div class="law"><b class="art">第 15 條之 2</b>Ⅰ 因公法上之保險事件涉訟者，得由為原告之被保險人、受益人之住居所地或被保險人從事職業活動所在地之行政法院管轄。<br>Ⅱ 前項訴訟事件於投保單位為原告時，得由其主事務所或主營業所所在地之行政法院管轄。</div>
+    <div class="law"><b class="art">第 15 條之 3</b>因原住民、原住民族部落之公法上權利或法律關係涉訟者，除兩造均為原住民或原住民族部落外，得由為原告之原住民住居所地或經核定部落所在地之行政法院管轄。</div>
+    <p><b>專屬管轄</b>只有一處：不動產的徵收、徵用、撥用（第 15 條第 1 項）。專屬的意思是排除第 13、14 條，只有不動產所在地法院能審，告錯了要移送。其他四種是<b>特別管轄</b>，用的字都是「得由」：多一個法院可以選，但第 13、14 條的法院也還在，由原告挑。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>事件</th><th>性質</th><th>多出來的法院</th><th>條文</th></tr></thead>
+      <tbody>
+        <tr><td>不動產徵收、徵用、撥用</td><td><span class="pill warn">專屬</span></td><td>不動產所在地（唯一）</td><td>第 15 條第 1 項</td></tr>
+        <tr><td>其他不動產公法關係（建照、地目變更、容積）</td><td><span class="pill green">得由</span></td><td>不動產所在地</td><td>第 15 條第 2 項</td></tr>
+        <tr><td>公務員職務關係（考績、調職、俸給）</td><td><span class="pill green">得由</span></td><td>公務員職務所在地</td><td>第 15 條之 1</td></tr>
+        <tr><td>公法上保險（勞保、健保、國保給付）</td><td><span class="pill green">得由</span></td><td>原告被保險人、受益人之住居所地或從事職業活動所在地；投保單位為原告時其主事務所、主營業所所在地</td><td>第 15 條之 2</td></tr>
+        <tr><td>原住民、部落之公法關係</td><td><span class="pill green">得由</span></td><td>原告原住民住居所地或經核定部落所在地。兩造均為原住民或部落時不適用</td><td>第 15 條之 3</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯一：把第 15 條第 2 項的「其他不動產公法關係」也寫成專屬。只有第 1 項三種（徵收、徵用、撥用）才專屬。常錯二：第 15 條之 3 的但書：兩造都是原住民或部落時，回到一般規定，不適用這條。</div>
+  </div>
+
+  <div class="card">
+    <h2>本課工具：管轄法院查找器</h2>
+    <p class="small muted">選被告或事件類型，必要時再選細項，看適用條文、管轄法院與性質（普通、特別、專屬）。工具只處理土地管轄；進哪一庭請用第 1 課的工具。</p>
+    <div class="toolbox">
+      <fieldset><legend>被告／事件類型</legend>
+        <select id="mjType" style="max-width:100%">
+          <option value="pub">公法人本身為被告（國家、縣市）</option>
+          <option value="organ">機關為被告（部、署、局、縣政府）</option>
+          <option value="priv">私法人、非法人團體為被告</option>
+          <option value="foreign">外國法人、外國團體為被告</option>
+          <option value="natural">自然人為被告</option>
+          <option value="realty">不動產事件</option>
+          <option value="officer">公務員職務關係事件</option>
+          <option value="insure">公法上保險事件</option>
+          <option value="indig">原住民、部落事件</option>
+          <option value="special">本法別有規定（收容、交通、都計）</option>
+        </select>
+      </fieldset>
+      <fieldset id="mjSubBox" style="display:none"><legend id="mjSubLegend">細項</legend><div id="mjSub"></div></fieldset>
+      <button class="btn" id="mjGo">查管轄</button>
+      <div class="result" id="mjRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲住臺北市，在臺中市有一筆土地。臺中市政府核定徵收該土地，甲經訴願駁回後，向臺北高等行政法院提起撤銷訴訟。管轄是否正確？若爭執的是臺中市政府撤銷該土地建築執照的處分，答案有無不同？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>不動產徵收事件是專屬管轄還是特別管轄；專屬與第 13 條的關係。</dd>
+        <dt>條文</dt><dd>第 15 條第 1 項：因不動產徵收、徵用或撥用之訴訟，專屬不動產所在地之行政法院管轄。第 15 條第 2 項：其他有關不動產之公法上權利或法律關係涉訟者，得由不動產所在地之行政法院管轄。第 13 條第 1 項後段：以機關為被告，由該機關所在地之行政法院管轄。</dd>
+        <dt>涵攝</dt><dd>徵收屬第 15 條第 1 項，專屬土地所在地（臺中市）的行政法院，排除第 13 條，也與原告住所地無關；臺北高等行政法院無管轄權。若是撤銷建照處分，屬第 15 條第 2 項「其他不動產公法關係」，不動產所在地法院只是「得由」，第 13 條第 1 項後段被告機關所在地（臺中市）的法院仍有管轄權；本件兩者都指向臺中。</dd>
+        <dt>結論</dt><dd>兩種情形臺北高等行政法院都無管轄權，但理由不同：徵收是專屬排除，建照是兩個可選法院剛好都在臺中。法院應依第 18 條準用民事訴訟法關於移送的規定裁定移送，而非逕行駁回（第 107 條第 1 項第 2 款只在不能指定、不能移送時才駁回）。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙是在花蓮工作的勞工，住所在臺東，向設於臺北的勞工保險局申請職業災害給付被駁回，訴願駁回後起訴。乙可以向哪些行政法院起訴？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>公法上保險事件的特別管轄與普通管轄競合。</dd>
+        <dt>條文</dt><dd>第 13 條第 1 項後段（被告機關所在地）；第 15 條之 2 第 1 項（得由為原告之被保險人之住居所地或從事職業活動所在地之行政法院管轄）；第 18 條準用民事訴訟法第 22 條（數法院有管轄權時原告得任向其一起訴）。</dd>
+        <dt>涵攝</dt><dd>勞保給付是公法上保險事件。被告勞保局所在地臺北的行政法院依第 13 條有管轄權；乙是原告且是被保險人，其住所地臺東、從事職業活動所在地花蓮的行政法院依第 15 條之 2 第 1 項也有管轄權。三個地點指向的法院都是合法選項。</dd>
+        <dt>結論</dt><dd>乙得選擇臺北、臺東或花蓮所屬的高等行政法院起訴；第 15 條之 2 是「得由」，不排除第 13 條。至於進高等庭或地方庭，看給付金額是否逾 150 萬、50 萬（第 104 條之 1、第 229 條）。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">1. 甲住臺中市，不服設於臺北市的經濟部所為之罰鍰 200 萬元處分，訴願駁回後提起撤銷訴訟。土地管轄依何者定之？</div>
+      <label><input type="radio" name="p1q1" value="A">原告甲之住所地臺中市</label>
+      <label><input type="radio" name="p1q1" value="B">被告機關經濟部之所在地臺北市</label>
+      <label><input type="radio" name="p1q1" value="C">由原告任選臺中或臺北</label>
+      <label><input type="radio" name="p1q1" value="D">中央政府所在地</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 13 條第 1 項後段：以公法人之機關為被告時，由該機關所在地之行政法院管轄。這是「以原就被」。" data-diag='{"A":"第 13、14 條都看被告，不看原告。原告住所地只在第 15 條之 2、之 3 這類特別管轄才出現。","C":"罰鍰事件沒有特別管轄可以競合，只有第 13 條一個答案。","D":"中央政府所在地是第 14 條第 2 項對自然人被告的最後一層順位，不適用於機關被告。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">2. 某機關依第 8 條對自然人乙起訴請求返還溢領補助款。乙在中華民國現無住所、亦無居所，但三年前曾在高雄設有住所。管轄法院為？</div>
+      <label><input type="radio" name="p1q2" value="A">原告機關所在地之行政法院</label>
+      <label><input type="radio" name="p1q2" value="B">中央政府所在地之行政法院</label>
+      <label><input type="radio" name="p1q2" value="C">乙在中華民國最後住所地（高雄）之行政法院</label>
+      <label><input type="radio" name="p1q2" value="D">任何一個高等行政法院</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 14 條第 2 項順位：無住所以居所視為住所；無居所以在中華民國最後之住所視為住所；無最後住所才以中央政府所在地視為最後住所地。乙有最後住所，到第三層就停。" data-diag='{"A":"對自然人的訴訟看被告（第 14 條第 1 項「由被告住所地」），不是原告機關所在地。","B":"中央政府所在地是第四層，要「無最後住所」才用；乙有高雄的最後住所。","D":"第 14 條第 2 項用「視為」一層一層補上住所，不是放任原告任選。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">3. 下列何種事件，依行政訴訟法屬<b>專屬</b>管轄？</div>
+      <label><input type="radio" name="p1q3" value="A">因不動產撥用之訴訟</label>
+      <label><input type="radio" name="p1q3" value="B">不服撤銷建築執照處分之訴訟</label>
+      <label><input type="radio" name="p1q3" value="C">公務員不服考績處分之訴訟</label>
+      <label><input type="radio" name="p1q3" value="D">被保險人請求勞保給付之訴訟</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 15 條第 1 項：因不動產徵收、徵用或撥用之訴訟，專屬不動產所在地之行政法院管轄。其餘三者條文都用「得由」。" data-diag='{"B":"建照是「其他有關不動產之公法上權利或法律關係」，第 15 條第 2 項用「得由」，是特別管轄不是專屬。","C":"第 15 條之 1 公務員職務關係是「得由公務員職務所在地」，特別管轄。","D":"第 15 條之 2 公法上保險事件是「得由」，特別管轄。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出第 16 條指定管轄的三種事由、由誰指定、誰可以聲請</li>
+      <li>知道第 17 條管轄恆定的時點是「起訴時」，並說得出它防什麼</li>
+      <li>記得第 18 條準用民事訴訟法的範圍，知道管轄錯誤時是移送不是駁回</li>
+      <li>背得出第 19 條法官自行迴避六款，特別是第 2 款與第 6 款但書</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：第 16 條，有管轄權的法院審不了時，請上級指定</h2>
+    <div class="law"><b class="art">第 16 條</b>Ⅰ 有下列各款情形之一者，直接上級行政法院應依當事人之聲請或受訴行政法院之請求，指定管轄：<br>一、有管轄權之行政法院因法律或事實不能行審判權者。<br>二、因管轄區域境界不明，致不能辨別有管轄權之行政法院者。<br>三、因特別情形由有管轄權之行政法院審判，恐影響公安或難期公平者。<br>Ⅱ 前項聲請得向受訴行政法院或直接上級行政法院為之。</div>
+    <p>三款事由各有畫面：第 1 款是法院「不能」審，例如全院法官都該迴避；第 2 款是「不知道」哪個法院，例如河川改道後界線不明；第 3 款是「不宜」審，例如地方上的重大對立案件。指定的人是<b>直接上級行政法院</b>，啟動方式有兩種：當事人聲請，或受訴法院請求。</p>
+    <div class="tip">第 2 項常被忽略：當事人的聲請<b>可以向受訴法院提出，也可以直接向上級法院提出</b>。選項寫「僅得向直接上級行政法院聲請」就是錯的。另外，條文說上級法院「應」指定，不是「得」。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 17 條管轄恆定，第 18 條準用民事訴訟法</h2>
+    <div class="law"><b class="art">第 17 條</b>定行政法院之管轄以起訴時為準。</div>
+    <p>起訴時有管轄權，之後被告機關搬家、不動產被分割、原告搬到別縣市，法院的管轄權都不受影響。這叫<b>管轄恆定</b>，目的是讓訴訟不被事後的變動拖著跑。反過來說，起訴時沒有管轄權，之後被告搬進轄區也不會補正，原則上還是要移送。</p>
+    <div class="law"><b class="art">第 18 條</b>民事訴訟法第三條、第六條、第十五條、第十七條、第二十條至第二十二條、第二十八條第一項、第三項、第二十九條至第三十一條之規定，於本節準用之。</div>
+    <p>準用清單裡考試最常用的三個：民事訴訟法第 22 條（數法院都有管轄權時，<b>原告得任向其中一法院起訴</b>，這是特別管轄競合時原告可以選的依據）、第 28 條第 1 項（無管轄權時應依聲請或職權以裁定<b>移送</b>管轄法院）、第 29 條至第 31 條（移送裁定的效力與拘束）。</p>
+    <div class="warn">常錯：「向無管轄權之法院起訴，法院應以裁定駁回」。錯。原則是移送。只有<b>不能請求指定管轄、亦不能移送</b>時，才依第 107 條第 1 項第 2 款裁定駁回。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：第 19 條法官自行迴避六款</h2>
+    <div class="law"><b class="art">第 19 條</b>法官有下列情形之一者，應自行迴避，不得執行職務：<br>一、有民事訴訟法第三十二條第一款至第六款情形之一。<br>二、曾在中央或地方機關參與該訴訟事件之行政處分或訴願決定。<br>三、曾參與該訴訟事件相牽涉之民刑事裁判。<br>四、曾參與該訴訟事件相牽涉之法官、檢察官或公務員懲戒事件議決或裁判。<br>五、曾參與該訴訟事件之前審裁判。<br>六、曾參與該訴訟事件再審前之裁判。但其迴避以一次為限。</div>
+    <p>第 1 款借用民事訴訟法第 32 條的身分關係事由（法官本人或配偶是當事人、親屬關係等）。第 2 款是行政訴訟獨有：法官以前在行政機關任職時，<b>參與過這件事的行政處分或訴願決定</b>，現在不能再審它。第 3 到第 5 款處理「曾經在其他程序碰過這件事」。</p>
+    <p>第 6 款的但書是考點：曾參與再審前裁判的法官要迴避，但<b>迴避以一次為限</b>。對同一事件一再提起再審時，不能因此把所有法官都排除掉。</p>
+    <div class="law"><b class="art">第 20 條</b>民事訴訟法第三十三條至第三十八條之規定，於本節準用之。</div>
+    <div class="law"><b class="art">第 21 條</b>前二條規定於行政法院之司法事務官、書記官及通譯準用之。</div>
+    <p>第 20 條準用民事訴訟法的「聲請迴避」與「職權裁定迴避」規定：自行迴避之外，當事人認為法官有偏頗之虞也可以聲請。第 21 條把這整套搬到司法事務官、書記官、通譯身上。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>款</th><th>一句話</th><th>記法</th></tr></thead>
+      <tbody>
+        <tr><td>第 1 款</td><td>民訴第 32 條第 1 至 6 款的身分關係</td><td>自己人</td></tr>
+        <tr><td>第 2 款</td><td>曾在機關參與該事件之處分或訴願決定</td><td>自己做的處分</td></tr>
+        <tr><td>第 3 款</td><td>曾參與相牽涉之民刑事裁判</td><td>別的法院碰過</td></tr>
+        <tr><td>第 4 款</td><td>曾參與相牽涉之懲戒事件議決或裁判</td><td>懲戒碰過</td></tr>
+        <tr><td>第 5 款</td><td>曾參與前審裁判</td><td>下一審碰過</td></tr>
+        <tr><td>第 6 款</td><td>曾參與再審前之裁判，迴避以一次為限</td><td>再審碰過，只擋一次</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲於 113 年 3 月向被告機關所在地之高等行政法院起訴。同年 6 月，該機關遷移至另一高等行政法院轄區。被告聲請移送。法院應如何處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>起訴後管轄原因事實變動，管轄權是否隨之變動。</dd>
+        <dt>條文</dt><dd>第 17 條：定行政法院之管轄以起訴時為準。第 13 條第 1 項後段。</dd>
+        <dt>涵攝</dt><dd>3 月起訴時，被告機關所在地在受訴法院轄區，受訴法院依第 13 條第 1 項後段有管轄權。6 月機關遷址是起訴後的變動，依第 17 條不影響已確定的管轄。</dd>
+        <dt>結論</dt><dd>受訴法院仍有管轄權，應駁回被告的移送聲請，繼續審理。若是反過來，起訴時就無管轄權、之後機關才搬進轄區，依第 17 條也不能因此取得管轄權，原則上仍應移送。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　法官乙於任職內政部期間，曾擔任某訴願案的承辦人並參與作成訴願決定。該案訴願人其後提起撤銷訴訟，分由乙審理。乙應否迴避？若乙只是曾在三年前審理過訴願人另一件不相關的案件，結論如何？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>第 19 條第 2 款自行迴避的範圍。</dd>
+        <dt>條文</dt><dd>第 19 條第 2 款：曾在中央或地方機關參與該訴訟事件之行政處分或訴願決定。第 20 條準用民事訴訟法關於聲請迴避之規定。</dd>
+        <dt>涵攝</dt><dd>乙在內政部參與作成的訴願決定，正是本件撤銷訴訟的對象，符合第 19 條第 2 款，應自行迴避，不待當事人聲請。至於三年前審理過同一訴願人的其他案件，不屬第 19 條任何一款的「該訴訟事件」，無自行迴避義務；當事人若認有偏頗之虞，只能依第 20 條準用民事訴訟法的規定聲請迴避，由法院裁定。</dd>
+        <dt>結論</dt><dd>前者應自行迴避，不得執行職務；後者不須自行迴避，僅可能成為聲請迴避的事由。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">4. 關於第 16 條之指定管轄，下列敘述何者正確？</div>
+      <label><input type="radio" name="p2q1" value="A">由司法院指定管轄法院</label>
+      <label><input type="radio" name="p2q1" value="B">由直接上級行政法院依當事人之聲請或受訴行政法院之請求指定</label>
+      <label><input type="radio" name="p2q1" value="C">僅當事人得聲請，受訴法院不得主動請求</label>
+      <label><input type="radio" name="p2q1" value="D">當事人之聲請僅得向直接上級行政法院提出</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 16 條第 1 項：直接上級行政法院應依當事人之聲請或受訴行政法院之請求，指定管轄。第 2 項：聲請得向受訴行政法院或直接上級行政法院為之。" data-diag='{"A":"司法院在第 104 條之 1 第 1 項第 4 款可以「指定由地方行政法院管轄之事件」，那是事務管轄的通案指定，第 16 條的個案指定管轄是直接上級行政法院的事。","C":"第 16 條第 1 項明文兩種啟動方式：當事人聲請、受訴行政法院請求。","D":"第 16 條第 2 項：聲請得向受訴行政法院或直接上級行政法院為之，兩條路都通。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">5. 甲向有管轄權之高等行政法院起訴後，被告機關遷至他法院轄區。下列何者正確？</div>
+      <label><input type="radio" name="p2q2" value="A">受訴法院之管轄權不受影響</label>
+      <label><input type="radio" name="p2q2" value="B">受訴法院應依職權裁定移送被告新所在地之法院</label>
+      <label><input type="radio" name="p2q2" value="C">以言詞辯論終結時被告所在地定管轄</label>
+      <label><input type="radio" name="p2q2" value="D">應由直接上級行政法院指定管轄</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 17 條：定行政法院之管轄以起訴時為準。起訴後的變動不影響。" data-diag='{"B":"移送是「起訴時」就無管轄權的處理方式；起訴時有管轄權，依第 17 條不因事後變動而喪失。","C":"第 17 條明定時點是起訴時，不是言詞辯論終結時或判決時。","D":"第 16 條指定管轄的三款事由是法院不能、不明、不宜審判，被告搬家不屬任何一款。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">6. 下列何種情形，法官<b>不須</b>依第 19 條自行迴避？</div>
+      <label><input type="radio" name="p2q3" value="A">曾在原處分機關參與作成該訴訟事件之行政處分</label>
+      <label><input type="radio" name="p2q3" value="B">曾參與該訴訟事件之前審裁判</label>
+      <label><input type="radio" name="p2q3" value="C">曾參與該訴訟事件再審前之裁判，且已因此迴避過一次</label>
+      <label><input type="radio" name="p2q3" value="D">曾參與與該訴訟事件相牽涉之刑事裁判</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 19 條第 6 款但書：曾參與再審前之裁判者應迴避，但其迴避以一次為限。已迴避過一次，再提再審時不須再迴避。" data-diag='{"A":"第 19 條第 2 款：曾在中央或地方機關參與該訴訟事件之行政處分或訴願決定，應自行迴避。","B":"第 19 條第 5 款：曾參與該訴訟事件之前審裁判，應自行迴避。","D":"第 19 條第 3 款：曾參與該訴訟事件相牽涉之民刑事裁判，應自行迴避。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>背得出第 22 條四種有當事人能力的主體，知道「機關」在這裡是獨立的被告</li>
+      <li>說得出第 23 條的當事人包含哪兩種參加人，哪一種不算</li>
+      <li>遇到受託行使公權力（第 25 條）、機關裁撤改組（第 26 條），找得到正確被告</li>
+      <li>分得清當事人能力與訴訟能力（第 27 條），知道機關由誰為訴訟行為</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：第 22 條，誰可以當原告被告</h2>
+    <div class="law"><b class="art">第 22 條</b>自然人、法人、中央及地方機關、非法人之團體，有當事人能力。</div>
+    <p><b>當事人能力</b>是「能不能在行政訴訟裡當原告或被告」的資格。四類：自然人、法人（公法人與私法人都算）、中央及地方機關、非法人之團體。重點在<b>機關</b>：機關沒有法人格，民事訴訟原則上要告它所屬的公法人；行政訴訟則直接讓機關當被告，所以第 24 條、第 26 條都講「被告機關」。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>主體</th><th>有無當事人能力</th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td>自然人（含外國人）</td><td><span class="pill green">有</span></td><td>第 22 條</td></tr>
+        <tr><td>公法人（國家、地方自治團體）、私法人（公司、社團、財團）</td><td><span class="pill green">有</span></td><td>第 22 條「法人」</td></tr>
+        <tr><td>中央及地方機關（部、署、局、縣政府、鄉公所）</td><td><span class="pill green">有</span></td><td>第 22 條明文。行政訴訟的典型被告</td></tr>
+        <tr><td>非法人之團體（未登記的協會、祭祀公業、公寓大廈管委會）</td><td><span class="pill green">有</span></td><td>第 22 條。第 27 條第 2 項由管理人為訴訟行為</td></tr>
+        <tr><td>機關內部單位（某局的某科、某處）</td><td><span class="pill warn">無</span></td><td>不在第 22 條四類之中，應以其所屬機關為當事人</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note">欠缺當事人能力的效果：第 107 條第 1 項第 3 款「原告或被告無當事人能力」，法院應以裁定駁回；但其情形可以補正者，審判長應先定期間命補正。寫錯被告名稱通常可以補正，不會直接被駁回。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 23 條，「當事人」比原告被告多兩種人</h2>
+    <div class="law"><b class="art">第 23 條</b>訴訟當事人謂原告、被告及依第四十一條與第四十二條參加訴訟之人。</div>
+    <p>當事人有三種：原告、被告、以及依第 41 條（<b>必要參加</b>：訴訟標的對第三人與一造必須合一確定，法院應以裁定命其參加）與第 42 條（<b>獨立參加</b>：撤銷訴訟的結果將損害第三人權利，法院得命其參加）參加的人。這兩種參加人受判決效力所及，所以法律給他們當事人地位。</p>
+    <div class="warn">常錯：把第 44 條的「輔助參加」（行政機關或第三人輔助一造）也算進當事人。第 23 條只點名第 41 與第 42 條，輔助參加人不是當事人。三種參加的差別第 5 課會用比較表講。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：被告是誰，第 24、25、26 條三個規則</h2>
+    <div class="law"><b class="art">第 24 條</b>經訴願程序之行政訴訟，其被告為下列機關：<br>一、駁回訴願時之原處分機關。<br>二、撤銷或變更原處分時，為撤銷或變更之機關。</div>
+    <p>第 24 條在第 1 課講過：訴願駁回告原處分機關，訴願機關撤銷或變更原處分就告訴願機關。這一節補上兩個特殊情形。</p>
+    <div class="law"><b class="art">第 25 條</b>人民與受委託行使公權力之團體或個人，因受託事件涉訟者，以受託之團體或個人為被告。</div>
+    <p>民間團體或個人受行政機關委託行使公權力（例如受委託辦理車輛檢驗的民間機構、受委託核發證書的團體），就受託事件作成的行為，<b>以受託的團體或個人為被告</b>，不是委託機關。這也是為什麼第 13 條第 2 項、第 14 條會用到：被告可能是私法人或自然人。</p>
+    <div class="law"><b class="art">第 26 條</b>被告機關經裁撤或改組者，以承受其業務之機關為被告機關；無承受其業務之機關者，以其直接上級機關為被告機關。</div>
+    <p>機關被裁撤或改組，原告不能告一個不存在的機關。順位是：先找<b>承受其業務的機關</b>；找不到，才以<b>直接上級機關</b>為被告。</p>
+    <div class="tip">三條搭配第 107 條第 2 項：撤銷訴訟及課予義務訴訟，原告於訴狀誤列被告機關者，準用第 1 項，審判長應先定期間命補正。考題問「法院應如何處理」，答「命補正」而非「駁回」。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：第 27 條訴訟能力，第 28 條準用</h2>
+    <div class="law"><b class="art">第 27 條</b>Ⅰ 能獨立以法律行為負義務者，有訴訟能力。<br>Ⅱ 法人、中央及地方機關、非法人之團體，應由其代表人或管理人為訴訟行為。<br>Ⅲ 前項規定於依法令得為訴訟上行為之代理人準用之。</div>
+    <p><b>訴訟能力</b>是「能不能自己有效地做訴訟行為」，跟當事人能力是兩回事。未成年人有當事人能力（是自然人），但沒有訴訟能力，要由法定代理人代為訴訟行為。機關、法人、非法人團體本身不會講話，第 2 項規定由<b>代表人或管理人</b>為訴訟行為：機關是首長，公司是董事長，非法人團體是管理人。</p>
+    <div class="law"><b class="art">第 28 條</b>民事訴訟法第四十六條至第四十九條、第五十一條之規定，於本節準用之。</div>
+    <p>準用的是民事訴訟法關於法定代理、能力欠缺的補正、特別代理人等規定。欠缺訴訟能力或代表權有欠缺，對應第 107 條第 1 項第 4 款「未由合法之法定代理人、代表人或管理人為訴訟行為」，同樣先命補正。</p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>當事人能力</th><th>訴訟能力</th></tr></thead>
+      <tbody>
+        <tr><th>問什麼</th><td>能不能當原告被告</td><td>能不能自己做有效的訴訟行為</td></tr>
+        <tr><th>條文</th><td>第 22 條</td><td>第 27 條</td></tr>
+        <tr><th>未成年人</th><td>有</td><td>無，由法定代理人為之</td></tr>
+        <tr><th>機關</th><td>有</td><td>由代表人（首長）為訴訟行為</td></tr>
+        <tr><th>欠缺的效果</th><td>第 107 條第 1 項第 3 款</td><td>第 107 條第 1 項第 4 款</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲的汽車經某民間檢驗中心（受交通部委託辦理定期檢驗）判定不合格而無法換發行照。甲不服，應以誰為被告？管轄法院如何決定？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>受託行使公權力之團體作成的決定，被告適格與管轄。</dd>
+        <dt>條文</dt><dd>第 25 條：人民與受委託行使公權力之團體或個人，因受託事件涉訟者，以受託之團體或個人為被告。第 22 條（法人、非法人團體有當事人能力）。第 13 條第 2 項（私法人由主事務所或主營業所所在地法院管轄）。</dd>
+        <dt>涵攝</dt><dd>檢驗中心受交通部委託辦理車輛檢驗，判定不合格是就「受託事件」行使公權力的行為，依第 25 條以受託之團體為被告，不以交通部為被告。檢驗中心是私法人或非法人團體，依第 22 條有當事人能力，依第 27 條第 2 項由代表人或管理人為訴訟行為；管轄依第 13 條第 2 項，由其主事務所或主營業所所在地之行政法院管轄。</dd>
+        <dt>結論</dt><dd>被告是檢驗中心本身；管轄法院為檢驗中心主事務所或主營業所所在地之行政法院。若甲誤列交通部為被告，法院依第 107 條第 2 項應先命補正。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙不服 A 署之處分，訴願駁回後起訴。訴訟中 A 署被裁撤，業務由新設之 B 署承受。另一件丙不服 C 局之處分，C 局被裁撤且無任何機關承受其業務。兩案被告各為何？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>第 26 條機關裁撤後被告機關的順位。</dd>
+        <dt>條文</dt><dd>第 26 條：被告機關經裁撤或改組者，以承受其業務之機關為被告機關；無承受其業務之機關者，以其直接上級機關為被告機關。</dd>
+        <dt>涵攝</dt><dd>乙案：A 署的業務由 B 署承受，第一順位成立，被告改為 B 署，訴訟由 B 署承接續行。丙案：C 局無承受業務之機關，第一順位落空，進入第二順位，以 C 局的直接上級機關為被告。</dd>
+        <dt>結論</dt><dd>乙案被告為 B 署；丙案被告為 C 局之直接上級機關。兩者都不是「訴訟因被告消滅而終結」。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="D">
+      <div class="stem">7. 依第 22 條，下列何者<b>無</b>當事人能力？</div>
+      <label><input type="radio" name="p3q1" value="A">某縣政府</label>
+      <label><input type="radio" name="p3q1" value="B">未辦法人登記之某社區發展協會</label>
+      <label><input type="radio" name="p3q1" value="C">某鄉公所</label>
+      <label><input type="radio" name="p3q1" value="D">某市政府工務局之建築管理科</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 22 條：自然人、法人、中央及地方機關、非法人之團體，有當事人能力。「科」是機關的內部單位，不是機關，應以工務局為當事人。" data-diag='{"A":"縣政府是地方機關，第 22 條明文有當事人能力。","B":"未登記的協會是非法人之團體，第 22 條明文有當事人能力。","C":"鄉公所是地方機關，有當事人能力。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">8. 某私立大學受教育部委託辦理學歷甄試，甲應試後經該校認定不合格。甲提起行政訴訟，被告應為：</div>
+      <label><input type="radio" name="p3q2" value="A">教育部</label>
+      <label><input type="radio" name="p3q2" value="B">該私立大學</label>
+      <label><input type="radio" name="p3q2" value="C">教育部與該私立大學為共同被告</label>
+      <label><input type="radio" name="p3q2" value="D">該私立大學校長個人</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 25 條：人民與受委託行使公權力之團體或個人，因受託事件涉訟者，以受託之團體或個人為被告。" data-diag='{"A":"委託機關不是被告，第 25 條明定以受託之團體或個人為被告。","C":"第 25 條只指定受託者一方為被告，沒有共同被告的設計。","D":"受託的是學校這個團體（法人），校長只是依第 27 條第 2 項為訴訟行為的代表人，不是被告。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">9. 乙對 A 機關之處分提起撤銷訴訟。訴訟中 A 機關經裁撤，業務由 B 機關承受。下列何者正確？</div>
+      <label><input type="radio" name="p3q3" value="A">被告仍為 A 機關，由其原首長為訴訟行為</label>
+      <label><input type="radio" name="p3q3" value="B">以 A 機關之直接上級機關為被告</label>
+      <label><input type="radio" name="p3q3" value="C">以 B 機關為被告機關</label>
+      <label><input type="radio" name="p3q3" value="D">訴訟因被告消滅而終結</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 26 條：被告機關經裁撤或改組者，以承受其業務之機關為被告機關。有承受業務的機關就不會跳到直接上級機關。" data-diag='{"A":"A 機關已裁撤，不存在的機關無法當被告，第 26 條就是為此設計。","B":"直接上級機關是第二順位，要「無承受其業務之機關」才用；本題 B 機關已承受業務。","D":"第 26 條的目的就是避免訴訟因機關組織變動而中斷，不會因此終結。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4-4 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出選定當事人的人數（1 至 5 人）、法院何時可以限期命選定、選定後其他人的地位</li>
+      <li>記得第 30 條到第 34 條：更換增減要全體同意、喪失資格、通知他造、以文書證之</li>
+      <li>背得出第 33 條四種要全體同意的行為（捨棄、認諾、撤回、和解）與但書</li>
+      <li>分得清第 35 條公益社團法人訴訟與第 9 條公益訴訟，說得出第 35 條四個要件</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：第 29 條，一群人選幾個人出來打官司</h2>
+    <div class="law"><b class="art">第 29 條</b>Ⅰ 多數有共同利益之人得由其中選定一人至五人為全體起訴或被訴。<br>Ⅱ 訴訟標的對於多數有共同利益之人，必須合一確定而未為前項選定者，行政法院得限期命為選定，逾期未選定者，行政法院得依職權指定之。<br>Ⅲ 訴訟繫屬後經選定或指定當事人者，其他當事人脫離訴訟。</div>
+    <p>兩百個住戶都反對同一個開發許可，兩百個人一起出庭不切實際。<b>選定當事人</b>讓他們從自己人裡選 1 到 5 人，為全體起訴或被訴。選定人與被選定人之間是「訴訟實施權」的授與，判決效力及於全體，所以後面才有第 33 條的保護機制。</p>
+    <p>第 2 項是法院介入的門檻：訴訟標的對多數人<b>必須合一確定</b>、而他們沒選，法院「得」限期命選定；逾期不選，法院「得」依職權指定。第 3 項：訴訟已繫屬後才選定或指定的，其他人脫離訴訟，不再是當事人。</p>
+    <div class="warn">常錯一：人數寫成「一人至三人」或「不限人數」，條文是<b>一人至五人</b>。常錯二：法院一開始就直接指定。順序是先限期命選定，逾期才能指定，而且只在必須合一確定的情形。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 30 條到第 34 條，選定之後的管理規則</h2>
+    <div class="law"><b class="art">第 30 條</b>Ⅰ 多數有共同利益之人於選定當事人或由行政法院依職權指定當事人後，得經全體當事人之同意更換或增減之。<br>Ⅱ 行政法院依前條第二項指定之當事人，如有必要，得依職權更換或增減之。<br>Ⅲ 依前兩項規定更換或增減者，原被選定或指定之當事人喪失其資格。</div>
+    <div class="law"><b class="art">第 31 條</b>被選定或被指定之人中有因死亡或其他事由喪失其資格者，他被選定或被指定之人得為全體為訴訟行為。</div>
+    <div class="law"><b class="art">第 32 條</b>第二十九條及第三十條訴訟當事人之選定、指定及其更換、增減應通知他造當事人。</div>
+    <div class="law"><b class="art">第 34 條</b>訴訟當事人之選定及其更換、增減，應以文書證之。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>情境</th><th>規則</th><th>條文</th></tr></thead>
+      <tbody>
+        <tr><td>想換人、加人、減人</td><td>經全體當事人同意；法院指定的，法院亦得依職權更換增減。被換掉的人喪失資格</td><td>第 30 條</td></tr>
+        <tr><td>被選定人之一死亡或喪失資格</td><td>其餘被選定人得為全體為訴訟行為，訴訟不中斷</td><td>第 31 條</td></tr>
+        <tr><td>對他造</td><td>選定、指定、更換、增減都要通知他造</td><td>第 32 條</td></tr>
+        <tr><td>怎麼證明</td><td>選定及其更換、增減應以文書證之</td><td>第 34 條</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tip">第 31 條與第 30 條的差別：第 31 條是「少了人，剩下的人繼續」，不需要任何同意；第 30 條是「主動換人」，要全體同意。選項把兩者混在一起（例如「被選定人死亡時應經全體同意另行選定」）就是陷阱。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：第 33 條，被選定人不能自己把官司結束掉</h2>
+    <div class="law"><b class="art">第 33 條</b>被選定人非得全體之同意，不得為捨棄、認諾、撤回或和解。但訴訟標的對於多數有共同利益之各人非必須合一確定，經原選定人之同意，就其訴之一部為撤回或和解者，不在此限。</div>
+    <p>被選定人代表全體打官司，但<b>捨棄、認諾、撤回、和解</b>這四種「直接把結果定下來」的行為，要全體同意，因為效果落在每一個選定人身上。但書放寬一種情形：訴訟標的對各人<b>非必須合一確定</b>（各人請求可以分開處理），某個選定人同意就自己那一部分撤回或和解，可以。</p>
+    <div class="note">四個字的記法：「捨、認、撤、和」。捨棄是原告放棄請求，認諾是被告承認請求，撤回是把訴收回，和解是雙方談定。這四個行為在民事訴訟法與本法第 219 條以下（和解）都會再出現。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：第 35 條，公益社團法人為社員出面</h2>
+    <div class="law"><b class="art">第 35 條</b>Ⅰ 以公益為目的之社團法人，於其章程所定目的範圍內，由多數有共同利益之社員，就一定之法律關係，授與訴訟實施權者，得為公共利益提起訴訟。<br>Ⅱ 前項規定於以公益為目的之非法人之團體準用之。<br>Ⅲ 前二項訴訟實施權之授與，應以文書證之。<br>Ⅳ 第三十三條之規定，於第一項之社團法人或第二項之非法人之團體，準用之。</div>
+    <p>第 35 條是選定當事人的「團體版」：社員不選自然人，改把訴訟實施權授與自己所屬的公益社團法人。四個要件缺一不可：<b>以公益為目的之社團法人</b>（第 2 項擴及公益非法人團體）、<b>在章程所定目的範圍內</b>、<b>由多數有共同利益之社員授與訴訟實施權</b>、<b>就一定之法律關係</b>。授與要以文書證之（第 3 項），捨棄認諾撤回和解要全體同意（第 4 項準用第 33 條）。</p>
+    <div class="law"><b class="art">第 36 條</b>民事訴訟法第四十八條、第四十九條之規定，於本節準用之。</div>
+    <p>第 36 條準用民事訴訟法關於「能力、代理權欠缺之追認與補正」的規定：選定或授與有瑕疵，原則上可以事後補正或追認，不是直接無效。</p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>第 9 條公益訴訟</th><th>第 35 條公益社團法人訴訟</th><th>第 29 條選定當事人</th></tr></thead>
+      <tbody>
+        <tr><th>誰起訴</th><td>人民（自然人或團體）</td><td>公益社團法人、公益非法人團體</td><td>從多數人中選出的 1 至 5 人</td></tr>
+        <tr><th>主張誰的權利</th><td>無關自己權利，純為公益</td><td>社員的共同利益</td><td>全體選定人的共同利益</td></tr>
+        <tr><th>前提</th><td>法律有特別規定</td><td>章程目的範圍、多數社員授與訴訟實施權</td><td>多數有共同利益之人選定</td></tr>
+        <tr><th>證明方式</th><td>—</td><td>文書（第 35 條第 3 項）</td><td>文書（第 34 條）</td></tr>
+        <tr><th>捨認撤和</th><td>—</td><td>準用第 33 條（第 35 條第 4 項）</td><td>第 33 條全體同意</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：把第 35 條當成第 9 條的一種。第 9 條是客觀訴訟，原告自己的權利沒有受害，所以要「法律有特別規定」才能提；第 35 條本質仍是社員權利的集合（主觀訴訟），不需要個別法律授權，但要社員授與訴訟實施權。條文寫「得為公共利益提起訴訟」，但要件在前半句。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　某社區 180 戶住戶不服環保局核發予鄰地工廠之許可，選定甲、乙、丙 3 人為全體起訴。訴訟中乙死亡；甲欲與環保局和解，丙反對。問：(1) 選定是否合法？(2) 乙死亡後訴訟如何進行？(3) 甲得否單獨和解？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>選定當事人的人數、被選定人喪失資格、和解之限制。</dd>
+        <dt>條文</dt><dd>第 29 條第 1 項（選定一人至五人）、第 34 條（以文書證之）、第 32 條（通知他造）；第 31 條（被選定人喪失資格，他被選定人得為全體為訴訟行為）；第 33 條（非得全體同意不得和解）。</dd>
+        <dt>涵攝</dt><dd>(1) 180 戶對同一許可有共同利益，選定 3 人在 1 至 5 人範圍內，合法；但應以文書證明選定，並通知環保局。(2) 乙死亡屬第 31 條「因死亡喪失其資格」，甲、丙得為全體為訴訟行為，不須重新選定，也不中斷。(3) 和解是第 33 條列舉的四種行為之一，須得全體（180 戶）同意，不是被選定人之間多數決；丙反對更不用說，甲單獨和解不合法。本件撤銷同一許可，對各戶必須合一確定，也無法適用但書的一部和解。</dd>
+        <dt>結論</dt><dd>選定合法；乙死亡後由甲、丙續行；甲不得未經全體選定人同意而和解。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　「某河川保護協會」為登記立案之公益社團法人，章程目的為「保護某河川流域生態」。流域內 60 名社員因主管機關核准採砂許可而受影響，以書面授與協會訴訟實施權。協會以自己名義提起撤銷訴訟。另一名非社員丁主張協會也應為他起訴。評析之。</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>第 35 條團體訴訟的要件與界限。</dd>
+        <dt>條文</dt><dd>第 35 條第 1 項（公益社團法人、章程目的範圍、多數有共同利益之社員、就一定法律關係授與訴訟實施權）、第 3 項（以文書證之）；第 22 條（法人有當事人能力）；第 9 條（公益訴訟以法律有特別規定者為限）。</dd>
+        <dt>涵攝</dt><dd>協會是公益社團法人，採砂許可涉及河川生態，在章程目的範圍內；60 名社員對同一許可有共同利益，就「該採砂許可」這個一定法律關係以書面授與訴訟實施權，四個要件與第 3 項的文書要求都符合，協會得以自己名義起訴。丁不是社員，第 35 條只處理「社員」授與訴訟實施權，協會無從為丁起訴；丁可以自己起訴，或依第 29 條與其他受影響者選定當事人。協會若想不靠社員授與、純為公益起訴，要回到第 9 條，須法律有特別規定。</dd>
+        <dt>結論</dt><dd>協會的起訴符合第 35 條；對非社員丁，協會無訴訟實施權。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">10. 依第 29 條第 1 項，多數有共同利益之人得由其中選定幾人為全體起訴或被訴？</div>
+      <label><input type="radio" name="p4q1" value="A">一人</label>
+      <label><input type="radio" name="p4q1" value="B">一人至三人</label>
+      <label><input type="radio" name="p4q1" value="C">一人至五人</label>
+      <label><input type="radio" name="p4q1" value="D">人數不限，由多數人自行決定</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 29 條第 1 項：得由其中選定一人至五人為全體起訴或被訴。" data-diag='{"A":"條文允許最多五人，不是只能一人。","B":"三人是第 49 條第 1 項每一當事人委任訴訟代理人的上限，不是選定當事人的人數。","D":"第 29 條第 1 項有明確上限五人。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">11. 被選定人甲欲就全體選定人之訴撤回起訴。依第 33 條，甲應：</div>
+      <label><input type="radio" name="p4q2" value="A">得自行決定，因其已取得訴訟實施權</label>
+      <label><input type="radio" name="p4q2" value="B">經選定人過半數同意</label>
+      <label><input type="radio" name="p4q2" value="C">得全體選定人之同意</label>
+      <label><input type="radio" name="p4q2" value="D">經行政法院許可</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 33 條本文：被選定人非得全體之同意，不得為捨棄、認諾、撤回或和解。全部撤回也不符合但書「一部撤回」的情形。" data-diag='{"A":"訴訟實施權不包含自行處分訴訟結果，第 33 條把捨棄、認諾、撤回、和解四種行為保留給全體。","B":"第 33 條用的是「全體之同意」，沒有多數決。","D":"第 33 條的要件是全體同意，不是法院許可。"}'></div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">12. 關於第 35 條公益社團法人提起訴訟，下列何者<b>不是</b>條文所定要件？</div>
+      <label><input type="radio" name="p4q3" value="A">須在其章程所定目的範圍內</label>
+      <label><input type="radio" name="p4q3" value="B">須由多數有共同利益之社員就一定之法律關係授與訴訟實施權</label>
+      <label><input type="radio" name="p4q3" value="C">訴訟實施權之授與應以文書證之</label>
+      <label><input type="radio" name="p4q3" value="D">須經目的事業主管機關許可</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 35 條第 1 項的要件是公益社團法人、章程目的範圍、多數有共同利益之社員、就一定法律關係授與訴訟實施權；第 3 項要求以文書證之。沒有主管機關許可這個要件。" data-diag='{"A":"第 35 條第 1 項明文「於其章程所定目的範圍內」。","B":"第 35 條第 1 項明文「由多數有共同利益之社員，就一定之法律關係，授與訴訟實施權」。","C":"第 35 條第 3 項：前二項訴訟實施權之授與，應以文書證之。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card goal">
+    <h2>章末測驗（選擇 10 題 + 實例 2 題）</h2>
+    <p>選擇題全部作答後按「交卷」，10 題答對 8 題過關。實例題先自己寫，再展開參考答案對照，自評後按「我寫到了」或「要再加強」。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 甲對設有主事務所於新北市、主營業所於臺中市之某股份有限公司提起行政訴訟。依第 13 條第 2 項，管轄法院為：</div>
+      <label><input type="radio" name="qz1" value="A">僅新北市所屬之行政法院</label>
+      <label><input type="radio" name="qz1" value="B">新北市或臺中市所屬之行政法院</label>
+      <label><input type="radio" name="qz1" value="C">原告甲住所地之行政法院</label>
+      <label><input type="radio" name="qz1" value="D">中央政府所在地之行政法院</label>
+      <div class="fb" data-exp="第 13 條第 2 項：對於私法人之訴訟，由其主事務所「或」主營業所所在地之行政法院管轄，兩者並列。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">2. 自然人乙住所在臺北，居所在高雄，訴訟事實發生於高雄。對乙之行政訴訟管轄法院為：</div>
+      <label><input type="radio" name="qz2" value="A">僅臺北所屬之行政法院</label>
+      <label><input type="radio" name="qz2" value="B">僅高雄所屬之行政法院</label>
+      <label><input type="radio" name="qz2" value="C">臺北或高雄所屬之行政法院，由原告選擇</label>
+      <label><input type="radio" name="qz2" value="D">訴訟事實發生地一律有管轄權，與居所無關</label>
+      <div class="fb" data-exp="第 14 條第 1 項住所地法院有管轄權；第 3 項訴訟事實發生於被告居所地者，得由居所地法院管轄。兩者競合，依第 18 條準用民事訴訟法第 22 條由原告選擇。第 3 項限於「被告居所地」，不是任何事實發生地。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 關於第 15 條，下列何者正確？</div>
+      <label><input type="radio" name="qz3" value="A">因不動產撥用之訴訟，專屬不動產所在地之行政法院管轄</label>
+      <label><input type="radio" name="qz3" value="B">一切有關不動產之公法上訴訟均專屬不動產所在地之行政法院管轄</label>
+      <label><input type="radio" name="qz3" value="C">因不動產徵收之訴訟，得由不動產所在地之行政法院管轄</label>
+      <label><input type="radio" name="qz3" value="D">不動產事件之管轄依第 13 條定之，第 15 條僅係補充</label>
+      <div class="fb" data-exp="第 15 條第 1 項列三種專屬：徵收、徵用、撥用。第 2 項其他不動產公法關係是「得由」。B 把第 2 項寫成專屬，C 把第 1 項寫成得由。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. 某投保單位（公司）不服勞工保險局之保險費核定而起訴。依第 15 條之 2，除被告機關所在地外，尚得由何法院管轄？</div>
+      <label><input type="radio" name="qz4" value="A">被保險人之住居所地</label>
+      <label><input type="radio" name="qz4" value="B">被保險人從事職業活動所在地</label>
+      <label><input type="radio" name="qz4" value="C">受益人之住居所地</label>
+      <label><input type="radio" name="qz4" value="D">投保單位之主事務所或主營業所所在地</label>
+      <div class="fb" data-exp="第 15 條之 2 第 2 項：前項訴訟事件於投保單位為原告時，得由其主事務所或主營業所所在地之行政法院管轄。第 1 項的被保險人、受益人住居所地是「為原告之被保險人、受益人」才適用。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 原住民族部落 A 與原住民乙間因傳統領域之公法上權利涉訟。關於第 15 條之 3 之特別管轄，下列何者正確？</div>
+      <label><input type="radio" name="qz5" value="A">得由為原告之一方之住居所地或部落所在地法院管轄</label>
+      <label><input type="radio" name="qz5" value="B">兩造均為原住民或部落，不適用第 15 條之 3</label>
+      <label><input type="radio" name="qz5" value="C">專屬部落所在地之行政法院管轄</label>
+      <label><input type="radio" name="qz5" value="D">專屬中央政府所在地之行政法院管轄</label>
+      <div class="fb" data-exp="第 15 條之 3 但書：除兩造均為原住民或原住民族部落外。兩造都是原住民或部落時回到一般規定；而且本條本文用的是「得由」，不是專屬。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">6. 某地發生重大群眾對立事件，有管轄權之行政法院審判恐難期公平。下列何者正確？</div>
+      <label><input type="radio" name="qz6" value="A">受訴法院得自行裁定移送其他法院</label>
+      <label><input type="radio" name="qz6" value="B">當事人得逕向其他有管轄權以外之法院起訴</label>
+      <label><input type="radio" name="qz6" value="C">直接上級行政法院應依當事人聲請或受訴法院請求指定管轄</label>
+      <label><input type="radio" name="qz6" value="D">由司法院指定管轄</label>
+      <div class="fb" data-exp="第 16 條第 1 項第 3 款：因特別情形由有管轄權之行政法院審判，恐影響公安或難期公平者，直接上級行政法院應依當事人之聲請或受訴行政法院之請求，指定管轄。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">7. 法官甲曾參與某事件再審前之裁判，於第一次再審已迴避。該事件再次提起再審又分由甲審理。依第 19 條：</div>
+      <label><input type="radio" name="qz7" value="A">甲應再次自行迴避</label>
+      <label><input type="radio" name="qz7" value="B">甲應否迴避由院長決定</label>
+      <label><input type="radio" name="qz7" value="C">甲須經當事人同意始得審理</label>
+      <label><input type="radio" name="qz7" value="D">甲不須再自行迴避，其迴避以一次為限</label>
+      <div class="fb" data-exp="第 19 條第 6 款：曾參與該訴訟事件再審前之裁判。但其迴避以一次為限。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">8. 依第 23 條，行政訴訟之「當事人」指：</div>
+      <label><input type="radio" name="qz8" value="A">僅原告與被告</label>
+      <label><input type="radio" name="qz8" value="B">原告、被告及一切參加訴訟之人</label>
+      <label><input type="radio" name="qz8" value="C">原告、被告及依第 41 條與第 42 條參加訴訟之人</label>
+      <label><input type="radio" name="qz8" value="D">原告、被告及其訴訟代理人</label>
+      <div class="fb" data-exp="第 23 條：訴訟當事人謂原告、被告及依第四十一條與第四十二條參加訴訟之人。第 44 條的輔助參加人不在其內，訴訟代理人更不是當事人。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">9. 某未辦法人登記之公寓大廈管理委員會提起行政訴訟。關於其訴訟行為，下列何者正確？</div>
+      <label><input type="radio" name="qz9" value="A">管理委員會無當事人能力，應由全體住戶起訴</label>
+      <label><input type="radio" name="qz9" value="B">管理委員會有當事人能力，應由其管理人為訴訟行為</label>
+      <label><input type="radio" name="qz9" value="C">管理委員會有訴訟能力，得由任一委員為訴訟行為</label>
+      <label><input type="radio" name="qz9" value="D">管理委員會應先辦理法人登記始得起訴</label>
+      <div class="fb" data-exp="第 22 條：非法人之團體有當事人能力。第 27 條第 2 項：非法人之團體應由其代表人或管理人為訴訟行為。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">10. 訴訟標的對 50 名原告必須合一確定，但 50 人未選定當事人。依第 29 條第 2 項，行政法院：</div>
+      <label><input type="radio" name="qz10" value="A">應以起訴不合程式裁定駁回</label>
+      <label><input type="radio" name="qz10" value="B">得限期命為選定，逾期未選定者得依職權指定</label>
+      <label><input type="radio" name="qz10" value="C">應不經命選定逕依職權指定一人至五人</label>
+      <label><input type="radio" name="qz10" value="D">應命 50 人全體委任同一訴訟代理人</label>
+      <div class="fb" data-exp="第 29 條第 2 項：必須合一確定而未為選定者，行政法院得限期命為選定，逾期未選定者，行政法院得依職權指定之。先命選定，逾期才指定。"></div>
+    </div>
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>實例題（自評）</h2>
+    <div class="essay" data-id="e1">
+      <div class="stem">實例一　甲住臺北市，所有坐落臺中市之土地經臺中市政府核定徵收。甲訴願遭駁回後，於 113 年 5 月 2 日向臺北高等行政法院提起撤銷訴訟。受命法官乙曾於任職內政部時參與本件之訴願決定。<br>問：(1) 臺北高等行政法院有無管轄權？應如何處理？(2) 若甲爭執的不是徵收，而是臺中市政府就同一土地所為之「限期拆除違建」處分，管轄有無不同？(3) 法官乙應否迴避？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>爭點</dt><dd>不動產徵收的專屬管轄、第 15 條第 2 項與第 13 條的競合、無管轄權時的處理、第 19 條第 2 款自行迴避。</dd>
+          <dt>條文</dt><dd>第 15 條第 1 項、第 2 項；第 13 條第 1 項後段；第 17 條；第 18 條準用民事訴訟法第 22 條、第 28 條；第 107 條第 1 項第 2 款；第 19 條第 2 款。</dd>
+          <dt>涵攝</dt><dd>(1) 徵收屬第 15 條第 1 項，專屬不動產所在地（臺中市）之行政法院管轄，排除第 13 條，與原告住所地無關。臺北高等行政法院無管轄權，應依第 18 條準用民事訴訟法第 28 條第 1 項裁定移送有管轄權之法院；非不能移送，不得依第 107 條第 1 項第 2 款駁回。管轄以起訴時（113 年 5 月 2 日）為準（第 17 條）。(2) 限期拆除是「其他有關不動產之公法上權利或法律關係」，第 15 條第 2 項僅「得由」不動產所在地法院管轄，不排除第 13 條第 1 項後段被告機關所在地法院；本件兩者都在臺中，臺北仍無管轄權，但性質是普通與特別管轄競合，而非專屬排除。(3) 乙曾在內政部參與本件訴願決定，符合第 19 條第 2 款，應自行迴避，不得執行職務，不待聲請。</dd>
+          <dt>結論</dt><dd>(1) 無管轄權，裁定移送。(2) 仍無管轄權，但理由改為第 13 條與第 15 條第 2 項均指向臺中。(3) 乙應自行迴避。</dd>
+          <dt>加分</dt><dd>可說明專屬管轄的立法理由在於不動產事件與所在地的證據、勘驗關聯密切；並指出若原告起訴時誤向無管轄權法院起訴，移送制度體現第 1 條保障人民權益的宗旨，使起訴期間（第 106 條）不因管轄錯誤而落空。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+    <div class="essay" data-id="e2">
+      <div class="stem">實例二　某縣 120 位果農因縣政府農業處駁回其農業天然災害救助申請而不服，經訴願駁回。果農選定甲、乙 2 人起訴並以書面證明選定。訴訟中縣政府農業處裁撤，業務改由新設之農業局承受。另「某縣果農協會」（公益社團法人，章程目的含「維護會員農業權益」）之 80 名會員亦以書面授與協會訴訟實施權，協會另行起訴。被選定人甲於訴訟中未經其他果農同意，向法院表示認諾被告之主張。<br>問：(1) 果農選定甲、乙起訴是否合法？其餘 118 人地位如何？(2) 農業處裁撤後被告為何？(3) 協會之起訴是否合法？(4) 甲之認諾效力如何？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>爭點</dt><dd>選定當事人之要件與效果、第 26 條被告機關之承受、第 35 條團體訴訟要件、第 33 條處分行為之限制。</dd>
+          <dt>條文</dt><dd>第 29 條第 1 項、第 3 項；第 34 條；第 32 條；第 26 條；第 22 條；第 35 條第 1 項、第 3 項、第 4 項；第 33 條；第 24 條第 1 款。</dd>
+          <dt>涵攝</dt><dd>(1) 120 位果農受同一類處分、對救助請求有共同利益，選定 2 人在第 29 條第 1 項「一人至五人」範圍內，並已以文書證之（第 34 條），選定合法；依第 32 條應通知他造。其餘 118 人非當事人，判決效力透過選定關係及於全體；若是訴訟繫屬後才選定，依第 29 條第 3 項脫離訴訟。(2) 原處分機關農業處為訴願駁回時之被告（第 24 條第 1 款），其經裁撤而業務由農業局承受，依第 26 條前段以農業局為被告機關。(3) 協會為公益社團法人（第 22 條有當事人能力），救助申請涉會員農業權益，在章程目的範圍內；80 名會員對同一類處分有共同利益，就該法律關係以書面授與訴訟實施權（第 35 條第 1 項、第 3 項），起訴合法。(4) 認諾是第 33 條列舉之四種行為之一，被選定人非得全體同意不得為之；本件各果農之救助請求雖可分別處理，但甲是對「被告之主張」全部認諾，非但書「就其訴之一部」經原選定人同意的情形。甲之認諾因欠缺全體同意，不生效力。</dd>
+          <dt>結論</dt><dd>(1) 選定合法，其餘果農非當事人但受判決效力所及。(2) 被告為農業局。(3) 協會起訴合法。(4) 甲之認諾不合法，不生認諾效力。</dd>
+          <dt>加分</dt><dd>可比較第 29 條與第 35 條兩條路並存時的訴訟經濟問題，並指出第 35 條第 4 項準用第 33 條，使協會同樣不得未經授與社員全體同意而認諾、和解；學說上有認為第 35 條性質仍屬主觀訴訟，與第 9 條客觀公益訴訟不同。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="s6" class="panel">
+  <div class="card">
+    <h2>本課引用條文</h2>
+    <p class="small muted">點開看原文。只收錄本課講到的條文；全文請見全國法規資料庫。</p>
+    <div class="arts">
+      <details><summary>第 9 條 <span>公益訴訟</span></summary><div class="txt">人民為維護公益，就無關自己權利及法律上利益之事項，對於行政機關之違法行為，得提起行政訴訟。但以法律有特別規定者為限。</div></details>
+      <details><summary>第 13 條 <span>公法人、機關、私法人、外國法人之管轄</span></summary><div class="txt">Ⅰ 對於公法人之訴訟，由其公務所所在地之行政法院管轄。其以公法人之機關為被告時，由該機關所在地之行政法院管轄。
+Ⅱ 對於私法人或其他得為訴訟當事人之團體之訴訟，由其主事務所或主營業所所在地之行政法院管轄。
+Ⅲ 對於外國法人或其他得為訴訟當事人之團體之訴訟，由其在中華民國之主事務所或主營業所所在地之行政法院管轄。</div></details>
+      <details><summary>第 14 條 <span>自然人之管轄</span></summary><div class="txt">Ⅰ 前條以外之訴訟，由被告住所地之行政法院管轄，其住所地之行政法院不能行使職權者，由其居所地之行政法院管轄。
+Ⅱ 被告在中華民國現無住所或住所不明者，以其在中華民國之居所，視為其住所；無居所或居所不明者，以其在中華民國最後之住所，視為其住所；無最後住所者，以中央政府所在地，視為其最後住所地。
+Ⅲ 訴訟事實發生於被告居所地者，得由其居所地之行政法院管轄。</div></details>
+      <details><summary>第 15 條 <span>不動產事件</span></summary><div class="txt">Ⅰ 因不動產徵收、徵用或撥用之訴訟，專屬不動產所在地之行政法院管轄。
+Ⅱ 除前項情形外，其他有關不動產之公法上權利或法律關係涉訟者，得由不動產所在地之行政法院管轄。</div></details>
+      <details><summary>第 15 條之 1 <span>公務員職務關係</span></summary><div class="txt">關於公務員職務關係之訴訟，得由公務員職務所在地之行政法院管轄。</div></details>
+      <details><summary>第 15 條之 2 <span>公法上保險事件</span></summary><div class="txt">Ⅰ 因公法上之保險事件涉訟者，得由為原告之被保險人、受益人之住居所地或被保險人從事職業活動所在地之行政法院管轄。
+Ⅱ 前項訴訟事件於投保單位為原告時，得由其主事務所或主營業所所在地之行政法院管轄。</div></details>
+      <details><summary>第 15 條之 3 <span>原住民、部落事件</span></summary><div class="txt">因原住民、原住民族部落之公法上權利或法律關係涉訟者，除兩造均為原住民或原住民族部落外，得由為原告之原住民住居所地或經核定部落所在地之行政法院管轄。</div></details>
+      <details><summary>第 16 條 <span>指定管轄</span></summary><div class="txt">Ⅰ 有下列各款情形之一者，直接上級行政法院應依當事人之聲請或受訴行政法院之請求，指定管轄：
+一、有管轄權之行政法院因法律或事實不能行審判權者。
+二、因管轄區域境界不明，致不能辨別有管轄權之行政法院者。
+三、因特別情形由有管轄權之行政法院審判，恐影響公安或難期公平者。
+Ⅱ 前項聲請得向受訴行政法院或直接上級行政法院為之。</div></details>
+      <details><summary>第 17 條 <span>管轄恆定</span></summary><div class="txt">定行政法院之管轄以起訴時為準。</div></details>
+      <details><summary>第 18 條 <span>準用民事訴訟法（管轄）</span></summary><div class="txt">民事訴訟法第三條、第六條、第十五條、第十七條、第二十條至第二十二條、第二十八條第一項、第三項、第二十九條至第三十一條之規定，於本節準用之。</div></details>
+      <details><summary>第 19 條 <span>法官自行迴避</span></summary><div class="txt">法官有下列情形之一者，應自行迴避，不得執行職務：
+一、有民事訴訟法第三十二條第一款至第六款情形之一。
+二、曾在中央或地方機關參與該訴訟事件之行政處分或訴願決定。
+三、曾參與該訴訟事件相牽涉之民刑事裁判。
+四、曾參與該訴訟事件相牽涉之法官、檢察官或公務員懲戒事件議決或裁判。
+五、曾參與該訴訟事件之前審裁判。
+六、曾參與該訴訟事件再審前之裁判。但其迴避以一次為限。</div></details>
+      <details><summary>第 20 條 <span>準用民事訴訟法（迴避）</span></summary><div class="txt">民事訴訟法第三十三條至第三十八條之規定，於本節準用之。</div></details>
+      <details><summary>第 21 條 <span>司法事務官、書記官、通譯之迴避</span></summary><div class="txt">前二條規定於行政法院之司法事務官、書記官及通譯準用之。</div></details>
+      <details><summary>第 22 條 <span>當事人能力</span></summary><div class="txt">自然人、法人、中央及地方機關、非法人之團體，有當事人能力。</div></details>
+      <details><summary>第 23 條 <span>當事人之定義</span></summary><div class="txt">訴訟當事人謂原告、被告及依第四十一條與第四十二條參加訴訟之人。</div></details>
+      <details><summary>第 24 條 <span>被告機關</span></summary><div class="txt">經訴願程序之行政訴訟，其被告為下列機關：
+一、駁回訴願時之原處分機關。
+二、撤銷或變更原處分時，為撤銷或變更之機關。</div></details>
+      <details><summary>第 25 條 <span>受委託行使公權力</span></summary><div class="txt">人民與受委託行使公權力之團體或個人，因受託事件涉訟者，以受託之團體或個人為被告。</div></details>
+      <details><summary>第 26 條 <span>被告機關裁撤或改組</span></summary><div class="txt">被告機關經裁撤或改組者，以承受其業務之機關為被告機關；無承受其業務之機關者，以其直接上級機關為被告機關。</div></details>
+      <details><summary>第 27 條 <span>訴訟能力、代表人</span></summary><div class="txt">Ⅰ 能獨立以法律行為負義務者，有訴訟能力。
+Ⅱ 法人、中央及地方機關、非法人之團體，應由其代表人或管理人為訴訟行為。
+Ⅲ 前項規定於依法令得為訴訟上行為之代理人準用之。</div></details>
+      <details><summary>第 28 條 <span>準用民事訴訟法（能力）</span></summary><div class="txt">民事訴訟法第四十六條至第四十九條、第五十一條之規定，於本節準用之。</div></details>
+      <details><summary>第 29 條 <span>選定當事人</span></summary><div class="txt">Ⅰ 多數有共同利益之人得由其中選定一人至五人為全體起訴或被訴。
+Ⅱ 訴訟標的對於多數有共同利益之人，必須合一確定而未為前項選定者，行政法院得限期命為選定，逾期未選定者，行政法院得依職權指定之。
+Ⅲ 訴訟繫屬後經選定或指定當事人者，其他當事人脫離訴訟。</div></details>
+      <details><summary>第 30 條 <span>更換、增減</span></summary><div class="txt">Ⅰ 多數有共同利益之人於選定當事人或由行政法院依職權指定當事人後，得經全體當事人之同意更換或增減之。
+Ⅱ 行政法院依前條第二項指定之當事人，如有必要，得依職權更換或增減之。
+Ⅲ 依前兩項規定更換或增減者，原被選定或指定之當事人喪失其資格。</div></details>
+      <details><summary>第 31 條 <span>被選定人喪失資格</span></summary><div class="txt">被選定或被指定之人中有因死亡或其他事由喪失其資格者，他被選定或被指定之人得為全體為訴訟行為。</div></details>
+      <details><summary>第 32 條 <span>通知他造</span></summary><div class="txt">第二十九條及第三十條訴訟當事人之選定、指定及其更換、增減應通知他造當事人。</div></details>
+      <details><summary>第 33 條 <span>捨棄、認諾、撤回、和解之限制</span></summary><div class="txt">被選定人非得全體之同意，不得為捨棄、認諾、撤回或和解。但訴訟標的對於多數有共同利益之各人非必須合一確定，經原選定人之同意，就其訴之一部為撤回或和解者，不在此限。</div></details>
+      <details><summary>第 34 條 <span>以文書證之</span></summary><div class="txt">訴訟當事人之選定及其更換、增減，應以文書證之。</div></details>
+      <details><summary>第 35 條 <span>公益社團法人之訴訟</span></summary><div class="txt">Ⅰ 以公益為目的之社團法人，於其章程所定目的範圍內，由多數有共同利益之社員，就一定之法律關係，授與訴訟實施權者，得為公共利益提起訴訟。
+Ⅱ 前項規定於以公益為目的之非法人之團體準用之。
+Ⅲ 前二項訴訟實施權之授與，應以文書證之。
+Ⅳ 第三十三條之規定，於第一項之社團法人或第二項之非法人之團體，準用之。</div></details>
+      <details><summary>第 36 條 <span>準用民事訴訟法（選定當事人）</span></summary><div class="txt">民事訴訟法第四十八條、第四十九條之規定，於本節準用之。</div></details>
+      <details><summary>第 41 條、第 42 條 <span>必要參加、獨立參加（第 5 課詳講）</span></summary><div class="txt">第 41 條 訴訟標的對於第三人及當事人一造必須合一確定者，行政法院應以裁定命該第三人參加訴訟。
+第 42 條 Ⅰ 行政法院認為撤銷訴訟之結果，第三人之權利或法律上利益將受損害者，得依職權命其獨立參加訴訟，並得因該第三人之聲請，裁定允許其參加。
+Ⅱ 前項參加，準用第三十九條第三款規定。參加人並得提出獨立之攻擊或防禦方法。
+Ⅲ 前二項規定，於其他訴訟準用之。
+Ⅳ 訴願人已向行政法院提起撤銷訴訟，利害關係人就同一事件再行起訴者，視為第一項之參加。</div></details>
+      <details><summary>第 104 條之 1 <span>通常程序第一審管轄（第 1 課）</span></summary><div class="txt">Ⅰ 適用通常訴訟程序之事件，以高等行政法院為第一審管轄法院。但下列事件，以地方行政法院為第一審管轄法院：
+一、關於稅捐課徵事件涉訟，所核課之稅額在新臺幣一百五十萬元以下者。
+二、因不服行政機關所為新臺幣一百五十萬元以下之罰鍰或其附帶之其他裁罰性、管制性不利處分而涉訟者。
+三、其他關於公法上財產關係之訴訟，其標的之金額或價額在新臺幣一百五十萬元以下者。
+四、其他依法律規定或經司法院指定由地方行政法院管轄之事件。
+Ⅱ 前項所定數額，司法院得因情勢需要，以命令增至新臺幣一千萬元。</div></details>
+      <details><summary>第 107 條（節錄） <span>起訴之駁回與補正</span></summary><div class="txt">Ⅰ 原告之訴，有下列各款情形之一者，行政法院應以裁定駁回之。但其情形可以補正者，審判長應先定期間命補正：
+一、訴訟事件不屬行政訴訟審判權，不能依法移送。
+二、訴訟事件不屬受訴行政法院管轄而不能請求指定管轄，亦不能為移送訴訟之裁定。
+三、原告或被告無當事人能力。
+四、原告或被告未由合法之法定代理人、代表人或管理人為訴訟行為。
+（第五款至第十一款略）
+Ⅱ 撤銷訴訟及課予義務訴訟，原告於訴狀誤列被告機關者，準用前項之規定。</div></details>
+      <details><summary>第 229 條第 1 項、第 4 項 <span>簡易程序與收容事件之管轄（第 1、10 課）</span></summary><div class="txt">Ⅰ 適用簡易訴訟程序之事件，以地方行政法院為第一審管轄法院。
+Ⅳ 第二項第五款之事件，由受收容人受收容或曾受收容所在地之地方行政法院管轄，不適用第十三條之規定。但未曾受收容者，由被告機關所在地之地方行政法院管轄。</div></details>
+      <details><summary>第 237 條之 2、第 237 條之 19 <span>交通裁決、都市計畫審查之管轄（第 10 課）</span></summary><div class="txt">第 237 條之 2 交通裁決事件，得由原告住所地、居所地、所在地或違規行為地之地方行政法院管轄。
+第 237 條之 19 前條訴訟，專屬都市計畫區所在地之高等行政法院管轄。</div></details>
+    </div>
+  </div>
+  <div class="card">
+    <h2>下一課</h2>
+    <p>第 5 課「多數當事人與代理」接著講共同訴訟（第 37 條至第 40 條）、三種訴訟參加（第 41 條至第 48 條）與訴訟代理人、強制律師代理（第 49 條至第 56 條）。這一課第 23 條點到的第 41、42 條參加人，會在那裡用比較表展開。<a href="05_多數當事人與代理.html">前往第 5 課</a>　<a href="00_總覽地圖.html">回總覽地圖</a></p>
+  </div>
+</section>
+
+<footer>行政訴訟法自學教材 · 第 4 課 管轄與當事人<br>依民國 111 年 6 月 22 日修正條文自行編寫，題目為原創；條文以<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030154" target="_blank" rel="noopener">全國法規資料庫</a>為準。</footer>
+</div>
+
+<script>
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const LESSON_ID = "04", CH = "行政訴訟法 04 管轄與當事人";
+const PROG_KEY = "xzss_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與數學教材共用 study_log_v1，供「學習紀錄」頁讀取）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+let pracCount = 0, pracOk = 0;
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="s5"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok }); pracCount++; if(ok) pracOk++;
+  });
+});
+
+// ===== 章末測驗交卷 =====
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0; const wrong = [];
+  qs.forEach((q,i)=>{
+    const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+    else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+  });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  writeProg({ quiz: { score, total: qs.length } });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+  else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="s5"]').classList.add('done'); }
+  else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+  else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 實例題自評 =====
+document.querySelectorAll('.essay').forEach(es=>{
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 本課專屬工具：管轄法院查找器 =====
+(function(){
+  const type = document.getElementById('mjType'), subBox = document.getElementById('mjSubBox'), sub = document.getElementById('mjSub'), subLegend = document.getElementById('mjSubLegend'), res = document.getElementById('mjRes');
+  const SUBS = {
+    natural:{ legend:'被告在中華民國的住居所狀況', opts:[['dom','有住所'],['res','無住所（或住所不明），有居所'],['last','無住所、無居所，有最後住所'],['none','住所、居所、最後住所都沒有'],['fact','有住所，且訴訟事實發生於其居所地']] },
+    realty:{ legend:'不動產事件的種類', opts:[['take','徵收、徵用或撥用'],['other','其他不動產公法關係（建照、拆除、地目、容積）']] },
+    insure:{ legend:'原告是誰', opts:[['insured','被保險人或受益人'],['unit','投保單位']] },
+    indig:{ legend:'兩造身分', opts:[['one','僅一造為原住民或部落（原告為原住民或部落）'],['both','兩造均為原住民或部落']] },
+    special:{ legend:'事件', opts:[['detain','收容事件（第 229 條第 2 項第 5 款）'],['traffic','交通裁決事件'],['plan','都市計畫審查']] }
+  };
+  function renderSub(){
+    const s = SUBS[type.value];
+    if(!s){ subBox.style.display='none'; sub.innerHTML=''; return; }
+    subLegend.textContent = s.legend;
+    sub.innerHTML = s.opts.map((o,i)=>'<label><input type="radio" name="mjSubOpt" value="'+o[0]+'"'+(i===0?' checked':'')+'>'+o[1]+'</label>').join('');
+    subBox.style.display='';
+  }
+  type.addEventListener('change',renderSub); renderSub();
+  function pick(){
+    const v = type.value, s = (sub.querySelector('input:checked')||{}).value;
+    const G = { kind:'普通管轄', also:'', art:'', court:'', note:'' };
+    if(v==='pub'){ G.art='第 13 條第 1 項前段'; G.court='公法人之公務所所在地之行政法院'; G.note='以國家、縣市、鄉鎮等公法人本身為被告時用這一句；告的是它的機關（縣政府、鄉公所）就改用後段。'; }
+    else if(v==='organ'){ G.art='第 13 條第 1 項後段'; G.court='該機關所在地之行政法院'; G.note='行政訴訟最常用的管轄規定。被告機關依第 24 條決定；機關裁撤改組依第 26 條找承受業務之機關或直接上級機關，管轄仍以起訴時為準（第 17 條）。'; }
+    else if(v==='priv'){ G.art='第 13 條第 2 項'; G.court='其主事務所或主營業所所在地之行政法院'; G.note='私法人、非法人團體當被告的典型是第 25 條受委託行使公權力之團體。主事務所與主營業所並列，兩者都可以。'; }
+    else if(v==='foreign'){ G.art='第 13 條第 3 項'; G.court='其在中華民國之主事務所或主營業所所在地之行政法院'; G.note='看的是「在中華民國」的主事務所或主營業所，不是外國總部。'; }
+    else if(v==='natural'){
+      G.art='第 14 條';
+      if(s==='dom'){ G.court='被告住所地之行政法院'; G.note='第 14 條第 1 項本文。住所地法院不能行使職權時，才由居所地法院管轄。'; }
+      else if(s==='res'){ G.court='被告在中華民國之居所地之行政法院（居所視為住所）'; G.note='第 14 條第 2 項第一層：現無住所或住所不明者，以其在中華民國之居所視為住所。'; }
+      else if(s==='last'){ G.court='被告在中華民國最後住所地之行政法院（最後住所視為住所）'; G.note='第 14 條第 2 項第二層：無居所或居所不明者，以其在中華民國最後之住所視為住所。'; }
+      else if(s==='none'){ G.court='中央政府所在地之行政法院（視為最後住所地）'; G.note='第 14 條第 2 項第三層：無最後住所者，以中央政府所在地視為其最後住所地。這是最後一層，不能跳過前面直接用。'; }
+      else { G.kind='普通管轄 + 第 14 條第 3 項'; G.court='被告住所地之行政法院，或其居所地之行政法院（原告擇一）'; G.note='第 14 條第 3 項：訴訟事實發生於被告居所地者，得由其居所地之行政法院管轄。限於「被告居所地」，不是任何事實發生地。競合時依第 18 條準用民事訴訟法第 22 條由原告選擇。'; }
+    }
+    else if(v==='realty'){
+      if(s==='take'){ G.kind='專屬管轄'; G.art='第 15 條第 1 項'; G.court='不動產所在地之行政法院（唯一）'; G.note='徵收、徵用、撥用三種才專屬。排除第 13、14 條；向其他法院起訴者應移送。'; }
+      else { G.kind='特別管轄（得由）'; G.art='第 15 條第 2 項'; G.court='不動產所在地之行政法院，或依第 13、14 條之法院（原告擇一）'; G.note='「其他有關不動產之公法上權利或法律關係」只是多一個法院可選，不排除被告所在地法院。'; }
+    }
+    else if(v==='officer'){ G.kind='特別管轄（得由）'; G.art='第 15 條之 1'; G.court='公務員職務所在地之行政法院，或依第 13 條被告機關所在地之行政法院（原告擇一）'; G.note='考績、調職、俸給、免職等公務員職務關係事件。職務所在地與機關所在地常常相同，不同時原告可選。'; }
+    else if(v==='insure'){
+      G.kind='特別管轄（得由）'; G.art='第 15 條之 2';
+      if(s==='insured'){ G.court='為原告之被保險人、受益人之住居所地，或被保險人從事職業活動所在地之行政法院；亦得依第 13 條向被告機關所在地法院起訴'; G.note='第 15 條之 2 第 1 項。注意條文限定「為原告之」被保險人、受益人，被告是保險機關時才有這個選項。'; }
+      else { G.court='投保單位之主事務所或主營業所所在地之行政法院；亦得依第 13 條向被告機關所在地法院起訴'; G.note='第 15 條之 2 第 2 項。投保單位（雇主）為原告時，不是看被保險人的住居所，而是看投保單位自己的主事務所或主營業所。'; }
+    }
+    else if(v==='indig'){
+      G.art='第 15 條之 3';
+      if(s==='one'){ G.kind='特別管轄（得由）'; G.court='為原告之原住民住居所地或經核定部落所在地之行政法院；亦得依第 13、14 條起訴'; G.note='第 15 條之 3 本文。原告是原住民或部落才有這個選項。'; }
+      else { G.kind='回到一般規定'; G.court='依第 13、14 條定之（第 15 條之 3 不適用）'; G.note='第 15 條之 3 但書：除兩造均為原住民或原住民族部落外。兩造都是原住民或部落時，特別管轄的保護理由不存在。'; }
+    }
+    else {
+      G.kind='本法別有規定';
+      if(s==='detain'){ G.art='第 229 條第 4 項'; G.court='受收容人受收容或曾受收容所在地之地方行政法院；未曾受收容者，被告機關所在地之地方行政法院'; G.note='條文明文「不適用第十三條之規定」。第 10 課會講收容聲請事件（第 237 條之 10 以下）。'; }
+      else if(s==='traffic'){ G.art='第 237 條之 2'; G.court='原告住所地、居所地、所在地或違規行為地之地方行政法院（得由）'; G.note='交通裁決事件罕見地以「原告」的住居所地為管轄依據，體現便民。第 10 課詳講。'; }
+      else { G.kind='專屬管轄'; G.art='第 237 條之 19'; G.court='都市計畫區所在地之高等行政法院（唯一）'; G.note='都市計畫審查程序專屬都市計畫區所在地之高等行政法院，不進地方庭。第 10 課詳講。'; }
+    }
+    return G;
+  }
+  document.getElementById('mjGo').addEventListener('click',()=>{
+    const g = pick();
+    res.innerHTML = '<h3>'+g.court+'</h3><p class="small" style="margin:0 0 .4em"><span class="pill law">'+g.art+'</span><span class="pill '+(g.kind.indexOf('專屬')>=0?'warn':(g.kind.indexOf('特別')>=0?'green':'blue'))+'">'+g.kind+'</span></p><p class="small muted" style="margin:0">'+g.note+'</p>';
+    res.classList.add('on');
+    logEv({ type:"tool", q:"venue-finder", k: type.value+':'+((sub.querySelector('input:checked')||{}).value||'-') });
+  });
+})();
+</script>
+</body>
+</html>

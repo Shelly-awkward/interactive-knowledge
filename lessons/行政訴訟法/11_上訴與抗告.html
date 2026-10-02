@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>行政訴訟法｜第 11 課 上訴與抗告</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F4F6F3; --card:#FFFFFF;
+  --ink:#1C2A30; --ink-2:#4B5A62; --ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --law:#5B3A8C; --law-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F; --card:#1D262B;
+    --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+    --rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --law:#B9A0E3; --law-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F; --card:#1D262B;
+  --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+  --rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --law:#B9A0E3; --law-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--blue);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+
+/* hero */
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--law);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--law-soft);color:var(--law);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+/* tabs */
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit}
+nav.tabs button:hover{border-color:var(--blue);color:var(--ink)}
+nav.tabs button.active{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--blue-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--law-soft);border-left:4px solid var(--law);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--law);display:block;margin-bottom:.2em}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.law{background:var(--law-soft);border-color:transparent;color:var(--law)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+
+/* flow / structure diagrams */
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 160px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--blue)}
+.courts{display:grid;grid-template-columns:1fr;gap:8px;margin:.6rem 0 1rem}
+.court{border:1px solid var(--rule);border-radius:10px;padding:.7rem .9rem;background:var(--paper);display:grid;grid-template-columns:7.5em 1fr;gap:.3rem .8rem;align-items:start}
+.court .lv{font-weight:700;color:var(--law)}
+.court .what{font-size:.92rem}
+.court.top{border-color:var(--law)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+/* examples */
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+.step4{display:grid;grid-template-columns:5em 1fr;gap:.25rem .7rem;font-size:.95rem;margin:.3rem 0 .8rem}
+.step4 dt{color:var(--law);font-weight:700}
+.step4 dd{margin:0}
+
+/* interactive tool */
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox select,.toolbox input[type=number]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--law)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+
+/* practice & quiz */
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--law);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+/* 條文速查 */
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">行政訴訟法 · 第 11 課</span>
+  <h1>上訴與抗告</h1>
+  <p>四節加章末測驗。判決出來了、裁定下來了，不服的人怎麼辦？對判決用「上訴」，對裁定用「抗告」，對受命法官、受託法官的裁定用「異議」。這一課先走完最高行政法院的上訴審（第 238 條到第 263 條），再看高等行政法院當上訴審時的特別規定（第 263 條之 1 到之 5），最後是抗告編（第 264 條到第 272 條）。考題最愛問三件事：違背法令怎麼認定、期間幾日、誰有資格裁定。</p>
+  <p class="ver">依民國 111 年 6 月 22 日修正條文編寫（多數條文自 112 年 8 月 15 日施行）。自學筆記，非官方；條文以全國法規資料庫為準。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">11-1 上訴最高行政法院的要件與程序</button>
+  <button data-t="s2">11-2 最高行政法院怎麼審、怎麼判</button>
+  <button data-t="s3">11-3 高等行政法院上訴審</button>
+  <button data-t="s4">11-4 抗告與異議</button>
+  <button data-t="s5">章末測驗</button>
+  <button data-t="s6">條文速查</button>
+</nav>
+
+<!-- ═══════════ 11-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出上訴最高行政法院的四個門檻：對象（終局判決）、期間（20 日）、理由（違背法令）、程式（上訴狀、理由書）</li>
+      <li>分得清第 243 條第 1 項「一般違背法令」與第 2 項「當然違背法令」六款，知道差別在第 258 條</li>
+      <li>記得三個期間：上訴 20 日、理由書 20 日、答辯狀 15 日，以及誰負責在哪個階段駁回</li>
+      <li>知道上訴審不能做什麼：不得訴之變更、追加、反訴（第 238 條第 2 項），聲明不得變更擴張（第 250 條）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：上訴的對象是「高等行政法院之終局判決」</h2>
+    <div class="law"><b class="art">第 238 條</b>Ⅰ 對於高等行政法院之終局判決，除法律別有規定外，得上訴於最高行政法院。<br>Ⅱ 於上訴審程序，不得為訴之變更、追加或提起反訴。</div>
+    <p>拆成三個條件。第一，<b>高等行政法院</b>的判決：依第 3 條之 1，這是指高等行政訴訟庭；地方行政訴訟庭的判決走第 263 條之 1，上訴到高等行政法院，不會到最高行政法院。第二，<b>終局判決</b>：中間判決不能單獨上訴。第三，<b>除法律別有規定外</b>：第 263 條之 1 第 2 項「對於高等行政法院之第二審判決，不得上訴」就是最重要的別有規定。</p>
+    <div class="law"><b class="art">第 239 條</b>前條判決前之裁判，牽涉該判決者，並受最高行政法院之審判。但依本法不得聲明不服或得以抗告聲明不服者，不在此限。</div>
+    <p>第 239 條補一個洞：判決前的裁判（例如駁回調查證據聲請的裁定）本來依第 265 條不能單獨抗告，但它影響了判決，所以隨著對判決的上訴一起被審。反過來，本來就能抗告的裁定（例如停止執行的裁定，第 119 條），就不用搭上訴的便車。</p>
+    <div class="warn">常錯：以為上訴審還可以追加一個新的請求、或被上訴人可以反訴。第 238 條第 2 項全部禁止。最高行政法院是法律審，沒有新的事實可以審，自然也不接新的訴。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：20 日不變期間、捨棄上訴權與裁判費</h2>
+    <div class="law"><b class="art">第 241 條</b>提起上訴，應於高等行政法院判決送達後二十日之不變期間內為之。但宣示或公告後送達前之上訴，亦有效力。</div>
+    <p>起算點是<b>判決送達</b>，不是宣示或公告。不變期間不能伸長縮短（第 90 條第 1 項但書），遲誤只能靠第 91 條回復原狀。但書處理「等不及送達就上訴」：有效，但第 245 條第 2 項提醒，理由書的 20 日要從送達後起算。</p>
+    <div class="law"><b class="art">第 240 條</b>Ⅰ 當事人於高等行政法院判決宣示、公告或送達後，得捨棄上訴權。<br>Ⅱ 當事人於宣示判決時，以言詞捨棄上訴權者，應記載於言詞辯論筆錄；如他造不在場，應將筆錄送達。</div>
+    <p>捨棄上訴權要在判決宣示、公告或送達「後」，判決還沒出來不能預先放棄。捨棄之後就不能再上訴；雙方都不上訴時，判決於上訴期間屆滿時確定（第 212 條第 1 項，第 9 課）。</p>
+    <div class="law"><b class="art">第 98 條之 2</b>Ⅰ 上訴，依第九十八條第二項規定，加徵裁判費二分之一。<br>Ⅱ 發回或發交更審再行上訴，或依第二百五十七條第二項為移送，經判決後再行上訴者，免徵裁判費。</div>
+    <p>第 98 條第 2 項起訴是 4,000 元、簡易事件 2,000 元；上訴「加徵二分之一」，所以通常程序事件上訴繳 6,000 元、簡易事件上訴繳 3,000 元。發回更審後再上訴不用再繳一次。</p>
+    <div class="tip">國考用法：向最高行政法院提起之事件是強制律師代理（第 49 條之 1 第 1 項第 3 款）。沒有委任律師就上訴，先走第 49 條之 1 的補正程序，不是直接以第 243 條第 2 項第 4 款處理。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：只能用「違背法令」當理由，第 243 條告訴你什麼叫違背法令</h2>
+    <div class="law"><b class="art">第 242 條</b>對於高等行政法院判決之上訴，非以其違背法令為理由，不得為之。</div>
+    <div class="law"><b class="art">第 243 條</b>Ⅰ 判決不適用法規或適用不當者，為違背法令。<br>Ⅱ 有下列各款情形之一者，其判決當然違背法令：<br>一、判決法院之組織不合法。<br>二、依法律或裁判應迴避之法官參與裁判。<br>三、行政法院於審判權之有無辨別不當或違背專屬管轄之規定。但其他法律別有規定者，從其規定。<br>四、當事人於訴訟未經合法代理或代表。<br>五、違背言詞辯論公開之規定。<br>六、判決不備理由或理由矛盾。</div>
+    <p>第 1 項是一般違背法令：該用的法規沒用（不適用），或用了但用錯（適用不當）。這裡的「法規」不限於法律，包括法規命令、判斷證據的經驗法則與論理法則。第 2 項六款是<b>當然違背法令</b>：只要有這些情形，不必再問它對判決結果有沒有影響，法律直接認定判決違法。</p>
+    <p>兩者在第 258 條分道：一般違背法令，如果不影響裁判結果，不得廢棄原判決；第 2 項第 1 款到第 5 款則<b>不受這個限制</b>。注意第 6 款「不備理由或理由矛盾」雖然是當然違背法令，卻沒有被第 258 條排除，所以理由寫壞了但結果對，仍不得廢棄。</p>
+    <div class="warn">常錯：把「事實認定錯誤」當成違背法令。最高行政法院以原判決確定之事實為基礎（第 254 條第 1 項），單純認為「法院事實看錯了」不是上訴理由；要說它<b>認定事實的方法</b>違法，例如違背職權調查義務（第 125 條、第 133 條）、違背經驗法則，才掛得上第 243 條第 1 項。</div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：第 243 條違背法令檢核器</h2>
+    <p class="small muted">勾選原判決有哪些瑕疵，再選這些瑕疵有沒有影響判決結果，工具會告訴你每一項落在第 243 條哪裡，以及第 258 條會不會擋住廢棄。</p>
+    <div class="toolbox">
+      <fieldset><legend>原判決的瑕疵（可複選）</legend>
+        <label><input type="checkbox" class="vk" value="org">合議庭只有兩位法官評議就判決</label>
+        <label><input type="checkbox" class="vk" value="rec">合議庭法官之一曾在機關參與該件訴願決定</label>
+        <label><input type="checkbox" class="vk" value="jur">把應歸普通法院的私法爭議當公法爭議實體判決</label>
+        <label><input type="checkbox" class="vk" value="excl">違背都市計畫審查的專屬管轄（第 237 條之 19）</label>
+        <label><input type="checkbox" class="vk" value="rep">原告公司由無代表權的人出面訴訟</label>
+        <label><input type="checkbox" class="vk" value="pub">無正當理由不公開言詞辯論</label>
+        <label><input type="checkbox" class="vk" value="rsn">判決理由前後矛盾，或對重要攻擊防禦方法未說明</label>
+        <label><input type="checkbox" class="vk" value="law">適用已修正前的舊法條，或解釋法條錯誤</label>
+        <label><input type="checkbox" class="vk" value="inv">原告聲請訊問的關鍵證人未調查、也未說明理由</label>
+        <label><input type="checkbox" class="vk" value="land">違背土地管轄（非專屬管轄）</label>
+        <label><input type="checkbox" class="vk" value="fact">只是不同意法院對證據的取捨與事實認定</label>
+      </fieldset>
+      <fieldset><legend>這些瑕疵對判決結果有沒有影響？</legend>
+        <label><input type="radio" name="vkEff" value="yes" checked>有影響，結果可能不同</label>
+        <label><input type="radio" name="vkEff" value="no">沒有影響，結論仍然正確</label>
+      </fieldset>
+      <button class="btn" id="vkGo">檢核</button>
+      <div class="result" id="vkRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：上訴狀、理由書、答辯狀，三個階段三個期間</h2>
+    <div class="law"><b class="art">第 244 條</b>Ⅰ 提起上訴，應以上訴狀表明下列各款事項，提出於原高等行政法院為之：<br>一、當事人。<br>二、高等行政法院判決，及對於該判決上訴之陳述。<br>三、對於高等行政法院判決不服之程度，及應如何廢棄或變更之聲明。<br>四、上訴理由。<br>Ⅱ 前項上訴理由應表明下列各款事項：<br>一、原判決所違背之法令及其具體內容。<br>二、依訴訟資料合於該違背法令之具體事實。<br>Ⅲ 第一項上訴狀內並應添具關於上訴理由之必要證據。<br>Ⅳ 在監獄或看守所之當事人，於上訴期間內向監所長官提出上訴狀者，視為上訴期間內之上訴；監所長官接受上訴狀後，應附記接受之年、月、日、時，送交原高等行政法院。</div>
+    <p>上訴狀是遞給<b>原高等行政法院</b>，不是直接寄到最高行政法院。第 2 項規定理由不能只寫「原判決違法」，要指出違背哪一條、對應哪個具體事實。這是上訴被認定「不合法」最常見的原因。</p>
+    <div class="law"><b class="art">第 245 條</b>Ⅰ 上訴狀內未表明上訴理由者，上訴人應於提起上訴後二十日內提出理由書於原高等行政法院；未提出者，毋庸命其補正，由原高等行政法院以裁定駁回之。<br>Ⅱ 判決宣示或公告後送達前提起上訴者，前項期間應自判決送達後起算。</div>
+    <div class="law"><b class="art">第 246 條</b>Ⅰ 上訴不合法而其情形不能補正者，原高等行政法院應以裁定駁回之。<br>Ⅱ 上訴不合法而其情形可以補正者，原高等行政法院應定期間命其補正；如不於期間內補正，原高等行政法院應以裁定駁回之。</div>
+    <div class="law"><b class="art">第 247 條</b>Ⅰ 上訴未經依前條規定駁回者，高等行政法院應速將上訴狀送達被上訴人。<br>Ⅱ 被上訴人得於上訴狀或第二百四十五條第一項理由書送達後十五日內，提出答辯狀於原高等行政法院。<br>Ⅲ 高等行政法院送交訴訟卷宗於最高行政法院，應於收到答辯狀或前項期間已滿，及各當事人之上訴期間已滿後為之。</div>
+    <div class="flow">
+      <div class="step"><b>送達後 20 日</b>提起上訴，上訴狀提出於原高等行政法院（第 241、244 條）。逾期：不能補正，原法院裁定駁回（第 246 條第 1 項）。</div>
+      <div class="step"><b>上訴後 20 日</b>上訴狀沒寫理由，補理由書（第 245 條第 1 項）。逾期：<b>毋庸命補正</b>，原法院裁定駁回。</div>
+      <div class="step"><b>送達後 15 日</b>被上訴人提答辯狀（第 247 條第 2 項）。期滿或收到答辯狀後，卷宗才送最高行政法院（第 3 項）。</div>
+      <div class="step"><b>到最高行政法院</b>雙方仍可提追加書狀（第 248 條）。不合法者裁定駁回，可補正者審判長先命補正（第 249 條第 1 項）。</div>
+    </div>
+    <div class="tip">國考用法：「毋庸命其補正」只出現在第 245 條第 1 項的理由書逾期。其他可以補正的不合法（例如裁判費沒繳、未委任律師）都要先命補正。題目問「原高等行政法院應如何處理」，先分辨是哪一種缺漏。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲不服高等行政訴訟庭第一審判決，判決於 113 年 3 月 5 日送達。甲 3 月 20 日提出上訴狀，只寫「原判決違法，請予廢棄」。4 月 15 日甲才補提理由書。原高等行政法院應如何處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>上訴期間與理由書期間分別怎麼算，逾期的效果有無不同。</dd>
+        <dt>條文</dt><dd>第 241 條（送達後 20 日不變期間）；第 244 條第 2 項（上訴理由應表明違背之法令及具體事實）；第 245 條第 1 項（提起上訴後 20 日內補理由書，未提出者毋庸命補正，裁定駁回）。</dd>
+        <dt>涵攝</dt><dd>上訴期間自 3 月 5 日送達起算，3 月 25 日屆滿（在途期間另計），3 月 20 日上訴合法。但上訴狀只寫「違法」，未指出違背哪一條、對應哪個事實，不符第 244 條第 2 項，屬「未表明上訴理由」。理由書應於提起上訴後 20 日即 4 月 9 日前提出，4 月 15 日已逾期。</dd>
+        <dt>結論</dt><dd>原高等行政法院應依第 245 條第 1 項，不必命補正，以裁定駁回上訴。甲對該裁定得依第 264 條抗告（第 268 條 10 日）。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙對高等行政法院判決上訴，理由是「原審認定乙未於期限內申報，但乙確有申報，原審事實認定錯誤」。這是合法的上訴理由嗎？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>單純爭執事實認定，是否屬第 242 條的「違背法令」。</dd>
+        <dt>條文</dt><dd>第 242 條；第 243 條第 1 項；第 254 條第 1 項（以高等行政法院判決確定之事實為判決基礎）。</dd>
+        <dt>涵攝</dt><dd>最高行政法院是法律審，原判決確定的事實原則上拘束它。乙只說「事實不對」，沒有指出原審在認定事實時違反了哪一條法規、哪個證據法則，無法掛上第 243 條第 1 項。乙若主張原審未依第 125 條、第 133 條職權調查其申報證明，或取捨證據違背經驗法則，才成為法律問題。</dd>
+        <dt>結論</dt><dd>以現有理由，上訴不合法，應依第 249 條第 1 項裁定駁回；但其情形屬「理由不合程式」，審判長得先定期間命補正。乙應改以原審調查證據程序違法為理由，並依第 244 條第 2 項表明具體事實。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">1. 甲不服高等行政訴訟庭第一審判決，判決 3 月 1 日送達，甲 3 月 25 日提起上訴。原高等行政法院應如何處理？</div>
+      <label><input type="radio" name="p1q1" value="A">定期間命甲補正</label>
+      <label><input type="radio" name="p1q1" value="B">以裁定駁回上訴</label>
+      <label><input type="radio" name="p1q1" value="C">送交最高行政法院，由最高行政法院裁定駁回</label>
+      <label><input type="radio" name="p1q1" value="D">以判決駁回上訴</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 241 條上訴期間為送達後 20 日，3 月 21 日屆滿；逾期不能補正，依第 246 條第 1 項由原高等行政法院以裁定駁回。" data-diag='{"A":"逾越不變期間是不能補正的瑕疵，第 246 條第 2 項的命補正只適用於可以補正的情形。","C":"第 246 條把不合法上訴的第一道把關交給原高等行政法院，不必送到最高行政法院。","D":"上訴不合法用裁定駁回；判決駁回是上訴無理由（第 255 條）才用。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">2. 上訴狀內未表明上訴理由，依第 245 條，下列何者正確？</div>
+      <label><input type="radio" name="p1q2" value="A">上訴人應於提起上訴後 20 日內提出理由書，未提出者毋庸命補正，由原高等行政法院裁定駁回</label>
+      <label><input type="radio" name="p1q2" value="B">上訴人應於提起上訴後 20 日內提出理由書，未提出者原高等行政法院應先定期間命補正</label>
+      <label><input type="radio" name="p1q2" value="C">上訴人應於提起上訴後 15 日內提出理由書</label>
+      <label><input type="radio" name="p1q2" value="D">上訴人應於判決送達後 10 日內提出理由書</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 245 條第 1 項：20 日內提出理由書於原高等行政法院；未提出者，毋庸命其補正，由原高等行政法院以裁定駁回之。" data-diag='{"B":"第 245 條第 1 項明文「毋庸命其補正」，這是它跟第 246 條第 2 項最大的差別。","C":"15 日是被上訴人提出答辯狀的期間（第 247 條第 2 項）。","D":"10 日是抗告期間（第 268 條），理由書是提起上訴後 20 日。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">3. 下列何種原判決的瑕疵，屬第 243 條第 2 項的「當然違背法令」？</div>
+      <label><input type="radio" name="p1q3" value="A">判決理由前後矛盾</label>
+      <label><input type="radio" name="p1q3" value="B">違背土地管轄的規定（非專屬管轄）</label>
+      <label><input type="radio" name="p1q3" value="C">判決適用了已經修正前的舊法條</label>
+      <label><input type="radio" name="p1q3" value="D">取捨證據違反經驗法則</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 243 條第 2 項第 6 款：判決不備理由或理由矛盾。其餘三者不在六款之內。" data-diag='{"B":"第 243 條第 2 項第 3 款只講「審判權」與「專屬管轄」，一般土地管轄錯誤依第 257 條第 1 項本文甚至不得作為廢棄原判決的理由。","C":"適用已修正前的法條是「適用法規不當」，屬第 243 條第 1 項的一般違背法令，要受第 258 條檢驗。","D":"違反經驗法則是認定事實方法違法，屬第 243 條第 1 項的一般違背法令。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 11-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出最高行政法院收到案子後的兩道篩選：不合法裁定駁回（含濫訴罰鍰 12 萬元）、無理由判決駁回</li>
+      <li>知道調查範圍受上訴聲明限制，但不受上訴理由拘束（第 251 條）</li>
+      <li>記得第 253 條應行言詞辯論的三款，以及法律審「以原判決確定之事實為基礎」的意義</li>
+      <li>畫得出判決方式的分流：駁回、廢棄後自為判決、廢棄發回或發交、廢棄移送</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：先問合不合法，再問有沒有理由</h2>
+    <div class="law"><b class="art">第 249 條</b>Ⅰ 上訴不合法者，最高行政法院應以裁定駁回之。但其情形可以補正者，審判長應先定期間命補正。<br>Ⅱ 上訴不合法之情形，已經原高等行政法院命補正而未補正者，得不行前項但書之程序。<br>Ⅲ 最高行政法院認上訴人之上訴基於惡意、不當或其他濫用訴訟程序之目的或有重大過失，且事實上或法律上之主張欠缺合理依據，應以裁定駁回之。但其情形可以補正者，審判長應先定期間命補正。<br>Ⅳ 最高行政法院依前項規定駁回上訴者，得各處上訴人、代表人或管理人、代理人新臺幣十二萬元以下之罰鍰。<br>Ⅴ 第一百零七條第五項及第七項前段規定，於前二項情形準用之。</div>
+    <p>原高等行政法院（第 246 條）漏掉的不合法事由，最高行政法院再篩一次。第 3 項是 111 年新增的<b>濫訴上訴</b>：主觀上惡意、不當、濫用程序或重大過失，加上客觀上主張欠缺合理依據，兩個要件都要有。第 4 項罰鍰上限 12 萬元，對象包括代表人、管理人、代理人，跟第 107 條第 6 項起訴濫訴的罰鍰數額相同。</p>
+    <div class="law"><b class="art">第 250 條</b>上訴之聲明不得變更或擴張之。</div>
+    <div class="law"><b class="art">第 251 條</b>Ⅰ 最高行政法院應於上訴聲明之範圍內調查之。<br>Ⅱ 最高行政法院調查高等行政法院判決有無違背法令，不受上訴理由之拘束。</div>
+    <p>兩條合起來讀：上訴人用「聲明」畫出戰場的範圍，法院不能跑到聲明以外（第 251 條第 1 項），上訴人自己也不能把範圍擴大（第 250 條）。但在範圍內，法院查到的違背法令<b>不限於上訴人寫的理由</b>（第 251 條第 2 項），這是行政訴訟職權主義的延伸。</p>
+    <div class="warn">常錯：把第 250 條「不得變更擴張聲明」跟第 262 條「得撤回上訴」搞混。聲明可以縮小（一部撤回），不能放大。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：法律審的審理方式</h2>
+    <div class="law"><b class="art">第 253 條</b>Ⅰ 最高行政法院之判決，有下列情形之一者，應行言詞辯論：<br>一、法律關係複雜或法律見解紛歧，有以言詞辯明之必要。<br>二、涉及專門知識或特殊經驗法則，有以言詞說明之必要。<br>三、涉及公益或影響當事人權利義務重大，有行言詞辯論之必要。<br>Ⅱ 前項言詞辯論實施之辦法由最高行政法院定之。</div>
+    <p>條文用「應行」，但三款都附帶「有…之必要」，所以實際上法院有判斷空間。沒有這三款情形的，不開言詞辯論，書面審理即可。</p>
+    <div class="law"><b class="art">第 253 條之 1</b>Ⅰ 言詞辯論應於上訴聲明之範圍內為之。<br>Ⅱ 言詞辯論期日，被上訴人、依第四十一條、第四十二條參加訴訟之人未委任訴訟代理人或當事人一造之訴訟代理人無正當理由未到場者，得依職權由到場之訴訟代理人辯論而為判決。當事人之訴訟代理人無正當理由均未到場者，得不行言詞辯論，逕為判決。</div>
+    <div class="law"><b class="art">第 254 條</b>Ⅰ 除別有規定外，最高行政法院應以高等行政法院判決確定之事實為判決基礎。<br>Ⅱ 以違背訴訟程序之規定為上訴理由時，所舉違背之事實，及以違背法令確定事實或遺漏事實為上訴理由時，所舉之該事實，最高行政法院得斟酌之。<br>Ⅲ 行言詞辯論所得闡明或補充訴訟關係之資料，最高行政法院亦得斟酌之。</div>
+    <p>第 1 項是法律審的核心：事實由原審確定，最高行政法院不重新認定。第 2 項開三個小門：原審「程序怎麼違法」的事實、原審「違法認定事實或漏掉事實」的事實，法院得斟酌；否則連判斷有沒有違背法令都做不到。</p>
+    <div class="note">第 253 條之 1 第 2 項講的是「訴訟代理人」未到場，因為向最高行政法院提起之事件強制律師代理（第 49 條之 1 第 1 項第 3 款），到場的本來就是律師。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：判決怎麼下</h2>
+    <div class="law"><b class="art">第 255 條</b>Ⅰ 最高行政法院認上訴為無理由者，應為駁回之判決。<br>Ⅱ 原判決依其理由雖屬不當，而依其他理由認為正當者，應以上訴為無理由。</div>
+    <div class="law"><b class="art">第 256 條</b>Ⅰ 最高行政法院認上訴為有理由者，就該部分應廢棄原判決。<br>Ⅱ 因違背訴訟程序之規定廢棄原判決者，其違背之訴訟程序部分，視為亦經廢棄。</div>
+    <div class="law"><b class="art">第 258 條</b>除第二百四十三條第二項第一款至第五款之情形外，高等行政法院判決違背法令而不影響裁判之結果者，不得廢棄原判決。</div>
+    <p>有理由才廢棄，而且只廢棄「該部分」。第 258 條是最後一道閘：違背法令但結論不會變，不廢棄，省掉一次沒意義的發回。例外是第 243 條第 2 項第 1 款到第 5 款這些涉及法院組織、審判權、代理與公開的重大程序瑕疵，一有就廢棄。</p>
+    <div class="law"><b class="art">第 259 條</b>經廢棄原判決而有下列各款情形之一者，最高行政法院應就該事件自為判決：<br>一、因基於確定之事實或依法得斟酌之事實，不適用法規或適用不當廢棄原判決，而事件已可依該事實為裁判。<br>二、原判決就欠缺實體判決要件之事件誤為實體判決。</div>
+    <div class="law"><b class="art">第 260 條</b>Ⅰ 除別有規定外，經廢棄原判決者，最高行政法院應將該事件發回原高等行政法院或發交其他高等行政法院。<br>Ⅱ 前項發回或發交判決，就高等行政法院應調查之事項，應詳予指示。<br>Ⅲ 受發回或發交之高等行政法院，應以最高行政法院所為廢棄理由之法律上判斷為其判決基礎。</div>
+    <div class="flow">
+      <div class="step"><b>上訴不合法</b>裁定駁回（第 249 條第 1 項）。濫訴者並得處 12 萬元以下罰鍰（第 3、4 項）。</div>
+      <div class="step"><b>上訴無理由</b>判決駁回（第 255 條第 1 項）。理由錯但結果對，也算無理由（第 2 項）。</div>
+      <div class="step"><b>有理由但不影響結果</b>不得廢棄（第 258 條）。但第 243 條第 2 項第 1 至 5 款例外。</div>
+      <div class="step"><b>有理由，廢棄後</b>事實已確定可裁判、或原審誤為實體判決：自為判決（第 259 條）。其餘：發回或發交（第 260 條）。</div>
+    </div>
+    <p>發回的高等行政法院受最高行政法院「法律上判斷」的拘束（第 260 條第 3 項），不能用原來那套見解再判一次。第 261 條規定判決正本附卷送交受發回法院；第 261 條之 1 允許判決書引用原判決相同的事實與理由。</p>
+    <div class="law"><b class="art">第 259 條之 1</b>Ⅰ 最高行政法院駁回上訴或廢棄原判決自為裁判時，法官對於裁判之主文或理由，已於評議時提出與多數意見不同之法律上意見，經記明於評議簿，並於評決後三日內補具書面者，得於裁判附記之；逾期提出者，不予附記。<br>Ⅱ 前項實施之辦法由最高行政法院定之。</div>
+    <p>不同意見書只在「駁回上訴」或「廢棄自為裁判」兩種情形附記，發回判決不附。要在評決後 3 日內補具書面。第 263 條之 5 明文把這一條排除在高等行政法院上訴審的準用範圍外，但第 272 條第 2 項又允許最高行政法院的抗告程序準用。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：管轄錯誤、上訴撤回與準用</h2>
+    <div class="law"><b class="art">第 257 條</b>Ⅰ 最高行政法院不得以高等行政法院無管轄權而廢棄原判決。但違背專屬管轄之規定者，不在此限。<br>Ⅱ 因高等行政法院無管轄權而廢棄原判決者，應以判決將該事件移送於管轄行政法院。</div>
+    <div class="law"><b class="art">第 256 條之 1</b>Ⅰ 以地方行政法院為第一審管轄法院之事件，高等行政法院依通常訴訟程序審理並為判決者，最高行政法院不得以高等行政法院無管轄權而廢棄原判決。<br>Ⅱ 前項情形，最高行政法院應依該事件所應適用之上訴審程序規定為裁判。</div>
+    <p>兩條都在說「管轄錯誤不要輕易廢棄」。第 257 條處理土地管轄：不得廢棄，除非違背專屬管轄。第 256 條之 1 處理審級錯誤：該在地方庭的案子跑到高等庭用通常程序判了，最高行政法院也不廢棄，改用該事件原本該走的上訴審程序（例如簡易程序的上訴審規定）來裁判。</p>
+    <div class="law"><b class="art">第 262 條</b>Ⅰ 上訴人於終局判決宣示或公告前得將上訴撤回。<br>Ⅱ 撤回上訴者，喪失其上訴權。<br>Ⅲ 上訴之撤回，應以書狀為之。但在言詞辯論時，得以言詞為之。<br>Ⅳ 於言詞辯論時所為上訴之撤回，應記載於言詞辯論筆錄，如他造不在場，應將筆錄送達。</div>
+    <div class="law"><b class="art">第 263 條</b>除本編別有規定外，前編第一章及第五章之規定，於最高行政法院上訴審程序準用之。</div>
+    <p>撤回上訴和捨棄上訴權（第 240 條）效果一樣：喪失上訴權，判決確定。差別在時點：捨棄是還沒上訴就放棄，撤回是上訴後收回。第 263 條把第二編第一章（高等行政法院通常訴訟程序）與第五章（裁判）準用到上訴審，所以上訴審的判決書、送達、言詞辯論筆錄都照第一審的規定走。</p>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　丙上訴主張原判決適用稅捐稽徵法的某條項錯誤。最高行政法院審理後認為：該條項確實用錯，但依另一條項計算，補稅金額與原判決相同。應如何判決？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>原判決理由不當但結果正確時，是廢棄還是駁回。</dd>
+        <dt>條文</dt><dd>第 243 條第 1 項（適用法規不當為違背法令）；第 255 條第 2 項（原判決依其理由雖屬不當，而依其他理由認為正當者，應以上訴為無理由）；第 258 條（違背法令而不影響裁判之結果者，不得廢棄）。</dd>
+        <dt>涵攝</dt><dd>適用法條錯誤屬第 243 條第 1 項的一般違背法令，不在第 243 條第 2 項第 1 至 5 款之列。既然依其他條項結論相同，該違背法令不影響裁判結果，第 258 條禁止廢棄；第 255 條第 2 項進一步規定此時「以上訴為無理由」。</dd>
+        <dt>結論</dt><dd>最高行政法院應以判決駁回上訴，並在理由中改依正確的法條說明。丙不會因為「原審用錯法條」就獲得發回。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　丁提起撤銷訴訟，高等行政法院未注意丁起訴已逾第 106 條的 2 個月不變期間，實體審理後判丁敗訴。丁上訴。最高行政法院發現逾期的事實，應如何處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>原審對欠缺實體判決要件的事件誤為實體判決，上訴審應發回還是自為判決。</dd>
+        <dt>條文</dt><dd>第 251 條第 2 項（調查有無違背法令，不受上訴理由之拘束）；第 107 條第 1 項第 6 款（起訴逾越法定期限，應以裁定駁回）；第 259 條第 2 款（原判決就欠缺實體判決要件之事件誤為實體判決，應自為判決）。</dd>
+        <dt>涵攝</dt><dd>起訴期間是法院應依職權審查的實體判決要件，丁沒有主張也沒關係，第 251 條第 2 項允許最高行政法院自行調查。原審本應以裁定駁回卻實體判決，屬「就欠缺實體判決要件之事件誤為實體判決」，第 259 條第 2 款規定應自為判決，不必發回。</dd>
+        <dt>結論</dt><dd>最高行政法院應廢棄原判決，自為判決駁回丁在第一審之訴。雖然丁是上訴人，結果比原判決對丁更不利，但這不是不利益變更的問題，而是訴訟要件本來就不備。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">4. 最高行政法院認上訴人之上訴屬濫用訴訟程序且主張欠缺合理依據而裁定駁回，得對上訴人處多少罰鍰？</div>
+      <label><input type="radio" name="p2q1" value="A">新臺幣 6 萬元以下</label>
+      <label><input type="radio" name="p2q1" value="B">新臺幣 12 萬元以下</label>
+      <label><input type="radio" name="p2q1" value="C">新臺幣 20 萬元以下</label>
+      <label><input type="radio" name="p2q1" value="D">法無明文，不得處罰</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 249 條第 4 項：得各處上訴人、代表人或管理人、代理人新臺幣十二萬元以下之罰鍰。與第 107 條第 6 項起訴濫訴的數額相同。" data-diag='{"A":"數額差一級。第 249 條第 4 項是 12 萬元以下。","C":"數額差一級。第 249 條第 4 項是 12 萬元以下。","D":"111 年修法新增第 249 條第 3、4 項，濫訴上訴有明文的罰鍰。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">5. 關於最高行政法院的調查與審理，下列何者正確？</div>
+      <label><input type="radio" name="p2q2" value="A">調查原判決有無違背法令，不受上訴理由之拘束</label>
+      <label><input type="radio" name="p2q2" value="B">得逾越上訴聲明之範圍一併調查</label>
+      <label><input type="radio" name="p2q2" value="C">得斟酌上訴後新發生、原審未確定的事實</label>
+      <label><input type="radio" name="p2q2" value="D">應一律行言詞辯論</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 251 條第 2 項。第 1 項限制在上訴聲明範圍內；第 254 條第 1 項以原判決確定之事實為基礎；第 253 條僅三款情形應行言詞辯論。" data-diag='{"B":"第 251 條第 1 項：應於上訴聲明之範圍內調查。不受拘束的是「理由」不是「聲明」。","C":"第 254 條第 1 項：以高等行政法院判決確定之事實為判決基礎。第 2 項只開放與程序違法或違法認定事實有關的事實。","D":"第 253 條第 1 項只在三款情形應行言詞辯論，其餘原則不開。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">6. 原判決理由雖屬不當，但最高行政法院依其他理由認為判決結果正當。應如何裁判？</div>
+      <label><input type="radio" name="p2q3" value="A">廢棄原判決，發回原高等行政法院</label>
+      <label><input type="radio" name="p2q3" value="B">廢棄原判決，自為判決</label>
+      <label><input type="radio" name="p2q3" value="C">以上訴為無理由，判決駁回</label>
+      <label><input type="radio" name="p2q3" value="D">以上訴為不合法，裁定駁回</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 255 條第 2 項：原判決依其理由雖屬不當，而依其他理由認為正當者，應以上訴為無理由。" data-diag='{"A":"結果正確就沒有廢棄的必要，第 258 條也禁止以不影響結果的違背法令廢棄原判決。","B":"自為判決是廢棄之後的事（第 259 條），這裡根本不廢棄。","D":"上訴合法與否看程式和期間；理由對不對是「有無理由」的問題，用判決。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 11-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出高等行政法院上訴審的定位：地方行政訴訟庭判決的第二審，也是終審</li>
+      <li>看到「程序用錯」或「審級用錯」的題目，分得出第 263 條之 2（不廢棄）與第 263 條之 3（廢棄）的界線</li>
+      <li>記得第 263 條之 4 統一見解移送的五項規定，特別是哪些裁定不得聲明不服</li>
+      <li>知道第 263 條之 5 準用了什麼、排除了什麼</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：第二審即終審</h2>
+    <div class="law"><b class="art">第 263 條之 1</b>Ⅰ 對於地方行政法院之終局判決，除法律別有規定外，得依本章規定上訴於管轄之高等行政法院。<br>Ⅱ 對於高等行政法院之第二審判決，不得上訴。</div>
+    <p>第 1 課講的「三級二審」在這裡落地。簡易程序、交通裁決、以及第 104 條之 1 但書 150 萬元以下的通常程序事件，第一審都在地方行政訴訟庭，上訴到高等行政訴訟庭就結束。第 2 項說得很死：第二審判決<b>不得上訴</b>，沒有「以違背法令為理由得上訴」這種例外。</p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>最高行政法院上訴審（第 238 條以下）</th><th>高等行政法院上訴審（第 263 條之 1 以下）</th></tr></thead>
+      <tbody>
+        <tr><th>原判決</th><td>高等行政訴訟庭第一審判決</td><td>地方行政訴訟庭第一審判決</td></tr>
+        <tr><th>上訴理由</th><td>限於違背法令（第 242 條）</td><td>準用第 242 條（第 263 條之 5），同樣是法律審</td></tr>
+        <tr><th>期間</th><td>20 日（第 241 條）</td><td>準用第 241 條，20 日</td></tr>
+        <tr><th>再上訴</th><td>無（最高行政法院為終審）</td><td>不得上訴（第 263 條之 1 第 2 項）</td></tr>
+        <tr><th>統一見解</th><td>行政法院組織法的大法庭等機制</td><td>裁定移送最高行政法院（第 263 條之 4）</td></tr>
+        <tr><th>不同意見附記</th><td>有（第 259 條之 1）</td><td>無（第 263 條之 5 明文排除）</td></tr>
+        <tr><th>裁判費</th><td>加徵二分之一（第 98 條之 2）</td><td>加徵二分之一；交通裁決上訴 750 元（第 237 條之 5）</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：以為高等行政法院的上訴審「可以審事實」。第 263 條之 5 準用第三編第一章，包含第 242 條、第 254 條，所以它同樣以違背法令為上訴理由、以原判決確定之事實為基礎。學說上對這是否過度限制簡易事件當事人的救濟有討論，但條文如此。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：程序用錯、審級用錯，上訴審怎麼收拾</h2>
+    <div class="law"><b class="art">第 263 條之 2</b>Ⅰ 應適用簡易訴訟程序或交通裁決訴訟程序之事件，高等行政法院不得以地方行政法院行通常訴訟程序而廢棄原判決。<br>Ⅱ 應適用交通裁決訴訟程序之事件，高等行政法院不得以地方行政法院行簡易訴訟程序而廢棄原判決。<br>Ⅲ 前二項情形，高等行政法院應依該事件所應適用之上訴審程序規定為裁判。</div>
+    <div class="law"><b class="art">第 263 條之 3</b>Ⅰ 地方行政法院就其應適用通常訴訟程序之事件，而誤用簡易訴訟程序或交通裁決事件訴訟程序審判；或應適用簡易訴訟程序之事件，而誤用交通裁決事件訴訟程序審判者，受理上訴之高等行政法院應廢棄原判決，將該事件發回或發交管轄地方行政法院。<br>Ⅱ 以高等行政法院為第一審管轄法院之事件，誤由地方行政法院審判者，受理上訴之高等行政法院應廢棄原判決，逕依通常訴訟程序為第一審判決。<br>Ⅲ 當事人對於第一項程序誤用或第二項管轄錯誤已表示無異議，或明知或可得而知並無異議而就本案有所聲明或陳述者，高等行政法院應依原程序之上訴審規定為裁判，不適用前二項規定。</div>
+    <p>判斷原則只有一句：<b>用了比較慎重的程序，不廢棄；用了比較簡略的程序，廢棄</b>。通常程序最慎重、簡易程序其次、交通裁決程序最簡略。往上錯（該簡易卻用通常）對當事人沒有損失，第 263 條之 2 說不廢棄，改依該事件應適用的上訴審規定裁判；往下錯（該通常卻用簡易）剝奪了當事人應有的程序保障，第 263 條之 3 第 1 項說廢棄發回。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>應適用</th><th>地方庭實際用</th><th>結果</th><th>條文</th></tr></thead>
+      <tbody>
+        <tr><td>簡易</td><td>通常</td><td>不廢棄，依簡易上訴審規定裁判</td><td>第 263 條之 2 第 1、3 項</td></tr>
+        <tr><td>交通裁決</td><td>通常</td><td>不廢棄，依交通裁決上訴審規定裁判</td><td>第 263 條之 2 第 1、3 項</td></tr>
+        <tr><td>交通裁決</td><td>簡易</td><td>不廢棄，依交通裁決上訴審規定裁判</td><td>第 263 條之 2 第 2、3 項</td></tr>
+        <tr><td>通常</td><td>簡易或交通裁決</td><td>廢棄，發回或發交管轄地方行政法院</td><td>第 263 條之 3 第 1 項</td></tr>
+        <tr><td>簡易</td><td>交通裁決</td><td>廢棄，發回或發交</td><td>第 263 條之 3 第 1 項</td></tr>
+        <tr><td>高等庭第一審</td><td>地方庭審判</td><td>廢棄，高等行政法院逕依通常程序為<b>第一審</b>判決</td><td>第 263 條之 3 第 2 項</td></tr>
+        <tr><td colspan="2">以上第 263 條之 3 的情形，當事人已表示無異議或無異議而為本案陳述</td><td>不廢棄，依原程序之上訴審規定裁判</td><td>第 263 條之 3 第 3 項</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tip">國考用法：第 263 條之 3 第 2 項的審級錯誤，高等行政法院廢棄後是「逕為第一審判決」，不是發回。因為它本來就該是第一審法院，自己判最省事；判完之後，當事人還可以再上訴最高行政法院。第 3 項的責問權喪失是整條的例外，別漏掉。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：見解不一致，裁定移送最高行政法院</h2>
+    <div class="law"><b class="art">第 263 條之 4</b>Ⅰ 高等行政法院受理上訴事件，認有確保裁判見解統一之必要者，應以裁定敘明理由移送最高行政法院裁判之。<br>Ⅱ 高等行政法院審理上訴事件期間，當事人認為足以影響裁判結果之法律見解，先前裁判之法律見解已產生歧異，得向受理本案之高等行政法院聲請以裁定敘明理由移送最高行政法院裁判之。其程序準用行政法院組織法第十五條之四規定。<br>Ⅲ 前二項之移送裁定及駁回聲請之裁定，均不得聲明不服。<br>Ⅳ 最高行政法院認高等行政法院裁定移送之事件，並未涉及裁判見解統一之必要者，應以裁定發回。受發回之高等行政法院，不得再將上訴事件裁定移送最高行政法院。<br>Ⅴ 除前項情形外，最高行政法院各庭應先以徵詢書徵詢其他庭之意見，並準用行政法院組織法第十五條之一、第十五條之二、第十五條之五至第十五條之十一規定。</div>
+    <p>三級二審的代價是各高等行政法院的見解可能分歧，又沒有最高行政法院來統一。第 263 條之 4 開一條專用通道：法院自己認為有必要（第 1 項）、或當事人聲請（第 2 項），都能把案子送到最高行政法院<b>裁判</b>，不是只問意見。</p>
+    <ul>
+      <li><b>誰啟動：</b>高等行政法院依職權（第 1 項）；當事人聲請（第 2 項），但要符合「足以影響裁判結果」且「先前裁判見解已歧異」。</li>
+      <li><b>能不能抗告：</b>移送裁定、駁回聲請的裁定，都不得聲明不服（第 3 項）。</li>
+      <li><b>送錯了：</b>最高行政法院認為沒有統一的必要，裁定發回；發回後高等行政法院不得再送（第 4 項）。</li>
+      <li><b>收到後：</b>最高行政法院各庭先用徵詢書徵詢其他庭意見，準用行政法院組織法的大法庭相關規定（第 5 項）。</li>
+    </ul>
+    <div class="warn">常錯：寫「當事人得聲請高等行政法院移送，法院駁回聲請時得抗告」。第 3 項明文連駁回聲請的裁定都不得聲明不服，這是整條最常被考的一句。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：第 263 條之 5 的準用與排除</h2>
+    <div class="law"><b class="art">第 263 條之 5</b>除第二百五十九條之一及本章別有規定外，本編第一章及前編第一章之規定，於高等行政法院上訴審程序準用之；交通裁決事件之上訴，並準用第二百三十七條之八規定。</div>
+    <p>準用兩塊：本編第一章（最高行政法院上訴審，第 238 條到第 263 條）與前編第一章（高等行政法院通常訴訟程序）。排除一條：第 259 條之 1 不同意見附記，只有最高行政法院才有。所以 20 日上訴期間、違背法令、理由書 20 日、答辯狀 15 日、第 243 條六款、第 258 條，在高等行政法院上訴審全部適用。</p>
+    <p>交通裁決事件的上訴另外準用第 237 條之 8：法院為訴訟費用裁判時應確定費用額。這是因為交通裁決事件的裁判費是固定數字（上訴 750 元，第 237 條之 5 第 1 項第 2 款），一次確定省得再另行聲請。</p>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　戊不服 30 萬元罰鍰，向地方行政訴訟庭起訴，該庭誤以通常訴訟程序審理後判戊敗訴。戊上訴。高等行政法院審理時發現程序用錯，應如何處理？若反過來，是 200 萬元的罰鍰事件誤由地方行政訴訟庭審判，又如何？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>程序誤用與審級錯誤在上訴審的處理方式。</dd>
+        <dt>條文</dt><dd>第 229 條第 2 項第 2 款（50 萬元以下罰鍰適用簡易程序）；第 263 條之 2 第 1、3 項；第 104 條之 1 第 1 項（150 萬元以下罰鍰由地方行政法院管轄，超過者由高等行政法院管轄）；第 263 條之 3 第 2、3 項。</dd>
+        <dt>涵攝</dt><dd>30 萬元罰鍰應適用簡易程序，地方庭卻用了更慎重的通常程序，對戊沒有不利，第 263 條之 2 第 1 項禁止以此廢棄原判決，第 3 項命高等行政法院依簡易程序的上訴審規定裁判。200 萬元罰鍰超過 150 萬元，第一審應在高等行政訴訟庭，地方庭審判是審級錯誤，第 263 條之 3 第 2 項規定高等行政法院應廢棄原判決，逕依通常訴訟程序為第一審判決；但若當事人已表示無異議或無異議而為本案陳述，依第 3 項改依原程序之上訴審規定裁判。</dd>
+        <dt>結論</dt><dd>前者不廢棄，依簡易上訴審程序裁判，判決為終審。後者原則上廢棄並自為第一審判決，該判決可再上訴最高行政法院。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　己對地方行政訴訟庭的簡易程序判決上訴。高等行政法院審理中，己發現其他高等行政法院對同一法律問題曾有相反見解，聲請移送最高行政法院。高等行政法院裁定駁回聲請。己得否抗告？若高等行政法院依職權移送，最高行政法院認為沒有統一的必要，怎麼辦？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>第 263 條之 4 聲請移送的要件、裁定的救濟與發回的效果。</dd>
+        <dt>條文</dt><dd>第 263 條之 4 第 2 項（當事人聲請）、第 3 項（移送裁定及駁回聲請之裁定不得聲明不服）、第 4 項（無統一必要者裁定發回，不得再移送）。</dd>
+        <dt>涵攝</dt><dd>己是當事人，於上訴審審理期間，主張足以影響裁判結果的法律見解已有歧異，符合第 2 項聲請要件。但法院駁回聲請的裁定依第 3 項不得聲明不服，己不能抗告。若法院依職權移送而最高行政法院認為無統一必要，依第 4 項以裁定發回，高等行政法院不得再送，應自行判決。</dd>
+        <dt>結論</dt><dd>己不得抗告，只能等高等行政法院判決。發回後的上訴事件由高等行政法院終局裁判，判決依第 263 條之 1 第 2 項不得上訴。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">7. 應適用簡易訴訟程序的事件，地方行政訴訟庭誤以通常訴訟程序審理並判決。當事人上訴，高等行政法院應：</div>
+      <label><input type="radio" name="p3q1" value="A">廢棄原判決，發回地方行政訴訟庭改依簡易程序審理</label>
+      <label><input type="radio" name="p3q1" value="B">不得以此廢棄原判決，應依簡易訴訟程序的上訴審規定裁判</label>
+      <label><input type="radio" name="p3q1" value="C">廢棄原判決，逕依簡易程序為第一審判決</label>
+      <label><input type="radio" name="p3q1" value="D">裁定移送最高行政法院</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 263 條之 2 第 1 項：不得以地方行政法院行通常訴訟程序而廢棄原判決；第 3 項：依該事件所應適用之上訴審程序規定為裁判。" data-diag='{"A":"廢棄發回是第 263 條之 3 第 1 項「該用通常卻用簡易」的處理，方向相反。","C":"逕為第一審判決是第 263 條之 3 第 2 項審級錯誤的處理，這裡審級沒錯。","D":"第 263 條之 4 的移送是為了統一法律見解，跟程序誤用無關。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">8. 以高等行政法院為第一審管轄法院之事件，誤由地方行政訴訟庭審判，當事人在第一審即表示異議。上訴後高等行政法院應：</div>
+      <label><input type="radio" name="p3q2" value="A">廢棄原判決，逕依通常訴訟程序為第一審判決</label>
+      <label><input type="radio" name="p3q2" value="B">廢棄原判決，發回地方行政訴訟庭</label>
+      <label><input type="radio" name="p3q2" value="C">不得廢棄原判決，依通常程序之上訴審規定裁判</label>
+      <label><input type="radio" name="p3q2" value="D">廢棄原判決，移送最高行政法院為第一審判決</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 263 條之 3 第 2 項：受理上訴之高等行政法院應廢棄原判決，逕依通常訴訟程序為第一審判決。當事人已異議，不適用第 3 項。" data-diag='{"B":"地方行政訴訟庭本來就沒有管轄權，發回它沒有意義；第 263 條之 3 第 2 項是由高等行政法院自己當第一審。","C":"這是第 263 條之 3 第 3 項的結果，前提是當事人無異議。題目說當事人已經異議。","D":"最高行政法院不當第一審；第一審管轄法院是高等行政法院自己。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">9. 關於第 263 條之 4 統一法律見解的移送，下列何者正確？</div>
+      <label><input type="radio" name="p3q3" value="A">移送裁定與駁回聲請之裁定，均不得聲明不服</label>
+      <label><input type="radio" name="p3q3" value="B">只有高等行政法院得依職權移送，當事人不得聲請</label>
+      <label><input type="radio" name="p3q3" value="C">最高行政法院認無統一見解必要者，應自為判決</label>
+      <label><input type="radio" name="p3q3" value="D">受發回之高等行政法院，如仍認有必要，得再次裁定移送</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 263 條之 4 第 3 項。第 2 項允許當事人聲請；第 4 項規定無必要者裁定發回，且受發回法院不得再移送。" data-diag='{"B":"第 263 條之 4 第 2 項：當事人得向受理本案之高等行政法院聲請移送。","C":"第 263 條之 4 第 4 項：並未涉及統一必要者，應以裁定「發回」，不是自為判決。","D":"第 263 條之 4 第 4 項後段：受發回之高等行政法院，不得再將上訴事件裁定移送最高行政法院。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 11-4 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出抗告的原則與兩個限制：對裁定得抗告（第 264 條），但程序進行中的裁定與法律明定不許抗告者除外</li>
+      <li>分得清抗告與異議：裁定是受訴法院作的還是受命、受託法官作的，案子繫屬在第一審還是上訴審</li>
+      <li>記得抗告期間 10 日、裁判費 1,000 元、由直接上級法院裁定、不得再抗告</li>
+      <li>知道抗告程序準用了哪些上訴審規定（第 272 條）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：對裁定用抗告，但不是每個裁定都能抗告</h2>
+    <div class="law"><b class="art">第 264 條</b>對於裁定得為抗告。但別有不許抗告之規定者，不在此限。</div>
+    <div class="law"><b class="art">第 265 條</b>訴訟程序進行中所為之裁定，除別有規定外，不得抗告。</div>
+    <p>判決用上訴，裁定用抗告，這是第一層。第二層是兩個排除。第 264 條但書：法律明文不許抗告的，例如第 263 條之 4 第 3 項的移送裁定、第 267 條第 2 項抗告法院的裁定。第 265 條：<b>程序進行中</b>的裁定，例如指定期日、駁回調查證據的聲請，原則上不能單獨抗告，要等判決後依第 239 條一併受上訴審審查。</p>
+    <p>第 265 條也有「別有規定」的反例：停止執行的裁定依第 119 條得抗告，雖然它常是在程序進行中作成的。看到裁定，先問三件事：有沒有明文不許抗告？是不是程序進行中的裁定？有沒有明文例外允許抗告？</p>
+    <div class="law"><b class="art">第 98 條之 4</b>抗告，徵收裁判費新臺幣一千元。</div>
+    <div class="note">交通裁決事件的抗告是 300 元（第 237 條之 5 第 1 項第 3 款），再次印證特別程序的費用自成一套。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：受命法官、受託法官的裁定用「異議」</h2>
+    <div class="law"><b class="art">第 266 條</b>Ⅰ 受命法官或受託法官之裁定，不得抗告。但其裁定如係受訴行政法院所為而依法得為抗告者，得向受訴行政法院提出異議。<br>Ⅱ 前項異議，準用對於行政法院同種裁定抗告之規定。<br>Ⅲ 受訴行政法院就異議所為之裁定，得依本編之規定抗告。<br>Ⅳ 繫屬於上訴審行政法院之事件，受命法官、受託法官所為之裁定，得向受訴行政法院提出異議。其不得上訴之事件，第一審行政法院受命法官、受託法官所為之裁定，亦同。</div>
+    <p>受命法官（合議庭派出去做準備程序的法官）、受託法官（受囑託調查證據的別院法官）不是「法院」，他們的裁定不能直接拿去上級法院抗告，先回到<b>受訴行政法院</b>（合議庭本身）異議。第 1 項但書多一個條件：這個裁定如果是受訴法院自己作的，依法要能抗告，才能異議；也就是程序進行中本來就不能抗告的裁定，換成受命法官作，也不能異議。</p>
+    <p>第 4 項放寬兩種情形，不再要求「依法得為抗告」：案件繫屬於上訴審，或是不得上訴的事件。理由是這兩種情形之後沒有上訴審能依第 239 條一併審查，再不給異議就沒有救濟了。異議的期間準用抗告（第 2 項），10 日；受訴法院對異議的裁定，可以再依本編抗告（第 3 項）。</p>
+    <div class="law"><b class="art">第 271 條</b>依本編規定，應為抗告而誤為異議者，視為已提起抗告；應提出異議而誤為抗告者，視為已提出異議。</div>
+    <div class="tip">國考用法：第 271 條是「用錯名稱不吃虧」條款。題目給你一個當事人寫錯標題的書狀，答案永遠是「視為已提起正確的那一種」，不是駁回、不是命補正。</div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：抗告還是異議</h2>
+    <p class="small muted">選裁定是誰作的、案子繫屬在哪一審、裁定的性質，看第 264 條到第 266 條怎麼說，以及期間、提出法院與費用。</p>
+    <div class="toolbox">
+      <fieldset style="min-width:0"><legend>裁定由誰作成</legend>
+        <select id="agWho" style="max-width:100%">
+          <option value="court">受訴行政法院（合議庭或獨任法官）</option>
+          <option value="pres">審判長</option>
+          <option value="comm">受命法官</option>
+          <option value="entr">受託法官</option>
+        </select>
+      </fieldset>
+      <fieldset style="min-width:0"><legend>案件繫屬狀態</legend>
+        <select id="agStage" style="max-width:100%">
+          <option value="first">第一審（判決得上訴之事件）</option>
+          <option value="appeal">上訴審（高等行政法院或最高行政法院）</option>
+          <option value="noapp">第一審，但屬不得上訴之事件</option>
+        </select>
+      </fieldset>
+      <fieldset><legend>裁定的性質</legend>
+        <label><input type="radio" name="agKind" value="final" checked>終結或獨立的裁定（駁回起訴、駁回上訴、停止執行、訴訟救助等）</label>
+        <label><input type="radio" name="agKind" value="interim">訴訟程序進行中的裁定（指定期日、駁回調查證據聲請等），且法律沒有明定得抗告</label>
+      </fieldset>
+      <button class="btn" id="agGo">判斷</button>
+      <div class="result" id="agRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：抗告的程序</h2>
+    <div class="law"><b class="art">第 267 條</b>Ⅰ 抗告，由直接上級行政法院裁定。<br>Ⅱ 對於抗告法院之裁定，不得再為抗告。</div>
+    <div class="law"><b class="art">第 268 條</b>提起抗告，應於裁定送達後十日之不變期間內為之。但送達前之抗告亦有效力。</div>
+    <div class="law"><b class="art">第 269 條</b>Ⅰ 提起抗告，應向為裁定之原行政法院或原審判長所屬行政法院提出抗告狀為之。<br>Ⅱ 關於訴訟救助提起抗告，及由證人、鑑定人或執有證物之第三人提起抗告者，得以言詞為之。</div>
+    <div class="law"><b class="art">第 270 條</b>關於捨棄上訴權及撤回上訴之規定，於抗告準用之。</div>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>上訴</th><th>抗告</th></tr></thead>
+      <tbody>
+        <tr><th>對象</th><td>終局判決（第 238 條）</td><td>裁定（第 264 條）</td></tr>
+        <tr><th>期間</th><td>送達後 20 日（第 241 條）</td><td>送達後 10 日（第 268 條）</td></tr>
+        <tr><th>送達前提起</th><td>有效（第 241 條但書）</td><td>有效（第 268 條但書）</td></tr>
+        <tr><th>提出於</th><td>原高等行政法院（第 244 條第 1 項）</td><td>原行政法院或原審判長所屬法院（第 269 條第 1 項）</td></tr>
+        <tr><th>形式</th><td>上訴狀（第 244 條）</td><td>抗告狀；訴訟救助、證人、鑑定人、執有證物之第三人得以言詞（第 269 條第 2 項）</td></tr>
+        <tr><th>裁判者</th><td>最高行政法院／高等行政法院</td><td>直接上級行政法院（第 267 條第 1 項）</td></tr>
+        <tr><th>再救濟</th><td>第二審判決不得上訴（第 263 條之 1 第 2 項）</td><td>不得再抗告（第 267 條第 2 項）</td></tr>
+        <tr><th>裁判費</th><td>加徵二分之一（第 98 條之 2）</td><td>1,000 元（第 98 條之 4）</td></tr>
+        <tr><th>捨棄、撤回</th><td>第 240 條、第 262 條</td><td>準用（第 270 條）</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：抗告期間寫成 20 日、或把收容聲請事件的 5 日（第 237 條之 16 第 1 項）套到一般抗告。一般抗告是 10 日，而且是不變期間。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：第 272 條的準用清單</h2>
+    <div class="law"><b class="art">第 272 條</b>Ⅰ 除本編別有規定外，第二百四十九條第三項至第五項、第二百五十六條之一、第二百六十一條之一、第二百六十三條之二至第二百六十三條之四規定，於抗告程序準用之。<br>Ⅱ 第二百五十九條之一規定，於最高行政法院抗告程序準用之。<br>Ⅲ 民事訴訟法第四百九十條至第四百九十二條及第三編第一章之規定，於本編準用之。</div>
+    <ul>
+      <li><b>第 249 條第 3 至 5 項：</b>濫訴抗告也可以裁定駁回並處 12 萬元以下罰鍰。</li>
+      <li><b>第 256 條之 1、第 263 條之 2 至之 4：</b>程序誤用不廢棄、審級錯誤的處理、統一見解移送，抗告程序一樣適用。</li>
+      <li><b>第 261 條之 1：</b>抗告裁定書可以引用原裁定的事實與理由。</li>
+      <li><b>第 259 條之 1：</b>不同意見附記，只準用於<b>最高行政法院</b>的抗告程序（第 2 項）。</li>
+      <li><b>民事訴訟法第 490 條至第 492 條及第三編第一章：</b>原法院對抗告的處理（認為有理由得自行更正裁定等）與上訴審的一般規定（第 3 項）。</li>
+    </ul>
+    <div class="note">對照第 263 條之 5：高等行政法院上訴審「排除」第 259 條之 1；第 272 條第 2 項則把它「限定」在最高行政法院的抗告程序。兩條合看，不同意見附記始終只屬於最高行政法院。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　庚在高等行政訴訟庭第一審（判決得上訴之事件）進行中，受命法官於準備程序裁定駁回庚聲請訊問證人。庚不服，向最高行政法院提起抗告。法院應如何處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>第一審受命法官所為程序進行中裁定的救濟途徑。</dd>
+        <dt>條文</dt><dd>第 266 條第 1 項（受命法官之裁定不得抗告；但其裁定如係受訴法院所為而依法得為抗告者，得向受訴法院提出異議）；第 265 條（程序進行中之裁定不得抗告）；第 239 條（判決前之裁判牽涉判決者，併受上訴審審判）；第 271 條（誤用之轉換）。</dd>
+        <dt>涵攝</dt><dd>駁回調查證據聲請是程序進行中的裁定，即使由受訴法院作成，依第 265 條也不得抗告，所以不符合第 266 條第 1 項但書「依法得為抗告」的條件，連異議都不能提。本件繫屬第一審且判決得上訴，不適用第 266 條第 4 項的放寬。庚只能等判決後上訴，由上訴審依第 239 條一併審查。</dd>
+        <dt>結論</dt><dd>庚的抗告不合法。第 271 條只在「應異議而誤為抗告」時轉換，本件本來就不能異議，無從轉換。法院應以裁定駁回抗告（準用第 249 條第 1 項）。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　辛對地方行政訴訟庭的簡易程序判決上訴，案件繫屬高等行政法院。高等行政法院受命法官裁定駁回辛的聲請。辛在裁定送達後第 8 日提出書狀，標題寫「抗告狀」，請求最高行政法院廢棄該裁定。效果如何？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>上訴審受命法官的裁定如何救濟，以及名稱用錯的效果。</dd>
+        <dt>條文</dt><dd>第 266 條第 4 項前段（繫屬於上訴審行政法院之事件，受命法官所為之裁定，得向受訴行政法院提出異議）；第 266 條第 2 項（異議準用抗告之規定，故期間依第 268 條為 10 日）；第 271 條（應提出異議而誤為抗告者，視為已提出異議）。</dd>
+        <dt>涵攝</dt><dd>案件繫屬於上訴審，受命法官的裁定依第 266 條第 4 項得向受訴法院即高等行政法院提出異議，不問該裁定是否「依法得為抗告」。辛寫成抗告狀並指向最高行政法院，是「應提出異議而誤為抗告」，第 271 條視為已提出異議。第 8 日提出，在 10 日內。</dd>
+        <dt>結論</dt><dd>視為辛已於期間內向高等行政法院提出異議，由高等行政法院合議庭就異議裁定。對該裁定，辛得依第 266 條第 3 項再抗告於最高行政法院，期間 10 日，裁判費 1,000 元。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">10. 提起抗告的不變期間為裁定送達後幾日？</div>
+      <label><input type="radio" name="p4q1" value="A">5 日</label>
+      <label><input type="radio" name="p4q1" value="B">10 日</label>
+      <label><input type="radio" name="p4q1" value="C">15 日</label>
+      <label><input type="radio" name="p4q1" value="D">20 日</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 268 條：提起抗告，應於裁定送達後十日之不變期間內為之。但送達前之抗告亦有效力。" data-diag='{"A":"5 日是收容聲請事件抗告的特別期間（第 237 條之 16 第 1 項），不是一般抗告。","C":"15 日是上訴審被上訴人提出答辯狀的期間（第 247 條第 2 項）。","D":"20 日是上訴期間（第 241 條）與理由書期間（第 245 條）。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">11. 第一審（判決得上訴之事件）受命法官所為之裁定，當事人不服，應如何救濟？</div>
+      <label><input type="radio" name="p4q2" value="A">向直接上級行政法院抗告</label>
+      <label><input type="radio" name="p4q2" value="B">不得抗告；但該裁定如係受訴法院所為而依法得為抗告者，得向受訴法院提出異議</label>
+      <label><input type="radio" name="p4q2" value="C">不問裁定性質，一律得向受訴法院提出異議</label>
+      <label><input type="radio" name="p4q2" value="D">不得聲明不服，亦不得於上訴時一併爭執</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 266 條第 1 項。「一律得異議」是第 4 項對上訴審事件與不得上訴事件的放寬，不是第一審一般情形。" data-diag='{"A":"第 266 條第 1 項本文：受命法官或受託法官之裁定，不得抗告。","C":"不問性質一律得異議，是第 266 條第 4 項對「繫屬上訴審」或「不得上訴之事件」的規定；一般第一審要符合第 1 項但書。","D":"不能異議的程序中裁定，依第 239 條仍隨判決一併受上訴審審判，不是完全沒有救濟。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">12. 壬對受訴法院所為得抗告之裁定，誤以「異議」名義向受訴法院提出。效果為何？</div>
+      <label><input type="radio" name="p4q3" value="A">視為已提起抗告</label>
+      <label><input type="radio" name="p4q3" value="B">異議不合法，裁定駁回</label>
+      <label><input type="radio" name="p4q3" value="C">法院應定期間命壬改為抗告</label>
+      <label><input type="radio" name="p4q3" value="D">視為撤回對該裁定之不服</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 271 條前段：應為抗告而誤為異議者，視為已提起抗告。" data-diag='{"B":"第 271 條就是為了避免因名稱用錯而被駁回。","C":"第 271 條是直接「視為」，不是命補正。","D":"用錯名稱不是放棄救濟，第 270 條準用的捨棄與撤回要有明確的意思表示。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card goal">
+    <h2>章末測驗（選擇 10 題 + 實例 2 題）</h2>
+    <p>選擇題全部作答後按「交卷」，10 題答對 8 題過關。實例題先自己寫，再展開參考答案對照，自評後按「我寫到了」或「要再加強」。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="A">
+      <div class="stem">1. 關於得上訴於最高行政法院的判決，下列何者正確？</div>
+      <label><input type="radio" name="qz1" value="A">高等行政法院之終局判決，除法律別有規定外，得上訴於最高行政法院</label>
+      <label><input type="radio" name="qz1" value="B">地方行政法院之終局判決，得直接上訴於最高行政法院</label>
+      <label><input type="radio" name="qz1" value="C">高等行政法院之第二審判決，以違背法令為理由得上訴於最高行政法院</label>
+      <label><input type="radio" name="qz1" value="D">高等行政法院之中間判決，得單獨上訴於最高行政法院</label>
+      <div class="fb" data-exp="第 238 條第 1 項。地方行政法院判決依第 263 條之 1 上訴高等行政法院；高等行政法院第二審判決不得上訴（第 263 條之 1 第 2 項）；中間判決不是終局判決。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">2. 於最高行政法院上訴審程序，下列何者得為之？</div>
+      <label><input type="radio" name="qz2" value="A">訴之變更</label>
+      <label><input type="radio" name="qz2" value="B">訴之追加</label>
+      <label><input type="radio" name="qz2" value="C">提起反訴</label>
+      <label><input type="radio" name="qz2" value="D">撤回上訴</label>
+      <div class="fb" data-exp="第 238 條第 2 項禁止訴之變更、追加與反訴；第 262 條第 1 項允許上訴人於終局判決宣示或公告前撤回上訴。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">3. 高等行政法院判決於 4 月 1 日宣示、4 月 10 日送達。甲於 4 月 5 日提起上訴，乙於 5 月 3 日提起上訴。下列何者正確？</div>
+      <label><input type="radio" name="qz3" value="A">甲之上訴因判決尚未送達而無效，乙之上訴合法</label>
+      <label><input type="radio" name="qz3" value="B">甲、乙之上訴均合法</label>
+      <label><input type="radio" name="qz3" value="C">甲之上訴有效力，乙之上訴因逾 20 日不變期間而不合法</label>
+      <label><input type="radio" name="qz3" value="D">甲、乙之上訴均不合法</label>
+      <div class="fb" data-exp="第 241 條：送達後 20 日不變期間，4 月 30 日屆滿，乙 5 月 3 日上訴已逾期；但宣示或公告後送達前之上訴亦有效力，甲 4 月 5 日的上訴有效。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. 下列何者<b>不是</b>第 243 條第 2 項所列當然違背法令之情形？</div>
+      <label><input type="radio" name="qz4" value="A">判決法院之組織不合法</label>
+      <label><input type="radio" name="qz4" value="B">依法律或裁判應迴避之法官參與裁判</label>
+      <label><input type="radio" name="qz4" value="C">違背言詞辯論公開之規定</label>
+      <label><input type="radio" name="qz4" value="D">違背土地管轄之規定</label>
+      <div class="fb" data-exp="第 243 條第 2 項第 3 款只及於審判權辨別不當與違背專屬管轄。一般土地管轄錯誤依第 257 條第 1 項本文不得作為廢棄原判決之理由。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 被上訴人得於上訴狀或理由書送達後幾日內，提出答辯狀於原高等行政法院？</div>
+      <label><input type="radio" name="qz5" value="A">10 日</label>
+      <label><input type="radio" name="qz5" value="B">15 日</label>
+      <label><input type="radio" name="qz5" value="C">20 日</label>
+      <label><input type="radio" name="qz5" value="D">30 日</label>
+      <div class="fb" data-exp="第 247 條第 2 項：十五日內。10 日是抗告期間，20 日是上訴與理由書期間。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">6. 下列何者<b>不是</b>第 253 條第 1 項規定最高行政法院應行言詞辯論之情形？</div>
+      <label><input type="radio" name="qz6" value="A">法律關係複雜或法律見解紛歧，有以言詞辯明之必要</label>
+      <label><input type="radio" name="qz6" value="B">涉及專門知識或特殊經驗法則，有以言詞說明之必要</label>
+      <label><input type="radio" name="qz6" value="C">涉及公益或影響當事人權利義務重大，有行言詞辯論之必要</label>
+      <label><input type="radio" name="qz6" value="D">上訴人聲請行言詞辯論</label>
+      <div class="fb" data-exp="第 253 條第 1 項三款均以法院認有必要為前提，當事人聲請不是法定的應行言詞辯論事由。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">7. 原判決理由矛盾（第 243 條第 2 項第 6 款），但最高行政法院審查後認為判決結果正確。應如何處理？</div>
+      <label><input type="radio" name="qz7" value="A">屬當然違背法令，一律廢棄原判決</label>
+      <label><input type="radio" name="qz7" value="B">違背法令不影響裁判結果，不得廢棄原判決</label>
+      <label><input type="radio" name="qz7" value="C">廢棄原判決，發回原高等行政法院重新敘明理由</label>
+      <label><input type="radio" name="qz7" value="D">廢棄原判決，移送其他高等行政法院</label>
+      <div class="fb" data-exp="第 258 條只排除第 243 條第 2 項第 1 款至第 5 款，第 6 款不備理由或理由矛盾仍受「不影響結果不得廢棄」的限制。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">8. 原判決就欠缺實體判決要件之事件誤為實體判決，最高行政法院廢棄原判決後應：</div>
+      <label><input type="radio" name="qz8" value="A">發回原高等行政法院</label>
+      <label><input type="radio" name="qz8" value="B">就該事件自為判決</label>
+      <label><input type="radio" name="qz8" value="C">以判決移送管轄行政法院</label>
+      <label><input type="radio" name="qz8" value="D">以裁定駁回上訴</label>
+      <div class="fb" data-exp="第 259 條第 2 款：原判決就欠缺實體判決要件之事件誤為實體判決者，應自為判決。發回是第 260 條的原則，但第 259 條是「別有規定」。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">9. 乙對地方行政訴訟庭判決上訴至高等行政法院。審理期間乙發現先前裁判對本件關鍵法律問題見解歧異，足以影響裁判結果。乙得如何主張？</div>
+      <label><input type="radio" name="qz9" value="A">向受理本案之高等行政法院聲請以裁定移送最高行政法院裁判</label>
+      <label><input type="radio" name="qz9" value="B">逕向最高行政法院提起上訴</label>
+      <label><input type="radio" name="qz9" value="C">聲請高等行政法院停止訴訟程序並聲請憲法法庭統一解釋</label>
+      <label><input type="radio" name="qz9" value="D">於高等行政法院判決後，以見解歧異為理由上訴最高行政法院</label>
+      <div class="fb" data-exp="第 263 條之 4 第 2 項。高等行政法院第二審判決不得上訴（第 263 條之 1 第 2 項），見解歧異不是上訴事由；憲法法庭處理的是違憲問題，不是行政法院間的見解統一。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">10. 關於抗告的裁定機關與再救濟，下列何者正確？</div>
+      <label><input type="radio" name="qz10" value="A">抗告由直接上級行政法院裁定，對於抗告法院之裁定不得再為抗告</label>
+      <label><input type="radio" name="qz10" value="B">抗告由原裁定法院自行裁定，不服者得再抗告於上級法院</label>
+      <label><input type="radio" name="qz10" value="C">抗告一律由最高行政法院裁定</label>
+      <label><input type="radio" name="qz10" value="D">抗告由直接上級行政法院裁定，對於抗告法院之裁定得以違背法令為理由再抗告</label>
+      <div class="fb" data-exp="第 267 條第 1 項、第 2 項。地方行政訴訟庭裁定的抗告法院是高等行政法院，不是一律最高行政法院。"></div>
+    </div>
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>實例題（自評）</h2>
+    <div class="essay" data-id="e1">
+      <div class="stem">實例一　甲公司不服國稅局補徵營業稅 3,000 萬元之處分，經復查、訴願後向高等行政法院起訴，遭判決駁回，判決於 113 年 3 月 5 日送達。甲於 3 月 20 日提出上訴狀，僅記載「原判決違法，請予廢棄」。4 月 2 日甲補提理由書，主張：(a) 原審合議庭法官 A 曾任財政部訴願審議委員會委員，參與本件訴願決定；(b) 原審適用修正前的營業稅法條文；(c) 原審對甲聲請訊問的會計師未調查、亦未於判決說明理由。<br>問：(1) 甲之上訴是否合法？應繳多少裁判費？(2) 三個理由各屬第 243 條何種違背法令？(3) 設三個理由均成立，但 (b)、(c) 對補稅結果無影響，最高行政法院應如何判決？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>(1) 合法性</dt><dd>上訴期間依第 241 條為送達後 20 日，3 月 25 日屆滿，3 月 20 日上訴在期間內。上訴狀未依第 244 條第 2 項表明違背之法令與具體事實，屬未表明上訴理由，依第 245 條第 1 項應於提起上訴後 20 日即 4 月 9 日前補提理由書，4 月 2 日補提合法。向最高行政法院提起之事件應委任律師（第 49 條之 1 第 1 項第 3 款）。裁判費依第 98 條之 2 第 1 項，按第 98 條第 2 項 4,000 元加徵二分之一，為 6,000 元。</dd>
+          <dt>(2) 定性</dt><dd>(a) 法官 A 曾在中央機關參與本件訴願決定，依第 19 條第 2 款應自行迴避，其參與裁判屬第 243 條第 2 項第 2 款「依法律應迴避之法官參與裁判」，當然違背法令。(b) 適用修正前條文是「適用法規不當」，屬第 243 條第 1 項一般違背法令。(c) 未調查聲請之證據且未說明理由，可主張違背第 125 條、第 133 條職權調查義務（第 243 條第 1 項），並構成第 243 條第 2 項第 6 款「判決不備理由」。</dd>
+          <dt>(3) 判決</dt><dd>第 258 條規定違背法令不影響裁判結果者不得廢棄，但第 243 條第 2 項第 1 款至第 5 款除外。(b)、(c) 分別為第 1 項與第 2 項第 6 款，不影響結果即不得據以廢棄。但 (a) 是第 2 項第 2 款，不受第 258 條限制，最高行政法院應依第 256 條第 1 項廢棄原判決。因法官組成有瑕疵，事實須由合法組成的法院重新確定，不符第 259 條自為判決的情形，應依第 260 條第 1 項發回原高等行政法院或發交其他高等行政法院，並依第 2 項詳予指示。</dd>
+          <dt>加分</dt><dd>說明第 258 條把第 243 條第 2 項第 6 款排除在例外之外的理由：理由瑕疵可由上訴審補充說明（第 255 條第 2 項），法院組成等瑕疵則動搖裁判的正當性基礎。並指出發回後再上訴免徵裁判費（第 98 條之 2 第 2 項）。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+    <div class="essay" data-id="e2">
+      <div class="stem">實例二　乙因違規停車受 20 萬元罰鍰（非道路交通管理處罰條例之裁決），向地方行政訴訟庭起訴，該庭以通常訴訟程序審理後判乙敗訴。乙上訴高等行政法院。上訴審中，受命法官裁定駁回乙聲請訊問證人；乙於裁定送達後 7 日，以「抗告狀」向最高行政法院聲明不服。高等行政法院其後判決駁回乙之上訴。<br>問：(1) 高等行政法院對地方庭程序用錯應如何處理？(2) 乙對受命法官裁定之聲明不服，效果如何？(3) 乙得否對高等行政法院之判決再上訴？乙在上訴審應繳多少裁判費？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>(1) 程序誤用</dt><dd>20 萬元罰鍰在 50 萬元以下，依第 229 條第 2 項第 2 款應適用簡易訴訟程序，地方庭卻用通常程序。依第 263 條之 2 第 1 項，高等行政法院不得以此廢棄原判決；依第 3 項，應依簡易程序事件所應適用的上訴審程序規定裁判。乙沒有因為較慎重的程序受到不利，所以不廢棄。</dd>
+          <dt>(2) 異議</dt><dd>案件繫屬於上訴審，受命法官之裁定依第 266 條第 4 項前段得向受訴行政法院（高等行政法院）提出異議，不以該裁定依法得抗告為條件。乙誤為抗告並指向最高行政法院，依第 271 條後段視為已提出異議；異議期間準用抗告之 10 日（第 266 條第 2 項、第 268 條），第 7 日提出合法。高等行政法院應就異議裁定；對該裁定乙得依第 266 條第 3 項抗告於最高行政法院。</dd>
+          <dt>(3) 再上訴與費用</dt><dd>高等行政法院對地方庭判決所為之判決是第二審判決，依第 263 條之 1 第 2 項不得上訴，乙的救濟到此為止；若有統一見解必要，只能在審理期間依第 263 條之 4 聲請移送。上訴裁判費依第 98 條之 2 第 1 項按第 98 條第 2 項加徵二分之一，本件應適用簡易程序，簡易程序事件 2,000 元加徵二分之一為 3,000 元。</dd>
+          <dt>加分</dt><dd>指出第 266 條第 4 項放寬異議的理由：上訴審之後已無再審級可依第 239 條一併審查受命法官的裁定。並說明若乙改走第 263 條之 4 第 2 項聲請，駁回聲請之裁定依第 3 項不得聲明不服。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="s6" class="panel">
+  <div class="card">
+    <h2>本課引用條文</h2>
+    <p class="small muted">點開看原文。只收錄本課講到的條文；全文請見全國法規資料庫。</p>
+    <div class="arts">
+      <details><summary>第 19 條 <span>法官自行迴避事由</span></summary><div class="txt">法官有下列情形之一者，應自行迴避，不得執行職務：
+一、有民事訴訟法第三十二條第一款至第六款情形之一。
+二、曾在中央或地方機關參與該訴訟事件之行政處分或訴願決定。
+三、曾參與該訴訟事件相牽涉之民刑事裁判。
+四、曾參與該訴訟事件相牽涉之法官、檢察官或公務員懲戒事件議決或裁判。
+五、曾參與該訴訟事件之前審裁判。
+六、曾參與該訴訟事件再審前之裁判。但其迴避以一次為限。</div></details>
+      <details><summary>第 49 條之 1 <span>強制律師代理（節錄第 1 項）</span></summary><div class="txt">Ⅰ 下列各款事件及其程序進行中所生之其他事件，當事人應委任律師為訴訟代理人：
+一、高等行政法院管轄之環境保護、土地爭議之第一審通常訴訟程序事件及都市計畫審查程序事件。
+二、高等行政法院管轄之通常訴訟程序上訴事件。
+三、向最高行政法院提起之事件。
+四、適用通常訴訟程序或都市計畫審查程序之再審事件。
+五、適用通常訴訟程序或都市計畫審查程序之聲請重新審理及其再審事件。</div></details>
+      <details><summary>第 90 條 <span>期間之伸長縮短；不變期間</span></summary><div class="txt">Ⅰ 期間，如有重大理由得伸長或縮短之。但不變期間不在此限。
+Ⅱ 伸長或縮短期間由行政法院裁定。但期間係審判長所定者，由審判長裁定。</div></details>
+      <details><summary>第 98 條之 2 <span>上訴裁判費加徵二分之一</span></summary><div class="txt">Ⅰ 上訴，依第九十八條第二項規定，加徵裁判費二分之一。
+Ⅱ 發回或發交更審再行上訴，或依第二百五十七條第二項為移送，經判決後再行上訴者，免徵裁判費。</div></details>
+      <details><summary>第 98 條之 4 <span>抗告裁判費</span></summary><div class="txt">抗告，徵收裁判費新臺幣一千元。</div></details>
+      <details><summary>第 107 條 <span>起訴之駁回、濫訴罰鍰（節錄第 1 項第 6、11 款、第 6 項）</span></summary><div class="txt">Ⅰ 原告之訴，有下列各款情形之一者，行政法院應以裁定駁回之。但其情形可以補正者，審判長應先定期間命補正：
+六、起訴逾越法定期限。
+十一、起訴基於惡意、不當或其他濫用訴訟程序之目的或有重大過失，且事實上或法律上之主張欠缺合理依據。
+Ⅵ 行政法院依第一項第十一款規定駁回原告之訴者，得各處原告、代表人或管理人、代理人新臺幣十二萬元以下之罰鍰。</div></details>
+      <details><summary>第 119 條 <span>停止執行裁定得抗告</span></summary><div class="txt">關於停止執行或撤銷停止執行之裁定，得為抗告。</div></details>
+      <details><summary>第 237 條之 5 <span>交通裁決事件裁判費</span></summary><div class="txt">Ⅰ 交通裁決事件，按下列規定徵收裁判費：
+一、起訴，按件徵收新臺幣三百元。
+二、上訴，按件徵收新臺幣七百五十元。
+三、抗告，徵收新臺幣三百元。
+四、再審之訴，按起訴法院之審級，依第一款、第二款徵收裁判費；對於確定之裁定聲請再審者，徵收新臺幣三百元。
+五、本法第九十八條之五各款聲請，徵收新臺幣三百元。
+Ⅱ 依前條第三項規定，視為撤回起訴者，法院應依職權退還已繳之裁判費。</div></details>
+      <details><summary>第 237 條之 16 <span>收容聲請事件之抗告</span></summary><div class="txt">Ⅰ 聲請人、受裁定人或移民署對地方行政法院所為收容聲請事件之裁定不服者，應於裁定送達後五日內抗告於管轄之高等行政法院。對於抗告法院之裁定，不得再為抗告。
+Ⅱ 抗告程序，除依前項規定外，準用第四編之規定。
+Ⅲ 收容聲請事件之裁定已確定，而有第二百七十三條之情形者，得準用第五編之規定，聲請再審。</div></details>
+      <details><summary>第 238 條 <span>上訴最高行政法院；上訴審不得變更追加反訴</span></summary><div class="txt">Ⅰ 對於高等行政法院之終局判決，除法律別有規定外，得上訴於最高行政法院。
+Ⅱ 於上訴審程序，不得為訴之變更、追加或提起反訴。</div></details>
+      <details><summary>第 239 條 <span>判決前裁判併受審判</span></summary><div class="txt">前條判決前之裁判，牽涉該判決者，並受最高行政法院之審判。但依本法不得聲明不服或得以抗告聲明不服者，不在此限。</div></details>
+      <details><summary>第 240 條 <span>捨棄上訴權</span></summary><div class="txt">Ⅰ 當事人於高等行政法院判決宣示、公告或送達後，得捨棄上訴權。
+Ⅱ 當事人於宣示判決時，以言詞捨棄上訴權者，應記載於言詞辯論筆錄；如他造不在場，應將筆錄送達。</div></details>
+      <details><summary>第 241 條 <span>上訴期間 20 日</span></summary><div class="txt">提起上訴，應於高等行政法院判決送達後二十日之不變期間內為之。但宣示或公告後送達前之上訴，亦有效力。</div></details>
+      <details><summary>第 242 條 <span>上訴理由限於違背法令</span></summary><div class="txt">對於高等行政法院判決之上訴，非以其違背法令為理由，不得為之。</div></details>
+      <details><summary>第 243 條 <span>違背法令；當然違背法令六款</span></summary><div class="txt">Ⅰ 判決不適用法規或適用不當者，為違背法令。
+Ⅱ 有下列各款情形之一者，其判決當然違背法令：
+一、判決法院之組織不合法。
+二、依法律或裁判應迴避之法官參與裁判。
+三、行政法院於審判權之有無辨別不當或違背專屬管轄之規定。但其他法律別有規定者，從其規定。
+四、當事人於訴訟未經合法代理或代表。
+五、違背言詞辯論公開之規定。
+六、判決不備理由或理由矛盾。</div></details>
+      <details><summary>第 244 條 <span>上訴狀應表明事項</span></summary><div class="txt">Ⅰ 提起上訴，應以上訴狀表明下列各款事項，提出於原高等行政法院為之：
+一、當事人。
+二、高等行政法院判決，及對於該判決上訴之陳述。
+三、對於高等行政法院判決不服之程度，及應如何廢棄或變更之聲明。
+四、上訴理由。
+Ⅱ 前項上訴理由應表明下列各款事項：
+一、原判決所違背之法令及其具體內容。
+二、依訴訟資料合於該違背法令之具體事實。
+Ⅲ 第一項上訴狀內並應添具關於上訴理由之必要證據。
+Ⅳ 在監獄或看守所之當事人，於上訴期間內向監所長官提出上訴狀者，視為上訴期間內之上訴；監所長官接受上訴狀後，應附記接受之年、月、日、時，送交原高等行政法院。</div></details>
+      <details><summary>第 245 條 <span>理由書 20 日</span></summary><div class="txt">Ⅰ 上訴狀內未表明上訴理由者，上訴人應於提起上訴後二十日內提出理由書於原高等行政法院；未提出者，毋庸命其補正，由原高等行政法院以裁定駁回之。
+Ⅱ 判決宣示或公告後送達前提起上訴者，前項期間應自判決送達後起算。</div></details>
+      <details><summary>第 246 條 <span>原高等行政法院之駁回與補正</span></summary><div class="txt">Ⅰ 上訴不合法而其情形不能補正者，原高等行政法院應以裁定駁回之。
+Ⅱ 上訴不合法而其情形可以補正者，原高等行政法院應定期間命其補正；如不於期間內補正，原高等行政法院應以裁定駁回之。</div></details>
+      <details><summary>第 247 條 <span>上訴狀送達、答辯狀 15 日、卷宗送交</span></summary><div class="txt">Ⅰ 上訴未經依前條規定駁回者，高等行政法院應速將上訴狀送達被上訴人。
+Ⅱ 被上訴人得於上訴狀或第二百四十五條第一項理由書送達後十五日內，提出答辯狀於原高等行政法院。
+Ⅲ 高等行政法院送交訴訟卷宗於最高行政法院，應於收到答辯狀或前項期間已滿，及各當事人之上訴期間已滿後為之。
+Ⅳ 前項應送交之卷宗，如為高等行政法院所需者，應自備繕本、影本或節本。</div></details>
+      <details><summary>第 248 條 <span>追加書狀</span></summary><div class="txt">Ⅰ 被上訴人在最高行政法院未判決前得提出答辯狀及其追加書狀於最高行政法院，上訴人亦得提出上訴理由追加書狀。
+Ⅱ 最高行政法院認有必要時，得將前項書狀送達於他造。</div></details>
+      <details><summary>第 249 條 <span>最高行政法院之駁回；濫訴罰鍰 12 萬</span></summary><div class="txt">Ⅰ 上訴不合法者，最高行政法院應以裁定駁回之。但其情形可以補正者，審判長應先定期間命補正。
+Ⅱ 上訴不合法之情形，已經原高等行政法院命補正而未補正者，得不行前項但書之程序。
+Ⅲ 最高行政法院認上訴人之上訴基於惡意、不當或其他濫用訴訟程序之目的或有重大過失，且事實上或法律上之主張欠缺合理依據，應以裁定駁回之。但其情形可以補正者，審判長應先定期間命補正。
+Ⅳ 最高行政法院依前項規定駁回上訴者，得各處上訴人、代表人或管理人、代理人新臺幣十二萬元以下之罰鍰。
+Ⅴ 第一百零七條第五項及第七項前段規定，於前二項情形準用之。</div></details>
+      <details><summary>第 250 條 <span>上訴聲明不得變更擴張</span></summary><div class="txt">上訴之聲明不得變更或擴張之。</div></details>
+      <details><summary>第 251 條 <span>調查範圍</span></summary><div class="txt">Ⅰ 最高行政法院應於上訴聲明之範圍內調查之。
+Ⅱ 最高行政法院調查高等行政法院判決有無違背法令，不受上訴理由之拘束。</div></details>
+      <details><summary>第 253 條 <span>應行言詞辯論之情形</span></summary><div class="txt">Ⅰ 最高行政法院之判決，有下列情形之一者，應行言詞辯論：
+一、法律關係複雜或法律見解紛歧，有以言詞辯明之必要。
+二、涉及專門知識或特殊經驗法則，有以言詞說明之必要。
+三、涉及公益或影響當事人權利義務重大，有行言詞辯論之必要。
+Ⅱ 前項言詞辯論實施之辦法由最高行政法院定之。</div></details>
+      <details><summary>第 253 條之 1 <span>言詞辯論之範圍與一造辯論</span></summary><div class="txt">Ⅰ 言詞辯論應於上訴聲明之範圍內為之。
+Ⅱ 言詞辯論期日，被上訴人、依第四十一條、第四十二條參加訴訟之人未委任訴訟代理人或當事人一造之訴訟代理人無正當理由未到場者，得依職權由到場之訴訟代理人辯論而為判決。當事人之訴訟代理人無正當理由均未到場者，得不行言詞辯論，逕為判決。</div></details>
+      <details><summary>第 254 條 <span>以原判決確定之事實為基礎</span></summary><div class="txt">Ⅰ 除別有規定外，最高行政法院應以高等行政法院判決確定之事實為判決基礎。
+Ⅱ 以違背訴訟程序之規定為上訴理由時，所舉違背之事實，及以違背法令確定事實或遺漏事實為上訴理由時，所舉之該事實，最高行政法院得斟酌之。
+Ⅲ 行言詞辯論所得闡明或補充訴訟關係之資料，最高行政法院亦得斟酌之。</div></details>
+      <details><summary>第 255 條 <span>上訴無理由之駁回判決</span></summary><div class="txt">Ⅰ 最高行政法院認上訴為無理由者，應為駁回之判決。
+Ⅱ 原判決依其理由雖屬不當，而依其他理由認為正當者，應以上訴為無理由。</div></details>
+      <details><summary>第 256 條 <span>上訴有理由之廢棄</span></summary><div class="txt">Ⅰ 最高行政法院認上訴為有理由者，就該部分應廢棄原判決。
+Ⅱ 因違背訴訟程序之規定廢棄原判決者，其違背之訴訟程序部分，視為亦經廢棄。</div></details>
+      <details><summary>第 256 條之 1 <span>地方法院事件誤由高等庭通常程序審理</span></summary><div class="txt">Ⅰ 以地方行政法院為第一審管轄法院之事件，高等行政法院依通常訴訟程序審理並為判決者，最高行政法院不得以高等行政法院無管轄權而廢棄原判決。
+Ⅱ 前項情形，最高行政法院應依該事件所應適用之上訴審程序規定為裁判。</div></details>
+      <details><summary>第 257 條 <span>管轄錯誤與移送</span></summary><div class="txt">Ⅰ 最高行政法院不得以高等行政法院無管轄權而廢棄原判決。但違背專屬管轄之規定者，不在此限。
+Ⅱ 因高等行政法院無管轄權而廢棄原判決者，應以判決將該事件移送於管轄行政法院。</div></details>
+      <details><summary>第 258 條 <span>不影響結果不得廢棄</span></summary><div class="txt">除第二百四十三條第二項第一款至第五款之情形外，高等行政法院判決違背法令而不影響裁判之結果者，不得廢棄原判決。</div></details>
+      <details><summary>第 259 條 <span>自為判決</span></summary><div class="txt">經廢棄原判決而有下列各款情形之一者，最高行政法院應就該事件自為判決：
+一、因基於確定之事實或依法得斟酌之事實，不適用法規或適用不當廢棄原判決，而事件已可依該事實為裁判。
+二、原判決就欠缺實體判決要件之事件誤為實體判決。</div></details>
+      <details><summary>第 259 條之 1 <span>不同意見之附記</span></summary><div class="txt">Ⅰ 最高行政法院駁回上訴或廢棄原判決自為裁判時，法官對於裁判之主文或理由，已於評議時提出與多數意見不同之法律上意見，經記明於評議簿，並於評決後三日內補具書面者，得於裁判附記之；逾期提出者，不予附記。
+Ⅱ 前項實施之辦法由最高行政法院定之。</div></details>
+      <details><summary>第 260 條 <span>發回或發交</span></summary><div class="txt">Ⅰ 除別有規定外，經廢棄原判決者，最高行政法院應將該事件發回原高等行政法院或發交其他高等行政法院。
+Ⅱ 前項發回或發交判決，就高等行政法院應調查之事項，應詳予指示。
+Ⅲ 受發回或發交之高等行政法院，應以最高行政法院所為廢棄理由之法律上判斷為其判決基礎。</div></details>
+      <details><summary>第 261 條 <span>判決正本送交</span></summary><div class="txt">為發回或發交之判決者，最高行政法院應速將判決正本附入卷宗，送交受發回或發交之高等行政法院。</div></details>
+      <details><summary>第 261 條之 1 <span>判決書引用原判決</span></summary><div class="txt">最高行政法院判決書應記載之事實及理由，如與高等行政法院判決相同者，得引用之。</div></details>
+      <details><summary>第 262 條 <span>上訴之撤回</span></summary><div class="txt">Ⅰ 上訴人於終局判決宣示或公告前得將上訴撤回。
+Ⅱ 撤回上訴者，喪失其上訴權。
+Ⅲ 上訴之撤回，應以書狀為之。但在言詞辯論時，得以言詞為之。
+Ⅳ 於言詞辯論時所為上訴之撤回，應記載於言詞辯論筆錄，如他造不在場，應將筆錄送達。</div></details>
+      <details><summary>第 263 條 <span>準用規定</span></summary><div class="txt">除本編別有規定外，前編第一章及第五章之規定，於最高行政法院上訴審程序準用之。</div></details>
+      <details><summary>第 263 條之 1 <span>上訴高等行政法院；第二審判決不得上訴</span></summary><div class="txt">Ⅰ 對於地方行政法院之終局判決，除法律別有規定外，得依本章規定上訴於管轄之高等行政法院。
+Ⅱ 對於高等行政法院之第二審判決，不得上訴。</div></details>
+      <details><summary>第 263 條之 2 <span>程序誤用不得廢棄之情形</span></summary><div class="txt">Ⅰ 應適用簡易訴訟程序或交通裁決訴訟程序之事件，高等行政法院不得以地方行政法院行通常訴訟程序而廢棄原判決。
+Ⅱ 應適用交通裁決訴訟程序之事件，高等行政法院不得以地方行政法院行簡易訴訟程序而廢棄原判決。
+Ⅲ 前二項情形，高等行政法院應依該事件所應適用之上訴審程序規定為裁判。</div></details>
+      <details><summary>第 263 條之 3 <span>程序誤用、管轄錯誤之處理</span></summary><div class="txt">Ⅰ 地方行政法院就其應適用通常訴訟程序之事件，而誤用簡易訴訟程序或交通裁決事件訴訟程序審判；或應適用簡易訴訟程序之事件，而誤用交通裁決事件訴訟程序審判者，受理上訴之高等行政法院應廢棄原判決，將該事件發回或發交管轄地方行政法院。
+Ⅱ 以高等行政法院為第一審管轄法院之事件，誤由地方行政法院審判者，受理上訴之高等行政法院應廢棄原判決，逕依通常訴訟程序為第一審判決。
+Ⅲ 當事人對於第一項程序誤用或第二項管轄錯誤已表示無異議，或明知或可得而知並無異議而就本案有所聲明或陳述者，高等行政法院應依原程序之上訴審規定為裁判，不適用前二項規定。</div></details>
+      <details><summary>第 263 條之 4 <span>統一見解之移送</span></summary><div class="txt">Ⅰ 高等行政法院受理上訴事件，認有確保裁判見解統一之必要者，應以裁定敘明理由移送最高行政法院裁判之。
+Ⅱ 高等行政法院審理上訴事件期間，當事人認為足以影響裁判結果之法律見解，先前裁判之法律見解已產生歧異，得向受理本案之高等行政法院聲請以裁定敘明理由移送最高行政法院裁判之。其程序準用行政法院組織法第十五條之四規定。
+Ⅲ 前二項之移送裁定及駁回聲請之裁定，均不得聲明不服。
+Ⅳ 最高行政法院認高等行政法院裁定移送之事件，並未涉及裁判見解統一之必要者，應以裁定發回。受發回之高等行政法院，不得再將上訴事件裁定移送最高行政法院。
+Ⅴ 除前項情形外，最高行政法院各庭應先以徵詢書徵詢其他庭之意見，並準用行政法院組織法第十五條之一、第十五條之二、第十五條之五至第十五條之十一規定。</div></details>
+      <details><summary>第 263 條之 5 <span>高等行政法院上訴審之準用</span></summary><div class="txt">除第二百五十九條之一及本章別有規定外，本編第一章及前編第一章之規定，於高等行政法院上訴審程序準用之；交通裁決事件之上訴，並準用第二百三十七條之八規定。</div></details>
+      <details><summary>第 264 條 <span>抗告之原則</span></summary><div class="txt">對於裁定得為抗告。但別有不許抗告之規定者，不在此限。</div></details>
+      <details><summary>第 265 條 <span>程序進行中之裁定不得抗告</span></summary><div class="txt">訴訟程序進行中所為之裁定，除別有規定外，不得抗告。</div></details>
+      <details><summary>第 266 條 <span>受命法官受託法官裁定之異議</span></summary><div class="txt">Ⅰ 受命法官或受託法官之裁定，不得抗告。但其裁定如係受訴行政法院所為而依法得為抗告者，得向受訴行政法院提出異議。
+Ⅱ 前項異議，準用對於行政法院同種裁定抗告之規定。
+Ⅲ 受訴行政法院就異議所為之裁定，得依本編之規定抗告。
+Ⅳ 繫屬於上訴審行政法院之事件，受命法官、受託法官所為之裁定，得向受訴行政法院提出異議。其不得上訴之事件，第一審行政法院受命法官、受託法官所為之裁定，亦同。</div></details>
+      <details><summary>第 267 條 <span>抗告法院；不得再抗告</span></summary><div class="txt">Ⅰ 抗告，由直接上級行政法院裁定。
+Ⅱ 對於抗告法院之裁定，不得再為抗告。</div></details>
+      <details><summary>第 268 條 <span>抗告期間 10 日</span></summary><div class="txt">提起抗告，應於裁定送達後十日之不變期間內為之。但送達前之抗告亦有效力。</div></details>
+      <details><summary>第 269 條 <span>抗告狀之提出</span></summary><div class="txt">Ⅰ 提起抗告，應向為裁定之原行政法院或原審判長所屬行政法院提出抗告狀為之。
+Ⅱ 關於訴訟救助提起抗告，及由證人、鑑定人或執有證物之第三人提起抗告者，得以言詞為之。</div></details>
+      <details><summary>第 270 條 <span>準用捨棄與撤回</span></summary><div class="txt">關於捨棄上訴權及撤回上訴之規定，於抗告準用之。</div></details>
+      <details><summary>第 271 條 <span>抗告異議誤用之轉換</span></summary><div class="txt">依本編規定，應為抗告而誤為異議者，視為已提起抗告；應提出異議而誤為抗告者，視為已提出異議。</div></details>
+      <details><summary>第 272 條 <span>抗告程序之準用</span></summary><div class="txt">Ⅰ 除本編別有規定外，第二百四十九條第三項至第五項、第二百五十六條之一、第二百六十一條之一、第二百六十三條之二至第二百六十三條之四規定，於抗告程序準用之。
+Ⅱ 第二百五十九條之一規定，於最高行政法院抗告程序準用之。
+Ⅲ 民事訴訟法第四百九十條至第四百九十二條及第三編第一章之規定，於本編準用之。</div></details>
+    </div>
+  </div>
+  <div class="card">
+    <h2>下一課</h2>
+    <p>第 12 課「再審、重新審理與強制執行」處理判決確定之後的事：第 273 條十四款再審事由、第 284 條第三人的重新審理，以及第 304 條以下怎麼把判決執行出來。<a href="12_再審重新審理與執行.html">前往第 12 課</a>　<a href="00_總覽地圖.html">回總覽地圖</a></p>
+  </div>
+</section>
+
+<footer>行政訴訟法自學教材 · 第 11 課 上訴與抗告<br>依民國 111 年 6 月 22 日修正條文自行編寫，題目為原創；條文以<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030154" target="_blank" rel="noopener">全國法規資料庫</a>為準。</footer>
+</div>
+
+<script>
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const LESSON_ID = "11", CH = "行政訴訟法 11 上訴與抗告";
+const PROG_KEY = "xzss_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與數學教材共用 study_log_v1，供「學習紀錄」頁讀取）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+let pracCount = 0, pracOk = 0;
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="s5"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok }); pracCount++; if(ok) pracOk++;
+  });
+});
+
+// ===== 章末測驗交卷 =====
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0; const wrong = [];
+  qs.forEach((q,i)=>{
+    const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+    else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+  });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  writeProg({ quiz: { score, total: qs.length } });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+  else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="s5"]').classList.add('done'); }
+  else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+  else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 實例題自評 =====
+document.querySelectorAll('.essay').forEach(es=>{
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+
+// ===== 本課專屬工具 1：第 243 條違背法令檢核器 =====
+(function(){
+  // cls: 'd1'..'d6' = 第 243 條第 2 項第 1～6 款；'g' = 第 1 項一般違背法令；'land' = 第 257 條土地管轄；'fact' = 非違背法令
+  const DATA = {
+    org:{ cls:'d1', name:'合議庭只有兩位法官評議就判決', art:'第 243 條第 2 項第 1 款', why:'判決法院之組織不合法。合議庭法官人數不足，法院的組成本身違法。' },
+    rec:{ cls:'d2', name:'法官曾參與該件訴願決定', art:'第 243 條第 2 項第 2 款', why:'依第 19 條第 2 款，曾在中央或地方機關參與該訴訟事件之訴願決定的法官應自行迴避；他參與裁判即屬「依法律應迴避之法官參與裁判」。' },
+    jur:{ cls:'d3', name:'私法爭議誤為公法爭議而實體判決', art:'第 243 條第 2 項第 3 款', why:'行政法院於審判權之有無辨別不當。' },
+    excl:{ cls:'d3', name:'違背專屬管轄', art:'第 243 條第 2 項第 3 款', why:'違背專屬管轄之規定。都市計畫審查程序專屬都市計畫區所在地之高等行政法院管轄（第 237 條之 19）。注意第 257 條第 1 項但書也把專屬管轄排除在「不得廢棄」之外。' },
+    rep:{ cls:'d4', name:'原告公司由無代表權之人出面訴訟', art:'第 243 條第 2 項第 4 款', why:'當事人於訴訟未經合法代理或代表。' },
+    pub:{ cls:'d5', name:'無正當理由不公開言詞辯論', art:'第 243 條第 2 項第 5 款', why:'違背言詞辯論公開之規定。' },
+    rsn:{ cls:'d6', name:'判決理由矛盾或對重要攻防方法未說明', art:'第 243 條第 2 項第 6 款', why:'判決不備理由或理由矛盾。雖是當然違背法令，但<b>不在第 258 條的例外清單內</b>：不影響裁判結果時，仍不得廢棄。' },
+    law:{ cls:'g', name:'適用舊法條或解釋法條錯誤', art:'第 243 條第 1 項', why:'判決不適用法規或適用不當，一般違背法令。要受第 258 條檢驗。' },
+    inv:{ cls:'g', name:'聲請之關鍵證人未調查且未說明理由', art:'第 243 條第 1 項（並可能構成第 2 項第 6 款）', why:'違背第 125 條、第 133 條的職權調查義務，是訴訟程序違背法令（第 1 項）。若判決對此未說明理由，另構成第 2 項第 6 款不備理由。' },
+    land:{ cls:'land', name:'違背土地管轄（非專屬）', art:'第 257 條第 1 項本文', why:'不是第 243 條第 2 項第 3 款（那只講審判權與專屬管轄）。而且第 257 條第 1 項明文：最高行政法院不得以高等行政法院無管轄權而廢棄原判決。' },
+    fact:{ cls:'fact', name:'不同意證據取捨與事實認定', art:'第 254 條第 1 項', why:'最高行政法院以原判決確定之事實為判決基礎，單純的事實爭執不是違背法令，不能作為上訴理由（第 242 條）。要主張認定事實的「方法」違法才行。' }
+  };
+  const res = document.getElementById('vkRes');
+  document.getElementById('vkGo').addEventListener('click',()=>{
+    const picked = [...document.querySelectorAll('.vk:checked')].map(c=>c.value);
+    if(!picked.length){ res.innerHTML='<p class="small" style="margin:0">先勾選至少一項瑕疵。</p>'; res.classList.add('on'); return; }
+    const eff = (document.querySelector('input[name="vkEff"]:checked')||{}).value === 'yes';
+    let rows = picked.map(k=>{ const d=DATA[k]; return '<tr><td>'+d.name+'</td><td>'+d.art+'</td><td>'+d.why+'</td></tr>'; }).join('');
+    const has15 = picked.some(k=>['d1','d2','d3','d4','d5'].includes(DATA[k].cls));
+    const has6 = picked.some(k=>DATA[k].cls==='d6');
+    const hasG = picked.some(k=>DATA[k].cls==='g');
+    const onlyLandFact = picked.every(k=>['land','fact'].includes(DATA[k].cls));
+    let verdict, basis;
+    if(onlyLandFact){
+      verdict = '不得據以廢棄原判決';
+      basis = '所勾選的事項不是第 243 條的違背法令（事實爭執），或依第 257 條第 1 項本文不得作為廢棄理由（土地管轄）。上訴若只有這些理由，屬第 242 條「非以違背法令為理由」，上訴不合法，依第 249 條第 1 項裁定駁回。';
+    } else if(has15){
+      verdict = '當然違背法令，應廢棄原判決（不受第 258 條限制）';
+      basis = '勾選項目中有第 243 條第 2 項第 1 款至第 5 款的情形。第 258 條明文把這五款排除在「不影響結果不得廢棄」之外，所以' + (eff ? '' : '即使你選了「沒有影響結果」，') + '最高行政法院仍應依第 256 條第 1 項廢棄原判決，原則上依第 260 條發回或發交；若已可依確定之事實裁判，依第 259 條自為判決。';
+    } else if(eff){
+      verdict = (has6 ? '當然違背法令' : '違背法令') + '，且影響裁判結果，應廢棄原判決';
+      basis = (has6 ? '第 243 條第 2 項第 6 款' : '第 243 條第 1 項') + (has6 && hasG ? '與第 1 項' : '') + '的違背法令，加上你判斷它影響了結果，第 258 條不阻擋廢棄。最高行政法院依第 256 條第 1 項廢棄原判決後，看事實是否已確定：可裁判者自為判決（第 259 條第 1 款），否則發回或發交（第 260 條）。';
+    } else {
+      verdict = '違背法令，但不影響結果，不得廢棄原判決';
+      basis = '第 258 條：除第 243 條第 2 項第 1 款至第 5 款外，判決違背法令而不影響裁判之結果者，不得廢棄原判決。' + (has6 ? '注意第 6 款「不備理由或理由矛盾」雖是當然違背法令，卻不在例外清單內，同樣受此限制。' : '') + '此時依第 255 條第 2 項，原判決依其理由雖屬不當而依其他理由認為正當，以上訴為無理由，判決駁回。';
+    }
+    res.innerHTML = '<h3>'+verdict+'</h3><div class="scroll"><table><thead><tr><th>瑕疵</th><th>落在哪裡</th><th>說明</th></tr></thead><tbody>'+rows+'</tbody></table></div><p class="small muted" style="margin:0"><b>判斷依據：</b>'+basis+'</p>';
+    res.classList.add('on');
+    logEv({ type:"tool", q:"s243-checker", k: picked.join(',')+'|'+(eff?'eff':'noeff') });
+  });
+})();
+
+// ===== 本課專屬工具 2：抗告還是異議 =====
+(function(){
+  const who = document.getElementById('agWho'), stage = document.getElementById('agStage'), res = document.getElementById('agRes');
+  document.getElementById('agGo').addEventListener('click',()=>{
+    const w = who.value, s = stage.value, interim = (document.querySelector('input[name="agKind"]:checked')||{}).value === 'interim';
+    let title, body = [], proc = '';
+    const PROC_APPEAL = '<b>期間：</b>裁定送達後 10 日不變期間，送達前抗告亦有效（第 268 條）。<b>提出：</b>向為裁定之原行政法院或原審判長所屬行政法院提出抗告狀（第 269 條第 1 項）；訴訟救助、證人、鑑定人、執有證物之第三人得以言詞為之（第 2 項）。<b>裁定機關：</b>直接上級行政法院，對抗告法院之裁定不得再抗告（第 267 條）。<b>裁判費：</b>1,000 元（第 98 條之 4）。';
+    const PROC_OBJ = '<b>期間：</b>異議準用抗告之規定（第 266 條第 2 項），即裁定送達後 10 日（第 268 條）。<b>提出：</b>向受訴行政法院（合議庭本身）。<b>後續：</b>受訴行政法院就異議所為之裁定，得依抗告編規定抗告（第 266 條第 3 項）。<b>名稱用錯：</b>應異議而誤為抗告、應抗告而誤為異議，均視為已提起正確的那一種（第 271 條）。';
+    if(w === 'court' || w === 'pres'){
+      const maker = w === 'court' ? '受訴行政法院' : '審判長';
+      if(interim){
+        title = '不得抗告（第 265 條）';
+        body.push(maker + '於訴訟程序進行中所為之裁定，除別有規定外不得抗告。這類裁定隨判決一併受上訴審審判（第 239 條）。例外：法律明定得抗告者，例如停止執行之裁定（第 119 條）。');
+        if(s === 'noapp') body.push('本件屬不得上訴之事件，判決後也沒有上訴審可以依第 239 條一併審查。但第 265 條的文字沒有為此設例外；第 266 條第 4 項後段的放寬只針對受命法官、受託法官的裁定。');
+      } else {
+        title = '抗告（第 264 條）';
+        body.push('對於裁定得為抗告，但別有不許抗告之規定者除外（例如第 263 條之 4 第 3 項的移送裁定、第 267 條第 2 項抗告法院之裁定）。' + (w === 'pres' ? '第 269 條第 1 項明文抗告狀得向「原審判長所屬行政法院」提出，可見審判長的裁定亦得抗告。' : ''));
+        if(s === 'appeal') body.push('繫屬上訴審時要留意「直接上級行政法院」是否存在：高等行政法院上訴審的裁定，直接上級是最高行政法院；最高行政法院自己的裁定已無上級法院，條文上無從抗告。');
+        proc = PROC_APPEAL;
+      }
+    } else {
+      const maker = w === 'comm' ? '受命法官' : '受託法官';
+      if(s === 'first'){
+        if(interim){
+          title = '不得抗告，也不得異議（第 266 條第 1 項、第 265 條）';
+          body.push(maker + '之裁定不得抗告（第 266 條第 1 項本文）。但書要求「其裁定如係受訴行政法院所為而依法得為抗告者」才能異議；程序進行中的裁定換成受訴法院作，依第 265 條也不得抗告，所以不符但書，無從異議。救濟途徑是判決後上訴，由上訴審依第 239 條一併審查。');
+        } else {
+          title = '異議（第 266 條第 1 項但書）';
+          body.push(maker + '之裁定不得抗告（第 266 條第 1 項本文），但該裁定若由受訴行政法院作成依法得抗告，得向受訴行政法院提出異議。本件是第一審、判決得上訴之事件，必須通過這個「依法得為抗告」的檢驗。');
+          proc = PROC_OBJ;
+        }
+      } else {
+        title = '異議（第 266 條第 4 項' + (s === 'appeal' ? '前段' : '後段') + '）';
+        body.push(s === 'appeal'
+          ? '繫屬於上訴審行政法院之事件，受命法官、受託法官所為之裁定，得向受訴行政法院提出異議，不以「依法得為抗告」為條件。' + (interim ? '所以即使是程序進行中的裁定，也可以異議。' : '')
+          : '不得上訴之事件，第一審行政法院受命法官、受託法官所為之裁定，亦得向受訴行政法院提出異議，不以「依法得為抗告」為條件。' + (interim ? '程序進行中的裁定同樣可以異議，因為之後沒有上訴審能依第 239 條一併審查。' : ''));
+        proc = PROC_OBJ;
+      }
+    }
+    res.innerHTML = '<h3>'+title+'</h3><p class="small" style="margin:0 0 .4em">'+body.join('</p><p class="small" style="margin:0 0 .4em">')+'</p>' + (proc ? '<p class="small muted" style="margin:0">'+proc+'</p>' : '');
+    res.classList.add('on');
+    logEv({ type:"tool", q:"appeal-vs-objection", k: w+':'+s+':'+(interim?'interim':'final') });
+  });
+})();
+</script>
+</body>
+</html>
