@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>行政訴訟法｜第 1 課 導論與法院架構</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F4F6F3; --card:#FFFFFF;
+  --ink:#1C2A30; --ink-2:#4B5A62; --ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --law:#5B3A8C; --law-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F; --card:#1D262B;
+    --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+    --rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --law:#B9A0E3; --law-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F; --card:#1D262B;
+  --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+  --rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --law:#B9A0E3; --law-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--blue);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+
+/* hero */
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--law);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--law-soft);color:var(--law);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+/* tabs */
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit}
+nav.tabs button:hover{border-color:var(--blue);color:var(--ink)}
+nav.tabs button.active{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--blue-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--law-soft);border-left:4px solid var(--law);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--law);display:block;margin-bottom:.2em}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.law{background:var(--law-soft);border-color:transparent;color:var(--law)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+
+/* flow / structure diagrams */
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 160px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--blue)}
+.courts{display:grid;grid-template-columns:1fr;gap:8px;margin:.6rem 0 1rem}
+.court{border:1px solid var(--rule);border-radius:10px;padding:.7rem .9rem;background:var(--paper);display:grid;grid-template-columns:7.5em 1fr;gap:.3rem .8rem;align-items:start}
+.court .lv{font-weight:700;color:var(--law)}
+.court .what{font-size:.92rem}
+.court.top{border-color:var(--law)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+/* examples */
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+.step4{display:grid;grid-template-columns:5em 1fr;gap:.25rem .7rem;font-size:.95rem;margin:.3rem 0 .8rem}
+.step4 dt{color:var(--law);font-weight:700}
+.step4 dd{margin:0}
+
+/* interactive tool */
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox select,.toolbox input[type=number]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--law)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+
+/* practice & quiz */
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--law);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+/* 條文速查 */
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">行政訴訟法 · 第 1 課</span>
+  <h1>導論與法院架構</h1>
+  <p>三節加章末測驗。這一課先回答三個問題：行政訴訟在做什麼、案子會進哪一個法院、起訴前要不要先訴願。後面十一課的每一條規定，都掛在這三個問題底下。</p>
+  <p class="ver">依民國 111 年 6 月 22 日修正條文編寫（多數條文自 112 年 8 月 15 日施行）。自學筆記，非官方；條文以全國法規資料庫為準。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1-1 行政訴訟在做什麼</button>
+  <button data-t="s2">1-2 法院架構與審級</button>
+  <button data-t="s3">1-3 訴願與起訴的關係</button>
+  <button data-t="s4">章末測驗</button>
+  <button data-t="s5">條文速查</button>
+</nav>
+
+<!-- ═══════════ 1-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出行政訴訟法第 1 條的三個宗旨，知道它們在考題裡怎麼被用</li>
+      <li>分得清「公法上爭議」和「私法爭議」，知道哪些爭議不走行政法院</li>
+      <li>記得第 3 條的三大訴訟類型，以及它們在後面條文怎麼再細分</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：第 1 條不是標語，是解釋條文的方向盤</h2>
+    <div class="law"><b class="art">第 1 條</b>行政訴訟以保障人民權益，確保國家行政權之合法行使，增進司法功能為宗旨。</div>
+    <p>三個宗旨有先後。「保障人民權益」排第一，所以行政訴訟是<b>主觀訴訟</b>為原則：你要主張自己的權利或法律上利益受損，才能起訴。「確保行政權合法行使」是客觀面向，體現在法院的職權調查（第 125 條、第 133 條）、以及例外允許的公益訴訟（第 9 條）。</p>
+    <div class="tip">國考用法：遇到條文解釋有兩種可能，往「有利人民權利保護」的方向解釋，再用第 1 條當理由。這招在訴訟類型選錯、期間計算、程序補正的題目最常用。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 2 條畫出行政法院的地盤</h2>
+    <div class="law"><b class="art">第 2 條</b>公法上之爭議，除法律別有規定外，得依本法提起行政訴訟。</div>
+    <p>兩個關鍵字。第一，<b>公法上之爭議</b>：這是行政法院審判權的概括條款，只要是公法爭議，原則上都歸行政法院，不需要法律另外一條一條授權。第二，<b>除法律別有規定外</b>：有些公法爭議被立法者送到別的法院，行政法院就不能收。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>爭議</th><th>去哪裡</th><th>為什麼</th></tr></thead>
+      <tbody>
+        <tr><td>不服罰鍰、駁回申請、徵收等行政處分</td><td><span class="pill law">行政法院</span></td><td>典型公法爭議，第 2 條概括條款</td></tr>
+        <tr><td>公法上契約（例如公費生契約、委託行使公權力契約）</td><td><span class="pill law">行政法院</span></td><td>第 8 條第 1 項明文：因公法上契約發生之給付亦同</td></tr>
+        <tr><td>選舉罷免事件之爭議</td><td><span class="pill law">行政法院</span></td><td>第 10 條：除法律別有規定外得依本法提起</td></tr>
+        <tr><td>國家賠償</td><td><span class="pill blue">普通法院</span>為原則</td><td>國家賠償法規定由民事法院審理，是「法律別有規定」。但第 7 條允許在行政訴訟中<b>合併請求</b>損害賠償</td></tr>
+        <tr><td>公務員懲戒、違憲審查</td><td><span class="pill blue">懲戒法院、憲法法庭</span></td><td>各有專法，屬「法律別有規定」</td></tr>
+        <tr><td>政府採購的履約爭議、機關買文具的買賣</td><td><span class="pill blue">普通法院</span></td><td>私法爭議，不是公法爭議</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：看到「政府」「機關」就以為一定是公法。判斷的是<b>法律關係的性質</b>，不是當事人是誰。機關去買文具是私法買賣；人民跟機關簽的公費生契約是公法契約。</div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：這件爭議該去哪個法院</h2>
+    <p class="small muted">選一個情境，看它會被分到哪裡，以及理由出自哪一條。這個工具在第 2、3 課會升級成「該提哪一種訴訟」。</p>
+    <div class="toolbox">
+      <div class="chips" id="t1chips">
+        <button class="chip" data-k="fine">不服環保局開的 30 萬元罰鍰</button>
+        <button class="chip" data-k="contract">公費醫師契約的服務年限爭議</button>
+        <button class="chip" data-k="ngo">市政府跟廠商的辦公室租約糾紛</button>
+        <button class="chip" data-k="nb">警察執勤撞壞人民車子要求賠償</button>
+        <button class="chip" data-k="elect">不服選舉委員會的當選無效認定</button>
+        <button class="chip" data-k="salary">公務員請求補發未發的加給</button>
+      </div>
+      <div class="result" id="t1res"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：第 3 條的三大類型，是整部法的骨架</h2>
+    <div class="law"><b class="art">第 3 條</b>前條所稱之行政訴訟，指撤銷訴訟、確認訴訟及給付訴訟。</div>
+    <p>第 3 條只講三大類，但第 4 條到第 8 條把它們拆得更細。先把這張表背起來，第 2、3 課會一條一條展開。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>第 3 條的三大類</th><th>細分後的類型</th><th>條文</th><th>一句話</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="1"><b>撤銷訴訟</b></td><td>撤銷訴訟</td><td>第 4 條</td><td>把違法的行政處分消滅掉</td></tr>
+        <tr><td rowspan="2"><b>給付訴訟</b></td><td>課予義務訴訟</td><td>第 5 條</td><td>要機關作成處分（怠為處分、駁回申請）</td></tr>
+        <tr><td>一般給付訴訟</td><td>第 8 條</td><td>要機關給錢、給東西、做處分以外的行為</td></tr>
+        <tr><td rowspan="2"><b>確認訴訟</b></td><td>確認處分無效、確認法律關係成立不成立</td><td>第 6 條第 1 項前段</td><td>請法院宣告某個狀態</td></tr>
+        <tr><td>確認已執行完畢或已消滅之處分違法</td><td>第 6 條第 1 項後段</td><td>處分已經不在了，仍請法院說它違法</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note">課予義務訴訟在學說上歸類為給付訴訟的一種（請求機關作成處分這個「給付」），這也是第 3 條只寫三類、第 5 條卻獨立成條的原因。考試寫「四大訴訟類型」或「五大類型」都看得到，關鍵是說得出每一種對應哪一條。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：第 3 條之 1 和第 307 條之 1，兩個常被跳過的條文</h2>
+    <div class="law"><b class="art">第 3 條之 1</b>本法所稱高等行政法院，指高等行政法院高等行政訴訟庭；所稱地方行政法院，指高等行政法院地方行政訴訟庭。</div>
+    <p>111 年修法後，原本地方法院的行政訴訟庭併入高等行政法院，改叫「地方行政訴訟庭」。所以條文裡的「地方行政法院」<b>不是一個獨立的法院</b>，而是高等行政法院裡的一個庭。下一節會畫給你看。</p>
+    <div class="law"><b class="art">第 307 條之 1</b>民事訴訟法之規定，除本法已規定準用者外，與行政訴訟性質不相牴觸者，亦準用之。</div>
+    <p>整部法到處寫「民事訴訟法第○條之規定，於本節準用之」。第 307 條之 1 再補一個概括準用：就算沒有明文列出，只要跟行政訴訟性質不牴觸，民事訴訟法也可以用。這是為什麼讀行政訴訟法要帶著民事訴訟法一起翻。</p>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲向某縣政府申請低收入戶資格被駁回，想告。這是公法爭議嗎？歸誰管？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>社會救助資格的核定，是不是行政訴訟法第 2 條的「公法上爭議」。</dd>
+        <dt>條文</dt><dd>第 2 條：公法上之爭議，除法律別有規定外，得依本法提起行政訴訟。</dd>
+        <dt>涵攝</dt><dd>縣政府依社會救助法審核資格，是行使公權力作成的行政處分，雙方是公法上的管制關係，不是對等的私人往來。社會救助法也沒有把這類爭議劃給普通法院。</dd>
+        <dt>結論</dt><dd>是公法爭議，由行政法院審判。甲應先經訴願，再依第 5 條第 2 項提起課予義務訴訟（第 2 課會細講）。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙主張公務員執行職務時過失撞壞他的招牌，向行政法院起訴請求國家賠償 20 萬元。法院怎麼處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>單獨提起的國家賠償請求，是否屬行政法院審判權範圍。</dd>
+        <dt>條文</dt><dd>第 2 條但書「除法律別有規定外」；第 7 條「提起行政訴訟，得於同一程序中，合併請求損害賠償或其他財產上給付」。</dd>
+        <dt>涵攝</dt><dd>國家賠償法將國賠事件交由民事法院審理，屬第 2 條所稱法律別有規定。第 7 條只允許在<b>已經合法提起的行政訴訟中</b>合併請求賠償，乙並沒有同時對任何行政處分或公法關係起訴，無從「合併」。</dd>
+        <dt>結論</dt><dd>行政法院無審判權。依第 107 條第 1 項第 1 款，應裁定駁回，但「不能依法移送」的情形才駁回；可移送者應移送有審判權的普通法院（第 6 課會講第 107 條）。乙如果想走行政法院，必須先有一個主訴訟，再依第 7 條合併請求。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">1. 依行政訴訟法第 1 條，下列何者<b>不是</b>條文明定的宗旨？</div>
+      <label><input type="radio" name="p1q1" value="A">保障人民權益</label>
+      <label><input type="radio" name="p1q1" value="B">促進行政效率</label>
+      <label><input type="radio" name="p1q1" value="C">確保國家行政權之合法行使</label>
+      <label><input type="radio" name="p1q1" value="D">增進司法功能</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 1 條三個宗旨：保障人民權益、確保國家行政權之合法行使、增進司法功能。「行政效率」是行政程序法的用語，不在這裡。" data-diag='{"A":"保障人民權益是第 1 條排第一的宗旨。","C":"確保國家行政權合法行使是第 1 條的第二個宗旨。","D":"增進司法功能是第 1 條的第三個宗旨。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">2. 關於行政訴訟法第 2 條，下列敘述何者正確？</div>
+      <label><input type="radio" name="p1q2" value="A">只有法律明文列舉的公法爭議，才能提起行政訴訟</label>
+      <label><input type="radio" name="p1q2" value="B">凡以行政機關為一造的爭議，都是公法上爭議</label>
+      <label><input type="radio" name="p1q2" value="C">公法上爭議原則上都可提起行政訴訟，但法律另有規定者除外</label>
+      <label><input type="radio" name="p1q2" value="D">私法爭議如涉及公益，也可依本法提起行政訴訟</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 2 條採概括條款：公法上之爭議，除法律別有規定外，得依本法提起行政訴訟。" data-diag='{"A":"這是列舉主義的講法，第 2 條採的是概括條款。","B":"機關買文具也是機關為一造，但那是私法。要看法律關係的性質。","D":"第 2 條的對象是公法上爭議，私法爭議再有公益也不歸行政法院。"}'></div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">3. 第 3 條之 1 所稱「地方行政法院」是指：</div>
+      <label><input type="radio" name="p1q3" value="A">各地方法院</label>
+      <label><input type="radio" name="p1q3" value="B">各地方法院行政訴訟庭</label>
+      <label><input type="radio" name="p1q3" value="C">獨立設置的地方行政法院</label>
+      <label><input type="radio" name="p1q3" value="D">高等行政法院地方行政訴訟庭</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 3 條之 1：所稱地方行政法院，指高等行政法院地方行政訴訟庭。它是高等行政法院裡的一個庭。" data-diag='{"A":"111 年修法前第一審簡易事件才在地方法院行政訴訟庭，現已併入高等行政法院。","B":"這是修法前的制度，現行條文已改為高等行政法院地方行政訴訟庭。","C":"沒有獨立設置的地方行政法院，它是高等行政法院的一個庭。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>畫得出「三級二審」：三個審判層級、每個案件最多走兩審</li>
+      <li>看到案件類型與金額，判斷得出第一審在高等行政訴訟庭還是地方行政訴訟庭</li>
+      <li>說得出各級法院的審理方式，以及裁判費的基本數字</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：三級二審，但「級」和「審」不是同一回事</h2>
+    <p>111 年修法建立的架構叫<b>三級二審</b>。三級是三個審判層級；二審是任何一個案件最多只走兩個審級。地方行政訴訟庭的案子上訴到高等行政訴訟庭就終結，不能再上最高行政法院。</p>
+    <div class="courts">
+      <div class="court top"><span class="lv">最高行政法院</span><span class="what">法律審。審理不服高等行政訴訟庭第一審判決的上訴（第 238 條），以及抗告。原則上不開言詞辯論（第 253 條）。</span></div>
+      <div class="arrow">▲ 上訴（第 238 條，20 日不變期間，第 241 條）</div>
+      <div class="court"><span class="lv">高等行政法院<br>高等行政訴訟庭</span><span class="what">兩種身分。(1) 通常訴訟程序事件的<b>第一審</b>（第 104 條之 1 本文）、都市計畫審查程序的專屬第一審（第 237 條之 19）。(2) 地方行政訴訟庭判決的<b>上訴審</b>，而且是終審（第 263 條之 1）。</span></div>
+      <div class="arrow">▲ 上訴（第 263 條之 1；第二審判決不得再上訴）</div>
+      <div class="court"><span class="lv">高等行政法院<br>地方行政訴訟庭</span><span class="what">第一審。管：簡易訴訟程序事件（第 229 條）、交通裁決事件（第 237 條之 1 以下）、收容聲請事件（第 237 條之 11）、以及通常程序中金額較小的那一塊（第 104 條之 1 但書）。</span></div>
+    </div>
+    <div class="warn">常錯：「地方行政訴訟庭的案子可以一路上訴到最高行政法院」。錯。第 263 條之 1 第 2 項明文，對於高等行政法院之第二審判決，不得上訴。只有統一法律見解的必要時，高等行政法院得裁定移送最高行政法院（第 263 條之 4）。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第一審在哪一庭，看「程序」加「金額」</h2>
+    <div class="law"><b class="art">第 104 條之 1 第 1 項</b>適用通常訴訟程序之事件，以高等行政法院為第一審管轄法院。但下列事件，以地方行政法院為第一審管轄法院：<br>一、關於稅捐課徵事件涉訟，所核課之稅額在新臺幣一百五十萬元以下者。<br>二、因不服行政機關所為新臺幣一百五十萬元以下之罰鍰或其附帶之其他裁罰性、管制性不利處分而涉訟者。<br>三、其他關於公法上財產關係之訴訟，其標的之金額或價額在新臺幣一百五十萬元以下者。<br>四、其他依法律規定或經司法院指定由地方行政法院管轄之事件。</div>
+    <p>所以同樣是「通常訴訟程序」，150 萬以下的稅捐、罰鍰、公法財產事件在地方庭，超過 150 萬在高等庭。而 50 萬以下的這三類事件，更進一步<b>改用簡易程序</b>（第 229 條第 2 項），自然也在地方庭。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>事件</th><th>適用程序</th><th>第一審</th><th>上訴審（終審）</th></tr></thead>
+      <tbody>
+        <tr><td>稅捐／罰鍰／公法財產：50 萬以下</td><td>簡易程序（§229 II 1–3）</td><td>地方行政訴訟庭</td><td>高等行政訴訟庭</td></tr>
+        <tr><td>稅捐／罰鍰／公法財產：超過 50 萬、150 萬以下</td><td>通常程序（§104-1 I 但書）</td><td>地方行政訴訟庭</td><td>高等行政訴訟庭</td></tr>
+        <tr><td>稅捐／罰鍰／公法財產：超過 150 萬</td><td>通常程序（§104-1 I 本文）</td><td>高等行政訴訟庭</td><td>最高行政法院</td></tr>
+        <tr><td>告誡、警告、記點、記次、講習、輔導教育等輕微處分</td><td>簡易程序（§229 II 4）</td><td>地方行政訴訟庭</td><td>高等行政訴訟庭</td></tr>
+        <tr><td>非財產性質的處分（例如撤銷執照、駁回許可）</td><td>通常程序（§104-1 I 本文）</td><td>高等行政訴訟庭</td><td>最高行政法院</td></tr>
+        <tr><td>交通裁決事件（道交條例 §8、§37 VI 裁決）</td><td>交通裁決事件程序（§237-1 以下）</td><td>地方行政訴訟庭</td><td>高等行政訴訟庭</td></tr>
+        <tr><td>收容聲請事件</td><td>收容聲請事件程序（§237-10 以下）</td><td>地方行政訴訟庭</td><td>抗告至高等行政訴訟庭（§237-16）</td></tr>
+        <tr><td>都市計畫審查</td><td>都市計畫審查程序（§237-18 以下）</td><td>高等行政訴訟庭（專屬，§237-19）</td><td>最高行政法院</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tip">數字會動：第 104 條之 1 第 2 項允許司法院以命令把 150 萬提高到 1,000 萬；第 229 條第 3 項允許把 50 萬調整為 25 萬或 75 萬。考題如果給了「司法院已以命令調整」的條件，要跟著改。</div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：這件案子第一審在哪一庭</h2>
+    <p class="small muted">選案件類型，必要時填金額，看第一審法院、適用程序、上訴到哪裡。數字以現行條文為準，未考慮司法院命令調整。</p>
+    <div class="toolbox">
+      <fieldset><legend>案件類型</legend>
+        <select id="ctType">
+          <option value="tax">稅捐課徵（有稅額）</option>
+          <option value="fine">罰鍰（有金額）</option>
+          <option value="money">其他公法上財產關係（有金額）</option>
+          <option value="minor">告誡、警告、記點、記次、講習、輔導教育等輕微處分</option>
+          <option value="other">非財產性質的處分（撤照、駁回許可等）</option>
+          <option value="traffic">交通裁決（道交條例 §8、§37 VI 的裁決）</option>
+          <option value="detain">收容聲請事件</option>
+          <option value="plan">請求宣告都市計畫無效</option>
+        </select>
+      </fieldset>
+      <fieldset id="ctAmtBox"><legend>金額（新臺幣元）</legend>
+        <input type="number" id="ctAmt" min="0" step="10000" value="300000" style="width:12em"> 元
+        <span class="small muted">例：300000 是 30 萬</span>
+      </fieldset>
+      <button class="btn" id="ctGo">判斷</button>
+      <div class="result" id="ctRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：各審級怎麼審、要繳多少錢</h2>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>地方行政訴訟庭</th><th>高等行政訴訟庭</th><th>最高行政法院</th></tr></thead>
+      <tbody>
+        <tr><th>角色</th><td>第一審</td><td>第一審，兼地方庭的上訴審</td><td>法律審</td></tr>
+        <tr><th>法官</th><td>簡易程序由獨任法官（§232 I）</td><td>合議</td><td>合議</td></tr>
+        <tr><th>審查範圍</th><td>事實與法律</td><td>事實與法律</td><td>只審「判決有無違背法令」（§242、§243）</td></tr>
+        <tr><th>言詞辯論</th><td>原則要（簡易程序起訴等陳述可用言詞，§231）</td><td>原則要（§188 I）</td><td>原則不開，§253 列舉例外才開</td></tr>
+        <tr><th>裁判費：起訴</th><td>簡易 2,000；交通裁決 300（§98 II、§237-5）</td><td>4,000（§98 II）</td><td>—</td></tr>
+        <tr><th>裁判費：上訴</th><td>—</td><td>加徵二分之一（§98-2 I）；交通裁決 750</td><td>加徵二分之一</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note">第 98 條第 1 項：訴訟費用由敗訴之當事人負擔。但第 198 條的情況判決，由被告負擔。這一句在第 9 課會回來。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲不服國稅局核定補稅 120 萬元並處罰鍰 60 萬元，經復查、訴願後提起撤銷訴訟。第一審在哪一庭？適用什麼程序？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>補稅與罰鍰合併爭執時，程序與管轄怎麼算。</dd>
+        <dt>條文</dt><dd>第 104 條之 1 第 1 項第 1、2 款（150 萬以下在地方庭）；第 229 條第 2 項第 1、2 款（50 萬以下簡易程序）。</dd>
+        <dt>涵攝</dt><dd>稅額 120 萬超過 50 萬、未逾 150 萬，屬通常程序但由地方庭管轄；罰鍰 60 萬同樣超過 50 萬、未逾 150 萬。兩者都落在第 104 條之 1 但書，沒有一者需要用簡易程序。</dd>
+        <dt>結論</dt><dd>適用通常訴訟程序，第一審在高等行政法院地方行政訴訟庭。對判決不服，上訴到高等行政訴訟庭，為終審（第 263 條之 1）。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙因超速被裁罰 3,000 元並記點，不服。乙應向哪個法院起訴？要先訴願嗎？裁判費多少？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>交通裁決事件的特別程序。</dd>
+        <dt>條文</dt><dd>第 237 條之 1 第 1 項第 1 款（不服道交條例第 8 條裁決之撤銷訴訟為交通裁決事件）；第 237 條之 2（管轄）；第 237 條之 3（被告、起訴期間）；第 237 條之 5（裁判費）。</dd>
+        <dt>涵攝</dt><dd>超速裁罰是道交條例第 8 條的裁決，屬交通裁決事件，由地方行政訴訟庭管轄；原告得選住所地、居所地、所在地或違規行為地的地方行政法院。第 237 條之 3 第 1 項規定逕向法院起訴、以原處分機關為被告，不經訴願。</dd>
+        <dt>結論</dt><dd>乙應於裁決書送達後 30 日不變期間內，以原處分機關為被告，向其住所地等的地方行政訴訟庭起訴，不須訴願。起訴裁判費 300 元。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">4. 甲不服 80 萬元的罰鍰處分，經訴願駁回後提起撤銷訴訟。依現行法，第一審管轄法院與程序為何？</div>
+      <label><input type="radio" name="p2q1" value="A">高等行政訴訟庭，通常程序</label>
+      <label><input type="radio" name="p2q1" value="B">地方行政訴訟庭，通常程序</label>
+      <label><input type="radio" name="p2q1" value="C">地方行政訴訟庭，簡易程序</label>
+      <label><input type="radio" name="p2q1" value="D">高等行政訴訟庭，簡易程序</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="80 萬超過 50 萬（不適用簡易程序），但未逾 150 萬，依第 104 條之 1 第 1 項第 2 款，由地方行政法院以通常程序審理。" data-diag='{"A":"150 萬以下的罰鍰事件，第 104 條之 1 但書交給地方行政訴訟庭。","C":"簡易程序的罰鍰門檻是 50 萬以下（第 229 條第 2 項第 2 款），80 萬已超過。","D":"高等行政訴訟庭不辦簡易程序事件，簡易程序以地方行政法院為第一審（第 229 條第 1 項）。"}'></div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">5. 對於高等行政法院地方行政訴訟庭之第一審判決提起上訴，經高等行政訴訟庭判決後，當事人仍不服。下列何者正確？</div>
+      <label><input type="radio" name="p2q2" value="A">得上訴最高行政法院</label>
+      <label><input type="radio" name="p2q2" value="B">得以違背法令為理由上訴最高行政法院</label>
+      <label><input type="radio" name="p2q2" value="C">得向最高行政法院抗告</label>
+      <label><input type="radio" name="p2q2" value="D">不得上訴，但高等行政法院認有統一見解必要時得裁定移送最高行政法院</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 263 條之 1 第 2 項：對於高等行政法院之第二審判決，不得上訴。第 263 條之 4 第 1 項：認有確保裁判見解統一之必要者，應以裁定敘明理由移送最高行政法院。" data-diag='{"A":"三級二審的意思就是最多兩個審級，地方庭起算的案件到高等庭終結。","B":"違背法令是對高等庭「第一審」判決上訴最高行政法院的要件（第 242 條），不適用於高等庭的第二審判決。","C":"判決用上訴、裁定用抗告，對判決不能抗告。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">6. 關於最高行政法院的審理，下列何者正確？</div>
+      <label><input type="radio" name="p2q3" value="A">原則上不行言詞辯論，但法律關係複雜或法律見解紛歧等情形應行言詞辯論</label>
+      <label><input type="radio" name="p2q3" value="B">應重新調查事實，不受高等行政法院認定之拘束</label>
+      <label><input type="radio" name="p2q3" value="C">上訴人得於上訴審為訴之變更或追加</label>
+      <label><input type="radio" name="p2q3" value="D">起訴裁判費為新臺幣 4,000 元</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 253 條第 1 項列舉三種應行言詞辯論的情形，其餘原則上不開。第 254 條第 1 項：以高等行政法院判決確定之事實為判決基礎。第 238 條第 2 項：上訴審不得為訴之變更、追加或提起反訴。" data-diag='{"B":"最高行政法院是法律審，第 254 條第 1 項以原判決確定之事實為基礎。","C":"第 238 條第 2 項明文禁止上訴審的訴之變更、追加與反訴。","D":"4,000 元是第一審起訴的裁判費（第 98 條第 2 項），上訴是加徵二分之一（第 98 條之 2）。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>知道哪些訴訟要先訴願（訴願前置），哪些不用，哪些有自己的前置程序</li>
+      <li>算得出第 106 條的起訴期間：2 個月不變期間與 3 年的上限</li>
+      <li>找得到被告：第 24 條以訴願結果決定被告機關</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：訴願前置不是所有訴訟都有</h2>
+    <p>行政訴訟和訴願是兩套制度。訴願是行政機關內部的自我審查，行政訴訟是法院。法律只在<b>針對行政處分</b>的訴訟要求先訴願，理由是給行政機關自我糾正的機會。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>訴訟類型</th><th>起訴前要做什麼</th><th>條文</th></tr></thead>
+      <tbody>
+        <tr><td>撤銷訴訟</td><td>先訴願。訴願被駁回、或提起訴願逾 3 個月不為決定、或延長期間逾 2 個月不為決定，才能起訴</td><td>第 4 條第 1 項</td></tr>
+        <tr><td>課予義務訴訟</td><td>先訴願（「經依訴願程序後」）</td><td>第 5 條第 1、2 項</td></tr>
+        <tr><td>確認處分無效</td><td><b>不是訴願</b>。先向原處分機關請求確認無效，未被允許或 30 日內不為確答，才能起訴</td><td>第 6 條第 2 項</td></tr>
+        <tr><td>確認法律關係成立不成立、確認已消滅處分違法</td><td>無前置程序，但受補充性限制（能提撤銷、課予義務、一般給付者不得提）</td><td>第 6 條第 3 項</td></tr>
+        <tr><td>一般給付訴訟</td><td>無訴願前置</td><td>第 8 條</td></tr>
+        <tr><td>交通裁決事件</td><td>不經訴願，逕向地方行政法院起訴</td><td>第 237 條之 3 第 1 項</td></tr>
+        <tr><td>都市計畫審查</td><td>不經訴願，逕向高等行政法院起訴</td><td>第 237 條之 18 第 1 項</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：把第 6 條第 2 項的「向原處分機關請求確認無效」寫成「訴願」。它是獨立的前置程序，對象是原處分機關本身，等待期間是 30 日，不是訴願法的 3 個月。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 106 條的時間線</h2>
+    <div class="law"><b class="art">第 106 條</b>第四條及第五條訴訟之提起，除本法別有規定外，應於訴願決定書送達後二個月之不變期間內為之。但訴願人以外之利害關係人知悉在後者，自知悉時起算。<br>第四條及第五條之訴訟，自訴願決定書送達後，已逾三年者，不得提起。<br>不經訴願程序即得提起第四條或第五條第二項之訴訟者，應於行政處分達到或公告後二個月之不變期間內為之。<br>不經訴願程序即得提起第五條第一項之訴訟者，於應作為期間屆滿後，始得為之。但於期間屆滿後，已逾三年者，不得提起。</div>
+    <div class="flow">
+      <div class="step"><b>起算點</b>訴願決定書送達。利害關係人知悉在後者，自知悉時起算。</div>
+      <div class="step"><b>2 個月</b>不變期間。不變期間不能伸長縮短（第 90 條第 1 項但書），遲誤只能聲請回復原狀（第 91 條）。</div>
+      <div class="step"><b>3 年</b>絕對上限。就算知悉在後，送達後逾 3 年也不能再起訴。</div>
+    </div>
+    <p>第 3、4 項處理「法律規定不用訴願就能起訴」的情形。第 4 項尤其特別：怠為處分的課予義務訴訟（第 5 條第 1 項），要等<b>應作為期間屆滿後</b>才能起訴，不然機關還沒違法。</p>
+    <div class="note">期間怎麼算、在途期間怎麼扣、怎麼回復原狀，第 6 課會給你一個計算器。這裡先把「2 個月、3 年」兩個數字和它們的起算點記住。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：被告是誰，看訴願的結果</h2>
+    <div class="law"><b class="art">第 24 條</b>經訴願程序之行政訴訟，其被告為下列機關：<br>一、駁回訴願時之原處分機關。<br>二、撤銷或變更原處分時，為撤銷或變更之機關。</div>
+    <p>訴願駁回，表示原處分還在，告<b>原處分機關</b>。訴願機關撤銷或變更了原處分，那個新的、對你不利的決定是訴願機關作的，就告<b>訴願機關</b>。</p>
+    <div class="tip">第 107 條第 2 項：撤銷訴訟及課予義務訴訟，原告於訴狀誤列被告機關者，法院應先命補正，不能直接駁回。所以列錯被告不是致命傷，但考試會問「法院應如何處理」。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：民刑事法院遇到行政處分，要停下來等</h2>
+    <div class="law"><b class="art">第 12 條</b>民事或刑事訴訟之裁判，以行政處分是否無效或違法為據者，應依行政爭訟程序確定之。<br>前項行政爭訟程序已經開始者，於其程序確定前，民事或刑事法院應停止其審判程序。</div>
+    <p>這條確立行政處分的「合法性」由行政爭訟程序判斷，民刑事法院不自己認定。注意第 2 項的條件：行政爭訟程序<b>已經開始</b>，民刑事法院才「應」停止；還沒開始的，條文沒有強制停止。</p>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲於 1 月 10 日收到訴願決定書（訴願駁回）。甲於 3 月 20 日才向行政法院提起撤銷訴訟。法院應如何處理？如果甲是訴願人以外的利害關係人，3 月 1 日才知道訴願決定，結論有無不同？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>第 106 條第 1 項不變期間的起算與效果。</dd>
+        <dt>條文</dt><dd>第 106 條第 1 項：訴願決定書送達後二個月之不變期間；但訴願人以外之利害關係人知悉在後者，自知悉時起算。第 107 條第 1 項第 6 款：起訴逾越法定期限者，裁定駁回。</dd>
+        <dt>涵攝</dt><dd>甲為訴願人，期間自 1 月 10 日送達起算，2 個月於 3 月 10 日屆滿（在途期間另計），3 月 20 日起訴已逾期，且逾期不能補正。若甲是利害關係人且 3 月 1 日始知悉，依但書自知悉時起算，5 月 1 日屆滿，3 月 20 日起訴合法；但仍受第 2 項「送達後 3 年」的上限。</dd>
+        <dt>結論</dt><dd>訴願人甲之訴因逾期，法院應依第 107 條第 1 項第 6 款裁定駁回；利害關係人甲則起訴合法。甲如有天災等不可歸責事由，得依第 91 條聲請回復原狀。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙申請建照被縣政府駁回，提起訴願後，內政部認原處分不當而撤銷之，並自行作成「不予核發」之決定。乙仍不服，要以誰為被告？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>訴願機關變更原處分時的被告適格。</dd>
+        <dt>條文</dt><dd>第 24 條第 2 款：撤銷或變更原處分時，為撤銷或變更之機關。</dd>
+        <dt>涵攝</dt><dd>訴願機關內政部撤銷原處分並自為決定，乙現在不服的是內政部的決定，而非縣政府的原處分。</dd>
+        <dt>結論</dt><dd>以內政部為被告。若乙誤列縣政府，法院依第 107 條第 2 項準用第 1 項但書，應先定期間命補正。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">7. 下列何種訴訟，依行政訴訟法規定起訴前<b>須先經訴願程序</b>？</div>
+      <label><input type="radio" name="p3q1" value="A">確認行政處分無效之訴訟</label>
+      <label><input type="radio" name="p3q1" value="B">一般給付訴訟</label>
+      <label><input type="radio" name="p3q1" value="C">課予義務訴訟</label>
+      <label><input type="radio" name="p3q1" value="D">交通裁決事件之撤銷訴訟</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 5 條第 1、2 項均規定「經依訴願程序後」。" data-diag='{"A":"第 6 條第 2 項的前置程序是向原處分機關請求確認無效，不是訴願。","B":"第 8 條一般給付訴訟沒有訴願前置。","D":"第 237 條之 3 第 1 項：交通裁決事件逕向地方行政法院起訴，不經訴願。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">8. 甲提起訴願後，訴願機關逾 3 個月未作成決定。關於甲得否提起撤銷訴訟，下列何者正確？</div>
+      <label><input type="radio" name="p3q2" value="A">不得提起，須等訴願決定作成</label>
+      <label><input type="radio" name="p3q2" value="B">得提起，第 4 條第 1 項明定提起訴願逾三個月不為決定者得起訴</label>
+      <label><input type="radio" name="p3q2" value="C">僅得提起課予義務訴訟請求訴願機關作成決定</label>
+      <label><input type="radio" name="p3q2" value="D">應先聲請訴願機關延長期間</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 4 條第 1 項列三種情形：不服訴願決定、提起訴願逾三個月不為決定、延長訴願決定期間逾二個月不為決定。" data-diag='{"A":"第 4 條第 1 項允許訴願逾期未決定時直接起訴，避免行政機關拖延使人民無法救濟。","C":"訴願決定不是對人民申請案的行政處分，不走課予義務訴訟；條文直接開放提撤銷訴訟。","D":"延長期間是訴願機關自己的程序，人民不需聲請；延長後逾二個月不決定也可起訴。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">9. 乙受甲機關處分，訴願遭乙的上級機關丙駁回。乙提起撤銷訴訟，被告應為：</div>
+      <label><input type="radio" name="p3q3" value="A">甲機關</label>
+      <label><input type="radio" name="p3q3" value="B">丙機關</label>
+      <label><input type="radio" name="p3q3" value="C">甲、丙機關為共同被告</label>
+      <label><input type="radio" name="p3q3" value="D">甲機關所屬之公法人</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 24 條第 1 款：駁回訴願時之原處分機關。" data-diag='{"B":"訴願機關只有在撤銷或變更原處分時才成為被告（第 24 條第 2 款）。","C":"第 24 條只指定一個機關為被告，沒有共同被告的設計。","D":"行政訴訟以機關為被告（第 22 條機關有當事人能力），不是以其所屬公法人為被告。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>章末測驗（選擇 10 題 + 實例 2 題）</h2>
+    <p>選擇題全部作答後按「交卷」，10 題答對 8 題過關。實例題先自己寫，再展開參考答案對照，自評後按「我寫到了」或「要再加強」。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="C">
+      <div class="stem">1. 關於行政訴訟法第 2 條「除法律別有規定外」，下列何者屬之？</div>
+      <label><input type="radio" name="qz1" value="A">公法上契約之給付爭議</label>
+      <label><input type="radio" name="qz1" value="B">選舉罷免事件之爭議</label>
+      <label><input type="radio" name="qz1" value="C">國家賠償法所定之國家賠償訴訟</label>
+      <label><input type="radio" name="qz1" value="D">不服行政處分之撤銷訴訟</label>
+      <div class="fb" data-exp="國家賠償由民事法院審理，是法律別有規定。公法契約（第 8 條）、選罷事件（第 10 條）、撤銷訴訟（第 4 條）都在行政法院。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">2. 依第 3 條，行政訴訟的三大類型為：</div>
+      <label><input type="radio" name="qz2" value="A">撤銷訴訟、課予義務訴訟、一般給付訴訟</label>
+      <label><input type="radio" name="qz2" value="B">撤銷訴訟、確認訴訟、給付訴訟</label>
+      <label><input type="radio" name="qz2" value="C">撤銷訴訟、確認訴訟、公益訴訟</label>
+      <label><input type="radio" name="qz2" value="D">形成訴訟、確認訴訟、給付訴訟</label>
+      <div class="fb" data-exp="第 3 條：指撤銷訴訟、確認訴訟及給付訴訟。課予義務訴訟與一般給付訴訟是給付訴訟的下位類型。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">3. 依第 3 條之 1，本法所稱「高等行政法院」指：</div>
+      <label><input type="radio" name="qz3" value="A">臺北、臺中、高雄高等行政法院之總稱</label>
+      <label><input type="radio" name="qz3" value="B">高等法院行政訴訟庭</label>
+      <label><input type="radio" name="qz3" value="C">高等行政法院地方行政訴訟庭</label>
+      <label><input type="radio" name="qz3" value="D">高等行政法院高等行政訴訟庭</label>
+      <div class="fb" data-exp="第 3 條之 1 前段：所稱高等行政法院，指高等行政法院高等行政訴訟庭。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">4. 甲不服稅額 200 萬元的核課處分，經復查、訴願後起訴。第一審管轄法院為：</div>
+      <label><input type="radio" name="qz4" value="A">高等行政法院高等行政訴訟庭</label>
+      <label><input type="radio" name="qz4" value="B">高等行政法院地方行政訴訟庭</label>
+      <label><input type="radio" name="qz4" value="C">最高行政法院</label>
+      <label><input type="radio" name="qz4" value="D">地方法院行政訴訟庭</label>
+      <div class="fb" data-exp="稅額超過 150 萬，不落入第 104 條之 1 第 1 項但書，回到本文：以高等行政法院為第一審。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">5. 下列何者<b>不是</b>第 229 條第 2 項規定適用簡易訴訟程序之事件？</div>
+      <label><input type="radio" name="qz5" value="A">稅額 40 萬元之稅捐課徵事件</label>
+      <label><input type="radio" name="qz5" value="B">因不服記點處分而涉訟</label>
+      <label><input type="radio" name="qz5" value="C">請求宣告都市計畫無效之事件</label>
+      <label><input type="radio" name="qz5" value="D">關於移民署行政收容事件涉訟</label>
+      <div class="fb" data-exp="都市計畫審查程序以高等行政法院為專屬管轄（第 237 條之 19），不是簡易事件。其餘三者分別是第 229 條第 2 項第 1、4、5 款。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">6. 關於對高等行政法院第一審判決之上訴，下列何者正確？</div>
+      <label><input type="radio" name="qz6" value="A">應於判決送達後 30 日之不變期間內提起</label>
+      <label><input type="radio" name="qz6" value="B">非以判決違背法令為理由不得為之</label>
+      <label><input type="radio" name="qz6" value="C">得於上訴審提起反訴</label>
+      <label><input type="radio" name="qz6" value="D">上訴審應重新調查全部事實</label>
+      <div class="fb" data-exp="第 242 條：對於高等行政法院判決之上訴，非以其違背法令為理由，不得為之。上訴期間是 20 日（第 241 條）；上訴審不得反訴（第 238 條第 2 項）。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">7. 甲欲提起確認行政處分無效之訴訟，起訴前應：</div>
+      <label><input type="radio" name="qz7" value="A">先提起訴願</label>
+      <label><input type="radio" name="qz7" value="B">先向訴願管轄機關請求確認</label>
+      <label><input type="radio" name="qz7" value="C">無任何前置程序</label>
+      <label><input type="radio" name="qz7" value="D">先向原處分機關請求確認其無效，未被允許或 30 日內不為確答</label>
+      <div class="fb" data-exp="第 6 條第 2 項。對象是原處分機關，等待期間 30 日。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">8. 利害關係人（非訴願人）提起撤銷訴訟之期間，自何時起算？</div>
+      <label><input type="radio" name="qz8" value="A">知悉在後者，自知悉時起算，但自訴願決定書送達後已逾三年者不得提起</label>
+      <label><input type="radio" name="qz8" value="B">一律自訴願決定書送達訴願人時起算</label>
+      <label><input type="radio" name="qz8" value="C">自原處分作成時起算</label>
+      <label><input type="radio" name="qz8" value="D">無期間限制</label>
+      <div class="fb" data-exp="第 106 條第 1 項但書與第 2 項。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">9. 訴願機關將原處分變更為對訴願人更不利之內容，訴願人提起撤銷訴訟時，被告為：</div>
+      <label><input type="radio" name="qz9" value="A">原處分機關</label>
+      <label><input type="radio" name="qz9" value="B">訴願機關</label>
+      <label><input type="radio" name="qz9" value="C">原處分機關與訴願機關</label>
+      <label><input type="radio" name="qz9" value="D">由原告選擇其一</label>
+      <div class="fb" data-exp="第 24 條第 2 款：撤銷或變更原處分時，為撤銷或變更之機關。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">10. 民事法院審理的案件，其裁判以某行政處分是否違法為據，且該處分的行政爭訟程序已經開始。民事法院應：</div>
+      <label><input type="radio" name="qz10" value="A">自行認定該處分是否違法</label>
+      <label><input type="radio" name="qz10" value="B">將案件移送行政法院</label>
+      <label><input type="radio" name="qz10" value="C">於行政爭訟程序確定前停止審判程序</label>
+      <label><input type="radio" name="qz10" value="D">以該處分合法為前提逕行裁判</label>
+      <div class="fb" data-exp="第 12 條第 2 項：行政爭訟程序已經開始者，於其程序確定前，民事或刑事法院應停止其審判程序。"></div>
+    </div>
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>實例題（自評）</h2>
+    <div class="essay" data-id="e1">
+      <div class="stem">實例一　甲為某市公立高中教師，於 112 年 9 月 1 日收到市政府教育局「不予續聘」之通知。甲於 9 月 15 日提起訴願，訴願機關迄 113 年 1 月 20 日仍未作成決定。甲於 113 年 1 月 25 日向行政法院起訴。<br>問：(1) 甲得否起訴？依據為何？(2) 本件第一審應由哪一個法院管轄？(3) 甲應以何機關為被告？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>(1)</dt><dd>不予續聘是對教師身分關係的行政處分，甲應提撤銷訴訟。甲 9 月 15 日提起訴願，至 113 年 1 月 25 日已逾 3 個月未決定，符合第 4 條第 1 項「提起訴願逾三個月不為決定」，得逕行起訴，不須等待訴願決定。</dd>
+          <dt>(2)</dt><dd>不予續聘屬非財產性質之處分，不在第 104 條之 1 第 1 項但書各款，也不是第 229 條第 2 項的簡易事件，適用通常訴訟程序，以高等行政法院（高等行政訴訟庭）為第一審管轄法院。管轄地依第 13 條以被告機關所在地定之（第 4 課）。</dd>
+          <dt>(3)</dt><dd>本件訴願尚未決定，無第 24 條所定「駁回訴願時之原處分機關」或「撤銷變更之機關」的情形，被告仍為作成處分之原處分機關，即市政府教育局。</dd>
+          <dt>加分</dt><dd>可指出第 1 條保障人民權益的宗旨，說明第 4 條第 1 項允許訴願逾期起訴的目的是避免行政機關以不作為阻斷司法救濟。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+    <div class="essay" data-id="e2">
+      <div class="stem">實例二　乙公司標得某國立大學的餐廳委外經營案，雙方簽訂經營契約。履約期間大學以乙違約為由終止契約，並要求返還補助款 80 萬元。乙不服，向高等行政法院提起訴訟。<br>問：行政法院對本件有無審判權？請分別就「終止契約」與「返還補助款」說明。若乙主張契約屬行政契約，程序與管轄有何不同？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>審判權</dt><dd>第 2 條以「公法上爭議」劃定行政法院審判權，判斷標準是法律關係的性質。餐廳委外經營契約，目的在校園場地的經濟利用，大學並未將公權力委託乙行使，一般認屬私法契約（可比照政府採購履約爭議），其終止與返還款項的爭議為私法爭議，行政法院無審判權。</dd>
+          <dt>處理</dt><dd>依第 107 條第 1 項第 1 款，訴訟事件不屬行政訴訟審判權而不能依法移送者，裁定駁回；能移送者應移送有審判權之普通法院（第 6 課）。</dd>
+          <dt>若為行政契約</dt><dd>若契約內容涉及公權力之委託或公共任務之履行而屬公法上契約，則依第 8 條第 1 項「因公法上契約發生之給付亦同」，大學請求返還 80 萬元、乙請求確認契約關係存在，均屬行政法院審判權。返還 80 萬元屬公法上財產關係之訴訟，金額未逾 150 萬元，依第 104 條之 1 第 1 項第 3 款以地方行政訴訟庭為第一審，適用通常程序；一般給付訴訟不須經訴願（第 8 條）。</dd>
+          <dt>加分</dt><dd>說明審判權認定時點依起訴時狀態（第 17 條管轄恆定的類推），以及第 12 條的精神是行政處分合法性由行政爭訟判斷，但本件不涉行政處分。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card">
+    <h2>本課引用條文</h2>
+    <p class="small muted">點開看原文。只收錄本課講到的條文；全文請見全國法規資料庫。</p>
+    <div class="arts">
+      <details><summary>第 1 條 <span>宗旨</span></summary><div class="txt">行政訴訟以保障人民權益，確保國家行政權之合法行使，增進司法功能為宗旨。</div></details>
+      <details><summary>第 2 條 <span>公法上爭議</span></summary><div class="txt">公法上之爭議，除法律別有規定外，得依本法提起行政訴訟。</div></details>
+      <details><summary>第 3 條 <span>三大類型</span></summary><div class="txt">前條所稱之行政訴訟，指撤銷訴訟、確認訴訟及給付訴訟。</div></details>
+      <details><summary>第 3 條之 1 <span>法院名稱</span></summary><div class="txt">本法所稱高等行政法院，指高等行政法院高等行政訴訟庭；所稱地方行政法院，指高等行政法院地方行政訴訟庭。</div></details>
+      <details><summary>第 4 條 <span>撤銷訴訟</span></summary><div class="txt">Ⅰ 人民因中央或地方機關之違法行政處分，認為損害其權利或法律上之利益，經依訴願法提起訴願而不服其決定，或提起訴願逾三個月不為決定，或延長訴願決定期間逾二個月不為決定者，得向行政法院提起撤銷訴訟。
+Ⅱ 逾越權限或濫用權力之行政處分，以違法論。
+Ⅲ 訴願人以外之利害關係人，認為第一項訴願決定，損害其權利或法律上之利益者，得向行政法院提起撤銷訴訟。</div></details>
+      <details><summary>第 5 條 <span>課予義務訴訟</span></summary><div class="txt">Ⅰ 人民因中央或地方機關對其依法申請之案件，於法令所定期間內應作為而不作為，認為其權利或法律上利益受損害者，經依訴願程序後，得向行政法院提起請求該機關應為行政處分或應為特定內容之行政處分之訴訟。
+Ⅱ 人民因中央或地方機關對其依法申請之案件，予以駁回，認為其權利或法律上利益受違法損害者，經依訴願程序後，得向行政法院提起請求該機關應為行政處分或應為特定內容之行政處分之訴訟。</div></details>
+      <details><summary>第 6 條 <span>確認訴訟</span></summary><div class="txt">Ⅰ 確認行政處分無效及確認公法上法律關係成立或不成立之訴訟，非原告有即受確認判決之法律上利益者，不得提起之。其確認已執行而無回復原狀可能之行政處分或已消滅之行政處分為違法之訴訟，亦同。
+Ⅱ 確認行政處分無效之訴訟，須已向原處分機關請求確認其無效未被允許，或經請求後於三十日內不為確答者，始得提起之。
+Ⅲ 確認訴訟，於原告得提起或可得提起撤銷訴訟、課予義務訴訟或一般給付訴訟者，不得提起之。但確認行政處分無效之訴訟，不在此限。
+Ⅳ 應提起撤銷訴訟、課予義務訴訟，誤為提起確認行政處分無效之訴訟，其未經訴願程序者，行政法院應以裁定將該事件移送於訴願管轄機關，並以行政法院收受訴狀之時，視為提起訴願。</div></details>
+      <details><summary>第 7 條 <span>合併請求</span></summary><div class="txt">提起行政訴訟，得於同一程序中，合併請求損害賠償或其他財產上給付。</div></details>
+      <details><summary>第 8 條 <span>一般給付訴訟</span></summary><div class="txt">Ⅰ 人民與中央或地方機關間，因公法上原因發生財產上之給付或請求作成行政處分以外之其他非財產上之給付，得提起給付訴訟。因公法上契約發生之給付，亦同。
+Ⅱ 前項給付訴訟之裁判，以行政處分應否撤銷為據者，應於依第四條第一項或第三項提起撤銷訴訟時，併為請求。原告未為請求者，審判長應告以得為請求。</div></details>
+      <details><summary>第 9 條 <span>公益訴訟</span></summary><div class="txt">人民為維護公益，就無關自己權利及法律上利益之事項，對於行政機關之違法行為，得提起行政訴訟。但以法律有特別規定者為限。</div></details>
+      <details><summary>第 10 條 <span>選罷事件</span></summary><div class="txt">選舉罷免事件之爭議，除法律別有規定外，得依本法提起行政訴訟。</div></details>
+      <details><summary>第 12 條 <span>民刑事法院停止審判</span></summary><div class="txt">Ⅰ 民事或刑事訴訟之裁判，以行政處分是否無效或違法為據者，應依行政爭訟程序確定之。
+Ⅱ 前項行政爭訟程序已經開始者，於其程序確定前，民事或刑事法院應停止其審判程序。</div></details>
+      <details><summary>第 24 條 <span>被告機關</span></summary><div class="txt">經訴願程序之行政訴訟，其被告為下列機關：
+一、駁回訴願時之原處分機關。
+二、撤銷或變更原處分時，為撤銷或變更之機關。</div></details>
+      <details><summary>第 98 條 <span>訴訟費用、裁判費</span></summary><div class="txt">Ⅰ 訴訟費用指裁判費及其他進行訴訟之必要費用，由敗訴之當事人負擔。但為第一百九十八條之判決時，由被告負擔。
+Ⅱ 起訴，按件徵收裁判費新臺幣四千元。適用簡易訴訟程序之事件，徵收裁判費新臺幣二千元。</div></details>
+      <details><summary>第 104 條之 1 <span>通常程序第一審管轄</span></summary><div class="txt">Ⅰ 適用通常訴訟程序之事件，以高等行政法院為第一審管轄法院。但下列事件，以地方行政法院為第一審管轄法院：
+一、關於稅捐課徵事件涉訟，所核課之稅額在新臺幣一百五十萬元以下者。
+二、因不服行政機關所為新臺幣一百五十萬元以下之罰鍰或其附帶之其他裁罰性、管制性不利處分而涉訟者。
+三、其他關於公法上財產關係之訴訟，其標的之金額或價額在新臺幣一百五十萬元以下者。
+四、其他依法律規定或經司法院指定由地方行政法院管轄之事件。
+Ⅱ 前項所定數額，司法院得因情勢需要，以命令增至新臺幣一千萬元。</div></details>
+      <details><summary>第 106 條 <span>起訴期間</span></summary><div class="txt">Ⅰ 第四條及第五條訴訟之提起，除本法別有規定外，應於訴願決定書送達後二個月之不變期間內為之。但訴願人以外之利害關係人知悉在後者，自知悉時起算。
+Ⅱ 第四條及第五條之訴訟，自訴願決定書送達後，已逾三年者，不得提起。
+Ⅲ 不經訴願程序即得提起第四條或第五條第二項之訴訟者，應於行政處分達到或公告後二個月之不變期間內為之。
+Ⅳ 不經訴願程序即得提起第五條第一項之訴訟者，於應作為期間屆滿後，始得為之。但於期間屆滿後，已逾三年者，不得提起。</div></details>
+      <details><summary>第 229 條 <span>簡易訴訟程序事件</span></summary><div class="txt">Ⅰ 適用簡易訴訟程序之事件，以地方行政法院為第一審管轄法院。
+Ⅱ 下列各款行政訴訟事件，除本法別有規定外，適用本章所定之簡易程序：
+一、關於稅捐課徵事件涉訟，所核課之稅額在新臺幣五十萬元以下者。
+二、因不服行政機關所為新臺幣五十萬元以下罰鍰處分而涉訟者。
+三、其他關於公法上財產關係之訴訟，其標的之金額或價額在新臺幣五十萬元以下者。
+四、因不服行政機關所為告誡、警告、記點、記次、講習、輔導教育或其他相類之輕微處分而涉訟者。
+五、關於內政部移民署（以下簡稱移民署）之行政收容事件涉訟，或合併請求損害賠償或其他財產上給付者。
+六、依法律之規定應適用簡易訴訟程序者。
+Ⅲ 前項所定數額，司法院得因情勢需要，以命令減為新臺幣二十五萬元或增至新臺幣七十五萬元。
+Ⅳ 第二項第五款之事件，由受收容人受收容或曾受收容所在地之地方行政法院管轄，不適用第十三條之規定。但未曾受收容者，由被告機關所在地之地方行政法院管轄。</div></details>
+      <details><summary>第 237 條之 1 至之 3、之 5 <span>交通裁決事件</span></summary><div class="txt">第 237 條之 1 Ⅰ 本法所稱交通裁決事件如下：一、不服道路交通管理處罰條例第八條及第三十七條第六項之裁決，而提起之撤銷訴訟、確認訴訟。二、合併請求返還與前款裁決相關之已繳納罰鍰或已繳送之駕駛執照、計程車駕駛人執業登記證、汽車牌照。
+第 237 條之 2 交通裁決事件，得由原告住所地、居所地、所在地或違規行為地之地方行政法院管轄。
+第 237 條之 3 Ⅰ 交通裁決事件訴訟之提起，應以原處分機關為被告，逕向管轄之地方行政法院為之。Ⅱ 交通裁決事件中撤銷訴訟之提起，應於裁決書送達後三十日之不變期間內為之。
+第 237 條之 5 Ⅰ 交通裁決事件，按下列規定徵收裁判費：一、起訴，按件徵收新臺幣三百元。二、上訴，按件徵收新臺幣七百五十元。三、抗告，徵收新臺幣三百元。</div></details>
+      <details><summary>第 237 條之 11、之 18、之 19 <span>收容聲請、都市計畫審查之管轄</span></summary><div class="txt">第 237 條之 11 Ⅰ 收容聲請事件，以地方行政法院為第一審管轄法院。
+第 237 條之 18 Ⅰ 人民、地方自治團體或其他公法人認為行政機關依都市計畫法發布之都市計畫違法，而直接損害、因適用而損害或在可預見之時間內將損害其權利或法律上利益者，得依本章規定，以核定都市計畫之行政機關為被告，逕向管轄之高等行政法院提起訴訟，請求宣告該都市計畫無效。
+第 237 條之 19 前條訴訟，專屬都市計畫區所在地之高等行政法院管轄。</div></details>
+      <details><summary>第 238、241、242 條 <span>上訴最高行政法院</span></summary><div class="txt">第 238 條 Ⅰ 對於高等行政法院之終局判決，除法律別有規定外，得上訴於最高行政法院。Ⅱ 於上訴審程序，不得為訴之變更、追加或提起反訴。
+第 241 條 提起上訴，應於高等行政法院判決送達後二十日之不變期間內為之。但宣示或公告後送達前之上訴，亦有效力。
+第 242 條 對於高等行政法院判決之上訴，非以其違背法令為理由，不得為之。</div></details>
+      <details><summary>第 253 條 <span>最高行政法院之言詞辯論</span></summary><div class="txt">Ⅰ 最高行政法院之判決，有下列情形之一者，應行言詞辯論：一、法律關係複雜或法律見解紛歧，有以言詞辯明之必要。二、涉及專門知識或特殊經驗法則，有以言詞說明之必要。三、涉及公益或影響當事人權利義務重大，有行言詞辯論之必要。</div></details>
+      <details><summary>第 263 條之 1、之 4 <span>高等行政法院上訴審</span></summary><div class="txt">第 263 條之 1 Ⅰ 對於地方行政法院之終局判決，除法律別有規定外，得依本章規定上訴於管轄之高等行政法院。Ⅱ 對於高等行政法院之第二審判決，不得上訴。
+第 263 條之 4 Ⅰ 高等行政法院受理上訴事件，認有確保裁判見解統一之必要者，應以裁定敘明理由移送最高行政法院裁判之。</div></details>
+      <details><summary>第 307 條之 1 <span>概括準用民事訴訟法</span></summary><div class="txt">民事訴訟法之規定，除本法已規定準用者外，與行政訴訟性質不相牴觸者，亦準用之。</div></details>
+    </div>
+  </div>
+  <div class="card">
+    <h2>下一課</h2>
+    <p>第 2 課「訴訟類型 I：撤銷訴訟與課予義務訴訟」會把第 4、5 條逐項拆開，並把這一課的分流器升級成「該提哪一種訴訟」。<a href="02_訴訟類型一_撤銷與課予義務.html">前往第 2 課</a>　<a href="00_總覽地圖.html">回總覽地圖</a></p>
+  </div>
+</section>
+
+<footer>行政訴訟法自學教材 · 第 1 課 導論與法院架構<br>依民國 111 年 6 月 22 日修正條文自行編寫，題目為原創；條文以<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030154" target="_blank" rel="noopener">全國法規資料庫</a>為準。</footer>
+</div>
+
+<script>
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const LESSON_ID = "01", CH = "行政訴訟法 01 導論與法院架構";
+const PROG_KEY = "xzss_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與數學教材共用 study_log_v1，供「學習紀錄」頁讀取）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+let pracCount = 0, pracOk = 0;
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="s4"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok }); pracCount++; if(ok) pracOk++;
+  });
+});
+
+// ===== 章末測驗交卷 =====
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0; const wrong = [];
+  qs.forEach((q,i)=>{
+    const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+    else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+  });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  writeProg({ quiz: { score, total: qs.length } });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+  else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="s4"]').classList.add('done'); }
+  else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+  else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 實例題自評 =====
+document.querySelectorAll('.essay').forEach(es=>{
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 本課專屬工具 1：這件爭議該去哪個法院 =====
+(function(){
+  const DATA = {
+    fine:{ t:'行政法院', k:'公法', why:'罰鍰是行政機關行使公權力作成的行政處分，屬第 2 條「公法上爭議」。先訴願，再依第 4 條提撤銷訴訟。30 萬元未逾 50 萬，適用簡易程序（第 229 條第 2 項第 2 款），第一審在地方行政訴訟庭。' },
+    contract:{ t:'行政法院', k:'公法', why:'公費醫師契約以培育公共醫療人力、課予服務義務為內容，一般認為是公法上契約。第 8 條第 1 項後段：因公法上契約發生之給付，亦同。提一般給付訴訟，不須訴願。' },
+    ngo:{ t:'普通法院（民事）', k:'私法', why:'機關承租辦公室是私經濟行政，與一般人租屋沒有兩樣，是私法上的租賃契約。即使一造是市政府，法律關係的性質仍是私法，不在第 2 條範圍。' },
+    nb:{ t:'普通法院為原則', k:'法律別有規定', why:'這是國家賠償。國家賠償法把國賠訴訟交給民事法院，屬第 2 條「法律別有規定」。例外：如果人民已經對相關行政處分提起行政訴訟，可依第 7 條在同一程序合併請求賠償。' },
+    elect:{ t:'行政法院', k:'公法', why:'第 10 條：選舉罷免事件之爭議，除法律別有規定外，得依本法提起行政訴訟。注意公職人員選罷法對當選無效之訴另有規定由普通法院審理，那就是「法律別有規定」；題目要看爭議的是哪一種決定。' },
+    salary:{ t:'行政法院', k:'公法', why:'公務員與國家間是公法上職務關係，請求補發加給是「因公法上原因發生財產上之給付」，依第 8 條第 1 項提一般給付訴訟。管轄依第 15 條之 1，得由公務員職務所在地之行政法院管轄。' }
+  };
+  const res = document.getElementById('t1res');
+  document.querySelectorAll('#t1chips .chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      document.querySelectorAll('#t1chips .chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+      c.setAttribute('aria-pressed','true');
+      const d = DATA[c.dataset.k];
+      res.innerHTML = '<h3>'+d.t+'　<span class="pill law">'+d.k+'</span></h3><p class="small" style="margin:0">'+d.why+'</p>';
+      res.classList.add('on');
+      logEv({ type:"tool", q:"court-router", k:c.dataset.k });
+    });
+  });
+})();
+
+// ===== 本課專屬工具 2：第一審在哪一庭 =====
+(function(){
+  const type = document.getElementById('ctType'), amtBox = document.getElementById('ctAmtBox'), amt = document.getElementById('ctAmt'), res = document.getElementById('ctRes');
+  function needAmt(){ return ['tax','fine','money'].includes(type.value); }
+  type.addEventListener('change',()=>{ amtBox.style.display = needAmt() ? '' : 'none'; });
+  amtBox.style.display = needAmt() ? '' : 'none';
+  document.getElementById('ctGo').addEventListener('click',()=>{
+    const v = type.value, n = Number(amt.value)||0;
+    let court, proc, appeal, basis;
+    const nameMap = { tax:'稅捐課徵事件', fine:'罰鍰處分', money:'公法上財產關係之訴訟' };
+    const kMap = { tax:'第 1 款', fine:'第 2 款', money:'第 3 款' };
+    if(needAmt()){
+      if(n <= 500000){ court='高等行政法院地方行政訴訟庭'; proc='簡易訴訟程序'; appeal='上訴至高等行政訴訟庭，為終審（第 263 條之 1）'; basis='第 229 條第 2 項'+kMap[v]+'：'+nameMap[v]+'在 50 萬元以下，適用簡易程序，第一審在地方行政法院（第 229 條第 1 項）。'; }
+      else if(n <= 1500000){ court='高等行政法院地方行政訴訟庭'; proc='通常訴訟程序'; appeal='上訴至高等行政訴訟庭，為終審（第 263 條之 1）'; basis='超過 50 萬不適用簡易程序，但在 150 萬元以下，依第 104 條之 1 第 1 項但書'+kMap[v]+'，由地方行政法院為第一審。'; }
+      else { court='高等行政法院高等行政訴訟庭'; proc='通常訴訟程序'; appeal='以違背法令為理由上訴最高行政法院（第 238、242 條）'; basis='超過 150 萬元，不在第 104 條之 1 但書各款內，回到本文：以高等行政法院為第一審。'; }
+    } else if(v==='minor'){ court='高等行政法院地方行政訴訟庭'; proc='簡易訴訟程序'; appeal='上訴至高等行政訴訟庭，為終審'; basis='第 229 條第 2 項第 4 款：告誡、警告、記點、記次、講習、輔導教育或其他相類之輕微處分。'; }
+    else if(v==='other'){ court='高等行政法院高等行政訴訟庭'; proc='通常訴訟程序'; appeal='以違背法令為理由上訴最高行政法院'; basis='非財產性質的處分沒有金額可以歸入第 104 條之 1 但書，依本文以高等行政法院為第一審。'; }
+    else if(v==='traffic'){ court='高等行政法院地方行政訴訟庭（原告住所地、居所地、所在地或違規行為地）'; proc='交通裁決事件訴訟程序'; appeal='上訴至高等行政訴訟庭，為終審'; basis='第 237 條之 1、第 237 條之 2。不經訴願，以原處分機關為被告（第 237 條之 3），起訴裁判費 300 元（第 237 條之 5）。'; }
+    else if(v==='detain'){ court='高等行政法院地方行政訴訟庭（受收容人所在地）'; proc='收容聲請事件程序'; appeal='裁定送達後 5 日內抗告至高等行政訴訟庭，不得再抗告（第 237 條之 16）'; basis='第 237 條之 11。'; }
+    else { court='高等行政法院高等行政訴訟庭（都市計畫區所在地，專屬管轄）'; proc='都市計畫審查程序'; appeal='上訴最高行政法院'; basis='第 237 條之 18、第 237 條之 19。不經訴願，以核定都市計畫之機關為被告，發布後 1 年不變期間（第 237 條之 20）。'; }
+    res.innerHTML = '<h3>'+court+'</h3><p class="small" style="margin:0 0 .4em"><b>程序：</b>'+proc+'<br><b>不服判決：</b>'+appeal+'</p><p class="small muted" style="margin:0"><b>依據：</b>'+basis+'</p>';
+    res.classList.add('on');
+    logEv({ type:"tool", q:"first-instance", k:v+':'+n });
+  });
+})();
+</script>
+</body>
+</html>
