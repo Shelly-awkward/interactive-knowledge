@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>行政訴訟法｜第 6 課 起訴：書狀、送達、期間、費用與起訴要件</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F4F6F3; --card:#FFFFFF;
+  --ink:#1C2A30; --ink-2:#4B5A62; --ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --law:#5B3A8C; --law-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F; --card:#1D262B;
+    --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+    --rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --law:#B9A0E3; --law-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F; --card:#1D262B;
+  --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+  --rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --law:#B9A0E3; --law-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--blue);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+
+/* hero */
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--law);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--law-soft);color:var(--law);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+/* tabs */
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit}
+nav.tabs button:hover{border-color:var(--blue);color:var(--ink)}
+nav.tabs button.active{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--blue-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--law-soft);border-left:4px solid var(--law);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--law);display:block;margin-bottom:.2em}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.law{background:var(--law-soft);border-color:transparent;color:var(--law)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+
+/* flow / structure diagrams */
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 160px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--blue)}
+.courts{display:grid;grid-template-columns:1fr;gap:8px;margin:.6rem 0 1rem}
+.court{border:1px solid var(--rule);border-radius:10px;padding:.7rem .9rem;background:var(--paper);display:grid;grid-template-columns:7.5em 1fr;gap:.3rem .8rem;align-items:start}
+.court .lv{font-weight:700;color:var(--law)}
+.court .what{font-size:.92rem}
+.court.top{border-color:var(--law)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+/* examples */
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+.step4{display:grid;grid-template-columns:5em 1fr;gap:.25rem .7rem;font-size:.95rem;margin:.3rem 0 .8rem}
+.step4 dt{color:var(--law);font-weight:700}
+.step4 dd{margin:0}
+
+/* interactive tool */
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox select,.toolbox input[type=number],.toolbox input[type=date]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);max-width:100%}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--law)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+
+/* practice & quiz */
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--law);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+/* 條文速查 */
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">行政訴訟法 · 第 6 課</span>
+  <h1>起訴：書狀、送達、期間、費用與起訴要件</h1>
+  <p>四節加章末測驗。這一課是「程序法的程序法」：訴狀怎麼寫、法院的文書怎麼算送到、期間從哪一天起算到哪一天截止、要繳多少錢、以及法院收到訴狀後會用第 107 條的哪一款把你擋在門外。考試裡每年都有的日期計算與駁回事由，全部在這裡。</p>
+  <p class="ver">依民國 111 年 6 月 22 日修正條文編寫（多數條文自 112 年 8 月 15 日施行）。自學筆記，非官方；條文以全國法規資料庫為準。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">6-1 書狀與送達</button>
+  <button data-t="s2">6-2 期日、期間與回復原狀</button>
+  <button data-t="s3">6-3 訴訟費用與訴訟救助</button>
+  <button data-t="s4">6-4 起訴、§107 駁回、變更追加、反訴與撤回</button>
+  <button data-t="s5">章末測驗</button>
+  <button data-t="s6">條文速查</button>
+</nav>
+
+<!-- ═══════════ 6-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出第 57 條書狀「應記載」九款，分得清它和「宜記載」事項的效果差在哪</li>
+      <li>知道送達由誰做、向誰做：無訴訟能力人、法人機關、訴訟代理人、送達代收人各有一條</li>
+      <li>排得出送達方法的順序：交付、補充、寄存、留置、公示，並算得出寄存送達 10 日、公示送達 20 日／60 日的生效點</li>
+      <li>知道科技設備傳送書狀（第 57 條第 4、5 項）與傳送訴訟文書（第 83 條）的效力條件</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：書狀九款、簽名、科技設備傳送</h2>
+    <div class="law"><b class="art">第 57 條第 1 項、第 4 項、第 5 項</b>Ⅰ 當事人書狀，除別有規定外，應記載下列各款事項：<br>一、當事人姓名及住所或居所；當事人為法人、機關或其他團體者，其名稱及所在地、事務所或營業所。<br>二、有法定代理人、代表人或管理人者，其姓名及住所或居所。<br>三、有訴訟代理人者，其姓名及住所或居所。<br>四、應為之聲明。<br>五、事實上及法律上之陳述。<br>六、供證明或釋明用之證據。<br>七、附屬文件及其件數。<br>八、行政法院。<br>九、年、月、日。<br>Ⅳ 當事人得以科技設備將書狀傳送於行政法院，其適用範圍、程序、效力及其他應遵循事項之辦法，由司法院定之。<br>Ⅴ 當事人以科技設備傳送書狀，未依前項辦法為之者，不生書狀提出之效力。</div>
+    <p>第 1 項九款是「應記載」，第 2 項的出生年月日、身分證字號、電話等是「宜記載」。差別在效果：漏了應記載事項，是起訴不合程式（第 107 條第 1 項第 10 款），審判長要先定期命補正；漏了宜記載事項，不構成瑕疵。第 3 項再加一層：書狀格式規則由司法院定，不照規則寫的，法院「得」拒絕其提出。</p>
+    <div class="law"><b class="art">第 58 條</b>Ⅰ 當事人、法定代理人、代表人、管理人或訴訟代理人應於書狀內簽名或蓋章；其以指印代簽名者，應由他人代書姓名，記明其事由並簽名。<br>Ⅱ 依法規以科技設備傳送前項書狀者，其效力與提出經簽名或蓋章之書狀同。其他訴訟關係人以科技設備傳送應簽名或蓋章之訴訟文書者，亦同。</div>
+    <p>第 60 條補一個口頭的出口：言詞辯論以外的聲明或陳述，除非本法規定一定要用書狀（例如起訴、訴之撤回原則上要書狀），可以在書記官前用言詞為之，由書記官作筆錄並簽名；筆錄準用第 57 條。</p>
+    <div class="warn">常錯：「用電子郵件寄訴狀給法院就算提出」。第 57 條第 5 項說得很硬：未依司法院辦法傳送者，<b>不生書狀提出之效力</b>。期間內用錯管道寄出，等於沒寄，起訴仍然逾期。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：送達由誰做、向誰做</h2>
+    <p>行政訴訟的送達是<b>職權送達</b>：由書記官依職權為之（第 61 條），交執達員或郵務機構執行（第 62 條），必要時囑託送達地的地方法院（第 63 條）。當事人不用自己寄。重點在「向誰送」，送錯人就是送達不合法，期間不起算。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>應受送達人是誰</th><th>向誰送達</th><th>條文</th></tr></thead>
+      <tbody>
+        <tr><td>無訴訟能力人</td><td>其<b>全體</b>法定代理人；其中有人處所不明者，得僅向其餘法定代理人為之。未陳明法定代理人者，補正前得向本人送達</td><td>第 64 條第 1、4 項</td></tr>
+        <tr><td>法人、中央及地方機關、非法人團體</td><td>代表人或管理人；有二人以上者得僅向其中一人為之</td><td>第 64 條第 2、3 項</td></tr>
+        <tr><td>在我國有事務所或營業所之外國法人、團體</td><td>其在中華民國之代表人或管理人</td><td>第 65 條</td></tr>
+        <tr><td>有訴訟代理人</td><td>向代理人送達，但代理人受送達權限受限制者除外；審判長認必要時得命併送達本人，效力仍以代理人受送達為準</td><td>第 66 條第 1、3 項</td></tr>
+        <tr><td>第 49 條之 1 第 1 項強制律師代理事件之代理人</td><td>其受送達權限<b>不受限制</b>，一律向代理人送達</td><td>第 66 條第 2 項</td></tr>
+        <tr><td>已指定送達代收人並向受訴法院陳明</td><td>向代收人送達；效力及於同地之各級行政法院</td><td>第 67 條、第 68 條</td></tr>
+        <tr><td>在我國無住居所、事務所及營業所</td><td>應指定送達代收人向受訴法院陳明；未指定者，法院得交郵務機構以掛號發送</td><td>第 69 條、第 70 條</td></tr>
+      </tbody>
+    </table></div>
+    <div class="law"><b class="art">第 66 條</b>Ⅰ 訴訟代理人除受送達之權限受有限制者外，送達應向該代理人為之。但審判長認為必要時，得命併送達於當事人本人。<br>Ⅱ 第四十九條之一第一項事件，其訴訟代理人受送達之權限，不受限制。<br>Ⅲ 第一項但書情形，送達效力以訴訟代理人受送達為準。</div>
+    <div class="tip">國考用法：題目給「判決分別於 3 月 1 日送達律師、3 月 5 日送達當事人本人」，上訴期間從 3 月 1 日算（第 66 條第 3 項）。再問「若當事人在委任狀限制律師不得受送達」，通常事件就要向本人送達；但若是第 49 條之 1 第 1 項的強制代理事件，限制無效，仍向律師送達。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：送達方法的順序，以及寄存送達的 10 日</h2>
+    <div class="flow">
+      <div class="step"><b>1 交付送達（第 71 條）</b>於住居所、事務所、營業所行之；在他處會晤得於會晤處所；有就業處所者亦得向該處所送達。</div>
+      <div class="step"><b>2 補充送達（第 72 條）</b>不獲會晤本人時，交給有辨別事理能力之同居人、受雇人或同一住宅之主人；接收郵件人員視為同居人。他造當事人除外。</div>
+      <div class="step"><b>3 寄存送達（第 73 條）</b>前兩種都做不到時，寄存於自治或警察機關（郵務人員得寄存郵局），貼通知書、交鄰居或置信箱。自寄存之日起經 10 日生效；保存 2 個月。</div>
+      <div class="step"><b>4 留置送達（第 74 條）</b>無法律上理由拒絕收領者，文書置於送達處所即為送達；難達留置時準用寄存送達。</div>
+    </div>
+    <div class="law"><b class="art">第 72 條</b>Ⅰ 送達於住居所、事務所、營業所或機關所在地不獲會晤應受送達人者，得將文書付與有辨別事理能力之同居人、受雇人或願代為收受而居住於同一住宅之主人。<br>Ⅱ 前條所定送達處所之接收郵件人員，視為前項之同居人或受雇人。<br>Ⅲ 如同居人、受雇人、居住於同一住宅之主人或接收郵件人員為他造當事人者，不適用前二項之規定。</div>
+    <div class="law"><b class="art">第 73 條</b>Ⅰ 送達不能依前二條規定為之者，得將文書寄存於送達地之自治或警察機關，並作送達通知書二份，一份黏貼於應受送達人住居所、事務所或營業所門首，一份交由鄰居轉交或置於應受送達人之信箱或其他適當之處所，以為送達。<br>Ⅱ 前項情形，如係以郵務人員為送達人者，得將文書寄存於附近之郵務機構。<br>Ⅲ 寄存送達，自寄存之日起，經十日發生效力。<br>Ⅳ 寄存之文書自寄存之日起，寄存機關或機構應保存二個月。</div>
+    <p>寄存送達是考題最愛。兩個數字：<b>10 日生效</b>、<b>保存 2 個月</b>。「自寄存之日起經十日」依民法第 120 條第 2 項始日不算入：3 月 1 日寄存，3 月 2 日起算，3 月 11 日是第十日，經過十日後發生送達效力；之後的不變期間再從送達生效後起算，同樣始日不算入。當事人有沒有真的去領，不影響生效。</p>
+    <p>第 75 條管「什麼時候可以送」：除郵務機構送達外，非經審判長、受命法官、受託法官或送達地地方法院法官許可，不得於星期日、其他休息日、日出前、日沒後送達；但應受送達人不拒絕收領者不在此限。第 76 條：在法院內當面交付的，命受送達人提出收據附卷。</p>
+    <div class="warn">常錯：補充送達交給「他造當事人」。第 72 條第 3 項明文排除，因為對造拿到你的文書沒有動機轉交。這一條在家庭成員互為對造的事件會出現，行政訴訟中多見於參加人與當事人同住的情形。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：囑託送達、公示送達與科技設備傳送</h2>
+    <p>人在特殊地方，法院不直接送，改<b>囑託</b>別人送：在外國或境外，囑託該國管轄機關或我國使領館等機構，不能囑託時以雙掛號發送（第 77 條）；駐外人員囑託外交部（第 78 條）；軍人囑託軍事機關或長官（第 79 條）；在監所之人囑託監所長官（第 80 條）。</p>
+    <div class="law"><b class="art">第 81 條</b>行政法院對於當事人之送達，有下列情形之一者，得依聲請或依職權為公示送達：<br>一、應為送達之處所不明。<br>二、於有治外法權人住居所或事務所為送達而無效。<br>三、於外國為送達，不能依第七十七條之規定辦理或預知雖依該條規定辦理而無效。</div>
+    <div class="law"><b class="art">第 82 條</b>公示送達，自將公告或通知書黏貼公告處之日起，公告於行政法院網站者，自公告之日起，其登載公報或新聞紙者，自最後登載之日起，經二十日發生效力；於依前條第三款為公示送達者，經六十日發生效力。但對同一當事人仍為公示送達者，自黏貼公告處之翌日起發生效力。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>情形</th><th>生效</th></tr></thead>
+      <tbody>
+        <tr><td>一般公示送達（第 81 條第 1、2 款）</td><td>自黏貼公告處、公告於法院網站、或最後登載公報新聞紙之日起，經 <b>20 日</b></td></tr>
+        <tr><td>於外國為送達而不能或無效（第 81 條第 3 款）</td><td>經 <b>60 日</b></td></tr>
+        <tr><td>對同一當事人<b>再次</b>公示送達</td><td>自黏貼公告處之<b>翌日</b>起發生效力</td></tr>
+      </tbody>
+    </table></div>
+    <p>第 83 條是送達的數位版：經訴訟關係人同意，法院得以科技設備傳送訴訟文書，與送達或通知有同一效力。注意「同意」是要件，和第 57 條第 4 項當事人主動用科技設備「提出書狀」是兩個方向。</p>
+    <div class="warn">常錯：把「找不到人」寫成公示送達事由。第 81 條第 1 款是「應為送達之<b>處所</b>不明」，處所明確只是人不在，走的是補充送達或寄存送達，不能公示送達。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲委任律師乙為一件通常訴訟程序事件（罰鍰 300 萬元）之訴訟代理人，委任狀載明「不得受送達」。高等行政法院將判決送達乙，乙於 4 月 1 日收受；甲於 4 月 15 日才自行收到法院另行送達之判決。上訴期間自何時起算？若本件是第 49 條之 1 第 1 項的上訴事件，結論是否不同？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>訴訟代理人受送達權限受限制時，送達應向誰為之；強制律師代理事件有無不同。</dd>
+        <dt>條文</dt><dd>第 66 條第 1 項：訴訟代理人除受送達之權限受有限制者外，送達應向該代理人為之。第 66 條第 2 項：第 49 條之 1 第 1 項事件，其訴訟代理人受送達之權限，不受限制。第 241 條：上訴應於判決送達後 20 日之不變期間內為之。</dd>
+        <dt>涵攝</dt><dd>本件是高等行政法院第一審通常事件，不在第 49 條之 1 第 1 項各款，委任狀對受送達權限的限制有效。向乙送達不是合法送達，上訴期間不從 4 月 1 日起算，應以甲本人 4 月 15 日收受為準。若本件屬第 49 條之 1 第 1 項事件（例如最高行政法院事件），第 66 條第 2 項使限制失效，仍應向律師送達，4 月 1 日起算。</dd>
+        <dt>結論</dt><dd>通常事件：自 4 月 15 日送達起算，末日 5 月 5 日（在途期間另計）。強制代理事件：自 4 月 1 日起算，末日 4 月 21 日。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　郵務人員於 3 月 3 日至乙住所送達第一審判決，乙不在，家中無人，遂將判決寄存於附近郵局並依規定黏貼通知、置放信箱。乙 3 月 20 日才去郵局領取。乙的上訴期間末日是哪一天？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>寄存送達的生效時點，以及不變期間的起算。</dd>
+        <dt>條文</dt><dd>第 73 條第 2 項：郵務人員為送達人者，得寄存於附近之郵務機構。第 73 條第 3 項：寄存送達自寄存之日起經十日發生效力。第 88 條第 3 項：期間之計算依民法。第 241 條：判決送達後 20 日。</dd>
+        <dt>涵攝</dt><dd>3 月 3 日寄存，寄存日不算入，3 月 4 日至 3 月 13 日為十日，經過後發生送達效力，與乙何時實際領取無關。20 日上訴期間自送達生效後起算，始日不算入：3 月 14 日至 4 月 2 日。</dd>
+        <dt>結論</dt><dd>末日為 4 月 2 日（乙若不在法院所在地住居，另依第 89 條加計在途期間）。乙 3 月 20 日才領取，不能主張期間自領取日起算。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">1. 依第 57 條，下列何者<b>不是</b>當事人書狀「應記載」之事項？</div>
+      <label><input type="radio" name="p1q1" value="A">應為之聲明</label>
+      <label><input type="radio" name="p1q1" value="B">供證明或釋明用之證據</label>
+      <label><input type="radio" name="p1q1" value="C">當事人之出生年月日及身分證明文件字號</label>
+      <label><input type="radio" name="p1q1" value="D">年、月、日</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="出生年月日、身分證明文件字號、電話等是第 57 條第 2 項的「宜記載」事項。第 1 項九款才是應記載。" data-diag='{"A":"應為之聲明是第 1 項第 4 款。","B":"供證明或釋明用之證據是第 1 項第 6 款。","D":"年、月、日是第 1 項第 9 款。"}'></div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">2. 執達員於甲住所不獲會晤甲，下列何人<b>不得</b>代甲收受文書（補充送達）？</div>
+      <label><input type="radio" name="p1q2" value="A">與甲同住、有辨別事理能力之成年子女</label>
+      <label><input type="radio" name="p1q2" value="B">甲住處大樓負責接收郵件之管理員</label>
+      <label><input type="radio" name="p1q2" value="C">願代為收受而居住於同一住宅之房東</label>
+      <label><input type="radio" name="p1q2" value="D">與甲同住，但在本件訴訟中為他造當事人之人</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 72 條第 3 項：同居人、受雇人、同一住宅主人或接收郵件人員為他造當事人者，不適用補充送達。" data-diag='{"A":"有辨別事理能力之同居人是第 72 條第 1 項明列的對象。","B":"第 72 條第 2 項：送達處所之接收郵件人員視為同居人或受雇人。","C":"願代為收受而居住於同一住宅之主人是第 72 條第 1 項明列的對象。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">3. 法院因甲應為送達之處所不明，依職權對甲為公示送達，並公告於行政法院網站。該送達何時發生效力？</div>
+      <label><input type="radio" name="p1q3" value="A">自公告之日起經 10 日</label>
+      <label><input type="radio" name="p1q3" value="B">自公告之日起經 20 日</label>
+      <label><input type="radio" name="p1q3" value="C">自公告之日起經 60 日</label>
+      <label><input type="radio" name="p1q3" value="D">自公告之翌日起</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 82 條：公告於行政法院網站者，自公告之日起經二十日發生效力。" data-diag='{"A":"10 日是寄存送達的生效期間（第 73 條第 3 項），不是公示送達。","C":"60 日只適用於第 81 條第 3 款「於外國為送達」的公示送達。","D":"翌日生效只限「對同一當事人仍為公示送達」的情形（第 82 條但書）。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 6-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>分得清期日與期間、法定期間與裁定期間、不變期間與一般期間</li>
+      <li>會依民法算期間：始日不算入、以月計算的末日、末日為休息日以次日代之</li>
+      <li>說得出在途期間扣除的要件與第 89 條但書的例外</li>
+      <li>背出回復原狀的要件：不應歸責、原因消滅後 1 個月（少於 1 月者相等日數）、1 年與 3 年上限、書狀釋明、同時補行</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：期日是「一個時點」，由審判長定</h2>
+    <div class="law"><b class="art">第 84 條</b>Ⅰ 期日，除別有規定外，由審判長依職權定之。<br>Ⅱ 期日，除有不得已之情形外，不得於星期日或其他休息日定之。</div>
+    <div class="law"><b class="art">第 87 條</b>Ⅰ 期日，以朗讀案由為始。<br>Ⅱ 期日，如有重大理由，得變更或延展之。<br>Ⅲ 變更或延展期日，除別有規定外，由審判長裁定之。</div>
+    <p>期日是法院與當事人碰面的那個時點，例如言詞辯論期日。審判長定期日後，書記官作通知書送達（第 85 條）；但審判長當面告知、或當事人曾以書狀陳明屆期到場的，與送達同一效力。期日應為之行為原則上在法院內為之（第 86 條）。</p>
+    <div class="tip">國考用法：第 84 條第 2 項（期日不得定在休息日）和第 75 條第 1 項（送達原則上不得在休息日）常被放在同一題裡混。前者講法院排庭，後者講送文書；後者有「郵務送達」與「不拒絕收領」兩個例外。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：期間怎麼分類、怎麼算</h2>
+    <div class="law"><b class="art">第 88 條</b>Ⅰ 期間，除法定者外，由行政法院或審判長酌量情形定之。<br>Ⅱ 行政法院或審判長所定期間，自送達定期間之文書時起算，無庸送達者，自宣示定期間之裁判時起算。<br>Ⅲ 期間之計算，依民法之規定。</div>
+    <div class="law"><b class="art">第 90 條</b>Ⅰ 期間，如有重大理由得伸長或縮短之。但不變期間不在此限。<br>Ⅱ 伸長或縮短期間由行政法院裁定。但期間係審判長所定者，由審判長裁定。</div>
+    <p>兩個分類軸。第一軸：<b>法定期間</b>（法律寫死，如上訴 20 日）對<b>裁定期間</b>（法院或審判長定的，如命 7 日內補正）。第二軸：法定期間裡，法律明文寫「不變期間」的叫<b>不變期間</b>，不能伸長縮短（第 90 條第 1 項但書），遲誤只能走第 91 條回復原狀；其他期間有重大理由可以伸縮。</p>
+    <p>計算依民法（第 88 條第 3 項）。三個規則要會用：(1) 民法第 120 條第 2 項，以日、星期、月、年定期間者，<b>始日不算入</b>；(2) 民法第 121 條第 2 項，以月計算者，以最後之月與起算日相當日之前一日為末日，沒有相當日的以該月末日為末日；(3) 民法第 122 條，末日為星期日、紀念日或其他休息日者，以其休息日之次日代之。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>本法常考的不變期間</th><th>長度</th><th>起算</th><th>條文</th></tr></thead>
+      <tbody>
+        <tr><td>撤銷訴訟、課予義務訴訟之起訴</td><td>2 個月</td><td>訴願決定書送達後；不經訴願者，處分達到或公告後</td><td>第 106 條第 1、3 項</td></tr>
+        <tr><td>上訴</td><td>20 日</td><td>判決送達後</td><td>第 241 條</td></tr>
+        <tr><td>抗告</td><td>10 日</td><td>裁定送達後</td><td>第 268 條</td></tr>
+        <tr><td>再審之訴</td><td>30 日</td><td>判決確定時；事由發生或知悉在後者自知悉時</td><td>第 276 條第 1、2 項</td></tr>
+        <tr><td>交通裁決事件之撤銷訴訟</td><td>30 日</td><td>裁決書送達後</td><td>第 237 條之 3 第 2 項</td></tr>
+        <tr><td>和解後請求繼續審判</td><td>30 日</td><td>和解成立時；無效或得撤銷原因知悉在後者自知悉時</td><td>第 224 條</td></tr>
+        <tr><td>聲請回復原狀</td><td>原因消滅後 1 個月（不變期間少於 1 月者，相等日數）</td><td>原因消滅</td><td>第 91 條第 1 項（第 2 項：不得伸縮）</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：「法院得因當事人聲請延長起訴期間」。起訴 2 個月是不變期間，第 90 條第 1 項但書明文排除伸長縮短。法院能做的只有在第 91 條要件下回復原狀。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：在途期間</h2>
+    <div class="law"><b class="art">第 89 條</b>Ⅰ 當事人不在行政法院所在地住居者，計算法定期間，應扣除其在途之期間，但有訴訟代理人住居行政法院所在地，得為期間內應為之訴訟行為者，不在此限。<br>Ⅱ 前項應扣除之在途期間，由司法院定之。</div>
+    <p>「扣除在途期間」的實際效果是把末日往後延：法定期間末日再加上司法院所定的在途日數。三個要件：當事人不在法院所在地住居、計算的是<b>法定</b>期間（裁定期間不適用）、沒有住居法院所在地且能代為該行為的訴訟代理人。天數由司法院的「法院訴訟當事人在途期間標準」定，考試會直接給你天數。</p>
+  </div>
+
+  <div class="card">
+    <h2>小工具：不變期間計算器</h2>
+    <p class="small muted">輸入起算事由發生日（送達日、確定日或和解成立日），選期間種類，必要時填在途期間天數。工具依第 88 條第 3 項用民法計算：<b>始日不算入</b>，以月計算者取相當日之前一日。工具<b>不會自動跳過休息日</b>，末日落在星期六、日會提醒，但國定假日要你自己查。</p>
+    <div class="toolbox">
+      <fieldset><legend>起算事由發生日</legend>
+        <label>日期 <input type="date" id="dpStart" value="2024-03-01"></label>
+      </fieldset>
+      <fieldset><legend>期間種類</legend>
+        <select id="dpKind">
+          <option value="sue">2 個月：提起撤銷／課予義務訴訟（第 106 條）</option>
+          <option value="appeal">20 日：上訴（第 241 條）</option>
+          <option value="kang">10 日：抗告（第 268 條）</option>
+          <option value="retrial">30 日：再審之訴（第 276 條）</option>
+          <option value="traffic">30 日：交通裁決事件撤銷訴訟（第 237 條之 3）</option>
+          <option value="cont">30 日：和解後請求繼續審判（第 224 條）</option>
+        </select>
+      </fieldset>
+      <fieldset><legend>在途期間（第 89 條，司法院所定天數；無則填 0）</legend>
+        <input type="number" id="dpTransit" min="0" max="60" value="0" style="width:6em"> 日
+      </fieldset>
+      <button class="btn" id="dpGo">計算末日</button>
+      <div class="result" id="dpRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：回復原狀，五個要件、兩個上限</h2>
+    <div class="law"><b class="art">第 91 條</b>Ⅰ 因天災或其他不應歸責於己之事由，致遲誤不變期間者，於其原因消滅後一個月內，如該不變期間少於一個月者，於相等之日數內，得聲請回復原狀。<br>Ⅱ 前項期間不得伸長或縮短之。<br>Ⅲ 遲誤不變期間已逾一年者，不得聲請回復原狀，遲誤第一百零六條之起訴期間已逾三年者，亦同。<br>Ⅳ 第一項之聲請應以書狀為之，並釋明遲誤期間之原因及其消滅時期。</div>
+    <div class="law"><b class="art">第 92 條</b>Ⅰ 因遲誤上訴或抗告期間而聲請回復原狀者，向為裁判之原行政法院為之；遲誤其他期間者，向管轄該期間內應為之訴訟行為之行政法院為之。<br>Ⅱ 聲請回復原狀，應同時補行期間內應為之訴訟行為。</div>
+    <div class="flow">
+      <div class="step"><b>要件 1</b>遲誤的是<b>不變期間</b>。一般期間遲誤不能回復原狀，但可能可以聲請伸長。</div>
+      <div class="step"><b>要件 2</b>天災或其他<b>不應歸責於己</b>之事由。自己出國、忘記、生病但能委託他人，通常都算可歸責。</div>
+      <div class="step"><b>要件 3</b>原因消滅後 <b>1 個月</b>內聲請；遲誤的不變期間少於 1 個月者（上訴 20 日、抗告 10 日），在<b>相等日數</b>內。此期間不得伸縮。</div>
+      <div class="step"><b>要件 4</b>以<b>書狀</b>聲請，並釋明遲誤原因及其消滅時期。</div>
+      <div class="step"><b>要件 5</b><b>同時補行</b>該訴訟行為（例如一併提出上訴狀）。向誰聲請：遲誤上訴或抗告期間，向原法院；其他期間，向管轄該行為之法院。</div>
+    </div>
+    <p>兩個絕對上限（第 91 條第 3 項）：遲誤不變期間已逾 <b>1 年</b>不得聲請；遲誤第 106 條起訴期間已逾 <b>3 年</b>不得聲請。第 93 條：聲請與補行之訴訟行為合併裁判；原法院認應許可而將上訴抗告事件送交上級法院者，由上級法院合併裁判。聲請回復原狀要繳裁判費 1,000 元（第 98 條之 5 第 2 款，下一節）。</p>
+    <div class="warn">常錯：把回復原狀的「1 個月」寫成不變期間的長度。1 個月是聲請回復原狀的期限，從原因消滅時起算；遲誤的是 20 日上訴期間時，聲請期限就縮成 20 日。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲住臺東，對高等行政法院（位於高雄）第一審判決不服。判決於 4 月 1 日合法送達甲本人。假設司法院所定甲住所地至該法院之在途期間為 4 日。(1) 甲上訴期間末日為何？(2) 若甲委任住居高雄市之律師乙為訴訟代理人，結論有無不同？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>不變期間的計算與在途期間的扣除。</dd>
+        <dt>條文</dt><dd>第 241 條：判決送達後 20 日之不變期間。第 88 條第 3 項依民法計算，始日不算入。第 89 條第 1 項：不在法院所在地住居者應扣除在途期間，但有訴訟代理人住居法院所在地得為該訴訟行為者，不在此限。</dd>
+        <dt>涵攝</dt><dd>4 月 1 日送達，始日不算入，4 月 2 日起算，第 20 日為 4 月 21 日。甲住臺東不在法院所在地，扣除在途期間 4 日，末日延至 4 月 25 日。若甲委任住居高雄之律師乙，乙能代為上訴，依第 89 條第 1 項但書不扣除在途期間，末日回到 4 月 21 日。</dd>
+        <dt>結論</dt><dd>(1) 4 月 25 日。(2) 4 月 21 日。兩者如遇休息日，依民法第 122 條以次日代之。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙於 6 月 10 日收受第一審判決，6 月 12 日因地震重傷昏迷住院，7 月 10 日清醒並恢復處理事務之能力，此時上訴期間已過。乙應如何救濟？期限到哪一天？向哪個法院？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>回復原狀的要件、聲請期限、受理法院與應併為之行為。</dd>
+        <dt>條文</dt><dd>第 91 條第 1 項：天災或其他不應歸責於己之事由致遲誤不變期間者，於原因消滅後一個月內，不變期間少於一個月者於相等日數內，得聲請回復原狀。第 91 條第 4 項：以書狀為之並釋明。第 92 條第 1 項：遲誤上訴期間向原行政法院聲請。第 92 條第 2 項：應同時補行訴訟行為。第 98 條之 5 第 2 款：聲請回復原狀徵收裁判費 1,000 元。</dd>
+        <dt>涵攝</dt><dd>上訴期間末日為 6 月 30 日，乙因地震昏迷而遲誤，屬不應歸責於己之事由。上訴期間 20 日少於 1 個月，聲請期限為原因消滅（7 月 10 日）後相等之 20 日，始日不算入，末日 7 月 30 日。應以書狀向為判決之原高等行政法院聲請，釋明昏迷事實與清醒日期（如診斷證明），並同時提出上訴狀。</dd>
+        <dt>結論</dt><dd>乙應於 7 月 30 日前，以書狀向原高等行政法院聲請回復原狀並同時補行上訴，繳納 1,000 元。法院依第 93 條第 1 項將聲請與上訴合併裁判。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">4. 高等行政法院判決於 5 月 10 日送達甲（住居法院所在地，無在途期間）。甲提起上訴之末日為：</div>
+      <label><input type="radio" name="p2q1" value="A">5 月 29 日</label>
+      <label><input type="radio" name="p2q1" value="B">5 月 30 日</label>
+      <label><input type="radio" name="p2q1" value="C">5 月 31 日</label>
+      <label><input type="radio" name="p2q1" value="D">6 月 9 日</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 241 條 20 日不變期間，依第 88 條第 3 項適用民法第 120 條第 2 項始日不算入：5 月 11 日起算，第 20 日為 5 月 30 日。" data-diag='{"A":"把送達日 5 月 10 日算成第 1 日，違反始日不算入。","C":"多算了一天。始日不算入是從翌日起算，不是末日再加一天。","D":"30 日是再審之訴（第 276 條）或交通裁決起訴（第 237 條之 3）的期間，上訴是 20 日。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">5. 關於不變期間，下列何者正確？</div>
+      <label><input type="radio" name="p2q2" value="A">行政法院如有重大理由，得裁定伸長之</label>
+      <label><input type="radio" name="p2q2" value="B">因天災致遲誤者，得於原因消滅後一定期間內聲請回復原狀</label>
+      <label><input type="radio" name="p2q2" value="C">其計算依行政程序法之規定</label>
+      <label><input type="radio" name="p2q2" value="D">當事人不在法院所在地住居者，亦不得扣除在途期間</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 91 條第 1 項。不變期間不得伸長縮短（第 90 條第 1 項但書）、計算依民法（第 88 條第 3 項）、法定期間得扣除在途期間（第 89 條）。" data-diag='{"A":"第 90 條第 1 項但書：不變期間不在得伸長縮短之列。","C":"第 88 條第 3 項：期間之計算依民法之規定。","D":"第 89 條第 1 項的在途期間適用於法定期間，不變期間當然包括在內。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">6. 甲遲誤第 106 條之起訴期間，主張係因不應歸責於己之事由。依第 91 條第 3 項，遲誤起訴期間已逾多久者，不得聲請回復原狀？</div>
+      <label><input type="radio" name="p2q3" value="A">1 年</label>
+      <label><input type="radio" name="p2q3" value="B">2 年</label>
+      <label><input type="radio" name="p2q3" value="C">3 年</label>
+      <label><input type="radio" name="p2q3" value="D">5 年</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 91 條第 3 項：遲誤不變期間已逾一年者不得聲請回復原狀，遲誤第 106 條之起訴期間已逾三年者亦同。起訴期間特別放寬到 3 年，與第 106 條第 2 項的 3 年上限相呼應。" data-diag='{"A":"1 年是遲誤「其他」不變期間（上訴、抗告等）的上限，起訴期間另有 3 年的特別規定。","B":"條文沒有 2 年這個數字。","D":"5 年是再審之訴的絕對上限（第 276 條第 4 項），不是回復原狀。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 6-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>背出裁判費的數字：起訴 4,000／簡易 2,000、上訴加徵二分之一、抗告 1,000、七款聲請 1,000</li>
+      <li>知道哪些情形不另徵收（第 98 條之 1）、免徵（第 98 條之 2 第 2 項）</li>
+      <li>說得出未預納裁判費的處理順序：先命繳納、逾期才駁回（第 100 條）</li>
+      <li>說得出訴訟救助的要件、釋明方式、保證書與「暫行免付」的效果</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：誰負擔、繳多少</h2>
+    <div class="law"><b class="art">第 98 條</b>Ⅰ 訴訟費用指裁判費及其他進行訴訟之必要費用，由敗訴之當事人負擔。但為第一百九十八條之判決時，由被告負擔。<br>Ⅱ 起訴，按件徵收裁判費新臺幣四千元。適用簡易訴訟程序之事件，徵收裁判費新臺幣二千元。</div>
+    <p>訴訟費用 = 裁判費 + 其他必要費用（第 98 條之 6：影印費、證人日費旅費、鑑定費等，由司法院定標準；郵電送達費不另徵收）。原則<b>敗訴者負擔</b>；例外是第 198 條情況判決，原告雖敗訴但處分違法，費用由被告負擔。第 99 條：因可歸責於參加人之事由所生無益費用，得命參加人負擔；第 44 條輔助參加所生費用由參加人負擔。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>行為</th><th>裁判費</th><th>條文</th></tr></thead>
+      <tbody>
+        <tr><td>起訴（通常程序）</td><td>4,000 元</td><td>第 98 條第 2 項</td></tr>
+        <tr><td>起訴（簡易程序）</td><td>2,000 元</td><td>第 98 條第 2 項</td></tr>
+        <tr><td>一訴主張數項標的、訴之變更追加、反訴</td><td>不另徵收</td><td>第 98 條之 1</td></tr>
+        <tr><td>上訴</td><td>依第 98 條第 2 項加徵二分之一（通常 6,000、簡易 3,000）</td><td>第 98 條之 2 第 1 項</td></tr>
+        <tr><td>發回或發交更審再行上訴；依第 257 條第 2 項移送經判決後再上訴</td><td>免徵</td><td>第 98 條之 2 第 2 項</td></tr>
+        <tr><td>再審之訴</td><td>按起訴法院之審級，依第 98 條第 2 項及第 98 條之 2 第 1 項徵收</td><td>第 98 條之 3 第 1 項</td></tr>
+        <tr><td>對確定裁定聲請再審</td><td>1,000 元</td><td>第 98 條之 3 第 2 項</td></tr>
+        <tr><td>抗告</td><td>1,000 元</td><td>第 98 條之 4</td></tr>
+        <tr><td>聲請或聲明</td><td>原則不徵收；但七款聲請徵 1,000 元</td><td>第 98 條之 5</td></tr>
+        <tr><td>交通裁決事件</td><td>第二編第三章別有規定者從其規定（起訴 300、上訴 750、抗告 300）</td><td>第 98 條之 7、第 237 條之 5</td></tr>
+      </tbody>
+    </table></div>
+    <div class="law"><b class="art">第 98 條之 5</b>聲請或聲明，不徵收裁判費。但下列聲請，徵收裁判費新臺幣一千元：<br>一、聲請參加訴訟或駁回參加。<br>二、聲請回復原狀。<br>三、聲請停止執行或撤銷停止執行之裁定。<br>四、起訴前聲請證據保全。<br>五、聲請重新審理。<br>六、聲請假扣押、假處分或撤銷假扣押、假處分之裁定。<br>七、第二百三十七條之三十聲請事件。</div>
+    <div class="tip">國考用法：「1,000 元」出現在三個地方：抗告（第 98 條之 4）、對確定裁定聲請再審（第 98 條之 3 第 2 項）、七款聲請（第 98 條之 5）。題目問「聲請訴訟救助要繳多少」，答案是不徵收，因為它不在七款裡。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：不另徵、加徵、免徵</h2>
+    <div class="law"><b class="art">第 98 條之 1</b>以一訴主張數項標的，或為訴之變更、追加或提起反訴者，不另徵收裁判費。</div>
+    <div class="law"><b class="art">第 98 條之 2</b>Ⅰ 上訴，依第九十八條第二項規定，加徵裁判費二分之一。<br>Ⅱ 發回或發交更審再行上訴，或依第二百五十七條第二項為移送，經判決後再行上訴者，免徵裁判費。</div>
+    <p>行政訴訟的裁判費是<b>按件</b>定額，不像民事按標的金額。所以一個訴狀裡告兩個處分、起訴後追加請求、被告提反訴，都還是「一件」，不另收。上訴要加徵二分之一，但被最高行政法院發回更審後再上訴，不再收，因為第一次上訴已經繳過。</p>
+    <p>第 98 條之 8 處理律師酬金：法院為當事人選任律師為特別代理人或訴訟代理人者，酬金由法院定；這類酬金和第 49 條之 1 第 1 項強制代理事件的律師酬金，是<b>訴訟費用之一部</b>，應限定最高額，終局裁判時併予酌定，對酌定裁判得抗告。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：沒繳錢怎麼辦</h2>
+    <div class="law"><b class="art">第 100 條</b>Ⅰ 裁判費除法律別有規定外，當事人應預納之。其未預納者，審判長應定期命當事人繳納；逾期未納者，行政法院應駁回其訴、上訴、抗告、再審或其他聲請。<br>Ⅱ 進行訴訟之必要費用，審判長得定期命當事人預納。逾期未納者，由國庫墊付，並於判決確定後，依職權裁定，向應負擔訴訟費用之人徵收之。<br>Ⅲ 前項裁定得為執行名義。</div>
+    <p>裁判費與其他必要費用的後果不同。<b>裁判費</b>沒繳：先定期命繳，逾期才駁回，這就是第 107 條第 1 項但書「可以補正者先命補正」在費用上的具體化。<b>其他必要費用</b>（如鑑定費）沒繳：不駁回，由國庫墊付，判決確定後依職權裁定向應負擔之人徵收，該裁定可作執行名義。</p>
+    <div class="warn">常錯：「未繳裁判費，法院應逕以裁定駁回」。漏了「審判長應定期命繳納」這一步。沒有先命補正就駁回，是程序違法。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：訴訟救助</h2>
+    <div class="law"><b class="art">第 101 條</b>當事人無資力支出訴訟費用者，行政法院應依聲請，以裁定准予訴訟救助。但顯無勝訴之望者，不在此限。</div>
+    <div class="law"><b class="art">第 102 條</b>Ⅰ 聲請訴訟救助，應向受訴行政法院為之。<br>Ⅱ 聲請人無資力支出訴訟費用之事由應釋明之。<br>Ⅲ 前項釋明，得由受訴行政法院管轄區域內有資力之人出具保證書代之。<br>Ⅳ 前項保證書內，應載明具保證書人於聲請訴訟救助人負擔訴訟費用時，代繳暫免之費用。</div>
+    <div class="law"><b class="art">第 103 條</b>准予訴訟救助者，暫行免付訴訟費用。</div>
+    <div class="flow">
+      <div class="step"><b>要件</b>無資力支出訴訟費用；且非顯無勝訴之望。</div>
+      <div class="step"><b>程序</b>依聲請（不依職權），向受訴行政法院為之，以裁定准駁。聲請不徵裁判費，也不適用強制律師代理（第 49 條之 1 第 6 項第 1 款）。</div>
+      <div class="step"><b>釋明</b>無資力的事由要釋明；可由受訴法院轄區內有資力之人出具保證書代替，保證書要載明代繳暫免費用。</div>
+      <div class="step"><b>效果</b>暫行免付，不是免除。敗訴仍依第 98 條第 1 項負擔，保證人代繳。</div>
+    </div>
+    <p>第 104 條把民事訴訟法第 77 條之 26、第 79 條至第 85 條、第 87 條至第 94 條等關於訴訟費用與訴訟救助的規定準用進來，例如一部勝訴的費用分擔、救助效力的範圍。</p>
+    <div class="warn">常錯：把「無資力」寫成「低收入戶」。條文只問有沒有能力支出訴訟費用，不以社會救助身分為要件；反過來，有身分也仍要釋明。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲以一訴請求撤銷 A、B 兩件罰鍰處分（各 200 萬元），適用通常訴訟程序。第一審敗訴後上訴最高行政法院，最高行政法院廢棄原判決發回更審，更審後甲再度敗訴，再上訴。甲在各階段應繳多少裁判費？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>按件徵收的計算、數項標的、上訴加徵與更審再上訴免徵。</dd>
+        <dt>條文</dt><dd>第 98 條第 2 項：起訴按件徵收 4,000 元。第 98 條之 1：以一訴主張數項標的，不另徵收。第 98 條之 2 第 1 項：上訴加徵二分之一。第 98 條之 2 第 2 項：發回或發交更審再行上訴者，免徵。</dd>
+        <dt>涵攝</dt><dd>一訴主張撤銷 A、B 兩處分是數項標的，仍是一件，起訴 4,000 元。第一次上訴依 4,000 元加徵二分之一，為 6,000 元。發回更審後再上訴，屬第 98 條之 2 第 2 項，免徵。</dd>
+        <dt>結論</dt><dd>起訴 4,000 元；第一次上訴 6,000 元；更審後再上訴 0 元。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙提起撤銷訴訟，同時聲請訴訟救助，但未提出任何無資力的證明，僅附上住在同一縣市、有固定收入之友人丙出具的保證書。法院審查後認為乙的主張在法律上顯然不能成立。法院應如何處理？若法院准予救助而乙最後敗訴，費用由誰出？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>保證書能否代替釋明；顯無勝訴之望的效果；訴訟救助的效力範圍。</dd>
+        <dt>條文</dt><dd>第 102 條第 2、3 項：無資力應釋明，得由受訴法院管轄區域內有資力之人出具保證書代之。第 101 條但書：顯無勝訴之望者不准。第 103 條：暫行免付。第 98 條第 1 項：敗訴者負擔。第 102 條第 4 項：保證人代繳暫免之費用。</dd>
+        <dt>涵攝</dt><dd>丙住在受訴法院管轄區域內且有資力，其保證書可代替乙對無資力的釋明，釋明這一關可以過。但第 101 條但書是獨立的消極要件，法院認乙顯無勝訴之望，即應以裁定駁回聲請。若法院准予救助，效果只是暫免，乙敗訴後仍是應負擔費用之人，保證人丙依保證書代繳。</dd>
+        <dt>結論</dt><dd>法院應以顯無勝訴之望駁回訴訟救助之聲請（本案仍可繼續，但要命乙繳裁判費）。若准予救助而敗訴，費用由乙負擔、丙代繳。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">7. 甲對地方行政法院適用簡易訴訟程序之第一審判決提起上訴。上訴應徵收裁判費若干？</div>
+      <label><input type="radio" name="p3q1" value="A">2,000 元</label>
+      <label><input type="radio" name="p3q1" value="B">3,000 元</label>
+      <label><input type="radio" name="p3q1" value="C">4,000 元</label>
+      <label><input type="radio" name="p3q1" value="D">6,000 元</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 98 條之 2 第 1 項：上訴依第 98 條第 2 項加徵二分之一。簡易事件起訴 2,000 元，上訴 3,000 元。" data-diag='{"A":"2,000 元是簡易事件「起訴」的裁判費，上訴要加徵二分之一。","C":"4,000 元是通常程序起訴的裁判費。","D":"6,000 元是通常程序事件上訴的裁判費。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">8. 下列何種聲請，依第 98 條之 5 應徵收裁判費 1,000 元？</div>
+      <label><input type="radio" name="p3q2" value="A">聲請閱覽卷宗</label>
+      <label><input type="radio" name="p3q2" value="B">聲請回復原狀</label>
+      <label><input type="radio" name="p3q2" value="C">聲請訴訟救助</label>
+      <label><input type="radio" name="p3q2" value="D">聲請法官迴避</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 98 條之 5 第 2 款。其餘不在七款之列，依本文不徵收裁判費。" data-diag='{"A":"閱卷不在七款內，不徵裁判費（影印費等另依第 98 條之 6 收費）。","C":"訴訟救助是給無資力者的程序，不在七款內，不徵裁判費。","D":"聲請迴避不在七款內。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">9. 關於訴訟救助，下列何者正確？</div>
+      <label><input type="radio" name="p3q3" value="A">准予訴訟救助者，免除其應負擔之訴訟費用</label>
+      <label><input type="radio" name="p3q3" value="B">應向最高行政法院聲請</label>
+      <label><input type="radio" name="p3q3" value="C">聲請人顯無勝訴之望者，不准予訴訟救助</label>
+      <label><input type="radio" name="p3q3" value="D">無資力之事由應證明之，不得以保證書代之</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 101 條但書。效果是暫行免付（第 103 條）、向受訴法院聲請（第 102 條第 1 項）、無資力只須釋明且得以保證書代之（第 102 條第 2、3 項）。" data-diag='{"A":"第 103 條是「暫行免付」，敗訴後仍要負擔。","B":"第 102 條第 1 項：向受訴行政法院為之。","D":"第 102 條第 2 項是釋明不是證明，第 3 項允許以有資力之人的保證書代之。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 6-4 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>寫得出訴狀三款（第 105 條）與起訴後法院的三個動作：送達被告、卷證 10 日、就審期間 10 日</li>
+      <li>對第 107 條第 1 項十一款，說得出哪些可補正、哪些不能，以及第 3 項判決駁回的兩款怎麼跟第 1 項分工</li>
+      <li>判斷訴之變更追加何時應准許、何時不適用（第 111 條第 4 項），以及裁判能不能聲明不服</li>
+      <li>記得撤銷與課予義務訴訟不得反訴、撤回要被告同意的時點與 10 日擬制同意</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：訴狀三款，然後法院做三件事</h2>
+    <div class="law"><b class="art">第 105 條</b>Ⅰ 起訴，應以訴狀表明下列各款事項，提出於行政法院為之：<br>一、當事人。<br>二、起訴之聲明。<br>三、訴訟標的及其原因事實。<br>Ⅱ 訴狀內宜記載適用程序上有關事項、證據方法及其他準備言詞辯論之事項；其經訴願程序者，並附具決定書。</div>
+    <p>第 105 條第 1 項是訴狀的<b>特別必要事項</b>，疊在第 57 條第 1 項九款的一般要求上。三款缺一不可：沒有「當事人」法院不知道告誰、沒有「聲明」不知道要什麼、沒有「訴訟標的及原因事實」不知道為什麼。缺了是第 107 條第 1 項第 10 款起訴不合程式，先命補正。</p>
+    <div class="flow">
+      <div class="step"><b>送達被告（第 108 條第 1 項）</b>法院除依第 107 條駁回或移送者外，應將訴狀送達被告，並得命以答辯狀陳述意見。</div>
+      <div class="step"><b>卷證 10 日（第 108 條第 2 項）</b>原處分機關、被告機關或受理訴願機關經法院通知後，應於 10 日內將卷證送交法院。</div>
+      <div class="step"><b>就審期間 10 日（第 109 條第 2 項）</b>言詞辯論期日距訴狀送達至少 10 日；急迫情形除外。</div>
+    </div>
+    <div class="tip">國考用法：第 106 條的起訴期間（2 個月、3 年）在第 1 課講過，這裡接上去的是：期間過了，法院用第 107 條第 1 項第 6 款裁定駁回，而且逾期不是可以補正的事項。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 107 條，裁定駁回十一款與判決駁回兩款</h2>
+    <div class="law"><b class="art">第 107 條第 1 項本文與但書、第 2 項、第 3 項、第 4 項、第 6 項</b>Ⅰ 原告之訴，有下列各款情形之一者，行政法院應以裁定駁回之。但其情形可以補正者，審判長應先定期間命補正：（十一款見下方卡片）<br>Ⅱ 撤銷訴訟及課予義務訴訟，原告於訴狀誤列被告機關者，準用前項之規定。<br>Ⅲ 原告之訴，有下列各款情形之一者，行政法院得不經言詞辯論，逕以判決駁回之。但其情形可以補正者，審判長應先定期間命補正：<br>一、除第二項以外之當事人不適格或欠缺權利保護必要。<br>二、依其所訴之事實，在法律上顯無理由。<br>Ⅳ 前三項情形，原告之訴因逾期未補正經裁判駁回後，不得再為補正。<br>Ⅵ 行政法院依第一項第十一款規定駁回原告之訴者，得各處原告、代表人或管理人、代理人新臺幣十二萬元以下之罰鍰。</div>
+    <p>結構先抓住：第 1 項是<b>訴訟要件</b>欠缺，用<b>裁定</b>駁回；第 3 項是當事人不適格、欠缺權利保護必要、顯無理由，用<b>判決</b>駁回（得不經言詞辯論）。兩項都有「可以補正者先命補正」的但書。第 2 項把「誤列被告機關」也納入先命補正。第 4 項：逾期未補正被駁回後，不能再補。第 5 項：這幾種裁判的理由得僅記載要領，可用原告書狀當附件。</p>
+    <p>第 11 款濫訴是 111 年新增：起訴基於惡意、不當或濫用程序之目的或有重大過失，且主張欠缺合理依據。配套在第 6 至 8 項：得各處原告、代表人或管理人、代理人 <b>12 萬元以下</b>罰鍰，與本案合併裁定，裁定內記載供擔保後得停止執行；原告對本案裁定聲明不服，處罰部分視為提起抗告。第 9 項：第 1 項與第 4 至 8 項於聲請或聲明事件準用。</p>
+    <div class="warn">常錯：「當事人不適格以裁定駁回」。被告不適格中的「誤列被告機關」（第 2 項）準用第 1 項，先命補正、不補才裁定駁回；其餘當事人不適格歸第 3 項第 1 款，是<b>判決</b>駁回。考題會問裁判的形式，形式錯了救濟途徑（抗告還是上訴）就跟著錯。</div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：第 107 條駁回事由卡片</h2>
+    <p class="small muted">點一款，看它的意思、性質上通常能不能補正、法院用什麼形式駁回。「可否補正」是依事由性質的一般判斷，條文只說「可以補正者先命補正」，個案仍看能不能補。</p>
+    <div class="toolbox">
+      <div class="chips" id="k107chips">
+        <button class="chip" data-k="1">Ⅰ-1 無審判權不能移送</button>
+        <button class="chip" data-k="2">Ⅰ-2 無管轄不能指定不能移送</button>
+        <button class="chip" data-k="3">Ⅰ-3 無當事人能力</button>
+        <button class="chip" data-k="4">Ⅰ-4 未由合法法定代理人</button>
+        <button class="chip" data-k="5">Ⅰ-5 代理權欠缺</button>
+        <button class="chip" data-k="6">Ⅰ-6 起訴逾期</button>
+        <button class="chip" data-k="7">Ⅰ-7 重複起訴</button>
+        <button class="chip" data-k="8">Ⅰ-8 撤回後再訴</button>
+        <button class="chip" data-k="9">Ⅰ-9 確定判決效力所及</button>
+        <button class="chip" data-k="10">Ⅰ-10 不合程式或不備其他要件</button>
+        <button class="chip" data-k="11">Ⅰ-11 濫訴</button>
+        <button class="chip" data-k="b">Ⅱ 誤列被告機關</button>
+        <button class="chip" data-k="s1">Ⅲ-1 當事人不適格、欠缺權利保護必要</button>
+        <button class="chip" data-k="s2">Ⅲ-2 法律上顯無理由</button>
+      </div>
+      <div class="result" id="k107res"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：訴之變更追加與訴訟標的移轉</h2>
+    <div class="law"><b class="art">第 111 條</b>Ⅰ 訴狀送達後，原告不得將原訴變更或追加他訴。但經被告同意或行政法院認為適當者，不在此限。<br>Ⅱ 被告於訴之變更或追加無異議，而為本案之言詞辯論者，視為同意變更或追加。<br>Ⅲ 有下列情形之一者，訴之變更或追加，應予准許：<br>一、訴訟標的對於數人必須合一確定，追加其原非當事人之人為當事人。<br>二、訴訟標的之請求雖有變更，但其請求之基礎不變。<br>三、因情事變更而以他項聲明代最初之聲明。<br>四、應提起確認訴訟，誤為提起撤銷訴訟。<br>五、依第一百九十七條或其他法律之規定，應許為訴之變更或追加。<br>Ⅳ 前三項規定，於變更或追加之新訴為撤銷訴訟而未經訴願程序者不適用之。<br>Ⅴ 對於行政法院以訴為非變更追加，或許訴之變更追加之裁判，不得聲明不服。但撤銷訴訟，主張其未經訴願程序者，得隨同終局判決聲明不服。</div>
+    <div class="flow">
+      <div class="step"><b>時點</b>「訴狀送達後」才受限制。送達前原告可以自由改。</div>
+      <div class="step"><b>原則與例外</b>原則不得；被告同意或法院認為適當則可；被告無異議而為本案言詞辯論，視為同意。</div>
+      <div class="step"><b>應准許五款</b>合一確定追加當事人、請求基礎不變、情事變更、應提確認誤提撤銷、第 197 條等法律規定。</div>
+      <div class="step"><b>擋門的第 4 項</b>新訴是撤銷訴訟而未經訴願，前三項都不適用，不能靠變更追加繞過訴願前置。</div>
+    </div>
+    <p>第 5 項：法院認為不是變更追加、或准許變更追加的裁判，不得聲明不服，避免程序爭執拖垮本案；只有「撤銷訴訟未經訴願」這一點可以隨同終局判決聲明不服。變更追加不另徵裁判費（第 98 條之 1）。</p>
+    <p>第 110 條處理訴訟中<b>訴訟標的的法律關係移轉給第三人</b>：於訴訟無影響（原當事人繼續打）；第三人經兩造同意得承當訴訟，僅他造不同意者得聲請法院裁定許之，該裁定得抗告；法院知悉移轉應書面通知第三人。第 5 項另開一條路：訴願決定後才移轉的，受移轉人得自己提起撤銷訴訟。</p>
+    <p>第 114 條之 1 是變更追加與撤回的程序後果：地方行政法院通常事件因變更或一部撤回而全部落入簡易或交通裁決程序範圍者，改依該程序由原受命法官續審；因追加變更反訴而落入高等行政法院管轄者，裁定移送；高等行政法院因變更或一部撤回而全部屬地方行政法院管轄者，裁定移送。</p>
+    <div class="warn">常錯：把第 111 條第 3 項第 4 款記反。條文是「應提起<b>確認</b>訴訟，誤為提起<b>撤銷</b>訴訟」應准變更。反過來（應提撤銷誤提確認無效）是第 6 條第 4 項，法院要裁定移送訴願機關，不是變更。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：反訴與撤回</h2>
+    <div class="law"><b class="art">第 112 條</b>Ⅰ 被告於言詞辯論終結前，得在本訴繫屬之行政法院提起反訴。但對於撤銷訴訟及課予義務訴訟，不得提起反訴。<br>Ⅱ 原告對於反訴，不得復行提起反訴。<br>Ⅲ 反訴之請求如專屬他行政法院管轄，或與本訴之請求或其防禦方法不相牽連者，不得提起。<br>Ⅳ 被告意圖延滯訴訟而提起反訴者，行政法院得駁回之。</div>
+    <div class="law"><b class="art">第 113 條</b>Ⅰ 原告於判決確定前得撤回訴之全部或一部。但於公益之維護有礙者，不在此限。<br>Ⅱ 前項撤回，被告已為本案之言詞辯論者，應得其同意。<br>Ⅲ 訴之撤回，應以書狀為之。但於期日得以言詞為之。<br>Ⅳ 以言詞所為之撤回，應記載於筆錄，如他造不在場，應將筆錄送達。<br>Ⅴ 訴之撤回，被告於期日到場，未為同意與否之表示者，自該期日起；其未於期日到場或係以書狀撤回者，自前項筆錄或撤回書狀送達之日起，十日內未提出異議者，視為同意撤回。</div>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>反訴（第 112 條）</th><th>撤回（第 113 條、第 114 條）</th></tr></thead>
+      <tbody>
+        <tr><th>誰</th><td>被告</td><td>原告</td></tr>
+        <tr><th>時點</th><td>言詞辯論終結前</td><td>判決確定前（含上訴審）</td></tr>
+        <tr><th>不能的情形</th><td>本訴是撤銷或課予義務訴訟；對反訴再反訴；專屬他法院管轄；與本訴或防禦方法不相牽連</td><td>於公益之維護有礙者（法院裁定不准，該裁定不得抗告，第 114 條）</td></tr>
+        <tr><th>要不要他造同意</th><td>不須</td><td>被告已為本案言詞辯論者，應得其同意；10 日不異議視為同意</td></tr>
+        <tr><th>方式</th><td>向本訴繫屬之法院提起</td><td>書狀；期日得以言詞，記明筆錄，他造不在場則送達筆錄</td></tr>
+        <tr><th>裁判費</th><td>不另徵收（第 98 條之 1）</td><td>—</td></tr>
+        <tr><th>再來一次</th><td>意圖延滯者法院得駁回</td><td>本案經終局判決後撤回，復提同一之訴，依第 107 條第 1 項第 8 款裁定駁回</td></tr>
+      </tbody>
+    </table></div>
+    <p>反訴禁止放在撤銷與課予義務訴訟，因為這兩種訴訟的被告是行政機關，機關要對人民主張什麼，自己作處分就好，不需要反訴。一般給付、確認訴訟則允許，例如人民請求給付補助款，機關反訴請求返還溢領。第 115 條把民事訴訟法關於起訴、一事不再理、撤回等多條規定準用進來。</p>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲於訴願駁回後 1 個月內向高等行政法院提起撤銷訴訟，但訴狀把訴願機關列為被告、未繳裁判費，且所爭執的另一處分 B 從未經過訴願。法院應如何分別處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>三種起訴瑕疵分別落在第 107 條哪一款、能否補正。</dd>
+        <dt>條文</dt><dd>第 107 條第 2 項：撤銷訴訟原告誤列被告機關者，準用第 1 項（先命補正）。第 100 條第 1 項：未預納裁判費，審判長應定期命繳納，逾期未納應駁回。第 107 條第 1 項第 10 款：起訴不合程式或不備其他要件。第 24 條第 1 款：駁回訴願時之原處分機關為被告。</dd>
+        <dt>涵攝</dt><dd>誤列被告：依第 24 條應以原處分機關為被告，法院依第 107 條第 2 項先定期命補正，補正後程序繼續。未繳裁判費：定期命繳，逾期才裁定駁回。處分 B 未經訴願：訴願前置是撤銷訴訟的要件，未經訴願屬第 1 項第 10 款不備其他要件；此瑕疵無法在訴訟中補正（訴願另有期間），就 B 部分裁定駁回。</dd>
+        <dt>結論</dt><dd>被告與裁判費先命補正；處分 B 部分裁定駁回；處分 A 部分補正後進入實體審理。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙起訴請求撤銷 50 萬元罰鍰處分（已繳納），訴狀送達被告後，乙追加請求被告返還已繳之 50 萬元；被告未表示意見即就本案進行言詞辯論。乙另欲追加撤銷同機關作成、但未經訴願之另一處分。兩項追加各應如何處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>訴狀送達後的追加、擬制同意、應准許事由與第 111 條第 4 項的限制。</dd>
+        <dt>條文</dt><dd>第 111 條第 1 項：訴狀送達後原則不得變更追加，但被告同意或法院認適當者例外。第 2 項：無異議而為本案言詞辯論視為同意。第 3 項第 2 款：請求基礎不變應予准許。第 4 項：新訴為撤銷訴訟而未經訴願者，前三項不適用。第 98 條之 1：追加不另徵裁判費。第 8 條第 2 項：給付訴訟以處分應否撤銷為據者，應於撤銷訴訟併為請求。</dd>
+        <dt>涵攝</dt><dd>返還 50 萬元的請求以罰鍰處分應否撤銷為前提，請求基礎不變，依第 3 項第 2 款應准許；被告未異議而為本案言詞辯論，依第 2 項也視為同意；不另徵費。追加撤銷未經訴願之處分，是「新訴為撤銷訴訟而未經訴願」，依第 4 項不適用前三項，即使被告同意也不能追加，乙應另行訴願。</dd>
+        <dt>結論</dt><dd>返還 50 萬元的追加應准許；撤銷未經訴願處分的追加不合法。乙如對後者不服，依第 5 項但書得隨同終局判決聲明不服。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">10. 甲提起撤銷訴訟，法院審查發現起訴已逾第 106 條第 1 項之 2 個月不變期間，且無回復原狀之聲請。法院應：</div>
+      <label><input type="radio" name="p4q1" value="A">定期命甲補正</label>
+      <label><input type="radio" name="p4q1" value="B">以裁定駁回其訴</label>
+      <label><input type="radio" name="p4q1" value="C">不經言詞辯論以判決駁回其訴</label>
+      <label><input type="radio" name="p4q1" value="D">裁定移送訴願管轄機關</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 107 條第 1 項第 6 款：起訴逾越法定期限，裁定駁回。逾期不是可以補正的事項。" data-diag='{"A":"逾期不是可以補正的瑕疵，但書的先命補正用不上。","C":"判決駁回是第 107 條第 3 項（當事人不適格、欠缺權利保護必要、顯無理由）的形式，逾期在第 1 項，用裁定。","D":"移送訴願機關是第 6 條第 4 項「應提撤銷誤提確認無效且未經訴願」的處理，與逾期無關。"}'></div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">11. 依第 111 條第 3 項，下列何者<b>不是</b>法院「應予准許」訴之變更或追加的情形？</div>
+      <label><input type="radio" name="p4q2" value="A">訴訟標的之請求雖有變更，但其請求之基礎不變</label>
+      <label><input type="radio" name="p4q2" value="B">因情事變更而以他項聲明代最初之聲明</label>
+      <label><input type="radio" name="p4q2" value="C">應提起確認訴訟，誤為提起撤銷訴訟</label>
+      <label><input type="radio" name="p4q2" value="D">應提起撤銷訴訟，誤為提起確認行政處分無效之訴訟</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 111 條第 3 項第 4 款是「應提起確認訴訟，誤為提起撤銷訴訟」。反方向（應提撤銷誤提確認無效）在第 6 條第 4 項，未經訴願者法院應裁定移送訴願管轄機關。" data-diag='{"A":"這是第 111 條第 3 項第 2 款。","B":"這是第 111 條第 3 項第 3 款。","C":"這正是第 111 條第 3 項第 4 款的文字。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">12. 乙提起一般給付訴訟，第一審經言詞辯論後敗訴，乙上訴中欲撤回起訴。下列何者正確？</div>
+      <label><input type="radio" name="p4q3" value="A">判決已宣示，不得撤回</label>
+      <label><input type="radio" name="p4q3" value="B">得撤回，但被告已為本案言詞辯論，應得其同意</label>
+      <label><input type="radio" name="p4q3" value="C">得撤回，無須被告同意</label>
+      <label><input type="radio" name="p4q3" value="D">撤回應經法院以裁定許可</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 113 條第 1 項：判決確定前得撤回；第 2 項：被告已為本案之言詞辯論者，應得其同意。被告自撤回書狀送達起 10 日內不異議，視為同意（第 5 項）。" data-diag='{"A":"第 113 條第 1 項的時點是「判決確定前」，上訴中判決尚未確定。","C":"被告已為本案言詞辯論，第 113 條第 2 項要求其同意。","D":"撤回不須法院許可；法院只在有礙公益時依第 114 條裁定不准。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card goal">
+    <h2>章末測驗（選擇 10 題 + 實例 2 題）</h2>
+    <p>選擇題全部作答後按「交卷」，10 題答對 8 題過關。實例題先自己寫，再展開參考答案對照，自評後按「我寫到了」或「要再加強」。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="C">
+      <div class="stem">1. 甲於起訴期間最後一日以電子郵件將訴狀寄至行政法院公務信箱，未依司法院所定科技設備傳送辦法為之。依第 57 條，該訴狀：</div>
+      <label><input type="radio" name="qz1" value="A">視為已於寄出時提出</label>
+      <label><input type="radio" name="qz1" value="B">法院應命補正簽名後生效</label>
+      <label><input type="radio" name="qz1" value="C">不生書狀提出之效力</label>
+      <label><input type="radio" name="qz1" value="D">法院得拒絕其提出，但不拒絕時仍有效</label>
+      <div class="fb" data-exp="第 57 條第 5 項：當事人以科技設備傳送書狀，未依前項辦法為之者，不生書狀提出之效力。「得拒絕」是第 3 項對不合格式規則的效果，不是這裡。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">2. 甲向臺北高等行政法院陳明指定乙為送達代收人。依第 68 條，該指定之效力：</div>
+      <label><input type="radio" name="qz2" value="A">僅及於該審級</label>
+      <label><input type="radio" name="qz2" value="B">及於同地之各級行政法院，但甲別有陳明者不在此限</label>
+      <label><input type="radio" name="qz2" value="C">及於全國各行政法院</label>
+      <label><input type="radio" name="qz2" value="D">須經審判長裁定許可始生效力</label>
+      <div class="fb" data-exp="第 68 條：送達代收人經指定陳明後，其效力及於同地之各級行政法院。但該當事人或代理人別有陳明者，不在此限。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">3. 向最高行政法院提起之上訴事件（第 49 條之 1 第 1 項第 3 款），上訴人委任律師並限制其不得受送達。關於判決之送達，下列何者正確？</div>
+      <label><input type="radio" name="qz3" value="A">應向上訴人本人送達</label>
+      <label><input type="radio" name="qz3" value="B">應同時向本人與律師送達，以後送達者為準</label>
+      <label><input type="radio" name="qz3" value="C">法院得選擇向本人或律師送達</label>
+      <label><input type="radio" name="qz3" value="D">仍應向律師送達，其受送達權限不受限制</label>
+      <div class="fb" data-exp="第 66 條第 2 項：第 49 條之 1 第 1 項事件，其訴訟代理人受送達之權限，不受限制。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">4. 郵務人員於 3 月 1 日將裁定寄存於郵局並依法黏貼通知、置放信箱。該寄存送達於何時發生效力？</div>
+      <label><input type="radio" name="qz4" value="A">3 月 1 日寄存時</label>
+      <label><input type="radio" name="qz4" value="B">自 3 月 1 日起經 10 日，即 3 月 11 日經過時</label>
+      <label><input type="radio" name="qz4" value="C">自 3 月 1 日起經 20 日</label>
+      <label><input type="radio" name="qz4" value="D">應受送達人實際領取時</label>
+      <div class="fb" data-exp="第 73 條第 3 項：寄存送達自寄存之日起經十日發生效力。寄存日不算入，3 月 2 日至 3 月 11 日為十日。何時領取不影響。20 日是公示送達。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 關於期日，下列何者正確？</div>
+      <label><input type="radio" name="qz5" value="A">期日由行政法院書記官依職權定之</label>
+      <label><input type="radio" name="qz5" value="B">除有不得已之情形外，不得於星期日或其他休息日定之</label>
+      <label><input type="radio" name="qz5" value="C">變更或延展期日，應由行政法院以合議裁定之</label>
+      <label><input type="radio" name="qz5" value="D">期日以點呼當事人為始</label>
+      <div class="fb" data-exp="第 84 條第 2 項。期日由審判長依職權定之（第 84 條第 1 項）、變更延展原則由審判長裁定（第 87 條第 3 項）、以朗讀案由為始（第 87 條第 1 項）。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">6. 甲住花蓮，對臺北高等行政法院判決上訴。甲已委任住居臺北市之律師乙為訴訟代理人，乙得為上訴行為。關於在途期間：</div>
+      <label><input type="radio" name="qz6" value="A">應扣除甲住所地至法院之在途期間</label>
+      <label><input type="radio" name="qz6" value="B">應扣除乙事務所至法院之在途期間</label>
+      <label><input type="radio" name="qz6" value="C">不扣除在途期間</label>
+      <label><input type="radio" name="qz6" value="D">由法院酌定是否扣除</label>
+      <div class="fb" data-exp="第 89 條第 1 項但書：有訴訟代理人住居行政法院所在地，得為期間內應為之訴訟行為者，不扣除在途期間。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">7. 乙因不應歸責於己之事由遲誤對高等行政法院判決之上訴期間，欲聲請回復原狀。應向何法院聲請？</div>
+      <label><input type="radio" name="qz7" value="A">為判決之原高等行政法院</label>
+      <label><input type="radio" name="qz7" value="B">最高行政法院</label>
+      <label><input type="radio" name="qz7" value="C">乙住所地之地方行政法院</label>
+      <label><input type="radio" name="qz7" value="D">任一行政法院均可</label>
+      <div class="fb" data-exp="第 92 條第 1 項前段：因遲誤上訴或抗告期間而聲請回復原狀者，向為裁判之原行政法院為之。並應同時補行上訴（第 2 項）。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">8. 對高等行政法院之裁定提起抗告（非交通裁決事件），應徵收裁判費：</div>
+      <label><input type="radio" name="qz8" value="A">300 元</label>
+      <label><input type="radio" name="qz8" value="B">1,000 元</label>
+      <label><input type="radio" name="qz8" value="C">2,000 元</label>
+      <label><input type="radio" name="qz8" value="D">不徵收</label>
+      <div class="fb" data-exp="第 98 條之 4：抗告，徵收裁判費新臺幣一千元。300 元是交通裁決事件的抗告（第 237 條之 5）。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">9. 法院依第 107 條第 1 項第 11 款（濫訴）裁定駁回原告之訴時，得對原告處以罰鍰之上限為：</div>
+      <label><input type="radio" name="qz9" value="A">3 萬元</label>
+      <label><input type="radio" name="qz9" value="B">6 萬元</label>
+      <label><input type="radio" name="qz9" value="C">12 萬元</label>
+      <label><input type="radio" name="qz9" value="D">50 萬元</label>
+      <div class="fb" data-exp="第 107 條第 6 項：得各處原告、代表人或管理人、代理人新臺幣十二萬元以下之罰鍰。處罰與本案合併裁定（第 7 項）。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">10. 甲對乙機關提起課予義務訴訟，乙機關於言詞辯論終結前對甲提起反訴，請求甲返還先前溢領之補助款。法院應：</div>
+      <label><input type="radio" name="qz10" value="A">認反訴不合法，因對課予義務訴訟不得提起反訴</label>
+      <label><input type="radio" name="qz10" value="B">受理反訴，因與本訴有牽連</label>
+      <label><input type="radio" name="qz10" value="C">受理反訴，並命乙機關另繳裁判費 4,000 元</label>
+      <label><input type="radio" name="qz10" value="D">命甲就反訴再提起反訴</label>
+      <div class="fb" data-exp="第 112 條第 1 項但書：對於撤銷訴訟及課予義務訴訟，不得提起反訴。牽連性是第 3 項的另一個要件，但本件先過不了第 1 項但書。"></div>
+    </div>
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>實例題（自評）</h2>
+    <div class="essay" data-id="e1">
+      <div class="stem">實例一　甲住臺南，向高雄高等行政法院提起撤銷訴訟，未委任訴訟代理人。第一審判決於 5 月 2 日由郵務人員送達甲住所，無人應門，遂寄存於附近郵局並依法黏貼通知、置放信箱。甲 5 月 5 日出國旅遊，6 月 20 日返國始見通知，6 月 25 日提起上訴。假設司法院所定臺南至該法院之在途期間為 2 日。<br>問：(1) 判決於何日發生送達效力？(2) 上訴期間末日為何？(3) 甲主張出國期間不知判決送達，得否聲請回復原狀？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>爭點</dt><dd>寄存送達的生效、不變期間與在途期間的計算、回復原狀的「不應歸責」要件。</dd>
+          <dt>條文</dt><dd>第 73 條第 2、3 項（郵務人員得寄存郵局；自寄存之日起經十日發生效力）。第 241 條（判決送達後 20 日不變期間）。第 88 條第 3 項（期間依民法計算，始日不算入）。第 89 條第 1 項（不在法院所在地住居者扣除在途期間）。第 91 條第 1 項（天災或其他不應歸責於己之事由致遲誤不變期間）。</dd>
+          <dt>涵攝</dt><dd>(1) 5 月 2 日寄存，寄存日不算入，5 月 3 日至 5 月 12 日為十日，經過後發生送達效力；甲何時領取或是否出國不影響。(2) 20 日自送達生效後起算，始日不算入，5 月 13 日至 6 月 1 日；甲住臺南不在法院所在地且無代理人，加計在途期間 2 日，末日 6 月 3 日。甲 6 月 25 日上訴已逾期。(3) 出國旅遊是甲自己安排的事，與天災不同，甲可以委託他人收信或指定送達代收人（第 67 條），遲誤屬可歸責於己，不符第 91 條第 1 項，不得回復原狀。</dd>
+          <dt>結論</dt><dd>(1) 5 月 12 日經過時生效。(2) 6 月 3 日（如為休息日則以次日代之）。(3) 不得聲請回復原狀，上訴因逾期不合法。</dd>
+          <dt>加分</dt><dd>可指出寄存送達採「擬制到達」是為了訴訟程序安定，與第 1 條保障人民權益之間的平衡，由第 73 條第 4 項保存 2 個月與第 91 條回復原狀作為緩衝；並說明若甲是因住院昏迷而非出國，結論會翻轉。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+    <div class="essay" data-id="e2">
+      <div class="stem">實例二　乙申請營業許可遭 A 市政府駁回，訴願經內政部駁回，決定書於 3 月 1 日送達。乙於 4 月 20 日向高等行政法院起訴，訴狀列內政部為被告、未附具訴願決定書、未繳裁判費，請求「命內政部核發許可」。訴狀送達後，乙又追加請求國家賠償 30 萬元。法院另認為乙之請求「依其所訴之事實，在法律上顯無理由」。<br>問：法院對上述各項瑕疵與請求應如何處理？請依序說明裁判之形式與依據。</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>爭點</dt><dd>起訴期間、誤列被告、訴狀欠缺、裁判費、訴之追加、顯無理由的判決駁回，各自的處理順序與裁判形式。</dd>
+          <dt>條文</dt><dd>第 106 條第 1 項（2 個月不變期間）。第 24 條第 1 款（駁回訴願時之原處分機關為被告）。第 107 條第 2 項（課予義務訴訟誤列被告準用先命補正）。第 105 條第 2 項（經訴願者附具決定書）。第 107 條第 1 項第 10 款與但書（不合程式先命補正）。第 100 條第 1 項（未預納裁判費定期命繳）。第 7 條（得合併請求損害賠償）。第 111 條第 1、3 項、第 98 條之 1（追加之准許與不另徵費）。第 107 條第 3 項第 2 款（顯無理由得不經言詞辯論判決駁回）。</dd>
+          <dt>涵攝</dt><dd>期間：3 月 1 日送達，4 月 20 日起訴，在 2 個月內（末日 5 月 1 日），合法。被告：乙提的是第 5 條第 2 項課予義務訴訟，訴願駁回，被告應為原處分機關 A 市政府，誤列內政部依第 107 條第 2 項準用第 1 項但書先定期命補正。未附決定書、未繳裁判費：屬可以補正之程式瑕疵，分別依第 107 條第 1 項但書與第 100 條第 1 項定期命補正繳納，逾期未補才裁定駁回，且駁回後不得再補正（第 4 項）。追加國賠：第 7 條允許於同一程序合併請求損害賠償，追加在訴狀送達後，須被告同意或法院認為適當；其請求基礎（同一駁回處分）不變，依第 111 條第 3 項第 2 款應予准許，不另徵裁判費。顯無理由：補正完成後，法院得依第 107 條第 3 項第 2 款不經言詞辯論逕以判決駁回；此為實體敗訴判決，救濟途徑是上訴而非抗告。</dd>
+          <dt>結論</dt><dd>先補正（被告、決定書、裁判費），准許追加國賠，然後以判決駁回。</dd>
+          <dt>加分</dt><dd>可指出第 107 條把「裁定駁回」與「判決駁回」分流的理由：第 1 項是訴訟要件欠缺不進入實體，第 3 項已觸及實體但顯無審理必要；並提及第 107 條第 5 項允許理由僅記載要領，是 111 年修法為處理濫訴與明顯無理由案件的配套。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="s6" class="panel">
+  <div class="card">
+    <h2>本課引用條文</h2>
+    <p class="small muted">點開看原文。只收錄本課講到的條文；全文請見全國法規資料庫。本課多次引用民法第 120 條第 2 項（始日不算入）、第 121 條第 2 項（以月計算之末日）、第 122 條（末日為休息日以次日代之），請自行對照民法。</p>
+    <div class="arts">
+      <details><summary>第 57 條 <span>書狀應記載事項、科技設備傳送</span></summary><div class="txt">Ⅰ 當事人書狀，除別有規定外，應記載下列各款事項：
+一、當事人姓名及住所或居所；當事人為法人、機關或其他團體者，其名稱及所在地、事務所或營業所。
+二、有法定代理人、代表人或管理人者，其姓名及住所或居所。
+三、有訴訟代理人者，其姓名及住所或居所。
+四、應為之聲明。
+五、事實上及法律上之陳述。
+六、供證明或釋明用之證據。
+七、附屬文件及其件數。
+八、行政法院。
+九、年、月、日。
+Ⅱ 書狀內宜記載當事人、法定代理人、代表人、管理人或訴訟代理人之出生年月日、職業、身分證明文件字號、營利事業統一編號、電話號碼及法定代理人、代表人或管理人與法人、機關或團體之關係或其他足資辨別之特徵。
+Ⅲ 當事人書狀格式、記載方法及效力之規則，由司法院定之。未依該規則為之者，行政法院得拒絕其書狀之提出。
+Ⅳ 當事人得以科技設備將書狀傳送於行政法院，其適用範圍、程序、效力及其他應遵循事項之辦法，由司法院定之。
+Ⅴ 當事人以科技設備傳送書狀，未依前項辦法為之者，不生書狀提出之效力。
+Ⅵ 其他訴訟關係人亦得以科技設備將訴訟文書傳送於行政法院，並準用前二項規定。</div></details>
+      <details><summary>第 58 條 <span>簽名蓋章</span></summary><div class="txt">Ⅰ 當事人、法定代理人、代表人、管理人或訴訟代理人應於書狀內簽名或蓋章；其以指印代簽名者，應由他人代書姓名，記明其事由並簽名。
+Ⅱ 依法規以科技設備傳送前項書狀者，其效力與提出經簽名或蓋章之書狀同。其他訴訟關係人以科技設備傳送應簽名或蓋章之訴訟文書者，亦同。</div></details>
+      <details><summary>第 60 條 <span>言詞聲明或陳述</span></summary><div class="txt">Ⅰ 於言詞辯論外，關於訴訟所為之聲明或陳述，除依本法應用書狀者外，得於行政法院書記官前以言詞為之。
+Ⅱ 前項情形，行政法院書記官應作筆錄，並於筆錄內簽名。
+Ⅲ 前項筆錄準用第五十七條及民事訴訟法第一百十八條至第一百二十條之規定。</div></details>
+      <details><summary>第 61 條至第 63 條 <span>職權送達、送達機關、囑託地方法院</span></summary><div class="txt">第 61 條 送達除別有規定外，由行政法院書記官依職權為之。
+第 62 條 Ⅰ 送達由行政法院書記官交執達員或郵務機構行之。Ⅱ 由郵務機構行送達者，以郵務人員為送達人；其實施辦法由司法院會同行政院定之。
+第 63 條 行政法院得向送達地之地方法院為送達之囑託。</div></details>
+      <details><summary>第 64 條 <span>對無訴訟能力人、法人機關之送達</span></summary><div class="txt">Ⅰ 對於無訴訟能力人為送達者，應向其全體法定代理人為之。但法定代理人有二人以上，如其中有應為送達處所不明者，送達得僅向其餘之法定代理人為之。
+Ⅱ 對於法人、中央及地方機關或非法人之團體為送達者，應向其代表人或管理人為之。
+Ⅲ 代表人或管理人有二人以上者，送達得僅向其中一人為之。
+Ⅳ 無訴訟能力人為訴訟行為，未向行政法院陳明其法定代理人者，於補正前，行政法院得向該無訴訟能力人為送達。</div></details>
+      <details><summary>第 65 條 <span>對外國法人團體之送達</span></summary><div class="txt">Ⅰ 對於在中華民國有事務所或營業所之外國法人或團體為送達者，應向其在中華民國之代表人或管理人為之。
+Ⅱ 前項代表人或管理人有二人以上者，送達得僅向其中一人為之。</div></details>
+      <details><summary>第 66 條 <span>對訴訟代理人之送達</span></summary><div class="txt">Ⅰ 訴訟代理人除受送達之權限受有限制者外，送達應向該代理人為之。但審判長認為必要時，得命併送達於當事人本人。
+Ⅱ 第四十九條之一第一項事件，其訴訟代理人受送達之權限，不受限制。
+Ⅲ 第一項但書情形，送達效力以訴訟代理人受送達為準。</div></details>
+      <details><summary>第 67 條至第 70 條 <span>送達代收人</span></summary><div class="txt">第 67 條 當事人或代理人經指定送達代收人，向受訴行政法院陳明者，應向該代收人為送達。但審判長認為必要時，得命送達於當事人本人。
+第 68 條 送達代收人經指定陳明後，其效力及於同地之各級行政法院。但該當事人或代理人別有陳明者，不在此限。
+第 69 條 當事人或代理人於中華民國無住居所、事務所及營業所者，應指定送達代收人向受訴行政法院陳明。
+第 70 條 當事人或代理人未依前條規定指定送達代收人者，行政法院得將應送達之文書交付郵務機構以掛號發送。</div></details>
+      <details><summary>第 71 條 <span>送達處所</span></summary><div class="txt">Ⅰ 送達，於應受送達人之住居所、事務所或營業所行之。但在他處會晤應受送達人時，得於會晤處所行之。
+Ⅱ 對於法人、機關、非法人之團體之代表人或管理人為送達者，應向其事務所、營業所或機關所在地行之。但必要時亦得於會晤之處所或其住居所行之。
+Ⅲ 應受送達人有就業處所者，亦得向該處所為送達。</div></details>
+      <details><summary>第 72 條 <span>補充送達</span></summary><div class="txt">Ⅰ 送達於住居所、事務所、營業所或機關所在地不獲會晤應受送達人者，得將文書付與有辨別事理能力之同居人、受雇人或願代為收受而居住於同一住宅之主人。
+Ⅱ 前條所定送達處所之接收郵件人員，視為前項之同居人或受雇人。
+Ⅲ 如同居人、受雇人、居住於同一住宅之主人或接收郵件人員為他造當事人者，不適用前二項之規定。</div></details>
+      <details><summary>第 73 條 <span>寄存送達</span></summary><div class="txt">Ⅰ 送達不能依前二條規定為之者，得將文書寄存於送達地之自治或警察機關，並作送達通知書二份，一份黏貼於應受送達人住居所、事務所或營業所門首，一份交由鄰居轉交或置於應受送達人之信箱或其他適當之處所，以為送達。
+Ⅱ 前項情形，如係以郵務人員為送達人者，得將文書寄存於附近之郵務機構。
+Ⅲ 寄存送達，自寄存之日起，經十日發生效力。
+Ⅳ 寄存之文書自寄存之日起，寄存機關或機構應保存二個月。</div></details>
+      <details><summary>第 74 條 <span>留置送達</span></summary><div class="txt">Ⅰ 應受送達人拒絕收領而無法律上理由者，應將文書置於送達處所，以為送達。
+Ⅱ 前項情形，如有難達留置情事者，準用前條之規定。</div></details>
+      <details><summary>第 75 條、第 76 條 <span>休息日送達之許可、法院內交付</span></summary><div class="txt">第 75 條 Ⅰ 送達，除由郵務機構行之者外，非經審判長或受命法官、受託法官或送達地地方法院法官之許可，不得於星期日或其他休息日或日出前、日沒後為之。但應受送達人不拒絕收領者，不在此限。Ⅱ 前項許可，書記官應於送達之文書內記明。
+第 76 條 行政法院書記官於法院內將文書付與應受送達人者，應命受送達人提出收據附卷。</div></details>
+      <details><summary>第 77 條至第 80 條 <span>囑託送達</span></summary><div class="txt">第 77 條 Ⅰ 於外國或境外為送達者，應囑託該國管轄機關或駐在該國之中華民國使領館或其他機構、團體為之。Ⅱ 不能依前項之規定為囑託送達者，得將應送達之文書交郵務機構以雙掛號發送，以為送達。
+第 78 條 對於駐在外國之中華民國大使、公使、領事或其他駐外人員為送達者，應囑託外交部為之。
+第 79 條 對於在軍隊或軍艦服役之軍人為送達者，應囑託該管軍事機關或長官為之。
+第 80 條 對於在監所人為送達者，應囑託該監所長官為之。</div></details>
+      <details><summary>第 81 條 <span>公示送達之事由</span></summary><div class="txt">行政法院對於當事人之送達，有下列情形之一者，得依聲請或依職權為公示送達：
+一、應為送達之處所不明。
+二、於有治外法權人住居所或事務所為送達而無效。
+三、於外國為送達，不能依第七十七條之規定辦理或預知雖依該條規定辦理而無效。</div></details>
+      <details><summary>第 82 條 <span>公示送達之生效</span></summary><div class="txt">公示送達，自將公告或通知書黏貼公告處之日起，公告於行政法院網站者，自公告之日起，其登載公報或新聞紙者，自最後登載之日起，經二十日發生效力；於依前條第三款為公示送達者，經六十日發生效力。但對同一當事人仍為公示送達者，自黏貼公告處之翌日起發生效力。</div></details>
+      <details><summary>第 83 條 <span>科技設備傳送訴訟文書</span></summary><div class="txt">Ⅰ 經訴訟關係人之同意，得以科技設備傳送訴訟文書，其傳送與送達或通知有同一之效力。
+Ⅱ 前項適用範圍、程序、效力及其他應遵循事項之辦法，由司法院定之。
+Ⅲ 民事訴訟法第一百二十六條、第一百三十一條、第一百三十五條、第一百四十一條、第一百四十二條、第一百四十四條、第一百四十八條、第一百五十一條及第一百五十三條之規定，於本節準用之。</div></details>
+      <details><summary>第 84 條至第 87 條 <span>期日</span></summary><div class="txt">第 84 條 Ⅰ 期日，除別有規定外，由審判長依職權定之。Ⅱ 期日，除有不得已之情形外，不得於星期日或其他休息日定之。
+第 85 條 審判長定期日後，行政法院書記官應作通知書，送達於訴訟關係人。但經審判長面告以所定之期日命其到場，或訴訟關係人曾以書狀陳明屆期到場者，與送達有同一之效力。
+第 86 條 期日應為之行為於行政法院內為之。但在行政法院內不能為或為之而不適當者，不在此限。
+第 87 條 Ⅰ 期日，以朗讀案由為始。Ⅱ 期日，如有重大理由，得變更或延展之。Ⅲ 變更或延展期日，除別有規定外，由審判長裁定之。</div></details>
+      <details><summary>第 88 條 <span>期間之酌定與計算</span></summary><div class="txt">Ⅰ 期間，除法定者外，由行政法院或審判長酌量情形定之。
+Ⅱ 行政法院或審判長所定期間，自送達定期間之文書時起算，無庸送達者，自宣示定期間之裁判時起算。
+Ⅲ 期間之計算，依民法之規定。</div></details>
+      <details><summary>第 89 條 <span>在途期間</span></summary><div class="txt">Ⅰ 當事人不在行政法院所在地住居者，計算法定期間，應扣除其在途之期間，但有訴訟代理人住居行政法院所在地，得為期間內應為之訴訟行為者，不在此限。
+Ⅱ 前項應扣除之在途期間，由司法院定之。</div></details>
+      <details><summary>第 90 條 <span>期間之伸長縮短</span></summary><div class="txt">Ⅰ 期間，如有重大理由得伸長或縮短之。但不變期間不在此限。
+Ⅱ 伸長或縮短期間由行政法院裁定。但期間係審判長所定者，由審判長裁定。</div></details>
+      <details><summary>第 91 條 <span>回復原狀</span></summary><div class="txt">Ⅰ 因天災或其他不應歸責於己之事由，致遲誤不變期間者，於其原因消滅後一個月內，如該不變期間少於一個月者，於相等之日數內，得聲請回復原狀。
+Ⅱ 前項期間不得伸長或縮短之。
+Ⅲ 遲誤不變期間已逾一年者，不得聲請回復原狀，遲誤第一百零六條之起訴期間已逾三年者，亦同。
+Ⅳ 第一項之聲請應以書狀為之，並釋明遲誤期間之原因及其消滅時期。</div></details>
+      <details><summary>第 92 條、第 93 條 <span>回復原狀之聲請法院與裁判</span></summary><div class="txt">第 92 條 Ⅰ 因遲誤上訴或抗告期間而聲請回復原狀者，向為裁判之原行政法院為之；遲誤其他期間者，向管轄該期間內應為之訴訟行為之行政法院為之。Ⅱ 聲請回復原狀，應同時補行期間內應為之訴訟行為。
+第 93 條 Ⅰ 回復原狀之聲請，由受聲請之行政法院與補行之訴訟行為合併裁判之。但原行政法院認其聲請應行許可，而將上訴或抗告事件送交上級行政法院者，應由上級行政法院合併裁判。Ⅱ 因回復原狀而變更原裁判者，準用第二百八十二條之規定。</div></details>
+      <details><summary>第 98 條 <span>訴訟費用之負擔、裁判費</span></summary><div class="txt">Ⅰ 訴訟費用指裁判費及其他進行訴訟之必要費用，由敗訴之當事人負擔。但為第一百九十八條之判決時，由被告負擔。
+Ⅱ 起訴，按件徵收裁判費新臺幣四千元。適用簡易訴訟程序之事件，徵收裁判費新臺幣二千元。</div></details>
+      <details><summary>第 98 條之 1 至之 4 <span>不另徵收、上訴、再審、抗告之裁判費</span></summary><div class="txt">第 98 條之 1 以一訴主張數項標的，或為訴之變更、追加或提起反訴者，不另徵收裁判費。
+第 98 條之 2 Ⅰ 上訴，依第九十八條第二項規定，加徵裁判費二分之一。Ⅱ 發回或發交更審再行上訴，或依第二百五十七條第二項為移送，經判決後再行上訴者，免徵裁判費。
+第 98 條之 3 Ⅰ 再審之訴，按起訴法院之審級，依第九十八條第二項及前條第一項規定徵收裁判費。Ⅱ 對於確定之裁定聲請再審者，徵收裁判費新臺幣一千元。
+第 98 條之 4 抗告，徵收裁判費新臺幣一千元。</div></details>
+      <details><summary>第 98 條之 5 <span>聲請之裁判費</span></summary><div class="txt">聲請或聲明，不徵收裁判費。但下列聲請，徵收裁判費新臺幣一千元：
+一、聲請參加訴訟或駁回參加。
+二、聲請回復原狀。
+三、聲請停止執行或撤銷停止執行之裁定。
+四、起訴前聲請證據保全。
+五、聲請重新審理。
+六、聲請假扣押、假處分或撤銷假扣押、假處分之裁定。
+七、第二百三十七條之三十聲請事件。</div></details>
+      <details><summary>第 98 條之 6 至之 8 <span>其他費用、交通裁決事件、律師酬金</span></summary><div class="txt">第 98 條之 6 Ⅰ 下列費用之徵收，除法律另有規定外，其項目及標準由司法院定之：一、影印費、攝影費、抄錄費、翻譯費、運送費、公告行政法院網站費及登載公報新聞紙費。二、證人及通譯之日費、旅費。三、鑑定人之日費、旅費、報酬及鑑定所需費用。四、其他進行訴訟及強制執行之必要費用。Ⅱ 郵電送達費及行政法院人員於法院外為訴訟行為之食、宿、交通費，不另徵收。
+第 98 條之 7 交通裁決事件之裁判費，第二編第三章別有規定者，從其規定。
+第 98 條之 8 Ⅰ 行政法院或審判長依法律規定，為當事人選任律師為特別代理人或訴訟代理人者，其律師之酬金由行政法院或審判長定之。Ⅱ 前項及第四十九條之一第一項事件之律師酬金為訴訟費用之一部，應限定其最高額。其支給標準，由司法院參酌法務部及全國律師聯合會等意見定之。Ⅲ 前項律師酬金之數額，行政法院為終局裁判時，應併予酌定。訴訟不經裁判而終結者，行政法院應依聲請以裁定酌定之。Ⅳ 對於酌定律師酬金數額之裁判，得抗告。</div></details>
+      <details><summary>第 99 條 <span>參加人之費用負擔</span></summary><div class="txt">Ⅰ 因可歸責於參加人之事由致生無益之費用者，行政法院得命該參加人負擔其全部或一部。
+Ⅱ 依第四十四條參加訴訟所生之費用，由參加人負擔。但他造當事人依第九十八條第一項及準用民事訴訟法第七十九條至第八十四條規定應負擔之訴訟費用，仍由該當事人負擔。</div></details>
+      <details><summary>第 100 條 <span>裁判費之預納、駁回、國庫墊付</span></summary><div class="txt">Ⅰ 裁判費除法律別有規定外，當事人應預納之。其未預納者，審判長應定期命當事人繳納；逾期未納者，行政法院應駁回其訴、上訴、抗告、再審或其他聲請。
+Ⅱ 進行訴訟之必要費用，審判長得定期命當事人預納。逾期未納者，由國庫墊付，並於判決確定後，依職權裁定，向應負擔訴訟費用之人徵收之。
+Ⅲ 前項裁定得為執行名義。</div></details>
+      <details><summary>第 101 條至第 104 條 <span>訴訟救助</span></summary><div class="txt">第 101 條 當事人無資力支出訴訟費用者，行政法院應依聲請，以裁定准予訴訟救助。但顯無勝訴之望者，不在此限。
+第 102 條 Ⅰ 聲請訴訟救助，應向受訴行政法院為之。Ⅱ 聲請人無資力支出訴訟費用之事由應釋明之。Ⅲ 前項釋明，得由受訴行政法院管轄區域內有資力之人出具保證書代之。Ⅳ 前項保證書內，應載明具保證書人於聲請訴訟救助人負擔訴訟費用時，代繳暫免之費用。
+第 103 條 准予訴訟救助者，暫行免付訴訟費用。
+第 104 條 民事訴訟法第七十七條之二十六、第七十九條至第八十五條、第八十七條至第九十四條、第九十五條、第九十六條至第一百零六條、第一百零八條、第一百零九條之一、第一百十一條至第一百十三條、第一百十四條第一項、第一百十四條之一及第一百十五條之規定，於本節準用之。</div></details>
+      <details><summary>第 105 條 <span>訴狀</span></summary><div class="txt">Ⅰ 起訴，應以訴狀表明下列各款事項，提出於行政法院為之：
+一、當事人。
+二、起訴之聲明。
+三、訴訟標的及其原因事實。
+Ⅱ 訴狀內宜記載適用程序上有關事項、證據方法及其他準備言詞辯論之事項；其經訴願程序者，並附具決定書。</div></details>
+      <details><summary>第 106 條 <span>起訴期間</span></summary><div class="txt">Ⅰ 第四條及第五條訴訟之提起，除本法別有規定外，應於訴願決定書送達後二個月之不變期間內為之。但訴願人以外之利害關係人知悉在後者，自知悉時起算。
+Ⅱ 第四條及第五條之訴訟，自訴願決定書送達後，已逾三年者，不得提起。
+Ⅲ 不經訴願程序即得提起第四條或第五條第二項之訴訟者，應於行政處分達到或公告後二個月之不變期間內為之。
+Ⅳ 不經訴願程序即得提起第五條第一項之訴訟者，於應作為期間屆滿後，始得為之。但於期間屆滿後，已逾三年者，不得提起。</div></details>
+      <details><summary>第 107 條 <span>起訴之駁回、補正、濫訴罰鍰</span></summary><div class="txt">Ⅰ 原告之訴，有下列各款情形之一者，行政法院應以裁定駁回之。但其情形可以補正者，審判長應先定期間命補正：
+一、訴訟事件不屬行政訴訟審判權，不能依法移送。
+二、訴訟事件不屬受訴行政法院管轄而不能請求指定管轄，亦不能為移送訴訟之裁定。
+三、原告或被告無當事人能力。
+四、原告或被告未由合法之法定代理人、代表人或管理人為訴訟行為。
+五、由訴訟代理人起訴，而其代理權有欠缺。
+六、起訴逾越法定期限。
+七、當事人就已向行政法院或其他審判權之法院起訴之事件，於訴訟繫屬中就同一事件更行起訴。
+八、本案經終局判決後撤回其訴，復提起同一之訴。
+九、訴訟標的為確定判決、和解或調解之效力所及。
+十、起訴不合程式或不備其他要件。
+十一、起訴基於惡意、不當或其他濫用訴訟程序之目的或有重大過失，且事實上或法律上之主張欠缺合理依據。
+Ⅱ 撤銷訴訟及課予義務訴訟，原告於訴狀誤列被告機關者，準用前項之規定。
+Ⅲ 原告之訴，有下列各款情形之一者，行政法院得不經言詞辯論，逕以判決駁回之。但其情形可以補正者，審判長應先定期間命補正：
+一、除第二項以外之當事人不適格或欠缺權利保護必要。
+二、依其所訴之事實，在法律上顯無理由。
+Ⅳ 前三項情形，原告之訴因逾期未補正經裁判駁回後，不得再為補正。
+Ⅴ 第一項至第三項之裁判書理由得僅記載要領，且得以原告書狀、筆錄或其他文書作為附件。
+Ⅵ 行政法院依第一項第十一款規定駁回原告之訴者，得各處原告、代表人或管理人、代理人新臺幣十二萬元以下之罰鍰。
+Ⅶ 前項處罰應與本案訴訟合併裁定之。裁定內應記載受處罰人供相當金額之擔保後，得停止執行。
+Ⅷ 原告對於本案訴訟之裁定聲明不服，關於處罰部分，視為提起抗告。
+Ⅸ 第一項及第四項至第八項規定，於聲請或聲明事件準用之。</div></details>
+      <details><summary>第 108 條、第 109 條 <span>訴狀送達、卷證、就審期間</span></summary><div class="txt">第 108 條 Ⅰ 行政法院除依前條規定駁回原告之訴或移送者外，應將訴狀送達於被告。並得命被告以答辯狀陳述意見。Ⅱ 原處分機關、被告機關或受理訴願機關經行政法院通知後，應於十日內將卷證送交行政法院。
+第 109 條 Ⅰ 審判長認已適於為言詞辯論時，應速定言詞辯論期日。Ⅱ 前項言詞辯論期日，距訴狀之送達，至少應有十日為就審期間。但有急迫情形者，不在此限。</div></details>
+      <details><summary>第 110 條 <span>訴訟標的之移轉、承當訴訟</span></summary><div class="txt">Ⅰ 訴訟繫屬中，為訴訟標的之法律關係雖移轉於第三人，於訴訟無影響。但第三人如經兩造同意，得代當事人承當訴訟。
+Ⅱ 前項情形，僅他造不同意者，移轉之當事人或第三人得聲請行政法院以裁定許第三人承當訴訟。
+Ⅲ 前項裁定得為抗告。
+Ⅳ 行政法院知悉訴訟標的有移轉者，應即以書面將訴訟繫屬情形通知第三人。
+Ⅴ 訴願決定後，為訴訟標的之法律關係移轉於第三人者，得由受移轉人提起撤銷訴訟。</div></details>
+      <details><summary>第 111 條 <span>訴之變更追加</span></summary><div class="txt">Ⅰ 訴狀送達後，原告不得將原訴變更或追加他訴。但經被告同意或行政法院認為適當者，不在此限。
+Ⅱ 被告於訴之變更或追加無異議，而為本案之言詞辯論者，視為同意變更或追加。
+Ⅲ 有下列情形之一者，訴之變更或追加，應予准許：
+一、訴訟標的對於數人必須合一確定，追加其原非當事人之人為當事人。
+二、訴訟標的之請求雖有變更，但其請求之基礎不變。
+三、因情事變更而以他項聲明代最初之聲明。
+四、應提起確認訴訟，誤為提起撤銷訴訟。
+五、依第一百九十七條或其他法律之規定，應許為訴之變更或追加。
+Ⅳ 前三項規定，於變更或追加之新訴為撤銷訴訟而未經訴願程序者不適用之。
+Ⅴ 對於行政法院以訴為非變更追加，或許訴之變更追加之裁判，不得聲明不服。但撤銷訴訟，主張其未經訴願程序者，得隨同終局判決聲明不服。</div></details>
+      <details><summary>第 112 條 <span>反訴</span></summary><div class="txt">Ⅰ 被告於言詞辯論終結前，得在本訴繫屬之行政法院提起反訴。但對於撤銷訴訟及課予義務訴訟，不得提起反訴。
+Ⅱ 原告對於反訴，不得復行提起反訴。
+Ⅲ 反訴之請求如專屬他行政法院管轄，或與本訴之請求或其防禦方法不相牽連者，不得提起。
+Ⅳ 被告意圖延滯訴訟而提起反訴者，行政法院得駁回之。</div></details>
+      <details><summary>第 113 條、第 114 條 <span>訴之撤回</span></summary><div class="txt">第 113 條 Ⅰ 原告於判決確定前得撤回訴之全部或一部。但於公益之維護有礙者，不在此限。Ⅱ 前項撤回，被告已為本案之言詞辯論者，應得其同意。Ⅲ 訴之撤回，應以書狀為之。但於期日得以言詞為之。Ⅳ 以言詞所為之撤回，應記載於筆錄，如他造不在場，應將筆錄送達。Ⅴ 訴之撤回，被告於期日到場，未為同意與否之表示者，自該期日起；其未於期日到場或係以書狀撤回者，自前項筆錄或撤回書狀送達之日起，十日內未提出異議者，視為同意撤回。
+第 114 條 Ⅰ 行政法院就前條訴之撤回認有礙公益之維護者，應以裁定不予准許。Ⅱ 前項裁定不得抗告。</div></details>
+      <details><summary>第 114 條之 1 <span>程序轉換與移送</span></summary><div class="txt">Ⅰ 地方行政法院適用通常訴訟程序之事件，因訴之變更或一部撤回，致其訴之全部屬於簡易訴訟程序或交通裁決事件訴訟程序之範圍者，地方行政法院應改依簡易訴訟程序或交通裁決事件訴訟程序之規定，由原受命法官繼續審理。
+Ⅱ 地方行政法院適用通常訴訟程序之事件，因訴之追加、變更或反訴，致其訴之全部或一部屬於高等行政法院管轄者，應裁定移送管轄之高等行政法院。
+Ⅲ 高等行政法院適用通常訴訟程序之事件，因訴之變更或一部撤回，致其訴之全部屬於地方行政法院管轄之事件者，高等行政法院應裁定移送管轄之地方行政法院。</div></details>
+      <details><summary>第 115 條 <span>準用民事訴訟法</span></summary><div class="txt">民事訴訟法第二百四十五條、第二百四十六條、第二百四十八條、第二百五十二條、第二百五十三條、第二百五十七條、第二百六十一條、第二百六十三條及第二百六十四條之規定，於本節準用之。</div></details>
+      <details><summary>第 224 條、第 237 條之 3、第 241 條、第 268 條、第 276 條 <span>計算器用到的其他不變期間</span></summary><div class="txt">第 224 條 Ⅰ 請求繼續審判，應於三十日之不變期間內為之。Ⅱ 前項期間，自和解成立時起算。但無效或得撤銷之原因知悉在後者，自知悉時起算。Ⅲ 和解成立後經過三年者，不得請求繼續審判。但當事人主張代理權有欠缺者，不在此限。
+第 237 條之 3 Ⅰ 交通裁決事件訴訟之提起，應以原處分機關為被告，逕向管轄之地方行政法院為之。Ⅱ 交通裁決事件中撤銷訴訟之提起，應於裁決書送達後三十日之不變期間內為之。
+第 241 條 提起上訴，應於高等行政法院判決送達後二十日之不變期間內為之。但宣示或公告後送達前之上訴，亦有效力。
+第 268 條 提起抗告，應於裁定送達後十日之不變期間內為之。但送達前之抗告亦有效力。
+第 276 條 Ⅰ 再審之訴應於三十日之不變期間內提起。Ⅱ 前項期間自判決確定時起算，判決於送達前確定者，自送達時起算；其再審事由發生或知悉在後者，均自知悉時起算。Ⅳ 再審之訴自判決確定時起，如已逾五年者，不得提起。但以第二百七十三條第一項第五款、第六款或第十二款情形為再審事由者，不在此限。</div></details>
+      <details><summary>第 7 條、第 24 條、第 49 條之 1（節錄） <span>本課交叉引用</span></summary><div class="txt">第 7 條 提起行政訴訟，得於同一程序中，合併請求損害賠償或其他財產上給付。
+第 24 條 經訴願程序之行政訴訟，其被告為下列機關：一、駁回訴願時之原處分機關。二、撤銷或變更原處分時，為撤銷或變更之機關。
+第 49 條之 1 Ⅰ 下列各款事件及其程序進行中所生之其他事件，當事人應委任律師為訴訟代理人：一、高等行政法院管轄之環境保護、土地爭議之第一審通常訴訟程序事件及都市計畫審查程序事件。二、高等行政法院管轄之通常訴訟程序上訴事件。三、向最高行政法院提起之事件。四、適用通常訴訟程序或都市計畫審查程序之再審事件。五、適用通常訴訟程序或都市計畫審查程序之聲請重新審理及其再審事件。
+Ⅵ 第一項規定，於下列各款事件不適用之：一、聲請訴訟救助及其抗告。二、聲請選任律師為訴訟代理人。三、聲請核定律師酬金。</div></details>
+    </div>
+  </div>
+  <div class="card">
+    <h2>下一課</h2>
+    <p>第 7 課「暫時權利保護：停止執行與保全程序」處理起訴前後怎麼先擋住處分的執行、怎麼保全金錢請求與法律關係。這一課的第 98 條之 5 第 3、6 款（聲請停止執行、假扣押假處分各徵 1,000 元）會在那裡再出現。<a href="07_暫時權利保護.html">前往第 7 課</a>　<a href="00_總覽地圖.html">回總覽地圖</a></p>
+  </div>
+</section>
+
+<footer>行政訴訟法自學教材 · 第 6 課 起訴：書狀、送達、期間、費用與起訴要件<br>依民國 111 年 6 月 22 日修正條文自行編寫，題目為原創；條文以<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030154" target="_blank" rel="noopener">全國法規資料庫</a>為準。</footer>
+</div>
+
+<script>
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const LESSON_ID = "06", CH = "行政訴訟法 06 起訴程序";
+const PROG_KEY = "xzss_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與數學教材共用 study_log_v1，供「學習紀錄」頁讀取）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+let pracCount = 0, pracOk = 0;
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="s5"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok }); pracCount++; if(ok) pracOk++;
+  });
+});
+
+// ===== 章末測驗交卷 =====
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0; const wrong = [];
+  qs.forEach((q,i)=>{
+    const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+    else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+  });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  writeProg({ quiz: { score, total: qs.length } });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+  else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="s5"]').classList.add('done'); }
+  else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+  else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 實例題自評 =====
+document.querySelectorAll('.essay').forEach(es=>{
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 本課專屬工具 1：不變期間計算器 =====
+(function(){
+  const start = document.getElementById('dpStart'), kind = document.getElementById('dpKind'), tr = document.getElementById('dpTransit'), res = document.getElementById('dpRes');
+  const KINDS = {
+    sue:{ label:'提起撤銷訴訟或課予義務訴訟', n:2, unit:'m', art:'第 106 條第 1 項（不經訴願者第 3 項）', from:'訴願決定書送達（或處分達到、公告）之日', extra:'另有第 106 條第 2 項的 3 年上限；利害關係人知悉在後者自知悉時起算。' },
+    appeal:{ label:'上訴', n:20, unit:'d', art:'第 241 條', from:'判決送達之日', extra:'宣示或公告後送達前的上訴亦有效力。遲誤者聲請回復原狀的期限為相等之 20 日（第 91 條第 1 項）。' },
+    kang:{ label:'抗告', n:10, unit:'d', art:'第 268 條', from:'裁定送達之日', extra:'送達前之抗告亦有效力。遲誤者聲請回復原狀的期限為相等之 10 日。' },
+    retrial:{ label:'再審之訴', n:30, unit:'d', art:'第 276 條第 1、2 項', from:'判決確定之日（送達前確定者自送達時；事由發生或知悉在後者自知悉時）', extra:'另有第 276 條第 4 項自判決確定起 5 年的上限（第 273 條第 1 項第 5、6、12 款除外）。' },
+    traffic:{ label:'交通裁決事件撤銷訴訟', n:30, unit:'d', art:'第 237 條之 3 第 2 項', from:'裁決書送達之日', extra:'不經訴願，以原處分機關為被告（第 237 條之 3 第 1 項）。' },
+    cont:{ label:'和解後請求繼續審判', n:30, unit:'d', art:'第 224 條', from:'和解成立之日（無效或得撤銷原因知悉在後者自知悉時）', extra:'和解成立後經過 3 年不得請求（第 224 條第 3 項）。' }
+  };
+  function parse(v){ const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v||''); return m ? new Date(+m[1], +m[2]-1, +m[3]) : null; }
+  function addMonths(d, n){ const y = d.getFullYear(), m = d.getMonth()+n, day = d.getDate(); const last = new Date(y, m+1, 0).getDate(); return new Date(y, m, Math.min(day, last)); }
+  function addDays(d, n){ const r = new Date(d); r.setDate(r.getDate()+n); return r; }
+  function fmt(d){ return d.getFullYear()+' 年 '+(d.getMonth()+1)+' 月 '+d.getDate()+' 日（星期'+'日一二三四五六'[d.getDay()]+'）'; }
+  document.getElementById('dpGo').addEventListener('click',()=>{
+    const d0 = parse(start.value), k = KINDS[kind.value], t = Math.max(0, Math.floor(Number(tr.value)||0));
+    if(!d0){ res.innerHTML = '<p class="small" style="margin:0">請先輸入日期。</p>'; res.classList.add('on'); return; }
+    const d1 = addDays(d0, 1);
+    const end = k.unit === 'm' ? addMonths(d0, k.n) : addDays(d0, k.n);
+    const endT = addDays(end, t);
+    const howCalc = k.unit === 'm'
+      ? '以月計算：起算日 '+fmt(d1)+'，最後之月與起算日相當日之前一日為末日（民法第 121 條第 2 項），即事由發生日的日期數往後推 '+k.n+' 個月；該月無相當日者以該月末日為末日。'
+      : '以日計算：起算日 '+fmt(d1)+'，第 '+k.n+' 日即為末日。';
+    const wk = endT.getDay();
+    const holiday = (wk === 0 || wk === 6) ? '<p class="small" style="margin:.4em 0 0;color:var(--warn)"><b>注意：</b>末日落在星期'+(wk===0?'日':'六')+'。依民法第 122 條，末日為星期日、紀念日或其他休息日者，以其休息日之次日代之。本工具不自動順延，國定假日也請自行查核。</p>' : '<p class="small muted" style="margin:.4em 0 0">本工具不判斷國定假日；末日如為休息日，依民法第 122 條以次日代之。</p>';
+    res.innerHTML = '<h3>'+k.label+'：末日 '+fmt(endT)+'</h3>'
+      + '<p class="small" style="margin:0 0 .4em"><b>依據：</b>'+k.art+'，'+(k.unit==='m' ? k.n+' 個月' : k.n+' 日')+'之不變期間，自'+k.from+'起算。</p>'
+      + '<p class="small" style="margin:0 0 .4em"><b>計算：</b>第 88 條第 3 項依民法計算，始日（'+fmt(d0)+'）不算入（民法第 120 條第 2 項）。'+howCalc+'法定末日 '+fmt(end)+'。'
+      + (t ? '依第 89 條扣除在途期間 '+t+' 日，末日延至 '+fmt(endT)+'。' : '未加計在途期間。若當事人不在法院所在地住居且無住居法院所在地之訴訟代理人，應再加計司法院所定日數（第 89 條）。')+'</p>'
+      + '<p class="small muted" style="margin:0"><b>補充：</b>'+k.extra+' 不變期間不得伸長縮短（第 90 條第 1 項但書）。</p>'
+      + holiday;
+    res.classList.add('on');
+    logEv({ type:"tool", q:"deadline-calc", k: kind.value+':'+start.value+':'+t });
+  });
+})();
+
+// ===== 本課專屬工具 2：第 107 條駁回事由卡片 =====
+(function(){
+  const DATA = {
+    '1':{ t:'第 1 項第 1 款：訴訟事件不屬行政訴訟審判權，不能依法移送', fix:'no', form:'裁定駁回', why:'例如純私法爭議或國家賠償單獨起訴。審判權欠缺不是當事人能補的；但「能移送」時應移送有審判權之法院，只有不能移送才駁回。' },
+    '2':{ t:'第 1 項第 2 款：不屬受訴法院管轄，不能請求指定管轄，亦不能移送', fix:'no', form:'裁定駁回', why:'管轄錯誤原則上用移送處理（第 18 條準用民事訴訟法），走到駁回的情形很少。' },
+    '3':{ t:'第 1 項第 3 款：原告或被告無當事人能力', fix:'部分', form:'裁定駁回', why:'例如以已裁撤且無承受機關之機關為被告。單純寫錯名稱可更正，但對象本身不存在法律上的人格，無從補正。' },
+    '4':{ t:'第 1 項第 4 款：未由合法之法定代理人、代表人或管理人為訴訟行為', fix:'yes', form:'先命補正，逾期裁定駁回', why:'補正方式是由合法的法定代理人、代表人承認先前的訴訟行為，或重新為之。' },
+    '5':{ t:'第 1 項第 5 款：由訴訟代理人起訴，而其代理權有欠缺', fix:'yes', form:'先命補正，逾期裁定駁回', why:'補提委任狀，或由本人承認代理人的起訴，即告補正。' },
+    '6':{ t:'第 1 項第 6 款：起訴逾越法定期限', fix:'no', form:'裁定駁回', why:'逾期是既成事實，不能補正。唯一的出路是第 91 條回復原狀：天災或不應歸責、原因消滅後 1 個月（少於 1 月者相等日數）、未逾 1 年（起訴期間 3 年）。' },
+    '7':{ t:'第 1 項第 7 款：就已起訴之事件於訴訟繫屬中更行起訴', fix:'no', form:'裁定駁回', why:'一事不再理的前段：同一事件已經繫屬於行政法院或其他審判權之法院，後訴不合法。注意條文包含「其他審判權之法院」。' },
+    '8':{ t:'第 1 項第 8 款：本案經終局判決後撤回其訴，復提起同一之訴', fix:'no', form:'裁定駁回', why:'對應第 113 條的撤回：終局判決後才撤回的，等於放棄，不能再告一次。終局判決前撤回的不受此限。' },
+    '9':{ t:'第 1 項第 9 款：訴訟標的為確定判決、和解或調解之效力所及', fix:'no', form:'裁定駁回', why:'一事不再理的後段：既判力（第 213 條）、和解與調解（第 219 條以下、第 228 條之 2 以下）的效力所及之事件不能再訴。' },
+    '10':{ t:'第 1 項第 10 款：起訴不合程式或不備其他要件', fix:'部分', form:'可補正者先命補正；不能補正或逾期未補者裁定駁回', why:'最常用的一款。訴狀漏記載、未簽名、未繳裁判費（第 100 條另有命繳規定）都可補正；未經訴願前置、欠缺第 6 條確認利益等「其他要件」則多無法在訴訟中補正。' },
+    '11':{ t:'第 1 項第 11 款：濫訴（惡意、不當或濫用程序之目的或重大過失，且主張欠缺合理依據）', fix:'no', form:'裁定駁回，並得處罰鍰', why:'111 年新增。兩個要件缺一不可：主觀上惡意、不當目的或重大過失，客觀上事實或法律主張欠缺合理依據。配套：得各處原告、代表人或管理人、代理人 12 萬元以下罰鍰（第 6 項），與本案合併裁定、供擔保得停止執行（第 7 項），對本案裁定不服視為對處罰抗告（第 8 項）。' },
+    'b':{ t:'第 2 項：撤銷訴訟及課予義務訴訟，原告於訴狀誤列被告機關', fix:'yes', form:'準用第 1 項：先命補正，逾期裁定駁回', why:'被告依第 24 條判斷。列錯機關不是致命傷，法院要先給補正機會；這也是為什麼第 3 項第 1 款的當事人不適格把「第 2 項」排除在外。' },
+    's1':{ t:'第 3 項第 1 款：除第 2 項以外之當事人不適格或欠缺權利保護必要', fix:'部分', form:'得不經言詞辯論，逕以判決駁回；可補正者先命補正', why:'原告不適格（不是權利受侵害之人）、處分已失效而無確認利益等。這是「實體」層次的門檻，所以用判決而非裁定，救濟是上訴。' },
+    's2':{ t:'第 3 項第 2 款：依其所訴之事實，在法律上顯無理由', fix:'no', form:'得不經言詞辯論，逕以判決駁回', why:'假設原告講的事實全是真的，法律上也不可能贏。這是實體敗訴判決，有既判力，救濟是上訴。' }
+  };
+  const res = document.getElementById('k107res');
+  const PILL = { yes:'<span class="pill green">性質上可補正</span>', no:'<span class="pill warn">性質上不可補正</span>', '部分':'<span class="pill blue">視情形可補正</span>' };
+  document.querySelectorAll('#k107chips .chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      document.querySelectorAll('#k107chips .chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+      c.setAttribute('aria-pressed','true');
+      const d = DATA[c.dataset.k];
+      res.innerHTML = '<h3>'+d.t+'</h3><p class="small" style="margin:0 0 .4em">'+PILL[d.fix]+'<span class="pill law">'+d.form+'</span></p><p class="small" style="margin:0">'+d.why+'</p><p class="small muted" style="margin:.4em 0 0">共通規則：逾期未補正經裁判駁回後，不得再為補正（第 107 條第 4 項）；裁判理由得僅記載要領（第 5 項）。</p>';
+      res.classList.add('on');
+      logEv({ type:"tool", q:"s107-cards", k:c.dataset.k });
+    });
+  });
+})();
+</script>
+</body>
+</html>
