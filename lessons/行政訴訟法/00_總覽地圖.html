@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>行政訴訟法｜總覽地圖</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F4F6F3; --card:#FFFFFF;
+  --ink:#1C2A30; --ink-2:#4B5A62; --ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --law:#5B3A8C; --law-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F; --card:#1D262B;
+    --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+    --rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --law:#B9A0E3; --law-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F; --card:#1D262B;
+  --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+  --rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --law:#B9A0E3; --law-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--blue);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+
+/* hero */
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--law);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--law-soft);color:var(--law);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+/* sticky in-page nav（沿用 tabs 外觀，但是錨點連結） */
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs a{flex:1 1 auto;min-width:100px;text-align:center;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;text-decoration:none}
+nav.tabs a:hover{border-color:var(--blue);color:var(--ink)}
+nav.tabs a.active{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+section.sec{scroll-margin-top:72px;margin-bottom:8px}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--blue-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.law{background:var(--law-soft);border-color:transparent;color:var(--law)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.pill.signal{background:var(--signal-soft);border-color:transparent;color:var(--signal)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.danger{background:transparent;color:var(--warn);border:1.5px solid var(--warn)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--law)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer;text-decoration:none}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+
+/* 九編結構圖 */
+.spine{display:flex;gap:3px;margin:.4rem 0 .3rem;height:38px}
+.spine button{flex:1 1 0;min-width:2em;border:0;border-radius:6px;background:var(--law-soft);color:var(--law);font:inherit;font-size:.82rem;font-weight:700;cursor:pointer;padding:0;overflow:hidden;white-space:nowrap}
+.spine button:hover,.spine button[aria-pressed="true"]{background:var(--law);color:#fff}
+.spine-cap{display:flex;justify-content:space-between;font-size:.78rem;color:var(--ink-3);margin-bottom:.8rem}
+.bian-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:.4rem 0 .8rem}
+.bian{border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:.5rem .6rem .6rem;display:flex;flex-direction:column;gap:.35rem}
+.bian.wide{grid-column:span 2}
+.bian[data-on="1"]{border-color:var(--law);box-shadow:0 0 0 2px var(--law-soft)}
+.bian .head{font:inherit;text-align:left;background:transparent;border:0;padding:0;cursor:pointer;color:var(--ink);line-height:1.4}
+.bian .head b{display:block;color:var(--law);font-size:.98rem}
+.bian .head small{display:block;color:var(--ink-2);font-size:.8rem}
+.bian .head:hover b{text-decoration:underline}
+.bian .chs{display:flex;flex-wrap:wrap;gap:.3rem}
+.bian .chs button{font:inherit;font-size:.78rem;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.1em .7em;cursor:pointer}
+.bian .chs button:hover,.bian .chs button[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+#bianDetail .range{font-size:.85rem;color:var(--ink-2);margin:-.3rem 0 .5rem}
+#bianDetail table{font-size:.9rem}
+#bianDetail .links a{margin:0 .6em .2em 0;white-space:nowrap}
+
+/* 法院架構圖 */
+.courts{display:grid;grid-template-columns:1fr;gap:8px;margin:.6rem 0 1rem}
+.court{border:1px solid var(--rule);border-radius:10px;padding:.7rem .9rem;background:var(--paper);display:grid;grid-template-columns:7.5em 1fr;gap:.3rem .8rem;align-items:start}
+.court .lv{font-weight:700;color:var(--law)}
+.court .what{font-size:.92rem}
+.court.top{border-color:var(--law)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+@media (max-width:420px){.court{grid-template-columns:1fr}}
+
+/* 12 課卡片 */
+.lessons{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin:.4rem 0}
+.lesson{border:1px solid var(--rule);border-radius:12px;background:var(--card);padding:14px 16px;display:flex;flex-direction:column;gap:.35rem}
+.lesson .no{font-size:.78rem;color:var(--ink-3);display:flex;justify-content:space-between;align-items:center}
+.lesson h3{margin:0;font-size:1rem}
+.lesson h3 a{color:var(--ink);text-decoration:none}
+.lesson h3 a:hover{color:var(--blue);text-decoration:underline}
+.lesson .range{font-size:.83rem;color:var(--ink-2)}
+.lesson .secs{display:flex;flex-wrap:wrap;gap:.3rem;margin:.1rem 0}
+.lesson .secs a{font-size:.78rem;border:1px solid var(--rule);border-radius:999px;padding:.05em .65em;color:var(--ink-2);text-decoration:none}
+.lesson .secs a:hover{border-color:var(--blue);color:var(--blue)}
+.lesson .tool{font-size:.85rem;color:var(--ink-2);border-top:1px dashed var(--rule);padding-top:.4rem;margin-top:auto}
+.lesson .tool b{color:var(--law)}
+.lesson.mix{border-style:dashed;border-color:var(--law)}
+
+/* 進度 */
+.bar{height:12px;border-radius:999px;background:var(--law-soft);overflow:hidden;margin:.4rem 0 .2rem}
+.bar i{display:block;height:100%;background:var(--green);width:0;transition:width .4s}
+.ok{color:var(--green);font-weight:700}
+.no{color:var(--warn)}
+.dim{color:var(--ink-3)}
+.week{display:grid;grid-template-columns:4.5em 1fr;gap:.2rem .8rem;font-size:.93rem}
+.week dt{color:var(--law);font-weight:700}
+.week dd{margin:0}
+.week dd.mark{color:var(--signal);font-weight:700}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">行政訴訟法 · 總覽地圖</span>
+  <h1>行政訴訟法 一張圖、十二課</h1>
+  <p>這一頁是入口。先看九編怎麼排、法院怎麼分三級二審，再從十二張課程卡進去。每一課的小節、章末測驗、實例自評都會記在這台裝置的瀏覽器裡，回到這頁就能看到讀到哪、哪一課還沒過關。</p>
+  <p>讀法建議：第 1 課到第 6 課是「進法院前」的規則，第 7 到第 9 課是法院「怎麼審、怎麼判」，第 10 到第 12 課是特別程序與救濟。順著讀，條文就會自己連起來。</p>
+  <p class="ver">依民國 111 年 6 月 22 日修正條文編寫（多數條文自 112 年 8 月 15 日施行）。自學筆記，非官方；條文以全國法規資料庫為準。</p>
+</header>
+
+<nav class="tabs" id="pageNav">
+  <a href="#map" class="active">九編結構圖</a>
+  <a href="#courts">法院架構</a>
+  <a href="#lessons">12 課</a>
+  <a href="#progress">學習進度</a>
+  <a href="#pace">建議節奏</a>
+</nav>
+
+<!-- ═══════════ 九編結構圖 ═══════════ -->
+<section id="map" class="sec">
+  <div class="card goal">
+    <h2>這部法的地圖</h2>
+    <ul>
+      <li>全法 9 編、308 條（含「之一」等增訂條文共約 390 條）。第一編總則與第二編第一審程序佔了近八成，考題也集中在這裡。</li>
+      <li>點下方任何一編、一章，會顯示它的條號範圍、一句話在講什麼、對應哪幾課，可以直接跳到那一課的小節。</li>
+      <li>上面那條色帶是「條文數比例」：看一眼就知道哪裡厚、哪裡薄。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>九編結構圖</h2>
+    <p class="small muted">色帶寬度依各編條文數。點色帶或下方方塊都可以。</p>
+    <div class="spine" id="spine" aria-label="九編條文數比例"></div>
+    <div class="spine-cap"><span>第 1 條</span><span>第 308 條</span></div>
+    <div class="bian-grid" id="bianGrid"></div>
+    <div class="result on" id="bianDetail"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 法院架構 ═══════════ -->
+<section id="courts" class="sec">
+  <div class="card">
+    <h2>三級二審法院架構圖</h2>
+    <p>111 年修法後叫<b>三級二審</b>：三個審判層級，但任何一件案子最多只走兩個審級。「地方行政法院」不是獨立法院，是高等行政法院裡的地方行政訴訟庭（第 3 條之 1）。</p>
+    <div class="courts">
+      <div class="court top"><span class="lv">最高行政法院</span><span class="what"><b>法律審、終審。</b>受理：對高等行政訴訟庭第一審終局判決的上訴（§238，須以違背法令為理由 §242）；對高等行政法院裁定的抗告（§264、§267 I）。原則不行言詞辯論（§253）。</span></div>
+      <div class="arrow">▲ 上訴 §238（判決送達後 20 日，§241）　▲ 抗告 §264（裁定送達後 10 日，§268）</div>
+      <div class="court"><span class="lv">高等行政法院<br>高等行政訴訟庭</span><span class="what"><b>第一審起點：</b>通常訴訟程序事件（§104-1 I 本文，例如超過 150 萬的稅捐、罰鍰、公法財產事件，以及沒有金額的處分）、都市計畫審查程序（§237-18，專屬都市計畫區所在地 §237-19）。<br><b>上訴審：</b>地方行政訴訟庭判決的上訴，第二審即終審（§263-1 II 不得上訴）；對地方庭裁定的抗告（§267 I），抗告法院的裁定不得再抗告（§267 II）。有統一見解必要時，裁定移送最高行政法院（§263-4）。</span></div>
+      <div class="arrow">▲ 上訴 §263-1（終審）　▲ 抗告 §264、§267　▲ 收容裁定：5 日內抗告 §237-16</div>
+      <div class="court"><span class="lv">高等行政法院<br>地方行政訴訟庭</span><span class="what"><b>第一審起點：</b>通常程序中 150 萬以下的稅捐、罰鍰、公法財產事件（§104-1 I 但書）、簡易訴訟程序事件（§229，50 萬以下與輕微處分等）、交通裁決事件（§237-1；管轄 §237-2）、收容聲請事件（§237-11）。</span></div>
+    </div>
+    <div class="scroll"><table>
+      <thead><tr><th>案件從哪裡進來</th><th>第一審</th><th>第二審（終審）</th><th>條文</th></tr></thead>
+      <tbody>
+        <tr><td>通常訴訟程序事件（本文）</td><td>高等行政訴訟庭</td><td>最高行政法院</td><td>§104-1 I 本文、§238</td></tr>
+        <tr><td>通常程序但 150 萬以下（稅捐、罰鍰、公法財產）</td><td>地方行政訴訟庭</td><td>高等行政訴訟庭</td><td>§104-1 I 但書、§263-1</td></tr>
+        <tr><td>簡易訴訟程序事件</td><td>地方行政訴訟庭</td><td>高等行政訴訟庭</td><td>§229、§263-1</td></tr>
+        <tr><td>交通裁決事件</td><td>地方行政訴訟庭</td><td>高等行政訴訟庭</td><td>§237-1、§237-2、§263-1</td></tr>
+        <tr><td>收容聲請事件（裁定）</td><td>地方行政訴訟庭</td><td>高等行政訴訟庭（抗告，5 日）</td><td>§237-11、§237-16</td></tr>
+        <tr><td>都市計畫審查程序</td><td>高等行政訴訟庭（專屬）</td><td>最高行政法院</td><td>§237-18、§237-19、§238</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：地方行政訴訟庭的案子「可以一路上訴到最高行政法院」。不行。§263-1 II 明文對高等行政法院的第二審判決不得上訴；§267 II 對抗告法院的裁定不得再抗告。</div>
+    <p class="small">細節在 <a href="01_導論與法院架構.html#s2">第 1 課 1-2 法院架構與審級</a>、<a href="11_上訴與抗告.html#s3">第 11 課 11-3 高等行政法院上訴審</a>、<a href="11_上訴與抗告.html#s4">11-4 抗告與異議</a>。</p>
+  </div>
+</section>
+
+<!-- ═══════════ 12 課卡片 ═══════════ -->
+<section id="lessons" class="sec">
+  <div class="card">
+    <h2>十二課 <span class="pill law" id="lessonCount"></span></h2>
+    <p class="small muted">每張卡：課名、條文範圍、小節（點小節名直接開到該節）、本課專屬互動工具。右上角是這台裝置上的進度。</p>
+    <div class="lessons" id="lessonGrid"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 學習進度 ═══════════ -->
+<section id="progress" class="sec">
+  <div class="card">
+    <h2>學習進度總覽</h2>
+    <p class="small muted">資料來自這個瀏覽器的 localStorage（鍵名 <code>xzss_progress_v1</code>）。換裝置或清除網站資料就會歸零；這一頁只讀取，不寫入。</p>
+    <div><b>完成度</b> <span id="pct">0%</span> <span class="small muted" id="pctNote"></span></div>
+    <div class="bar"><i id="bar"></i></div>
+    <p class="small muted" style="margin-top:.4rem">每課四個里程碑：已讀、測驗交卷、測驗 8 分以上、兩題實例題自評完成。</p>
+    <div class="scroll"><table id="progTable">
+      <thead><tr><th>課</th><th>已讀</th><th>章末測驗</th><th>實例 1</th><th>實例 2</th><th>最後活動</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <div class="toolbox">
+      <p class="small" style="margin:0 0 .5rem">「清除進度」只刪除 <code>xzss_progress_v1</code>（這套教材的課別進度），不會動到學習紀錄 <code>study_log_v1</code>。</p>
+      <button class="btn danger small" id="clearProg">清除進度</button>
+      <span class="small muted" id="clearMsg" style="margin-left:.6rem"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 建議節奏 ═══════════ -->
+<section id="pace" class="sec">
+  <div class="card">
+    <h2>建議節奏：一學期 16 週</h2>
+    <p>12 堂課，第 6 課後安排期中複習與期中考，最後兩週期末複習與期末考。每堂課的流程：先讀觀念卡與例題、做小節練習，課後做章末測驗，測驗 8 分以上再寫實例題。</p>
+    <dl class="week">
+      <dt>第 1 週</dt><dd><a href="01_導論與法院架構.html">第 1 課 導論與法院架構</a></dd>
+      <dt>第 2 週</dt><dd><a href="02_訴訟類型一_撤銷與課予義務.html">第 2 課 撤銷訴訟與課予義務訴訟</a></dd>
+      <dt>第 3 週</dt><dd><a href="03_訴訟類型二_確認給付公益.html">第 3 課 確認、一般給付、公益訴訟與合併請求</a></dd>
+      <dt>第 4 週</dt><dd><a href="04_管轄與當事人.html">第 4 課 管轄與當事人</a></dd>
+      <dt>第 5 週</dt><dd><a href="05_多數當事人與代理.html">第 5 課 多數當事人與代理</a></dd>
+      <dt>第 6 週</dt><dd><a href="06_起訴程序.html">第 6 課 起訴：書狀、送達、期間、費用與起訴要件</a></dd>
+      <dt>第 7 週</dt><dd class="mark">期中複習：訴訟類型判斷器全部跑一次，重做第 2、3、6 課章末測驗</dd>
+      <dt>第 8 週</dt><dd class="mark">期中考：<a href="綜合練習場.html">綜合練習場</a> 跨章混合 10 題 ＋ 實例題 2 題</dd>
+      <dt>第 9 週</dt><dd><a href="07_暫時權利保護.html">第 7 課 暫時權利保護：停止執行與保全程序</a></dd>
+      <dt>第 10 週</dt><dd><a href="08_審理與證據.html">第 8 課 審理：言詞辯論、職權調查與證據</a></dd>
+      <dt>第 11 週</dt><dd><a href="09_裁判與終結.html">第 9 課 裁判與終結：判決、效力、和解、調解與訴訟停止</a></dd>
+      <dt>第 12 週</dt><dd><a href="10_特別程序.html">第 10 課 特別程序：簡易、交通裁決、收容聲請、都市計畫審查</a></dd>
+      <dt>第 13 週</dt><dd><a href="11_上訴與抗告.html">第 11 課 上訴與抗告</a></dd>
+      <dt>第 14 週</dt><dd><a href="12_再審重新審理與執行.html">第 12 課 再審、重新審理與強制執行</a></dd>
+      <dt>第 15 週</dt><dd class="mark">期末複習：下面六個交叉主題各寫一頁筆記，對照各課條文速查</dd>
+      <dt>第 16 週</dt><dd class="mark">期末考：<a href="綜合練習場.html">綜合練習場</a> 兩輪混合題 ＋ 實例題 4 題，看弱點頁補洞</dd>
+    </dl>
+  </div>
+
+  <div class="card">
+    <h2>國考常考的交叉主題</h2>
+    <p class="small muted">這六個主題橫跨好幾課，題目常把它們串在一起問。複習時沿著連結來回對照。</p>
+    <ul>
+      <li><b>訴訟類型選擇</b>：有沒有行政處分、處分是否已消滅、能提撤銷就不能提確認。→ <a href="02_訴訟類型一_撤銷與課予義務.html#s1">2-1 撤銷訴訟的要件</a>、<a href="02_訴訟類型一_撤銷與課予義務.html#s2">2-2 課予義務訴訟</a>、<a href="03_訴訟類型二_確認給付公益.html#s1">3-1 確認訴訟</a>、<a href="03_訴訟類型二_確認給付公益.html#s2">3-2 一般給付訴訟</a>、<a href="綜合練習場.html">綜合練習場</a></li>
+      <li><b>訴願前置與期間</b>：哪些訴訟要先訴願、§106 二個月與三年、在途期間與回復原狀。→ <a href="01_導論與法院架構.html#s3">1-3 訴願與起訴的關係</a>、<a href="06_起訴程序.html#s2">6-2 期日、期間與回復原狀</a>、<a href="06_起訴程序.html#s4">6-4 起訴與 §107 駁回事由</a>、<a href="10_特別程序.html#s2">10-2 交通裁決（不經訴願）</a></li>
+      <li><b>暫時權利保護</b>：停止執行與假處分的排他關係（§299）、定暫時狀態處分。→ <a href="07_暫時權利保護.html#s1">7-1 停止執行</a>、<a href="07_暫時權利保護.html#s2">7-2 假扣押</a>、<a href="07_暫時權利保護.html#s3">7-3 假處分與定暫時狀態處分</a></li>
+      <li><b>判決效力</b>：既判力的客觀與主觀範圍、對第三人、對關係機關的拘束力、不利益變更禁止。→ <a href="09_裁判與終結.html#s3">9-3 判決的確定與效力</a>、<a href="09_裁判與終結.html#s2">9-2 判決的種類與內容</a>、<a href="02_訴訟類型一_撤銷與課予義務.html#s3">2-3 判決怎麼下</a>、<a href="12_再審重新審理與執行.html#s4">12-4 強制執行</a></li>
+      <li><b>上訴要件</b>：違背法令、當然違背法令六款、上訴期間與理由書、第二審即終審。→ <a href="11_上訴與抗告.html#s1">11-1 上訴最高行政法院的要件</a>、<a href="11_上訴與抗告.html#s2">11-2 最高行政法院怎麼審</a>、<a href="11_上訴與抗告.html#s3">11-3 高等行政法院上訴審</a>、<a href="10_特別程序.html#s1">10-1 簡易程序（誤用程序的處理）</a></li>
+      <li><b>再審事由</b>：§273 十四款、§276 三十日與五年、重新審理與再審的區別。→ <a href="12_再審重新審理與執行.html#s1">12-1 再審之訴的事由與期間</a>、<a href="12_再審重新審理與執行.html#s2">12-2 再審的程序與效果</a>、<a href="12_再審重新審理與執行.html#s3">12-3 重新審理</a>、<a href="11_上訴與抗告.html#s4">11-4 抗告與異議</a></li>
+    </ul>
+    <div class="tip">國考用法：遇到不確定的題目，先問三件事：這是哪一種訴訟？第一審在哪一庭？期間從哪一天起算？三個問題分別對應第 2–3 課、第 1 與第 4 課、第 6 課。</div>
+  </div>
+
+  <div class="card">
+    <h2>期間速查：七個一定要背的數字</h2>
+    <p class="small muted">全部是不變期間。起算點各課會細講，這裡先把數字與條號對上。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>做什麼</th><th>期間</th><th>從哪一天算</th><th>條文</th><th>課</th></tr></thead>
+      <tbody>
+        <tr><td>提起撤銷訴訟、課予義務訴訟</td><td><b>2 個月</b>（逾 3 年不得提起）</td><td>訴願決定書送達後</td><td>§106 I、II</td><td><a href="06_起訴程序.html#s2">6-2</a></td></tr>
+        <tr><td>交通裁決事件的撤銷訴訟</td><td><b>30 日</b></td><td>裁決書送達後</td><td>§237-3 II</td><td><a href="10_特別程序.html#s2">10-2</a></td></tr>
+        <tr><td>上訴最高行政法院</td><td><b>20 日</b></td><td>高等行政法院判決送達後</td><td>§241</td><td><a href="11_上訴與抗告.html#s1">11-1</a></td></tr>
+        <tr><td>抗告</td><td><b>10 日</b></td><td>裁定送達後</td><td>§268</td><td><a href="11_上訴與抗告.html#s4">11-4</a></td></tr>
+        <tr><td>收容聲請事件裁定的抗告</td><td><b>5 日</b></td><td>裁定送達後</td><td>§237-16 I</td><td><a href="10_特別程序.html#s3">10-3</a></td></tr>
+        <tr><td>再審之訴</td><td><b>30 日</b></td><td>判決確定時（事由知悉在後者自知悉時）</td><td>§276 I、II</td><td><a href="12_再審重新審理與執行.html#s1">12-1</a></td></tr>
+        <tr><td>第三人聲請重新審理</td><td><b>30 日</b>（判決確定逾 1 年不得聲請）</td><td>知悉確定判決之日</td><td>§284 II</td><td><a href="12_再審重新審理與執行.html#s3">12-3</a></td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：把「上訴 20 日」與「交通裁決起訴 30 日」記混；把「抗告 10 日」與「收容抗告 5 日」互換；再審 30 日忘了還有 §276 的起算點規則。第 6 課的不變期間計算器可以輸入送達日直接算末日。</div>
+  </div>
+</section>
+
+<footer>行政訴訟法自學教材 · 總覽地圖<br>依民國 111 年 6 月 22 日修正條文自行編寫，題目為原創；條文以<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030154" target="_blank" rel="noopener">全國法規資料庫</a>為準。</footer>
+</div>
+
+<script>
+// ===== 進度讀取（只讀，不寫）=====
+const LESSON_ID = "00";
+const PROG_KEY = "xzss_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+// ===== 課程資料（檔名、課名、條文範圍、小節、工具）=====
+const LESSONS = [
+  { id:"01", file:"01_導論與法院架構.html", title:"導論與法院架構", range:"§1–§3-1、§104-1、§229、§237-1 以下、§238、§263-1、§307-1", secs:["1-1 行政訴訟在做什麼","1-2 法院架構與審級","1-3 訴願與起訴的關係"], tool:"「這件爭議該去哪個法院」情境分流；「第一審在哪一庭」判斷器" },
+  { id:"02", file:"02_訴訟類型一_撤銷與課予義務.html", title:"訴訟類型 I：撤銷訴訟與課予義務訴訟", range:"§4、§5、§24、§106、§107 II、§195–§201", secs:["2-1 撤銷訴訟的要件","2-2 課予義務訴訟的兩種型態","2-3 判決怎麼下"], tool:"「該提哪一種訴訟」判斷器第一版（問答式）" },
+  { id:"03", file:"03_訴訟類型二_確認給付公益.html", title:"訴訟類型 II：確認、一般給付、公益訴訟與合併請求", range:"§6–§12、§196 II、§197、§203", secs:["3-1 確認訴訟","3-2 一般給付訴訟","3-3 公益訴訟、選罷事件、合併請求與第 12 條"], tool:"訴訟類型判斷器完整版（五種類型、補充性分支）" },
+  { id:"04", file:"04_管轄與當事人.html", title:"管轄與當事人", range:"§13–§21、§22–§36", secs:["4-1 土地管轄與特別管轄","4-2 指定管轄、管轄恆定與法官迴避","4-3 當事人能力、訴訟能力與被告機關","4-4 選定當事人與公益社團訴訟"], tool:"管轄法院查找器（選被告類型 → 條文與管轄法院）" },
+  { id:"05", file:"05_多數當事人與代理.html", title:"多數當事人與代理", range:"§37–§40、§41–§48、§49–§56（含 §49-1 強制律師代理）", secs:["5-1 共同訴訟","5-2 訴訟參加","5-3 訴訟代理人、強制律師代理與輔佐人"], tool:"「要不要強制委任律師」判斷器（§49-1）" },
+  { id:"06", file:"06_起訴程序.html", title:"起訴：書狀、送達、期間、費用與起訴要件", range:"§57–§104、§105–§115", secs:["6-1 書狀與送達","6-2 期日、期間與回復原狀","6-3 訴訟費用與訴訟救助","6-4 起訴、§107 駁回事由、訴之變更追加、反訴與撤回"], tool:"不變期間計算器；§107 I 十一款「可否補正」卡片" },
+  { id:"07", file:"07_暫時權利保護.html", title:"暫時權利保護：停止執行與保全程序", range:"§116–§119、§293–§303、§237-30", secs:["7-1 停止執行","7-2 假扣押","7-3 假處分與定暫時狀態處分"], tool:"「我該聲請哪一種」選擇器（停止執行／假扣押／假處分／定暫時狀態）" },
+  { id:"08", file:"08_審理與證據.html", title:"審理：言詞辯論、職權調查與證據", range:"§120–§132、§133–§176", secs:["8-1 言詞辯論與審判長的職權","8-2 職權調查主義與舉證責任","8-3 證人、鑑定人與文書","8-4 保全證據"], tool:"「拒絕證言／拒絕具結」情境判斷器（§144–§146、§151–§152）" },
+  { id:"09", file:"09_裁判與終結.html", title:"裁判與終結：判決、效力、和解、調解與訴訟停止", range:"§177–§186、§187–§218、§219–§228-6", secs:["9-1 訴訟程序之停止","9-2 判決的種類與內容","9-3 判決的確定與效力","9-4 和解與調解"], tool:"判決效力範圍圖（§213–§216）；情況判決流程（§198→§199→§98 I 但書）" },
+  { id:"10", file:"10_特別程序.html", title:"特別程序：簡易、交通裁決、收容聲請、都市計畫審查", range:"§229–§237、§237-1–§237-9、§237-10–§237-17、§237-18–§237-31", secs:["10-1 簡易訴訟程序","10-2 交通裁決事件","10-3 收容聲請事件","10-4 都市計畫審查程序"], tool:"四程序比較表（可只看差異）；事件分流器（含 §263-2、§263-3 誤用處理）" },
+  { id:"11", file:"11_上訴與抗告.html", title:"上訴與抗告", range:"§238–§263、§263-1–§263-5、§264–§272", secs:["11-1 上訴最高行政法院的要件與程序","11-2 最高行政法院怎麼審、怎麼判","11-3 高等行政法院上訴審（第二審即終審）","11-4 抗告與異議"], tool:"§243 違背法令檢核器；「抗告 vs 異議」判斷" },
+  { id:"12", file:"12_再審重新審理與執行.html", title:"再審、重新審理與強制執行", range:"§273–§283、§284–§292、§304–§307", secs:["12-1 再審之訴的事由與期間","12-2 再審的程序與效果","12-3 重新審理","12-4 強制執行"], tool:"§273 十四款再審事由翻卡；再審期間計算（§276 三十日／五年）" }
+];
+const L = {}; LESSONS.forEach(l => L[l.id] = l);
+// 連到某課某節：lk("06","s2") → <a href="06_...html#s2">第 6 課 6-2 期日、期間與回復原狀</a>
+function lk(id, sec){
+  const l = L[id]; if(!l) return '';
+  const n = sec ? parseInt(sec.slice(1),10) : 0;
+  const label = sec && l.secs[n-1] ? '第 '+Number(id)+' 課 '+l.secs[n-1] : '第 '+Number(id)+' 課 '+l.title;
+  return '<a href="'+l.file+(sec?'#'+sec:'')+'">'+esc(label)+'</a>';
+}
+
+// ===== 九編結構圖資料（編／章／節的條號範圍依法條 txt 檔標題）=====
+const BIAN = [
+  { no:"一", name:"總則", range:"§1–§104", count:124, one:"整部法共用的規則：行政訴訟是什麼、誰來審、誰能告、程序怎麼跑。後面八編都站在這一編上面。",
+    chapters:[
+      { name:"第一章 行政訴訟事件", short:"行政訴訟事件", range:"§1–§12（§12-1～12-5 已刪除）", one:"宗旨、公法爭議的審判權、各種訴訟類型（撤銷、課予義務、確認、一般給付、公益）與審判權衝突的處理。", links:[["01","s1"],["02","s1"],["02","s2"],["03","s1"],["03","s2"],["03","s3"]] },
+      { name:"第二章 行政法院", short:"行政法院", range:"§13–§21", one:"案子歸哪個法院（管轄）以及法官什麼時候不能審（迴避）。", secs:[["第一節 管轄","§13–§18",["04","s1"],["04","s2"]],["第二節 法官之迴避","§19–§21",["04","s2"]]], links:[["04","s1"],["04","s2"]] },
+      { name:"第三章 當事人", short:"當事人", range:"§22–§56", one:"誰能當原告被告、多數人一起告怎麼辦、第三人怎麼參加、律師與代理人。", secs:[["第一節 當事人能力及訴訟能力","§22–§28",["04","s3"]],["第二節 選定當事人","§29–§36",["04","s4"]],["第三節 共同訴訟","§37–§40",["05","s1"]],["第四節 訴訟參加","§41–§48",["05","s2"]],["第五節 訴訟代理人及輔佐人","§49–§56",["05","s3"]]], links:[["04","s3"],["04","s4"],["05","s1"],["05","s2"],["05","s3"]] },
+      { name:"第四章 訴訟程序", short:"訴訟程序", range:"§57–§104", one:"書狀怎麼寫、文書怎麼送達、期間怎麼算、卷宗與訴訟費用。這是程序題的數字倉庫。", secs:[["第一節 當事人書狀","§57–§60",["06","s1"]],["第二節 送達","§61–§83",["06","s1"]],["第三節 期日及期間","§84–§94",["06","s2"]],["第四節 訴訟卷宗","§95–§97",["06","s3"]],["第五節 訴訟費用","§98–§104",["06","s3"]]], links:[["06","s1"],["06","s2"],["06","s3"]] }
+    ] },
+  { no:"二", name:"第一審程序", range:"§104-1–§237-31", count:183, one:"案子進法院之後的全部流程：起訴、審理、證據、裁判，再加四種特別程序。條文最多、考最多。",
+    chapters:[
+      { name:"第一章 通常訴訟程序", short:"通常訴訟程序", range:"§104-1–§228-6", one:"標準流程八節：從起訴到調解。其他四種特別程序都是這一章的變形，差異處才另外規定。", secs:[["第一節 起訴","§104-1–§115",["06","s4"],["01","s2"]],["第二節 停止執行","§116–§119",["07","s1"]],["第三節 言詞辯論","§120–§132",["08","s1"]],["第四節 證據","§133–§176",["08","s2"],["08","s3"],["08","s4"]],["第五節 訴訟程序之停止","§177–§186",["09","s1"]],["第六節 裁判","§187–§218",["09","s2"],["09","s3"],["02","s3"]],["第七節 和解","§219–§228-1",["09","s4"]],["第八節 調解","§228-2–§228-6",["09","s4"]]], links:[["06","s4"],["07","s1"],["08","s1"],["08","s2"],["09","s2"],["09","s3"],["09","s4"]] },
+      { name:"第二章 簡易訴訟程序", short:"簡易程序", range:"§229–§237", one:"金額 50 萬以下與輕微處分等事件，由地方行政訴訟庭獨任法官審，程序較簡。", links:[["10","s1"],["01","s2"]] },
+      { name:"第三章 交通裁決事件訴訟程序", short:"交通裁決", range:"§237-1–§237-9", one:"不服交通裁決不經訴願，30 日內直接告原處分機關，裁判費 300 元。", links:[["10","s2"],["01","s2"]] },
+      { name:"第四章 收容聲請事件程序", short:"收容聲請", range:"§237-10–§237-17", one:"移民署收容外國人要經法院裁定；受收容人可聲請停止收容，裁定後 5 日內抗告。", links:[["10","s3"]] },
+      { name:"第五章 都市計畫審查程序", short:"都市計畫審查", range:"§237-18–§237-31", one:"直接請高等行政法院宣告都市計畫無效的規範審查程序，含 §237-30 暫停適用。", links:[["10","s4"],["07","s1"]] }
+    ] },
+  { no:"三", name:"上訴審程序", range:"§238–§263-5", count:36, one:"不服第一審判決怎麼辦。第一章上最高行政法院（法律審），第二章上高等行政法院（第二審即終審）。",
+    chapters:[
+      { name:"第一章 最高行政法院上訴審程序", short:"上訴最高行政法院", range:"§238–§263", one:"要以違背法令為理由（§242、§243），20 日內提起（§241），原則不開言詞辯論（§253）。", links:[["11","s1"],["11","s2"]] },
+      { name:"第二章 高等行政法院上訴審程序", short:"上訴高等行政法院", range:"§263-1–§263-5", one:"地方行政訴訟庭判決的上訴審，第二審判決不得再上訴；有統一見解必要可移送最高行政法院（§263-4）。", links:[["11","s3"],["10","s1"]] }
+    ] },
+  { no:"四", name:"抗告程序", range:"§264–§272", count:9, one:"不服「裁定」的救濟。10 日內（§268）向直接上級法院抗告，抗告法院的裁定不得再抗告（§267）。", links:[["11","s4"],["07","s1"]] },
+  { no:"五", name:"再審程序", range:"§273–§283", count:12, one:"判決確定後發現 §273 列的十四款重大瑕疵，30 日內（§276）再開一次。", links:[["12","s1"],["12","s2"]] },
+  { no:"六", name:"重新審理", range:"§284–§292", count:9, one:"撤銷判決害到沒參加訴訟的第三人，第三人可在知悉後 30 日內聲請重新審理（§284）。", links:[["12","s3"],["05","s2"]] },
+  { no:"七", name:"保全程序", range:"§293–§303", count:11, one:"判決前先凍結狀態：假扣押保金錢請求，假處分與定暫時狀態處分保其他請求；能停止執行的就不能假處分（§299）。", links:[["07","s2"],["07","s3"]] },
+  { no:"八", name:"強制執行", range:"§304–§307", count:4, one:"判決確定後怎麼落實：撤銷判決由關係機關處置（§304）、給付判決可聲請執行（§305）。", links:[["12","s4"],["09","s3"]] },
+  { no:"九", name:"附則", range:"§307-1–§308", count:2, one:"概括準用民事訴訟法（§307-1）與施行日期（§308）。", links:[["01","s1"]] }
+];
+
+// ===== 畫九編結構圖 =====
+(function(){
+  const spine = document.getElementById('spine'), grid = document.getElementById('bianGrid'), det = document.getElementById('bianDetail');
+  BIAN.forEach((b, bi) => {
+    const s = document.createElement('button'); s.style.flexGrow = b.count; s.textContent = b.no; s.title = '第'+b.no+'編 '+b.name+'（'+b.range+'）'; s.dataset.b = bi; s.setAttribute('aria-pressed','false');
+    s.addEventListener('click', () => show(bi, -1)); spine.appendChild(s);
+    const box = document.createElement('div'); box.className = 'bian' + (b.chapters && b.chapters.length > 1 ? ' wide' : ''); box.dataset.b = bi;
+    box.innerHTML = '<button class="head" data-b="'+bi+'"><b>第'+b.no+'編 '+esc(b.name)+'</b><small>'+esc(b.range)+' · '+b.count+' 條</small></button>' +
+      (b.chapters ? '<div class="chs">'+b.chapters.map((c, ci) => '<button data-b="'+bi+'" data-c="'+ci+'" aria-pressed="false">'+esc(c.short)+'</button>').join('')+'</div>' : '');
+    grid.appendChild(box);
+  });
+  grid.addEventListener('click', e => {
+    const btn = e.target.closest('button'); if(!btn) return;
+    show(Number(btn.dataset.b), btn.dataset.c === undefined ? -1 : Number(btn.dataset.c));
+  });
+  function show(bi, ci){
+    const b = BIAN[bi]; const c = ci >= 0 ? b.chapters[ci] : null;
+    spine.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(Number(x.dataset.b) === bi)));
+    grid.querySelectorAll('.bian').forEach(x => x.dataset.on = Number(x.dataset.b) === bi ? '1' : '0');
+    grid.querySelectorAll('.chs button').forEach(x => x.setAttribute('aria-pressed', String(Number(x.dataset.b) === bi && Number(x.dataset.c) === ci)));
+    let h = '<h3>第'+b.no+'編 '+esc(b.name)+(c ? ' · '+esc(c.name) : '')+'</h3>';
+    h += '<div class="range"><span class="pill law">'+esc(c ? c.range : b.range)+'</span>'+(c ? '' : b.count+' 條')+'</div>';
+    h += '<p class="small">'+esc(c ? c.one : b.one)+'</p>';
+    if(!c && b.chapters){
+      h += '<p class="small muted" style="margin-bottom:.3rem">本編各章（點開看節與對應課）：</p><div class="chips">'+b.chapters.map((x, i) => '<button class="chip" data-b="'+bi+'" data-c="'+i+'">'+esc(x.name)+'　<span class="muted">'+esc(x.range)+'</span></button>').join('')+'</div>';
+    }
+    if(c && c.secs){
+      h += '<div class="scroll" style="margin:.4rem 0"><table><thead><tr><th>節</th><th>條號</th><th>對應課別</th></tr></thead><tbody>' +
+        c.secs.map(s => '<tr><td>'+esc(s[0])+'</td><td>'+esc(s[1])+'</td><td>'+s.slice(2).map(p => lk(p[0], p[1])).join('<br>')+'</td></tr>').join('') + '</tbody></table></div>';
+    }
+    const links = c ? c.links : (b.links || []);
+    if(links.length) h += '<p class="small" style="margin:.4rem 0 0"><b>對應課別：</b></p><div class="links small">'+links.map(p => lk(p[0], p[1])).join('')+'</div>';
+    if(!c && b.chapters) h += '<p class="small muted" style="margin:.4rem 0 0">各章的對應課在上面每一章裡。</p>';
+    det.innerHTML = h; det.classList.add('on');
+    det.querySelectorAll('.chip').forEach(x => x.addEventListener('click', () => show(Number(x.dataset.b), Number(x.dataset.c))));
+  }
+  show(0, -1);
+})();
+
+// ===== 12 課卡片 + 進度 =====
+function badge(p){
+  if(!p) return ['', '未開始'];
+  if(p.quiz && typeof p.quiz.score === 'number'){
+    const t = p.quiz.total || 10;
+    return p.quiz.score >= 8 ? ['green', '過關 '+p.quiz.score+'/'+t] : ['blue', '測驗 '+p.quiz.score+'/'+t];
+  }
+  return p.visited ? ['law', '已讀'] : ['', '未開始'];
+}
+function renderLessons(){
+  const prog = readProg(); const grid = document.getElementById('lessonGrid');
+  document.getElementById('lessonCount').textContent = LESSONS.length + ' 課 + 綜合練習場';
+  grid.innerHTML = LESSONS.map(l => {
+    const [cls, txt] = badge(prog[l.id]);
+    return '<article class="lesson"><div class="no"><span>第 '+Number(l.id)+' 課</span><span class="pill '+cls+'">'+txt+'</span></div>' +
+      '<h3><a href="'+l.file+'">'+esc(l.title)+'</a></h3><div class="range">'+esc(l.range)+'</div>' +
+      '<div class="secs">'+l.secs.map((s, i) => '<a href="'+l.file+'#s'+(i+1)+'">'+esc(s)+'</a>').join('')+'<a href="'+l.file+'#s'+(l.secs.length+1)+'">章末測驗</a><a href="'+l.file+'#s'+(l.secs.length+2)+'">條文速查</a></div>' +
+      '<div class="tool"><b>互動工具：</b>'+esc(l.tool)+'</div></article>';
+  }).join('') +
+  '<article class="lesson mix"><div class="no"><span>綜合練習</span><span class="pill law">全法</span></div><h3><a href="綜合練習場.html">綜合練習場</a></h3><div class="range">跨 12 課的隨機出題與弱點統計</div>' +
+  '<div class="secs"><span class="pill">該提哪一種訴（20 情境）</span><span class="pill">混合題庫 40 題，每輪抽 10</span><span class="pill">實例題 6 題</span><span class="pill">弱點頁</span></div>' +
+  '<div class="tool"><b>互動工具：</b>隨機出題、錯題立即重出、依 localStorage 統計最常錯的課別並連回該課</div></article>';
+}
+
+// ===== 進度總覽表 =====
+function fmtTime(t){
+  if(!t) return '—';
+  const d = new Date(t); if(isNaN(d)) return '—';
+  const p = n => String(n).padStart(2, '0');
+  return (d.getFullYear()-1911)+'/'+p(d.getMonth()+1)+'/'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());
+}
+function renderProgress(){
+  const prog = readProg(); const tb = document.querySelector('#progTable tbody');
+  let steps = 0; const max = LESSONS.length * 4;
+  tb.innerHTML = LESSONS.map(l => {
+    const p = prog[l.id] || {}; const q = p.quiz, e = p.essay || {};
+    const visited = !!p.visited, submitted = !!(q && typeof q.score === 'number'), passed = submitted && q.score >= 8, essayDone = ('e1' in e) && ('e2' in e);
+    steps += visited + submitted + passed + essayDone;
+    const ecell = k => (k in e) ? (e[k] ? '<span class="ok">✓ 寫到了</span>' : '<span class="no">再看一次</span>') : '<span class="dim">—</span>';
+    const qcell = submitted ? '<span class="'+(passed ? 'ok' : 'no')+'">'+q.score+' / '+(q.total||10)+(passed ? ' 過關' : '')+'</span>' : '<span class="dim">未交卷</span>';
+    return '<tr><td><a href="'+l.file+'">'+Number(l.id)+'. '+esc(l.title)+'</a></td><td>'+(visited ? '<span class="ok">✓</span>' : '<span class="dim">—</span>')+'</td><td>'+qcell+'</td><td>'+ecell('e1')+'</td><td>'+ecell('e2')+'</td><td class="dim small">'+fmtTime(p.t)+'</td></tr>';
+  }).join('');
+  const pct = Math.round(steps / max * 100);
+  document.getElementById('pct').textContent = pct + '%';
+  document.getElementById('bar').style.width = pct + '%';
+  const passedN = LESSONS.filter(l => prog[l.id] && prog[l.id].quiz && prog[l.id].quiz.score >= 8).length;
+  const visitedN = LESSONS.filter(l => prog[l.id] && prog[l.id].visited).length;
+  document.getElementById('pctNote').textContent = '（已讀 '+visitedN+' 課、測驗過關 '+passedN+' 課，共 '+steps+' / '+max+' 個里程碑）';
+}
+renderLessons(); renderProgress();
+
+document.getElementById('clearProg').addEventListener('click', () => {
+  if(!confirm('確定清除這套教材的課別進度（xzss_progress_v1）？學習紀錄 study_log_v1 不受影響。')) return;
+  try{ localStorage.removeItem(PROG_KEY); }catch(e){}
+  renderLessons(); renderProgress();
+  document.getElementById('clearMsg').textContent = '已清除。';
+});
+// 別的分頁改了進度，回到這頁時更新
+window.addEventListener('focus', () => { renderLessons(); renderProgress(); });
+
+// ===== 頁內導覽：捲到哪一段就亮哪一顆 =====
+(function(){
+  const links = [...document.querySelectorAll('#pageNav a')];
+  const secs = links.map(a => document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
+  function update(){
+    let cur = secs[0];
+    secs.forEach(s => { if(s.getBoundingClientRect().top <= 90) cur = s; });
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur.id));
+  }
+  window.addEventListener('scroll', update, { passive: true }); update();
+})();
+</script>
+</body>
+</html>
