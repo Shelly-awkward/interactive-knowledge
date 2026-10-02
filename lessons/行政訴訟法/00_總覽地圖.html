@@ -341,7 +341,7 @@ const LESSONS = [
   { id:"12", file:"12_再審重新審理與執行.html", title:"再審、重新審理與強制執行", range:"§273–§283、§284–§292、§304–§307", secs:["12-1 再審之訴的事由與期間","12-2 再審的程序與效果","12-3 重新審理","12-4 強制執行"], tool:"§273 十四款再審事由翻卡；再審期間計算（§276 三十日／五年）" }
 ];
 const L = {}; LESSONS.forEach(l => L[l.id] = l);
-// 連到某課某節：lk("06","s2") → <a href="06_...html#s2">第 6 課 6-2 期日、期間與回復原狀</a>
+// 連到某課某節：lk("06","s2") → 連到第 6 課檔案的 #s2 分頁（6-2 期日、期間與回復原狀）
 function lk(id, sec){
   const l = L[id]; if(!l) return '';
   const n = sec ? parseInt(sec.slice(1),10) : 0;
