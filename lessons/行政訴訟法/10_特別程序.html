@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>行政訴訟法｜第 10 課 特別程序：簡易、交通裁決、收容聲請、都市計畫審查</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F4F6F3; --card:#FFFFFF;
+  --ink:#1C2A30; --ink-2:#4B5A62; --ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --law:#5B3A8C; --law-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F; --card:#1D262B;
+    --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+    --rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --law:#B9A0E3; --law-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F; --card:#1D262B;
+  --ink:#E9EEF0; --ink-2:#B8C3CA; --ink-3:#7F8C95;
+  --rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --law:#B9A0E3; --law-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--blue);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+
+/* hero */
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--law);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--law-soft);color:var(--law);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+/* tabs */
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit}
+nav.tabs button:hover{border-color:var(--blue);color:var(--ink)}
+nav.tabs button.active{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--blue-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--law-soft);border-left:4px solid var(--law);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--law);display:block;margin-bottom:.2em}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.law{background:var(--law-soft);border-color:transparent;color:var(--law)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+
+/* flow / structure diagrams */
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 160px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--blue)}
+.courts{display:grid;grid-template-columns:1fr;gap:8px;margin:.6rem 0 1rem}
+.court{border:1px solid var(--rule);border-radius:10px;padding:.7rem .9rem;background:var(--paper);display:grid;grid-template-columns:7.5em 1fr;gap:.3rem .8rem;align-items:start}
+.court .lv{font-weight:700;color:var(--law)}
+.court .what{font-size:.92rem}
+.court.top{border-color:var(--law)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+/* examples */
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+.step4{display:grid;grid-template-columns:5em 1fr;gap:.25rem .7rem;font-size:.95rem;margin:.3rem 0 .8rem}
+.step4 dt{color:var(--law);font-weight:700}
+.step4 dd{margin:0}
+
+/* interactive tool */
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox select,.toolbox input[type=number]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--law)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+
+/* practice & quiz */
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--law);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+/* 條文速查 */
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">行政訴訟法 · 第 10 課</span>
+  <h1>特別程序：簡易、交通裁決、收容聲請、都市計畫審查</h1>
+  <p>第二編第二章到第五章是四套「有自己規則」的程序。考題不會問你四章各有幾條，而是問：這件事該走哪一套、被告是誰、要不要先訴願、期間多久、裁判費多少、不服怎麼辦，以及第一審走錯程序時上訴審怎麼收拾。四節各講一套，最後用一張比較表和一個分流器收攏。</p>
+  <p class="ver">依民國 111 年 6 月 22 日修正條文編寫（多數條文自 112 年 8 月 15 日施行）。自學筆記，非官方；條文以全國法規資料庫為準。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">10-1 簡易訴訟程序</button>
+  <button data-t="s2">10-2 交通裁決事件</button>
+  <button data-t="s3">10-3 收容聲請事件</button>
+  <button data-t="s4">10-4 都市計畫審查程序</button>
+  <button data-t="s5">章末測驗</button>
+  <button data-t="s6">條文速查</button>
+</nav>
+
+<!-- ═══════════ 10-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>背得出第 229 條第 2 項六款簡易事件，知道 50 萬這條線可以被司法院調成 25 萬或 75 萬</li>
+      <li>說得出簡易程序和通常程序差在哪：獨任法官、言詞起訴、2 星期宣判、判決書簡化</li>
+      <li>遇到訴之變更使事件「跳出」簡易範圍時，知道第 230 條要改程序或移送</li>
+      <li>知道第 236 條的補充關係：本章沒規定的，回去用通常程序</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：哪些事件走簡易程序（第 229 條）</h2>
+    <div class="law"><b class="art">第 229 條第 1 項、第 2 項</b>Ⅰ 適用簡易訴訟程序之事件，以地方行政法院為第一審管轄法院。<br>Ⅱ 下列各款行政訴訟事件，除本法別有規定外，適用本章所定之簡易程序：<br>一、關於稅捐課徵事件涉訟，所核課之稅額在新臺幣五十萬元以下者。<br>二、因不服行政機關所為新臺幣五十萬元以下罰鍰處分而涉訟者。<br>三、其他關於公法上財產關係之訴訟，其標的之金額或價額在新臺幣五十萬元以下者。<br>四、因不服行政機關所為告誡、警告、記點、記次、講習、輔導教育或其他相類之輕微處分而涉訟者。<br>五、關於內政部移民署（以下簡稱移民署）之行政收容事件涉訟，或合併請求損害賠償或其他財產上給付者。<br>六、依法律之規定應適用簡易訴訟程序者。</div>
+    <p>六款分三組記。第 1 到 3 款是<b>金額型</b>：稅額、罰鍰、公法財產關係，門檻都是 50 萬以下。第 4 款是<b>輕微處分型</b>，沒有金額，看處分的性質。第 5 款是<b>移民署行政收容事件</b>（注意：是對收容處分本身的「訴訟」，不是第四章的「收容聲請事件」）。第 6 款是其他法律的指定。</p>
+    <div class="law"><b class="art">第 229 條第 3 項、第 4 項</b>Ⅲ 前項所定數額，司法院得因情勢需要，以命令減為新臺幣二十五萬元或增至新臺幣七十五萬元。<br>Ⅳ 第二項第五款之事件，由受收容人受收容或曾受收容所在地之地方行政法院管轄，不適用第十三條之規定。但未曾受收容者，由被告機關所在地之地方行政法院管轄。</div>
+    <div class="warn">常錯一：把簡易程序的 50 萬和第 104 條之 1 的 150 萬搞混。50 萬是「要不要用簡易程序」的線；150 萬是「通常程序第一審在地方庭還是高等庭」的線。50 萬以下簡易、超過 50 萬到 150 萬是地方庭通常程序、超過 150 萬才上高等庭。<br>常錯二：第 3 項的調整幅度是「減為 25 萬或增至 75 萬」，不是「增至 1,000 萬」；1,000 萬是第 104 條之 1 第 2 項的數字。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：簡易程序到底「簡」在哪（第 231 條至第 234 條）</h2>
+    <div class="law"><b class="art">第 231 條</b>Ⅰ 起訴及其他期日外之聲明或陳述，概得以言詞為之。<br>Ⅱ 以言詞起訴者，應將筆錄送達於他造。</div>
+    <div class="law"><b class="art">第 232 條</b>Ⅰ 簡易訴訟程序在獨任法官前行之。<br>Ⅱ 簡易訴訟程序之審理，當事人一造之住居所、公務所、機關、主事務所或主營業所所在地位於與法院相距過遠之地區者，行政法院應徵詢其意見，以遠距審理、巡迴法庭或其他便利之方式行之。</div>
+    <div class="law"><b class="art">第 233 條</b>Ⅰ 言詞辯論期日之通知書，應與訴狀或第二百三十一條第二項之筆錄一併送達於他造。<br>Ⅱ 簡易訴訟程序事件行言詞辯論終結者，指定宣示判決之期日，自辯論終結時起，不得逾二星期。但案情繁雜或有特殊情形者，不在此限。</div>
+    <div class="law"><b class="art">第 234 條</b>Ⅰ 判決書內之事實、理由，得不分項記載，並得僅記載其要領。<br>Ⅱ 地方行政法院亦得於宣示判決時，命將判決主文及其事實、理由之要領，記載於言詞辯論筆錄或宣示判決筆錄，不另作判決書。<br>Ⅲ 前項筆錄正本或節本，應分別記明之，由書記官簽名並蓋法院印。<br>Ⅳ 第二項筆錄正本或節本之送達，與判決正本之送達，有同一之效力。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>環節</th><th>通常程序</th><th>簡易程序</th></tr></thead>
+      <tbody>
+        <tr><td>起訴方式</td><td>書狀（第 105 條）</td><td>得以言詞為之，筆錄送達他造（§231）</td></tr>
+        <tr><td>法官</td><td>合議</td><td>獨任法官（§232 I）</td></tr>
+        <tr><td>遠距、巡迴</td><td>—</td><td>一造住居所距法院過遠者，應徵詢意見改以遠距審理或巡迴法庭（§232 II）</td></tr>
+        <tr><td>宣判期日</td><td>依通常規定</td><td>自辯論終結起不得逾 2 星期，案情繁雜者除外（§233 II）</td></tr>
+        <tr><td>判決書</td><td>第 209 條法定記載事項</td><td>事實、理由得不分項、僅記要領；得以筆錄代替判決書（§234）</td></tr>
+        <tr><td>言詞辯論</td><td>原則應行（§188 I）</td><td>仍以言詞辯論為原則，本章無「得不經言詞辯論」的規定</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tip">國考用法：「簡易程序得不經言詞辯論」是錯的。得不經言詞辯論的是<b>交通裁決事件</b>（第 237 條之 7）。簡易程序只是把辯論後的宣判壓在 2 星期內、判決書寫法簡化。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：案子中途「長大」或「變種」怎麼辦（第 230 條）</h2>
+    <div class="law"><b class="art">第 230 條</b>Ⅰ 前條第二項之訴，因訴之變更或一部撤回，致其訴屬於地方行政法院適用通常訴訟程序之事件或交通裁決事件者，應改依通常訴訟程序或交通裁決事件訴訟程序之規定審理。追加之新訴或反訴，以原訴與之合併辯論及裁判者，亦同。<br>Ⅱ 前項情形，訴之全部或一部屬於高等行政法院管轄者，地方行政法院應裁定移送管轄之高等行政法院。</div>
+    <p>兩層處理。第一層：變更後仍在<b>地方行政法院</b>的範圍（例如罰鍰從 40 萬變更為 120 萬，落入第 104 條之 1 但書），同一法院改用通常程序或交通裁決程序審下去，不用移送。第二層：變更後屬<b>高等行政法院</b>管轄（例如追加請求的金額超過 150 萬、或追加非財產處分的撤銷），地方行政法院要裁定移送。</p>
+    <div class="note">對照組：第 237 條之 6 是交通裁決事件的同款規定（變成非交通裁決事件→改依簡易或通常程序；無管轄權→移送高等行政法院）。兩條一起記，分流器會用到。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：第 236 條、第 237 條，簡易程序的「補充」與「準用」</h2>
+    <div class="law"><b class="art">第 236 條</b>簡易訴訟程序除本章別有規定外，仍適用通常訴訟程序之規定。</div>
+    <div class="law"><b class="art">第 237 條</b>民事訴訟法第四百三十條、第四百三十一條及第四百三十三條之規定，於本章準用之。</div>
+    <p>第二章扣掉四條已刪除的條文，只剩七條活的條文，所以簡易程序九成的規則還是通常程序那一套：起訴期間（第 106 條）、訴願前置、被告（第 24 條）、裁判費 2,000 元（第 98 條第 2 項後段）全部照用。而且這一章是後面三章的「母程序」：第 237 條之 9、第 237 條之 17 第 2 項都寫「準用簡易訴訟程序之規定」。</p>
+    <div class="tip">層次：都市計畫審查 →準用第一章通常程序（§237-31）；交通裁決、收容聲請 →準用第二章簡易程序（§237-9、§237-17 II）→簡易程序再補充適用通常程序（§236）。考題問「交通裁決事件沒規定的事怎麼辦」，答案是先找簡易程序，再找通常程序。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲遭環保局裁處罰鍰 45 萬元，經訴願駁回後起訴。審理中甲追加請求撤銷同一處分書內的「停工 30 日」處分。法院應如何處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>簡易事件因追加而含有非財產性質處分時，程序與管轄如何變動。</dd>
+        <dt>條文</dt><dd>第 229 條第 2 項第 2 款（50 萬以下罰鍰為簡易事件）；第 230 條第 1 項（追加之新訴與原訴合併辯論裁判者亦應改依通常程序）、第 2 項（屬高等行政法院管轄者應裁定移送）；第 104 條之 1 第 1 項第 2 款（罰鍰「或其附帶之其他裁罰性、管制性不利處分」150 萬以下由地方行政法院管轄）。</dd>
+        <dt>涵攝</dt><dd>原訴罰鍰 45 萬，是簡易事件。追加的停工處分是附帶於罰鍰的管制性不利處分，依第 104 條之 1 第 1 項第 2 款仍在地方行政法院的通常程序範圍，所以是「屬於地方行政法院適用通常訴訟程序之事件」。</dd>
+        <dt>結論</dt><dd>地方行政法院不必移送，依第 230 條第 1 項改依通常訴訟程序審理全案。若追加的是與罰鍰無附帶關係的獨立非財產處分，才會落入第 230 條第 2 項，裁定移送高等行政法院。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙對 30 萬元罰鍰提起撤銷訴訟，獨任法官於 3 月 1 日言詞辯論終結，定 3 月 29 日宣判，宣判時只把主文與要領記在筆錄，未另作判決書。乙主張程序違法。有無理由？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>簡易程序的宣判期限與判決書簡化是否合法。</dd>
+        <dt>條文</dt><dd>第 232 條第 1 項（獨任法官）；第 233 條第 2 項（宣判期日自辯論終結起不得逾二星期，但案情繁雜或有特殊情形者不在此限）；第 234 條第 2 項、第 4 項（得以筆錄代替判決書，送達效力同判決正本）。</dd>
+        <dt>涵攝</dt><dd>獨任審理與以筆錄代判決書，都是本章明文允許。3 月 1 日到 3 月 29 日是 4 星期，超過 2 星期的原則，但第 233 條第 2 項但書允許案情繁雜或特殊情形例外；學說上多認為這是對法院指定期日的訓示規定，逾期不使判決當然違法。</dd>
+        <dt>結論</dt><dd>獨任與筆錄代判決書合法；宣判逾 2 星期若無但書情形雖不合規定，但難以據此廢棄判決。乙的主張無理由。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">1. 下列何者<b>不是</b>第 229 條第 2 項所列應適用簡易訴訟程序之事件？</div>
+      <label><input type="radio" name="p1q1" value="A">因不服主管機關所為講習處分而涉訟</label>
+      <label><input type="radio" name="p1q1" value="B">關於移民署之行政收容事件涉訟並合併請求損害賠償</label>
+      <label><input type="radio" name="p1q1" value="C">因不服新臺幣 80 萬元罰鍰處分而涉訟</label>
+      <label><input type="radio" name="p1q1" value="D">稅捐課徵事件，所核課之稅額為新臺幣 50 萬元</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 229 條第 2 項第 2 款的罰鍰門檻是 50 萬元「以下」，80 萬已超過，依第 104 條之 1 第 1 項第 2 款由地方行政法院以通常程序審理。稅額剛好 50 萬，仍是「以下」。" data-diag='{"A":"講習是第 229 條第 2 項第 4 款明列的輕微處分。","B":"第 229 條第 2 項第 5 款：移民署行政收容事件涉訟「或合併請求損害賠償或其他財產上給付者」。","D":"「五十萬元以下」包含 50 萬本身，仍是第 1 款的簡易事件。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">2. 關於簡易訴訟程序的審理，下列何者正確？</div>
+      <label><input type="radio" name="p1q2" value="A">得不經言詞辯論逕為判決</label>
+      <label><input type="radio" name="p1q2" value="B">在獨任法官前行之，起訴得以言詞為之</label>
+      <label><input type="radio" name="p1q2" value="C">宣示判決之期日自辯論終結起不得逾一個月</label>
+      <label><input type="radio" name="p1q2" value="D">判決書之事實、理由必須分項記載</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 232 條第 1 項獨任法官；第 231 條第 1 項起訴得以言詞為之。" data-diag='{"A":"得不經言詞辯論是交通裁決事件的規定（第 237 條之 7），簡易程序沒有這條。","C":"第 233 條第 2 項是「不得逾二星期」，不是一個月。","D":"第 234 條第 1 項剛好相反：得不分項記載，並得僅記載其要領。"}'></div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">3. 甲對 20 萬元罰鍰提起撤銷訴訟後，變更為請求撤銷另一件 200 萬元的罰鍰處分。地方行政法院應如何處理？</div>
+      <label><input type="radio" name="p1q3" value="A">仍依簡易訴訟程序審理</label>
+      <label><input type="radio" name="p1q3" value="B">改依通常訴訟程序審理</label>
+      <label><input type="radio" name="p1q3" value="C">以訴之變更不合法裁定駁回</label>
+      <label><input type="radio" name="p1q3" value="D">裁定移送管轄之高等行政法院</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="200 萬元罰鍰超過第 104 條之 1 第 1 項第 2 款的 150 萬元，屬高等行政法院管轄，依第 230 條第 2 項應裁定移送。" data-diag='{"A":"200 萬遠超過第 229 條第 2 項的 50 萬，不能再用簡易程序。","B":"改依通常程序審理的前提是變更後仍屬地方行政法院管轄（第 230 條第 1 項）；150 萬以上是高等行政法院管轄。","C":"第 230 條預設訴之變更可以發生，處理方式是改程序或移送，不是駁回。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 10-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>定義得出交通裁決事件（第 237 條之 1 兩款），知道合併其他訴訟時要切回簡易或通常程序</li>
+      <li>答得出四個數字：30 日起訴、被告 20 日重新審查、裁判費 300／750／300</li>
+      <li>說得出「不經訴願、以原處分機關為被告、誤遞視為遵守期間」三個對人民友善的設計</li>
+      <li>知道被告依請求處置後「視為撤回起訴」並退費，以及得不經言詞辯論</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：什麼是交通裁決事件（第 237 條之 1）</h2>
+    <div class="law"><b class="art">第 237 條之 1</b>Ⅰ 本法所稱交通裁決事件如下：<br>一、不服道路交通管理處罰條例第八條及第三十七條第六項之裁決，而提起之撤銷訴訟、確認訴訟。<br>二、合併請求返還與前款裁決相關之已繳納罰鍰或已繳送之駕駛執照、計程車駕駛人執業登記證、汽車牌照。<br>Ⅱ 合併提起前項以外之訴訟者，應適用簡易訴訟程序或通常訴訟程序之規定。<br>Ⅲ 第二百三十七條之二、第二百三十七條之三、第二百三十七條之四第一項及第二項規定，於前項情形準用之。</div>
+    <p>第 1 款鎖定兩個來源：道交條例第 8 條（一般違規的裁決）和第 37 條第 6 項（計程車駕駛人相關裁決）。訴訟類型只有<b>撤銷</b>和<b>確認</b>。第 2 款是「附帶」的返還請求：已繳的罰鍰、已繳送的駕照、執業登記證、牌照。</p>
+    <p>第 2 項是分流點：如果原告順便合併了第 1 項以外的請求（例如請求國家賠償、請求返還不相干的款項），整件改依簡易或通常程序。但第 3 項讓管轄（§237-2）、被告與期間（§237-3）、起訴狀送達與被告重新審查（§237-4 I、II）在這種情形仍準用，所以人民不會因為多請求一項就失去這些保護。</p>
+    <div class="law"><b class="art">第 237 條之 2</b>交通裁決事件，得由原告住所地、居所地、所在地或違規行為地之地方行政法院管轄。</div>
+    <div class="note">管轄是「得由」，四個連結點任選，而且全部以<b>原告</b>為中心（住所地、居所地、所在地）加上違規行為地。這和第 13 條以被告機關所在地為原則剛好相反，目的是讓人民就近起訴。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：被告、期間與「寄錯地方也算」（第 237 條之 3）</h2>
+    <div class="law"><b class="art">第 237 條之 3</b>Ⅰ 交通裁決事件訴訟之提起，應以原處分機關為被告，逕向管轄之地方行政法院為之。<br>Ⅱ 交通裁決事件中撤銷訴訟之提起，應於裁決書送達後三十日之不變期間內為之。<br>Ⅲ 前項訴訟，因原處分機關未為告知或告知錯誤，致原告於裁決書送達三十日內誤向原處分機關遞送起訴狀者，視為已遵守起訴期間，原處分機關並應即將起訴狀移送管轄法院。</div>
+    <div class="flow">
+      <div class="step"><b>不經訴願</b>「逕向」地方行政法院起訴。沒有訴願，自然也沒有第 24 條以訴願結果定被告的問題：被告固定是原處分機關。</div>
+      <div class="step"><b>30 日不變期間</b>自裁決書送達起算。比第 106 條的 2 個月短，而且只適用於撤銷訴訟；確認訴訟沒有這個期間。</div>
+      <div class="step"><b>誤遞保護</b>機關沒告知或告知錯誤，原告在 30 日內把起訴狀送到原處分機關，視為遵守期間，機關應即移送法院。</div>
+    </div>
+    <div class="warn">常錯：第 3 項的前提是「原處分機關未為告知或告知錯誤」。機關告知正確、原告自己寄錯，條文沒有保護。考題給事實時，看清楚裁決書上有沒有正確記載救濟途徑。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：被告先自己再審一次（第 237 條之 4）</h2>
+    <div class="law"><b class="art">第 237 條之 4</b>Ⅰ 地方行政法院收受前條起訴狀後，應將起訴狀繕本送達被告。<br>Ⅱ 被告收受起訴狀繕本後，應於二十日內重新審查原裁決是否合法妥當，並分別為如下之處置：<br>一、原告提起撤銷之訴，被告認原裁決違法或不當者，應自行撤銷或變更原裁決。但不得為更不利益之處分。<br>二、原告提起確認之訴，被告認原裁決無效或違法者，應為確認。<br>三、原告合併提起給付之訴，被告認原告請求有理由者，應即返還。<br>四、被告重新審查後，不依原告之請求處置者，應附具答辯狀，並將重新審查之紀錄及其他必要之關係文件，一併提出於管轄之地方行政法院。<br>Ⅲ 被告依前項第一款至第三款規定為處置者，應即陳報管轄之地方行政法院；被告於第一審終局裁判生效前已完全依原告之請求處置者，以其陳報管轄之地方行政法院時，視為原告撤回起訴。</div>
+    <p>這是「訴願前置」的替代品：不要求人民先訴願，但要求機關在收到起訴狀繕本後 20 日內<b>自己重新審查</b>。審查標準是「合法妥當」，包含不當，比法院只審合法性寬。四款對應三種訴訟加一個「不改」的情形。</p>
+    <p>第 3 項的效果要背：被告在第一審終局裁判生效前<b>完全</b>依原告請求處置並陳報法院，陳報時<b>視為原告撤回起訴</b>，法院依第 237 條之 5 第 2 項依職權退還裁判費。只做一部分的，案子繼續審。</p>
+    <div class="tip">第 2 項第 1 款但書「不得為更不利益之處分」，是不利益變更禁止在這裡的表現。機關重新審查後發現原本罰太輕，也不能趁機加重。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：裁判費、改程序、不開庭、準用（第 237 條之 5 至之 9）</h2>
+    <div class="law"><b class="art">第 237 條之 5</b>Ⅰ 交通裁決事件，按下列規定徵收裁判費：<br>一、起訴，按件徵收新臺幣三百元。<br>二、上訴，按件徵收新臺幣七百五十元。<br>三、抗告，徵收新臺幣三百元。<br>四、再審之訴，按起訴法院之審級，依第一款、第二款徵收裁判費；對於確定之裁定聲請再審者，徵收新臺幣三百元。<br>五、本法第九十八條之五各款聲請，徵收新臺幣三百元。<br>Ⅱ 依前條第三項規定，視為撤回起訴者，法院應依職權退還已繳之裁判費。</div>
+    <div class="law"><b class="art">第 237 條之 6</b>因訴之變更、追加，致其訴之全部或一部，不屬於交通裁決事件之範圍者，地方行政法院應改依簡易訴訟程序或通常訴訟程序審理；無通常訴訟程序管轄權者，應裁定移送管轄之高等行政法院。</div>
+    <div class="law"><b class="art">第 237 條之 7</b>交通裁決事件之裁判，得不經言詞辯論為之。</div>
+    <div class="law"><b class="art">第 237 條之 8</b>Ⅰ 行政法院為訴訟費用之裁判時，應確定其費用額。<br>Ⅱ 前項情形，行政法院得命當事人提出費用計算書及釋明費用額之文書。</div>
+    <div class="law"><b class="art">第 237 條之 9</b>交通裁決事件，除本章別有規定外，準用簡易訴訟程序之規定。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>項目</th><th>通常／簡易程序</th><th>交通裁決事件</th></tr></thead>
+      <tbody>
+        <tr><td>起訴裁判費</td><td>4,000／2,000（§98 II）</td><td>300（§237-5 I 1）</td></tr>
+        <tr><td>上訴裁判費</td><td>加徵二分之一（§98-2 I）</td><td>750（§237-5 I 2）</td></tr>
+        <tr><td>抗告裁判費</td><td>1,000（§98-4）</td><td>300（§237-5 I 3）</td></tr>
+        <tr><td>對確定裁定聲請再審</td><td>1,000（§98-3 II）</td><td>300（§237-5 I 4 後段）</td></tr>
+        <tr><td>§98-5 各款聲請</td><td>1,000</td><td>300（§237-5 I 5）</td></tr>
+        <tr><td>退費</td><td>—</td><td>視為撤回起訴時依職權退還（§237-5 II）</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note">第 237 條之 8 要求法院裁判訴訟費用時「確定其費用額」，因為交通裁決事件金額小，不值得再開一個確定費用額的程序。第 263 條之 5 後段規定交通裁決事件的上訴也準用本條。</div>
+  </div>
+
+  <div class="card">
+    <h2>工具：分流器，這件事走哪一套、走錯了上訴審怎麼辦</h2>
+    <p class="small muted">先選事件，看應適用的程序與基本資料；再選「第一審實際用了什麼程序」，看第 263 條之 2、第 263 條之 3 怎麼處理。</p>
+    <div class="toolbox">
+      <fieldset style="min-width:0"><legend>事件</legend>
+        <select id="rtCase" style="max-width:100%">
+          <option value="traffic">不服超速罰鍰 3,000 元並記點的裁決（道交條例第 8 條）</option>
+          <option value="traffic_plus">不服交通裁決，並合併請求因違規拖吊受損的國家賠償</option>
+          <option value="simple_fine">不服環保局 40 萬元罰鍰</option>
+          <option value="simple_minor">不服主管機關的書面警告處分</option>
+          <option value="simple_detain">不服移民署收容處分，請求撤銷並合併請求賠償</option>
+          <option value="ord_local">不服 120 萬元罰鍰</option>
+          <option value="ord_high">不服 300 萬元罰鍰</option>
+          <option value="ord_nonmoney">不服吊銷營業執照處分</option>
+          <option value="detain_req">移民署聲請續予收容</option>
+          <option value="plan">請求宣告某都市計畫無效</option>
+        </select>
+      </fieldset>
+      <fieldset style="min-width:0"><legend>第一審實際用的程序</legend>
+        <select id="rtUsed" style="max-width:100%">
+          <option value="">（先不管，只看應適用的程序）</option>
+          <option value="traffic">地方行政法院用交通裁決事件程序</option>
+          <option value="simple">地方行政法院用簡易程序</option>
+          <option value="ord_local">地方行政法院用通常程序</option>
+          <option value="ord_high">高等行政法院用通常程序</option>
+        </select>
+      </fieldset>
+      <label><input type="checkbox" id="rtNoObj"> 當事人對程序誤用或管轄錯誤已表示無異議，或明知而就本案有所聲明（§263-3 III）</label>
+      <div style="margin-top:.5rem"><button class="btn" id="rtGo">判斷</button></div>
+      <div class="result" id="rtRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　甲於 5 月 1 日收到監理所依道交條例第 8 條作成的裁決書（罰鍰 1,800 元、記違規點數），裁決書漏未記載救濟期間。甲於 5 月 25 日把起訴狀寄到監理所，監理所於 6 月 10 日才轉給法院。起訴是否逾期？被告是誰？要先訴願嗎？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>交通裁決事件的起訴期間、誤遞保護、被告與前置程序。</dd>
+        <dt>條文</dt><dd>第 237 條之 3 第 1 項（以原處分機關為被告，逕向地方行政法院起訴）、第 2 項（裁決書送達後三十日不變期間）、第 3 項（機關未告知或告知錯誤致原告三十日內誤向原處分機關遞狀者，視為已遵守期間）。</dd>
+        <dt>涵攝</dt><dd>5 月 1 日送達，30 日期間至 5 月 31 日屆滿。甲 5 月 25 日把起訴狀遞到原處分機關，是在期間內；裁決書漏未記載救濟期間屬「未為告知」，符合第 3 項要件，視為已遵守期間，監理所 6 月 10 日才移送不影響甲。</dd>
+        <dt>結論</dt><dd>起訴未逾期。被告是作成裁決的監理所，不經訴願，直接向甲的住所地、居所地、所在地或違規行為地的地方行政法院起訴（第 237 條之 2），裁判費 300 元。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙提起交通裁決撤銷訴訟後，監理所收受起訴狀繕本第 15 日自行撤銷原裁決並陳報法院；乙另外合併請求返還已繳的罰鍰 2,400 元，監理所同時退還。訴訟如何終結？裁判費如何處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>被告重新審查後完全依請求處置的效果。</dd>
+        <dt>條文</dt><dd>第 237 條之 4 第 2 項第 1 款、第 3 款與第 3 項（第一審終局裁判生效前已完全依原告之請求處置者，以其陳報時視為原告撤回起訴）；第 237 條之 5 第 2 項（視為撤回起訴者，法院應依職權退還已繳之裁判費）。</dd>
+        <dt>涵攝</dt><dd>監理所在 20 日內重新審查，撤銷裁決（第 1 款）並返還罰鍰（第 3 款），兩項請求都被滿足，屬「完全依原告之請求處置」。</dd>
+        <dt>結論</dt><dd>監理所陳報法院時，視為乙撤回起訴，訴訟繫屬消滅，法院不必裁判；已繳的 300 元裁判費由法院依職權退還，乙不必聲請。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="A">
+      <div class="stem">4. 關於交通裁決事件的起訴，下列何者正確？</div>
+      <label><input type="radio" name="p2q1" value="A">以原處分機關為被告，不經訴願逕向地方行政法院起訴，撤銷訴訟應於裁決書送達後 30 日內提起</label>
+      <label><input type="radio" name="p2q1" value="B">應先經訴願，再於訴願決定書送達後 2 個月內起訴</label>
+      <label><input type="radio" name="p2q1" value="C">以原處分機關之上級機關為被告，於裁決書送達後 30 日內起訴</label>
+      <label><input type="radio" name="p2q1" value="D">不經訴願，於裁決書送達後 2 個月內起訴</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 237 條之 3 第 1 項、第 2 項。" data-diag='{"B":"交通裁決事件不經訴願，第 237 條之 3 第 1 項寫的是「逕向」地方行政法院。","C":"沒有訴願就沒有上級機關介入，被告是原處分機關。","D":"2 個月是第 106 條的通常期間；交通裁決撤銷訴訟是 30 日。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">5. 被告機關收受交通裁決事件起訴狀繕本後，依第 237 條之 4 應如何處理？</div>
+      <label><input type="radio" name="p2q2" value="A">應於 10 日內提出答辯狀</label>
+      <label><input type="radio" name="p2q2" value="B">應於 20 日內重新審查原裁決是否合法，認違法者得為更不利益之處分</label>
+      <label><input type="radio" name="p2q2" value="C">應於 20 日內重新審查原裁決是否合法妥當，認違法或不當者應自行撤銷或變更，但不得為更不利益之處分</label>
+      <label><input type="radio" name="p2q2" value="D">應於 30 日內將案件移送訴願管轄機關重新審查</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 237 條之 4 第 2 項：二十日內重新審查原裁決是否合法「妥當」；第 1 款但書不得為更不利益之處分。" data-diag='{"A":"期間是 20 日，而且重點是重新審查，不只是答辯。","B":"審查標準是合法「妥當」，而且第 1 款但書明文禁止更不利益之處分。","D":"交通裁決事件沒有訴願機關介入，重新審查由被告機關自己做。"}'></div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">6. 關於交通裁決事件的裁判費，下列何者正確？</div>
+      <label><input type="radio" name="p2q3" value="A">起訴 300 元，上訴 450 元</label>
+      <label><input type="radio" name="p2q3" value="B">起訴 300 元，上訴 750 元，抗告 300 元</label>
+      <label><input type="radio" name="p2q3" value="C">起訴 2,000 元，上訴加徵二分之一</label>
+      <label><input type="radio" name="p2q3" value="D">起訴 300 元，被告依原告請求處置視為撤回起訴者，須經原告聲請始退還裁判費</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 237 條之 5 第 1 項第 1 至 3 款：300／750／300。第 2 項：視為撤回起訴者，法院應依職權退還。" data-diag='{"A":"上訴不是用加徵二分之一算出來的 450，而是條文直接定 750 元。","C":"2,000 元是簡易程序的裁判費（第 98 條第 2 項）；交通裁決事件依第 98 條之 7 從第 237 條之 5 的特別規定。","D":"第 237 條之 5 第 2 項是法院「應依職權」退還，不須聲請。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 10-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>分得清「收容聲請事件」（第四章，裁定程序）和「行政收容事件涉訟」（第 229 條第 2 項第 5 款，簡易訴訟）</li>
+      <li>背得出第 237 條之 10 兩款：收容異議、續予收容、延長收容，以及停止收容</li>
+      <li>說得出審理的核心保障：訊問受收容人、移民署到場、期間屆滿前宣示或送達否則視為撤銷</li>
+      <li>答得出救濟：5 日抗告、不得再抗告、得聲請再審、不收裁判費</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：這一章處理的是「人身自由」，所以用裁定、要快（第 237 條之 10、之 11）</h2>
+    <div class="law"><b class="art">第 237 條之 10</b>本法所稱收容聲請事件如下：<br>一、依入出國及移民法、臺灣地區與大陸地區人民關係條例及香港澳門關係條例提起收容異議、聲請續予收容及延長收容事件。<br>二、依本法聲請停止收容事件。</div>
+    <div class="law"><b class="art">第 237 條之 11</b>Ⅰ 收容聲請事件，以地方行政法院為第一審管轄法院。<br>Ⅱ 前項事件，由受收容人所在地之地方行政法院管轄，不適用第十三條之規定。</div>
+    <p>外國人、大陸地區人民、港澳居民遭移民署收容時，移民署自己能決定的收容時間有限，之後要由法院審查。第 1 款三種聲請：<b>收容異議</b>（受收容人不服移民署的暫予收容）、<b>續予收容</b>與<b>延長收容</b>（移民署要繼續關人，必須向法院聲請）。第 2 款<b>停止收容</b>是法院裁定收容後，受收容人請求放人。</p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>收容聲請事件（第四章）</th><th>行政收容事件涉訟（§229 II 5）</th></tr></thead>
+      <tbody>
+        <tr><td>性質</td><td>非訟性質的聲請，法院以<b>裁定</b>決定要不要繼續收容</td><td>對收容處分提起的<b>訴訟</b>（撤銷、確認、合併請求賠償），法院以判決終結</td></tr>
+        <tr><td>程序</td><td>收容聲請事件程序，準用簡易程序（§237-17 II）</td><td>簡易訴訟程序</td></tr>
+        <tr><td>管轄</td><td>受收容人所在地（§237-11 II）</td><td>受收容或曾受收容所在地；未曾受收容者被告機關所在地（§229 IV）</td></tr>
+        <tr><td>救濟</td><td>5 日內抗告，不得再抗告（§237-16）</td><td>上訴高等行政法院（§263-1）</td></tr>
+        <tr><td>裁判費</td><td>不適用訴訟費用規定（§237-17 I）</td><td>2,000 元（§98 II）</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：兩者的管轄都排除第 13 條，但連結點不同。收容聲請事件是「所在地」（現在人在哪）；第 229 條第 4 項是「受收容或曾受收容所在地」，而且多了「未曾受收容者由被告機關所在地」的但書。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：怎麼審，第 237 條之 12 到之 14</h2>
+    <div class="law"><b class="art">第 237 條之 12</b>Ⅰ 行政法院審理收容異議、續予收容及延長收容之聲請事件，應訊問受收容人；移民署並應到場陳述。<br>Ⅱ 行政法院審理前項聲請事件時，得徵詢移民署為其他收容替代處分之可能，以供審酌收容之必要性。</div>
+    <div class="law"><b class="art">第 237 條之 13</b>Ⅰ 行政法院裁定續予收容或延長收容後，受收容人及得提起收容異議之人，認為收容原因消滅、無收容必要或有得不予收容情形者，得聲請法院停止收容。<br>Ⅱ 行政法院審理前項事件，認有必要時，得訊問受收容人或徵詢移民署之意見，並準用前條第二項之規定。</div>
+    <div class="law"><b class="art">第 237 條之 14</b>Ⅰ 行政法院認收容異議、停止收容之聲請為無理由者，應以裁定駁回之。認有理由者，應為釋放受收容人之裁定。<br>Ⅱ 行政法院認續予收容、延長收容之聲請為無理由者，應以裁定駁回之。認有理由者，應為續予收容或延長收容之裁定。</div>
+    <p>兩個「應」和兩個「得」。收容異議、續予、延長三種事件，法院<b>應</b>訊問受收容人、移民署<b>應</b>到場（§237-12 I），這是人身自由案件的最低保障。停止收容事件則是「認有必要時<b>得</b>訊問」（§237-13 II），因為前面已經審過一次。替代處分的徵詢在兩種情形都是「得」。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>聲請人</th><th>聲請種類</th><th>有理由</th><th>無理由</th></tr></thead>
+      <tbody>
+        <tr><td>受收容人方</td><td>收容異議、停止收容</td><td>釋放受收容人之裁定</td><td>裁定駁回</td></tr>
+        <tr><td>移民署</td><td>續予收容、延長收容</td><td>續予收容或延長收容之裁定</td><td>裁定駁回</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：時間到了沒裁定，視為撤銷（第 237 條之 15）</h2>
+    <div class="law"><b class="art">第 237 條之 15</b>Ⅰ 行政法院所為續予收容或延長收容之裁定，應於收容期間屆滿前當庭宣示或以正本送達受收容人。未於收容期間屆滿前為之者，續予收容或延長收容之裁定，視為撤銷。<br>Ⅱ 前項正本以電子文件為之者，應以囑託收容處所長官列印裁定影本交付之方式為送達。</div>
+    <p>這是整章最嚴厲的一條。續予或延長收容的裁定，必須在<b>原收容期間屆滿前</b>當庭宣示或送達受收容人；晚一天，裁定「視為撤銷」，人就不能再被關。注意送達對象是受收容人本人，不是移民署。</p>
+    <div class="tip">國考用法：題目給「收容期間 2 月 15 日屆滿，法院 2 月 14 日裁定續予收容，2 月 16 日送達受收容人」，答案是視為撤銷。裁定日期不是重點，宣示或送達到受收容人的時點才是。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：救濟與費用（第 237 條之 16、之 17）</h2>
+    <div class="law"><b class="art">第 237 條之 16</b>Ⅰ 聲請人、受裁定人或移民署對地方行政法院所為收容聲請事件之裁定不服者，應於裁定送達後五日內抗告於管轄之高等行政法院。對於抗告法院之裁定，不得再為抗告。<br>Ⅱ 抗告程序，除依前項規定外，準用第四編之規定。<br>Ⅲ 收容聲請事件之裁定已確定，而有第二百七十三條之情形者，得準用第五編之規定，聲請再審。</div>
+    <div class="law"><b class="art">第 237 條之 17</b>Ⅰ 行政法院受理收容聲請事件，不適用第一編第四章第五節訴訟費用之規定。但依第九十八條之六第一項第一款之規定徵收者，不在此限。<br>Ⅱ 收容聲請事件，除本章別有規定外，準用簡易訴訟程序之規定。</div>
+    <div class="flow">
+      <div class="step"><b>5 日抗告</b>比一般抗告的 10 日（第 268 條）短一半。抗告權人三種：聲請人、受裁定人、移民署。</div>
+      <div class="step"><b>不得再抗告</b>高等行政法院的抗告裁定就是終局。對照通常抗告經高等行政法院裁定後也不得再抗告的精神，這裡直接寫明。</div>
+      <div class="step"><b>得聲請再審</b>裁定確定後有第 273 條各款情形，準用第五編再審。注意用語是「聲請」再審，因為對象是裁定。</div>
+      <div class="step"><b>不收費</b>整個訴訟費用節不適用，只有第 98 條之 6 第 1 項第 1 款的影印費、翻譯費等例外可收。</div>
+    </div>
+    <div class="note">再審事由只準用第 273 條，所以收容聲請事件的再審也受第 273 條第 1 項但書（已依上訴主張其事由或知而不主張者不得再審）的限制，期間則準用第 276 條的 30 日。這部分第 12 課會細講。</div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　外國人甲遭移民署暫予收容，收容於新竹的收容所。移民署向臺北高等行政法院地方行政訴訟庭聲請續予收容，法院未訊問甲，僅書面審查後裁定准許。甲應如何救濟？法院的程序有無違法？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>收容聲請事件的管轄、必要之訊問，以及抗告期間。</dd>
+        <dt>條文</dt><dd>第 237 條之 11 第 2 項（由受收容人所在地之地方行政法院管轄，不適用第 13 條）；第 237 條之 12 第 1 項（審理續予收容之聲請應訊問受收容人，移民署並應到場陳述）；第 237 條之 16 第 1 項（裁定送達後五日內抗告於管轄之高等行政法院）。</dd>
+        <dt>涵攝</dt><dd>甲所在地是新竹，管轄法院應依受收容人所在地定之，不是以移民署所在地為準。續予收容事件法院「應」訊問受收容人，書面審查即裁定准許違反第 237 條之 12 第 1 項。</dd>
+        <dt>結論</dt><dd>甲（受裁定人）應於裁定送達後 5 日內向管轄之高等行政法院抗告，主張管轄錯誤與未經訊問。抗告法院的裁定不得再抗告。甲不必繳裁判費。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　乙受法院裁定延長收容至 8 月 31 日。8 月 20 日乙取得有效護照與機票，主張已無收容必要。乙可以做什麼？若移民署再聲請延長，法院 8 月 30 日裁定准許、9 月 2 日始送達乙，效果如何？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>停止收容的聲請要件，以及第 237 條之 15 的失效效果。</dd>
+        <dt>條文</dt><dd>第 237 條之 13 第 1 項（裁定續予或延長收容後，認收容原因消滅、無收容必要或有得不予收容情形者，得聲請法院停止收容）；第 237 條之 14 第 1 項（有理由者應為釋放受收容人之裁定）；第 237 條之 15 第 1 項（延長收容裁定未於收容期間屆滿前宣示或送達受收容人者，視為撤銷）。</dd>
+        <dt>涵攝</dt><dd>乙已取得護照機票，可主張「無收容必要」，聲請停止收容；法院認有理由應裁定釋放。至於新的延長裁定，8 月 30 日作成但 9 月 2 日才送達，已逾 8 月 31 日的收容期間屆滿日。</dd>
+        <dt>結論</dt><dd>乙得依第 237 條之 13 聲請停止收容。新的延長收容裁定因未於期間屆滿前宣示或送達，依第 237 條之 15 第 1 項視為撤銷，移民署不得據以繼續收容。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="D">
+      <div class="stem">7. 下列何者<b>不屬於</b>第 237 條之 10 所稱收容聲請事件？</div>
+      <label><input type="radio" name="p3q1" value="A">依入出國及移民法提起之收容異議</label>
+      <label><input type="radio" name="p3q1" value="B">移民署聲請延長收容</label>
+      <label><input type="radio" name="p3q1" value="C">受收容人依行政訴訟法聲請停止收容</label>
+      <label><input type="radio" name="p3q1" value="D">受收容人對收容處分提起撤銷訴訟並合併請求損害賠償</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="對收容處分提起的撤銷訴訟與合併請求賠償，是第 229 條第 2 項第 5 款的簡易訴訟事件，不是第四章的收容聲請事件。" data-diag='{"A":"第 237 條之 10 第 1 款明列收容異議。","B":"第 237 條之 10 第 1 款明列聲請續予收容及延長收容。","C":"第 237 條之 10 第 2 款：依本法聲請停止收容事件。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">8. 對地方行政法院所為收容聲請事件之裁定不服，應如何救濟？</div>
+      <label><input type="radio" name="p3q2" value="A">於裁定送達後 5 日內抗告於管轄之高等行政法院，對抗告法院之裁定不得再抗告</label>
+      <label><input type="radio" name="p3q2" value="B">於裁定送達後 10 日內抗告於管轄之高等行政法院，對抗告法院之裁定得再抗告於最高行政法院</label>
+      <label><input type="radio" name="p3q2" value="C">於裁定送達後 20 日內上訴於管轄之高等行政法院</label>
+      <label><input type="radio" name="p3q2" value="D">於裁定送達後 5 日內抗告於最高行政法院</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 237 條之 16 第 1 項。" data-diag='{"B":"10 日是一般抗告期間（第 268 條），收容聲請事件縮短為 5 日，且明文不得再抗告。","C":"收容聲請事件以裁定終結，救濟方式是抗告不是上訴。","D":"抗告法院是管轄之高等行政法院，不是最高行政法院。"}'></div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">9. 關於收容聲請事件的審理，下列何者正確？</div>
+      <label><input type="radio" name="p3q3" value="A">審理續予收容之聲請時，得視情形決定是否訊問受收容人</label>
+      <label><input type="radio" name="p3q3" value="B">續予收容之裁定應於收容期間屆滿前送達移民署，否則視為撤銷</label>
+      <label><input type="radio" name="p3q3" value="C">法院應訊問受收容人，移民署並應到場陳述；法院並得徵詢移民署為其他收容替代處分之可能</label>
+      <label><input type="radio" name="p3q3" value="D">受理收容聲請事件應徵收裁判費新臺幣 300 元</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 237 條之 12 第 1 項、第 2 項。" data-diag='{"A":"續予收容事件是「應」訊問（第 237 條之 12 第 1 項）；「認有必要時得訊問」是停止收容事件（第 237 條之 13 第 2 項）。","B":"第 237 條之 15 第 1 項的送達對象是受收容人，不是移民署。","D":"第 237 條之 17 第 1 項：收容聲請事件不適用訴訟費用之規定。300 元是交通裁決事件的數字。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 10-4 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>拆得開第 237 條之 18 第 1 項：誰能告、三種損害型態、被告、法院、請求內容，以及第 2 項禁止合併</li>
+      <li>記得專屬管轄、1 年不變期間、被告 2 個月重新檢討三款、不適用訴訟參加而改用第 237 條之 23、之 24 的參加</li>
+      <li>說得出判決三種結果（無效、失效、違法）與對第三人的效力，以及第 237 條之 29 對刑事與其他確定裁判的影響</li>
+      <li>知道這一章在第 49 條之 1 第 1 項第 1 款是強制律師代理事件，暫時權利保護走第 237 條之 30</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：這是對「法規」的訴訟（第 237 條之 18、之 19、之 20）</h2>
+    <div class="law"><b class="art">第 237 條之 18</b>Ⅰ 人民、地方自治團體或其他公法人認為行政機關依都市計畫法發布之都市計畫違法，而直接損害、因適用而損害或在可預見之時間內將損害其權利或法律上利益者，得依本章規定，以核定都市計畫之行政機關為被告，逕向管轄之高等行政法院提起訴訟，請求宣告該都市計畫無效。<br>Ⅱ 前項情形，不得與非行本章程序之其他訴訟合併提起。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>要素</th><th>內容</th><th>陷阱</th></tr></thead>
+      <tbody>
+        <tr><td>原告</td><td>人民、地方自治團體或其他公法人</td><td>公法人也能當原告，這在其他訴訟類型少見</td></tr>
+        <tr><td>對象</td><td>行政機關依都市計畫法發布之都市計畫</td><td>限於「都市計畫法」的都市計畫，其他法規命令不能走這章</td></tr>
+        <tr><td>損害型態</td><td>直接損害／因適用而損害／在可預見之時間內將損害</td><td>第三種允許「還沒受害」就起訴，所以仍是主觀訴訟，不是公益訴訟</td></tr>
+        <tr><td>被告</td><td>核定都市計畫之行政機關</td><td>不是擬定機關，也不是發布機關（他們依 §237-25 到場陳述意見）</td></tr>
+        <tr><td>法院</td><td>逕向高等行政法院，不經訴願</td><td>專屬都市計畫區所在地（§237-19）</td></tr>
+        <tr><td>請求</td><td>宣告該都市計畫無效</td><td>第 2 項：不得與非本章程序的訴訟合併</td></tr>
+      </tbody>
+    </table></div>
+    <div class="law"><b class="art">第 237 條之 19</b>前條訴訟，專屬都市計畫區所在地之高等行政法院管轄。</div>
+    <div class="law"><b class="art">第 237 條之 20</b>本章訴訟，應於都市計畫發布後一年之不變期間內提起。但都市計畫發布後始發生違法之原因者，應自原因發生時起算。</div>
+    <div class="warn">常錯：被告寫成「發布機關」。條文是「核定」都市計畫之機關。都市計畫通常由地方政府擬定、上級機關核定、再由地方政府發布，三個角色可能是不同機關。判決確定後要「公告判決主文」的才是原發布機關（§237-29 I）。</div>
+    <div class="tip">第 49 條之 1 第 1 項第 1 款：高等行政法院管轄之都市計畫審查程序事件，當事人應委任律師為訴訟代理人。再審（第 4 款）、重新審理（第 5 款）也是。考題問「都市計畫審查程序原告未委任律師」，依第 49 條之 1 第 7 項應先定期間命補正。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：被告先自我檢討 2 個月（第 237 條之 21）</h2>
+    <div class="law"><b class="art">第 237 條之 21</b>Ⅰ 高等行政法院收受起訴狀後，應將起訴狀繕本送達被告。<br>Ⅱ 被告收受起訴狀繕本後，應於二個月內重新檢討原告請求宣告無效之都市計畫是否合法，並分別依下列規定辦理：<br>一、如認其違反作成之程序規定得補正者，應為補正，並陳報高等行政法院。<br>二、如認其違法者，應將其違法情形陳報高等行政法院，並得為必要之處置。<br>三、如認其合法者，應於答辯狀說明其理由。<br>Ⅲ 被告應附具答辯狀，並將原都市計畫與重新檢討之卷證及其他必要文件，一併提出於管轄之高等行政法院。如有與原告請求宣告無效之都市計畫具不可分關係者，亦應一併陳報。</div>
+    <p>結構和交通裁決的第 237 條之 4 一樣：不訴願，改由被告自己重新檢討。差別在期間（2 個月對 20 日）和結果：這裡沒有「依請求處置視為撤回起訴」的規定，被告補正程序瑕疵後，依第 237 條之 27 後段法院會以判決駁回原告之訴。</p>
+    <div class="note">第 3 項的「不可分關係」會在判決那一端回來：第 237 條之 28 第 1 項後段，與請求部分具不可分關係且經審查違法者，併宣告無效。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：參加與到場，第 237 條之 22 到之 26</h2>
+    <div class="law"><b class="art">第 237 條之 22</b>高等行政法院受理都市計畫審查程序事件，不適用前編第三章第四節訴訟參加之規定。</div>
+    <div class="law"><b class="art">第 237 條之 23</b>Ⅰ 高等行政法院認為都市計畫如宣告無效、失效或違法，第三人之權利或法律上利益將直接受損害者，得依職權命其參加訴訟，並得因該第三人之聲請，裁定允許其參加。<br>Ⅱ 前項情形，準用第四十二條第二項、第四十三條、第四十五條及第四十七條規定。<br>Ⅲ 依第一項參加訴訟之人為訴訟當事人。</div>
+    <div class="law"><b class="art">第 237 條之 24</b>Ⅰ 都市計畫審查程序事件，高等行政法院認為具利害關係之第三人有輔助一造之必要者，得命其參加訴訟。有利害關係之第三人亦得聲請參加。<br>Ⅱ 前項情形，準用民事訴訟法第五十九條至第六十一條及第六十三條至第六十七條之規定。</div>
+    <div class="law"><b class="art">第 237 條之 25</b>高等行政法院審理都市計畫審查程序事件，應依職權通知都市計畫之擬定機關及發布機關於期日到場陳述意見，並得通知權限受都市計畫影響之行政機關於期日到場陳述意見。權限受都市計畫影響之行政機關亦得聲請於期日到場陳述意見。</div>
+    <div class="law"><b class="art">第 237 條之 26</b>都市計畫審查程序事件已經訴訟繫屬尚未終結，同一都市計畫經聲請憲法法庭判決宣告違憲者，高等行政法院在憲法法庭審理程序終結前，得以裁定停止訴訟程序。</div>
+    <p>第 41 條到第 48 條的訴訟參加在這章整個關掉（§237-22），換成兩種自己的參加：§237-23 是權利將「直接受損害」的第三人，參加後是<b>當事人</b>（類似第 42 條獨立參加）；§237-24 是有利害關係而「輔助一造」的第三人（類似第 44 條輔助參加）。擬定機關與發布機關不是當事人，但法院<b>應</b>通知到場陳述意見。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：怎麼判、判了之後（第 237 條之 27 到之 31）</h2>
+    <div class="law"><b class="art">第 237 條之 27</b>高等行政法院認都市計畫未違法者，應以判決駁回原告之訴。都市計畫僅違反作成之程序規定，而已於第一審言詞辯論終結前合法補正者，亦同。</div>
+    <div class="law"><b class="art">第 237 條之 28</b>Ⅰ 高等行政法院認原告請求宣告無效之都市計畫違法者，應宣告該都市計畫無效。同一都市計畫中未經原告請求，而與原告請求宣告無效之部分具不可分關係，經法院審查認定違法者，併宣告無效。<br>Ⅱ 前項情形，都市計畫發布後始發生違法原因者，應宣告自違法原因發生時起失效。<br>Ⅲ 都市計畫違法，而依法僅得為違法之宣告者，應宣告其違法。<br>Ⅳ 前三項確定判決，對第三人亦有效力。<br>Ⅴ 第一項情形，高等行政法院認與原告請求宣告無效之部分具不可分關係之不同都市計畫亦違法者，得於判決理由中一併敘明。</div>
+    <div class="flow">
+      <div class="step"><b>無效</b>發布時就違法：宣告無效，溯及地不生效力。不可分的其他部分一併宣告。</div>
+      <div class="step"><b>失效</b>發布後才發生違法原因：自原因發生時起失效，之前的效力保留。</div>
+      <div class="step"><b>違法</b>依法只能宣告違法（不能宣告無效）的情形：宣告違法，相關機關依判決意旨處置（§237-29 V）。</div>
+      <div class="step"><b>對世效</b>三種確定判決對第三人亦有效力（§237-28 IV），因為對象是法規，不是個案。</div>
+    </div>
+    <div class="law"><b class="art">第 237 條之 29</b>Ⅰ 都市計畫經判決宣告無效、失效或違法確定者，判決正本應送達原發布機關，由原發布機關依都市計畫發布方式公告判決主文。<br>Ⅱ 因前項判決致刑事確定裁判違背法令者，得依刑事訴訟法規定提起非常上訴。<br>Ⅲ 前項以外之確定裁判，其效力不受影響。但該裁判尚未執行或執行未完畢者，自宣告都市計畫無效或失效之判決確定之日起，於無效或失效之範圍內不得強制執行。<br>Ⅳ 適用第一項受無效或失效宣告之都市計畫作成之行政處分確定者，其效力與後續執行準用前項之規定。<br>Ⅴ 依前條第三項宣告都市計畫違法確定者，相關機關應依判決意旨為必要之處置。</div>
+    <p>第 237 條之 29 回答「以前依這個計畫做的事怎麼辦」：刑事確定裁判可以非常上訴；其他確定裁判和確定的行政處分<b>效力不受影響</b>，但還沒執行或沒執行完的部分，在無效失效範圍內不得再強制執行。這是法安定性和個案正義的折衷。</p>
+    <div class="law"><b class="art">第 237 條之 30</b>Ⅰ 於爭執之都市計畫，為防止發生重大之損害或避免急迫之危險而有必要時，得聲請管轄本案之行政法院暫時停止適用或執行，或為其他必要之處置。<br>Ⅱ 前項情形，準用第二百九十五條至第二百九十七條、第二百九十八條第三項、第四項、第三百零一條及第三百零三條之規定。<br>Ⅲ 行政法院裁定准許第一項之聲請者，準用前條第一項規定。該裁定經廢棄、變更或撤銷者，亦同。</div>
+    <div class="law"><b class="art">第 237 條之 31</b>都市計畫審查程序，除本章別有規定外，準用本編第一章之規定。</div>
+    <div class="note">第 237 條之 30 是這章的暫時權利保護（第 7 課講過）：聲請要件寫法接近定暫時狀態處分，准許裁定也要比照第 237 條之 29 第 1 項公告。聲請要繳 1,000 元裁判費（第 98 條之 5 第 7 款）。第 237 條之 31 說明本章準用的是<b>通常程序</b>（第一章），不是簡易程序，所以第一審在高等行政法院、上訴到最高行政法院。</div>
+  </div>
+
+  <div class="card">
+    <h2>工具：四程序比較表</h2>
+    <p class="small muted">把四套特別程序和通常程序並排。勾「只看差異」會把四個特別程序欄位內容完全相同的列藏起來，剩下的就是要背的。</p>
+    <div class="toolbox">
+      <label><input type="checkbox" id="cmpDiff"> 只看差異</label>
+      <span class="small muted" id="cmpCount"></span>
+      <div class="scroll"><table id="cmpTable">
+        <thead><tr><th>項目</th><th>簡易訴訟程序</th><th>交通裁決事件</th><th>收容聲請事件</th><th>都市計畫審查程序</th></tr></thead>
+        <tbody>
+          <tr><th>第一審法院</th><td>地方行政法院（§229 I）</td><td>地方行政法院（§237-3 I）</td><td>地方行政法院（§237-11 I）</td><td>高等行政法院（§237-18 I）</td></tr>
+          <tr><th>管轄地</th><td>依通常規定，被告機關所在地為原則（§13）；§229 II 5 事件依 §229 IV</td><td>原告住所地、居所地、所在地或違規行為地，任選（§237-2）</td><td>受收容人所在地，不適用 §13（§237-11 II）</td><td>專屬都市計畫區所在地（§237-19）</td></tr>
+          <tr><th>被告</th><td>依 §24，看訴願結果</td><td>原處分機關（§237-3 I）</td><td>無被告；聲請人與相對人為移民署與受收容人</td><td>核定都市計畫之行政機關（§237-18 I）</td></tr>
+          <tr><th>訴願前置</th><td>撤銷、課予義務訴訟要（§4、§5）</td><td>不經訴願，被告 20 日內重新審查（§237-3 I、§237-4 II）</td><td>無，本質是聲請</td><td>不經訴願，被告 2 個月內重新檢討（§237-18 I、§237-21 II）</td></tr>
+          <tr><th>起訴期間</th><td>訴願決定書送達後 2 個月（§106 I）</td><td>撤銷訴訟：裁決書送達後 30 日（§237-3 II）</td><td>依移民法規定之收容期間聲請</td><td>都市計畫發布後 1 年，發布後始違法者自原因發生時起算（§237-20）</td></tr>
+          <tr><th>裁判費</th><td>起訴 2,000（§98 II）</td><td>起訴 300、上訴 750、抗告 300（§237-5）</td><td>不徵收（§237-17 I）</td><td>起訴 4,000（§98 II，依 §237-31 準用通常程序）</td></tr>
+          <tr><th>審理方式</th><td>獨任法官、得言詞起訴、遠距或巡迴（§231、§232）</td><td>準用簡易程序（§237-9）</td><td>裁定程序；應訊問受收容人、移民署應到場（§237-12 I）</td><td>合議；應通知擬定與發布機關到場（§237-25）</td></tr>
+          <tr><th>言詞辯論</th><td>原則應行（§188 I）</td><td>得不經言詞辯論（§237-7）</td><td>訊問程序，非言詞辯論</td><td>原則應行（§188 I）</td></tr>
+          <tr><th>判決書</th><td>得僅記要領、得以筆錄代替（§234）</td><td>同簡易程序（§237-9 準用）</td><td>以裁定終結（§237-14）</td><td>依 §209 作判決書</td></tr>
+          <tr><th>上訴／抗告路徑</th><td>上訴高等行政法院，第二審即終審（§263-1）</td><td>上訴高等行政法院，第二審即終審（§263-1）</td><td>5 日內抗告高等行政法院，不得再抗告（§237-16 I）</td><td>上訴最高行政法院，以違背法令為理由（§238、§242）</td></tr>
+          <tr><th>強制律師代理</th><td>否</td><td>否</td><td>否</td><td>是（§49-1 I 1）</td></tr>
+          <tr><th>再審</th><td>第五編（§273 以下）</td><td>第五編；裁判費依 §237-5 I 4</td><td>裁定確定後有 §273 情形得準用第五編聲請再審（§237-16 III）</td><td>第五編；強制律師代理（§49-1 I 4）</td></tr>
+          <tr><th>審判權</th><td>公法上爭議（§2）</td><td>公法上爭議（§2）</td><td>公法上爭議（§2）</td><td>公法上爭議（§2）</td></tr>
+          <tr><th>職權調查</th><td>適用 §125、§133</td><td>適用 §125、§133</td><td>適用 §125、§133</td><td>適用 §125、§133</td></tr>
+          <tr><th>補充／準用</th><td>仍適用通常程序（§236）</td><td>準用簡易程序（§237-9）</td><td>準用簡易程序（§237-17 II）</td><td>準用第一章通常程序（§237-31）</td></tr>
+          <tr><th>程序誤用時</th><td>§263-2、§263-3</td><td>§263-2、§263-3</td><td>—</td><td>§263-3 II（誤由地方行政法院審判）</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>例題</h2>
+    <details class="example"><summary>例題 1　某市政府擬定、內政部核定、市政府於 112 年 3 月 1 日發布甲都市計畫，將乙所有土地劃為公園用地。乙於 113 年 5 月 1 日提起都市計畫審查訴訟，請求宣告無效，並合併請求市政府徵收補償 500 萬元。法院應如何處理？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>起訴期間、被告適格、合併請求之禁止。</dd>
+        <dt>條文</dt><dd>第 237 條之 20（發布後一年之不變期間）；第 237 條之 18 第 1 項（以核定都市計畫之行政機關為被告）、第 2 項（不得與非行本章程序之其他訴訟合併提起）。</dd>
+        <dt>涵攝</dt><dd>112 年 3 月 1 日發布，1 年不變期間至 113 年 3 月 1 日屆滿，乙 113 年 5 月 1 日起訴已逾期，除非能證明「發布後始發生違法之原因」而改自原因發生時起算。被告應是核定機關內政部，不是擬定與發布的市政府。徵收補償是一般給付之請求，不是本章程序，依第 2 項不得合併。</dd>
+        <dt>結論</dt><dd>本案起訴逾 1 年不變期間，法院應以裁定駁回（第 107 條第 1 項第 6 款）；縱未逾期，合併的 500 萬元請求也不合法，應另行起訴。乙若列市政府為被告，法院應先命補正（第 107 條第 2 項）。</dd>
+      </dl></div>
+    </details>
+    <details class="example"><summary>例題 2　丙對 A 都市計畫提起審查訴訟，高等行政法院審理後認為 A 計畫發布時合法，但 2 年後因上位計畫變更而牴觸上位計畫；另發現未經丙請求的 B 部分與 A 不可分且同樣違法。法院應如何判決？判決對曾依 A 計畫受處分而確定的丁有何影響？</summary>
+      <div class="body"><dl class="step4">
+        <dt>爭點</dt><dd>無效與失效的區分、不可分部分的併宣告、對第三人與確定處分的效力。</dd>
+        <dt>條文</dt><dd>第 237 條之 28 第 1 項後段（不可分關係部分併宣告無效）、第 2 項（發布後始發生違法原因者宣告自原因發生時起失效）、第 4 項（確定判決對第三人亦有效力）；第 237 條之 29 第 3 項、第 4 項（確定裁判與確定處分效力不受影響，但未執行或執行未完畢部分不得強制執行）。</dd>
+        <dt>涵攝</dt><dd>A 計畫發布時合法、嗣後才違法，不是宣告無效而是宣告「自違法原因發生時起失效」。B 部分與 A 不可分且違法，法院併予宣告。丁的處分已確定，效力不受影響，但若尚未執行完畢，自判決確定日起在失效範圍內不得強制執行。</dd>
+        <dt>結論</dt><dd>判決主文：A 計畫（含不可分之 B 部分）自上位計畫變更時起失效。判決確定後對丁亦有效力（§237-28 IV），但丁的確定處分本身不因此失效，只是未執行部分不得再執行；判決正本送達原發布機關公告主文（§237-29 I）。</dd>
+      </dl></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>練習</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">10. 關於都市計畫審查訴訟的被告與管轄，下列何者正確？</div>
+      <label><input type="radio" name="p4q1" value="A">以發布都市計畫之機關為被告，由被告機關所在地之高等行政法院管轄</label>
+      <label><input type="radio" name="p4q1" value="B">以核定都市計畫之機關為被告，專屬都市計畫區所在地之高等行政法院管轄</label>
+      <label><input type="radio" name="p4q1" value="C">以擬定都市計畫之機關為被告，由原告住所地之高等行政法院管轄</label>
+      <label><input type="radio" name="p4q1" value="D">以核定都市計畫之機關為被告，由地方行政法院為第一審管轄法院</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 237 條之 18 第 1 項：以核定都市計畫之行政機關為被告；第 237 條之 19：專屬都市計畫區所在地之高等行政法院管轄。" data-diag='{"A":"發布機關是判決確定後負責公告判決主文的機關（第 237 條之 29 第 1 項），不是被告。","C":"擬定機關只是依第 237 條之 25 被通知到場陳述意見。","D":"第 237 條之 18 第 1 項明定逕向高等行政法院起訴，地方行政法院沒有管轄權。"}'></div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">11. 關於都市計畫審查程序的起訴期間與合併請求，下列何者正確？</div>
+      <label><input type="radio" name="p4q2" value="A">應於都市計畫發布後 2 個月之不變期間內提起</label>
+      <label><input type="radio" name="p4q2" value="B">應於都市計畫發布後 1 年內提起，並得合併請求損害賠償</label>
+      <label><input type="radio" name="p4q2" value="C">無期間限制，但不得合併提起其他訴訟</label>
+      <label><input type="radio" name="p4q2" value="D">應於都市計畫發布後 1 年之不變期間內提起，發布後始發生違法原因者自原因發生時起算；不得與非行本章程序之其他訴訟合併提起</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 237 條之 20 與第 237 條之 18 第 2 項。" data-diag='{"A":"2 個月是第 106 條對撤銷、課予義務訴訟的期間；本章是 1 年。","B":"第 237 條之 18 第 2 項明文不得與非行本章程序之其他訴訟合併提起，第 7 條的合併請求在這裡不適用。","C":"第 237 條之 20 定有 1 年不變期間。"}'></div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">12. 高等行政法院審理都市計畫審查事件，認該計畫於發布後 3 年因法律修正而牴觸新法。法院應如何判決？</div>
+      <label><input type="radio" name="p4q3" value="A">宣告該都市計畫自違法原因發生時起失效</label>
+      <label><input type="radio" name="p4q3" value="B">宣告該都市計畫自發布時起無效</label>
+      <label><input type="radio" name="p4q3" value="C">以判決駁回原告之訴，因發布時合法</label>
+      <label><input type="radio" name="p4q3" value="D">宣告該都市計畫違法，並命被告於 2 個月內修正</label>
+      <button class="btn small check">對答案</button>
+      <div class="fb" data-exp="第 237 條之 28 第 2 項：都市計畫發布後始發生違法原因者，應宣告自違法原因發生時起失效。" data-diag='{"B":"無效是對發布時即違法的計畫；嗣後違法用「失效」，而且只往後生效。","C":"第 237 條之 20 但書與第 237 條之 28 第 2 項都承認「發布後始發生違法原因」可以成為勝訴理由。","D":"宣告違法是第 237 條之 28 第 3 項「依法僅得為違法之宣告」的情形；而且法院沒有命被告限期修正的權限，只有第 237 條之 29 第 5 項的「相關機關應依判決意旨為必要之處置」。"}'></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card goal">
+    <h2>章末測驗（選擇 10 題 + 實例 2 題）</h2>
+    <p>選擇題全部作答後按「交卷」，10 題答對 8 題過關。實例題先自己寫，再展開參考答案對照，自評後按「我寫到了」或「要再加強」。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 依第 229 條第 3 項，司法院得以命令將簡易訴訟程序的金額門檻調整為：</div>
+      <label><input type="radio" name="qz1" value="A">減為 20 萬元或增至 100 萬元</label>
+      <label><input type="radio" name="qz1" value="B">減為 25 萬元或增至 75 萬元</label>
+      <label><input type="radio" name="qz1" value="C">增至 150 萬元</label>
+      <label><input type="radio" name="qz1" value="D">增至 1,000 萬元</label>
+      <div class="fb" data-exp="第 229 條第 3 項：減為新臺幣二十五萬元或增至新臺幣七十五萬元。1,000 萬是第 104 條之 1 第 2 項對 150 萬門檻的調整上限。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">2. 甲對 30 萬元罰鍰提起撤銷訴訟（簡易事件），審理中追加請求撤銷另一獨立的「廢止設立許可」處分，法院合併辯論。地方行政法院應：</div>
+      <label><input type="radio" name="qz2" value="A">就全案依簡易程序審理</label>
+      <label><input type="radio" name="qz2" value="B">就全案改依通常程序審理</label>
+      <label><input type="radio" name="qz2" value="C">裁定移送管轄之高等行政法院</label>
+      <label><input type="radio" name="qz2" value="D">駁回追加之訴</label>
+      <div class="fb" data-exp="廢止設立許可是非財產性質處分，屬高等行政法院通常程序第一審管轄；第 230 條第 2 項：訴之全部或一部屬於高等行政法院管轄者，地方行政法院應裁定移送。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">3. 關於交通裁決事件之管轄，下列何者正確？</div>
+      <label><input type="radio" name="qz3" value="A">專屬被告機關所在地之地方行政法院管轄</label>
+      <label><input type="radio" name="qz3" value="B">專屬違規行為地之地方行政法院管轄</label>
+      <label><input type="radio" name="qz3" value="C">由原告住所地之高等行政法院管轄</label>
+      <label><input type="radio" name="qz3" value="D">得由原告住所地、居所地、所在地或違規行為地之地方行政法院管轄</label>
+      <div class="fb" data-exp="第 237 條之 2。是「得由」，四個連結點任選，不是專屬管轄。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">4. 乙提起交通裁決撤銷訴訟，被告重新審查後認原裁決罰鍰過輕。被告得否變更為更重之罰鍰？</div>
+      <label><input type="radio" name="qz4" value="A">不得，第 237 條之 4 第 2 項第 1 款但書禁止更不利益之處分</label>
+      <label><input type="radio" name="qz4" value="B">得，因重新審查之標準為合法妥當</label>
+      <label><input type="radio" name="qz4" value="C">得，但應經法院許可</label>
+      <label><input type="radio" name="qz4" value="D">得，但須於 20 日內為之</label>
+      <div class="fb" data-exp="第 237 條之 4 第 2 項第 1 款但書：不得為更不利益之處分。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">5. 交通裁決事件被告於第一審終局裁判生效前，已完全依原告之請求處置並陳報法院。效果為何？</div>
+      <label><input type="radio" name="qz5" value="A">法院應為原告勝訴之判決</label>
+      <label><input type="radio" name="qz5" value="B">法院應以訴訟欠缺權利保護必要駁回原告之訴</label>
+      <label><input type="radio" name="qz5" value="C">以陳報時視為原告撤回起訴，法院應依職權退還裁判費</label>
+      <label><input type="radio" name="qz5" value="D">視為兩造成立和解</label>
+      <div class="fb" data-exp="第 237 條之 4 第 3 項與第 237 條之 5 第 2 項。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">6. 關於收容聲請事件之管轄，下列何者正確？</div>
+      <label><input type="radio" name="qz6" value="A">由移民署所在地之地方行政法院管轄</label>
+      <label><input type="radio" name="qz6" value="B">由受收容人所在地之地方行政法院管轄，不適用第 13 條</label>
+      <label><input type="radio" name="qz6" value="C">由受收容人戶籍地之地方行政法院管轄</label>
+      <label><input type="radio" name="qz6" value="D">由高等行政法院為第一審管轄法院</label>
+      <div class="fb" data-exp="第 237 條之 11 第 1 項、第 2 項。"></div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">7. 法院於收容期間屆滿前裁定續予收容，但於期間屆滿後始送達受收容人。效果為何？</div>
+      <label><input type="radio" name="qz7" value="A">裁定仍有效，僅送達瑕疵得補正</label>
+      <label><input type="radio" name="qz7" value="B">裁定自送達時起生效</label>
+      <label><input type="radio" name="qz7" value="C">受收容人得於 5 日內抗告</label>
+      <label><input type="radio" name="qz7" value="D">續予收容之裁定視為撤銷</label>
+      <div class="fb" data-exp="第 237 條之 15 第 1 項：未於收容期間屆滿前當庭宣示或以正本送達受收容人者，視為撤銷。"></div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">8. 下列關於收容聲請事件的敘述，何者正確？</div>
+      <label><input type="radio" name="qz8" value="A">不適用訴訟費用之規定，但第 98 條之 6 第 1 項第 1 款所列費用之徵收不在此限</label>
+      <label><input type="radio" name="qz8" value="B">裁定確定後不得聲請再審</label>
+      <label><input type="radio" name="qz8" value="C">對抗告法院之裁定得再抗告於最高行政法院</label>
+      <label><input type="radio" name="qz8" value="D">除本章別有規定外，準用通常訴訟程序之規定</label>
+      <div class="fb" data-exp="第 237 條之 17 第 1 項。再審：第 237 條之 16 第 3 項得準用第五編聲請再審；不得再抗告：第 237 條之 16 第 1 項後段；準用的是簡易程序：第 237 條之 17 第 2 項。"></div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">9. 關於都市計畫審查程序中被告的重新檢討，下列何者正確？</div>
+      <label><input type="radio" name="qz9" value="A">被告應於 20 日內重新檢討</label>
+      <label><input type="radio" name="qz9" value="B">被告認都市計畫違法而自行廢止者，視為原告撤回起訴</label>
+      <label><input type="radio" name="qz9" value="C">被告應於 2 個月內重新檢討，認違反作成之程序規定得補正者應補正並陳報法院</label>
+      <label><input type="radio" name="qz9" value="D">被告認其合法者，無須附具答辯狀</label>
+      <div class="fb" data-exp="第 237 條之 21 第 2 項第 1 款、第 3 項。本章沒有「視為撤回起訴」的規定，那是交通裁決事件（第 237 條之 4 第 3 項）。"></div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">10. 地方行政法院就應適用通常訴訟程序之事件誤用簡易程序審判，當事人上訴且於上訴審即表示異議。高等行政法院應：</div>
+      <label><input type="radio" name="qz10" value="A">依簡易程序之上訴審規定為裁判</label>
+      <label><input type="radio" name="qz10" value="B">廢棄原判決，將事件發回或發交管轄地方行政法院</label>
+      <label><input type="radio" name="qz10" value="C">廢棄原判決，逕依通常訴訟程序為第一審判決</label>
+      <label><input type="radio" name="qz10" value="D">以上訴無理由駁回</label>
+      <div class="fb" data-exp="第 263 條之 3 第 1 項。「逕依通常程序為第一審判決」是第 2 項「以高等行政法院為第一審管轄法院之事件誤由地方行政法院審判」的處理；當事人無異議而為本案陳述才依原程序之上訴審規定裁判（第 3 項）。"></div>
+    </div>
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>實例題（自評）</h2>
+    <div class="essay" data-id="e1">
+      <div class="stem">實例一　甲於 113 年 4 月 1 日收到監理站依道交條例第 8 條作成之裁決書，裁處罰鍰 6,000 元、吊扣駕照 3 個月；裁決書正確記載救濟期間與法院。甲於 4 月 20 日向其住所地之地方行政法院起訴請求撤銷裁決，並合併請求（1）返還已繳送之駕照、（2）因吊扣駕照無法上班之薪資損失 5 萬元。監理站收受起訴狀繕本後第 10 日，自行撤銷原裁決並發還駕照，但拒絕賠償薪資損失，於同日陳報法院。<br>問：(1) 本件應適用何種程序？被告為誰？期間是否遵守？(2) 監理站的處置對訴訟有何影響？(3) 薪資損失部分應如何處理？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>爭點</dt><dd>合併非交通裁決事件請求時的程序；被告部分處置的效果；國家賠償請求在交通裁決事件中的地位。</dd>
+          <dt>條文</dt><dd>第 237 條之 1 第 1 項第 1 款、第 2 款（撤銷裁決與返還駕照為交通裁決事件）、第 2 項（合併提起第 1 項以外之訴訟者應適用簡易或通常程序）、第 3 項（§237-2、§237-3、§237-4 I、II 仍準用）；第 237 條之 3 第 1 項、第 2 項（原處分機關為被告，30 日不變期間）；第 237 條之 4 第 3 項（「完全」依原告請求處置始視為撤回起訴）；第 7 條（合併請求損害賠償）；第 229 條第 2 項第 3 款（50 萬元以下公法上財產關係之訴訟適用簡易程序）。</dd>
+          <dt>涵攝</dt><dd>(1) 撤銷裁決與返還駕照是交通裁決事件；但薪資損失 5 萬元的賠償不在第 237 條之 1 第 1 項兩款內，依第 2 項整件應改依簡易程序（金額 5 萬元在 50 萬以下）或通常程序審理。依第 3 項，被告仍為原處分機關監理站，期間仍是裁決書送達後 30 日：4 月 1 日送達、4 月 20 日起訴，未逾期；管轄仍可依 §237-2 選住所地法院。(2) 監理站撤銷裁決並發還駕照，是第 237 條之 4 第 2 項第 1、3 款的處置，但賠償請求未獲滿足，不是「完全」依請求處置，不生視為撤回起訴的效果；撤銷與返還部分已無爭執，法院就該部分可能以欠缺權利保護必要處理，但訴訟繫屬仍在。(3) 薪資損失屬第 7 條得於同一程序合併請求之損害賠償，由法院依簡易程序就其有無理由審理。</dd>
+          <dt>結論</dt><dd>本件因合併賠償請求而改依簡易程序，被告為監理站，起訴未逾期；監理站的部分處置不使訴訟終結；薪資損失依第 7 條在同一程序中審理。</dd>
+          <dt>加分</dt><dd>可說明第 237 條之 1 第 3 項的立法目的：避免人民因多請求一項賠償就失去不經訴願、就近起訴、30 日期間與被告重新審查等保護，呼應第 1 條保障人民權益的宗旨。並可指出改依簡易程序後，裁判費應回到第 98 條第 2 項的 2,000 元，而非 300 元。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+    <div class="essay" data-id="e2">
+      <div class="stem">實例二　乙公司所有土地位於 A 市，A 市政府擬定、內政部核定、A 市政府於 112 年 7 月 1 日發布甲都市計畫，將該土地由住宅區變更為公園用地。乙公司於 113 年 5 月 1 日以 A 市政府為被告，向 A 市所在地之高等行政法院起訴請求宣告甲計畫無效，未委任律師。審理中，鄰地所有人丙主張甲計畫若被宣告無效將使其土地回復為工業區而受損害，聲請參加。<br>問：(1) 乙公司之訴有無程序上的問題？法院應如何處理？(2) 丙得否參加？依據為何？(3) 若法院最終宣告甲計畫無效，對丙及其他未參加訴訟之人有無效力？</div>
+      <textarea placeholder="先自己寫，再展開參考答案。"></textarea>
+      <details class="example"><summary>參考答案</summary>
+        <div class="body"><dl class="step4">
+          <dt>爭點</dt><dd>都市計畫審查訴訟的被告適格、起訴期間、強制律師代理；第三人參加的特別規定；判決的對世效。</dd>
+          <dt>條文</dt><dd>第 237 條之 18 第 1 項（以核定都市計畫之行政機關為被告）；第 237 條之 19（專屬管轄）；第 237 條之 20（發布後 1 年不變期間）；第 49 條之 1 第 1 項第 1 款、第 7 項（都市計畫審查程序事件應委任律師，未委任者先定期間命補正，逾期裁定駁回）；第 107 條第 2 項（誤列被告應先命補正）；第 237 條之 22、之 23（不適用一般訴訟參加，第三人權利將直接受損害者得命或許其參加，參加人為當事人）；第 237 條之 28 第 4 項（確定判決對第三人亦有效力）。</dd>
+          <dt>涵攝</dt><dd>(1) 管轄正確（A 市所在地高等行政法院專屬管轄）；112 年 7 月 1 日發布、113 年 5 月 1 日起訴，未逾 1 年；但被告應為核定機關內政部，乙誤列發布機關 A 市政府，法院應依第 107 條第 2 項先命補正；乙未委任律師，法院應依第 49 條之 1 第 7 項定期間命補正，逾期未補正且未依第 49 條之 3 聲請選任者，裁定駁回。(2) 第 41 條以下之訴訟參加在本章不適用（§237-22），丙應依第 237 條之 23 第 1 項：甲計畫若宣告無效，丙土地回復為工業區，其權利將直接受損害，法院得依職權命其參加，亦得因丙之聲請裁定允許，參加後丙為訴訟當事人（第 3 項）。(3) 第 237 條之 28 第 4 項：宣告無效、失效或違法之確定判決對第三人亦有效力，不以參加訴訟為限。</dd>
+          <dt>結論</dt><dd>乙之訴應先補正被告與律師代理，補正後本案可進行；丙得依第 237 條之 23 參加並成為當事人；無效判決確定後對丙及所有第三人均有效力，並由原發布機關 A 市政府公告判決主文（§237-29 I）。</dd>
+          <dt>加分</dt><dd>可說明都市計畫審查是對「法規」的規範審查，所以判決採對世效、原告不限於人民而含公法人、禁止與其他訴訟合併（§237-18 II），並由第 237 條之 29 處理既存確定裁判與處分的效力，兼顧法安定性。</dd>
+        </dl></div>
+      </details>
+      <div class="self on"><button class="btn small" data-ok="1">我寫到了</button><button class="btn small secondary" data-ok="0">要再加強</button><span class="small muted selfmsg"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="s6" class="panel">
+  <div class="card">
+    <h2>本課引用條文</h2>
+    <p class="small muted">點開看原文。只收錄本課講到的條文（長條文節錄相關項款並於標題註明）；全文請見全國法規資料庫。</p>
+    <div class="arts">
+      <details><summary>第 4 條 <span>撤銷訴訟（訴願前置）</span></summary><div class="txt">Ⅰ 人民因中央或地方機關之違法行政處分，認為損害其權利或法律上之利益，經依訴願法提起訴願而不服其決定，或提起訴願逾三個月不為決定，或延長訴願決定期間逾二個月不為決定者，得向行政法院提起撤銷訴訟。</div></details>
+      <details><summary>第 5 條 <span>課予義務訴訟（訴願前置）</span></summary><div class="txt">Ⅰ 人民因中央或地方機關對其依法申請之案件，於法令所定期間內應作為而不作為，認為其權利或法律上利益受損害者，經依訴願程序後，得向行政法院提起請求該機關應為行政處分或應為特定內容之行政處分之訴訟。
+Ⅱ 人民因中央或地方機關對其依法申請之案件，予以駁回，認為其權利或法律上利益受違法損害者，經依訴願程序後，得向行政法院提起請求該機關應為行政處分或應為特定內容之行政處分之訴訟。</div></details>
+      <details><summary>第 7 條 <span>合併請求</span></summary><div class="txt">提起行政訴訟，得於同一程序中，合併請求損害賠償或其他財產上給付。</div></details>
+      <details><summary>第 13 條 <span>普通審判籍</span></summary><div class="txt">Ⅰ 對於公法人之訴訟，由其公務所所在地之行政法院管轄。其以公法人之機關為被告時，由該機關所在地之行政法院管轄。
+Ⅱ 對於私法人或其他得為訴訟當事人之團體之訴訟，由其主事務所或主營業所所在地之行政法院管轄。
+Ⅲ 對於外國法人或其他得為訴訟當事人之團體之訴訟，由其在中華民國之主事務所或主營業所所在地之行政法院管轄。</div></details>
+      <details><summary>第 24 條 <span>被告機關</span></summary><div class="txt">經訴願程序之行政訴訟，其被告為下列機關：
+一、駁回訴願時之原處分機關。
+二、撤銷或變更原處分時，為撤銷或變更之機關。</div></details>
+      <details><summary>第 49 條之 1 <span>強制律師代理（節錄第 1、2、7 項）</span></summary><div class="txt">Ⅰ 下列各款事件及其程序進行中所生之其他事件，當事人應委任律師為訴訟代理人：
+一、高等行政法院管轄之環境保護、土地爭議之第一審通常訴訟程序事件及都市計畫審查程序事件。
+二、高等行政法院管轄之通常訴訟程序上訴事件。
+三、向最高行政法院提起之事件。
+四、適用通常訴訟程序或都市計畫審查程序之再審事件。
+五、適用通常訴訟程序或都市計畫審查程序之聲請重新審理及其再審事件。
+Ⅱ 前項情形，不因訴之減縮、一部撤回、變更或程序誤用而受影響。前項第一款之事件範圍由司法院以命令定之。
+Ⅶ 原告、上訴人、聲請人或抗告人未依第一項至第四項規定委任訴訟代理人，或雖依第四項規定委任，行政法院認為不適當者，應先定期間命補正。逾期未補正，亦未依第四十九條之三為聲請者，應以裁定駁回之。</div></details>
+      <details><summary>第 98 條 <span>訴訟費用、裁判費</span></summary><div class="txt">Ⅰ 訴訟費用指裁判費及其他進行訴訟之必要費用，由敗訴之當事人負擔。但為第一百九十八條之判決時，由被告負擔。
+Ⅱ 起訴，按件徵收裁判費新臺幣四千元。適用簡易訴訟程序之事件，徵收裁判費新臺幣二千元。</div></details>
+      <details><summary>第 98 條之 2 <span>上訴裁判費</span></summary><div class="txt">Ⅰ 上訴，依第九十八條第二項規定，加徵裁判費二分之一。
+Ⅱ 發回或發交更審再行上訴，或依第二百五十七條第二項為移送，經判決後再行上訴者，免徵裁判費。</div></details>
+      <details><summary>第 98 條之 3 <span>再審裁判費</span></summary><div class="txt">Ⅰ 再審之訴，按起訴法院之審級，依第九十八條第二項及前條第一項規定徵收裁判費。
+Ⅱ 對於確定之裁定聲請再審者，徵收裁判費新臺幣一千元。</div></details>
+      <details><summary>第 98 條之 4 <span>抗告裁判費</span></summary><div class="txt">抗告，徵收裁判費新臺幣一千元。</div></details>
+      <details><summary>第 98 條之 5 <span>聲請裁判費</span></summary><div class="txt">聲請或聲明，不徵收裁判費。但下列聲請，徵收裁判費新臺幣一千元：
+一、聲請參加訴訟或駁回參加。
+二、聲請回復原狀。
+三、聲請停止執行或撤銷停止執行之裁定。
+四、起訴前聲請證據保全。
+五、聲請重新審理。
+六、聲請假扣押、假處分或撤銷假扣押、假處分之裁定。
+七、第二百三十七條之三十聲請事件。</div></details>
+      <details><summary>第 98 條之 6 <span>其他費用</span></summary><div class="txt">Ⅰ 下列費用之徵收，除法律另有規定外，其項目及標準由司法院定之：
+一、影印費、攝影費、抄錄費、翻譯費、運送費、公告行政法院網站費及登載公報新聞紙費。
+二、證人及通譯之日費、旅費。
+三、鑑定人之日費、旅費、報酬及鑑定所需費用。
+四、其他進行訴訟及強制執行之必要費用。
+Ⅱ 郵電送達費及行政法院人員於法院外為訴訟行為之食、宿、交通費，不另徵收。</div></details>
+      <details><summary>第 98 條之 7 <span>交通裁決事件裁判費從特別規定</span></summary><div class="txt">交通裁決事件之裁判費，第二編第三章別有規定者，從其規定。</div></details>
+      <details><summary>第 104 條之 1 <span>通常程序第一審管轄</span></summary><div class="txt">Ⅰ 適用通常訴訟程序之事件，以高等行政法院為第一審管轄法院。但下列事件，以地方行政法院為第一審管轄法院：
+一、關於稅捐課徵事件涉訟，所核課之稅額在新臺幣一百五十萬元以下者。
+二、因不服行政機關所為新臺幣一百五十萬元以下之罰鍰或其附帶之其他裁罰性、管制性不利處分而涉訟者。
+三、其他關於公法上財產關係之訴訟，其標的之金額或價額在新臺幣一百五十萬元以下者。
+四、其他依法律規定或經司法院指定由地方行政法院管轄之事件。
+Ⅱ 前項所定數額，司法院得因情勢需要，以命令增至新臺幣一千萬元。</div></details>
+      <details><summary>第 105 條 <span>起訴狀（節錄第 1 項）</span></summary><div class="txt">Ⅰ 起訴，應以訴狀表明下列各款事項，提出於行政法院為之：
+一、當事人。
+二、起訴之聲明。
+三、訴訟標的及其原因事實。</div></details>
+      <details><summary>第 106 條 <span>起訴期間</span></summary><div class="txt">Ⅰ 第四條及第五條訴訟之提起，除本法別有規定外，應於訴願決定書送達後二個月之不變期間內為之。但訴願人以外之利害關係人知悉在後者，自知悉時起算。
+Ⅱ 第四條及第五條之訴訟，自訴願決定書送達後，已逾三年者，不得提起。
+Ⅲ 不經訴願程序即得提起第四條或第五條第二項之訴訟者，應於行政處分達到或公告後二個月之不變期間內為之。4   不經訴願程序即得提起第五條第一項之訴訟者，於應作為期間屆滿後，始得為之。但於期間屆滿後，已逾三年者，不得提起。</div></details>
+      <details><summary>第 107 條 <span>起訴之駁回與補正（節錄第 1 項第 6 款、第 2 項）</span></summary><div class="txt">Ⅰ 原告之訴，有下列各款情形之一者，行政法院應以裁定駁回之。但其情形可以補正者，審判長應先定期間命補正：
+六、起訴逾越法定期限。
+Ⅱ 撤銷訴訟及課予義務訴訟，原告於訴狀誤列被告機關者，準用前項之規定。</div></details>
+      <details><summary>第 188 條 <span>言詞辯論原則</span></summary><div class="txt">Ⅰ 行政訴訟除別有規定外，應本於言詞辯論而為裁判。
+Ⅱ 法官非參與裁判基礎之辯論者，不得參與裁判。
+Ⅲ 裁定得不經言詞辯論為之。
+Ⅳ 裁定前不行言詞辯論者，除別有規定外，得命關係人以書狀或言詞為陳述。</div></details>
+      <details><summary>第 209 條 <span>判決書（節錄第 1 項）</span></summary><div class="txt">Ⅰ 判決應作判決書記載下列各款事項：
+一、當事人姓名及住所或居所；當事人為法人、機關或其他團體者，其名稱及所在地、事務所或營業所。
+二、有法定代理人、代表人、管理人者，其姓名及住所或居所。
+三、有訴訟代理人者，其姓名及住所或居所。
+四、判決經言詞辯論者，其言詞辯論終結日期。
+五、主文。
+六、事實。
+七、理由。
+八、年、月、日。
+九、行政法院。</div></details>
+      <details><summary>第 229 條 <span>簡易訴訟程序事件</span></summary><div class="txt">Ⅰ 適用簡易訴訟程序之事件，以地方行政法院為第一審管轄法院。
+Ⅱ 下列各款行政訴訟事件，除本法別有規定外，適用本章所定之簡易程序：
+一、關於稅捐課徵事件涉訟，所核課之稅額在新臺幣五十萬元以下者。
+二、因不服行政機關所為新臺幣五十萬元以下罰鍰處分而涉訟者。
+三、其他關於公法上財產關係之訴訟，其標的之金額或價額在新臺幣五十萬元以下者。
+四、因不服行政機關所為告誡、警告、記點、記次、講習、輔導教育或其他相類之輕微處分而涉訟者。
+五、關於內政部移民署（以下簡稱移民署）之行政收容事件涉訟，或合併請求損害賠償或其他財產上給付者。
+六、依法律之規定應適用簡易訴訟程序者。
+Ⅲ 前項所定數額，司法院得因情勢需要，以命令減為新臺幣二十五萬元或增至新臺幣七十五萬元。
+Ⅳ 第二項第五款之事件，由受收容人受收容或曾受收容所在地之地方行政法院管轄，不適用第十三條之規定。但未曾受收容者，由被告機關所在地之地方行政法院管轄。</div></details>
+      <details><summary>第 230 條 <span>訴之變更致程序變動</span></summary><div class="txt">Ⅰ 前條第二項之訴，因訴之變更或一部撤回，致其訴屬於地方行政法院適用通常訴訟程序之事件或交通裁決事件者，應改依通常訴訟程序或交通裁決事件訴訟程序之規定審理。追加之新訴或反訴，以原訴與之合併辯論及裁判者，亦同。
+Ⅱ 前項情形，訴之全部或一部屬於高等行政法院管轄者，地方行政法院應裁定移送管轄之高等行政法院。</div></details>
+      <details><summary>第 231 條 <span>言詞起訴</span></summary><div class="txt">Ⅰ 起訴及其他期日外之聲明或陳述，概得以言詞為之。
+Ⅱ 以言詞起訴者，應將筆錄送達於他造。</div></details>
+      <details><summary>第 232 條 <span>獨任、遠距與巡迴</span></summary><div class="txt">Ⅰ 簡易訴訟程序在獨任法官前行之。
+Ⅱ 簡易訴訟程序之審理，當事人一造之住居所、公務所、機關、主事務所或主營業所所在地位於與法院相距過遠之地區者，行政法院應徵詢其意見，以遠距審理、巡迴法庭或其他便利之方式行之。
+Ⅲ 前項與法院相距過遠地區之標準、審理方式及巡迴法庭臨時開庭辦法，由司法院定之。</div></details>
+      <details><summary>第 233 條 <span>通知書送達、二星期宣判</span></summary><div class="txt">Ⅰ 言詞辯論期日之通知書，應與訴狀或第二百三十一條第二項之筆錄一併送達於他造。
+Ⅱ 簡易訴訟程序事件行言詞辯論終結者，指定宣示判決之期日，自辯論終結時起，不得逾二星期。但案情繁雜或有特殊情形者，不在此限。</div></details>
+      <details><summary>第 234 條 <span>判決書簡化</span></summary><div class="txt">Ⅰ 判決書內之事實、理由，得不分項記載，並得僅記載其要領。
+Ⅱ 地方行政法院亦得於宣示判決時，命將判決主文及其事實、理由之要領，記載於言詞辯論筆錄或宣示判決筆錄，不另作判決書。
+Ⅲ 前項筆錄正本或節本，應分別記明之，由書記官簽名並蓋法院印。
+Ⅳ 第二項筆錄正本或節本之送達，與判決正本之送達，有同一之效力。</div></details>
+      <details><summary>第 236 條 <span>補充適用通常程序</span></summary><div class="txt">簡易訴訟程序除本章別有規定外，仍適用通常訴訟程序之規定。</div></details>
+      <details><summary>第 237 條 <span>準用民事訴訟法</span></summary><div class="txt">民事訴訟法第四百三十條、第四百三十一條及第四百三十三條之規定，於本章準用之。</div></details>
+      <details><summary>第 237 條之 1 <span>交通裁決事件定義</span></summary><div class="txt">Ⅰ 本法所稱交通裁決事件如下：
+一、不服道路交通管理處罰條例第八條及第三十七條第六項之裁決，而提起之撤銷訴訟、確認訴訟。
+二、合併請求返還與前款裁決相關之已繳納罰鍰或已繳送之駕駛執照、計程車駕駛人執業登記證、汽車牌照。
+Ⅱ 合併提起前項以外之訴訟者，應適用簡易訴訟程序或通常訴訟程序之規定。
+Ⅲ 第二百三十七條之二、第二百三十七條之三、第二百三十七條之四第一項及第二項規定，於前項情形準用之。</div></details>
+      <details><summary>第 237 條之 2 <span>交通裁決事件管轄</span></summary><div class="txt">交通裁決事件，得由原告住所地、居所地、所在地或違規行為地之地方行政法院管轄。</div></details>
+      <details><summary>第 237 條之 3 <span>被告、起訴期間、誤遞</span></summary><div class="txt">Ⅰ 交通裁決事件訴訟之提起，應以原處分機關為被告，逕向管轄之地方行政法院為之。
+Ⅱ 交通裁決事件中撤銷訴訟之提起，應於裁決書送達後三十日之不變期間內為之。
+Ⅲ 前項訴訟，因原處分機關未為告知或告知錯誤，致原告於裁決書送達三十日內誤向原處分機關遞送起訴狀者，視為已遵守起訴期間，原處分機關並應即將起訴狀移送管轄法院。</div></details>
+      <details><summary>第 237 條之 4 <span>被告重新審查</span></summary><div class="txt">Ⅰ 地方行政法院收受前條起訴狀後，應將起訴狀繕本送達被告。
+Ⅱ 被告收受起訴狀繕本後，應於二十日內重新審查原裁決是否合法妥當，並分別為如下之處置：
+一、原告提起撤銷之訴，被告認原裁決違法或不當者，應自行撤銷或變更原裁決。但不得為更不利益之處分。
+二、原告提起確認之訴，被告認原裁決無效或違法者，應為確認。
+三、原告合併提起給付之訴，被告認原告請求有理由者，應即返還。
+四、被告重新審查後，不依原告之請求處置者，應附具答辯狀，並將重新審查之紀錄及其他必要之關係文件，一併提出於管轄之地方行政法院。
+Ⅲ 被告依前項第一款至第三款規定為處置者，應即陳報管轄之地方行政法院；被告於第一審終局裁判生效前已完全依原告之請求處置者，以其陳報管轄之地方行政法院時，視為原告撤回起訴。</div></details>
+      <details><summary>第 237 條之 5 <span>交通裁決事件裁判費</span></summary><div class="txt">Ⅰ 交通裁決事件，按下列規定徵收裁判費：
+一、起訴，按件徵收新臺幣三百元。
+二、上訴，按件徵收新臺幣七百五十元。
+三、抗告，徵收新臺幣三百元。
+四、再審之訴，按起訴法院之審級，依第一款、第二款徵收裁判費；對於確定之裁定聲請再審者，徵收新臺幣三百元。
+五、本法第九十八條之五各款聲請，徵收新臺幣三百元。
+Ⅱ 依前條第三項規定，視為撤回起訴者，法院應依職權退還已繳之裁判費。</div></details>
+      <details><summary>第 237 條之 6 <span>訴之變更致程序變動</span></summary><div class="txt">因訴之變更、追加，致其訴之全部或一部，不屬於交通裁決事件之範圍者，地方行政法院應改依簡易訴訟程序或通常訴訟程序審理；無通常訴訟程序管轄權者，應裁定移送管轄之高等行政法院。</div></details>
+      <details><summary>第 237 條之 7 <span>得不經言詞辯論</span></summary><div class="txt">交通裁決事件之裁判，得不經言詞辯論為之。</div></details>
+      <details><summary>第 237 條之 8 <span>確定費用額</span></summary><div class="txt">Ⅰ 行政法院為訴訟費用之裁判時，應確定其費用額。
+Ⅱ 前項情形，行政法院得命當事人提出費用計算書及釋明費用額之文書。</div></details>
+      <details><summary>第 237 條之 9 <span>準用簡易程序</span></summary><div class="txt">交通裁決事件，除本章別有規定外，準用簡易訴訟程序之規定。</div></details>
+      <details><summary>第 237 條之 10 <span>收容聲請事件定義</span></summary><div class="txt">本法所稱收容聲請事件如下：
+一、依入出國及移民法、臺灣地區與大陸地區人民關係條例及香港澳門關係條例提起收容異議、聲請續予收容及延長收容事件。
+二、依本法聲請停止收容事件。</div></details>
+      <details><summary>第 237 條之 11 <span>收容聲請事件管轄</span></summary><div class="txt">Ⅰ 收容聲請事件，以地方行政法院為第一審管轄法院。
+Ⅱ 前項事件，由受收容人所在地之地方行政法院管轄，不適用第十三條之規定。</div></details>
+      <details><summary>第 237 條之 12 <span>訊問受收容人</span></summary><div class="txt">Ⅰ 行政法院審理收容異議、續予收容及延長收容之聲請事件，應訊問受收容人；移民署並應到場陳述。
+Ⅱ 行政法院審理前項聲請事件時，得徵詢移民署為其他收容替代處分之可能，以供審酌收容之必要性。</div></details>
+      <details><summary>第 237 條之 13 <span>停止收容</span></summary><div class="txt">Ⅰ 行政法院裁定續予收容或延長收容後，受收容人及得提起收容異議之人，認為收容原因消滅、無收容必要或有得不予收容情形者，得聲請法院停止收容。
+Ⅱ 行政法院審理前項事件，認有必要時，得訊問受收容人或徵詢移民署之意見，並準用前條第二項之規定。</div></details>
+      <details><summary>第 237 條之 14 <span>裁定之種類</span></summary><div class="txt">Ⅰ 行政法院認收容異議、停止收容之聲請為無理由者，應以裁定駁回之。認有理由者，應為釋放受收容人之裁定。
+Ⅱ 行政法院認續予收容、延長收容之聲請為無理由者，應以裁定駁回之。認有理由者，應為續予收容或延長收容之裁定。</div></details>
+      <details><summary>第 237 條之 15 <span>期間屆滿前宣示送達</span></summary><div class="txt">Ⅰ 行政法院所為續予收容或延長收容之裁定，應於收容期間屆滿前當庭宣示或以正本送達受收容人。未於收容期間屆滿前為之者，續予收容或延長收容之裁定，視為撤銷。
+Ⅱ 前項正本以電子文件為之者，應以囑託收容處所長官列印裁定影本交付之方式為送達。</div></details>
+      <details><summary>第 237 條之 16 <span>抗告、再審</span></summary><div class="txt">Ⅰ 聲請人、受裁定人或移民署對地方行政法院所為收容聲請事件之裁定不服者，應於裁定送達後五日內抗告於管轄之高等行政法院。對於抗告法院之裁定，不得再為抗告。
+Ⅱ 抗告程序，除依前項規定外，準用第四編之規定。
+Ⅲ 收容聲請事件之裁定已確定，而有第二百七十三條之情形者，得準用第五編之規定，聲請再審。</div></details>
+      <details><summary>第 237 條之 17 <span>費用、準用簡易程序</span></summary><div class="txt">Ⅰ 行政法院受理收容聲請事件，不適用第一編第四章第五節訴訟費用之規定。但依第九十八條之六第一項第一款之規定徵收者，不在此限。
+Ⅱ 收容聲請事件，除本章別有規定外，準用簡易訴訟程序之規定。</div></details>
+      <details><summary>第 237 條之 18 <span>都市計畫審查訴訟</span></summary><div class="txt">Ⅰ 人民、地方自治團體或其他公法人認為行政機關依都市計畫法發布之都市計畫違法，而直接損害、因適用而損害或在可預見之時間內將損害其權利或法律上利益者，得依本章規定，以核定都市計畫之行政機關為被告，逕向管轄之高等行政法院提起訴訟，請求宣告該都市計畫無效。
+Ⅱ 前項情形，不得與非行本章程序之其他訴訟合併提起。</div></details>
+      <details><summary>第 237 條之 19 <span>專屬管轄</span></summary><div class="txt">前條訴訟，專屬都市計畫區所在地之高等行政法院管轄。</div></details>
+      <details><summary>第 237 條之 20 <span>一年不變期間</span></summary><div class="txt">本章訴訟，應於都市計畫發布後一年之不變期間內提起。但都市計畫發布後始發生違法之原因者，應自原因發生時起算。</div></details>
+      <details><summary>第 237 條之 21 <span>被告重新檢討</span></summary><div class="txt">Ⅰ 高等行政法院收受起訴狀後，應將起訴狀繕本送達被告。
+Ⅱ 被告收受起訴狀繕本後，應於二個月內重新檢討原告請求宣告無效之都市計畫是否合法，並分別依下列規定辦理：
+一、如認其違反作成之程序規定得補正者，應為補正，並陳報高等行政法院。
+二、如認其違法者，應將其違法情形陳報高等行政法院，並得為必要之處置。
+三、如認其合法者，應於答辯狀說明其理由。
+Ⅲ 被告應附具答辯狀，並將原都市計畫與重新檢討之卷證及其他必要文件，一併提出於管轄之高等行政法院。如有與原告請求宣告無效之都市計畫具不可分關係者，亦應一併陳報。</div></details>
+      <details><summary>第 237 條之 22 <span>不適用訴訟參加</span></summary><div class="txt">高等行政法院受理都市計畫審查程序事件，不適用前編第三章第四節訴訟參加之規定。</div></details>
+      <details><summary>第 237 條之 23 <span>命第三人參加</span></summary><div class="txt">Ⅰ 高等行政法院認為都市計畫如宣告無效、失效或違法，第三人之權利或法律上利益將直接受損害者，得依職權命其參加訴訟，並得因該第三人之聲請，裁定允許其參加。
+Ⅱ 前項情形，準用第四十二條第二項、第四十三條、第四十五條及第四十七條規定。
+Ⅲ 依第一項參加訴訟之人為訴訟當事人。</div></details>
+      <details><summary>第 237 條之 24 <span>輔助參加</span></summary><div class="txt">Ⅰ 都市計畫審查程序事件，高等行政法院認為具利害關係之第三人有輔助一造之必要者，得命其參加訴訟。有利害關係之第三人亦得聲請參加。
+Ⅱ 前項情形，準用民事訴訟法第五十九條至第六十一條及第六十三條至第六十七條之規定。</div></details>
+      <details><summary>第 237 條之 25 <span>擬定、發布機關到場</span></summary><div class="txt">高等行政法院審理都市計畫審查程序事件，應依職權通知都市計畫之擬定機關及發布機關於期日到場陳述意見，並得通知權限受都市計畫影響之行政機關於期日到場陳述意見。權限受都市計畫影響之行政機關亦得聲請於期日到場陳述意見。</div></details>
+      <details><summary>第 237 條之 26 <span>裁定停止訴訟</span></summary><div class="txt">都市計畫審查程序事件已經訴訟繫屬尚未終結，同一都市計畫經聲請憲法法庭判決宣告違憲者，高等行政法院在憲法法庭審理程序終結前，得以裁定停止訴訟程序。</div></details>
+      <details><summary>第 237 條之 27 <span>駁回判決</span></summary><div class="txt">高等行政法院認都市計畫未違法者，應以判決駁回原告之訴。都市計畫僅違反作成之程序規定，而已於第一審言詞辯論終結前合法補正者，亦同。</div></details>
+      <details><summary>第 237 條之 28 <span>宣告無效、失效、違法</span></summary><div class="txt">Ⅰ 高等行政法院認原告請求宣告無效之都市計畫違法者，應宣告該都市計畫無效。同一都市計畫中未經原告請求，而與原告請求宣告無效之部分具不可分關係，經法院審查認定違法者，併宣告無效。
+Ⅱ 前項情形，都市計畫發布後始發生違法原因者，應宣告自違法原因發生時起失效。
+Ⅲ 都市計畫違法，而依法僅得為違法之宣告者，應宣告其違法。
+Ⅳ 前三項確定判決，對第三人亦有效力。
+Ⅴ 第一項情形，高等行政法院認與原告請求宣告無效之部分具不可分關係之不同都市計畫亦違法者，得於判決理由中一併敘明。</div></details>
+      <details><summary>第 237 條之 29 <span>判決之公告與效力</span></summary><div class="txt">Ⅰ 都市計畫經判決宣告無效、失效或違法確定者，判決正本應送達原發布機關，由原發布機關依都市計畫發布方式公告判決主文。
+Ⅱ 因前項判決致刑事確定裁判違背法令者，得依刑事訴訟法規定提起非常上訴。
+Ⅲ 前項以外之確定裁判，其效力不受影響。但該裁判尚未執行或執行未完畢者，自宣告都市計畫無效或失效之判決確定之日起，於無效或失效之範圍內不得強制執行。
+Ⅳ 適用第一項受無效或失效宣告之都市計畫作成之行政處分確定者，其效力與後續執行準用前項之規定。
+Ⅴ 依前條第三項宣告都市計畫違法確定者，相關機關應依判決意旨為必要之處置。</div></details>
+      <details><summary>第 237 條之 30 <span>暫時停止適用</span></summary><div class="txt">Ⅰ 於爭執之都市計畫，為防止發生重大之損害或避免急迫之危險而有必要時，得聲請管轄本案之行政法院暫時停止適用或執行，或為其他必要之處置。
+Ⅱ 前項情形，準用第二百九十五條至第二百九十七條、第二百九十八條第三項、第四項、第三百零一條及第三百零三條之規定。
+Ⅲ 行政法院裁定准許第一項之聲請者，準用前條第一項規定。該裁定經廢棄、變更或撤銷者，亦同。</div></details>
+      <details><summary>第 237 條之 31 <span>準用通常程序</span></summary><div class="txt">都市計畫審查程序，除本章別有規定外，準用本編第一章之規定。</div></details>
+      <details><summary>第 238 條 <span>上訴最高行政法院</span></summary><div class="txt">Ⅰ 對於高等行政法院之終局判決，除法律別有規定外，得上訴於最高行政法院。
+Ⅱ 於上訴審程序，不得為訴之變更、追加或提起反訴。</div></details>
+      <details><summary>第 242 條 <span>上訴理由限於違背法令</span></summary><div class="txt">對於高等行政法院判決之上訴，非以其違背法令為理由，不得為之。</div></details>
+      <details><summary>第 263 條之 1 <span>上訴高等行政法院</span></summary><div class="txt">Ⅰ 對於地方行政法院之終局判決，除法律別有規定外，得依本章規定上訴於管轄之高等行政法院。
+Ⅱ 對於高等行政法院之第二審判決，不得上訴。</div></details>
+      <details><summary>第 263 條之 2 <span>程序誤用不得廢棄</span></summary><div class="txt">Ⅰ 應適用簡易訴訟程序或交通裁決訴訟程序之事件，高等行政法院不得以地方行政法院行通常訴訟程序而廢棄原判決。
+Ⅱ 應適用交通裁決訴訟程序之事件，高等行政法院不得以地方行政法院行簡易訴訟程序而廢棄原判決。
+Ⅲ 前二項情形，高等行政法院應依該事件所應適用之上訴審程序規定為裁判。</div></details>
+      <details><summary>第 263 條之 3 <span>程序誤用應廢棄</span></summary><div class="txt">Ⅰ 地方行政法院就其應適用通常訴訟程序之事件，而誤用簡易訴訟程序或交通裁決事件訴訟程序審判；或應適用簡易訴訟程序之事件，而誤用交通裁決事件訴訟程序審判者，受理上訴之高等行政法院應廢棄原判決，將該事件發回或發交管轄地方行政法院。
+Ⅱ 以高等行政法院為第一審管轄法院之事件，誤由地方行政法院審判者，受理上訴之高等行政法院應廢棄原判決，逕依通常訴訟程序為第一審判決。
+Ⅲ 當事人對於第一項程序誤用或第二項管轄錯誤已表示無異議，或明知或可得而知並無異議而就本案有所聲明或陳述者，高等行政法院應依原程序之上訴審規定為裁判，不適用前二項規定。</div></details>
+      <details><summary>第 263 條之 5 <span>高等行政法院上訴審準用</span></summary><div class="txt">除第二百五十九條之一及本章別有規定外，本編第一章及前編第一章之規定，於高等行政法院上訴審程序準用之；交通裁決事件之上訴，並準用第二百三十七條之八規定。</div></details>
+      <details><summary>第 268 條 <span>抗告期間</span></summary><div class="txt">提起抗告，應於裁定送達後十日之不變期間內為之。但送達前之抗告亦有效力。</div></details>
+      <details><summary>第 273 條 <span>再審事由（節錄第 1 項前段）</span></summary><div class="txt">Ⅰ 有下列各款情形之一者，得以再審之訴對於確定終局判決聲明不服。但當事人已依上訴主張其事由經判決為無理由，或知其事由而不為上訴主張者，不在此限：</div></details>
+      <details><summary>第 276 條 <span>再審期間</span></summary><div class="txt">Ⅰ 再審之訴應於三十日之不變期間內提起。
+Ⅱ 前項期間自判決確定時起算，判決於送達前確定者，自送達時起算；其再審事由發生或知悉在後者，均自知悉時起算。
+Ⅲ 依第二百七十三條第二項提起再審之訴者，第一項期間自裁判送達之翌日起算。
+Ⅳ 再審之訴自判決確定時起，如已逾五年者，不得提起。但以第二百七十三條第一項第五款、第六款或第十二款情形為再審事由者，不在此限。
+Ⅴ 對於再審確定判決不服，復提起再審之訴者，前項所定期間，自原判決確定時起算。但再審之訴有理由者，自該再審判決確定時起算。
+Ⅵ 第二百七十三條第二項之情形，自聲請案件繫屬之日起至裁判送達聲請人之日止，不計入第四項所定期間。</div></details>
+    </div>
+  </div>
+  <div class="card">
+    <h2>下一課</h2>
+    <p>第 11 課「上訴與抗告」會把第 263 條之 2、第 263 條之 3 放回高等行政法院上訴審的全貌裡，並講最高行政法院的違背法令審查與抗告程序。<a href="11_上訴與抗告.html">前往第 11 課</a>　<a href="00_總覽地圖.html">回總覽地圖</a></p>
+  </div>
+</section>
+
+<footer>行政訴訟法自學教材 · 第 10 課 特別程序：簡易、交通裁決、收容聲請、都市計畫審查<br>依民國 111 年 6 月 22 日修正條文自行編寫，題目為原創；條文以<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030154" target="_blank" rel="noopener">全國法規資料庫</a>為準。</footer>
+</div>
+
+<script>
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const LESSON_ID = "10", CH = "行政訴訟法 10 特別程序";
+const PROG_KEY = "xzss_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與數學教材共用 study_log_v1，供「學習紀錄」頁讀取）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+let pracCount = 0, pracOk = 0;
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="s5"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok }); pracCount++; if(ok) pracOk++;
+  });
+});
+
+// ===== 章末測驗交卷 =====
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0; const wrong = [];
+  qs.forEach((q,i)=>{
+    const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+    else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+  });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  writeProg({ quiz: { score, total: qs.length } });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+  else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="s5"]').classList.add('done'); }
+  else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+  else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 實例題自評 =====
+document.querySelectorAll('.essay').forEach(es=>{
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 本課專屬工具 1：四程序比較表「只看差異」 =====
+(function(){
+  const table = document.getElementById('cmpTable'), cb = document.getElementById('cmpDiff'), cnt = document.getElementById('cmpCount');
+  if(!table || !cb) return;
+  const rows = [...table.querySelectorAll('tbody tr')];
+  let same = 0;
+  rows.forEach(tr=>{
+    const cells = [...tr.querySelectorAll('td')].map(td=>td.textContent.trim());
+    const allSame = cells.length === 4 && cells.every(c=>c === cells[0]);
+    tr.dataset.same = allSame ? '1' : '0';
+    if(allSame) same++;
+  });
+  function apply(){
+    rows.forEach(tr=>{ tr.style.display = (cb.checked && tr.dataset.same === '1') ? 'none' : ''; });
+    cnt.textContent = cb.checked ? `顯示 ${rows.length - same} 列有差異，隱藏 ${same} 列四程序相同` : `共 ${rows.length} 列，其中 ${same} 列四程序相同`;
+  }
+  cb.addEventListener('change',()=>{ apply(); logEv({ type:"tool", q:"compare-diff", k: cb.checked ? 'diff' : 'all' }); });
+  apply();
+})();
+
+// ===== 本課專屬工具 2：分流器（應適用程序 + §263-2 / §263-3 誤用處理） =====
+(function(){
+  const sel = document.getElementById('rtCase'), used = document.getElementById('rtUsed'), noObj = document.getElementById('rtNoObj'), res = document.getElementById('rtRes');
+  if(!sel) return;
+  const PROC = {
+    traffic:{ name:'交通裁決事件訴訟程序', court:'地方行政法院', appeal:'上訴高等行政法院，第二審即終審（§263-1）；上訴裁判費 750 元（§237-5 I 2）' },
+    simple:{ name:'簡易訴訟程序', court:'地方行政法院', appeal:'上訴高等行政法院，第二審即終審（§263-1）；上訴裁判費加徵二分之一（§98-2 I）' },
+    ord_local:{ name:'通常訴訟程序（地方行政法院第一審）', court:'地方行政法院', appeal:'上訴高等行政法院，第二審即終審（§263-1）' },
+    ord_high:{ name:'通常訴訟程序（高等行政法院第一審）', court:'高等行政法院', appeal:'以違背法令為理由上訴最高行政法院（§238、§242）' },
+    detain:{ name:'收容聲請事件程序', court:'地方行政法院（受收容人所在地）', appeal:'裁定送達後 5 日內抗告高等行政法院，不得再抗告（§237-16 I）' },
+    plan:{ name:'都市計畫審查程序', court:'高等行政法院（都市計畫區所在地，專屬）', appeal:'上訴最高行政法院（§237-31 準用通常程序；§238、§242）；應委任律師（§49-1 I 1、3）' }
+  };
+  const CASES = {
+    traffic:{ p:'traffic', why:'不服道交條例第 8 條裁決之撤銷訴訟，是第 237 條之 1 第 1 項第 1 款的交通裁決事件。被告為原處分機關、不經訴願（§237-3 I），裁決書送達後 30 日內起訴（§237-3 II），裁判費 300 元（§237-5 I 1），管轄依 §237-2 由原告選。' },
+    traffic_plus:{ p:'simple', why:'合併了第 237 條之 1 第 1 項以外的國家賠償請求，依第 2 項整件改依簡易或通常程序；賠償金額若在 50 萬元以下，屬 §229 II 3 的簡易事件。但依第 3 項，§237-2 管轄、§237-3 被告與 30 日期間、§237-4 I、II 被告重新審查仍準用。裁判費回到 §98 II 的 2,000 元。' },
+    simple_fine:{ p:'simple', why:'40 萬元罰鍰在 50 萬元以下，第 229 條第 2 項第 2 款。先訴願（§4 I），訴願決定書送達後 2 個月內起訴（§106 I），被告依 §24 定，裁判費 2,000 元（§98 II）。' },
+    simple_minor:{ p:'simple', why:'書面警告是第 229 條第 2 項第 4 款「告誡、警告、記點、記次、講習、輔導教育或其他相類之輕微處分」。沒有金額門檻。' },
+    simple_detain:{ p:'simple', why:'對收容處分提起撤銷訴訟並合併請求賠償，是第 229 條第 2 項第 5 款的簡易事件（注意不是第四章的收容聲請事件）。管轄依 §229 IV：受收容或曾受收容所在地之地方行政法院；未曾受收容者，被告機關所在地。' },
+    ord_local:{ p:'ord_local', why:'120 萬元罰鍰超過 50 萬元，不是簡易事件；但在 150 萬元以下，依第 104 條之 1 第 1 項第 2 款由地方行政法院以通常程序為第一審。' },
+    ord_high:{ p:'ord_high', why:'300 萬元罰鍰超過 150 萬元，不落入第 104 條之 1 第 1 項但書，依本文以高等行政法院為第一審。' },
+    ord_nonmoney:{ p:'ord_high', why:'吊銷營業執照是非財產性質的處分，沒有金額可以歸入 §229 II 或 §104-1 I 但書，依 §104-1 I 本文以高等行政法院為第一審。' },
+    detain_req:{ p:'detain', why:'移民署聲請續予收容是第 237 條之 10 第 1 款的收容聲請事件，由受收容人所在地之地方行政法院以裁定審理（§237-11、§237-14），應訊問受收容人（§237-12 I），不收裁判費（§237-17 I）。' },
+    plan:{ p:'plan', why:'請求宣告都市計畫無效，是第 237 條之 18 第 1 項的都市計畫審查訴訟。以核定機關為被告、不經訴願、專屬都市計畫區所在地之高等行政法院（§237-19），發布後 1 年內起訴（§237-20），不得與其他訴訟合併（§237-18 II）。' }
+  };
+  const USED_NAME = { traffic:'交通裁決事件程序（地方行政法院）', simple:'簡易程序（地方行政法院）', ord_local:'通常程序（地方行政法院）', ord_high:'通常程序（高等行政法院）' };
+  function misuse(should, u, quiet){
+    if(!u) return '';
+    if(should === 'detain') return '<p class="small" style="margin:.4em 0 0"><b>誤用處理：</b>收容聲請事件以裁定終結，救濟走 §237-16 的抗告，第 263 條之 2、之 3 處理的是地方行政法院「判決」的程序誤用，這裡用不上。</p>';
+    if(u === should) return '<p class="small" style="margin:.4em 0 0"><b>程序正確。</b>不服第一審裁判：'+PROC[should].appeal+'。</p>';
+    let t = '';
+    if(should === 'plan'){
+      if(u === 'ord_high') t = '高等行政法院雖是正確的第一審法院，但誤用通常程序而非本章程序。第 263 條之 2、之 3 只規範地方行政法院的誤用，本法對這種情形沒有明文；第 237 條之 31 本來就準用通常程序，差異主要在專屬管轄、強制律師代理、參加與判決效力等本章特別規定，上訴時依 §242 以違背法令為理由主張。';
+      else t = '都市計畫審查訴訟以高等行政法院為第一審（§237-18 I、§237-19），誤由地方行政法院審判，依第 263 條之 3 第 2 項，受理上訴之高等行政法院應廢棄原判決，逕為第一審判決（條文文字是「逕依通常訴訟程序為第一審判決」；本章依 §237-31 準用通常程序）。' + (quiet ? '但當事人已表示無異議或明知而為本案陳述（§263-3 III），高等行政法院改依原程序之上訴審規定裁判。' : '');
+      return '<p class="small" style="margin:.4em 0 0"><b>誤用處理：</b>'+t+'</p>';
+    }
+    if(u === 'ord_high'){
+      t = '應由地方行政法院第一審的事件，誤由高等行政法院以第一審審判。第 263 條之 2、之 3 只處理地方行政法院的程序誤用與管轄錯誤，對這種情形本章沒有明文；不服者上訴最高行政法院，以違背法令（含違背管轄規定）為理由主張（§242），第 11 課再談。';
+      return '<p class="small" style="margin:.4em 0 0"><b>誤用處理：</b>'+t+'</p>';
+    }
+    if(should === 'ord_high'){
+      t = '以高等行政法院為第一審管轄法院之事件（§104-1 I 本文），誤由地方行政法院審判（'+USED_NAME[u]+'）。依第 263 條之 3 第 2 項，受理上訴之高等行政法院應<b>廢棄原判決，逕依通常訴訟程序為第一審判決</b>，不發回。';
+      if(quiet) t += '<br>但你勾了「已表示無異議或明知而為本案陳述」：依第 263 條之 3 第 3 項，高等行政法院改依原程序（'+USED_NAME[u]+'）之上訴審規定裁判，判決後即為終審（§263-1 II）。';
+      else t += '<br>如果當事人對管轄錯誤已表示無異議，或明知而就本案有所聲明或陳述，則依第 3 項改依原程序之上訴審規定裁判（勾選上方核取方塊看效果）。';
+      return '<p class="small" style="margin:.4em 0 0"><b>誤用處理：</b>'+t+'</p>';
+    }
+    // 地方行政法院內部的程序誤用
+    const rank = { traffic:0, simple:1, ord_local:2 };
+    if(rank[u] > rank[should]){
+      // 用了「較重」的程序：§263-2 不得廢棄
+      const item = (should === 'traffic' && u === 'simple') ? '第 263 條之 2 第 2 項' : '第 263 條之 2 第 1 項';
+      t = '地方行政法院用了比應適用程序更周全的程序（'+USED_NAME[u]+'），依'+item+'，高等行政法院<b>不得</b>以此為由廢棄原判決；依同條第 3 項，應依該事件<b>所應適用</b>的上訴審程序（'+PROC[should].name+'的上訴審）裁判。'+(should === 'traffic' ? '上訴裁判費仍是 750 元（§237-5 I 2）。' : '')+'有無異議在此不影響結果。';
+    } else {
+      // 用了「較輕」的程序：§263-3 I 應廢棄發回／發交
+      t = '地方行政法院用了比應適用程序更簡略的程序（'+USED_NAME[u]+'）。依第 263 條之 3 第 1 項，受理上訴之高等行政法院應<b>廢棄原判決</b>，將事件發回或發交管轄之地方行政法院，以正確的程序（'+PROC[should].name+'）重審。';
+      if(quiet) t += '<br>但你勾了「已表示無異議或明知而為本案陳述」：依第 263 條之 3 第 3 項，高等行政法院改依<b>原程序</b>（'+USED_NAME[u]+'）之上訴審規定裁判，不再廢棄發回。';
+      else t += '<br>如果當事人對誤用已表示無異議，或明知而就本案有所聲明或陳述，則依第 3 項改依原程序之上訴審規定裁判（勾選上方核取方塊看效果）。';
+    }
+    return '<p class="small" style="margin:.4em 0 0"><b>誤用處理：</b>'+t+'</p>';
+  }
+  document.getElementById('rtGo').addEventListener('click',()=>{
+    const c = CASES[sel.value], p = PROC[c.p];
+    let h = '<h3>應適用：'+p.name+'</h3><p class="small" style="margin:0 0 .4em"><b>第一審法院：</b>'+p.court+'</p>';
+    h += '<p class="small" style="margin:0 0 .4em">'+c.why+'</p>';
+    h += '<p class="small muted" style="margin:0"><b>不服第一審：</b>'+p.appeal+'</p>';
+    if(used.value){ h += '<p class="small muted" style="margin:.5em 0 0"><b>第一審實際用的程序：</b>'+USED_NAME[used.value]+'</p>'; }
+    h += misuse(c.p, used.value, noObj.checked);
+    res.innerHTML = h; res.classList.add('on');
+    logEv({ type:"tool", q:"procedure-router", k: sel.value+':'+(used.value||'-')+(noObj.checked?':noobj':'') });
+  });
+})();
+</script>
+</body>
+</html>
