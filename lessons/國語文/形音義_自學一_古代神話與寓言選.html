@@ -106,6 +106,20 @@
   .hintline{font-size:.85rem; color:var(--sub); margin-top:8px;}
   .hintline a{color:var(--main); cursor:pointer; text-decoration:underline;}
 
+  /* 手寫格 */
+  .hw{display:flex; flex-direction:column; align-items:center; gap:10px;}
+  .hwbox{position:relative; width:min(260px,80vw); aspect-ratio:1; border:2px solid var(--main); border-radius:10px; background:#fff; overflow:hidden; touch-action:none;}
+  .hwbox canvas{position:absolute; inset:0; width:100%; height:100%;}
+  .hwbox .ans{position:absolute; inset:0; display:none; align-items:center; justify-content:center;
+    font-size:min(190px,58vw); line-height:1; color:rgba(220,38,38,.45); font-weight:bold; pointer-events:none; font-family:"標楷體","BiauKai","DFKai-SB","Kaiti TC","KaiTi",serif;}
+  .hwbox.show .ans{display:flex;}
+  .hwrow{display:flex; gap:8px; width:100%;}
+  .hwrow button{flex:1; border-radius:10px; padding:10px; font-size:.95rem; cursor:pointer; font-family:inherit; border:1px solid var(--main); background:#fff; color:var(--main);}
+  .hwrow button.main{background:var(--main); color:#fff;}
+  .hwrow button.ok{border-color:var(--green); background:var(--green-soft); color:#166534;}
+  .hwrow button.no{border-color:var(--red); background:var(--red-soft); color:#991b1b;}
+  .hwtip{font-size:.85rem; color:var(--sub); text-align:center;}
+
   .fb{margin-top:14px; padding:12px 15px; border-radius:10px; font-size:.95rem; display:none;}
   .fb.ok{display:block; background:var(--green-soft); color:#166534;}
   .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
@@ -314,9 +328,10 @@
     <h2 style="margin-top:18px">2. 看詞選字怎麼作答？</h2>
     <div class="chips" id="selMode">
       <button class="on" data-v="mc">四選一</button>
+      <button data-v="hw">用手寫</button>
       <button data-v="tp">自己打字</button>
     </div>
-    <div class="note">自己打字：不給選項，把那個字打出來。想不起來可以看注音提示。最接近考試寫字的感覺。</div>
+    <div class="note">用手寫：不給選項，在格子裡用手指或滑鼠把字寫出來，再翻答案對照。對不對由自己判斷，最接近考試寫字的感覺。</div>
 
     <h2 style="margin-top:18px">3. 這次做幾題？</h2>
     <div class="chips" id="selCount">
@@ -338,6 +353,12 @@
     <div class="stem" id="qStem"></div>
     <div id="qClue" class="clue"></div>
     <div class="opts" id="qOpts"></div>
+    <div id="qHw" class="hw" style="display:none">
+      <div class="hwbox" id="hwBox"><canvas id="hwCv"></canvas><div class="ans" id="hwAns"></div></div>
+      <div class="hwtip" id="hwTip">在格子裡把字寫出來</div>
+      <div class="hwrow" id="hwRow1"><button id="hwClear">擦掉重寫</button><button class="main" id="hwReveal">寫好了，看答案</button></div>
+      <div class="hwrow" id="hwRow2" style="display:none"><button class="ok" id="hwOk">我寫對了</button><button class="no" id="hwNo">寫錯了</button></div>
+    </div>
     <div id="qType" style="display:none">
       <div class="typerow">
         <input type="text" id="typeIn" maxlength="2" placeholder="打一個字" autocomplete="off">
@@ -827,7 +848,7 @@ function renderQ(){
   $("#qFb").className="fb"; $("#qFb").innerHTML="";
   $("#btnNext").style.display="none";
   $("#qOpts").innerHTML=""; $("#qOpts").className="opts";
-  $("#qType").style.display="none"; $("#hintTxt").textContent="";
+  $("#qType").style.display="none"; $("#hintTxt").textContent=""; $("#qHw").style.display="none";
   $("#qClue").style.display="block";
 
   if(q.kind==="z"){
@@ -841,7 +862,9 @@ function renderQ(){
     $("#qNum").textContent = `講義第 ${it.n} 題`;
     $("#qStem").innerHTML = `<div>◯ 要填哪一個字？</div><div class="words">${blankify(q.word.t,it.c)}</div>`;
     $("#qClue").innerHTML = `<b>意思</b>：${esc(q.word.m)}`;
-    if(cfg.mode==="tp"){
+    if(cfg.mode==="hw"){
+      $("#qHw").style.display="flex"; hwReset(it.c);
+    }else if(cfg.mode==="tp"){
       $("#qType").style.display="block"; $("#typeIn").value=""; setTimeout(()=>$("#typeIn").focus(),50);
     }else{
       charOptions(it).forEach(ch=>addOpt(ch, it.c, "big"));
@@ -897,6 +920,44 @@ function answer(ok, btn, correct){
   $("#btnNext").style.display="block";
   $("#btnNext").textContent = quiz.i+1<quiz.list.length ? "下一題 →" : "看結果";
 }
+// ═══════════ 手寫格 ═══════════
+const hwCv=$("#hwCv"), hwCtx=hwCv.getContext("2d");
+let hwDrawing=false, hwHasInk=false;
+function hwGrid(){
+  const w=hwCv.width, h=hwCv.height;
+  hwCtx.clearRect(0,0,w,h);
+  hwCtx.save(); hwCtx.strokeStyle="#e7d5c6"; hwCtx.setLineDash([8,8]); hwCtx.lineWidth=2;
+  hwCtx.beginPath(); hwCtx.moveTo(w/2,0); hwCtx.lineTo(w/2,h); hwCtx.moveTo(0,h/2); hwCtx.lineTo(w,h/2);
+  hwCtx.moveTo(0,0); hwCtx.lineTo(w,h); hwCtx.moveTo(w,0); hwCtx.lineTo(0,h); hwCtx.stroke(); hwCtx.restore();
+}
+function hwSize(){
+  const r=$("#hwBox").getBoundingClientRect(); const dpr=window.devicePixelRatio||1;
+  hwCv.width=Math.round(r.width*dpr); hwCv.height=Math.round(r.height*dpr);
+  hwGrid();
+}
+function hwReset(ch){
+  $("#hwAns").textContent=ch; $("#hwBox").classList.remove("show");
+  $("#hwRow1").style.display="flex"; $("#hwRow2").style.display="none";
+  $("#hwTip").textContent="在格子裡把字寫出來";
+  hwHasInk=false; setTimeout(hwSize,0);
+}
+function hwPos(e){ const r=hwCv.getBoundingClientRect(); const sx=hwCv.width/r.width, sy=hwCv.height/r.height; return [(e.clientX-r.left)*sx,(e.clientY-r.top)*sy]; }
+hwCv.addEventListener("pointerdown",e=>{ if($("#hwBox").classList.contains("show")) return; hwDrawing=true; hwCv.setPointerCapture(e.pointerId); const [x,y]=hwPos(e);
+  hwCtx.strokeStyle="#1f2937"; hwCtx.lineWidth=Math.max(6, hwCv.width/36); hwCtx.lineCap="round"; hwCtx.lineJoin="round"; hwCtx.setLineDash([]);
+  hwCtx.beginPath(); hwCtx.moveTo(x,y); hwCtx.lineTo(x+0.1,y+0.1); hwCtx.stroke(); hwHasInk=true; });
+hwCv.addEventListener("pointermove",e=>{ if(!hwDrawing) return; const [x,y]=hwPos(e); hwCtx.lineTo(x,y); hwCtx.stroke(); });
+["pointerup","pointercancel","pointerleave"].forEach(ev=>hwCv.addEventListener(ev,()=>{ hwDrawing=false; }));
+window.addEventListener("resize",()=>{ if($("#qHw").style.display!=="none" && !hwHasInk) hwSize(); });
+$("#hwClear").addEventListener("click",()=>{ hwGrid(); hwHasInk=false; });
+$("#hwReveal").addEventListener("click",()=>{
+  if(quiz.answered) return;
+  if(!hwHasInk && !confirm("還沒寫字，直接看答案嗎？")) return;
+  $("#hwBox").classList.add("show"); $("#hwRow1").style.display="none"; $("#hwRow2").style.display="flex";
+  $("#hwTip").textContent="紅字是正確答案。對照一下，你寫對了嗎？";
+});
+$("#hwOk").addEventListener("click",()=>{ const q=quiz.list[quiz.i]; if(q.kind==="c"){ $("#hwRow2").style.display="none"; answer(true,null,q.item.c); } });
+$("#hwNo").addEventListener("click",()=>{ const q=quiz.list[quiz.i]; if(q.kind==="c"){ $("#hwRow2").style.display="none"; answer(false,null,q.item.c); } });
+
 function answerTyped(){
   if(quiz.answered) return;
   const q=quiz.list[quiz.i]; if(q.kind!=="c") return;
