@@ -68,8 +68,13 @@
   .chips button:hover{border-color:var(--main);}
   .chips button.on{background:var(--main-soft); border-color:var(--main); color:var(--main-dark); font-weight:bold;}
 
+  .rangerow{display:none; align-items:center; gap:8px; margin-top:10px; font-size:.95rem; flex-wrap:wrap;}
+  .rangerow.show{display:flex;}
+  .rangerow select{padding:8px 10px; font-size:1rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+
   .bigbtn{display:block; width:100%; background:var(--main); color:#fff; border:none; border-radius:10px;
     padding:14px; font-size:1.02rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:14px;}
+  .bigbtn:disabled{background:#d6b8a8; cursor:not-allowed;}
   .ghostbtn{display:block; width:100%; background:#fff; color:var(--main); border:1px solid var(--main);
     border-radius:10px; padding:11px; font-size:.95rem; cursor:pointer; font-family:inherit; margin-top:10px;}
   .tip .ghostbtn{margin-top:12px;}
@@ -315,7 +320,17 @@
 <!-- ══════ 設定 ══════ -->
 <section id="pStart" class="panel">
   <div class="card">
-    <h2>1. 練哪一種題型？</h2>
+    <h2>1. 要練哪一段？</h2>
+    <div class="chips" id="selRange">
+      <button class="on" data-v="1-47">全部 47 題</button>
+      <button data-v="1-26">第 1～26 題（沌～垮）</button>
+      <button data-v="27-47">第 27～47 題（矇～說）</button>
+      <button data-v="custom">自己選範圍</button>
+    </div>
+    <div class="rangerow" id="rangeRow">從第 <select id="rFrom"></select> 題到第 <select id="rTo"></select> 題</div>
+    <div class="note" id="rangeNote"></div>
+
+    <h2 style="margin-top:18px">2. 練哪一種題型？</h2>
     <div class="chips" id="selType">
       <button class="on" data-v="z">選注音（音）</button>
       <button data-v="c">看詞選字（形）</button>
@@ -325,7 +340,7 @@
     </div>
     <div class="note" id="typeNote"></div>
 
-    <h2 style="margin-top:18px">2. 看詞選字怎麼作答？</h2>
+    <h2 style="margin-top:18px">3. 看詞選字怎麼作答？</h2>
     <div class="chips" id="selMode">
       <button class="on" data-v="mc">四選一</button>
       <button data-v="hw">用手寫</button>
@@ -333,7 +348,7 @@
     </div>
     <div class="note">用手寫：不給選項，在格子裡用手指或滑鼠把字寫出來，再翻答案對照。對不對由自己判斷，最接近考試寫字的感覺。</div>
 
-    <h2 style="margin-top:18px">3. 這次做幾題？</h2>
+    <h2 style="margin-top:18px">4. 這次做幾題？</h2>
     <div class="chips" id="selCount">
       <button class="on" data-v="10">10 題</button>
       <button data-v="20">20 題</button>
@@ -701,6 +716,17 @@ const IDIOMS = [
   {t:"誇大其辭",m:"把事情說得超過原來的程度"}
 ];
 
+// 一字多義、成語也對應回講義題號，分段練習時才知道屬於哪一段
+function itemNoOf(t, c){
+  const hit = ITEMS.find(it=>it.w.some(w=>w.t===t));
+  if(hit) return hit.n;
+  if(c==="以" || t==="不以人廢言") return 43;
+  const byC = ITEMS.find(it=>it.c===c);
+  return byC ? byC.n : 0;
+}
+SENSES.forEach(x=>{ x.n = itemNoOf(x.t, x.c); });
+IDIOMS.forEach(x=>{ x.n = itemNoOf(x.t, ""); });
+
 const TIP_NAME = {T1:"第 1 招：看部首猜意思",T2:"第 2 招：拆開來比",T3:"第 3 招：聲符家族",T4:"第 4 招：破音字看用法",T5:"第 5 招：一字多義代入法",T6:"第 6 招：成語抓比喻"};
 
 // ═══════════ 工具 ═══════════
@@ -748,13 +774,15 @@ function keyToQ(k){
   if(p[0]==="c" && !it.f) return null;
   return {kind:p[0], item:it};
 }
-function allQuestions(kinds){
+function inRange(n){ return n>=cfg.from && n<=cfg.to; }
+function allQuestions(kinds, useRange){
   const qs=[];
   if(kinds.includes("z")) ITEMS.forEach(it=>qs.push({kind:"z",item:it}));
   if(kinds.includes("c")) ITEMS.forEach(it=>{ if(it.f && it.w.some(w=>!w.nc)) qs.push({kind:"c",item:it}); });
   if(kinds.includes("s")) SENSES.forEach(s=>qs.push({kind:"s",sense:s}));
   if(kinds.includes("p")) IDIOMS.forEach(d=>qs.push({kind:"p",idiom:d}));
-  return qs;
+  if(!useRange) return qs;
+  return qs.filter(q=>inRange(q.kind==="s"?q.sense.n : q.kind==="p"?q.idiom.n : q.item.n));
 }
 function tipQuestions(tip){
   if(tip==="T5") return pick(allQuestions(["s"]),8);
@@ -794,7 +822,7 @@ document.querySelectorAll("[data-tip]").forEach(b=>b.addEventListener("click",()
 }));
 
 // ═══════════ 設定頁 ═══════════
-let cfg = {type:"z", mode:"mc", count:"10"};
+let cfg = {type:"z", mode:"mc", count:"10", range:"1-47", from:1, to:47};
 const TYPE_NOTE = {
   z:"選注音：紅字在這個詞裡怎麼念。破音字（飲、父、說、矇）要先看意思。",
   c:"看詞選字：詞裡挖掉一個字，從長得很像的字裡挑出對的。",
@@ -809,7 +837,25 @@ function bindChips(id, key, cb){
   }));
 }
 function kindsOf(){ return cfg.type==="all" ? ["z","c","s","p"] : [cfg.type]; }
-function updatePool(){ $("#poolN").textContent = allQuestions(kindsOf()).length; $("#typeNote").textContent=TYPE_NOTE[cfg.type]; }
+function updatePool(){
+  $("#poolN").textContent = allQuestions(kindsOf(), true).length; $("#typeNote").textContent=TYPE_NOTE[cfg.type];
+  const its = ITEMS.filter(it=>inRange(it.n)).map(it=>it.c);
+  $("#rangeNote").textContent = its.length ? `這一段的字：${[...new Set(its)].join("、")}` : "這個範圍沒有題目，換一下起訖。";
+  $("#btnStart").disabled = !allQuestions(kindsOf(), true).length;
+}
+// 範圍選單：講義題號 1～47（第 6、43、47 題沒有字音字形題，但 43 題有「以」的字義題）
+(function(){
+  let h=""; for(let i=1;i<=47;i++) h+=`<option value="${i}">${i}</option>`;
+  $("#rFrom").innerHTML=h; $("#rTo").innerHTML=h; $("#rFrom").value="1"; $("#rTo").value="47";
+  const onSel=()=>{ let a=+$("#rFrom").value, b=+$("#rTo").value; if(a>b){ [a,b]=[b,a]; } cfg.from=a; cfg.to=b; updatePool(); };
+  $("#rFrom").addEventListener("change",onSel); $("#rTo").addEventListener("change",onSel);
+})();
+bindChips("selRange","range",()=>{
+  $("#rangeRow").classList.toggle("show", cfg.range==="custom");
+  if(cfg.range==="custom"){ cfg.from=+$("#rFrom").value; cfg.to=+$("#rTo").value; if(cfg.from>cfg.to){ [cfg.from,cfg.to]=[cfg.to,cfg.from]; } }
+  else { const [a,b]=cfg.range.split("-").map(Number); cfg.from=a; cfg.to=b; }
+  updatePool();
+});
 bindChips("selType","type",updatePool);
 bindChips("selMode","mode");
 bindChips("selCount","count");
@@ -826,8 +872,8 @@ function startQuiz(list){
   showPanel("pQuiz"); renderQ();
 }
 $("#btnStart").addEventListener("click",()=>{
-  quizSource="";
-  let pool = shuffle(allQuestions(kindsOf()));
+  quizSource = (cfg.from===1 && cfg.to===47) ? "" : `第 ${cfg.from}～${cfg.to} 題`;
+  let pool = shuffle(allQuestions(kindsOf(), true));
   const n = parseInt(cfg.count,10); if(n>0) pool = pool.slice(0,n);
   startQuiz(pool);
 });
