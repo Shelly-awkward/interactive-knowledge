@@ -98,6 +98,14 @@
   .opts button.ok{background:var(--green-soft); border-color:var(--green); color:#166534; font-weight:bold;}
   .opts button.no{background:var(--red-soft); border-color:var(--red); color:#991b1b;}
 
+  .typerow{display:flex; gap:8px;}
+  .typerow input{flex:1; min-width:0; padding:12px 14px; font-size:1.6rem; text-align:center;
+    border:1px solid var(--border); border-radius:10px; font-family:inherit;}
+  .typerow button{background:var(--main); color:#fff; border:none; border-radius:10px;
+    padding:0 20px; font-size:.95rem; cursor:pointer; font-family:inherit;}
+  .hintline{font-size:.85rem; color:var(--sub); margin-top:8px;}
+  .hintline a{color:var(--main); cursor:pointer; text-decoration:underline;}
+
   .fb{margin-top:14px; padding:12px 15px; border-radius:10px; font-size:.95rem; display:none;}
   .fb.ok{display:block; background:var(--green-soft); color:#166534;}
   .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
@@ -303,7 +311,14 @@
     </div>
     <div class="note" id="typeNote"></div>
 
-    <h2 style="margin-top:18px">2. 這次做幾題？</h2>
+    <h2 style="margin-top:18px">2. 看詞選字怎麼作答？</h2>
+    <div class="chips" id="selMode">
+      <button class="on" data-v="mc">四選一</button>
+      <button data-v="tp">自己打字</button>
+    </div>
+    <div class="note">自己打字：不給選項，把那個字打出來。想不起來可以看注音提示。最接近考試寫字的感覺。</div>
+
+    <h2 style="margin-top:18px">3. 這次做幾題？</h2>
     <div class="chips" id="selCount">
       <button class="on" data-v="10">10 題</button>
       <button data-v="20">20 題</button>
@@ -323,6 +338,13 @@
     <div class="stem" id="qStem"></div>
     <div id="qClue" class="clue"></div>
     <div class="opts" id="qOpts"></div>
+    <div id="qType" style="display:none">
+      <div class="typerow">
+        <input type="text" id="typeIn" maxlength="2" placeholder="打一個字" autocomplete="off">
+        <button id="btnTypeGo">確定</button>
+      </div>
+      <div class="hintline">想不出來？<a id="btnHint">看注音提示</a><span id="hintTxt"></span></div>
+    </div>
     <div class="fb" id="qFb"></div>
     <button class="bigbtn" id="btnNext" style="display:none">下一題 →</button>
   </div>
@@ -751,7 +773,7 @@ document.querySelectorAll("[data-tip]").forEach(b=>b.addEventListener("click",()
 }));
 
 // ═══════════ 設定頁 ═══════════
-let cfg = {type:"z", count:"10"};
+let cfg = {type:"z", mode:"mc", count:"10"};
 const TYPE_NOTE = {
   z:"選注音：紅字在這個詞裡怎麼念。破音字（飲、父、說、矇）要先看意思。",
   c:"看詞選字：詞裡挖掉一個字，從長得很像的字裡挑出對的。",
@@ -768,6 +790,7 @@ function bindChips(id, key, cb){
 function kindsOf(){ return cfg.type==="all" ? ["z","c","s","p"] : [cfg.type]; }
 function updatePool(){ $("#poolN").textContent = allQuestions(kindsOf()).length; $("#typeNote").textContent=TYPE_NOTE[cfg.type]; }
 bindChips("selType","type",updatePool);
+bindChips("selMode","mode");
 bindChips("selCount","count");
 updatePool();
 
@@ -804,6 +827,7 @@ function renderQ(){
   $("#qFb").className="fb"; $("#qFb").innerHTML="";
   $("#btnNext").style.display="none";
   $("#qOpts").innerHTML=""; $("#qOpts").className="opts";
+  $("#qType").style.display="none"; $("#hintTxt").textContent="";
   $("#qClue").style.display="block";
 
   if(q.kind==="z"){
@@ -817,7 +841,11 @@ function renderQ(){
     $("#qNum").textContent = `講義第 ${it.n} 題`;
     $("#qStem").innerHTML = `<div>◯ 要填哪一個字？</div><div class="words">${blankify(q.word.t,it.c)}</div>`;
     $("#qClue").innerHTML = `<b>意思</b>：${esc(q.word.m)}`;
-    charOptions(it).forEach(ch=>addOpt(ch, it.c, "big"));
+    if(cfg.mode==="tp"){
+      $("#qType").style.display="block"; $("#typeIn").value=""; setTimeout(()=>$("#typeIn").focus(),50);
+    }else{
+      charOptions(it).forEach(ch=>addOpt(ch, it.c, "big"));
+    }
   }else if(q.kind==="s"){
     const s=q.sense;
     $("#qNum").textContent = `「${s.c}」的意思`;
@@ -855,12 +883,13 @@ function answer(ok, btn, correct){
   quiz.answered=true;
   const q=quiz.list[quiz.i];
   $("#qOpts").querySelectorAll("button").forEach(b=>{ b.disabled=true; if(b.textContent===correct) b.classList.add("ok"); });
+  if(btn && btn.id==="btnTypeGo") btn=null;
   const fb=$("#qFb"); const key=qKey(q);
   if(ok){
     quiz.score++; markRight(key);
     fb.className="fb ok"; fb.innerHTML = `答對了！<b>${esc(correct)}</b>` + explainHTML(q);
   }else{
-    btn.classList.add("no");
+    if(btn) btn.classList.add("no");
     quiz.wrong.push(q); markWrong(key);
     fb.className="fb no"; fb.innerHTML = `正確答案是 <b>${esc(correct)}</b>` + explainHTML(q);
   }
@@ -868,6 +897,17 @@ function answer(ok, btn, correct){
   $("#btnNext").style.display="block";
   $("#btnNext").textContent = quiz.i+1<quiz.list.length ? "下一題 →" : "看結果";
 }
+function answerTyped(){
+  if(quiz.answered) return;
+  const q=quiz.list[quiz.i]; if(q.kind!=="c") return;
+  const v=$("#typeIn").value.trim(); if(!v) return;
+  $("#typeIn").disabled=true; $("#btnTypeGo").disabled=true;
+  answer(v===q.item.c, $("#btnTypeGo"), q.item.c);
+  $("#typeIn").disabled=false; $("#btnTypeGo").disabled=false;
+}
+$("#btnTypeGo").addEventListener("click", answerTyped);
+$("#typeIn").addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); if(quiz.answered) nextQ(); else answerTyped(); } });
+$("#btnHint").addEventListener("click", ()=>{ const q=quiz.list[quiz.i]; if(q.kind==="c") $("#hintTxt").textContent = `　注音：${q.item.z}`; });
 function nextQ(){
   if(!quiz.answered) return;
   quiz.i++;
