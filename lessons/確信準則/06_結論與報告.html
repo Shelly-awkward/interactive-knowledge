@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>確信準則｜第 6 課 結論與報告</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F3F6F5; --card:#FFFFFF;
+  --ink:#1B2A2C; --ink-2:#4A5C5E; --ink-3:#83949A;
+  --rule:rgba(27,42,44,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --std:#0F6E6E; --std-soft:#E0F1F0;
+  --ghg:#5B3A8C; --ghg-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131B1C; --card:#1C2628;
+    --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+    --rule:rgba(232,238,238,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --std:#6CC3C0; --std-soft:#1E3736;
+    --ghg:#B9A0E3; --ghg-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131B1C; --card:#1C2628;
+  --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+  --rule:rgba(232,238,238,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --std:#6CC3C0; --std-soft:#1E3736;
+  --ghg:#B9A0E3; --ghg-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--std);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+code{font-size:.9em;background:var(--paper);padding:.05em .35em;border-radius:4px}
+
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--std);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--std-soft);color:var(--std);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button,nav.tabs a{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none}
+nav.tabs button:hover,nav.tabs a:hover{border-color:var(--std);color:var(--ink)}
+nav.tabs button.active,nav.tabs a.active{background:var(--std);border-color:var(--std);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--std-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--std-soft);border-left:4px solid var(--std);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--std);display:block;margin-bottom:.2em}
+.law.ghg{background:var(--ghg-soft);border-left-color:var(--ghg)}
+.law.ghg b.art{color:var(--ghg)}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.insp{background:var(--green-soft);border-left:4px solid var(--green);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.93rem}
+.insp b.t{color:var(--green);display:block;margin-bottom:.2em}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.std{background:var(--std-soft);border-color:transparent;color:var(--std)}
+.pill.ghg{background:var(--ghg-soft);border-color:transparent;color:var(--ghg)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.pill.signal{background:var(--signal-soft);border-color:transparent;color:var(--signal)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2,.grid3{grid-template-columns:1fr}}
+
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--std)}
+.flow .step.click{cursor:pointer}
+.flow .step.click:hover,.flow .step.on{border-color:var(--std);background:var(--std-soft)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+.roles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:.6rem 0 1rem}
+@media (max-width:720px){.roles{grid-template-columns:1fr 1fr}}
+.role{border:1px solid var(--rule);border-radius:10px;padding:.6rem .7rem;background:var(--paper);font-size:.9rem;cursor:pointer}
+.role b{display:block;color:var(--std)}
+.role:hover,.role.on{border-color:var(--std);background:var(--std-soft)}
+
+.compare{display:grid;grid-template-columns:9em 1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;font-size:.92rem;margin:.6rem 0 1rem}
+.compare>div{padding:.55em .8em;border-bottom:1px solid var(--rule)}
+.compare .h{background:var(--paper);font-weight:700}
+.compare .k{background:var(--paper);font-weight:700;color:var(--ink-2)}
+@media (max-width:720px){.compare{grid-template-columns:7em 1fr 1fr;font-size:.85rem}}
+
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox label.block{display:flex}
+.toolbox select,.toolbox input[type=number],.toolbox input[type=date],.toolbox input[type=text]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);max-width:100%}
+.toolbox input[type=range]{width:100%;max-width:420px}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--std)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--std);color:var(--std);background:var(--std-soft)}
+.chip.ok{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+.chip.bad{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--std);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--std);border:1.5px solid var(--std)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+.report{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 20px;font-size:.93rem;line-height:1.9}
+.report .rh{font-weight:700;text-align:center;font-size:1.05rem;margin-bottom:.6em}
+.report .blank{display:inline-block;min-width:7em;border-bottom:2px dashed var(--std);text-align:center;color:var(--std);cursor:pointer;padding:0 .3em}
+.report .blank.ok{border-bottom-style:solid;color:var(--green);border-color:var(--green)}
+.report .blank.bad{color:var(--warn);border-color:var(--warn)}
+.report .sec{color:var(--std);font-weight:700;margin-top:.5em}
+.list-check label{display:block;padding:.3em .5em;border-radius:6px}
+.list-check label:hover{background:var(--paper)}
+.list-check label.ok{background:var(--green-soft)}
+.list-check label.bad{background:var(--warn-soft)}
+.bar{height:12px;background:var(--paper);border:1px solid var(--rule);border-radius:999px;overflow:hidden;margin:.3rem 0}
+.bar i{display:block;height:100%;background:var(--std)}
+
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--std);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--std);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">確信準則 3000 · 3410 · 第 6 課</span>
+  <h1>結論與報告</h1>
+  <p>三節加章末測驗。程序做完，證據在手，最後要回答兩個問題：下什麼結論、報告怎麼寫。這一課把 3410 號第 84 條的十五個報告要素拆開，練一次報告填空；再把修正式結論的四條路（保留、否定、無法表示、無保留加說明段）排成決策樹；最後講書面紀錄與案件品質複核，這是檢查人員翻底稿時最常開缺失的地方。</p>
+  <p class="ver">依確信準則 3000 號與 3410 號編寫。自學筆記，非官方。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">6-1 作成結論</button>
+  <button data-t="s2">6-2 報告十五要素</button>
+  <button data-t="s3">6-3 修正式結論與底稿</button>
+  <button data-t="quiz">章末測驗</button>
+  <button data-t="arts">條文速查</button>
+</nav>
+
+<!-- ═══════════ 6-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出作結論前要評估的兩件事：證據夠不夠、未更正不實表達重不重大</li>
+      <li>列得出 3410 號第 82 條對量化方法與報導實務的五項質性評估</li>
+      <li>知道範圍受限制時的三條出路</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：結論前的兩個問題</h2>
+    <div class="law"><b class="art">3000 號第 66、67 條（摘要）</b>第 66 條 執業人員應評估案件過程中所取得之證據是否足夠及適切，並於必要時取得進一步證據。應考量所有攸關證據，無論其與衡量或評估結果一致或矛盾。 第 67 條 執業人員應對標的資訊是否存有重大不實表達作成結論，考量：1. 所取得之證據是否足夠及適切。 2. 未更正不實表達（就個別或彙總而言）是否重大。</div>
+    <div class="law"><b class="art">3000 號第 68 條</b>執業人員如無法取得足夠及適切之證據，則屬範圍受限制。於此情況下，執業人員應出具保留結論、無法表示結論之確信報告或終止委任（如法令允許終止委任）。</div>
+    <p>3410 號第 79 至 81 條把這兩個問題改寫成溫室氣體版：有限確信評估「是否未發現在所有重大方面有未依適用基準編製」；合理確信評估「在所有重大方面是否係依適用基準編製」。兩者都要考量第 63 條的未更正不實表達評估。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：第 82 條的質性評估</h2>
+    <div class="law ghg"><b class="art">3410 號第 82 條</b>執業人員依第八十條及第八十一條所執行之評估，應包含對個體之量化方法及報導實務之質性層面考量，包括於估計及編製溫室氣體聲明時所作之判斷及決定是否存有可能偏頗之跡象，以及就適用基準而言：1. 所選擇及應用之量化方法與報導政策，是否與適用基準一致且係屬適當。 2. 溫室氣體聲明中所作之估計是否合理。 3. 溫室氣體聲明所表達之資訊是否攸關、可靠、完整、可比較及可瞭解。 4. 溫室氣體聲明是否適當揭露適用基準及其他事項（包括不確定性），俾使預期使用者能瞭解個體在編製過程中所作之重大判斷。 5. 溫室氣體聲明中所使用之專用術語是否適當。</div>
+    <p>第 83 條再加兩項：聲明的整體表達、結構及內容；在基準與案件情況適當時，聲明是否允當表達所報導的排放。這些是「數字都對、但整份聲明會不會誤導」的最後一道檢查，例如第 166 條第 7 款點名的「過度強調有利資料或趨勢」。</p>
+    <div class="tip">「偏頗之跡象」怎麼看：每一個估計都往有利方向取值、每一次方法變動都讓排放變少、不利的設施剛好被組織邊界排除。單一項目可能都說得過去，加起來就是偏頗。這一條要跟第 4 課的舞弊誘因（第 147 條）對照看。</div>
+  </div>
+
+  <div class="q" data-ans="B">
+    <div class="stem">練習 1：青山鋼鐵的溫室氣體聲明數字經測試均無重大不實表達，但附註完全沒提量化的不確定性，也沒說明質量平衡法的重大假設。依 3410 號，會計師作結論時應？</div>
+    <label><input type="radio" name="p1" value="A">A. 數字正確即可出具無保留結論</label>
+    <label><input type="radio" name="p1" value="B">B. 依第 82 條第 4 款評估揭露是否充分；揭露不足可能構成重大不實表達（遺漏），影響結論</label>
+    <label><input type="radio" name="p1" value="C">C. 只要在確信報告中提及不確定性即可補救</label>
+    <label><input type="radio" name="p1" value="D">D. 改為有限確信</label>
+    <button class="btn small check">對答案</button>
+    <div class="fb" data-exp="第 82 條第 4 款；第 16 條第 2 款第 4 目要求基準包含充分揭露；第 115 條第 4 款列出不確定性應揭露的內容。3000 號第 10 條第 17 款：不實表達包含遺漏。" data-diag='{"A":"第 82 條要求的是質性層面的評估，不只數字。","C":"第 84 條第 6 款的報告說明是執業人員的責任，不能取代個體在聲明中的揭露責任（第 16 條第 3 款）。","D":"揭露不足與確信程度無關。"}'></div>
+  </div>
+</section>
+
+<!-- ═══════════ 6-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>背得出 3410 號第 84 條十五個要素，尤其 3410 號比 3000 號多出來的三項</li>
+      <li>知道確信報告日不得早於哪兩個日期</li>
+      <li>分得清強調事項段與其他事項段</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：十五個要素</h2>
+    <p>3000 號第 71 條與 3410 號第 84 條的清單幾乎平行。下表用 3410 號的順序，粗體是溫室氣體案件特有或特別改寫的。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>#</th><th>要素（3410 號第 84 條）</th><th>備註</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>報告名稱，清楚標示為確信報告</td><td></td></tr>
+        <tr><td>2</td><td>報告收受者</td><td>通常是委任方（第 151 條）</td></tr>
+        <tr><td>3</td><td>確信程度（合理或有限）之辨認</td><td></td></tr>
+        <tr><td>4</td><td><b>溫室氣體聲明之辨認（含涵蓋期間）；結論未涵蓋全部資訊時，明確指出涵蓋與排除的資訊，並敘明未對排除資訊執行程序、未作結論</b></td><td>第 221 條</td></tr>
+        <tr><td>5</td><td>個體責任之說明</td><td>對應第 16 條第 3 款三項責任</td></tr>
+        <tr><td>6</td><td><b>溫室氣體之量化受先天不確定性影響之說明</b></td><td>第 145 條：不論附註有沒有揭露都要寫</td></tr>
+        <tr><td>7</td><td><b>結論涵蓋排放扣減時，排放扣減之辨認及執業人員對其責任之說明</b></td><td></td></tr>
+        <tr><td>8</td><td>適用基準之辨認：如何取得；僅供特定使用者或用途時提醒並限制使用；須以附註補充者辨認該附註</td><td></td></tr>
+        <tr><td>9</td><td>所隸屬組織適用品質管理準則 1 號之聲明</td><td>非會計師應敘明其他規範</td></tr>
+        <tr><td>10</td><td>遵循職業道德規範中獨立性及其他規範之聲明</td><td></td></tr>
+        <tr><td>11</td><td>執業人員責任之說明：依本準則執行之聲明；工作彙總（有限確信加兩句）</td><td>第 2 課觀念 8</td></tr>
+        <tr><td>12</td><td>結論：合理確信積極文字；有限確信「未發現」；修正式結論含事項說明與修正式結論</td><td>第 2 課小工具</td></tr>
+        <tr><td>13</td><td>案件主持人之簽名與蓋章</td><td></td></tr>
+        <tr><td>14</td><td>確信報告日</td><td>見觀念 4</td></tr>
+        <tr><td>15</td><td>所隸屬組織之名稱及地址</td><td></td></tr>
+      </tbody>
+    </table></div>
+    <div class="note">3000 號第 71 條還有兩項 3410 號沒單獨列的：第 5 款「衡量或評估之重大先天限制」（3410 號改成第 6 款的不確定性說明）、第 6 款「基準為特定目的設計時的提醒」（3410 號併入第 8 款第 2 目）。第 149、150 條：準則不規定統一格式，可以用「短式」或「長式」，額外資訊要跟結論明確區分（第 70 條）。</div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：報告填空</h2>
+    <p class="small muted">這是依第 84 條要素寫的有限確信報告骨架。點每一個虛線空格，從選項裡挑對的字。全部填對會亮綠。</p>
+    <div class="report" id="rpt"></div>
+    <div class="result" id="rptRes"></div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：報告日</h2>
+    <div class="law ghg"><b class="art">3410 號第 84 條第 14 款</b>確信報告日。確信報告日不得早於：(1) 執業人員取得足夠及適切之證據並據以作成結論之日期。足夠及適切之證據包括有權通過溫室氣體聲明者已聲明對該溫室氣體聲明負有責任。 (2) 當依據品質管理準則 1 號或所隸屬組織之政策或程序須執行案件品質複核時，完成案件品質複核之日期。</div>
+    <p>再疊上第 66 條：書面聲明日期不得晚於報告日。3000 號第 166 條：報告日的意義是「截至該日的事項都已考量」，所以第 68 條的期後事項要看到報告日為止。</p>
+    <div class="toolbox">
+      <fieldset><legend>輸入日期</legend>
+        <label class="block">取得足夠及適切證據並作成結論之日 <input type="date" id="dEvid" value="2026-03-20"></label>
+        <label class="block">有權通過聲明者聲明負責之日 <input type="date" id="dAppr" value="2026-03-22"></label>
+        <label class="block">案件品質複核完成日（本案須執行） <input type="date" id="dEqr" value="2026-03-26"></label>
+        <label class="block">書面聲明日 <input type="date" id="dRep" value="2026-03-24"></label>
+        <label class="block">擬定之確信報告日 <input type="date" id="dRpt" value="2026-03-25"></label>
+      </fieldset>
+      <button class="btn small" id="dGo">檢核</button>
+      <div class="result" id="dRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 5：強調事項段與其他事項段</h2>
+    <div class="law ghg"><b class="art">3410 號第 85 條（摘要）</b>執業人員認為必要時：1. 得提醒預期使用者注意<b>表達或揭露於</b>溫室氣體聲明中之某一事項，該事項對瞭解聲明係屬重要（強調事項段）。 2. 得溝通<b>未表達或揭露於</b>聲明中之某一事項，該事項對瞭解案件、執業人員之責任或確信報告係屬攸關（其他事項段）。應以附有適當標題之段落說明，並明確指出結論並未因該事項而修正。</div>
+    <div class="compare">
+      <div class="h"></div><div class="h">強調事項段</div><div class="h">其他事項段</div>
+      <div class="k">講的事在哪</div><div>已在聲明裡表達或揭露</div><div>不在聲明裡</div>
+      <div class="k">例子</div><div>附註揭露的重大不確定性、組織邊界方法變更</div><div>比較資訊未經確信（第 70 條第 2 款第 2 目）、報告限制使用</div>
+      <div class="k">會不會改變結論</div><div colspan="2">都不會。段落要明確說結論未因此修正（3000 號第 75 條）</div><div></div>
+    </div>
+    <div class="warn">強調事項段不是保留結論的替代品。3000 號第 79 條：個體已在聲明裡辨認並適當說明重大不實表達，執業人員要嘛對標的作保留或否定結論，要嘛（條款要求針對聲明作結論時）無保留加強調事項段。這是唯一一種「有重大不實表達還能無保留」的情況，條件很嚴。</div>
+  </div>
+</section>
+
+<!-- ═══════════ 6-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>畫得出修正式結論決策樹：原因（範圍受限制／重大不實表達）乘以廣泛與否</li>
+      <li>知道「廣泛」的三個判斷</li>
+      <li>背得出書面紀錄的內容、歸檔期限、保存年限，以及案件品質複核人員要做的四件事</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 6：修正式結論決策樹</h2>
+    <div class="law"><b class="art">3000 號第 76、77 條</b>第 76 條 於下列情況下，執業人員應出具修正式結論之確信報告：1. 範圍受限制且其影響係屬重大：保留結論或無法表示結論。 2. 標的資訊存有重大不實表達：保留結論或否定結論。 第 77 條 當某一事項之影響或可能影響並未重大且廣泛至須出具否定結論或無法表示結論時，執業人員應出具保留結論。保留結論應以「除……外」之方式表達。</div>
+    <div class="law"><b class="art">3000 號第 167 條</b>「廣泛」係指依執業人員之專業判斷：1. 其影響不侷限於標的資訊之特定層面。 2. 其影響如侷限於特定層面，占（或可能占）標的資訊之比例重大。 3. 涉及揭露時，該揭露對預期使用者瞭解標的資訊係屬重要。</div>
+    <div class="toolbox">
+      <fieldset><legend>原因</legend>
+        <label><input type="radio" name="mc" value="scope" checked>範圍受限制（取不到足夠及適切之證據）</label>
+        <label><input type="radio" name="mc" value="mis">標的資訊存有重大不實表達</label>
+        <label><input type="radio" name="mc" value="both">兩者都有</label>
+        <label><input type="radio" name="mc" value="none">都沒有，但有重要事項想提醒</label>
+      </fieldset>
+      <fieldset><legend>影響</legend>
+        <label><input type="radio" name="mp" value="no" checked>重大但不廣泛</label>
+        <label><input type="radio" name="mp" value="yes">重大且廣泛</label>
+      </fieldset>
+      <div class="result on" id="mcRes"></div>
+    </div>
+    <p>第 78 條：因範圍受限制而修正結論，但又知道有重大不實表達，兩件事都要在報告裡說。3000 號第 9 條：取不到確信且保留仍嫌不足時，無法表示結論或終止委任。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 7：書面紀錄</h2>
+    <div class="law"><b class="art">3000 號第 81 條</b>執業人員應及時編製案件書面紀錄（亦稱工作底稿）以支持所出具之確信報告，且該等案件書面紀錄須足夠及適切，使有經驗之執業人員縱未參與該案件，亦能瞭解下列事項：1. 為符合本確信準則及相關法令規定所執行程序之性質、時間及範圍。 2. 執行程序之結果及所獲取之證據。 3. 執行案件過程中所發現之重大事項及所達成之結論，暨達成該等結論所作之重大專業判斷。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>規定</th><th>條文</th></tr></thead>
+      <tbody>
+        <tr><td>記錄所測試項目的可辨認特性、執行者與完成日、複核者與複核日期及範圍</td><td>3410 號第 72 條；3000 號第 171 條</td></tr>
+        <tr><td>記錄與個體及其他方對重大事項的討論：性質、時間、對象</td><td>3410 號第 73 條</td></tr>
+        <tr><td>記錄職業道德問題與解決、獨立性結論、承接續任結論、諮詢</td><td>3410 號第 74 條；3000 號第 172 條</td></tr>
+        <tr><td>與最終結論不一致的資訊，記錄其處理</td><td>3000 號第 82 條</td></tr>
+        <tr><td>報告日後須增加程序或作成新結論的特殊情況：記錄情況、新程序證據結論影響、變動與複核的人員及日期</td><td>3410 號第 75 條</td></tr>
+        <tr><td>報告日後及時彙整歸檔；適當期限通常<b>不超過 60 天</b></td><td>3000 號第 83、173 條；3410 號第 76 條</td></tr>
+        <tr><td>保管期限屆滿前不得刪除或銷毀；保管年限通常<b>不短於 5 年</b></td><td>3000 號第 84、175 條；3410 號第 76 條</td></tr>
+        <tr><td>歸檔後修改或新增：記錄原因、執行及複核的人員與日期</td><td>3000 號第 85 條；3410 號第 77 條</td></tr>
+        <tr><td>歸檔是行政程序，可刪除被更新的文件、交叉索引、簽檢查表，但不得增加程序或作新結論</td><td>3000 號第 174 條</td></tr>
+        <tr><td>作廢草稿、初步看法註記、更正前文稿、重複文件不必列入</td><td>3000 號第 170 條</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tip">第 81 條的「有經驗之執業人員縱未參與亦能瞭解」就是檢查人員的標準。你看不懂的底稿，不是你的問題，是底稿的問題。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 8：案件品質複核</h2>
+    <div class="law ghg"><b class="art">3410 號第 78 條</b>對依法令或所隸屬組織之政策應執行案件品質複核之案件，案件品質複核人員應對案件服務團隊所作之重大判斷及確信報告之結論執行客觀之評估，該等評估包括：1. 與案件主持人討論重大事項，包括案件服務團隊對溫室氣體排放予以量化、報導及執行確信之專業能力。 2. 複核溫室氣體聲明及擬出具之確信報告。 3. 複核所選定有關案件服務團隊所作重大判斷及所達成結論之案件書面紀錄。 4. 評估確信報告之結論，並考量擬出具之確信報告是否適當。</div>
+    <p>3000 號第 34 條：主持人要與複核人員討論重大事項與重大判斷，並在報告日前完成。第 84 條第 14 款第 2 目：報告日不得早於複核完成日。</p>
+  </div>
+
+  <div class="insp"><b class="t">檢查人員視角：第 6 課在底稿裡看什麼</b>
+    <ul>
+      <li>報告逐項對第 84 條十五款，特別是第 4 款（涵蓋與排除）、第 6 款（不確定性）、第 11 款（有限確信兩句）。</li>
+      <li>四個日期的順序：證據與結論日 ≤ 報告日；品質複核完成日 ≤ 報告日；書面聲明日 ≤ 報告日；歸檔日 ≤ 報告日加 60 天。</li>
+      <li>結論與未更正不實表達彙總表、重大性的關係：彙總接近或超過重大性卻無保留的，要追第 63 條的判斷紀錄。</li>
+      <li>修正式結論的報告有沒有「基礎段」與對應標題（第 165 條）；保留結論有沒有用「除……外」。</li>
+      <li>品質複核紀錄：複核人員做了第 78 條四件事的證據，不是只有一個簽名。</li>
+      <li>歸檔後有沒有被動過：修改紀錄的原因、人員、日期（第 77 條）。</li>
+    </ul>
+  </div>
+
+  <div class="essay" data-id="e1">
+    <div class="stem">實例題：青山鋼鐵有限確信報告日為 3 月 25 日，案件品質複核人員簽名日為 3 月 27 日。報告結論段寫「本會計師認為溫室氣體聲明大致依適用基準編製」，沒有不確定性的說明。底稿顯示高雄廠逸散排放無法取得證據（估計佔總排放 3%，整體重大性 5%），報告未提及。歸檔日為 6 月 10 日。請列出檢查發現並引條文。</div>
+    <textarea placeholder="先寫你的答案，再看參考答案。"></textarea>
+    <button class="btn small secondary showans">看參考答案並自評</button>
+    <details><summary class="small">參考答案（點開）</summary>
+      <div class="body small">
+        <ol>
+          <li>報告日早於品質複核完成日：3410 號第 84 條第 14 款第 2 目、3000 號第 34 條與第 71 條第 14 款第 2 目。</li>
+          <li>結論用語不符：有限確信結論應為「依據所執行之程序及所獲取之證據，未發現……有未依適用基準編製之情事」（3410 號第 12 條、第 84 條第 12 款第 2 目）；「認為」「大致」都不是準則用語。</li>
+          <li>缺不確定性說明：第 84 條第 6 款、第 145 條，不論附註有無揭露，報告都須提及。</li>
+          <li>範圍受限制未反映：逸散排放無法取證屬範圍受限制（3000 號第 68 條）。佔比 3% 雖低於整體重大性 5%，仍須依第 76 條判斷影響是否重大；若判斷不重大而不修正結論，底稿應有判斷紀錄（第 81 條第 3 款）；若重大但不廣泛應保留結論（第 77 條），並於工作彙總或基礎段說明。第 162 條：若屬重要設施的範疇 1，替代程序是否執行亦應記錄。</li>
+          <li>歸檔逾期：報告日起 60 天內為適當期限（3000 號第 173 條），6 月 10 日已超過 77 天；應查看事務所品質管理制度的規定與逾期原因。</li>
+        </ol>
+      </div>
+    </details>
+    <div class="self"><span class="small">自評：</span><button class="btn small" data-ok="1">寫到了主要幾點</button><button class="btn small secondary" data-ok="0">漏了關鍵條文</button><span class="selfmsg small muted"></span></div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="quiz" class="panel">
+  <div class="card goal"><h2>章末測驗</h2><p>10 題，8 題以上過關。</p></div>
+  <div id="quizCard">
+    <div class="q quiz" data-ans="C"><div class="stem">1. 範圍受限制且影響重大但不廣泛，應出具？</div>
+      <label><input type="radio" name="q1" value="A">A. 否定結論</label><label><input type="radio" name="q1" value="B">B. 無法表示結論</label><label><input type="radio" name="q1" value="C">C. 保留結論</label><label><input type="radio" name="q1" value="D">D. 無保留結論加強調事項段</label>
+      <div class="fb" data-exp="3000 號第 76 條第 1 款、第 77 條。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">2. 標的資訊存有重大且廣泛之不實表達，應出具？</div>
+      <label><input type="radio" name="q2" value="A">A. 否定結論</label><label><input type="radio" name="q2" value="B">B. 無法表示結論</label><label><input type="radio" name="q2" value="C">C. 保留結論</label><label><input type="radio" name="q2" value="D">D. 終止委任為唯一選項</label>
+      <div class="fb" data-exp="3000 號第 76 條第 2 款、第 77 條反面。"></div></div>
+    <div class="q quiz" data-ans="D"><div class="stem">3. 依 3410 號第 84 條，確信報告中<b>必須</b>包含而 3000 號未單獨列出的要素是？</div>
+      <label><input type="radio" name="q3" value="A">A. 報告收受者</label><label><input type="radio" name="q3" value="B">B. 案件主持人簽名蓋章</label><label><input type="radio" name="q3" value="C">C. 適用基準之辨認</label><label><input type="radio" name="q3" value="D">D. 溫室氣體之量化受先天不確定性影響之說明</label>
+      <div class="fb" data-exp="第 84 條第 6 款；第 145 條強調不論附註揭露與否均須提及。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">4. 確信報告日不得早於？</div>
+      <label><input type="radio" name="q4" value="A">A. 委任書簽訂日</label><label><input type="radio" name="q4" value="B">B. 取得足夠及適切證據並作成結論之日，及（須執行時）案件品質複核完成日</label><label><input type="radio" name="q4" value="C">C. 溫室氣體聲明日</label><label><input type="radio" name="q4" value="D">D. 歸檔完成日</label>
+      <div class="fb" data-exp="3410 號第 84 條第 14 款。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">5. 強調事項段所提及的事項必須？</div>
+      <label><input type="radio" name="q5" value="A">A. 已表達或揭露於溫室氣體聲明中</label><label><input type="radio" name="q5" value="B">B. 未揭露於溫室氣體聲明中</label><label><input type="radio" name="q5" value="C">C. 導致結論修正</label><label><input type="radio" name="q5" value="D">D. 由委任方指定</label>
+      <div class="fb" data-exp="3410 號第 85 條第 1 款；3000 號第 75 條末句：強調事項段僅可提及表達或揭露於標的資訊之事項。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">6. 最終案件檔案之彙整及歸檔，自確信報告日起算之適當期限通常？</div>
+      <label><input type="radio" name="q6" value="A">A. 不超過 30 天</label><label><input type="radio" name="q6" value="B">B. 不超過 45 天</label><label><input type="radio" name="q6" value="C">C. 不超過 60 天</label><label><input type="radio" name="q6" value="D">D. 不超過 90 天</label>
+      <div class="fb" data-exp="3000 號第 173 條。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">7. 確信案件書面紀錄之保管年限，自確信報告日起算通常？</div>
+      <label><input type="radio" name="q7" value="A">A. 不短於 3 年</label><label><input type="radio" name="q7" value="B">B. 不短於 5 年</label><label><input type="radio" name="q7" value="C">C. 不短於 7 年</label><label><input type="radio" name="q7" value="D">D. 不短於 10 年</label>
+      <div class="fb" data-exp="3000 號第 175 條。"></div></div>
+    <div class="q quiz" data-ans="D"><div class="stem">8. 案件品質複核人員依 3410 號第 78 條應執行之評估<b>不包括</b>？</div>
+      <label><input type="radio" name="q8" value="A">A. 與案件主持人討論重大事項</label><label><input type="radio" name="q8" value="B">B. 複核溫室氣體聲明及擬出具之確信報告</label><label><input type="radio" name="q8" value="C">C. 複核所選定有關重大判斷之案件書面紀錄</label><label><input type="radio" name="q8" value="D">D. 親自執行進一步程序以取得證據</label>
+      <div class="fb" data-exp="第 78 條四款均為複核與評估，不是取證。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">9. 「廣泛」的判斷<b>不包括</b>？</div>
+      <label><input type="radio" name="q9" value="A">A. 不實表達之金額是否超過執行重大性</label><label><input type="radio" name="q9" value="B">B. 影響是否不侷限於標的資訊之特定層面</label><label><input type="radio" name="q9" value="C">C. 影響侷限於特定層面時，占標的資訊之比例是否重大</label><label><input type="radio" name="q9" value="D">D. 涉及揭露時，該揭露對使用者瞭解標的資訊是否重要</label>
+      <div class="fb" data-exp="3000 號第 167 條三項。執行重大性是規劃用的門檻，不是廣泛的判斷標準。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">10. 最終案件檔案彙整後，須修改或新增書面紀錄時，應記錄？</div>
+      <label><input type="radio" name="q10" value="A">A. 僅修改內容</label><label><input type="radio" name="q10" value="B">B. 僅修改日期</label><label><input type="radio" name="q10" value="C">C. 修改或新增之原因，以及執行及複核之人員及日期</label><label><input type="radio" name="q10" value="D">D. 不得修改</label>
+      <div class="fb" data-exp="3000 號第 85 條；3410 號第 77 條。"></div></div>
+  </div>
+  <button class="bigbtn" id="submitQuiz">交卷</button>
+  <div id="quizResult"></div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="arts" class="panel">
+  <div class="card"><h2>本課條文速查</h2>
+  <div class="arts">
+    <details><summary>3000 號第 66 至 70 條 <span>作成結論、報告格式</span></summary><div class="txt">第 66 條 執業人員應評估案件過程中所取得之證據是否足夠及適切，並於必要時取得進一步證據。執業人員應考量所有攸關證據，無論其與依適用基準對標的所作之衡量或評估一致或矛盾。
+第 67 條 執業人員應對標的資訊是否存有重大不實表達作成結論，考量：1.所取得之證據是否足夠及適切。2.未更正不實表達（就個別或彙總而言）是否重大。
+第 68 條 執業人員如無法取得足夠及適切之證據，則屬範圍受限制。於此情況下，執業人員應出具保留結論、無法表示結論之確信報告或終止委任。
+第 69 條 確信報告應為書面形式，且應明確表達執業人員對標的資訊之結論。
+第 70 條 執業人員之結論應與不影響該結論之資訊或說明明確區分。</div></details>
+    <details><summary>3000 號第 71 條 <span>確信報告之基本要素</span></summary><div class="txt">1.報告名稱。2.報告收受者。3.確信程度、標的資訊及標的之辨認或說明。4.適用基準之辨認。5.重大先天限制之說明（如適用時）。6.基準為特定目的設計時之提醒。7.負責方與衡量方或評估方之辨認及責任說明。8.案件係依本確信準則及標的事項特定確信準則執行之聲明。9.品質管理準則 1 號之聲明。10.獨立性及其他道德規範之聲明。11.所執行工作之彙總說明（有限確信加兩句）。12.執業人員之結論。13.案件主持人之簽名與蓋章。14.確信報告日，不得早於：(1)取得足夠及適切之證據並作成結論之日期。(2)完成案件品質複核之日期。15.所隸屬組織之名稱及地址。</div></details>
+    <details><summary>3000 號第 74 至 79 條 <span>無保留及修正式結論</span></summary><div class="txt">第 74 條 於下列情況下，執業人員應出具無保留結論之確信報告：1.對於合理確信案件，標的資訊在所有重大方面係依適用基準編製。2.對於有限確信案件，執業人員依據其所執行之程序及所獲取之證據，未發現標的資訊在所有重大方面有未依適用基準編製之情事。
+第 75 條 執業人員認為必要時，得：1.提醒預期使用者注意表達或揭露於標的資訊之某一事項（強調某一重大事項之說明段）。2.說明未表達或揭露於標的資訊之某一事項（其他事項之說明段）。應以附有適當標題之一個段落說明該事項，並明確指出執業人員之結論並未因該事項而修正。在強調某一重大事項之情況下，該段落僅可提及表達或揭露於標的資訊之事項。
+第 76 條 於下列情況下，執業人員應出具修正式結論：1.範圍受限制且其影響係屬重大：保留結論或無法表示結論。2.標的資訊存有重大不實表達：保留結論或否定結論。
+第 77 條 當某一事項之影響或可能影響並未重大且廣泛至須出具否定結論或無法表示結論時，執業人員應出具保留結論。保留結論應以「除……外」之方式表達。
+第 78 條 執業人員因範圍受限制而作成修正式結論，但又知悉導致標的資訊存有重大不實表達之情事時，應於確信報告中對兩者均明確說明。
+第 79 條 適當方已於其聲明中辨認並適當說明標的資訊存有重大不實表達時，執業人員應以下列方式之一作成結論：1.針對標的及適用基準作成保留結論或否定結論。2.如案件條款明確要求針對適當方之聲明作成結論，應作成無保留結論，但須增加一強調重大事項之說明段。</div></details>
+    <details><summary>3000 號第 81 至 85 條 <span>書面紀錄</span></summary><div class="txt">第 81 條（見觀念 7）
+第 82 條 執業人員如辨認出與重大事項之最終結論有不一致之資訊，應記錄該不一致之處理情形。
+第 83 條 執業人員應於確信報告日後，及時完成最終案件檔案之彙整及歸檔。
+第 84 條 執業人員完成最終案件檔案之彙整後，於案件書面紀錄保管期限屆滿前，不得予以刪除或銷毀。
+第 85 條 執業人員完成最終案件檔案之彙整後，如須修改或新增現有案件書面紀錄時，應記錄：1.修改或新增之原因。2.執行及複核之人員及日期。</div></details>
+    <details><summary>3000 號第 149 至 157 條 <span>報告格式與內容之解釋</span></summary><div class="txt">第 149 條 本確信準則並未規定所有確信案件之報告皆須採標準化格式，而僅辨認確信報告應包含之基本要素。
+第 150 條 執業人員可選擇以「短式」或「長式」報告與預期使用者溝通。額外資訊應與執業人員之結論明確區分。
+第 151 條 報告收受者通常為委任方，惟於某些情況下可能包括其他預期使用者。
+第 153 條 確信報告應辨認衡量或評估標的之適用基準。攸關之揭露可能包括：基準之來源及是否為一般公認基準、所採用之衡量或評估方法、重要解釋、方法是否變動。
+第 155 條 責任歸屬之說明可使預期使用者瞭解負責方對標的負責，衡量方或評估方負責依適用基準衡量或評估標的，而執業人員則負責以超然獨立之立場對標的資訊表示結論。
+第 156 條 品質管理規範聲明之例示：執業人員所隸屬組織遵循品質管理準則 1 號「會計師事務所之品質管理」……
+第 157 條 職業道德規範聲明之例示：本執業人員及所隸屬組織遵循會計師職業道德規範中有關獨立性及其他道德規範之規定，該規範之基本原則為正直、公正客觀、專業能力及專業上應有之注意、保密及專業行為。</div></details>
+    <details><summary>3000 號第 165 至 175 條 <span>標題、報告日、廣泛、歸檔</span></summary><div class="txt">第 165 條 依案件情況，於修正式結論段及導致修正式結論事項之說明段前加列標題（例如「保留結論」、「否定結論」或「無法表示結論」及「保留結論之基礎」等），可增加確信報告之可瞭解性。
+第 166 條 確信報告日可使預期使用者瞭解，執業人員已考量截至該日所發生可能影響標的資訊及確信報告之事項。
+第 167 條（見觀念 6）
+第 170 條 作廢之工作底稿草稿、初步或不完整看法之註記、更正錯誤前之文稿及重複之文件，無須列為案件檔案。
+第 171 條 書面紀錄中可能包括：1.所測試特定項目或事項之可辨認特性。2.執行案件工作之人員及完成工作之日期。3.執行複核工作之人員及複核之日期與範圍。4.與適當方及其他方對重大事項所作之討論。
+第 173 條 最終案件檔案之彙整及歸檔之適當期限，自確信報告日起算通常不超過六十天。
+第 174 條 最終案件檔案之彙整係屬行政管理程序，並不涉及程序之增加或作成新結論。
+第 175 條 確信案件之保管年限，自確信報告日起算通常不短於五年。</div></details>
+    <details><summary>3410 號第 72 至 78 條 <span>書面紀錄、品質複核</span></summary><div class="txt">第 72 條 執業人員於記錄所執行程序之性質、時間及範圍時，應記錄：1.所測試特定項目或事項之可辨認特性。2.執行案件工作之人員及其完成該工作之日期。3.執行複核工作之人員及複核之日期與範圍。
+第 73 條 執業人員應記錄與個體及其他方對重大事項所作之討論，其內容包括重大事項之性質、討論之時間及對象。
+第 75 條 確信報告日後，如發生執業人員須增加程序或達成新結論之特殊情況，執業人員應記錄：1.所發生之情況。2.所執行之新增或額外程序、取得之證據、達成之結論及對確信報告之影響。3.對案件書面紀錄進行變動及複核之人員及日期。
+第 76 條 執業人員應於確信報告日後，及時完成最終案件檔案之彙整及歸檔。完成彙整後，於保管期限屆滿前，不得予以刪除或銷毀。
+第 77 條 於完成最終案件檔案之彙整歸檔後，除第七十五條所述情況外，發現有必要修改或新增案件書面紀錄時，應記錄：1.修改或新增之原因。2.執行及複核之人員及日期。
+第 78 條（見觀念 8）</div></details>
+    <details><summary>3410 號第 79 至 86 條 <span>結論、報告、強調事項、其他溝通</span></summary><div class="txt">第 79 條 執業人員應就是否已對溫室氣體聲明取得合理確信或有限確信作成結論。
+第 80 條 對有限確信案件，執業人員應評估是否未發現溫室氣體聲明在所有重大方面有未依適用基準編製之情事。
+第 81 條 對合理確信案件，執業人員應評估溫室氣體聲明在所有重大方面是否係依適用基準編製。
+第 82 條（見觀念 2）
+第 83 條 依第八十條及第八十一條所作之評估亦應考量：1.溫室氣體聲明之整體表達、結構及內容。2.當基準、確信結論之用語或其他案件情況適當時，溫室氣體聲明是否允當表達所報導之排放。
+第 84 條（見觀念 3 表格）
+第 85 條（見觀念 5）
+第 86 條（見第 5 課）</div></details>
+  </div></div>
+  <p class="small"><a href="05_執行程序與證據.html">上一課</a> · <a href="00_總覽地圖.html">回總覽地圖</a> · <a href="綜合練習場.html">綜合練習場</a></p>
+</section>
+
+<footer>確信準則 3000 號與 3410 號自學課 · 自學筆記，非官方；條文以會計研究發展基金會發布版本為準 · 紀錄只存在這台裝置的瀏覽器</footer>
+</div>
+<script>
+const LESSON_ID = "06", CH = "確信準則 06 結論與報告";
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const PROG_KEY = "qx_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與其他教材共用 study_log_v1）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  $$('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  $$('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+$$('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="quiz"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+$$('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok });
+  });
+});
+
+// ===== 章末測驗交卷 =====
+(function(){
+  const sb = document.getElementById('submitQuiz'); if(!sb) return;
+  sb.addEventListener('click',()=>{
+    const qs = $$('#quizCard .q.quiz');
+    let score = 0, answered = 0; const wrong = [];
+    qs.forEach((q,i)=>{
+      const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+      q.classList.remove('correct','wrong');
+      if(sel) answered++;
+      if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+      else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+    });
+    logEv({ type:"quiz", score, total: qs.length, wrong });
+    writeProg({ quiz: { score, total: qs.length } });
+    const r = document.getElementById('quizResult');
+    if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+    else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="quiz"]').classList.add('done'); }
+    else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+    else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+    r.scrollIntoView({behavior:'smooth'});
+  });
+})();
+
+// ===== 實例題自評 =====
+$$('.essay').forEach(es=>{
+  const ta = es.querySelector('textarea'), self = es.querySelector('.self'), ans = es.querySelector('details');
+  const showBtn = es.querySelector('.showans');
+  if(showBtn) showBtn.addEventListener('click',()=>{ if(ans) ans.open = true; self.classList.add('on'); });
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 通用：chips 單選顯示結果 =====
+function chipTool(chipsId, resId, DATA, render, logName){
+  const res = document.getElementById(resId); if(!res) return;
+  $$('#'+chipsId+' .chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      $$('#'+chipsId+' .chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+      c.setAttribute('aria-pressed','true');
+      const d = DATA[c.dataset.k];
+      res.innerHTML = render(d, c.dataset.k);
+      res.classList.add('on');
+      logEv({ type:"tool", q:logName, k:c.dataset.k });
+    });
+  });
+}
+
+// ===== 工具：報告填空 =====
+(function(){
+  const B = {
+    b1:{ a:'確信報告', o:['確信報告','查核報告','核閱報告','協議程序報告'], k:'第 84 條第 1 款：清楚標示為確信報告' },
+    b2:{ a:'有限確信', o:['有限確信','合理確信','協議程序','代編'], k:'第 3 款：確信程度之辨認' },
+    b3:{ a:'民國 114 年 1 月 1 日至 12 月 31 日', o:['民國 114 年 1 月 1 日至 12 月 31 日','民國 114 年 12 月 31 日','本年度'], k:'第 4 款：含涵蓋之期間' },
+    b4:{ a:'範疇 3 排放', o:['範疇 3 排放','範疇 1 排放','比較資訊'], k:'第 4 款：結論未涵蓋全部資訊時，指出排除的資訊並敘明未執行程序、未作結論' },
+    b5:{ a:'設計、付諸實行及維持必要之內部控制', o:['設計、付諸實行及維持必要之內部控制','執行確信程序','出具確信報告'], k:'第 5 款、第 16 條第 3 款第 1 目' },
+    b6:{ a:'先天不確定性', o:['先天不確定性','抽樣風險','匯率變動'], k:'第 6 款、第 145 條' },
+    b7:{ a:'ISO 14064-1:2018 及環境部溫室氣體排放量盤查作業指引', o:['ISO 14064-1:2018 及環境部溫室氣體排放量盤查作業指引','國際財務報導準則','本所內部作業手冊'], k:'第 8 款：適用基準之辨認' },
+    b8:{ a:'品質管理準則 1 號', o:['品質管理準則 1 號','審計準則公報第 46 號','ISO 9001'], k:'第 9 款' },
+    b9:{ a:'獨立性及其他道德規範', o:['獨立性及其他道德規範','保密義務','收費標準'], k:'第 10 款' },
+    b10:{ a:'確信準則 3000 號及 3410 號', o:['確信準則 3000 號及 3410 號','審計準則','確信準則 3410 號（不含 3000 號）'], k:'第 11 款第 1 目；3410 號第 9、14 條' },
+    b11:{ a:'性質及時間不同，其範圍亦較小', o:['性質及時間不同，其範圍亦較小','完全相同','更為嚴謹'], k:'第 11 款第 2 目①' },
+    b12:{ a:'明顯低於', o:['明顯低於','等同於','略高於'], k:'第 11 款第 2 目②' },
+    b13:{ a:'未發現', o:['未發現','認為','保證'], k:'第 12 款第 2 目：有限確信之消極式結論' },
+    b14:{ a:'林〇〇會計師（簽名蓋章）', o:['林〇〇會計師（簽名蓋章）','明德聯合會計師事務所（用印）','青山鋼鐵董事長'], k:'第 13 款：案件主持人之簽名與蓋章' },
+    b15:{ a:'民國 115 年 3 月 25 日', o:['民國 115 年 3 月 25 日','民國 114 年 12 月 31 日','民國 115 年 3 月 20 日（取得證據日之前）'], k:'第 14 款：不得早於取得證據作成結論日與品質複核完成日' }
+  };
+  const tpl = `<div class="rh">{b1}</div>
+<p>青山鋼鐵股份有限公司 公鑒：</p>
+<div class="sec">範圍</div>
+<p>本會計師受託對青山鋼鐵股份有限公司（以下簡稱貴公司）{b3}之溫室氣體聲明執行{b2}案件。本案件結論涵蓋該聲明所列範疇 1 及範疇 2 排放；聲明中之{b4}不在本案件範圍內，本會計師未對其執行任何程序，亦未作出結論。</p>
+<div class="sec">貴公司之責任</div>
+<p>貴公司之責任為依{b7}編製溫室氣體聲明，並{b5}，以確保溫室氣體聲明未存有導因於舞弊或錯誤之重大不實表達。</p>
+<div class="sec">先天不確定性</div>
+<p>溫室氣體之量化受{b6}影響，其係因量化所依據之科學知識不完整，以及用以決定排放係數與衡量排放之方法存有估計不確定性所致。</p>
+<div class="sec">本會計師之獨立性與品質管理</div>
+<p>本會計師及所隸屬事務所遵循會計師職業道德規範中有關{b9}之規定。本事務所適用{b8}，設計、付諸實行及執行品質管理制度。</p>
+<div class="sec">本會計師之責任</div>
+<p>本會計師依照{b10}執行本案件。有限確信案件中執行程序之{b11}，所取得之確信程度{b12}合理確信案件中取得者。本會計師所執行之程序包括查詢負責編製聲明之人員、對排放量執行分析性程序、將所選取之活動數據核對至原始憑證、核對排放係數至公告來源、重新驗算，以及於高雄廠及台中廠實地觀察並檢查監測設備校準紀錄。</p>
+<div class="sec">結論</div>
+<p>依據所執行之程序及所獲取之證據，本會計師{b13}貴公司{b3}之溫室氣體聲明（就範疇 1 及範疇 2 排放而言）在所有重大方面有未依適用基準編製之情事。</p>
+<p style="margin-top:1em">明德聯合會計師事務所<br>{b14}<br>{b15}<br>台北市〇〇路〇號</p>`;
+  const box = $('#rpt');
+  box.innerHTML = tpl.replace(/\{(b\d+)\}/g, (m,k)=>'<span class="blank" data-k="'+k+'" tabindex="0">______</span>');
+  const state = {};
+  function check(){
+    const keys = Object.keys(B); const done = keys.filter(k=>state[k]===B[k].a).length;
+    const r = $('#rptRes'); r.classList.add('on');
+    r.innerHTML = '<p class="small" style="margin:0">已填對 '+done+' / '+keys.length+' 格。'+(done===keys.length?' <b>全部正確。</b>再對照一次第 84 條十五款，這份骨架少了「報告收受者」以外的哪一款？（答案：都有了，收受者就是抬頭。）':'')+'</p>';
+  }
+  $$('#rpt .blank').forEach(sp=>{
+    sp.addEventListener('click',()=>{
+      const k = sp.dataset.k, d = B[k];
+      if(sp.querySelector('select')) return;
+      const sel = document.createElement('select'); sel.innerHTML = '<option value="">選一個</option>'+shuffle(d.o).map(o=>'<option>'+o+'</option>').join('');
+      sel.style.font='inherit'; sel.style.maxWidth='100%';
+      sp.innerHTML=''; sp.appendChild(sel); sel.focus();
+      sel.addEventListener('change',()=>{
+        const v = sel.value; if(!v) return; state[k]=v; const ok = v===d.a;
+        sp.innerHTML = v; sp.classList.toggle('ok', ok); sp.classList.toggle('bad', !ok); sp.title = (ok?'對。':'不對。')+d.k;
+        if(!ok){ const t = document.createElement('span'); t.className='small muted'; t.textContent='（'+d.k+'）'; sp.after(t); setTimeout(()=>t.remove(), 4000); }
+        check(); logEv({ type:"tool", q:"report-blank", k, ok });
+      });
+      sel.addEventListener('blur',()=>{ if(!sel.value){ sp.innerHTML='______'; } });
+    });
+    sp.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); sp.click(); } });
+  });
+})();
+
+// ===== 工具：報告日檢核 =====
+(function(){
+  $('#dGo').addEventListener('click',()=>{
+    const g = id => $('#'+id).value; const ev=g('dEvid'), ap=g('dAppr'), eq=g('dEqr'), rp=g('dRep'), rt=g('dRpt');
+    const out = [];
+    const base = ev > ap ? ev : ap;
+    out.push([rt >= base, '報告日 '+rt+(rt>=base?' 不早於':' 早於')+'取得足夠及適切證據之日（含有權通過聲明者聲明負責之日）'+base+'（第 84 條第 14 款第 1 目）']);
+    out.push([rt >= eq, '報告日 '+rt+(rt>=eq?' 不早於':' 早於')+'案件品質複核完成日 '+eq+'（第 84 條第 14 款第 2 目、3000 號第 34 條）']);
+    out.push([rp <= rt, '書面聲明日 '+rp+(rp<=rt?' 不晚於':' 晚於')+'報告日 '+rt+'（第 66 條）']);
+    const ok = out.every(o=>o[0]);
+    const d = new Date(rt); d.setDate(d.getDate()+60);
+    $('#dRes').innerHTML = '<h3>'+(ok?'日期順序正確':'日期順序有問題')+'</h3><ul class="small">'+out.map(o=>'<li>'+(o[0]?'✓ ':'✗ ')+o[1]+'</li>').join('')+'</ul><p class="small muted" style="margin:0">歸檔期限：報告日起 60 天，即 '+d.toISOString().slice(0,10)+' 前（3000 號第 173 條）。書面紀錄保管至少 5 年（第 175 條）。</p>';
+    $('#dRes').classList.add('on'); logEv({ type:"tool", q:"dates", ok });
+  });
+})();
+
+// ===== 工具：修正式結論決策 =====
+(function(){
+  const r = $('#mcRes');
+  function draw(){
+    const c = document.querySelector('input[name=mc]:checked').value, p = document.querySelector('input[name=mp]:checked').value==='yes';
+    let t, w;
+    if(c==='none'){ t='無保留結論，視情況加強調事項段或其他事項段'; w='3000 號第 74 條無保留；第 75 條、3410 號第 85 條：已揭露的事項用強調事項段，未揭露的用其他事項段，都要明確說結論未因此修正。'; }
+    else if(c==='scope'){ t = p ? '無法表示結論（或終止委任）' : '保留結論'; w = p ? '3000 號第 76 條第 1 款、第 9 條：範圍受限制且影響重大且廣泛。報告須有「無法表示結論之基礎」段（第 165 條）。' : '第 76 條第 1 款、第 77 條：重大但不廣泛，以「除……外」表達。第 78 條：若同時知悉重大不實表達，兩者都要說明。'; }
+    else if(c==='mis'){ t = p ? '否定結論' : '保留結論'; w = p ? '第 76 條第 2 款：重大且廣泛之不實表達。第 167 條「廣泛」的三個判斷。' : '第 76 條第 2 款、第 77 條：重大但不廣泛，以「除……外」表達。'; }
+    else { t = p ? '依主導事項出具無法表示結論或否定結論，且兩者均須說明' : '保留結論，兩者均須說明'; w = '第 78 條：因範圍受限制而修正結論，但又知悉重大不實表達時，應於報告中對兩者均明確說明。哪一個主導要看專業判斷與廣泛程度。'; }
+    r.innerHTML = '<h3>'+t+'</h3><p class="small" style="margin:0">'+w+'</p>';
+  }
+  $$('input[name=mc],input[name=mp]').forEach(i=>i.addEventListener('change',()=>{ draw(); logEv({ type:"tool", q:"modified" }); })); draw();
+})();
+
+</script>
+</body>
+</html>

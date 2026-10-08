@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>確信準則｜第 5 課 執行程序與證據</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F3F6F5; --card:#FFFFFF;
+  --ink:#1B2A2C; --ink-2:#4A5C5E; --ink-3:#83949A;
+  --rule:rgba(27,42,44,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --std:#0F6E6E; --std-soft:#E0F1F0;
+  --ghg:#5B3A8C; --ghg-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131B1C; --card:#1C2628;
+    --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+    --rule:rgba(232,238,238,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --std:#6CC3C0; --std-soft:#1E3736;
+    --ghg:#B9A0E3; --ghg-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131B1C; --card:#1C2628;
+  --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+  --rule:rgba(232,238,238,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --std:#6CC3C0; --std-soft:#1E3736;
+  --ghg:#B9A0E3; --ghg-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--std);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+code{font-size:.9em;background:var(--paper);padding:.05em .35em;border-radius:4px}
+
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--std);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--std-soft);color:var(--std);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button,nav.tabs a{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none}
+nav.tabs button:hover,nav.tabs a:hover{border-color:var(--std);color:var(--ink)}
+nav.tabs button.active,nav.tabs a.active{background:var(--std);border-color:var(--std);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--std-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--std-soft);border-left:4px solid var(--std);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--std);display:block;margin-bottom:.2em}
+.law.ghg{background:var(--ghg-soft);border-left-color:var(--ghg)}
+.law.ghg b.art{color:var(--ghg)}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.insp{background:var(--green-soft);border-left:4px solid var(--green);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.93rem}
+.insp b.t{color:var(--green);display:block;margin-bottom:.2em}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.std{background:var(--std-soft);border-color:transparent;color:var(--std)}
+.pill.ghg{background:var(--ghg-soft);border-color:transparent;color:var(--ghg)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.pill.signal{background:var(--signal-soft);border-color:transparent;color:var(--signal)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2,.grid3{grid-template-columns:1fr}}
+
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--std)}
+.flow .step.click{cursor:pointer}
+.flow .step.click:hover,.flow .step.on{border-color:var(--std);background:var(--std-soft)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+.roles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:.6rem 0 1rem}
+@media (max-width:720px){.roles{grid-template-columns:1fr 1fr}}
+.role{border:1px solid var(--rule);border-radius:10px;padding:.6rem .7rem;background:var(--paper);font-size:.9rem;cursor:pointer}
+.role b{display:block;color:var(--std)}
+.role:hover,.role.on{border-color:var(--std);background:var(--std-soft)}
+
+.compare{display:grid;grid-template-columns:9em 1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;font-size:.92rem;margin:.6rem 0 1rem}
+.compare>div{padding:.55em .8em;border-bottom:1px solid var(--rule)}
+.compare .h{background:var(--paper);font-weight:700}
+.compare .k{background:var(--paper);font-weight:700;color:var(--ink-2)}
+@media (max-width:720px){.compare{grid-template-columns:7em 1fr 1fr;font-size:.85rem}}
+
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox label.block{display:flex}
+.toolbox select,.toolbox input[type=number],.toolbox input[type=date],.toolbox input[type=text]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);max-width:100%}
+.toolbox input[type=range]{width:100%;max-width:420px}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--std)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--std);color:var(--std);background:var(--std-soft)}
+.chip.ok{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+.chip.bad{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--std);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--std);border:1.5px solid var(--std)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+.report{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 20px;font-size:.93rem;line-height:1.9}
+.report .rh{font-weight:700;text-align:center;font-size:1.05rem;margin-bottom:.6em}
+.report .blank{display:inline-block;min-width:7em;border-bottom:2px dashed var(--std);text-align:center;color:var(--std);cursor:pointer;padding:0 .3em}
+.report .blank.ok{border-bottom-style:solid;color:var(--green);border-color:var(--green)}
+.report .blank.bad{color:var(--warn);border-color:var(--warn)}
+.report .sec{color:var(--std);font-weight:700;margin-top:.5em}
+.list-check label{display:block;padding:.3em .5em;border-radius:6px}
+.list-check label:hover{background:var(--paper)}
+.list-check label.ok{background:var(--green-soft)}
+.list-check label.bad{background:var(--warn-soft)}
+.bar{height:12px;background:var(--paper);border:1px solid var(--rule);border-radius:999px;overflow:hidden;margin:.3rem 0}
+.bar i{display:block;height:100%;background:var(--std)}
+
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--std);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--std);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">確信準則 3000 · 3410 · 第 5 課</span>
+  <h1>執行程序與證據</h1>
+  <p>三節加章末測驗。風險評完了，接下來是「做什麼來回應風險」。這一課把 3410 號第 36 到 71 條的程序排成一張清單：整體對策、進一步程序（控制測試、細項測試、分析性程序、估計、抽樣）、專家與其他執業人員、書面聲明、不實表達的處理、期後事項、比較資訊、其他資訊。每一項都標出有限確信與合理確信的分岔。</p>
+  <p class="ver">依確信準則 3000 號與 3410 號編寫。自學筆記，非官方。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">5-1 對策與進一步程序</button>
+  <button data-t="s2">5-2 證據、專家、書面聲明</button>
+  <button data-t="s3">5-3 不實表達與收尾程序</button>
+  <button data-t="quiz">章末測驗</button>
+  <button data-t="arts">條文速查</button>
+</nav>
+
+<!-- ═══════════ 5-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>說得出「整體對策」回應什麼、「進一步程序」回應什麼</li>
+      <li>背得出七種程序，知道控制測試何時非做不可</li>
+      <li>列得出分析性程序的三步驟與差異處理，以及對估計的三種程序</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：兩層回應</h2>
+    <div class="law ghg"><b class="art">3410 號第 36、37 條</b>第 36 條 執業人員應設計及執行整體對策，以因應所評估整體溫室氣體聲明之重大不實表達風險。 第 37 條 執業人員應考量確信程度（合理或有限確信），設計及執行進一步程序，其性質、時間及範圍須足以因應所評估之重大不實表達風險。</div>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>整體對策（第 36 條）</th><th>進一步程序（第 37 條）</th></tr></thead>
+      <tbody>
+        <tr><td>回應什麼</td><td>整體聲明層級的風險（第 4 課觀念 8）</td><td>重大排放類別及揭露事項（合理確信：其聲明）的風險</td></tr>
+        <tr><td>長什麼樣</td><td>第 177 條：強調專業懷疑、派更有經驗或特殊技能的人、聘專家、加強督導、加入個體無法預期的因素、改變程序的性質時間範圍（期末而非期中）</td><td>控制測試、細項測試、分析性程序（第 13 條第 12 款「進一步程序」的定義）</td></tr>
+        <tr><td>控制環境的影響</td><td>第 178 條：控制環境無效時，期末多做、靠其他程序多取證、加大樣本與設施數</td><td>第 179 條：影響控制測試與其他程序的相對比重</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：七種程序與例舉</h2>
+    <div class="law ghg"><b class="art">3410 號第 7 條（節錄）</b>執業人員對溫室氣體聲明執行有限確信及合理確信案件時，可選擇不同確信程序之組合，該等程序包括：檢查、觀察、函證、驗算、重新執行、分析性程序及查詢。</div>
+    <p>第 180 條列了十一種溫室氣體案件常見的進一步程序，考試很愛拿來出配合題：</p>
+    <ol class="small">
+      <li>測試活動數據蒐集與記錄的控制執行有效性（例如購電度數）</li>
+      <li>將排放係數核對至適當來源（政府出版物）並考量適用性</li>
+      <li>複核與組織邊界攸關的合資協議及其他合約</li>
+      <li>調節所記錄的資料（例如到車輛里程表）</li>
+      <li>重新驗算（質量守恆、能量守恆）並調節差異</li>
+      <li>讀取連續性監測設備的資料</li>
+      <li>觀察或重新進行實體測量（伸入油箱測量）</li>
+      <li>分析特殊測量或量化技術的合理性（回收或回饋循環）</li>
+      <li>抽樣並獨立分析原料特性（煤炭），或觀察個體抽樣技術並閱讀實驗室紀錄</li>
+      <li>檢查計算的正確性與方法妥適性（衡量值轉換與彙總）</li>
+      <li>將所記錄的資料核對至原始憑證（生產紀錄、燃料使用紀錄、購電發票）</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：合理確信的三條硬規定</h2>
+    <div class="law ghg"><b class="art">3410 號第 43 條</b>有下列情況之一時，執業人員應設計及執行控制測試，俾對攸關控制執行之有效性取得足夠及適切之證據：1. 執業人員欲信賴測試控制執行之有效性，以決定其他程序之性質、時間及範圍。 2. 對個別聲明僅執行其他程序（控制測試以外之程序）無法提供足夠及適切之證據。</div>
+    <div class="law ghg"><b class="art">3410 號第 45 條</b>執業人員所評估之重大不實表達風險不論為何，對每一重大排放類別及揭露事項，除控制測試外（如有時），均應設計及執行細項測試或分析性程序。</div>
+    <div class="law ghg"><b class="art">3410 號第 46 條</b>執業人員應考量是否執行外部函證程序。</div>
+    <p>第 44 條：控制測試發現偏差時，要查詢瞭解、決定已做的測試還能不能支持信賴、要不要加測控制、要不要加做其他程序。第 42 條：合理確信設計進一步程序時，要考量固有風險與是否信賴控制；風險愈高，證據要愈有說服力（第 183 條）。</p>
+    <div class="note">有限確信對應的是第 38 條：考量風險評估的理由、風險愈高證據愈要有說服力。沒有「每一類別都要細項測試或分析性程序」的硬規定，也不要求考慮函證，但第 90 條提醒：資料全部電子化時，有限確信也可能決定做控制測試。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：分析性程序的三步與差異處理</h2>
+    <div class="compare">
+      <div class="h">步驟</div><div class="h">有限確信（第 39、40 條）</div><div class="h">合理確信（第 47、48 條）</div>
+      <div class="k">1. 判斷妥適性</div><div>考量風險評估與細項測試結果</div><div>針對特定聲明判斷</div>
+      <div class="k">2. 評估資料可靠性</div><div colspan="2">來源、可比較性、性質、攸關性、資訊編製的控制（兩者相同）</div><div></div>
+      <div class="k">3. 設定預期值</div><div>設定即可</div><div>應足夠精確，以辨認可能之重大不實表達</div>
+      <div class="k">出現重大差異</div><div>向個體查詢，考量回應以決定是否須執行其他程序</div><div>向個體查詢並取得與回應攸關之額外證據；執行其他必要程序</div>
+    </div>
+    <p>第 149 至 151 條另外講「為了解個體而做的分析性程序」：例如比各設施的排放與產量，用的是高度彙整資料，結果只能給「可能有重大不實表達」的廣泛初步跡象。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 5：估計與抽樣</h2>
+    <div class="law ghg"><b class="art">3410 號第 50 條（合理確信）</b>為因應所評估重大不實表達風險，執業人員應依據估計之性質，執行下列一項或多項程序：1. 測試個體如何作估計及估計所依據之資料，評估量化方法是否適當及假設是否合理。 2. 測試估計相關控制執行之有效性，並執行適當之其他程序。 3. 建立點估計或區間估計以評估個體所作之估計。採用不同假設或方法時，應對個體之假設或方法取得足夠瞭解；採區間估計時，應依證據縮小區間，直至該區間內之所有結果皆被認為合理。</div>
+    <p>有限確信與合理確信共同的估計程序（第 41、49 條）：評估是否適當採用基準中與估計攸關的規定、方法是否適當且一致應用、方法變動是否適當。有限確信多一句「考量是否須執行其他程序」。</p>
+    <p>第 51 條抽樣：設計樣本時考量程序的目的與母體特性。第 191 條（應用）的細節在準則後段。</p>
+  </div>
+
+  <div class="card">
+    <h2>小工具：這個情境該做哪些程序</h2>
+    <p class="small muted">選一個情境，勾你會做的程序，看對照。這不是標準答案題，是練「為什麼做這個、為什麼不做那個」。</p>
+    <div class="toolbox">
+      <select id="scSel">
+        <option value="s2L">有限確信：台中廠範疇 2 購電 15,200 公噸</option>
+        <option value="s1R">合理確信：高雄廠高爐製程排放 95,000 公噸（質量平衡估算）</option>
+        <option value="bioL">有限確信：台中廠生質混燒鍋爐 12,000 公噸（碳含量估計）</option>
+        <option value="cemsR">合理確信：高雄廠連續監測設備（CEMS）量測的燃燒排放</option>
+      </select>
+      <div class="list-check" id="scList"></div>
+      <button class="btn small" id="scGo">對照</button>
+      <div class="result" id="scRes"></div>
+    </div>
+  </div>
+
+  <div class="q" data-ans="B">
+    <div class="stem">練習 1：合理確信案件，青山鋼鐵範疇 2 排放的風險評估為「低」。會計師決定只做控制測試、不做細項測試或分析性程序。依 3410 號？</div>
+    <label><input type="radio" name="p1" value="A">A. 可以，風險低時控制測試即足夠</label>
+    <label><input type="radio" name="p1" value="B">B. 不可以，第 45 條要求不論風險高低，每一重大排放類別都應設計及執行細項測試或分析性程序</label>
+    <label><input type="radio" name="p1" value="C">C. 可以，但須改為有限確信</label>
+    <label><input type="radio" name="p1" value="D">D. 不可以，合理確信不得做控制測試</label>
+    <button class="btn small check">對答案</button>
+    <div class="fb" data-exp="第 45 條：「所評估之重大不實表達風險不論為何」。" data-diag='{"A":"第 45 條就是為了防這個想法。","C":"確信程度不是程序不夠的補救方法。","D":"第 43 條：想信賴控制時應做控制測試，不是不得做。"}'></div>
+  </div>
+</section>
+
+<!-- ═══════════ 5-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>背得出證據可靠性的四個原則，以及「足夠」與「適切」的關係</li>
+      <li>列得出採用執業人員專家、負責方專家、其他執業人員、內部稽核各要評估什麼</li>
+      <li>背得出 3410 號第 65 條六項書面聲明與日期規定，以及不給聲明的後果</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 6：證據的足夠與適切</h2>
+    <div class="law"><b class="art">3000 號第 145 條</b>證據之足夠性及適切性二者相互關聯。足夠性係證據數量之衡量，所需證據之數量受標的資訊重大不實表達之風險（風險愈高，所需之證據數量愈多）及證據之品質（品質愈高，所需之證據數量愈少）所影響。惟取得較多之證據可能無法彌補證據品質不佳之缺陷。</div>
+    <div class="law"><b class="art">3000 號第 146 條（摘要）</b>證據可靠性之原則：1. 取自適當方以外之來源，可靠性較高。 2. 來自內部者，若相關控制有效，可靠性較高。 3. 執業人員直接取得之證據（觀察控制之執行），較間接或推論取得者（查詢）更可靠。 4. 書面形式較口頭更可靠。</div>
+    <p>第 52 條：證據來源不一致，或對可靠性有懷疑，要決定是否修改或增加程序。第 148 條列了判斷「夠不夠」的七個因素：風險顯著程度、個體對策的有效性、以往經驗、程序結果、資訊來源與可靠性、說服力、對個體的瞭解。</p>
+    <div class="toolbox">
+      <p class="small muted">青山鋼鐵範疇 2 的用電度數，下列四種證據哪一個最可靠？點一個。</p>
+      <div class="chips" id="t2chips">
+        <button class="chip" data-k="a">永續辦公室口頭告知的年度用電度數</button>
+        <button class="chip" data-k="b">公司內部用電統計表（Excel，無覆核紀錄）</button>
+        <button class="chip" data-k="c">公司提供的台電電費單影本</button>
+        <button class="chip" data-k="d">執業人員直接向台電函證取得的年度用電資料</button>
+      </div>
+      <div class="result" id="t2res"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 7：別人做的工作，怎麼用</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>誰</th><th>條文</th><th>要評估什麼</th></tr></thead>
+      <tbody>
+        <tr><td><b>執業人員專家</b>（事務所聘的製程工程師）</td><td>3000 號第 54 條、第 135 至 140 條</td><td>專業能力、適任能力、客觀性（外部專家要查利益與關係）；對其專門知識領域取得足夠瞭解；就工作的性質範圍目的達成共識；評估其工作是否適當（發現的攸關性合理性、假設與方法、原始資料）。報告提及專家時不得暗示責任因此降低（第 72 條）</td></tr>
+        <tr><td><b>負責方的專家</b>（公司委託的盤查顧問）</td><td>3000 號第 55 條</td><td>考量重要程度後：評估能力與客觀性、瞭解其工作、評估採用為證據是否適切</td></tr>
+        <tr><td><b>其他執業人員</b>（海外子公司當地會計師）</td><td>3000 號第 56 條、第 113 至 114 條；3410 號第 64 條、第 129 條</td><td>是否瞭解並遵循職業道德（尤其獨立性）、專業能力、團隊參與程度、所處法令環境是否積極監督。3410 號第 64 條另要求：清楚溝通工作範圍時間與發現，並評估證據足夠適切及納入聲明的流程</td></tr>
+        <tr><td><b>內部稽核</b></td><td>3000 號第 57 條；3410 號第 32 條</td><td>職能定位與客觀性、專業能力、系統化嚴謹方法、工作是否適切</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tip">檢查時的重點：底稿裡專家做的部分，有沒有執業人員「評估專家工作」的紀錄。只有專家報告、沒有評估，就是第 54 條第 4 款沒做。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 8：書面聲明</h2>
+    <div class="law ghg"><b class="art">3410 號第 65 條</b>執業人員應要求對溫室氣體聲明負有適當責任且瞭解相關事項之個體人員，提供下列書面聲明：1. 已依協議之案件條款，履行依照適用基準編製溫室氣體聲明（包括比較資訊）之責任。 2. 已使執業人員可取得並接觸所有攸關資訊，且所有攸關事項均已反映於溫室氣體聲明。 3. 是否認為未更正之不實表達（就個別及彙總而言）對溫室氣體聲明之影響非屬重大，並將彙總納入聲明中或列為附件。 4. 是否認為作成估計所採用之重大假設係屬合理。 5. 已與執業人員溝通所有與案件攸關之已知且非顯然微小之內部控制缺失。 6. 是否已告知所知悉對溫室氣體聲明可能有重大影響之已發生、疑似或被指控之舞弊或未遵循法令之事項。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>規定</th><th>條文</th></tr></thead>
+      <tbody>
+        <tr><td>日期儘量接近確信報告日，不得晚於該日</td><td>3410 號第 66 條；3000 號第 61 條</td></tr>
+        <tr><td>第 1、2 款聲明沒給，或對提供者誠信有重大懷疑：無法表示結論或終止委任</td><td>3410 號第 67 條</td></tr>
+        <tr><td>書面聲明不能取代可合理取得的其他證據；本身無法對所因應事項提供足夠適切證據</td><td>3000 號第 142 條</td></tr>
+        <tr><td>涉及重大事項時，評估合理性與一致性，考量出具者是否充分瞭解</td><td>3000 號第 60 條</td></tr>
+        <tr><td>聲明不可靠時：討論、重評誠信、採取行動含考量對報告的影響</td><td>3000 號第 62 條</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常見缺失：書面聲明日期晚於報告日；只有第 1、2 款，缺未更正不實表達彙總表（第 3 款）；簽署者是不瞭解排放事務的財務主管。</div>
+  </div>
+
+  <div class="q" data-ans="C">
+    <div class="stem">練習 2：確信報告日為 3 月 25 日。青山鋼鐵的書面聲明日期為 3 月 28 日，內容只有「聲明已依適用基準編製」一句。依準則，下列何者正確？</div>
+    <label><input type="radio" name="p2" value="A">A. 日期在報告日後三天內，可接受</label>
+    <label><input type="radio" name="p2" value="B">B. 內容已涵蓋最重要的一項，其餘可省略</label>
+    <label><input type="radio" name="p2" value="C">C. 日期不得晚於報告日，且應包含第 65 條六項；缺第 2 款時依第 67 條應出具無法表示結論或終止委任</label>
+    <label><input type="radio" name="p2" value="D">D. 書面聲明可用口頭聲明替代</label>
+    <button class="btn small check">對答案</button>
+    <div class="fb" data-exp="3410 號第 65、66、67 條。" data-diag='{"A":"第 66 條：不得晚於確信報告日。","B":"第 65 條「應要求……提供下列書面聲明」六項都要。","D":"3000 號第 58 條、3410 號第 65 條都要求書面。"}'></div>
+  </div>
+</section>
+
+<!-- ═══════════ 5-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>走得完「累計、溝通、更正、評估」四步的不實表達處理</li>
+      <li>知道期後事項、比較資訊、其他資訊各自要做什麼</li>
+      <li>知道舞弊與未遵循法令辨認出來後要溝通給誰</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 9：不實表達的四步</h2>
+    <div class="flow">
+      <div class="step"><b>1. 累計</b>除顯然微小者外全部累計（3410 號第 57 條）</div>
+      <div class="step"><b>2. 判斷要不要改策略</b>性質顯示可能還有別的、或已接近重大性（第 58 條）；個體自己檢查更正後，執業人員要再做程序確認（第 59 條）</div>
+      <div class="step"><b>3. 溝通與更正</b>及時與適當層級溝通所有累計的不實表達並要求更正（第 60 條）；拒絕更正要瞭解理由並納入結論考量（第 61 條）</div>
+      <div class="step"><b>4. 評估</b>先重評重大性是否仍適當（第 62 條），再判斷未更正者個別或彙總是否重大，考量大小、性質與情況（第 63 條）</div>
+    </div>
+    <p>3000 號第 133 條：累計的目的是在作結論時評估未更正不實表達是否重大。第 141 條第 1 款：書面聲明要附未更正不實表達的彙總表。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 10：收尾前的四件事</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>事項</th><th>條文</th><th>要做什麼</th></tr></thead>
+      <tbody>
+        <tr><td><b>舞弊與未遵循法令</b></td><td>3410 號第 52 條、第 86 條</td><td>適當因應；與對聲明負監督責任的人溝通內控顯著缺失、舞弊、未遵循法令（顯然微不足道者除外），並確定是否有向內外部報告的責任</td></tr>
+        <tr><td><b>期後事項</b></td><td>3410 號第 68 條；3000 號第 63、143 條</td><td>聲明日至報告日間的事項是否須調整或揭露，並取得證據。報告日後沒有執行程序的義務，但獲悉「當時知道就會改報告」的事實時要適當因應</td></tr>
+        <tr><td><b>比較資訊</b></td><td>3410 號第 69、70 條</td><td>結論涵蓋比較資訊時：評估與前期一致或已適當重編並揭露、前期政策與本期一致。察覺比較資訊可能重大不實表達時：討論並執行程序；未重編者，結論涵蓋就保留或否定，不涵蓋就在其他事項段敘明</td></tr>
+        <tr><td><b>其他資訊</b></td><td>3410 號第 71 條；3000 號第 64、144 條</td><td>閱讀與聲明併列的其他資訊（例如永續報告書其他章節），辨認重大不一致或重大誤述；與個體溝通並採取行動（諮詢法律顧問、與主管機關溝通、暫不交付報告、終止委任、在報告中說明）</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：這個差異接下來怎麼走</h2>
+    <p class="small muted">青山鋼鐵有限確信案件，期末彙總時發現三筆事項。逐一選處理方式。</p>
+    <div class="toolbox" id="misBox"></div>
+  </div>
+
+  <div class="insp"><b class="t">檢查人員視角：第 5 課在底稿裡看什麼</b>
+    <ul>
+      <li>程序跟風險對不對得起來：風險評估表上每一個「高」風險的類別，都要找得到對應的進一步程序。合理確信看第 45 條：每一重大類別都有細項測試或分析性程序。</li>
+      <li>分析性程序底稿：有沒有預期值、資料可靠性評估、差異門檻、差異的查詢與後續。只有「比去年增加 8%，合理」一句的，不算分析性程序。</li>
+      <li>排放係數核對紀錄（第 180 條第 2 款）：係數來源、版本、適用期間。</li>
+      <li>專家工作：事務所對專家的評估紀錄（第 54 條四款）。</li>
+      <li>書面聲明：日期、六項內容、簽署人、未更正不實表達彙總表。</li>
+      <li>不實表達彙總表：有沒有「顯然微小」門檻、每筆的處理與個體回應、拒絕更正的理由。</li>
+      <li>其他資訊：底稿有沒有閱讀永續報告書其他章節的紀錄，以及不一致的處理。</li>
+    </ul>
+  </div>
+
+  <div class="essay" data-id="e1">
+    <div class="stem">實例題：底稿顯示會計師對高雄廠製程排放執行分析性程序：「本年度排放較去年增加 12%，與粗鋼產量增加 10% 大致相符，合理。」沒有其他程序。另一張底稿記錄事務所聘請的製程專家出具 3 頁意見書，底稿附上意見書後寫「已採用」。書面聲明日期在報告日前一週，但未附未更正不實表達彙總表，底稿另有一張彙總表列了兩筆合計約執行重大性 80% 的未更正數。請列出檢查發現。</div>
+    <textarea placeholder="先寫你的答案，再看參考答案。"></textarea>
+    <button class="btn small secondary showans">看參考答案並自評</button>
+    <details><summary class="small">參考答案（點開）</summary>
+      <div class="body small">
+        <ol>
+          <li>分析性程序不完整：3410 號第 39 條三步（判斷妥適性、評估資料可靠性、設定預期值）在底稿看不到；用高度彙整的年度數據比對（第 151 條）只能給初步跡象；製程排放與產量關係是否穩定（第 174 條第 3 款）未評估。質量平衡估算屬估計，第 41 條要求評估是否適當採用基準規定、方法是否適當一致，並考量是否須執行其他程序。</li>
+          <li>專家工作未評估：3000 號第 54 條要求評估專家能力適任客觀性、瞭解其領域、就工作達成共識、評估工作是否適當（第 140 條：發現的攸關性合理性與一致性、假設方法、原始資料）。「已採用」不是評估。</li>
+          <li>書面聲明缺項：3410 號第 65 條第 3 款要求聲明是否認為未更正不實表達不重大，且彙總應納入聲明或列為附件。</li>
+          <li>未更正不實表達接近執行重大性：第 58 條第 2 款，接近重大性時應決定是否修正整體案件策略與計畫；第 62 條，評估前重新評估重大性是否仍適當；第 63 條，判斷個別與彙總是否重大，考量性質與情況；第 60、61 條，應有溝通與要求更正的紀錄及拒絕理由。</li>
+        </ol>
+      </div>
+    </details>
+    <div class="self"><span class="small">自評：</span><button class="btn small" data-ok="1">寫到了主要幾點</button><button class="btn small secondary" data-ok="0">漏了關鍵條文</button><span class="selfmsg small muted"></span></div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="quiz" class="panel">
+  <div class="card goal"><h2>章末測驗</h2><p>10 題，8 題以上過關。</p></div>
+  <div id="quizCard">
+    <div class="q quiz" data-ans="A"><div class="stem">1. 3410 號第 13 條第 12 款「進一步程序」包括？</div>
+      <label><input type="radio" name="q1" value="A">A. 控制測試（如有時）、細項測試及分析性程序</label><label><input type="radio" name="q1" value="B">B. 僅查詢與觀察</label><label><input type="radio" name="q1" value="C">C. 僅為瞭解個體所執行之程序</label><label><input type="radio" name="q1" value="D">D. 承接程序</label>
+      <div class="fb" data-exp="第 13 條第 12 款。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">2. 合理確信案件中，何時「應」執行控制測試？</div>
+      <label><input type="radio" name="q2" value="A">A. 所有案件一律</label><label><input type="radio" name="q2" value="B">B. 僅當個體要求時</label><label><input type="radio" name="q2" value="C">C. 欲信賴控制以決定其他程序，或僅執行其他程序無法提供足夠及適切證據時</label><label><input type="radio" name="q2" value="D">D. 僅當控制環境薄弱時</label>
+      <div class="fb" data-exp="3410 號第 43 條。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">3. 合理確信案件中分析性程序發現重大差異，執業人員應？</div>
+      <label><input type="radio" name="q3" value="A">A. 向個體查詢並記錄回應即可</label><label><input type="radio" name="q3" value="B">B. 向個體查詢並取得與其回應攸關之額外證據，並執行必要之其他程序</label><label><input type="radio" name="q3" value="C">C. 直接出具保留結論</label><label><input type="radio" name="q3" value="D">D. 改以細項測試取代</label>
+      <div class="fb" data-exp="3410 號第 48 條；有限確信依第 40 條。"></div></div>
+    <div class="q quiz" data-ans="D"><div class="stem">4. 依 3000 號第 146 條，下列證據何者通常最可靠？</div>
+      <label><input type="radio" name="q4" value="A">A. 對控制執行情形之查詢</label><label><input type="radio" name="q4" value="B">B. 事後對討論事項之口頭聲明</label><label><input type="radio" name="q4" value="C">C. 控制無效環境下產生的內部紀錄</label><label><input type="radio" name="q4" value="D">D. 執業人員直接觀察控制之執行</label>
+      <div class="fb" data-exp="第 146 條第 3 款：直接取得較間接或推論更可靠。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">5. 「取得較多之證據可能無法彌補證據品質不佳之缺陷」是在說明？</div>
+      <label><input type="radio" name="q5" value="A">A. 足夠性與適切性相互關聯但不可互相取代</label><label><input type="radio" name="q5" value="B">B. 證據數量不重要</label><label><input type="radio" name="q5" value="C">C. 外部證據一律可靠</label><label><input type="radio" name="q5" value="D">D. 有限確信不須證據</label>
+      <div class="fb" data-exp="3000 號第 145 條。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">6. 擬採用執業人員外部專家之工作，評估其客觀性時應？</div>
+      <label><input type="radio" name="q6" value="A">A. 不須評估，外部專家當然客觀</label><label><input type="radio" name="q6" value="B">B. 僅確認其有證照</label><label><input type="radio" name="q6" value="C">C. 查詢可能影響其客觀性之利益與關係</label><label><input type="radio" name="q6" value="D">D. 由個體出具證明</label>
+      <div class="fb" data-exp="3000 號第 54 條第 1 款、第 137 條。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">7. 個體未提供 3410 號第 65 條第 1、2 款之書面聲明。執業人員應？</div>
+      <label><input type="radio" name="q7" value="A">A. 出具保留結論</label><label><input type="radio" name="q7" value="B">B. 出具無法表示結論或終止委任</label><label><input type="radio" name="q7" value="C">C. 以口頭聲明替代</label><label><input type="radio" name="q7" value="D">D. 於強調事項段說明</label>
+      <div class="fb" data-exp="3410 號第 67 條。"></div></div>
+    <div class="q quiz" data-ans="D"><div class="stem">8. 關於不實表達之累計，下列何者正確？</div>
+      <label><input type="radio" name="q8" value="A">A. 只累計重大者</label><label><input type="radio" name="q8" value="B">B. 只累計個體拒絕更正者</label><label><input type="radio" name="q8" value="C">C. 有限確信案件不須累計</label><label><input type="radio" name="q8" value="D">D. 除顯然微小者外均應累計，並及時與個體溝通要求更正</label>
+      <div class="fb" data-exp="3410 號第 57、60 條。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">9. 結論未涵蓋比較資訊，但併列之比較資訊存有重大不實表達且未重編。執業人員應？</div>
+      <label><input type="radio" name="q9" value="A">A. 於確信報告之其他事項段敘明影響比較資訊之情況</label><label><input type="radio" name="q9" value="B">B. 出具否定結論</label><label><input type="radio" name="q9" value="C">C. 不須處理</label><label><input type="radio" name="q9" value="D">D. 拒絕出具報告</label>
+      <div class="fb" data-exp="3410 號第 70 條第 2 款第 2 目；結論涵蓋者依第 1 目出具保留或否定結論。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">10. 執業人員於確信報告日後？</div>
+      <label><input type="radio" name="q10" value="A">A. 應持續對標的資訊執行程序至下一報導期間</label><label><input type="radio" name="q10" value="B">B. 對任何後續事實均無須理會</label><label><input type="radio" name="q10" value="C">C. 無對標的資訊執行程序之義務，但獲悉可能導致修改報告之事實時應適當因應</label><label><input type="radio" name="q10" value="D">D. 應撤回報告</label>
+      <div class="fb" data-exp="3000 號第 63、143 條；3410 號第 68 條第 2 項。"></div></div>
+  </div>
+  <button class="bigbtn" id="submitQuiz">交卷</button>
+  <div id="quizResult"></div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="arts" class="panel">
+  <div class="card"><h2>本課條文速查</h2>
+  <div class="arts">
+    <details><summary>3000 號第 48 至 53 條 <span>風險之考量及因應、證據</span></summary><div class="txt">第 48 條 對合理確信案件，執業人員應依據其瞭解：1.辨認及評估標的資訊之重大不實表達風險。2.針對前述風險設計及執行程序。有下列情況之一時，尚應對與標的資訊攸關控制之執行有效性取得足夠及適切之證據：(1)風險評估包含對控制係有效執行之預期。(2)僅執行控制測試以外之程序無法提供足夠及適切之證據。
+第 49 條 合理確信案件中，所取得之證據若與原據以評估風險之證據不一致，執業人員應修正其評估，並依此修改所規劃之程序。
+第 50 條 對有限確信案件，執業人員應依據其瞭解：1.辨認標的資訊可能存有重大不實表達之領域。2.針對前述領域設計及執行程序。
+第 52 條 執業人員於設計及執行程序時，應考量擬作為證據之資訊之攸關性及可靠性。有下列情況時，應決定是否修改或增加程序：1.自不同來源所取得之證據存有不一致。2.對擬作為證據資訊之可靠性存有懷疑。
+第 53 條 執業人員應累計案件過程中所辨認且未被更正之不實表達（顯然微小者除外）。</div></details>
+    <details><summary>3000 號第 54 至 57 條 <span>專家、其他執業人員、內部稽核</span></summary><div class="txt">第 54 條 擬採用執業人員專家所執行之工作時，執業人員應：1.評估該專家是否具備必要之專業能力、適任能力及客觀性。如該專家為外部專家，評估客觀性應包括查詢可能影響其客觀性之利益與關係。2.對該專家之專門知識領域取得足夠之瞭解。3.與該專家就工作之性質、範圍及目的達成共識。4.評估該專家之工作就執業人員之目的而言是否適當。
+第 55 條 擬作為證據之資訊如係依據負責方、衡量方或評估方之專家之工作編製，執業人員應於考量該專家之工作對達成其目的之重要程度後：1.評估該專家之專業能力、適任能力及客觀性。2.取得對該專家工作之瞭解。3.評估採用該專家工作以作為證據是否適切。
+第 56 條 擬採用其他執業人員之工作時，執業人員應評估其工作就執業人員之目的而言是否適切。
+第 57 條 執業人員擬採用內部稽核人員之工作時，應評估：1.內部稽核職能之定位及支持其客觀性之程度。2.專業能力。3.是否應用系統化且嚴謹之方法。4.工作是否適切。</div></details>
+    <details><summary>3000 號第 58 至 64 條 <span>書面聲明、期後事項、其他資訊</span></summary><div class="txt">第 58 條 執業人員應要求適當方提供下列書面聲明：1.已提供其已知且與案件攸關之所有資訊予執業人員。2.確認已依適用基準衡量或評估標的，且所有攸關事項均已反映於標的資訊。
+第 60 條 書面聲明涉及對標的資訊係屬重大之事項時，執業人員應：1.評估其合理性及與其他證據之一致性。2.考量出具書面聲明之人員對該等事項是否充分瞭解。
+第 61 條 書面聲明之日期應儘量接近確信報告日，但不得晚於該日。
+第 62 條 如所要求之書面聲明無法取得，或對提供者之專業能力、誠信、道德觀或謹慎程度存有疑慮，或認為書面聲明不可靠，執業人員應：1.與適當方討論。2.重新評估誠信及其對證據可靠性之可能影響。3.採取適當行動，包括確認對確信報告之可能影響。
+第 63 條 執業人員應考量截至確信報告日止與案件攸關之事項，對標的資訊及確信報告之影響。執業人員於確信報告日後，並無對標的資訊執行任何程序之義務。
+第 64 條 執業人員應閱讀其他資訊，以辨認其與標的資訊或確信報告間之重大不一致。有下列情況應與適當方討論並採取適當行動：1.辨認出重大不一致。2.發現其他資訊存有重大誤述之情事。</div></details>
+    <details><summary>3000 號第 142、145、146、148 條 <span>證據之解釋</span></summary><div class="txt">第 142 條 適當方之書面聲明不得取代執業人員合理預期可取得之其他證據。書面聲明雖為必要之證據，但其自身無法對其所因應之事項提供足夠及適切之證據。
+第 145 條（見觀念 6）
+第 146 條（見觀念 6）
+第 148 條 執業人員判斷是否已取得足夠及適切之證據時，受下列因素影響：1.潛在不實表達風險之顯著程度。2.適當方針對已知風險所採取對策之有效性。3.以往經驗。4.執行程序之結果。5.可取得資訊之來源及其可靠性。6.證據之說服力。7.對適當方及其環境之瞭解。</div></details>
+    <details><summary>3410 號第 36 至 51 條 <span>整體對策與進一步程序</span></summary><div class="txt">第 38 條 執業人員對有限確信案件設計及執行進一步程序時，應遵循：1.考量對重大排放類別及揭露事項之重大不實表達風險作成評估結論所依據之理由。2.所評估之風險愈高，愈須取得更具說服力之證據。
+第 39 條 對有限確信案件，如設計及執行分析性程序時，執業人員應：1.判斷特定分析性程序之妥適性。2.於設定預期值時，先評估所依據資料之可靠性（來源、可比較性、性質、攸關性及資訊編製之控制）。3.對所記錄之數量或比率設定預期值。
+第 41 條 基於所評估之重大不實表達風險，執業人員應：1.評估個體是否已適當採用適用基準中與估計攸關之規定。2.評估作估計之方法是否適當並一致應用；方法變動是否適當。3.考量於當時情況下是否須執行其他程序。
+第 42 條 合理確信案件設計進一步程序時：1.考量風險評估之理由，包括固有風險，及是否欲信賴控制。2.風險愈高，愈須取得更具說服力之證據。
+第 44 條 執業人員對欲信賴之控制偵出偏差時，應作特定之查詢，並決定：1.已執行之控制測試是否對信賴提供適當基礎。2.是否有必要執行額外之控制測試。3.是否有必要執行額外之其他程序。
+第 47 條 對合理確信案件分析性程序：1.針對特定聲明判斷妥適性。2.評估資料可靠性。3.設定預期值，該預期值應足夠精確，以辨認可能之重大不實表達。
+第 48 條 合理確信案件分析性程序發現重大差異，執業人員應：1.向個體查詢並取得與其回應攸關之額外證據。2.執行必要之其他程序。
+第 49 條 合理確信案件對估計：1.評估是否適當採用基準規定。2.評估方法是否適當並一致應用。
+第 51 條 如採用抽樣方法，執業人員於設計樣本時，應考量所執行程序之目的及選取樣本之母體特性。</div></details>
+    <details><summary>3410 號第 52 至 63 條 <span>舞弊、彙總流程、不實表達</span></summary><div class="txt">第 52 條 執業人員應適當因應於案件中所辨認之舞弊或疑似舞弊，以及未遵循或疑似未遵循法令之事項。
+第 56 條 合理確信案件中，所取得之證據如與原先據以評估重大不實表達風險之證據不一致，執業人員應修正其評估，並依此修改所規劃之程序。
+第 57 條 除不實表達屬顯然微小者外，執業人員應累計案件過程中所辨認之不實表達。
+第 58 條 如有下列情況時，執業人員應決定是否須修正整體案件策略及案件計畫：1.所辨認不實表達之性質及情況顯示可能存有其他不實表達，彙總後可能係屬重大。2.所辨認之不實表達已接近重大性。
+第 59 條 如在執業人員之要求下，個體已檢查排放類別或揭露事項並更正所偵出之不實表達，執業人員應對個體所完成之工作執行程序，俾確認是否仍存有重大不實表達。
+第 60 條 執業人員應及時與個體適當層級人員溝通所累計之所有不實表達，並要求個體更正。
+第 61 條 如個體拒絕更正，執業人員應瞭解拒絕更正之理由，並於形成結論時將該等瞭解納入考量。
+第 62 條 執業人員於評估未更正不實表達之影響前，應就個體實際排放重新評估重大性是否仍屬適當。
+第 63 條 執業人員應決定未更正不實表達（就個別或彙總而言）是否重大，考量不實表達之大小及性質，以及發生之特定情況。</div></details>
+    <details><summary>3410 號第 64 至 71 條 <span>其他執業人員、書面聲明、期後、比較資訊、其他資訊</span></summary><div class="txt">第 64 條 當執業人員擬採用其他執業人員之工作時，其應：1.與其他執業人員清楚溝通其工作之範圍及時間與其發現。2.評估所取得之證據是否足夠及適切，以及將相關資訊納入溫室氣體聲明中之流程。
+第 66 條 書面聲明之日期應儘量接近確信報告日，但不得晚於該日。
+第 67 條 如有下列情形之一時，執業人員應對溫室氣體聲明出具無法表示結論之確信報告或終止委任：1.對提供第六十五條第一款及第二款書面聲明人員之誠信有重大懷疑，致認為相關書面聲明並不可靠。2.個體未提供第六十五條第一款及第二款所規定之書面聲明。
+第 68 條 執業人員應考量溫室氣體聲明日至確信報告日止所發生之事項，是否須對溫室氣體聲明進行調整或揭露，並評估是否取得足夠及適切之證據。執業人員亦應適當因應於確信報告日後始獲悉之事實。
+第 69 條 當比較資訊與當期排放資訊併列表達，且執業人員之結論涵蓋比較資訊時，應評估：1.比較資訊與前期列報之數量及揭露是否一致，或已進行適當之重編並揭露。2.前期量化政策是否與本期一致，如發生變動，是否已適當應用且充分揭露。
+第 70 條 如執業人員察覺比較資訊可能存有重大不實表達：1.與個體討論並執行適當程序。2.考量對確信報告之影響。如比較資訊存有重大不實表達且未重編：(1)結論涵蓋比較資訊者，應出具保留或否定結論。(2)結論未涵蓋者，應於其他事項段敘明。
+第 71 條 執業人員應閱讀與溫室氣體聲明及確信報告併列之其他資訊，以辨認重大不一致。如辨認出重大不一致或發現其他資訊存有重大不實表達，應與個體溝通並採取進一步行動。</div></details>
+    <details><summary>3410 號第 86 條 <span>其他溝通</span></summary><div class="txt">除法令規範禁止外，執業人員應就於案件過程中所發現下列事項，與對溫室氣體聲明負有監督責任之人員溝通，並應確定是否有責任向個體內部或外部其他方報告該等事項：1.依執業人員之專業判斷，認為須注意之內部控制顯著缺失。2.所辨認之舞弊或疑似舞弊。3.存有未遵循或疑似未遵循法令之事項，顯然微不足道者除外。</div></details>
+    <details><summary>3410 號第 176 至 181 條 <span>對策與程序之解釋</span></summary><div class="txt">第 177 條 因應整體風險之整體對策可能包括：1.強調專業懷疑。2.指派更有經驗或具特殊技能之人員，或聘用專家。3.更積極之督導。4.融入更多個體無法預期之因素。5.改變程序之性質、時間及範圍，例如於期末而非期中執行。
+第 178 條 有效之控制環境可使執業人員於期中執行某些程序；控制環境有缺失時：1.於期末執行較多程序。2.經由其他程序取得更多證據。3.增加樣本量及執行程序之範圍。
+第 180 條（見觀念 2）
+第 181 條 可能影響所評估重大不實表達風險之因素包括：1.測量工具性能之先天限制及校準頻率。2.蒐集資料之設施之數量、性質、地理分布及所有權特性。3.各種氣體及排放源之數量及性質。</div></details>
+  </div></div>
+  <p class="small"><a href="04_規劃重大性與風險.html">上一課</a> · <a href="00_總覽地圖.html">回總覽地圖</a> · <a href="06_結論與報告.html">下一課：結論與報告</a></p>
+</section>
+
+<footer>確信準則 3000 號與 3410 號自學課 · 自學筆記，非官方；條文以會計研究發展基金會發布版本為準 · 紀錄只存在這台裝置的瀏覽器</footer>
+</div>
+<script>
+const LESSON_ID = "05", CH = "確信準則 05 執行程序與證據";
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const PROG_KEY = "qx_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與其他教材共用 study_log_v1）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  $$('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  $$('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+$$('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="quiz"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+$$('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok });
+  });
+});
+
+// ===== 章末測驗交卷 =====
+(function(){
+  const sb = document.getElementById('submitQuiz'); if(!sb) return;
+  sb.addEventListener('click',()=>{
+    const qs = $$('#quizCard .q.quiz');
+    let score = 0, answered = 0; const wrong = [];
+    qs.forEach((q,i)=>{
+      const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+      q.classList.remove('correct','wrong');
+      if(sel) answered++;
+      if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+      else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+    });
+    logEv({ type:"quiz", score, total: qs.length, wrong });
+    writeProg({ quiz: { score, total: qs.length } });
+    const r = document.getElementById('quizResult');
+    if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+    else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="quiz"]').classList.add('done'); }
+    else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+    else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+    r.scrollIntoView({behavior:'smooth'});
+  });
+})();
+
+// ===== 實例題自評 =====
+$$('.essay').forEach(es=>{
+  const ta = es.querySelector('textarea'), self = es.querySelector('.self'), ans = es.querySelector('details');
+  const showBtn = es.querySelector('.showans');
+  if(showBtn) showBtn.addEventListener('click',()=>{ if(ans) ans.open = true; self.classList.add('on'); });
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 通用：chips 單選顯示結果 =====
+function chipTool(chipsId, resId, DATA, render, logName){
+  const res = document.getElementById(resId); if(!res) return;
+  $$('#'+chipsId+' .chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      $$('#'+chipsId+' .chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+      c.setAttribute('aria-pressed','true');
+      const d = DATA[c.dataset.k];
+      res.innerHTML = render(d, c.dataset.k);
+      res.classList.add('on');
+      logEv({ type:"tool", q:logName, k:c.dataset.k });
+    });
+  });
+}
+
+// ===== 工具：情境選程序 =====
+(function(){
+  const P = [
+    ['inq','查詢永續辦公室人員資料蒐集與計算流程'],
+    ['ana','分析性程序：排放量對產量／用電量設定預期值並比較'],
+    ['vouch','核對至原始憑證（電費單、燃料發票、生產紀錄）'],
+    ['factor','將排放係數核對至政府公告來源並確認版本'],
+    ['recalc','重新驗算（含單位轉換、質量平衡）'],
+    ['toc','控制測試：測試資料蒐集與覆核控制的執行有效性'],
+    ['conf','外部函證（向台電、燃料供應商）'],
+    ['site','實地訪查：觀察設備、檢查校準紀錄'],
+    ['lab','抽樣並獨立分析原料特性，或閱讀實驗室紀錄'],
+    ['est','評估估計方法與假設；建立點估計或區間估計'],
+    ['expert','採用執業人員專家並評估其工作']
+  ];
+  const SC = {
+    s2L:{ must:['inq','ana','vouch','factor'], good:['recalc'], no:['toc','conf','lab','est','expert'], note:'有限確信、範疇 2 購電：3410 號第 105 條說這種案件主要聚焦在「發票度數的系統」與「係數的算術應用」。查詢、分析性程序（第 39 條）、核對電費單、核對係數（第 180 條第 2、11 款）是核心。控制測試與函證是合理確信的著重點（第 176 條第 1 款），有限確信不是不能做，但通常不必。' },
+    s1R:{ must:['ana','recalc','est','site','vouch'], good:['toc','expert','lab','inq','factor'], no:[], note:'合理確信、質量平衡估算的製程排放：這是估計，第 50 條要求測試估計方法與資料、或測試相關控制、或建立自己的點估計／區間估計。第 45 條：每一重大類別都要細項測試或分析性程序。第 47 條：預期值要足夠精確。第 161、162 條：合理確信通常每一重要設施都去。製程複雜時第 105 條提示需要工程專家，採用專家要依 3000 號第 54 條評估。第 46 條：要考量是否函證（此情境較難函證，可記錄考量結果）。' },
+    bioL:{ must:['inq','est','ana','lab'], good:['vouch','factor','recalc','site'], no:['toc','conf'], note:'有限確信、生質混燒的碳含量估計：第 41 條三件事（基準規定、方法一致、是否須其他程序）。第 176 條的例子：有限確信對煤炭特性可以「複核個體實驗室的紀錄」而不必獨立分析。輸入變數變動（第 174 條第 4 款第 3 目）是這類風險的來源，分析性程序要看批次間的差異。' },
+    cemsR:{ must:['site','toc','recalc','ana','vouch'], good:['inq','expert','factor'], no:['lab'], note:'合理確信、連續監測設備：第 176 條的對照例子，合理確信要「檢查校準紀錄或獨立測試設備」而不只是查詢校準頻率；第 180 條第 6 款讀取設備資料、第 7 款觀察或重新進行實體測量。第 90 條：資訊全部電子化時，對控制作業取得瞭解並測試是必要的。第 181 條第 1 款：測量工具先天限制與校準頻率影響風險評估。' }
+  };
+  const list = $('#scList');
+  function draw(){ list.innerHTML = P.map(p=>'<label><input type="checkbox" value="'+p[0]+'"> '+p[1]+'</label>').join(''); $('#scRes').classList.remove('on'); }
+  $('#scSel').addEventListener('change', draw); draw();
+  $('#scGo').addEventListener('click',()=>{
+    const sc = SC[$('#scSel').value]; const sel = $$('#scList input').filter(i=>i.checked).map(i=>i.value);
+    $$('#scList label').forEach(l=>{ const v=l.querySelector('input').value; l.classList.remove('ok','bad'); if(sc.must.includes(v)) l.classList.add(sel.includes(v)?'ok':'bad'); else if(sc.no.includes(v) && sel.includes(v)) l.classList.add('bad'); });
+    const miss = sc.must.filter(m=>!sel.includes(m)).map(m=>P.find(p=>p[0]===m)[1]);
+    const extra = sc.no.filter(n=>sel.includes(n)).map(n=>P.find(p=>p[0]===n)[1]);
+    $('#scRes').innerHTML = '<h3>對照</h3>'+(miss.length?'<p class="small"><b>通常不該漏的：</b>'+miss.join('；')+'</p>':'<p class="small"><b>核心程序都有。</b></p>')+(extra.length?'<p class="small"><b>這個情境通常不需要：</b>'+extra.join('；')+'（做了不算錯，但要問自己為什麼）</p>':'')+'<p class="small muted" style="margin:0">'+sc.note+'</p>';
+    $('#scRes').classList.add('on'); logEv({ type:"tool", q:"procedures", k:$('#scSel').value });
+  });
+})();
+
+// ===== 工具：證據可靠性 =====
+chipTool('t2chips','t2res',{
+  a:{ t:'最不可靠', why:'口頭、內部、間接。第 146 條第 4 款：書面較口頭可靠；第 1 款：外部較內部可靠。查詢只能當佐證。' },
+  b:{ t:'可靠性低', why:'內部書面，但第 146 條第 2 款：內部證據的可靠性取決於相關控制是否有效。無覆核紀錄的試算表是第 175 條第 2 款點名的風險。' },
+  c:{ t:'可靠性中高', why:'外部來源產生的文件，但經由個體之手提供。第 146 條第 1 款外部來源較可靠；第 116 條可視為真實除非有理由懷疑。合理確信常以此為主要證據（第 163 條第 1 款）。' },
+  d:{ t:'最可靠', why:'外部來源、執業人員直接取得、書面。第 146 條三個原則都符合。第 46 條：合理確信應考量是否函證。但第 146 條也提醒：外部來源若缺乏相關知識或客觀性，仍可能不可靠。' }
+}, d=>'<h3>'+d.t+'</h3><p class="small" style="margin:0">'+d.why+'</p>', 'reliability');
+
+// ===== 工具：不實表達處理 =====
+(function(){
+  const CASES = [
+    { s:'第一筆：桃園倉儲堆高機柴油少記 3 公噸 CO₂e。顯然微小門檻為 450 公噸。', opts:[['acc','累計到未更正不實表達彙總表'],['triv','低於顯然微小門檻，不累計，但記錄門檻與判斷'],['mod','考慮修正式結論']], a:'triv', why:'3410 號第 57 條：顯然微小者不累計。但 3000 號第 134 條：門檻本身與「這筆是否顯然微小」的判斷要有紀錄，不確定的就不算顯然微小。' },
+    { s:'第二筆：台中廠 12 月天然氣 1,900 公噸記到隔年。公司說「年底發票晚到，明年會補」。整體重大性 9,000 公噸，執行重大性 6,300。', opts:[['acc','累計，與適當層級溝通並要求更正；拒絕更正則記錄理由'],['ignore','金額低於執行重大性，不處理'],['mod','直接出具保留結論']], a:'acc', why:'第 57 條累計、第 60 條溝通並要求更正、第 61 條拒絕更正要瞭解理由。低於執行重大性不是不處理的理由，彙總後可能重大（第 58 條）。這是截止錯誤，性質上顯示年底可能還有別筆（第 58 條第 1 款）。' },
+    { s:'第三筆：高雄廠製程排放的質量平衡用了舊版碳含量係數，差 5,800 公噸。公司同意更正。', opts:[['done','公司已更正，不必再做'],['recheck','對公司更正的工作執行程序，確認是否仍有重大不實表達；並評估性質是否顯示其他係數也可能有錯'],['mod','考慮修正式結論']], a:'recheck', why:'第 59 條：個體在執業人員要求下更正後，執業人員要對其工作執行程序。第 58 條第 1 款：係數用錯這種性質，可能顯示其他排放類別也用了舊係數，要決定是否修正策略與計畫。更正後這筆就不在未更正彙總裡，但更正前接近執行重大性，也觸發第 58 條第 2 款。' }
+  ];
+  const box = $('#misBox'); let i = 0;
+  function draw(){
+    if(i >= CASES.length){ box.innerHTML = '<p><b>三筆都走完了。</b>收尾時記得第 62 條：評估未更正不實表達前，先用實際排放重評重大性；第 65 條第 3 款：未更正彙總表要附在書面聲明。</p><button class="btn small secondary" id="misAgain">再走一次</button>'; $('#misAgain').addEventListener('click',()=>{ i=0; draw(); }); return; }
+    const c = CASES[i];
+    box.innerHTML = '<p><span class="pill ghg">'+(i+1)+' / '+CASES.length+'</span> '+c.s+'</p><div class="chips">'+c.opts.map(o=>'<button class="chip" data-a="'+o[0]+'">'+o[1]+'</button>').join('')+'</div><div class="result" id="misRes"></div>';
+    $$('#misBox .chip').forEach(ch=>ch.addEventListener('click',()=>{
+      const ok = ch.dataset.a === c.a; $$('#misBox .chip').forEach(x=>{ x.disabled=true; if(x.dataset.a===c.a) x.classList.add('ok'); }); if(!ok) ch.classList.add('bad');
+      $('#misRes').innerHTML = '<p class="small" style="margin:0">'+(ok?'對。':'不對。')+c.why+'</p><p style="margin:.5em 0 0"><button class="btn small" id="misNext">下一筆</button></p>'; $('#misRes').classList.add('on');
+      $('#misNext').addEventListener('click',()=>{ i++; draw(); }); logEv({ type:"tool", q:"misstatement", k:i, ok });
+    }));
+  }
+  draw();
+})();
+
+</script>
+</body>
+</html>
