@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海上的人｜從元朝到鄭成功：東南海商怎麼來的</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#0c4a6e; --accent-soft:#e0f2fe;
+    --c-off:#2563eb; --c-legal:#16a34a; --c-smug:#dc2626; --c-for:#d97706;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:960px; margin:0 auto; padding:24px 16px 80px;}
+  header.hero{background:linear-gradient(135deg,#0c4a6e,#0369a1); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink); padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+  section.panel{display:none;} section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;} .card ul,.card ol{margin-left:1.3em;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;} .q input{margin-right:8px;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;} .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);} .q.wrong{border-color:var(--red);}
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;} #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;} #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  /* 時期選擇 */
+  .periods{display:grid; grid-template-columns:repeat(auto-fit,minmax(105px,1fr)); gap:6px; margin:8px 0;}
+  .periods button{background:#fff; border:2px solid var(--border); color:var(--ink); border-radius:10px; padding:6px 6px; font-size:.82rem; line-height:1.35; cursor:pointer; font-family:inherit; text-align:center;}
+  .periods button b{display:block; font-size:.9rem;}
+  .periods button.active{border-color:var(--accent); background:var(--accent); color:#fff;}
+  .mapwrap{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;}
+  .mapwrap .svgbox{flex:1 1 420px; min-width:0; margin:0;}
+  .svgbox svg{width:100%; height:auto; border-radius:12px; display:block;}
+  .mapwrap .side{flex:1 1 280px; min-width:0;}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:12px 14px; font-size:.95rem;}
+  .infobox h4{font-size:1.05rem; margin-bottom:2px; color:var(--accent);}
+  .infobox .yrs{color:var(--sub); font-size:.85rem; margin-bottom:6px;}
+  .infobox .kv{display:grid; grid-template-columns:5.2em 1fr; gap:4px 8px; font-size:.9rem; margin-top:6px;}
+  .infobox .kv b{color:var(--accent);}
+  .gauge{margin-top:10px; font-size:.85rem;}
+  .gauge .bar{height:14px; border-radius:7px; background:#e5e7eb; position:relative; overflow:hidden; margin:3px 0 8px;}
+  .gauge .bar i{position:absolute; left:0; top:0; bottom:0; border-radius:7px; transition:width .5s;}
+  .gauge .gap{color:#991b1b; font-weight:bold;}
+  .legend{display:flex; flex-wrap:wrap; gap:6px 14px; font-size:.82rem; color:var(--sub); margin-top:8px;}
+  .legend i{display:inline-block; width:22px; height:4px; border-radius:2px; margin-right:5px; vertical-align:3px;}
+  .port{cursor:pointer;} .port:hover circle{stroke-width:3;}
+  .cmp{display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:8px; margin-top:8px;}
+  .cmp .col{text-align:center; font-size:.8rem;}
+  .cmp .stack{height:120px; display:flex; flex-direction:column-reverse; gap:2px; justify-content:flex-start; align-items:center;}
+  .cmp .stack i{display:block; width:60%; border-radius:3px;}
+  .cmp .lbl{font-weight:bold; font-size:.82rem; margin-top:4px;}
+  /* 選據點 */
+  .opts{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin:10px 0;}
+  .opt{border:2px solid var(--border); border-radius:12px; padding:12px 14px; cursor:pointer; background:#fff; transition:.15s;}
+  .opt:hover{border-color:var(--blue);} .opt.sel{border-color:var(--accent); background:var(--accent-soft);}
+  .opt h4{font-size:1rem; margin-bottom:4px;}
+  .opt .crit{display:none; margin-top:8px; font-size:.88rem;}
+  .opt.sel .crit{display:block;}
+  .crit div{padding:3px 0; border-top:1px dashed var(--border);}
+  .crit .ok::before{content:"✔ "; color:var(--green); font-weight:bold;}
+  .crit .no::before{content:"✘ "; color:var(--red); font-weight:bold;}
+  .crit .so::before{content:"△ "; color:var(--amber); font-weight:bold;}
+  .verdict{margin-top:8px; padding:8px 10px; border-radius:8px; background:var(--amber-soft); font-size:.88rem;}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 臺灣的歷史（上） · 鄭氏時期延伸</span>
+  <h1>海上的人：從元朝到鄭成功，東南海商怎麼來的</h1>
+  <p>課本說鄭成功「趕走荷蘭人、以臺灣為反清基地」。但他為什麼有這麼多船、這麼多錢？為什麼選臺灣？答案要往前推四百年：看中國東南沿海的船怎麼變多、變少、又變多。這份教材用<b>海上船的密度</b>來看朝代怎麼變，政府關門的時候海上的人怎麼找出路。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1 海圖：船變多變少</button>
+  <button data-t="s2">2 為什麼會有海商</button>
+  <button data-t="s3">3 鄭成功選哪裡</button>
+  <button data-t="s4">🏁 小測驗</button>
+</nav>
+
+<!-- ═══════════ 1 海圖 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 這一頁要看到的</h2>
+    <ul>
+      <li>元朝泉州是大港，政府<b>歡迎</b>做生意，船很多</li>
+      <li>明朝<b>海禁</b>：合法的船只剩「朝貢」那幾艘，但偷跑的船越來越多</li>
+      <li>偷跑的船多到打起來，就是課本說的「倭寇」。大部分是中國人</li>
+      <li>鄭芝龍把偷跑變成「收費站」，鄭成功靠這個養軍隊</li>
+      <li>清朝把海岸封死（遷界令），鄭成功的貨源斷了，所以轉去臺灣</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 選一個時期，看海上有幾艘船</h2>
+    <div class="tool">
+      <div class="periods" id="periods"></div>
+      <div class="row">
+        <button class="ghost" id="prev">← 上一期</button>
+        <button id="auto">▶ 自動輪播</button>
+        <button class="ghost" id="next">下一期 →</button>
+        <span class="hint">船的顏色：<b style="color:var(--c-off)">藍＝官方／朝貢</b>、<b style="color:var(--c-legal)">綠＝合法的民間生意</b>、<b style="color:var(--c-smug)">紅＝走私、海盜、海商</b>、<b style="color:var(--c-for)">橘＝外國人（葡、西、荷、日）</b>。船的多少是「大概的感覺」，不是統計數字。</span>
+      </div>
+      <div class="mapwrap">
+        <div class="svgbox" id="svgSea"></div>
+        <div class="side">
+          <div class="infobox" id="pinfo"></div>
+          <div class="legend">
+            <span><i style="background:var(--c-off)"></i>官方／朝貢</span>
+            <span><i style="background:var(--c-legal)"></i>合法民間</span>
+            <span><i style="background:var(--c-smug)"></i>走私／海商</span>
+            <span><i style="background:var(--c-for)"></i>外國人</span>
+          </div>
+          <p class="hint" style="margin-top:6px">👆 點地圖上的港口，看它在這個時期的角色。</p>
+        </div>
+      </div>
+    </div>
+    <div class="note">💡 地圖是<b>示意圖</b>，形狀和距離不精確，只為了看清楚航線。「船的數量」是依照史料印象畫的相對多寡，不是真的統計。</div>
+  </div>
+
+  <div class="card">
+    <h2>📊 八個時期排排站：海上有多少船</h2>
+    <p style="font-size:.92rem">每一欄一格一艘船，顏色跟地圖一樣。看紅色什麼時候冒出來、什麼時候最多。</p>
+    <div class="cmp" id="cmp"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 2 為什麼 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 這一頁要回答的</h2>
+    <p>明朝政府不喜歡做生意（收稅收米、不收錢；只准外國「進貢」，不准老百姓出海），照理說海上應該沒人。為什麼反而生出一堆海盜、海商？</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 一句話答案</h2>
+    <p style="font-size:1.05rem"><b>想做生意的力量很大，政府開的門很小，差距就變成走私。走私久了要自保，就變成有武裝的海商（別人叫他們海盜）。</b></p>
+    <h3>把它畫成兩條bar</h3>
+    <div class="gauge" id="gaugeAll"></div>
+    <p class="hint">「需求」是絲綢、瓷器想賣出去、白銀想買進來的力量；「門」是政府准許的合法管道。兩條差多少，紅色就多少。數字是感覺，不是統計。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 為什麼「想做生意的力量」那麼大？四個原因</h2>
+    <h3>1. 福建的地：八山一水一分田</h3>
+    <div class="svgbox" id="svgFujian"></div>
+    <p>福建山多田少，種的米養不活那麼多人。宋朝、元朝的時候，福建人就已經靠海吃飯：造船、捕魚、載貨到外國賣。<b>這個習慣有幾百年了</b>，不是明朝一紙命令就能停的。</p>
+    <h3>2. 元朝留下的「生意路」</h3>
+    <p>元朝政府在泉州、寧波、廣州設<b>市舶司</b>（管進出口、收稅的衙門），歡迎外國商人來。泉州是當時世界數一數二的大港，阿拉伯商人、波斯商人住了一整區。明朝一禁，<b>路還在、人還在、客人還在</b>，只是變成不合法。</p>
+    <h3>3. 日本的白銀、中國的絲綢</h3>
+    <p>1530 年代日本挖到大銀礦（石見銀山），日本人很想要中國絲綢，中國人很想要白銀。一來一回利潤好幾倍。可是明朝<b>連跟日本的朝貢都停了</b>（1523 年寧波之亂後），完全沒有合法管道。利潤越高、門越窄，走私越兇。</p>
+    <h3>4. 明朝自己後來也需要白銀</h3>
+    <p>明朝一開始收稅收米、收布（實物），不收錢。可是到了 1570 年代張居正推<b>一條鞭法</b>，稅改成收白銀。中國自己產的銀不夠，只能靠日本和美洲（經馬尼拉）的銀流進來。<b>政府一邊禁海、一邊需要海上運來的銀</b>，自己打自己。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 從「走私客」到「海商」到「海盜」：其實是同一群人</h2>
+    <div class="tblbox"><table class="pv">
+      <tr><th>階段</th><th>他們在做什麼</th><th>政府怎麼叫他們</th><th>代表</th></tr>
+      <tr><td class="name">偷跑</td><td>載絲綢去日本換銀，躲開官府</td><td>奸民、通番</td><td>1540 年代雙嶼港的商人</td></tr>
+      <tr><td class="name">武裝自保</td><td>生意太大要帶兵器，跟官府打、跟同行打</td><td>倭寇、海寇</td><td>王直（在日本平戶設總部）</td></tr>
+      <tr><td class="name">被招安</td><td>政府打不贏，就給他官做，讓他管海</td><td>游擊、總兵</td><td>鄭芝龍（1628 年受招撫）</td></tr>
+      <tr><td class="name">自己成為政權</td><td>收過路費、養軍隊、建國</td><td>叛逆、海逆</td><td>鄭成功、鄭經</td></tr>
+    </table></div>
+    <div class="note">💡 「倭寇」字面是日本海盜，但明朝官員自己寫：「真倭十之三，從倭者十之七」。大部分是中國沿海的人。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 從元朝說起：時間線上的關鍵轉折</h2>
+    <div class="tblbox"><table class="pv" style="text-align:left">
+      <tr><th>年代</th><th>事件</th><th>對海上的影響</th></tr>
+      <tr><td>1279–1368 元</td><td>泉州市舶司，政府鼓勵出海</td><td>船最多、最合法的時代</td></tr>
+      <tr><td>1371 明洪武</td><td>海禁：「片板不許下海」</td><td>合法的船剩朝貢船；琉球變成轉口站</td></tr>
+      <tr><td>1405–1433</td><td>鄭和七次下西洋</td><td>官方大船隊，跟民間無關；結束後更禁</td></tr>
+      <tr><td>1523</td><td>寧波之亂，日本朝貢停止</td><td>跟日本完全沒有合法管道</td></tr>
+      <tr><td>1530 年代</td><td>日本石見銀山大量產銀</td><td>走私利潤暴增</td></tr>
+      <tr><td>1548</td><td>官軍剿滅雙嶼走私港</td><td>走私商人武裝化，1550 年代「嘉靖大倭寇」</td></tr>
+      <tr><td>1557</td><td>葡萄牙人住進澳門</td><td>外國人開始跑澳門—長崎線</td></tr>
+      <tr><td>1567 隆慶</td><td>開放月港，准去東西洋（不准去日本）</td><td>綠船出現；1571 西班牙在馬尼拉，美洲白銀進來</td></tr>
+      <tr><td>1624</td><td>荷蘭人到大員（臺南）</td><td>臺灣變成中國—日本—巴達維亞的中繼站</td></tr>
+      <tr><td>1628</td><td>鄭芝龍受明朝招撫</td><td>海上由鄭家管，出海要買鄭家的令旗</td></tr>
+      <tr><td>1639</td><td>日本鎖國，只准中國船、荷蘭船進長崎</td><td>鄭家變成日本貿易最大贏家</td></tr>
+      <tr><td>1656、1661 清</td><td>禁海令、遷界令</td><td>沿海居民內遷，鄭成功貨源、糧源被切</td></tr>
+      <tr><td>1661–1662</td><td>鄭成功攻下臺灣</td><td>基地從金廈搬到臺灣</td></tr>
+      <tr><td>1683–1684</td><td>施琅攻臺；清朝開海設四海關</td><td>海上重新合法，廈門—臺灣對渡</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<!-- ═══════════ 3 選據點 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 換你當鄭成功</h2>
+    <p>時間是 1660 年。清朝已經下禁海令，明年還會下遷界令。你在金門、廈門，有幾萬兵、幾百艘船，但島上種不出糧，大陸的貨越來越難進來。<b>你要把基地搬去哪？</b>點一個選項，看它符合幾個條件。</p>
+  </div>
+  <div class="card">
+    <h2>🧭 五個條件</h2>
+    <ul style="font-size:.95rem">
+      <li><b>糧</b>：自己種得出糧食嗎？（養幾萬兵最重要）</li>
+      <li><b>港</b>：有港口停大船嗎？</li>
+      <li><b>貨</b>：離中國貨源（絲綢、瓷器）近嗎？</li>
+      <li><b>敵</b>：那裡的對手打得贏嗎？</li>
+      <li><b>線</b>：在日本—東南亞的航線上嗎？（這是鄭家的收入）</li>
+    </ul>
+    <div class="opts" id="opts"></div>
+    <div class="note" id="optNote">👆 先選一個。</div>
+  </div>
+  <div class="card">
+    <h2>📖 歷史上他怎麼做</h2>
+    <p>1659 年鄭成功北伐南京大敗，退回金廈。1660 年前後，原本在荷蘭人手下當通事（翻譯）的<b>何斌</b>逃來投靠，帶來臺灣的地圖和水道資料，告訴他：臺灣「田園萬頃、沃野千里」，荷蘭人在那裡只有一千多兵。</p>
+    <p>1661 年 4 月，鄭成功帶兩萬五千人從金門出發，經澎湖，趁大潮從<b>鹿耳門</b>水道進入臺江內海，先攻下普羅民遮城（赤崁樓），圍住熱蘭遮城九個月。1662 年 2 月荷蘭人投降。</p>
+    <p>把這件事放回海圖看：臺灣在長崎和巴達維亞、馬尼拉的<b>正中間</b>，是荷蘭人花三十年經營的轉口站。鄭成功拿走的不只是一座島，是荷蘭人那條航線。</p>
+    <div class="note">💡 鄭成功在 1662 年還真的寫信給馬尼拉的西班牙總督要求投降，打算下一個打呂宋。信送到不久他就病逝了，39 歲。</div>
+  </div>
+</section>
+
+<!-- ═══════════ 4 小測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card">
+    <h2>🏁 小測驗（7 題）</h2>
+    <div id="quizCard">
+      <div class="q quiz" data-ans="B">
+        <div class="stem">1. 元朝的泉州為什麼船那麼多？</div>
+        <label><input type="radio" name="qz1" value="A">因為元朝規定每家都要有一艘船</label>
+        <label><input type="radio" name="qz1" value="B">政府設市舶司收稅、歡迎外國商人來做生意</label>
+        <label><input type="radio" name="qz1" value="C">因為那時候還沒有海盜</label>
+        <label><input type="radio" name="qz1" value="D">因為泉州人不會種田</label>
+        <div class="fb" data-exp="　元朝把做生意當收入來源，泉州是當時世界級大港。">　</div>
+      </div>
+      <div class="q quiz" data-ans="C">
+        <div class="stem">2. 明朝海禁期間，唯一合法的海上往來是？</div>
+        <label><input type="radio" name="qz2" value="A">漁船出海捕魚</label>
+        <label><input type="radio" name="qz2" value="B">商人繳稅後出海</label>
+        <label><input type="radio" name="qz2" value="C">外國使節來「朝貢」，順便帶貨交換</label>
+        <label><input type="radio" name="qz2" value="D">沒有任何合法往來</label>
+        <div class="fb" data-exp="　朝貢是政治儀式包著生意，次數、船數、港口都被規定死。">　</div>
+      </div>
+      <div class="q quiz" data-ans="A">
+        <div class="stem">3. 嘉靖年間的「倭寇」，大部分是什麼人？</div>
+        <label><input type="radio" name="qz3" value="A">中國沿海做走私生意的人，像王直</label>
+        <label><input type="radio" name="qz3" value="B">日本派來的正規軍</label>
+        <label><input type="radio" name="qz3" value="C">葡萄牙人</label>
+        <label><input type="radio" name="qz3" value="D">琉球人</label>
+        <div class="fb" data-exp="　明朝官員自己說「真倭十之三，從倭者十之七」。">　</div>
+      </div>
+      <div class="q quiz" data-ans="D">
+        <div class="stem">4. 1530 年代之後，走私突然變得非常好賺，主要因為日本有了什麼？</div>
+        <label><input type="radio" name="qz4" value="A">大量稻米</label>
+        <label><input type="radio" name="qz4" value="B">火槍</label>
+        <label><input type="radio" name="qz4" value="C">茶葉</label>
+        <label><input type="radio" name="qz4" value="D">白銀（石見銀山）</label>
+        <div class="fb" data-exp="　中國要銀、日本要絲，一趟來回利潤好幾倍。">　</div>
+      </div>
+      <div class="q quiz" data-ans="B">
+        <div class="stem">5. 1567 年「隆慶開關」是開放哪個港口？但不准去哪裡？</div>
+        <label><input type="radio" name="qz5" value="A">開廣州，不准去東南亞</label>
+        <label><input type="radio" name="qz5" value="B">開月港（漳州），不准去日本</label>
+        <label><input type="radio" name="qz5" value="C">開泉州，不准去琉球</label>
+        <label><input type="radio" name="qz5" value="D">開寧波，不准去呂宋</label>
+        <div class="fb" data-exp="　所以綠船跑東南亞、馬尼拉，去日本的還是紅船。">　</div>
+      </div>
+      <div class="q quiz" data-ans="C">
+        <div class="stem">6. 鄭芝龍受招撫以後，怎麼從海上賺錢？</div>
+        <label><input type="radio" name="qz6" value="A">自己種甘蔗賣糖</label>
+        <label><input type="radio" name="qz6" value="B">跟明朝領薪水</label>
+        <label><input type="radio" name="qz6" value="C">出海的船要買鄭家的令旗（繳保護費），不買就被搶</label>
+        <label><input type="radio" name="qz6" value="D">幫荷蘭人打工</label>
+        <div class="fb" data-exp="　海上的收費站。1639 年日本鎖國後只准中國船和荷蘭船進長崎，鄭家賺最多。">　</div>
+      </div>
+      <div class="q quiz" data-ans="A">
+        <div class="stem">7. 鄭成功攻打臺灣之前，清朝做了什麼讓他非搬家不可？</div>
+        <label><input type="radio" name="qz7" value="A">禁海令、遷界令：沿海居民內遷，貨和糧進不來金廈</label>
+        <label><input type="radio" name="qz7" value="B">跟荷蘭人結盟</label>
+        <label><input type="radio" name="qz7" value="C">開放所有港口做生意</label>
+        <label><input type="radio" name="qz7" value="D">把泉州送給他</label>
+        <div class="fb" data-exp="　岸上被封死，只能往海上找一塊能種糧、有港口、在航線上的地方：臺灣。">　</div>
+      </div>
+      <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+      <div id="quizResult"></div>
+    </div>
+  </div>
+</section>
+
+<footer>海上的人｜從元朝到鄭成功 · 地圖為示意圖，船數為相對印象 · 互動知識庫</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（只存在這台瀏覽器）=====
+const LOG_KEY = "study_log_v1", CH = "歷史 海商四百年";
+function logEv(ev){ try{ const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); a.push(Object.assign({ t: Date.now(), ch: CH }, ev)); localStorage.setItem(LOG_KEY, JSON.stringify(a)); }catch(e){} }
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){ if(!CLOUD_URL) return; const body = JSON.stringify(Object.assign({ ch: CH }, row)); try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} } }
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){ const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7); logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{ if(document.visibilityState !== "visible") return; studySec += 30; try{ const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); const v = a.find(e => e.vid === vid); if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); } }catch(e){} }, 30000); })();
+window.addEventListener("pagehide", ()=>{ const min = Math.round(studySec / 6) / 10; if(min < 0.5 && pracCount === 0) return; cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" }); studySec = 0; pracCount = 0; pracOk = 0; });
+
+function showTab(id){ document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.t === id)); document.querySelectorAll('section.panel').forEach(p=>p.classList.toggle('show', p.id === id)); window.scrollTo({top:0,behavior:'smooth'}); }
+document.querySelectorAll('nav.tabs button').forEach(btn=>btn.addEventListener('click',()=>showTab(btn.dataset.t)));
+function txt(x,y,s,color,size,anchor,extra){ return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`; }
+function rect(x,y,w,h,fill,stroke,sw,extra){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}" ${extra||''}/>`; }
+
+// ===== 港口與航線（示意座標，viewBox 680×600）=====
+const COL = { off:'#2563eb', legal:'#16a34a', smug:'#dc2626', foreign:'#d97706' };
+const PORTS = {
+  ningbo:{ n:'寧波', x:335, y:120, lx:-9, la:'end' }, shuangyu:{ n:'雙嶼', x:356, y:142, lx:9, la:'start' },
+  fuzhou:{ n:'福州', x:300, y:215, lx:-9, la:'end' }, quanzhou:{ n:'泉州', x:290, y:248, lx:-9, la:'end' },
+  xiamen:{ n:'廈門・安海', x:278, y:272, lx:-9, la:'end' }, yuegang:{ n:'月港（漳州）', x:266, y:294, lx:-9, la:'end' },
+  guangzhou:{ n:'廣州', x:205, y:335, lx:-9, la:'end' }, macau:{ n:'澳門', x:202, y:356, lx:-9, la:'end' },
+  naha:{ n:'琉球（那霸）', x:425, y:198, lx:9, la:'start' }, nagasaki:{ n:'長崎', x:470, y:102, lx:9, la:'start' }, hirado:{ n:'平戶', x:460, y:74, lx:9, la:'start' },
+  penghu:{ n:'澎湖', x:330, y:306, lx:-9, la:'end' }, tayouan:{ n:'大員（臺南）', x:358, y:320, lx:9, la:'start' },
+  manila:{ n:'馬尼拉', x:398, y:425, lx:9, la:'start' }, hoian:{ n:'會安（越南）', x:128, y:432, lx:9, la:'start' },
+  siam:{ n:'暹羅', x:62, y:522, lx:9, la:'start' }, south:{ n:'滿剌加・巴達維亞（更南）', x:200, y:588, lx:9, la:'start' }, americas:{ n:'→ 美洲', x:664, y:430, lx:-9, la:'end' },
+};
+function routeD(a, b, bend){
+  const A = PORTS[a], B = PORTS[b], mx = (A.x+B.x)/2, my = (A.y+B.y)/2, dx = B.x-A.x, dy = B.y-A.y, L = Math.hypot(dx,dy) || 1;
+  return `M${A.x} ${A.y} Q${mx - dy/L*bend} ${my + dx/L*bend} ${B.x} ${B.y}`;
+}
+const ROUTES = {
+  qz_sea:['quanzhou','hoian',-40], gz_sea:['guangzhou','hoian',20], hoian_south:['hoian','south',-10], hoian_siam:['hoian','siam',20],
+  nb_jp:['ningbo','nagasaki',-40], fz_ry:['fuzhou','naha',-30], ry_jp:['naha','nagasaki',20], ry_sea:['naha','manila',-30],
+  yg_ml:['yuegang','manila',30], yg_sea:['yuegang','hoian',-30], zs_jp:['shuangyu','hirado',-20], fj_jp:['xiamen','nagasaki',-70],
+  mc_jp:['macau','nagasaki',-130], mc_south:['macau','south',30], ml_am:['manila','americas',0], jp_sea:['nagasaki','manila',70],
+  fj_tw:['xiamen','tayouan',10], tw_jp:['tayouan','nagasaki',30], tw_south:['tayouan','south',40], tw_ml:['tayouan','manila',-10], tw_siam:['tayouan','siam',70],
+  zh:['quanzhou','south',-70], nb_ry:['ningbo','naha',-20],
+};
+// ===== 八個時期 =====
+const PERIODS = [
+  { id:'yuan', name:'元', yrs:'1279–1368', one:'歡迎做生意', demand:7, door:8,
+    gov:'在泉州、寧波、廣州設市舶司收稅，鼓勵出海。中間有幾次短暫禁海，但很快又開。',
+    sea:'泉州是世界級大港，阿拉伯、波斯商人住一整區。船去東南亞、印度洋、日本。',
+    key:'泉州市舶司、蒲壽庚家族、馬可波羅說泉州是「世界最大港之一」',
+    ships:[['qz_sea','legal',6],['hoian_south','legal',4],['gz_sea','legal',2],['nb_jp','legal',3],['hoian_siam','legal',1]], ports:['quanzhou','ningbo','guangzhou','hoian','south'] },
+  { id:'mingearly', name:'明初海禁', yrs:'1368–1520s', one:'片板不許下海', demand:5, door:1,
+    gov:'1371 年起禁止百姓出海。只准外國「朝貢」：日本十年一次到寧波、琉球到福州、東南亞到廣州。1405–1433 鄭和七次下西洋是官方船隊。',
+    sea:'合法的船剩朝貢船那幾艘。琉球變成轉口站：中國貨先到琉球，再轉日本、東南亞。沿海還是有人偷跑。',
+    key:'洪武海禁、鄭和、琉球「萬國津梁」',
+    ships:[['nb_jp','off',1],['fz_ry','off',2],['ry_jp','off',1],['ry_sea','off',2],['gz_sea','off',1],['qz_sea','smug',1],['zh','off',3]], ports:['fuzhou','naha','ningbo','guangzhou'],
+    extra:'zh' },
+  { id:'jiajing', name:'嘉靖走私', yrs:'1520s–1567', one:'禁得越緊，偷跑越多', demand:9, door:1,
+    gov:'1523 年寧波之亂後連日本朝貢都停了。1548 年官軍剿平雙嶼走私港，1550 年代「嘉靖大倭寇」，沿海打了十幾年。',
+    sea:'日本 1530 年代開始大量產銀，絲換銀一趟賺好幾倍。走私商人在寧波外海雙嶼、福建沿海集結，有武裝、有船隊。王直把總部設在日本平戶。葡萄牙人 1557 年住進澳門，跑澳門—長崎線。',
+    key:'石見銀山、雙嶼港、王直、朱紈、戚繼光',
+    ships:[['zs_jp','smug',6],['fj_jp','smug',3],['qz_sea','smug',3],['hoian_south','smug',1],['mc_jp','foreign',3],['mc_south','foreign',2],['fz_ry','off',1],['ry_jp','off',1]], ports:['shuangyu','hirado','macau','xiamen'] },
+  { id:'longqing', name:'隆慶開關', yrs:'1567–1624', one:'開一扇門，但不准去日本', demand:9, door:5,
+    gov:'1567 年開放漳州月港，百姓領執照可以去東洋（呂宋）、西洋（東南亞），政府收稅。<b>日本仍然禁止</b>。',
+    sea:'綠船出現：月港—馬尼拉線最熱，1571 年西班牙人在馬尼拉，美洲白銀用大帆船運來換絲綢。去日本的還是走私船。日本朱印船也南下。1604、1622 年荷蘭人兩度占澎湖，1624 年到大員。',
+    key:'月港、馬尼拉大帆船、一條鞭法（1581）要白銀、朱印船、荷蘭東印度公司',
+    ships:[['yg_ml','legal',5],['yg_sea','legal',4],['hoian_south','legal',2],['ml_am','foreign',3],['fj_jp','smug',4],['mc_jp','foreign',3],['mc_south','foreign',1],['jp_sea','foreign',2],['tw_south','foreign',1]], ports:['yuegang','manila','macau','nagasaki','penghu'] },
+  { id:'zhilong', name:'鄭芝龍', yrs:'1625–1645', one:'海上的收費站', demand:10, door:6,
+    gov:'明朝打不贏鄭芝龍，1628 年招撫他當官。從此福建的海由鄭家管：出海要買鄭家令旗，一面幾千兩，不買就被搶。',
+    sea:'鄭家船隊從安海出發到長崎、大員、馬尼拉、東南亞。荷蘭人在大員做中國—日本—巴達維亞三角貿易，貨還是要跟鄭家買。1639 年日本鎖國，只准中國船和荷蘭船進長崎，鄭家變最大贏家。',
+    key:'令旗、料羅灣海戰（1633 打敗荷蘭）、日本鎖國、安海（安平）',
+    ships:[['fj_jp','smug',7],['fj_tw','smug',4],['yg_ml','legal',3],['yg_sea','legal',2],['tw_jp','foreign',3],['tw_south','foreign',3],['ml_am','foreign',2],['mc_jp','foreign',1]], ports:['xiamen','tayouan','nagasaki','manila','south'] },
+  { id:'chenggong', name:'鄭成功', yrs:'1646–1662', one:'岸上被封死，往海上找出路', demand:9, door:0,
+    gov:'1644 年明亡。鄭芝龍降清，鄭成功不降，以金門廈門為基地。清朝 1656 年禁海、1661 年<b>遷界令</b>：從山東到廣東的海邊居民全部往內陸搬 30 里以上，房子燒掉、田荒掉，不讓鄭家拿到一粒米一匹絲。',
+    sea:'鄭成功的錢還是靠船：廈門—長崎、廈門—東南亞。但貨源一年比一年難。1659 年北伐南京大敗。1661 年帶兩萬五千人攻臺灣，1662 年荷蘭人投降。',
+    key:'金門廈門、北伐南京、遷界令、何斌、鹿耳門、熱蘭遮城圍城九個月',
+    ships:[['fj_jp','smug',5],['fj_tw','smug',2],['yg_sea','smug',2],['hoian_south','smug',1],['tw_jp','foreign',3],['tw_south','foreign',2],['ml_am','foreign',1]], ports:['xiamen','tayouan','nagasaki'], coast:true, attack:true },
+  { id:'zhengtw', name:'鄭氏臺灣', yrs:'1662–1683', one:'從臺灣繼續做生意', demand:8, door:1,
+    gov:'清朝繼續遷界，還想拉荷蘭人一起打鄭家。鄭經在臺灣屯田、設學校，一邊跟清朝談判一邊做生意。',
+    sea:'大員變成鄭家的港：到長崎、暹羅、巴達維亞、馬尼拉。1670 年英國東印度公司來臺灣設商館。大陸貨靠遷界線上的漏洞偷運。1683 年施琅在澎湖打敗鄭軍，鄭克塽投降。',
+    key:'鄭經、陳永華、英國商館、三藩之亂（鄭經趁機反攻福建）、施琅、澎湖海戰',
+    ships:[['tw_jp','smug',5],['tw_south','smug',3],['tw_siam','smug',1],['tw_ml','smug',2],['fj_tw','smug',1],['ml_am','foreign',1]], ports:['tayouan','nagasaki','south','manila'], coast:true },
+  { id:'qingopen', name:'清開海', yrs:'1684–1720s', one:'海又開了，船回到合法', demand:8, door:7,
+    gov:'1684 年清朝設臺灣府，同時廢除海禁，設粵、閩、浙、江四個海關收稅。廈門—鹿耳門是臺灣唯一的合法對渡口。',
+    sea:'綠船回來：廈門到臺灣載米載糖，廈門到長崎、東南亞。1717 年曾短暫禁南洋，1727 年又開。（1757 年以後西洋人只准到廣州，那是另一段故事。）',
+    key:'四海關、臺灣府、對渡、郊商（臺灣的貿易商行）',
+    ships:[['fj_tw','legal',5],['fj_jp','legal',3],['yg_sea','legal',3],['hoian_south','legal',2],['tw_jp','legal',1],['ml_am','foreign',1],['mc_jp','foreign',0]], ports:['xiamen','tayouan','nagasaki','guangzhou'] },
+];
+
+// ===== 畫海圖 =====
+let pi = 0, autoTimer = null, boats = [], pathEls = {}, raf = null, t0 = performance.now();
+function landSvg(){
+  let s = rect(0,0,680,600,'#dbeafe');
+  const land = (d) => `<path d="${d}" fill="#fef3c7" stroke="#a16207" stroke-width="1.5"/>`;
+  s += land('M0 0 L372 0 L362 60 L348 100 L335 120 L322 165 L300 215 L290 248 L278 272 L266 294 L240 316 L205 335 L202 356 L165 362 L128 390 L105 430 L95 470 L112 520 L135 560 L150 600 L0 600 Z'); // 中國＋中南半島
+  s += land('M0 470 L40 470 L70 500 L80 545 L60 580 L30 600 L0 600 Z'); // 暹羅灣西側
+  s += `<ellipse cx="150" cy="400" rx="18" ry="11" fill="#fef3c7" stroke="#a16207" stroke-width="1.5"/>`; // 海南
+  s += land('M372 240 L392 250 L398 290 L388 330 L370 345 L358 320 L352 280 L360 255 Z'); // 臺灣
+  s += `<circle cx="330" cy="306" r="3" fill="#fef3c7" stroke="#a16207"/><circle cx="325" cy="300" r="2" fill="#fef3c7" stroke="#a16207"/><circle cx="336" cy="312" r="2" fill="#fef3c7" stroke="#a16207"/>`; // 澎湖
+  s += `<circle cx="356" cy="142" r="4" fill="#fef3c7" stroke="#a16207"/>`; // 雙嶼
+  [[425,198,5],[437,185,3],[449,172,3],[461,160,3],[404,214,3]].forEach(([x,y,r]) => s += `<circle cx="${x}" cy="${y}" r="${r}" fill="#fef3c7" stroke="#a16207"/>`); // 琉球
+  s += land('M470 55 L520 45 L545 80 L530 125 L492 136 L464 112 L458 82 Z'); // 九州
+  s += land('M520 0 L680 0 L680 95 L610 78 L560 50 L540 42 Z'); // 本州
+  s += land('M395 375 L425 370 L447 410 L437 470 L410 492 L390 452 L385 405 Z'); // 呂宋
+  s += land('M470 525 L540 500 L620 520 L680 560 L680 600 L470 600 Z'); // 婆羅洲一角
+  s += txt(90, 60, '中國', '#92400e', 20) + txt(600, 40, '日本', '#92400e', 16) + txt(416, 440, '呂宋', '#92400e', 12, 'start') + txt(375, 290, '臺灣', '#92400e', 11) + txt(60, 420, '越南', '#92400e', 11) + txt(560, 575, '婆羅洲', '#92400e', 11);
+  return s;
+}
+function drawSea(){
+  const P = PERIODS[pi];
+  let s = landSvg();
+  if(P.coast){
+    s += `<path d="M335 120 L322 165 L300 215 L290 248 L278 272 L266 294 L240 316 L205 335 L202 356" fill="none" stroke="#dc2626" stroke-width="18" opacity=".28" stroke-linecap="round"/>`;
+    s += txt(150, 250, '遷界令：海邊 30 里', '#991b1b', 12) + txt(150, 266, '不准住人、不准出海', '#991b1b', 12);
+  }
+  // 航線
+  const used = {};
+  P.ships.forEach(([r, kind, n]) => { if(n > 0){ used[r] = kind; } });
+  Object.entries(used).forEach(([r, kind]) => { const [a,b,bend] = ROUTES[r]; s += `<path id="r_${r}" d="${routeD(a,b,bend)}" fill="none" stroke="${COL[kind]}" stroke-width="2" stroke-dasharray="5 6" opacity=".55"/>`; });
+  if(P.extra === 'zh') s += txt(250, 470, '鄭和船隊 1405–1433（官方，不是做生意）', '#1e40af', 11);
+  if(P.attack){
+    const d = routeD('xiamen','tayouan',-30);
+    s += `<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#991b1b"/></marker></defs>`;
+    s += `<path d="${d}" fill="none" stroke="#991b1b" stroke-width="4" marker-end="url(#arr)"/>` + txt(300, 345, '1661 攻臺', '#991b1b', 12, 'start', 'font-weight="bold"');
+  }
+  // 港口
+  Object.entries(PORTS).forEach(([k, p]) => {
+    if(k === 'americas' || k === 'south'){ s += txt(p.x + p.lx, p.y + 4, p.n, '#6b7280', 11, p.la); return; }
+    const hot = P.ports.includes(k);
+    s += `<g class="port" data-k="${k}"><circle cx="${p.x}" cy="${p.y}" r="${hot ? 7 : 4}" fill="${hot ? '#0c4a6e' : '#fff'}" stroke="${hot ? '#fff' : '#6b7280'}" stroke-width="2"/>`;
+    s += txt(p.x + p.lx, p.y + 4, p.n, hot ? '#0c4a6e' : '#6b7280', hot ? 12 : 10, p.la, hot ? 'font-weight="bold"' : '') + '</g>';
+  });
+  s += `<g id="boatLayer"></g>`;
+  s += txt(12, 590, `${P.name}（${P.yrs}）`, '#0c4a6e', 14, 'start', 'font-weight="bold"');
+  document.getElementById('svgSea').innerHTML = `<svg viewBox="0 0 680 600" role="img">${s}</svg>`;
+  document.querySelectorAll('#svgSea .port').forEach(g => g.addEventListener('click', () => portInfo(g.dataset.k)));
+  // 船
+  pathEls = {}; boats = [];
+  const layer = document.getElementById('boatLayer');
+  P.ships.forEach(([r, kind, n]) => {
+    const el = document.getElementById('r_' + r); if(!el || n <= 0) return;
+    pathEls[r] = { el, len: el.getTotalLength() };
+    for(let i = 0; i < n; i++){
+      const big = P.extra === 'zh' && r === 'zh';
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      g.innerHTML = big ? `<path d="M-10 3 L10 3 L7 8 L-7 8 Z" fill="${COL[kind]}"/><path d="M-4 3 L-4 -9 L3 -3 Z" fill="${COL[kind]}"/><path d="M4 3 L4 -11 L11 -4 Z" fill="${COL[kind]}"/>`
+                        : `<path d="M-6 2 L6 2 L4 5 L-4 5 Z" fill="${COL[kind]}"/><path d="M0 2 L0 -6 L5 -1 Z" fill="${COL[kind]}"/>`;
+      layer.appendChild(g);
+      boats.push({ g, r, off: i / n, dir: i % 2 ? -1 : 1, spd: 0.035 + (i % 3) * 0.006 });
+    }
+  });
+  if(!raf) raf = requestAnimationFrame(tick);
+  periodInfo();
+  document.querySelectorAll('#periods button').forEach((b, i) => b.classList.toggle('active', i === pi));
+}
+function tick(now){
+  const t = (now - t0) / 1000;
+  boats.forEach(b => {
+    const p = pathEls[b.r]; if(!p) return;
+    let u = (b.off + b.dir * t * b.spd) % 1; if(u < 0) u += 1;
+    const pt = p.el.getPointAtLength(u * p.len);
+    b.g.setAttribute('transform', `translate(${pt.x.toFixed(1)} ${pt.y.toFixed(1)})${b.dir < 0 ? ' scale(-1 1)' : ''}`);
+  });
+  raf = requestAnimationFrame(tick);
+}
+function gaugeHtml(P){
+  const gap = Math.max(0, P.demand - P.door);
+  return `<div class="gauge"><div>想做生意的力量（需求）<b>${P.demand}</b>/10</div><div class="bar"><i style="width:${P.demand*10}%;background:#0369a1"></i></div>
+    <div>政府開的門（合法管道）<b>${P.door}</b>/10</div><div class="bar"><i style="width:${P.door*10}%;background:#16a34a"></i><i style="left:${P.door*10}%;width:${gap*10}%;background:#dc2626;border-radius:0 7px 7px 0"></i></div>
+    <div class="gap">${gap >= 6 ? '差距很大 → 走私、海盜、海商滿地跑' : gap >= 3 ? '有差距 → 走私不少' : '差距小 → 大多走合法管道'}</div></div>`;
+}
+function periodInfo(){
+  const P = PERIODS[pi];
+  document.getElementById('pinfo').innerHTML = `<h4>${P.name}：${P.one}</h4><div class="yrs">${P.yrs}</div>
+    <div class="kv"><b>政府做什麼</b><span>${P.gov}</span><b>海上的人</b><span>${P.sea}</span><b>關鍵字</b><span>${P.key}</span></div>` + gaugeHtml(P);
+}
+const PORT_ROLE = {
+  quanzhou:{ yuan:'元朝世界級大港，市舶司在這裡。', mingearly:'海禁後沒落，只剩琉球朝貢船偶爾來。', jiajing:'泉州人改從附近小港偷跑。', zhilong:'鄭芝龍的老家安海就在泉州南邊。' },
+  ningbo:{ yuan:'對日本的大港。', mingearly:'日本朝貢船唯一能進的港，十年一次。', jiajing:'1523 年日本兩批使節在這裡打起來（寧波之亂），日本朝貢從此停止。外海的雙嶼變走私大本營。' },
+  shuangyu:{ jiajing:'1540 年代最大的走私港，葡萄牙人、日本人、中國商人都在。1548 年被朱紈率軍剿平，商人四散變成「倭寇」。' },
+  fuzhou:{ mingearly:'琉球朝貢船進的港，福州有琉球館。' },
+  xiamen:{ jiajing:'走私船出海的地方之一。', zhilong:'安海是鄭芝龍的大本營，廈門是港。', chenggong:'鄭成功的基地金門、廈門。遷界後糧和貨都進不來。', qingopen:'1684 年後臺灣唯一的對渡口：廈門—鹿耳門。' },
+  yuegang:{ longqing:'1567 年開放的唯一合法出海口，領執照、繳稅，去呂宋、東南亞。', zhilong:'逐漸被廈門取代。' },
+  guangzhou:{ yuan:'對東南亞、印度洋的港。', mingearly:'東南亞朝貢船進的港。', qingopen:'四海關之一（粵海關）。' },
+  macau:{ jiajing:'1557 年葡萄牙人住進來，跑澳門—長崎線，賺絲換銀的差價。', longqing:'葡萄牙人的中繼站。', zhilong:'1639 年日本鎖國後葡萄牙船被禁，澳門沒落。' },
+  naha:{ mingearly:'琉球王國靠轉口貿易活：中國貨到琉球，再轉日本、東南亞。「萬國津梁」。', jiajing:'走私興起後琉球的轉口角色變小。' },
+  nagasaki:{ jiajing:'走私船和葡萄牙船都來。', longqing:'日本白銀出口的港。', zhilong:'1639 年鎖國後只准中國船、荷蘭船進來。鄭家最大的市場。', chenggong:'鄭成功的錢主要靠這條線。', zhengtw:'鄭經時代臺灣船每年來。', qingopen:'清朝商船繼續來，日本後來限制數量。' },
+  hirado:{ jiajing:'王直在這裡設總部，日本大名收留他。', zhilong:'鄭芝龍年輕時在這裡，鄭成功 1624 年在平戶出生。' },
+  penghu:{ longqing:'1604、1622 年荷蘭人兩度占領，明朝趕他們去臺灣。', chenggong:'1661 年鄭成功從這裡等風出發攻臺。', zhengtw:'1683 年施琅在澎湖海戰打敗鄭軍。' },
+  tayouan:{ longqing:'1624 年荷蘭人在這裡建熱蘭遮城。', zhilong:'荷蘭人的轉口站：中國絲→日本銀→東南亞香料。貨要跟鄭家買。', chenggong:'1661–1662 鄭成功攻下。', zhengtw:'鄭家的新基地和新港口。', qingopen:'臺灣府，對渡廈門。' },
+  manila:{ longqing:'1571 年西班牙人建城，美洲白銀用大帆船運來換中國絲綢。月港的船主要來這裡。', zhilong:'鄭家船也來。', chenggong:'鄭成功 1662 年寫信要求西班牙總督投降。' },
+  hoian:{ yuan:'往東南亞的中途站。', longqing:'西洋航線（東南亞）的門口。' },
+  siam:{ zhengtw:'鄭經派船到暹羅買糧、買錫。' },
+};
+function portInfo(k){
+  const P = PERIODS[pi], p = PORTS[k], role = (PORT_ROLE[k] || {})[P.id];
+  document.getElementById('pinfo').innerHTML = `<h4>${p.n}</h4><div class="yrs">在「${P.name}」這個時期</div><p>${role || '這個時期它不是主角。換個時期再點看看。'}</p><p class="hint" style="margin-top:8px"><a href="#" id="backP" style="color:var(--blue)">← 回到這個時期的說明</a></p>`;
+  document.getElementById('backP').addEventListener('click', e => { e.preventDefault(); periodInfo(); });
+  logEv({ type:'practice', q:'海圖_點港口_'+p.n, ok:true });
+}
+document.getElementById('periods').innerHTML = PERIODS.map((P,i) => `<button data-i="${i}"><b>${P.name}</b>${P.yrs}</button>`).join('');
+document.querySelectorAll('#periods button').forEach(b => b.addEventListener('click', () => { stopAuto(); pi = +b.dataset.i; drawSea(); }));
+document.getElementById('prev').addEventListener('click', () => { stopAuto(); pi = (pi + PERIODS.length - 1) % PERIODS.length; drawSea(); });
+document.getElementById('next').addEventListener('click', () => { stopAuto(); pi = (pi + 1) % PERIODS.length; drawSea(); });
+function stopAuto(){ if(autoTimer){ clearInterval(autoTimer); autoTimer = null; document.getElementById('auto').textContent = '▶ 自動輪播'; } }
+document.getElementById('auto').addEventListener('click', () => {
+  if(autoTimer){ stopAuto(); return; }
+  document.getElementById('auto').textContent = '⏸ 停止輪播';
+  autoTimer = setInterval(() => { pi = (pi + 1) % PERIODS.length; drawSea(); if(pi === PERIODS.length - 1){ logEv({ type:'practice', q:'海圖_輪播一輪', ok:true }); } }, 7000);
+});
+
+// ===== 排排站 =====
+document.getElementById('cmp').innerHTML = PERIODS.map(P => {
+  const counts = { off:0, legal:0, smug:0, foreign:0 };
+  P.ships.forEach(([r,k,n]) => counts[k] += n);
+  const order = ['smug','foreign','legal','off'];
+  let stack = ''; order.forEach(k => { for(let i = 0; i < counts[k]; i++) stack += `<i style="height:4px;background:${COL[k]}"></i>`; });
+  const total = Object.values(counts).reduce((a,b)=>a+b,0);
+  return `<div class="col"><div class="stack">${stack}</div><div class="lbl">${P.name}</div><div style="color:var(--sub)">${P.yrs}</div><div>共 ${total} 艘｜<span style="color:var(--c-smug)">紅 ${counts.smug}</span></div></div>`;
+}).join('');
+
+// ===== 第 2 頁：全部時期的兩條 bar =====
+document.getElementById('gaugeAll').innerHTML = PERIODS.map(P => `<div style="margin:6px 0 2px"><b>${P.name}</b> <span style="color:var(--sub);font-size:.85rem">${P.yrs}</span></div>` + gaugeHtml(P).replace('<div class="gauge">','<div class="gauge" style="margin-top:0">')).join('');
+
+// 福建示意圖
+(function(){
+  let s = rect(0,0,420,150,'#dbeafe');
+  s += `<polygon points="0,120 40,40 80,120" fill="#8a9a5b"/><polygon points="50,120 110,25 170,120" fill="#6b7f3a"/><polygon points="140,120 200,45 260,120" fill="#8a9a5b"/><polygon points="230,120 275,60 320,120" fill="#6b7f3a"/>`;
+  s += rect(0,120,340,30,'#bbf7d0') + rect(300,110,40,40,'#86efac') + rect(340,100,80,50,'#7dd3fc');
+  s += `<path d="M350 125 q10 -5 20 0 t20 0 t20 0" stroke="#bae6fd" stroke-width="2" fill="none"/>`;
+  s += txt(150, 140, '八分是山', '#14532d', 13, 'middle', 'font-weight="bold"') + txt(320, 108, '一分田', '#14532d', 11) + txt(380, 95, '一分水：出海', '#0369a1', 11);
+  s += `<path d="M372 128 q-2 -6 4 -8 l10 0 q4 4 0 8 Z" fill="#78350f"/><line x1="380" y1="120" x2="380" y2="108" stroke="#78350f" stroke-width="1.5"/><polygon points="381,109 390,116 381,117" fill="#fef3c7"/>`;
+  document.getElementById('svgFujian').innerHTML = `<svg viewBox="0 0 420 150" width="420" style="max-width:100%;height:auto;border-radius:10px">${s}</svg>`;
+})();
+
+// ===== 第 3 頁：選據點 =====
+const OPTS = [
+  { n:'留在金門、廈門', c:[['no','糧：小島種不出糧，以前靠大陸買，遷界後買不到'],['ok','港：好港口'],['ok','貨：就在福建旁邊'],['no','敵：清軍就在對岸，隨時打過來'],['ok','線：在航線上']],
+    v:'他 1650 年代就在這裡，但遷界令一下，幾萬人要餓肚子。撐不久。' },
+  { n:'往北去舟山', c:[['no','糧：島小，一樣要靠大陸'],['ok','港：有港口'],['ok','貨：靠近江南絲綢產地'],['no','敵：清軍重兵，之前反清據點已被打掉'],['so','線：偏北，離日本近、離東南亞遠']],
+    v:'1650 年代反清勢力曾守舟山，很快被清軍攻陷。往北是往敵人最強的地方走。' },
+  { n:'往南打呂宋（馬尼拉）', c:[['ok','糧：有田'],['ok','港：好港口'],['no','貨：離中國貨源太遠'],['so','敵：西班牙人不多，但有城堡和火砲'],['ok','線：美洲白銀的終點，很賺']],
+    v:'鄭成功真的想過，1662 年還寫信要西班牙人投降。但太遠，當第一步太冒險。他打算當第二步。' },
+  { n:'打臺灣（大員）', c:[['ok','糧：荷蘭人三十年開了很多田，招了幾萬漢人農民'],['ok','港：大員是現成的轉口港'],['so','貨：隔一道海峽，順風一天'],['ok','敵：荷蘭人在臺灣只有一兩千兵，援軍要從巴達維亞來'],['ok','線：長崎和巴達維亞、馬尼拉的正中間']],
+    v:'五個條件最多的一個。何斌還帶來地圖和水道資料。1661 年他選了這裡。' },
+];
+document.getElementById('opts').innerHTML = OPTS.map((o,i) => `<div class="opt" data-i="${i}"><h4>${o.n}</h4><div class="crit">${o.c.map(([k,t]) => `<div class="${k}">${t}</div>`).join('')}<div class="verdict">${o.v}</div></div></div>`).join('');
+document.querySelectorAll('.opt').forEach(el => el.addEventListener('click', () => {
+  document.querySelectorAll('.opt').forEach(x => x.classList.remove('sel')); el.classList.add('sel');
+  const o = OPTS[el.dataset.i], ok = o.c.filter(c => c[0]==='ok').length;
+  document.getElementById('optNote').innerHTML = `<b>${o.n}</b>：五個條件打勾 ${ok} 個。${ok >= 4 ? '這就是鄭成功的選擇。' : '再看看別的選項，哪一個打勾最多？'}`;
+  logEv({ type:'practice', q:'選據點_'+o.n, ok: ok >= 4 }); pracCount++; if(ok >= 4) pracOk++;
+}));
+
+// ===== 小測驗 =====
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz'); let score = 0, answered = 0;
+  qs.forEach(q=>{ const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb'); q.classList.remove('correct','wrong'); if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp; }
+    else { q.classList.add('wrong'); fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp; } });
+  const wrong = []; qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){ r.className='bad'; r.style.display='block'; r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`; }
+  else if(score >= 6){ r.className='good'; r.textContent=`🎉 ${score} / ${qs.length}！海上的人為什麼出現、鄭成功為什麼選臺灣，你都看懂了。`; }
+  else if(score >= 4){ r.className='soso'; r.textContent=`${score} / ${qs.length}。回第 1 頁把錯的那個時期點出來，看船的顏色。`; }
+  else { r.className='bad'; r.textContent=`${score} / ${qs.length}。先按「自動輪播」看完八個時期，再回來。`; }
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+});
+
+drawSea();
+</script>
+</body>
+</html>
