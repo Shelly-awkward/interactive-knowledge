@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>臺灣史前文化｜五萬年時間地圖：從長濱到十三行</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#7c2d12; --accent-soft:#fef3c7;
+    --old:#7e22ce; --new:#15803d; --metal:#c2410c; --hist:#2563eb;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:900px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#7c2d12,#c2410c); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .card ul,.card ol{margin-left:1.3em;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool button.small{padding:5px 12px; font-size:.82rem;}
+  .tool select{padding:7px 10px; font-size:.9rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+
+  /* 時間桿 */
+  .timebar{margin:8px 0 4px;}
+  .timebar input[type=range]{width:100%; height:34px; -webkit-appearance:none; appearance:none; background:transparent; cursor:pointer;}
+  .timebar input[type=range]::-webkit-slider-runnable-track{height:14px; border-radius:99px; background:linear-gradient(90deg,
+    var(--old) 0%, var(--old) 24%, var(--new) 24%, var(--new) 62%, var(--metal) 62%, var(--metal) 82%, var(--hist) 82%, var(--hist) 100%);}
+  .timebar input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:30px; height:30px; margin-top:-8px; border-radius:50%; background:#fff; border:4px solid var(--accent); box-shadow:0 2px 6px rgba(0,0,0,.3);}
+  .timebar input[type=range]::-moz-range-track{height:14px; border-radius:99px; background:linear-gradient(90deg,
+    var(--old) 0%, var(--old) 24%, var(--new) 24%, var(--new) 62%, var(--metal) 62%, var(--metal) 82%, var(--hist) 82%, var(--hist) 100%);}
+  .timebar input[type=range]::-moz-range-thumb{width:22px; height:22px; border-radius:50%; background:#fff; border:4px solid var(--accent); box-shadow:0 2px 6px rgba(0,0,0,.3);}
+  .ticks{display:flex; justify-content:space-between; font-size:.75rem; color:var(--sub); padding:0 4px;}
+  .nowbox{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 16px; margin:6px 0 2px;}
+  .nowbox .big{font-size:1.6rem; font-weight:bold; color:var(--accent); font-family:"Courier New",monospace; letter-spacing:1px;}
+  .nowbox .ce{font-size:.95rem; color:var(--sub);}
+  .eras{display:flex; gap:6px; flex-wrap:wrap;}
+  .era-tag{display:inline-block; border-radius:99px; padding:2px 10px; font-size:.85rem; color:#fff;}
+  .era-old{background:var(--old);} .era-new{background:var(--new);} .era-metal{background:var(--metal);} .era-hist{background:var(--hist);}
+
+  .mapwrap{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;}
+  .mapwrap .svgbox{margin:0; flex:0 0 auto; text-align:center;}
+  .svgbox svg{max-width:100%; height:auto; border-radius:12px;}
+  .mapwrap .side{flex:1 1 260px; min-width:0;}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:12px 14px; min-height:7em; font-size:.95rem;}
+  .infobox h4{font-size:1.05rem; margin-bottom:4px;}
+  .infobox .icon{float:right; margin:0 0 6px 10px;}
+  .infobox .yrs{color:var(--sub); font-size:.85rem;}
+  .site{cursor:pointer;} .site:hover circle{stroke-width:4;}
+  .site.hit circle.dot{animation:pulse .6s ease 3;}
+  @keyframes pulse{0%{r:7} 50%{r:14} 100%{r:7}}
+  .legend{display:flex; flex-wrap:wrap; gap:6px 14px; font-size:.82rem; color:var(--sub); margin-top:8px;}
+  .legend i{display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:4px; vertical-align:-1px;}
+
+  .skills{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 12px;}
+  .skills h4{font-size:.95rem; margin-bottom:4px; color:var(--accent);}
+  .skills .sk{display:flex; align-items:center; gap:8px; padding:3px 0; font-size:.9rem; color:#9ca3af; transition:.2s;}
+  .skills .sk i{width:14px; height:14px; border-radius:50%; border:2px solid #d1d5db; flex:0 0 auto; background:#fff;}
+  .skills .sk.on{color:var(--ink);}
+  .skills .sk.on i{border-color:transparent;}
+  .skills .sk.new{font-weight:bold;}
+  .skills .sk .tag{font-size:.72rem; background:var(--red); color:#fff; border-radius:99px; padding:0 7px; margin-left:auto;}
+  .skills .sk small{color:var(--sub); font-size:.75rem; margin-left:auto;}
+  .scenewrap{display:flex; flex-wrap:wrap; gap:14px; align-items:stretch; margin-top:8px;}
+  .scenewrap .svgbox{flex:1 1 380px; margin:0;}
+  .scenewrap .svgbox svg{width:100%; max-width:520px;}
+  .scenewrap .infobox{flex:1 1 260px;}
+  .plus{background:var(--amber-soft); border-radius:8px; padding:6px 10px; margin-top:8px; font-size:.88rem;}
+  .strip{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; margin-top:10px;}
+  .strip .cell{border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#fff;}
+  .strip .cell svg{width:100%; display:block;}
+  .strip .cap{padding:8px 10px; font-size:.86rem;}
+  .strip .cap b{display:block; font-size:.95rem;}
+  .lanes{overflow-x:auto; margin-top:10px;}
+  .lanes svg{min-width:640px; display:block; cursor:pointer;}
+
+  .say{border:1px solid var(--border); border-radius:12px; padding:12px 16px; margin:10px 0; display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center;}
+  .say .quote{flex:1 1 320px; font-size:.98rem;}
+  .say .quote b{color:var(--accent);}
+  .say .why{flex-basis:100%; font-size:.88rem; color:var(--sub); display:none;}
+  .say.open .why{display:block;}
+  .say button{background:var(--blue); color:#fff; border:none; border-radius:99px; padding:7px 16px; cursor:pointer; font-family:inherit; font-size:.88rem; white-space:nowrap;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} .nowbox .big{font-size:1.3rem;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 臺灣的歷史（上） · 1-1 延伸</span>
+  <h1>五萬年時間地圖：從長濱到十三行</h1>
+  <p>「臺灣四百年」只是臺灣故事的最後一小段。這份教材把時間拉長到 <b>五萬年前</b>：拉動時間桿，看海岸線怎麼變、哪個年代哪裡有人住，點圓點看他們留下什麼。看過地圖，課本那些「長濱」「大坌坑」「十三行」才知道在講哪裡、什麼時候。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1 時間地圖</button>
+  <button data-t="s2">2 課本的話，地圖上在哪</button>
+  <button data-t="s3">🏁 小測驗</button>
+</nav>
+
+<!-- ═══════════ 1 時間地圖 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 這一頁要看到的</h2>
+    <ul>
+      <li>兩萬年前臺灣和大陸連在一起，長濱的人是<b>走</b>過來的</li>
+      <li>舊石器（長濱）和新石器（大坌坑）有<b>同時存在</b>的一段</li>
+      <li>大坌坑和十三行都在<b>八里</b>，但差了好幾千年</li>
+      <li>四百年前荷蘭人來，只是最右邊很短的一截</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 拉時間桿，看臺灣</h2>
+    <div class="tool">
+      <div class="nowbox">
+        <span>現在看的是</span><span class="big" id="nowBP">距今 5 萬年前</span><span class="ce" id="nowCE"></span>
+        <span class="eras" id="nowEra"></span>
+      </div>
+      <div class="timebar"><input type="range" id="time" min="0" max="1000" step="1" value="0" aria-label="時間桿"></div>
+      <div class="ticks"><span>5 萬年前</span><span>2 萬</span><span>1 萬</span><span>7 千</span><span>5 千</span><span>3 千</span><span>2 千</span><span>1 千</span><span>4 百</span><span>現在</span></div>
+      <div class="row">
+        <button id="play">▶ 播放</button>
+        <select id="speed"><option value="0.6">慢</option><option value="1.2" selected>中</option><option value="2.5">快</option></select>
+        <button class="ghost" id="toStart">⏮ 回到五萬年前</button>
+        <span class="hint">時間桿不是等距的：越古老的年代被壓得越短，最近的四百年反而拉得最長，這樣才看得清楚。</span>
+      </div>
+      <div class="mapwrap">
+        <div class="svgbox" id="svgMap"></div>
+        <div class="side">
+          <div class="skills" id="skills"></div>
+          <div class="legend">
+            <span><i style="background:var(--old)"></i>舊石器時代</span>
+            <span><i style="background:var(--new)"></i>新石器時代</span>
+            <span><i style="background:var(--metal)"></i>金屬器時代</span>
+            <span><i style="background:var(--hist)"></i>歷史時代（有文字）</span>
+            <span><i style="background:#fff;border:2px solid #9ca3af"></i>已經結束的遺址</span>
+          </div>
+          <div class="row" id="jumpRow" style="margin-top:10px"></div>
+        </div>
+      </div>
+      <h3 style="margin-top:14px">👀 這個年代的人怎麼過日子</h3>
+      <p class="hint" style="margin:0 0 4px">圖會自動跟著時間走，顯示「最新出現」的那群人。想看別的，<b>點地圖上的圓點</b>。</p>
+      <div class="scenewrap">
+        <div class="svgbox" id="svgScene"></div>
+        <div class="infobox" id="mapInfo"></div>
+      </div>
+    </div>
+
+    <h3>📏 誰跟誰同時：每個文化活了多久</h3>
+    <p style="font-size:.92rem">橫條越長、代表這個文化延續越久。紅線是你現在看的時間，<b>直接點橫條</b>也可以跳時間。</p>
+    <div class="lanes" id="lanes"></div>
+    <div class="note">💡 數字都是「大約」。不同的書寫的年代不一樣，這裡以課本為主，課本沒寫的用考古學界常見的說法。像長濱文化，課本寫 5 萬年前，近年的測定認為確定的證據大約 3 萬年前。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 四個時代排排站：多了什麼？</h2>
+    <p style="font-size:.92rem">由左到右、由古早到晚。每一格比前一格<b>多了</b>什麼，就是課本說的那個時代的特徵。</p>
+    <div class="strip" id="strip"></div>
+  </div>
+
+  <div class="card">
+    <h2>📖 地圖上三個「看了才懂」的地方</h2>
+    <h3>1. 臺灣曾經不是島</h3>
+    <p>兩萬年前是冰河時期，很多水結成冰，海平面比現在低一百多公尺。臺灣海峽很淺，整個露出來變成陸地。長濱文化的人就是這樣<b>走</b>到臺灣的。大約一萬年前冰融化、海水回升，臺灣才又變成島。</p>
+    <h3>2. 臺北曾經是一個湖</h3>
+    <p>大約六千年前海水灌進臺北盆地，變成一大片湖（或說海灣）。圓山文化的人住在湖邊吃貝類，貝殼丟成一堆，就是課本說的<b>貝塚</b>。</p>
+    <h3>3. 八里有兩個遺址，差了幾千年</h3>
+    <p>大坌坑文化（七千年前，繩紋陶）和十三行文化（兩千年前，煉鐵）都在新北市八里。同一個地方、不同時代的人。拉時間桿會看到：大坌坑的點先亮、熄掉，很久以後十三行的點才亮。</p>
+  </div>
+</section>
+
+<!-- ═══════════ 2 課本的話 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 這一頁怎麼用</h2>
+    <p>左邊是課本（或考卷）會出現的句子。按「帶我去看」，會自動跳回第 1 頁、把時間轉到那個年代、把那個遺址點亮。看完再回來按下一句。</p>
+  </div>
+  <div class="card" id="sayList">
+    <h2>📖 課本的話 → 地圖上在哪、什麼時候</h2>
+  </div>
+</section>
+
+<!-- ═══════════ 3 小測驗 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card">
+    <h2>🏁 小測驗（7 題）</h2>
+    <p style="font-size:.92rem;margin-bottom:8px">每一題都可以回第 1 頁拉時間桿找答案。</p>
+    <div id="quizCard">
+      <div class="q quiz" data-ans="B">
+        <div class="stem">1. 兩萬年前，長濱文化的人怎麼來到臺灣？</div>
+        <label><input type="radio" name="qz1" value="A">划船渡過臺灣海峽</label>
+        <label><input type="radio" name="qz1" value="B">走路，因為那時海平面低、臺灣和大陸連在一起</label>
+        <label><input type="radio" name="qz1" value="C">從日本坐大船來</label>
+        <label><input type="radio" name="qz1" value="D">他們是本來就住在臺灣的原生人類</label>
+        <div class="fb" data-exp="　冰河時期海平面比現在低一百多公尺，臺灣海峽露出來變成陸地。">　</div>
+      </div>
+      <div class="q quiz" data-ans="C">
+        <div class="stem">2. 把時間轉到「距今 6000 年前」，地圖上會同時亮著哪兩個遺址？</div>
+        <label><input type="radio" name="qz2" value="A">大坌坑、十三行</label>
+        <label><input type="radio" name="qz2" value="B">卑南、十三行</label>
+        <label><input type="radio" name="qz2" value="C">長濱、大坌坑</label>
+        <label><input type="radio" name="qz2" value="D">圓山、卑南</label>
+        <div class="fb" data-exp="　長濱（舊石器）到 5 千年前才結束，大坌坑（新石器）7 千年前就開始，所以 6 千年前兩個同時存在。">　</div>
+      </div>
+      <div class="q quiz" data-ans="A">
+        <div class="stem">3. 大坌坑文化和十三行文化的關係是？</div>
+        <label><input type="radio" name="qz3" value="A">同一個地方（八里），但差了好幾千年</label>
+        <label><input type="radio" name="qz3" value="B">同一個時代，一個在北、一個在南</label>
+        <label><input type="radio" name="qz3" value="C">同一群人、同一個時代</label>
+        <label><input type="radio" name="qz3" value="D">都在臺東</label>
+        <div class="fb" data-exp="　大坌坑約 7 千年前、十三行約 2 千年前，都在新北市八里區。">　</div>
+      </div>
+      <div class="q quiz" data-ans="D">
+        <div class="stem">4. 圓山文化的人為什麼會留下貝塚？</div>
+        <label><input type="radio" name="qz4" value="A">他們用貝殼蓋房子</label>
+        <label><input type="radio" name="qz4" value="B">他們把貝殼當錢</label>
+        <label><input type="radio" name="qz4" value="C">貝殼是從外國買來的</label>
+        <label><input type="radio" name="qz4" value="D">當時臺北盆地是湖，他們吃貝肉、把殼丟成一堆</label>
+        <div class="fb" data-exp="　地圖上 6 千～2 千年前臺北盆地會出現一片湖，圓山就在湖邊。">　</div>
+      </div>
+      <div class="q quiz" data-ans="B">
+        <div class="stem">5. 在時間桿上，「荷蘭人來臺灣到現在」這四百年，占五萬年的多少？</div>
+        <label><input type="radio" name="qz5" value="A">大約一半</label>
+        <label><input type="radio" name="qz5" value="B">不到 1%</label>
+        <label><input type="radio" name="qz5" value="C">大約四分之一</label>
+        <label><input type="radio" name="qz5" value="D">大約 10%</label>
+        <div class="fb" data-exp="　400 ÷ 50000 = 0.8%。時間桿故意把這一段拉長，不然根本看不到。">　</div>
+      </div>
+      <div class="q quiz" data-ans="C">
+        <div class="stem">6. 下面哪個遺址在臺東？</div>
+        <label><input type="radio" name="qz6" value="A">大坌坑、圓山</label>
+        <label><input type="radio" name="qz6" value="B">十三行、南關里</label>
+        <label><input type="radio" name="qz6" value="C">長濱、卑南</label>
+        <label><input type="radio" name="qz6" value="D">圓山、十三行</label>
+        <div class="fb" data-exp="　長濱（舊石器）和卑南（新石器）都在臺東，一個在海邊山洞、一個在卑南。">　</div>
+      </div>
+      <div class="q quiz" data-ans="C">
+        <div class="stem">7. 下面四件事，哪一件<b>最早</b>出現？</div>
+        <label><input type="radio" name="qz7" value="A">燒陶器</label>
+        <label><input type="radio" name="qz7" value="B">煉鐵</label>
+        <label><input type="radio" name="qz7" value="C">會用火</label>
+        <label><input type="radio" name="qz7" value="D">把石器磨光滑</label>
+        <div class="fb" data-exp="　用火是舊石器時代（長濱）就會的。磨製石器、陶器要到新石器，煉鐵要到金屬器。">　</div>
+      </div>
+      <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+      <div id="quizResult"></div>
+    </div>
+  </div>
+</section>
+
+<footer>臺灣史前文化｜五萬年時間地圖 · 年代均為大約值，以課本為主 · 互動知識庫</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（只存在這台瀏覽器）=====
+const LOG_KEY = "study_log_v1", CH = "歷史1-1 五萬年時間地圖";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+function showTab(id){
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.t === id));
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.toggle('show', p.id === id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('nav.tabs button').forEach(btn=>btn.addEventListener('click',()=>showTab(btn.dataset.t)));
+
+// ===== 小工具 =====
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw,extra){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}" ${extra||''}/>`; }
+function svg(w,h,inner,extra){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img" ${extra||''}>${inner}</svg>`; }
+const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
+
+// ===== 時間桿：不等距（越古老壓越短）=====
+// [距今年數, 時間桿位置 0~100]
+const BRK = [[50000,0],[20000,8],[10000,16],[7000,24],[5000,36],[3000,50],[2000,62],[1000,72],[400,82],[0,100]];
+function posToBP(p){
+  for(let i=0;i<BRK.length-1;i++){
+    const [b0,p0]=BRK[i],[b1,p1]=BRK[i+1];
+    if(p<=p1) return b0 + (b1-b0)*(p-p0)/(p1-p0);
+  }
+  return 0;
+}
+function bpToPos(bp){
+  for(let i=0;i<BRK.length-1;i++){
+    const [b0,p0]=BRK[i],[b1,p1]=BRK[i+1];
+    if(bp>=b1) return p0 + (p1-p0)*(bp-b0)/(b1-b0);
+  }
+  return 100;
+}
+const THIS_YEAR = 2026;
+function fmtBP(bp){
+  if(bp >= 10000){ const w = Math.round(bp/1000)/10; return `距今 ${w % 1 === 0 ? w : w.toFixed(1)} 萬年前`; }
+  if(bp >= 1000){ const k = Math.round(bp/100)/10; return `距今 ${k % 1 === 0 ? k : k.toFixed(1)} 千年前`; }
+  if(bp >= 1) return `距今 ${Math.round(bp)} 年前`;
+  return '現在';
+}
+function fmtCE(bp){
+  if(bp > 2000) return '';
+  const y = THIS_YEAR - Math.round(bp);
+  return y > 0 ? `≈ 西元 ${y} 年` : `≈ 西元前 ${1 - y} 年`;
+}
+
+// ===== 遺址資料（年代為距今大約年數）=====
+const ERA = { old:'#7e22ce', new:'#15803d', metal:'#c2410c', hist:'#2563eb' };
+const ERA_NAME = { old:'舊石器時代', new:'新石器時代', metal:'金屬器時代', hist:'歷史時代' };
+const SITES = [
+  { id:'changbin', name:'長濱文化', era:'old', from:50000, to:5000, x:226, y:215, where:'臺東縣長濱鄉（八仙洞）', icon:'stone', scene:'old', plus:'最早的人。會用火、把石頭敲出刃口當工具，靠採集、打獵、捕魚吃飯。還不會種東西、不會做陶器。',
+    text:'臺灣目前最早的人。住在海邊的山洞裡，用敲打出來的石頭當工具（打製石器），已經會用火，靠採集、打獵、捕魚過日子。' },
+  { id:'dabenkeng', name:'大坌坑文化', era:'new', from:7000, to:4500, x:134, y:62, lx:-11, lanchor:'end', where:'新北市八里區', icon:'pot', scene:'neoA', plus:'比長濱多了：石器磨得光滑、會燒陶器、開始種東西、養狗養豬。這就是「新石器」。',
+    text:'新石器時代最早的一群。開始用磨得光滑的石器、會燒陶器。陶器上有繩子壓出來的花紋，叫「繩紋陶」。' },
+  { id:'nanguanli', name:'南關里遺址', era:'new', from:5000, to:4300, x:106, y:298, where:'臺南科學園區', icon:'rice', scene:'neoA', plus:'多了：種稻的直接證據。燒焦的稻米在土裡放了五千年。',
+    text:'屬於大坌坑文化晚期。挖到五千年前燒焦的稻米（炭化稻米），證明這時候的人已經會種稻。' },
+  { id:'yuanshan', name:'圓山文化', era:'new', from:4500, to:2000, x:162, y:66, where:'臺北市（圓山）', icon:'shell', scene:'neoB', plus:'多了：住在湖邊大量吃貝類，貝殼堆成貝塚。石器、陶器、種田都繼續用。',
+    text:'那時臺北盆地是一大片湖。人們住在湖邊吃貝類，貝殼丟成一座小山，就是「貝塚」。' },
+  { id:'beinan', name:'卑南文化', era:'new', from:3500, to:2300, x:208, y:300, where:'臺東縣（卑南）', icon:'coffin', scene:'neoC', plus:'多了：把玉磨成很精細的飾品、用石板做棺材、聚落很大。這是新石器的「晚期」。',
+    text:'新石器時代晚期、臺灣最大的史前聚落之一。用石板做棺材（石板棺），陪葬的玉器裡有「人獸形玉耳飾」，表示他們很會磨玉。' },
+  { id:'shisanhang', name:'十三行文化', era:'metal', from:2000, to:400, x:140, y:44, lx:-11, lanchor:'end', where:'新北市八里區', icon:'furnace', scene:'metal', plus:'多了：自己煉鐵做鐵器，還跟外面做生意（玻璃珠、銅錢是進口的）。這就是「金屬器」。',
+    text:'臺灣人開始自己煉鐵：挖到煉鐵爐和鐵渣。還挖到玻璃珠、瑪瑙、中國銅錢，這些本地做不出來，所以知道他們跟外面做生意。' },
+];
+// 歷史時代地標（距今年數用西元換算）
+const MARKS = [
+  { name:'熱蘭遮城', ce:1624, x:100, y:306, lx:-9, ly:14, lanchor:'end', note:'荷蘭人在安平蓋的城堡，課本說的「臺灣四百年」從這裡算起。' },
+  { name:'臺北府城', ce:1884, x:160, y:72, note:'清朝蓋的臺北城牆，今天只剩幾個城門。' },
+  { name:'總督府', ce:1919, x:166, y:60, note:'日本時代蓋的，現在是總統府。' },
+];
+const PERIODS = [
+  { name:'荷蘭／西班牙', from:1624, to:1662 }, { name:'鄭氏', from:1662, to:1683 }, { name:'清朝', from:1683, to:1895 },
+  { name:'日本', from:1895, to:1945 }, { name:'中華民國', from:1945, to:THIS_YEAR },
+];
+const TW = 'M 150,28 L 186,24 L 206,46 L 216,82 L 226,122 L 231,170 L 224,232 L 212,290 L 196,340 L 182,384 L 170,420 L 152,406 L 132,372 L 118,338 L 106,300 L 95,252 L 100,200 L 110,140 L 124,90 L 138,50 Z';
+const BRIDGE = 'M 0,0 L 200,0 L 186,24 L 150,28 L 138,50 L 124,90 L 110,140 L 100,200 L 95,252 L 106,300 L 118,338 L 132,372 L 152,406 L 170,420 L 150,440 L 0,440 Z';
+
+// ===== 文物小圖 =====
+const ICONS = {
+  stone: `<polygon points="14,46 22,18 44,10 62,22 66,44 50,64 26,62" fill="#9ca3af" stroke="#4b5563" stroke-width="2"/><path d="M26 30 L40 24 M30 42 L48 34 M38 52 L54 44" stroke="#4b5563" stroke-width="2" fill="none"/>`,
+  pot: `<path d="M24 20 Q20 14 28 12 L52 12 Q60 14 56 20 Q70 34 62 56 Q60 66 40 66 Q20 66 18 56 Q10 34 24 20 Z" fill="#b45309" stroke="#78350f" stroke-width="2"/><path d="M22 30 q6 4 12 0 t12 0 t12 0 M20 40 q6 4 12 0 t12 0 t12 0 M22 50 q6 4 12 0 t12 0 t12 0" stroke="#fde68a" stroke-width="2" fill="none"/>`,
+  rice: `<ellipse cx="26" cy="30" rx="6" ry="12" fill="#1f2937" transform="rotate(-20 26 30)"/><ellipse cx="42" cy="26" rx="6" ry="12" fill="#1f2937" transform="rotate(10 42 26)"/><ellipse cx="56" cy="36" rx="6" ry="12" fill="#1f2937" transform="rotate(30 56 36)"/><ellipse cx="34" cy="52" rx="6" ry="12" fill="#1f2937" transform="rotate(-5 34 52)"/><ellipse cx="50" cy="58" rx="6" ry="12" fill="#1f2937" transform="rotate(20 50 58)"/>`,
+  shell: `<path d="M8 66 Q40 20 72 66 Z" fill="#e5e7eb" stroke="#9ca3af" stroke-width="2"/><path d="M20 58 a8 8 0 0 1 16 0 M36 52 a8 8 0 0 1 16 0 M28 44 a8 8 0 0 1 16 0 M46 60 a8 8 0 0 1 16 0 M14 64 a7 7 0 0 1 14 0" stroke="#78716c" stroke-width="2" fill="#fafaf9"/>`,
+  coffin: `<rect x="12" y="26" width="56" height="30" fill="#78716c" stroke="#44403c" stroke-width="2"/><rect x="8" y="20" width="64" height="8" fill="#a8a29e" stroke="#44403c" stroke-width="2"/><circle cx="40" cy="42" r="7" fill="none" stroke="#86efac" stroke-width="3"/><path d="M40 35 L36 28 L44 28 Z" fill="#86efac"/>`,
+  furnace: `<path d="M16 66 L16 40 Q16 16 40 16 Q64 16 64 40 L64 66 Z" fill="#78350f" stroke="#451a03" stroke-width="2"/><rect x="30" y="46" width="20" height="20" fill="#f97316"/><path d="M40 20 q8 -10 2 -16 q10 6 4 16 Z" fill="#fb923c"/><circle cx="58" cy="58" r="4" fill="#60a5fa"/><circle cx="24" cy="56" r="3" fill="#34d399"/>`,
+};
+function iconSvg(k){ return `<svg viewBox="0 0 80 80" width="72" height="72" class="icon" aria-hidden="true">${ICONS[k]||''}</svg>`; }
+
+// ===== 生活場景圖（純 SVG 小人圖）=====
+const SC = {
+  person(x,y,c,o={}){ // y = 腳底；o.arm: 'down'|'fwd'|'up'|'squat'
+    const h = o.squat ? 0.72 : 1, hy = y - 40*h;
+    let a = `<circle cx="${x}" cy="${hy}" r="5" fill="${c}"/><line x1="${x}" y1="${hy+5}" x2="${x}" y2="${y-16*h}" stroke="${c}" stroke-width="3"/>`;
+    a += o.squat ? `<path d="M${x} ${y-12} l-7 4 l1 8 M${x} ${y-12} l7 4 l-1 8" stroke="${c}" stroke-width="3" fill="none"/>`
+                 : `<path d="M${x} ${y-16} l-6 16 M${x} ${y-16} l6 16" stroke="${c}" stroke-width="3" fill="none"/>`;
+    const sy = hy + 10;
+    if(o.arm==='up') a += `<path d="M${x} ${sy} l-7 8 M${x} ${sy} l8 -12" stroke="${c}" stroke-width="3" fill="none"/>`;
+    else if(o.arm==='fwd') a += `<path d="M${x} ${sy} l10 4 M${x} ${sy} l10 8" stroke="${c}" stroke-width="3" fill="none"/>`;
+    else a += `<path d="M${x} ${sy} l-7 10 M${x} ${sy} l7 10" stroke="${c}" stroke-width="3" fill="none"/>`;
+    return a;
+  },
+  fire(x,y,s=1){ return `<path d="M${x-9*s} ${y} q-3 -10 4 -14 q-1 8 5 10 q-2 -14 6 -22 q0 12 7 16 q2 -8 1 -12 q7 10 1 22 Z" fill="#f97316"/><path d="M${x-4*s} ${y} q-1 -7 3 -10 q1 6 4 7 q2 -6 2 -9 q4 6 0 12 Z" fill="#fde047"/><path d="M${x-12} ${y+2} l24 0 M${x-9} ${y+5} l18 0" stroke="#78350f" stroke-width="3"/>`; },
+  tag(x,y,t,anchor='middle'){ const w = t.length*11+10, lx = anchor==='start'?x:anchor==='end'?x-w:x-w/2; return `<rect x="${lx}" y="${y-12}" width="${w}" height="17" rx="5" fill="#fff" opacity=".9"/>` + txt(x,y,t,'#1f2937',11,anchor,'font-weight="bold"'); },
+  hut(x,y,w=46){ return `<polygon points="${x-w/2},${y-18} ${x},${y-44} ${x+w/2},${y-18}" fill="#a16207"/><rect x="${x-w/2+6}" y="${y-18}" width="${w-12}" height="18" fill="#d6a452" stroke="#92400e"/><rect x="${x-5}" y="${y-13}" width="10" height="13" fill="#3f2a14"/>`; },
+  pot(x,y,s=1,cord=true){ return `<path d="M${x-5*s} ${y-16*s} l${10*s} 0 l${3*s} ${4*s} q${6*s} ${8*s} 0 ${12*s} l-${16*s} 0 q-${6*s} -${4*s} 0 -${12*s} Z" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>` + (cord?`<path d="M${x-6*s} ${y-7*s} q${3*s} ${2*s} ${6*s} 0 t${6*s} 0 M${x-7*s} ${y-3*s} q${3*s} ${2*s} ${6*s} 0 t${7*s} 0" stroke="#fde68a" stroke-width="1.2" fill="none"/>`:''); },
+  axe(x,y,polished){ return `<line x1="${x}" y1="${y}" x2="${x+14}" y2="${y-26}" stroke="#78350f" stroke-width="3"/>` + (polished ? `<ellipse cx="${x+17}" cy="${y-30}" rx="9" ry="5" fill="#64748b" transform="rotate(-60 ${x+17} ${y-30})"/>` : `<polygon points="${x+10},${y-26} ${x+14},${y-38} ${x+22},${y-36} ${x+24},${y-28} ${x+19},${y-22}" fill="#6b7280" stroke="#374151"/>`); },
+  rice(x,y,n=6){ let a=''; for(let i=0;i<n;i++){ const px=x+i*9; a+=`<path d="M${px} ${y} q-3 -10 -1 -18 M${px} ${y} q3 -8 3 -16 M${px} ${y} l0 -20" stroke="#4d7c0f" stroke-width="1.6" fill="none"/><circle cx="${px}" cy="${y-21}" r="2" fill="#ca8a04"/>`; } return a; },
+  pig(x,y){ return `<ellipse cx="${x}" cy="${y-7}" rx="11" ry="7" fill="#f9a8d4"/><circle cx="${x+10}" cy="${y-10}" r="4" fill="#f9a8d4"/><path d="M${x-6} ${y} l0 -4 M${x+5} ${y} l0 -4" stroke="#f9a8d4" stroke-width="3"/>`; },
+  dog(x,y){ return `<ellipse cx="${x}" cy="${y-7}" rx="10" ry="5" fill="#a16207"/><circle cx="${x+9}" cy="${y-11}" r="3.5" fill="#a16207"/><path d="M${x-10} ${y-9} l-5 -6 M${x-6} ${y} l0 -4 M${x+5} ${y} l0 -4" stroke="#a16207" stroke-width="2.5"/>`; },
+  deer(x,y){ return `<ellipse cx="${x}" cy="${y-12}" rx="12" ry="6" fill="#b45309"/><circle cx="${x+13}" cy="${y-18}" r="4" fill="#b45309"/><path d="M${x+13} ${y-22} l-3 -8 m3 8 l4 -8 M${x-8} ${y} l0 -8 M${x-2} ${y} l0 -8 M${x+4} ${y} l0 -8 M${x+9} ${y} l0 -8" stroke="#b45309" stroke-width="2"/>`; },
+  shells(x,y){ let a=''; const pts=[[0,0],[12,-2],[24,0],[6,-9],[18,-9],[12,-17],[-8,-1],[-2,-9]]; pts.forEach(([dx,dy])=>{ a+=`<path d="M${x+dx-6} ${y+dy} a6 6 0 0 1 12 0 Z" fill="#f5f5f4" stroke="#a8a29e" stroke-width="1"/>`; }); return a; },
+  coffin(x,y){ return `<rect x="${x-18}" y="${y-10}" width="36" height="12" fill="#78716c" stroke="#44403c"/><rect x="${x-21}" y="${y-14}" width="42" height="5" fill="#a8a29e" stroke="#44403c"/>`; },
+  jade(x,y){ return `<circle cx="${x}" cy="${y}" r="5" fill="none" stroke="#4ade80" stroke-width="3"/><path d="M${x} ${y-5} l-3 -5 l6 0 Z" fill="#4ade80"/>`; },
+  pillar(x,y){ return `<rect x="${x-5}" y="${y-50}" width="10" height="50" fill="#9ca3af" stroke="#4b5563"/><circle cx="${x}" cy="${y-44}" r="3" fill="#374151"/>`; },
+  furnace(x,y){ return `<path d="M${x-16} ${y} l0 -20 q0 -18 16 -18 q16 0 16 18 l0 20 Z" fill="#78350f" stroke="#451a03" stroke-width="1.5"/><rect x="${x-6}" y="${y-12}" width="12" height="12" fill="#f97316"/><circle cx="${x+2}" cy="${y-46}" r="5" fill="#9ca3af" opacity=".7"/><circle cx="${x+8}" cy="${y-56}" r="6" fill="#9ca3af" opacity=".5"/><circle cx="${x+12}" cy="${y-68}" r="7" fill="#9ca3af" opacity=".35"/>`; },
+  anvil(x,y){ return `<rect x="${x-10}" y="${y-10}" width="20" height="5" fill="#374151"/><rect x="${x-5}" y="${y-5}" width="10" height="5" fill="#374151"/><rect x="${x-6}" y="${y-13}" width="12" height="3" fill="#f97316"/>`; },
+  boat(x,y,s=1){ return `<path d="M${x-30*s} ${y-6} q30 14 60 0 l-6 -10 l-48 0 Z" fill="#92400e"/><line x1="${x}" y1="${y-16}" x2="${x}" y2="${y-50}" stroke="#78350f" stroke-width="2"/><polygon points="${x+2},${y-48} ${x+26},${y-24} ${x+2},${y-22}" fill="#fef3c7" stroke="#a16207"/>`; },
+  beads(x,y){ return ['#60a5fa','#34d399','#f472b6','#facc15'].map((c,i)=>`<circle cx="${x+i*8}" cy="${y}" r="3.5" fill="${c}" stroke="#fff"/>`).join('') + `<circle cx="${x+34}" cy="${y}" r="4" fill="#ca8a04" stroke="#854d0e"/><circle cx="${x+34}" cy="${y}" r="1.5" fill="#fff"/>`; },
+  fort(x,y){ let a=`<rect x="${x-50}" y="${y-40}" width="100" height="40" fill="#d6a452" stroke="#92400e"/>`; for(let i=0;i<6;i++) a+=`<rect x="${x-50+i*17}" y="${y-48}" width="9" height="8" fill="#d6a452" stroke="#92400e"/>`; a+=`<rect x="${x-8}" y="${y-18}" width="16" height="18" fill="#3f2a14"/><line x1="${x+30}" y1="${y-48}" x2="${x+30}" y2="${y-78}" stroke="#374151" stroke-width="2"/><rect x="${x+30}" y="${y-78}" width="20" height="12" fill="#dc2626"/>`; return a; },
+  tree(x,y){ return `<rect x="${x-3}" y="${y-28}" width="6" height="28" fill="#78350f"/><circle cx="${x}" cy="${y-34}" r="14" fill="#15803d"/>`; },
+  mountain(){ return `<polygon points="0,120 70,40 140,120" fill="#a3b18a"/><polygon points="90,120 180,30 270,120" fill="#8a9a5b"/><polygon points="230,120 310,55 400,120" fill="#a3b18a"/>`; },
+  sea(x,w){ let a=rect(x,120,w,100,'#7dd3fc'); for(let i=0;i<4;i++) a+=`<path d="M${x+10} ${135+i*20} q10 -5 20 0 t20 0 t20 0 t20 0 t20 0 t20 0" stroke="#bae6fd" stroke-width="2" fill="none"/>`; return a; },
+};
+function sceneSvg(kind, site){
+  const S = SC, Y = 170; let a = rect(0,0,400,220,'#dbeafe');
+  if(kind==='old'){
+    a += S.sea(250,150) + rect(0,120,260,100,'#e7cfa0');
+    a += `<path d="M0 120 L0 30 Q60 10 120 45 Q160 70 175 120 Z" fill="#a16207"/><ellipse cx="80" cy="118" rx="36" ry="30" fill="#3f2a14"/>` + rect(0,120,260,100,'#e7cfa0');
+    a += S.fire(80,Y-8) + S.tag(80,105,'山洞');
+    a += S.person(150,Y,'#7e22ce',{squat:true,arm:'fwd'}) + `<ellipse cx="166" cy="${Y-2}" rx="7" ry="4" fill="#6b7280"/><ellipse cx="176" cy="${Y-3}" rx="5" ry="3" fill="#9ca3af"/>` + S.tag(150,Y+28,'敲石頭做工具');
+    a += S.person(205,Y,'#7e22ce',{arm:'up'}) + `<line x1="208" y1="${Y-50}" x2="226" y2="${Y-20}" stroke="#78350f" stroke-width="2.5"/>` + S.deer(245,Y) + S.tag(225,Y+28,'打獵');
+    a += S.person(300,Y,'#7e22ce',{arm:'fwd'}) + `<path d="M318 ${Y-6} q4 -6 10 0 q-4 5 -10 0" fill="#fff"/><path d="M335 ${Y-14} q4 -6 10 0 q-4 5 -10 0" fill="#fff"/>` + S.tag(320,Y+28,'撿貝、抓魚');
+    a += S.tag(80,Y+28,'會用火') + S.tag(330,30,'舊石器時代','middle');
+  }else if(kind==='neoA'){
+    const rice = site==='nanguanli';
+    a += rect(0,120,400,100,'#bbf7d0') + S.sea(0,60);
+    a += S.hut(110,Y) + S.pig(150,Y) + S.dog(175,Y) + S.tag(162,Y+28,'養豬養狗');
+    a += S.person(215,Y,'#15803d',{squat:true,arm:'fwd'}) + S.pot(236,Y,1.1) + S.fire(262,Y-6,0.8) + S.pot(262,Y-16,0.8) + S.tag(240,Y+28,'做陶器、燒陶器');
+    a += S.person(310,Y,'#15803d',{arm:'up'}) + S.axe(312,Y-30,true) + S.tree(350,Y) + S.tag(320,Y+28,'磨光的石斧');
+    a += S.rice(rice?20:40, Y+8, rice?10:4) + S.tag(rice?60:50, Y+28, rice?'種稻（炭化稻米）':'開始種東西');
+    a += S.tag(330,30,'新石器時代（早）');
+  }else if(kind==='neoB'){
+    a += rect(0,120,400,100,'#bbf7d0') + S.sea(0,170) + S.tag(85,135,'臺北湖');
+    a += S.person(178,Y,'#15803d',{arm:'fwd'}) + `<path d="M188 ${Y-24} l22 14 M188 ${Y-24} l22 2 M188 ${Y-24} l20 -10 M210 ${Y-10} l0 -22" stroke="#78350f" stroke-width="1.5" fill="none"/>` + S.tag(180,Y+28,'到湖裡抓貝');
+    a += S.shells(262,Y-2) + S.shells(269,Y-14) + S.tag(268,Y+28,'貝塚：殼堆成山');
+    a += S.hut(330,Y) + S.pot(360,Y,0.9) + S.pot(376,Y,0.8);
+    a += S.tag(330,30,'新石器時代（中）');
+  }else if(kind==='neoC'){
+    a += S.mountain() + rect(0,120,400,100,'#bbf7d0');
+    a += S.hut(60,Y,40) + S.hut(110,Y,40) + S.hut(160,Y,40) + S.tag(110,Y+28,'很大的聚落');
+    a += S.pillar(215,Y) + S.tag(215,Y+28,'石柱');
+    a += S.person(265,Y,'#15803d',{squat:true,arm:'fwd'}) + S.jade(285,Y-14) + S.tag(272,Y+28,'磨玉做耳飾');
+    a += S.coffin(345,Y+2) + S.tag(345,Y+28,'石板棺');
+    a += S.tag(330,30,'新石器時代（晚）');
+  }else if(kind==='metal'){
+    a += rect(0,120,400,100,'#bbf7d0') + S.sea(0,150) + S.boat(70,150) + S.beads(40,110) + S.tag(75,Y+28,'船載來玻璃珠、銅錢');
+    a += S.furnace(215,Y) + S.tag(215,Y+28,'煉鐵爐');
+    a += S.person(275,Y,'#c2410c',{arm:'up'}) + `<line x1="278" y1="${Y-42}" x2="290" y2="${Y-30}" stroke="#374151" stroke-width="4"/>` + S.anvil(300,Y) + S.tag(292,Y+28,'打鐵做鐵器');
+    a += S.hut(355,Y) + S.pot(385,Y,0.8,false);
+    a += S.tag(330,30,'金屬器時代');
+  }else{
+    a += rect(0,120,400,100,'#bbf7d0') + S.sea(0,120) + S.boat(60,145,1.2) + S.fort(250,Y) + S.tag(250,Y+28,'熱蘭遮城（安平）');
+    a += S.person(360,Y,'#2563eb',{arm:'fwd'}) + `<rect x="368" y="${Y-30}" width="14" height="18" fill="#fff" stroke="#374151"/><path d="M371 ${Y-25} l8 0 M371 ${Y-21} l8 0 M371 ${Y-17} l5 0" stroke="#374151"/>` + S.tag(360,Y+28,'開始有文字紀錄');
+    a += S.tag(330,30,'歷史時代');
+  }
+  return svg(400,220,a,'preserveAspectRatio="xMidYMid meet"');
+}
+
+// ===== 這個年代的人會什麼 =====
+const SKILLS = [
+  { name:'會用火', from:50000, era:'old' }, { name:'敲石頭做工具（打製石器）', from:50000, era:'old' }, { name:'採集、打獵、捕魚', from:50000, era:'old' },
+  { name:'把石器磨光滑（磨製石器）', from:7000, era:'new' }, { name:'燒陶器', from:7000, era:'new' }, { name:'開始種東西（農業）', from:7000, era:'new' }, { name:'養家畜', from:7000, era:'new' },
+  { name:'磨玉器、做石板棺', from:3500, era:'new' },
+  { name:'煉鐵、用鐵器', from:2000, era:'metal' }, { name:'跟外面做生意', from:2000, era:'metal' },
+  { name:'有文字紀錄', from:402, era:'hist' },
+];
+function drawSkills(t){
+  const on = SKILLS.filter(k => t <= k.from);
+  const newest = on.length ? Math.min(...on.map(k => k.from)) : null;
+  document.getElementById('skills').innerHTML = '<h4>這個年代的人會什麼</h4>' + SKILLS.map(k => {
+    const isOn = t <= k.from, isNew = isOn && k.from === newest && k.from !== 50000;
+    return `<div class="sk${isOn?' on':''}${isNew?' new':''}"><i style="${isOn?'background:'+ERA[k.era]:''}"></i>${k.name}${isNew?'<span class="tag">新！</span>':`<small>${isOn?'':'還不會'}</small>`}</div>`;
+  }).join('');
+}
+
+// ===== 畫地圖 =====
+let bp = 50000, selected = null, forceSel = false;
+function activeSites(t){ return SITES.filter(s => t <= s.from && t >= s.to); }
+function erasAt(t){
+  const e = [];
+  if(t <= 50000 && t >= 5000) e.push('old');
+  if(t <= 7000 && t >= 2000) e.push('new');
+  if(t <= 2000 && t >= 400) e.push('metal');
+  if(t < 402) e.push('hist');
+  return e;
+}
+function periodAt(t){ const y = THIS_YEAR - t; return PERIODS.find(p => y >= p.from && y < p.to) || (y >= THIS_YEAR ? PERIODS[PERIODS.length-1] : null); }
+
+function drawMap(){
+  const t = bp;
+  let s = rect(0,0,300,440,'#e0f2fe');
+  // 陸橋：1 萬 2 千年前以前全露出，8 千年前完全淹沒
+  const bridge = clamp((t - 8000) / 4000, 0, 1);
+  if(bridge > 0){
+    s += `<path d="${BRIDGE}" fill="#fde68a" opacity="${(bridge*.9).toFixed(2)}"/>`;
+    s += txt(50, 150, '陸地', '#92400e', 13, 'middle', `opacity="${bridge}"`);
+    s += txt(50, 170, '海平面低一百多公尺', '#92400e', 9, 'middle', `opacity="${bridge}"`);
+    s += txt(50, 184, '臺灣海峽露出來', '#92400e', 9, 'middle', `opacity="${bridge}"`);
+    s += txt(28, 30, '← 大陸', '#92400e', 11, 'start', `opacity="${bridge}"`);
+  }
+  s += `<path d="${TW}" fill="#fef3c7" stroke="#a16207" stroke-width="2"/>`;
+  s += `<circle cx="52" cy="352" r="4" fill="#fef3c7" stroke="#a16207"/>` + txt(60, 380, '澎湖', '#6b7280', 10);
+  // 臺北湖：約 6 千～2 千年前
+  const lake = Math.min(clamp((6500 - t) / 500, 0, 1), clamp((t - 2000) / 500, 0, 1));
+  if(lake > 0){
+    s += `<ellipse cx="158" cy="72" rx="16" ry="11" fill="#7dd3fc" stroke="#38bdf8" opacity="${lake.toFixed(2)}"/>`;
+    s += txt(158, 96, '臺北湖', '#0369a1', 10, 'middle', `opacity="${lake}"`);
+  }
+  // 歷史時代地標
+  if(t < 402){
+    MARKS.forEach(m => {
+      if(THIS_YEAR - t >= m.ce){
+        s += `<g class="site" data-mark="${m.name}"><rect x="${m.x-5}" y="${m.y-5}" width="10" height="10" fill="${ERA.hist}" stroke="#fff" stroke-width="2"/>`;
+        s += txt(m.x + (m.lx ?? 9), m.y + (m.ly ?? 4), m.name, '#1e40af', 10, m.lanchor || 'start') + '</g>';
+      }
+    });
+  }
+  // 遺址：還沒出現不畫、已結束畫空心灰點
+  SITES.forEach(st => {
+    const on = t <= st.from && t >= st.to, past = t < st.to;
+    if(!on && !past) return;
+    const lbl = st.name.replace('文化','').replace('遺址','');
+    const right = st.lanchor ? st.lanchor === 'end' : st.x > 180;
+    const lx = st.x + (st.lx ?? (right ? -12 : 12));
+    if(on){
+      s += `<g class="site${selected===st.id?' hit':''}" data-id="${st.id}">`;
+      s += `<circle class="dot" cx="${st.x}" cy="${st.y}" r="7" fill="${ERA[st.era]}" stroke="#fff" stroke-width="${selected===st.id?4:2}"/>`;
+      s += txt(lx, st.y + 4, lbl, '#1f2937', 11, right ? 'end' : 'start', 'font-weight="bold"') + '</g>';
+    }else{
+      s += `<g class="site" data-id="${st.id}"><circle class="dot" cx="${st.x}" cy="${st.y}" r="5" fill="#fff" stroke="#9ca3af" stroke-width="2"/>`;
+      s += txt(lx, st.y + 4, lbl, '#9ca3af', 9, right ? 'end' : 'start') + '</g>';
+    }
+  });
+  document.getElementById('svgMap').innerHTML = svg(300, 440, s, 'style="background:#e0f2fe"');
+  document.querySelectorAll('#svgMap .site').forEach(g => g.addEventListener('click', () => g.dataset.id ? showSite(g.dataset.id) : showMark(g.dataset.mark)));
+
+  // 上方文字
+  document.getElementById('nowBP').textContent = fmtBP(t);
+  document.getElementById('nowCE').textContent = fmtCE(t);
+  const per = t < 402 ? periodAt(t) : null;
+  document.getElementById('nowEra').innerHTML = erasAt(t).map(e => `<span class="era-tag era-${e}">${ERA_NAME[e]}${e==='hist'&&per?'・'+per.name:''}</span>`).join('');
+  drawSkills(t);
+  drawScene();
+  drawLanes();
+}
+// 場景：固定看某個遺址，否則自動跟著「最新出現」的那群人
+function focusSite(){
+  const sel = SITES.find(x => x.id === selected);
+  if(sel && (forceSel || (bp <= sel.from && bp >= sel.to))) return sel;
+  const act = activeSites(bp);
+  if(act.length) return act.reduce((a,b) => a.from < b.from ? a : b);
+  return null;
+}
+function drawScene(){
+  if(bp < 402 && !(forceSel && selected)){ renderInfo(null); document.getElementById('svgScene').innerHTML = sceneSvg('hist'); return; }
+  const st = focusSite();
+  if(!st){ document.getElementById('svgScene').innerHTML = sceneSvg('hist'); renderInfo(null); return; }
+  document.getElementById('svgScene').innerHTML = sceneSvg(st.scene, st.id);
+  renderInfo(st);
+}
+function renderInfo(st){
+  const info = document.getElementById('mapInfo');
+  if(!st){
+    info.innerHTML = `<h4><span class="era-tag era-hist">歷史時代</span> 有文字了</h4><div class="yrs">西元 1624 年荷蘭人建熱蘭遮城之後</div><p style="margin-top:6px">從這裡開始有人把事情寫下來，所以叫「歷史時代」。前面五萬年沒有文字，只能靠挖。</p><div class="plus">多了：文字紀錄。這之後的四百年，就是「臺灣四百年」。</div>`;
+    return;
+  }
+  const on = bp <= st.from && bp >= st.to;
+  info.innerHTML = iconSvg(st.icon) + `<h4><span class="era-tag era-${st.era}">${ERA_NAME[st.era]}</span> ${st.name}</h4>` +
+    `<div class="yrs">${st.where}｜約 ${fmtBP(st.from).replace('距今 ','')} ～ ${fmtBP(st.to).replace('距今 ','')}${on ? '' : '（你現在看的年代，這裡已經沒有人了）'}</div>` +
+    `<p style="margin-top:6px">${st.text}</p><div class="plus">${st.plus}</div>`;
+}
+
+function showSite(id){
+  const st = SITES.find(x => x.id === id); if(!st) return;
+  selected = id; forceSel = true;
+  logEv({ type:'practice', q:'時間地圖_點遺址_'+st.name, ok:true });
+  drawMap();
+}
+function showMark(name){
+  const m = MARKS.find(x => x.name === name); if(!m) return;
+  selected = null; forceSel = false;
+  drawMap();
+  document.getElementById('mapInfo').innerHTML = `<h4><span class="era-tag era-hist">歷史時代</span> ${m.name}</h4><div class="yrs">西元 ${m.ce} 年</div><p style="margin-top:6px">${m.note}</p><div class="plus">多了：文字紀錄。這之後的四百年，就是「臺灣四百年」。</div>`;
+}
+
+// ===== 文化橫條圖 =====
+function drawLanes(){
+  const W = 680, L = 92, R = 14, laneH = 22, top = 34;
+  const rows = SITES.map(s => ({ name:s.name, era:s.era, p0:bpToPos(s.from), p1:bpToPos(s.to), id:s.id }));
+  const H = top + (rows.length + 1) * laneH + 30;
+  const X = p => L + (W - L - R) * p / 100;
+  let s = rect(0,0,W,H,'#fff');
+  // 時代帶
+  const bands = [['old',50000,5000],['new',7000,2000],['metal',2000,400],['hist',400,0]];
+  bands.forEach(([e,a,b]) => { s += rect(X(bpToPos(a)), 6, X(bpToPos(b)) - X(bpToPos(a)), 10, ERA[e], null, 0, 'opacity=".35" rx="3"'); });
+  s += txt(X(bpToPos(27000)), 28, '舊石器', ERA.old, 11) + txt(X(bpToPos(4000)), 28, '新石器', ERA.new, 11) + txt(X(bpToPos(900)), 28, '金屬器', ERA.metal, 11) + txt(X(bpToPos(150)), 28, '有文字', ERA.hist, 11);
+  // 刻度
+  BRK.forEach(([b,p]) => { s += `<line x1="${X(p)}" y1="${top}" x2="${X(p)}" y2="${H-26}" stroke="#e5e7eb"/>`; s += txt(X(p), H-10, b===0?'現在':b>=10000?(b/10000)+'萬':b>=1000?(b/1000)+'千':b, '#6b7280', 10); });
+  rows.forEach((r,i) => {
+    const y = top + i * laneH + 4;
+    s += txt(L - 6, y + 13, r.name, '#1f2937', 11, 'end');
+    s += rect(X(r.p0), y, Math.max(2, X(r.p1) - X(r.p0)), laneH - 8, ERA[r.era], null, 0, `rx="5" data-id="${r.id}" class="lane"`);
+  });
+  // 歷史時代細條
+  const yh = top + rows.length * laneH + 4;
+  s += txt(L - 6, yh + 13, '荷西→今', '#1f2937', 11, 'end');
+  PERIODS.forEach((p,i) => {
+    const a = bpToPos(THIS_YEAR - p.from), b = bpToPos(THIS_YEAR - p.to);
+    s += rect(X(a), yh, Math.max(2, X(b) - X(a)), laneH - 8, ERA.hist, '#fff', 1, `rx="3" opacity="${.55 + i*.1}"`);
+    if(X(b) - X(a) > 30) s += txt((X(a)+X(b))/2, yh + 11, p.name, '#fff', 9);
+  });
+  // 播放頭
+  const px = X(bpToPos(bp));
+  s += `<line x1="${px}" y1="${top-4}" x2="${px}" y2="${H-24}" stroke="#dc2626" stroke-width="2"/><polygon points="${px-5},${top-10} ${px+5},${top-10} ${px},${top-2}" fill="#dc2626"/>`;
+  document.getElementById('lanes').innerHTML = svg(W, H, s, 'id="lanesSvg"');
+  const el = document.getElementById('lanesSvg');
+  el.onclick = ev => {
+    const r = el.getBoundingClientRect(), x = (ev.clientX - r.left) * W / r.width;
+    const p = clamp((x - L) / (W - L - R) * 100, 0, 100);
+    const tgt = ev.target.closest('.lane');
+    stopPlay(); setTime(posToBP(p));
+    if(tgt) showSite(tgt.dataset.id);
+  };
+}
+
+// ===== 時間控制 =====
+const slider = document.getElementById('time');
+function setTime(t){ bp = clamp(t, 0, 50000); forceSel = false; slider.value = Math.round(bpToPos(bp) * 10); drawMap(); }
+slider.addEventListener('input', () => { stopPlay(); forceSel = false; bp = posToBP(slider.value / 10); drawMap(); });
+let timer = null;
+function stopPlay(){ if(timer){ clearInterval(timer); timer = null; document.getElementById('play').textContent = '▶ 播放'; } }
+document.getElementById('play').addEventListener('click', () => {
+  if(timer){ stopPlay(); return; }
+  if(bpToPos(bp) >= 99.9) setTime(50000);
+  document.getElementById('play').textContent = '⏸ 暫停';
+  timer = setInterval(() => {
+    const sp = parseFloat(document.getElementById('speed').value);
+    const p = bpToPos(bp) + 0.12 * sp;
+    if(p >= 100){ setTime(0); stopPlay(); logEv({ type:'practice', q:'時間地圖_播放完', ok:true }); return; }
+    bp = posToBP(p); forceSel = false; drawMap();
+  }, 50);
+});
+document.getElementById('toStart').addEventListener('click', () => { stopPlay(); selected = null; setTime(50000); });
+
+// 快速跳到
+const JUMPS = [
+  { label:'2 萬年前（陸橋）', bp:20000, site:'changbin' }, { label:'6 千年前（新舊重疊）', bp:6000, site:'dabenkeng' },
+  { label:'3 千年前（卑南）', bp:3000, site:'beinan' }, { label:'1 千年前（十三行）', bp:1000, site:'shisanhang' }, { label:'1624 荷蘭人來', bp:THIS_YEAR-1624, site:null },
+];
+document.getElementById('jumpRow').innerHTML = '<span style="font-size:.85rem;color:var(--sub)">快速跳到：</span>' + JUMPS.map((j,i)=>`<button class="ghost small" data-j="${i}">${j.label}</button>`).join('');
+document.querySelectorAll('#jumpRow button').forEach(b => b.addEventListener('click', () => {
+  const j = JUMPS[b.dataset.j]; stopPlay(); setTime(j.bp);
+  if(j.site) showSite(j.site); else showMark('熱蘭遮城');
+}));
+
+// ===== 第 2 頁：課本的話 =====
+const SAYS = [
+  { q:'臺灣最早的舊石器時代文化是<b>長濱文化</b>，在臺東縣長濱鄉。', bp:30000, site:'changbin',
+    why:'地圖上只有東邊海岸一個紫點。注意這時臺灣海峽是陸地：長濱的人是從大陸走過來的，卻住到了東邊靠太平洋的山洞（八仙洞）。' },
+  { q:'舊石器時代和新石器時代<b>有重疊</b>（約 7 千～5 千年前）。', bp:6000, site:'dabenkeng',
+    why:'這時地圖上紫點（長濱）和綠點（大坌坑）同時亮著。北部的人已經用磨製石器、燒陶器，東部的人還過舊石器的生活。' },
+  { q:'<b>大坌坑文化</b>在新北市八里，代表文物是<b>繩紋陶</b>。', bp:6000, site:'dabenkeng',
+    why:'八里在淡水河出海口的西岸。點綠點看繩紋陶的樣子：陶器還軟的時候用繩子壓出紋路。' },
+  { q:'臺南<b>南關里遺址</b>挖到 5 千年前的<b>炭化稻米</b>。', bp:5000, site:'nanguanli',
+    why:'南邊也亮起一個綠點。炭化就是燒焦碳化，所以能保存五千年。這是臺灣人會種稻最早的證據之一。' },
+  { q:'<b>圓山文化</b>留下<b>貝塚</b>，說明當時臺北盆地是湖泊。', bp:3500, site:'yuanshan',
+    why:'看地圖上臺北出現一片藍色的湖，圓山就在湖邊。沒有湖就不會有那麼多貝殼。' },
+  { q:'<b>卑南文化</b>的代表文物是<b>石板棺</b>、<b>人獸形玉耳飾</b>。', bp:3000, site:'beinan',
+    why:'卑南在臺東，離長濱不遠，但晚了幾萬年。卑南遺址現在是「卑南遺址公園」，可以去看真的石板棺。' },
+  { q:'<b>十三行文化</b>進入金屬器時代，會<b>煉鐵</b>，也和外面<b>貿易</b>。', bp:1200, site:'shisanhang',
+    why:'橘點又出現在八里，跟大坌坑同一個地方。這時大坌坑的綠點早就變成灰色空心點了，兩者差了五千年。' },
+  { q:'西元 <b>1624</b> 年荷蘭人在臺南建<b>熱蘭遮城</b>，臺灣進入有文字紀錄的時代。', bp:THIS_YEAR-1624, site:null,
+    why:'時間桿已經走到最右邊那一小段。從這裡到現在只有四百年，是五萬年的不到 1%。' },
+];
+const list = document.getElementById('sayList');
+SAYS.forEach((s,i) => {
+  const d = document.createElement('div'); d.className = 'say';
+  d.innerHTML = `<div class="quote">${i+1}. ${s.q}</div><button data-i="${i}">帶我去看 →</button><div class="why">👀 看什麼：${s.why}</div>`;
+  list.appendChild(d);
+  d.querySelector('button').addEventListener('click', () => {
+    document.querySelectorAll('.say').forEach(x => x.classList.remove('open')); d.classList.add('open');
+    stopPlay(); setTime(s.bp);
+    if(s.site) showSite(s.site); else showMark('熱蘭遮城');
+    logEv({ type:'practice', q:'課本的話_'+(i+1), ok:true }); pracCount++; pracOk++;
+    showTab('s1');
+    setTimeout(() => document.getElementById('svgMap').scrollIntoView({ behavior:'smooth', block:'center' }), 300);
+  });
+});
+
+// ===== 小測驗 =====
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 6){
+    r.className='good'; r.textContent=`🎉 ${score} / ${qs.length}！長濱、大坌坑、十三行在哪、什麼時候，你都看懂了。`;
+  } else if(score >= 4){
+    r.className='soso'; r.textContent=`${score} / ${qs.length}。回第 1 頁把錯的那題的年代拉出來看一次。`;
+  } else {
+    r.className='bad'; r.textContent=`${score} / ${qs.length}。先按「播放」完整看一遍，再回來。`;
+  }
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+});
+
+// ===== 四個時代排排站 =====
+const STRIP = [
+  { scene:'old', site:'changbin', title:'舊石器｜長濱', yrs:'5 萬～5 千年前', plus:'會用火、敲石頭做工具、採集打獵捕魚。' },
+  { scene:'neoA', site:'dabenkeng', title:'新石器早｜大坌坑', yrs:'7 千～4.5 千年前', plus:'多了：磨光的石器、陶器、種東西、養家畜。' },
+  { scene:'neoC', site:'beinan', title:'新石器晚｜卑南', yrs:'3.5 千～2.3 千年前', plus:'多了：精美玉器、石板棺、很大的聚落。' },
+  { scene:'metal', site:'shisanhang', title:'金屬器｜十三行', yrs:'2 千～4 百年前', plus:'多了：煉鐵、鐵器、跟外面做生意。' },
+];
+document.getElementById('strip').innerHTML = STRIP.map(c => `<div class="cell">${sceneSvg(c.scene, c.site)}<div class="cap"><b>${c.title}</b><span style="color:var(--sub)">${c.yrs}</span><br>${c.plus}</div></div>`).join('');
+
+setTime(50000);
+</script>
+</body>
+</html>
