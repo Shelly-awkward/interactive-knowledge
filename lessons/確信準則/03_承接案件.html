@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>確信準則｜第 3 課 承接案件：先決條件、獨立性與案件條款</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F3F6F5; --card:#FFFFFF;
+  --ink:#1B2A2C; --ink-2:#4A5C5E; --ink-3:#83949A;
+  --rule:rgba(27,42,44,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --std:#0F6E6E; --std-soft:#E0F1F0;
+  --ghg:#5B3A8C; --ghg-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131B1C; --card:#1C2628;
+    --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+    --rule:rgba(232,238,238,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --std:#6CC3C0; --std-soft:#1E3736;
+    --ghg:#B9A0E3; --ghg-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131B1C; --card:#1C2628;
+  --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+  --rule:rgba(232,238,238,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --std:#6CC3C0; --std-soft:#1E3736;
+  --ghg:#B9A0E3; --ghg-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--std);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+code{font-size:.9em;background:var(--paper);padding:.05em .35em;border-radius:4px}
+
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--std);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--std-soft);color:var(--std);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button,nav.tabs a{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none}
+nav.tabs button:hover,nav.tabs a:hover{border-color:var(--std);color:var(--ink)}
+nav.tabs button.active,nav.tabs a.active{background:var(--std);border-color:var(--std);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--std-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--std-soft);border-left:4px solid var(--std);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--std);display:block;margin-bottom:.2em}
+.law.ghg{background:var(--ghg-soft);border-left-color:var(--ghg)}
+.law.ghg b.art{color:var(--ghg)}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.insp{background:var(--green-soft);border-left:4px solid var(--green);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.93rem}
+.insp b.t{color:var(--green);display:block;margin-bottom:.2em}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.std{background:var(--std-soft);border-color:transparent;color:var(--std)}
+.pill.ghg{background:var(--ghg-soft);border-color:transparent;color:var(--ghg)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.pill.signal{background:var(--signal-soft);border-color:transparent;color:var(--signal)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2,.grid3{grid-template-columns:1fr}}
+
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--std)}
+.flow .step.click{cursor:pointer}
+.flow .step.click:hover,.flow .step.on{border-color:var(--std);background:var(--std-soft)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+.roles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:.6rem 0 1rem}
+@media (max-width:720px){.roles{grid-template-columns:1fr 1fr}}
+.role{border:1px solid var(--rule);border-radius:10px;padding:.6rem .7rem;background:var(--paper);font-size:.9rem;cursor:pointer}
+.role b{display:block;color:var(--std)}
+.role:hover,.role.on{border-color:var(--std);background:var(--std-soft)}
+
+.compare{display:grid;grid-template-columns:9em 1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;font-size:.92rem;margin:.6rem 0 1rem}
+.compare>div{padding:.55em .8em;border-bottom:1px solid var(--rule)}
+.compare .h{background:var(--paper);font-weight:700}
+.compare .k{background:var(--paper);font-weight:700;color:var(--ink-2)}
+@media (max-width:720px){.compare{grid-template-columns:7em 1fr 1fr;font-size:.85rem}}
+
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox label.block{display:flex}
+.toolbox select,.toolbox input[type=number],.toolbox input[type=date],.toolbox input[type=text]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);max-width:100%}
+.toolbox input[type=range]{width:100%;max-width:420px}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--std)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--std);color:var(--std);background:var(--std-soft)}
+.chip.ok{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+.chip.bad{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--std);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--std);border:1.5px solid var(--std)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+.report{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 20px;font-size:.93rem;line-height:1.9}
+.report .rh{font-weight:700;text-align:center;font-size:1.05rem;margin-bottom:.6em}
+.report .blank{display:inline-block;min-width:7em;border-bottom:2px dashed var(--std);text-align:center;color:var(--std);cursor:pointer;padding:0 .3em}
+.report .blank.ok{border-bottom-style:solid;color:var(--green);border-color:var(--green)}
+.report .blank.bad{color:var(--warn);border-color:var(--warn)}
+.report .sec{color:var(--std);font-weight:700;margin-top:.5em}
+.list-check label{display:block;padding:.3em .5em;border-radius:6px}
+.list-check label:hover{background:var(--paper)}
+.list-check label.ok{background:var(--green-soft)}
+.list-check label.bad{background:var(--warn-soft)}
+.bar{height:12px;background:var(--paper);border:1px solid var(--rule);border-radius:999px;overflow:hidden;margin:.3rem 0}
+.bar i{display:block;height:100%;background:var(--std)}
+
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--std);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--std);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">確信準則 3000 · 3410 · 第 3 課</span>
+  <h1>承接案件：先決條件、獨立性與案件條款</h1>
+  <p>三節加章末測驗。案子能不能接，準則給了一張很長的檢核表：三個承接條件、六項先決條件、基準五特性、溫室氣體基準四必備、獨立性五類威脅、案件條款六項。這一課把它們排成一條線，用青山鋼鐵的委任過程走一遍。</p>
+  <p class="ver">依確信準則 3000 號與 3410 號編寫。自學筆記，非官方。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">3-1 三個條件、六項先決</button>
+  <button data-t="s2">3-2 基準、能力、獨立性</button>
+  <button data-t="s3">3-3 案件條款與品質管理</button>
+  <button data-t="quiz">章末測驗</button>
+  <button data-t="arts">條文速查</button>
+</nav>
+
+<!-- ═══════════ 3-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>背得出第 20 條的三個承接條件，以及第 22 條的六項先決條件</li>
+      <li>知道先決條件不成立時的處理，以及「承接後才發現」要怎麼辦</li>
+      <li>知道 3410 號第 16 條在先決條件上多加了什麼</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：承接的三個條件</h2>
+    <div class="law"><b class="art">3000 號第 20 條</b>僅於符合下列所有條件時，執業人員方得承接或續任確信案件：1. 執業人員確認尚無違反攸關職業道德規範（包括獨立性）之情事。 2. 執業人員確認執行案件之人員具有適當之專業能力及適任能力（包括有足夠時間）以執行案件。 3. 執行案件之基礎已藉由下列達成協議：(1) 確認確信案件之先決條件已成立。(2) 確認執業人員及委任方已對案件條款（包括執業人員之報導責任）達成共識。</div>
+    <div class="flow">
+      <div class="step"><b>條件一：道德與獨立</b>沒有違反職業道德規範</div>
+      <div class="step"><b>條件二：人</b>專業能力、適任能力、足夠時間</div>
+      <div class="step"><b>條件三：基礎</b>先決條件成立 ＋ 案件條款有共識</div>
+    </div>
+    <p>第 19 條另外要求案件主持人確認承接與續任已依事務所的政策或程序執行。第 21 條：接了以後才得知「早知道就不接」的資訊，要儘速跟事務所溝通。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：六項先決條件</h2>
+    <div class="law"><b class="art">3000 號第 22 條</b>執業人員應依據對案件情況之初步瞭解及與適當方討論之結果，確認下列先決條件是否存在：1. 適當方之角色及責任於當時情況下係屬妥適。 2. 案件具備下列所有特性：(1) 標的係屬適當。(2) 執業人員預期編製標的資訊所採用之基準係屬妥適（攸關性、完整性、可靠性、中立性、可瞭解性）。(3) 預期使用者可取得用以編製標的資訊之基準。(4) 執業人員預期可取得支持其結論之證據。(5) 執業人員之結論可以適當之格式呈現於書面報告中。(6) 正當之目的，包括執業人員預期可對有限確信案件取得具有意義之確信程度。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>先決條件</th><th>青山鋼鐵案件要問的問題</th><th>深入條文</th></tr></thead>
+      <tbody>
+        <tr><td>角色責任妥適</td><td>公司願不願意承認「聲明是我編的、我負責」？</td><td>第 100 條、附錄一；3410 號第 16 條第 3 款</td></tr>
+        <tr><td>標的適當</td><td>排放能不能用妥適基準一致地量出來？逸散排放佔比太大又只能粗估，就有問題</td><td>第 101 至 104 條；3410 號第 107、108、143 條</td></tr>
+        <tr><td>基準妥適</td><td>ISO 14064-1 加法定係數：五特性都有嗎？有沒有包含 3410 號要求的四項內容？</td><td>第 105 至 107 條；3410 號第 16 條第 2 款、第 109 至 112 條</td></tr>
+        <tr><td>基準可取得</td><td>投資人查得到公司用哪一套基準嗎？</td><td>第 108、109 條</td></tr>
+        <tr><td>預期可取得證據</td><td>三個廠的燃料紀錄、電費單、校準紀錄都在嗎？</td><td>第 121 條（3410 號）：紀錄不可靠可先做協議程序</td></tr>
+        <tr><td>結論可用適當格式呈現</td><td>法令有沒有規定報告格式到會誤導的程度？</td><td>第 28 條、第 73 條</td></tr>
+        <tr><td>正當目的</td><td>公司是不是只想拿會計師的名字背書、卻把最大的排放源排除？</td><td>第 110 條；3410 號第 16 條第 1 款、第 106 條</td></tr>
+      </tbody>
+    </table></div>
+    <div class="law"><b class="art">3000 號第 23 條</b>如確信案件之先決條件不存在，執業人員應與委任方討論該事項。如無法改變以符合先決條件，除非法令另有規定，執業人員不得承接該確信案件。在先決條件不存在之情況下執行之案件不符合本確信準則之規定，因此執業人員不得於確信報告中提及該案件係依本確信準則執行。</div>
+    <div class="tip">接了以後才發現先決條件不成立：第 40 條，跟適當方討論，確認能否解決、該不該繼續、要不要在報告裡講。發現基準不妥適或標的不適當：第 41 條，考慮終止委任，繼續做就要出保留、否定或無法表示結論。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：3410 號在先決條件上多加的三組要求</h2>
+    <div class="law ghg"><b class="art">3410 號第 16 條（摘要）</b>1. 案件主持人應確認溫室氣體聲明及案件均包含足夠之範圍，特別考量：(1) 聲明排除已量化或易於量化之重大排放是否合理。(2) 案件排除對重大排放之確信是否合理。(3) 若包含排放扣減，確信性質與報告內容是否明確合理且為委任方所理解。 2. 確認適用基準至少包括：(1) 決定組織邊界之方法。(2) 須計算之溫室氣體。(3) 可接受之量化方法，含基準年調整方法。(4) 充分之揭露。 3. 取得個體同意，認知並瞭解其責任：(1) 設計、付諸實行及維持必要內部控制。(2) 依適用基準編製溫室氣體聲明。(3) 於聲明中提及或敘明適用基準及基準設計者。</div>
+    <p>第 106 條舉了三種「排除不合理」的典型：有重大範疇 1 排放卻只報範疇 2；較大法律個體用組織邊界的選法把高排放的子個體排掉；會計師只對總排放的一小部分出報告。第 117 條補一種：服務業的範疇 3 遠高於範疇 1 加 2，重大的範疇 3 沒納入就承接可能不適當。</p>
+  </div>
+
+  <div class="card">
+    <h2>小工具：接案檢核器</h2>
+    <p class="small muted">青山鋼鐵的委任前會議紀錄如下。勾選「已確認」的項目，看結論。</p>
+    <div class="toolbox">
+      <div class="list-check" id="accept">
+        <label><input type="checkbox" data-g="eth"> 事務所去年沒有為青山鋼鐵提供排放量化服務，案件服務團隊無親屬在永續辦公室任職</label>
+        <label><input type="checkbox" data-g="comp"> 團隊有一位具鋼鐵製程排放經驗的執業人員專家，主持人曾完成溫室氣體確信訓練</label>
+        <label><input type="checkbox" data-g="time"> 團隊確認有足夠時間在 3 月底前完成，包含高雄廠與台中廠實地訪查</label>
+        <label><input type="checkbox" data-g="role"> 公司同意以書面認知：聲明由公司依適用基準編製、公司負責相關內控、聲明會敘明適用基準</label>
+        <label><input type="checkbox" data-g="scope"> 聲明包含三個據點的範疇 1 與範疇 2；桃園倉儲的範疇 1 只有堆高機用油，佔總量不到 1%</label>
+        <label><input type="checkbox" data-g="crit"> 適用基準寫明：組織邊界採營運控制權法、涵蓋七種溫室氣體、量化方法為排放係數法、附註揭露不確定性</label>
+        <label><input type="checkbox" data-g="avail"> 適用基準會在聲明附註中敘明，且 ISO 14064-1 與環境部指引都是公開文件</label>
+        <label><input type="checkbox" data-g="evid"> 公司已提供三個廠的燃料採購紀錄、電費單、連續監測校準紀錄清單，無明顯缺口</label>
+        <label><input type="checkbox" data-g="terms"> 雙方對委任書六項內容（目的範圍、雙方責任、適用基準、報告格式、書面聲明）達成共識</label>
+      </div>
+      <button class="btn small" id="acceptGo">看結論</button>
+      <div class="result" id="acceptRes"></div>
+    </div>
+  </div>
+
+  <div class="q" data-ans="C">
+    <div class="stem">練習 1：青山鋼鐵要求案件範圍只涵蓋範疇 2，理由是範疇 1 的高爐排放「數字還不穩」。範疇 1 佔總排放約 78%。依準則，執業人員應？</div>
+    <label><input type="radio" name="p1" value="A">A. 可以承接，在報告中說明僅涵蓋範疇 2 即可</label>
+    <label><input type="radio" name="p1" value="B">B. 可以承接，但改為合理確信</label>
+    <label><input type="radio" name="p1" value="C">C. 應評估此排除是否合理；排除重大且可量化之排放，可能使案件不具正當目的，不得承接</label>
+    <label><input type="radio" name="p1" value="D">D. 應先代編範疇 1 再承接</label>
+    <button class="btn small check">對答案</button>
+    <div class="fb" data-exp="3410 號第 16 條第 1 款第 2 目與第 106 條：有重大範疇 1 卻只對範疇 2 出報告，是典型不合理的排除；3000 號第 110 條把「部分層面被排除及其原因」列為正當目的的考量。" data-diag='{"A":"報告說明不能治癒先決條件不成立；第 23 條：先決條件不存在，不得承接。","B":"確信程度不影響承接與否（3410 號第 143 條）。","D":"代編再確信是獨立性的自我評估威脅（3410 號第 91 條）。正確做法是第 121 條：先協議程序或諮詢，下一期再確信。"}'></div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>背得出妥適基準的五個特性，並說得出「建立的基準」與「特別設計的基準」怎麼分</li>
+      <li>列得出 3410 號對案件主持人與團隊的專業能力要求</li>
+      <li>分得出五類獨立性威脅，並舉得出溫室氣體案件的例子</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：基準的五個特性與兩種來源</h2>
+    <div class="law"><b class="art">3000 號第 105 條（摘要）</b>妥適之基準應具備：1. 攸關性：有助於產出可協助預期使用者作成決策之標的資訊。 2. 完整性：不遺漏攸關因素，包括表達與揭露之標準。 3. 可靠性：不同衡量方在類似情況下可一致衡量。 4. 中立性：免於偏頗。 5. 可瞭解性：使用者易於瞭解。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>來源</th><th>例子</th><th>怎麼看</th></tr></thead>
+      <tbody>
+        <tr><td>法令明定</td><td>環境部盤查登錄的規定、指定係數</td><td>除有反證，推定妥適（第 107 條）</td></tr>
+        <tr><td>經授權或認可之專業機構依透明程序建立</td><td>ISO 14064-1、GHG Protocol</td><td>與使用者需求攸關即視為妥適（第 107 條）。前兩種合稱「一般公認基準」</td></tr>
+        <tr><td>特別設計</td><td>公司自訂的排放係數、特殊機器的量化方法</td><td>要特別檢查中立性與其他特性（3410 號第 110 條）；報告須提醒讀者基準為特殊用途（第 71 條第 6 款）</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note">3410 號第 109 條的細節：監理機關設計的基準可以推定攸關，但它可能只為特定地區或特定監理層面設計，拿去別的地區或對監理機關以外的使用者報導，就可能不妥適。第 111 條：基準的細節可以透過聲明附註補充，但補充說明救不了「少了第 16 條第 2 款四項內容」的基準。</div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：這套基準有沒有 3410 號要的四件事</h2>
+    <p class="small muted">青山鋼鐵提出的「適用基準說明」如下。勾出它<b>缺了</b>哪些必備內容。</p>
+    <div class="toolbox">
+      <div class="report small">本公司溫室氣體聲明依 ISO 14064-1:2018 編製。納入 CO<sub>2</sub>、CH<sub>4</sub>、N<sub>2</sub>O、HFCs、PFCs、SF<sub>6</sub>、NF<sub>3</sub> 七種氣體，以二氧化碳當量表達。範疇 1 採排放係數法，係數採環境部公告值；範疇 2 採經濟部能源署公告電力係數。附註揭露量化方法、資料來源與不確定性說明。</div>
+      <div class="list-check" id="crit">
+        <label><input type="checkbox" value="boundary"> 缺：決定組織邊界之方法</label>
+        <label><input type="checkbox" value="gases"> 缺：須計算之溫室氣體</label>
+        <label><input type="checkbox" value="method"> 缺：可接受之量化方法</label>
+        <label><input type="checkbox" value="baseyear"> 缺：基準年（排放量）調整方法（本案聲明含 2024 年比較資訊）</label>
+        <label><input type="checkbox" value="disc"> 缺：充分之揭露</label>
+      </div>
+      <button class="btn small" id="critGo">對答案</button>
+      <div class="result" id="critRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 5：專業能力，3410 號要求得更具體</h2>
+    <div class="law ghg"><b class="art">3410 號第 15 條</b>案件主持人應：1. 透過充分之訓練及實務應用，而具備執行確信案件之技能與技術，並對排放之量化與報導具有足夠之專業能力，以對其確信結論負責。 2. 確認執行案件之人員具備適當之專業能力及適任能力（包括對排放之量化與報導及確信），以依本確信準則執行確信案件。</div>
+    <p>第 104 條列出六種溫室氣體相關的專業能力：氣候科學基本瞭解、瞭解預期使用者、排放交易制度、相關法令、量化方法論與不確定性、適用基準（含排放係數、重大估計、組織邊界方法、允許的排放扣減）。第 105 條說：單一地點只報範疇 2 的案件可能很簡單，但複雜案件可能需要資訊系統、科學與工程的專家。</p>
+    <div class="tip">3000 號第 10 條第 14 款把「確信技能與技術」（規劃、蒐證、評估、溝通、報導）跟「標的的專門知識」分開。案件主持人兩種都要有到「足以對結論負責」的程度（第 29 條）。檢查時看團隊名單與訓練紀錄，就是在對這一條。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 6：獨立性的五類威脅</h2>
+    <div class="law ghg"><b class="art">3410 號第 91 條（摘要）</b>執業人員應運用會計師職業道德規範總綱之觀念性架構，辨認、評估及因應獨立性威脅：1. 自我利益，例如過度依賴來自個體之總公費。 2. 自我評估，例如為個體提供排放之量化服務將直接影響溫室氣體聲明。 3. 辯護，例如為個體對適用基準之解讀擔任辯護者。 4. 熟悉度，例如團隊成員與個體負責編製聲明之員工有長期關係或親屬關係。 5. 脅迫，例如個體為降低公費迫使不當減少工作範圍，或威脅撤銷註冊資格。</div>
+    <p>第 92 條：威脅達不可接受程度時，消弭產生威脅的情況、採取防護措施降至可接受程度，或終止委任。獨立性的詳細規定在職業道德規範公報（查核與核閱以外其他確信案件之獨立性），這裡只教分類。</p>
+    <div class="toolbox">
+      <div class="chips" id="t2chips">
+        <button class="chip" data-k="a">事務所同時替青山鋼鐵建置排放資料蒐集系統並代為計算範疇 1</button>
+        <button class="chip" data-k="b">案件主持人的配偶是青山鋼鐵永續辦公室主管</button>
+        <button class="chip" data-k="c">青山鋼鐵說「再多做一個廠的訪查就換事務所」</button>
+        <button class="chip" data-k="d">青山鋼鐵的確信公費佔事務所年收入的 30%</button>
+        <button class="chip" data-k="e">事務所代表青山鋼鐵向環境部主張某製程不須納入盤查</button>
+        <button class="chip" data-k="f">事務所去年為青山鋼鐵提供盤查諮詢，今年才首次承接確信</button>
+      </div>
+      <div class="result" id="t2res"></div>
+    </div>
+  </div>
+
+  <div class="q" data-ans="B">
+    <div class="stem">練習 2：關於基準妥適性的判斷，下列何者正確？</div>
+    <label><input type="radio" name="p2" value="A">A. 只要寫在聲明附註裡，任何基準都算妥適</label>
+    <label><input type="radio" name="p2" value="B">B. 法令明定或專業機構依透明程序建立的基準，可推定或視為妥適，但特別設計的基準要特別檢查中立性</label>
+    <label><input type="radio" name="p2" value="C">C. 有限確信案件對基準妥適性的要求較低</label>
+    <label><input type="radio" name="p2" value="D">D. 監理機關設計的基準在任何用途下都妥適</label>
+    <button class="btn small check">對答案</button>
+    <div class="fb" data-exp="3000 號第 107 條；3410 號第 109、110 條。" data-diag='{"A":"3410 號第 111 條：附註補充救不了缺少必備內容的基準。","C":"3410 號第 112 條：基準妥適性不受確信程度影響。","D":"3410 號第 109 條：特定地區或特定監理層面設計的基準，用在其他情況可能不妥適。"}'></div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>列得出 3410 號第 17 條案件條款的六項內容</li>
+      <li>知道條款修改的正當與不正當理由</li>
+      <li>知道法令規定報告格式時怎麼處理，以及案件主持人在品質管理上的責任</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 7：案件條款要寫什麼</h2>
+    <div class="law"><b class="art">3000 號第 25 條</b>執業人員應與委任方就案件條款達成協議。已達成協議之案件條款應於委任書或其他形式之書面協議中詳盡記載或索引至相關法令（如適用時）。</div>
+    <div class="law ghg"><b class="art">3410 號第 17 條</b>依確信準則 3000 號之規定須達成協議之案件條款包括：1. 案件之目的及範圍。 2. 執業人員之責任。 3. 個體之責任，包括第十六條第三款所述者。 4. 辨認編製溫室氣體聲明之適用基準。 5. 執業人員擬出具報告之格式及內容，並敘明於某些情況下所出具報告之格式及內容可能與所預期者不同。 6. 個體同意於執業人員作成確信結論前提供書面聲明之認知。</div>
+    <p>第 5 款的後半句常被漏掉：委任書要先講好「報告可能跟你預期的不一樣」（例如出保留結論）。第 6 款對應第 65 條的書面聲明與第 67 條「不給聲明就無法表示結論」。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>情況</th><th>條文</th><th>處理</th></tr></thead>
+      <tbody>
+        <tr><td>續任案件</td><td>3000 號第 26 條</td><td>評估情況是否改變致須修改條款，是否須提醒委任方現行條款</td></tr>
+        <tr><td>要求修改條款</td><td>第 27 條、第 112 條；3410 號第 123 條</td><td>無正當理由不得接受；修改後不得忽略修改前已取得的證據。取不到證據、怕出修正式結論而要求排除排放源，都不是正當理由</td></tr>
+        <tr><td>法令已詳細規定條款</td><td>第 111 條</td><td>不必抄進委任書，但要敘明適用該法令且適當方瞭解其責任</td></tr>
+        <tr><td>法令規定報告格式或用語</td><td>第 28 條、第 73 條；3410 號第 11、93 條</td><td>評估會不會誤導、加說明能不能減少誤解；不能就不得承接。依法令格式出具的報告只有包含第 71 條所有要素才能提及準則</td></tr>
+        <tr><td>承接前就想限制範圍</td><td>第 24 條</td><td>限制使執業人員無法表示結論時，不得承接</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 8：案件主持人的品質管理責任</h2>
+    <div class="law"><b class="art">3000 號第 31 條（摘要）</b>案件主持人應對管理並達成案件品質，以及於案件執行過程中充分且適當參與，承擔整體責任，包括確認：1. 承接與續任已遵循組織政策或程序。 2. 案件已依專業準則及法令規劃及執行（包括適當指導及監督）。 3. 組織政策或程序已確實執行，且於報告日前完成書面紀錄之複核。 4. 已適當作成案件書面紀錄。 5. 已針對困難或具爭議性事項進行適當諮詢。</div>
+    <ul>
+      <li>第 29 條：主持人的資格，所屬組織受品質管理準則 1 號規範，具備確信技能與技術，對標的有足夠專業能力。</li>
+      <li>第 30 條：確認團隊能力與時間、能參與專家與其他執業人員的工作、資源足夠且及時分派。</li>
+      <li>第 32 條：對團隊成員是否違反職業道德規範保持警覺。第 33 條：考量組織監督及改正流程的資訊。</li>
+      <li>第 34 條：須執行案件品質複核的案件，報告日前要完成。3410 號第 78 條列出複核人員要做的四件事（第 6 課再講）。</li>
+    </ul>
+    <div class="law ghg"><b class="art">3410 號第 74 條</b>執業人員應於案件書面紀錄中納入下列項目：1. 對遵循攸關職業道德規範所辨認之問題及其解決方式。 2. 對遵循適用於案件之獨立性規範之結論，以及與所隸屬組織就支持該等結論所作之攸關討論。 3. 對客戶關係及確信案件之承接及續任所達成之結論。 4. 案件過程中所作諮詢之性質、範圍及所達成之結論。</div>
+  </div>
+
+  <div class="insp"><b class="t">檢查人員視角：第 3 課在底稿裡看什麼</b>
+    <ul>
+      <li>承接評估表：有沒有逐項對第 22 條六項先決條件，尤其「範圍是否足夠」「基準四項內容」這兩個 3410 號加的項目。</li>
+      <li>獨立性：底稿必須有獨立性結論（3410 號第 74 條第 2 款）。再比對事務所同年度對同一客戶的其他服務清單，看有沒有量化、系統建置這類會直接影響聲明的服務。</li>
+      <li>委任書：對 3410 號第 17 條六項逐一勾。缺第 5 款後半（報告可能與預期不同）與第 6 款（書面聲明）的最常見。</li>
+      <li>團隊名單：主持人與成員的溫室氣體訓練紀錄、專家的參與範圍。專家做了什麼、執業人員怎麼評估專家的工作（第 5 課）。</li>
+      <li>條款中途改過的：看修改原因與日期，對第 112 條。</li>
+    </ul>
+  </div>
+
+  <div class="essay" data-id="e1">
+    <div class="stem">實例題：明德事務所的承接評估表只有一頁，寫著「客戶信譽良好、無獨立性問題、團隊有時間」三行並簽名。委任書載明「依確信準則 3410 號對青山鋼鐵溫室氣體聲明執行有限確信」，其他內容是公費與期限。聲明的組織邊界方法沒有寫在任何文件裡。請列出檢查發現。</div>
+    <textarea placeholder="先寫你的答案，再看參考答案。"></textarea>
+    <button class="btn small secondary showans">看參考答案並自評</button>
+    <details><summary class="small">參考答案（點開）</summary>
+      <div class="body small">
+        <ol>
+          <li>承接評估不足：3000 號第 20 條三條件、第 22 條六項先決條件，以及 3410 號第 16 條三組要求（範圍足夠、基準四項內容、個體責任），底稿看不出有逐項確認。第 19 條要求主持人確認承接已依組織政策程序執行且結論適當。</li>
+          <li>獨立性結論欠缺依據：3410 號第 74 條第 2 款要求記錄獨立性結論與相關討論；「無獨立性問題」一句話未顯示辨認、評估、因應威脅的過程（第 91、92 條）。</li>
+          <li>基準不完整：適用基準至少應包括決定組織邊界之方法（3410 號第 16 條第 2 款第 1 目）。沒有組織邊界方法，基準不妥適，先決條件不成立，依第 23 條不得承接、不得在報告中提及依準則執行。</li>
+          <li>委任書不符第 17 條：缺案件目的及範圍、雙方責任（含第 16 條第 3 款三項個體責任）、適用基準之辨認、報告格式及「可能與預期不同」之說明、書面聲明之認知。</li>
+          <li>專業能力：底稿應顯示團隊對排放量化與報導的能力（3410 號第 15 條），而非只有「有時間」。</li>
+        </ol>
+      </div>
+    </details>
+    <div class="self"><span class="small">自評：</span><button class="btn small" data-ok="1">寫到了主要幾點</button><button class="btn small secondary" data-ok="0">漏了關鍵條文</button><span class="selfmsg small muted"></span></div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="quiz" class="panel">
+  <div class="card goal"><h2>章末測驗</h2><p>10 題，8 題以上過關。</p></div>
+  <div id="quizCard">
+    <div class="q quiz" data-ans="C"><div class="stem">1. 依 3000 號第 20 條，下列何者<b>不是</b>承接確信案件的條件？</div>
+      <label><input type="radio" name="q1" value="A">A. 無違反職業道德規範（含獨立性）</label><label><input type="radio" name="q1" value="B">B. 人員具專業能力及適任能力（含足夠時間）</label><label><input type="radio" name="q1" value="C">C. 委任方同意支付公費之金額高於市場行情</label><label><input type="radio" name="q1" value="D">D. 先決條件成立且就案件條款達成共識</label>
+      <div class="fb" data-exp="第 20 條三項條件；公費高低不是條件，過度依賴公費反而是自我利益威脅。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">2. 妥適基準的五個特性是？</div>
+      <label><input type="radio" name="q2" value="A">A. 攸關性、完整性、可靠性、中立性、可瞭解性</label><label><input type="radio" name="q2" value="B">B. 攸關性、完整性、可靠性、及時性、可比較性</label><label><input type="radio" name="q2" value="C">C. 正確性、完整性、存在、評價、揭露</label><label><input type="radio" name="q2" value="D">D. 攸關性、忠實表述、可驗證性、及時性、可瞭解性</label>
+      <div class="fb" data-exp="3000 號第 22 條第 2 款第 2 目、第 105 條。"></div></div>
+    <div class="q quiz" data-ans="D"><div class="stem">3. 依 3410 號第 16 條第 2 款，溫室氣體聲明之適用基準至少應包括下列何者？</div>
+      <label><input type="radio" name="q3" value="A">A. 重大性門檻</label><label><input type="radio" name="q3" value="B">B. 確信程度</label><label><input type="radio" name="q3" value="C">C. 執業人員之名稱</label><label><input type="radio" name="q3" value="D">D. 決定組織邊界之方法、須計算之溫室氣體、可接受之量化方法、充分之揭露</label>
+      <div class="fb" data-exp="第 16 條第 2 款四項。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">4. 先決條件不存在且無法改變時，執業人員應？</div>
+      <label><input type="radio" name="q4" value="A">A. 改為有限確信後承接</label><label><input type="radio" name="q4" value="B">B. 除非法令另有規定，不得承接；若執行亦不得於報告提及依本準則執行</label><label><input type="radio" name="q4" value="C">C. 承接但於報告中加強調事項段</label><label><input type="radio" name="q4" value="D">D. 承接並出具保留結論</label>
+      <div class="fb" data-exp="3000 號第 23 條。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">5. 為個體提供排放量化服務，且該服務直接影響溫室氣體聲明，屬哪一類獨立性威脅？</div>
+      <label><input type="radio" name="q5" value="A">A. 自我利益</label><label><input type="radio" name="q5" value="B">B. 自我評估</label><label><input type="radio" name="q5" value="C">C. 辯護</label><label><input type="radio" name="q5" value="D">D. 熟悉度</label>
+      <div class="fb" data-exp="3410 號第 91 條第 2 款。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">6. 3410 號第 17 條要求案件條款包含「報告格式及內容」，並須敘明？</div>
+      <label><input type="radio" name="q6" value="A">A. 報告一定為無保留結論</label><label><input type="radio" name="q6" value="B">B. 報告僅供個體內部使用</label><label><input type="radio" name="q6" value="C">C. 於某些情況下所出具報告之格式及內容可能與所預期者不同</label><label><input type="radio" name="q6" value="D">D. 報告不須簽名</label>
+      <div class="fb" data-exp="第 17 條第 5 款。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">7. 個體因執業人員可能出具修正式結論，要求將某些排放源排除於案件範圍外。此要求？</div>
+      <label><input type="radio" name="q7" value="A">A. 可能不具正當理由，執業人員不得接受</label><label><input type="radio" name="q7" value="B">B. 屬雙方合意，可以接受</label><label><input type="radio" name="q7" value="C">C. 只要在報告中揭露即可接受</label><label><input type="radio" name="q7" value="D">D. 改為合理確信後即可接受</label>
+      <div class="fb" data-exp="3410 號第 123 條；3000 號第 27 條。"></div></div>
+    <div class="q quiz" data-ans="D"><div class="stem">8. 法令明定確信報告之格式，且執業人員認為即使增加說明也無法減少誤解。執業人員應？</div>
+      <label><input type="radio" name="q8" value="A">A. 依法令格式出具並聲明遵循 3000 號</label><label><input type="radio" name="q8" value="B">B. 自行改用準則格式</label><label><input type="radio" name="q8" value="C">C. 出具無法表示結論</label><label><input type="radio" name="q8" value="D">D. 除非法令另有規定，不得承接；依該法令執行之案件不得提及依準則執行</label>
+      <div class="fb" data-exp="3000 號第 28 條。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">9. 依 3410 號第 74 條，案件書面紀錄應納入下列何者？</div>
+      <label><input type="radio" name="q9" value="A">A. 公費計算明細</label><label><input type="radio" name="q9" value="B">B. 獨立性規範遵循之結論及相關討論、承接續任之結論、諮詢之性質範圍與結論</label><label><input type="radio" name="q9" value="C">C. 個體所有員工名單</label><label><input type="radio" name="q9" value="D">D. 預期使用者的簽名</label>
+      <div class="fb" data-exp="第 74 條四款。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">10. 個體第一次編製溫室氣體聲明且紀錄可靠性有疑慮。3410 號第 121 條建議？</div>
+      <label><input type="radio" name="q10" value="A">A. 改做直接案件</label><label><input type="radio" name="q10" value="B">B. 降低重大性以承接</label><label><input type="radio" name="q10" value="C">C. 先執行協議程序或提供諮詢，後續期間再執行確信案件</label><label><input type="radio" name="q10" value="D">D. 由執業人員代為量化後出具確信報告</label>
+      <div class="fb" data-exp="第 121 條。D 是自我評估威脅。"></div></div>
+  </div>
+  <button class="bigbtn" id="submitQuiz">交卷</button>
+  <div id="quizResult"></div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="arts" class="panel">
+  <div class="card"><h2>本課條文速查</h2>
+  <div class="arts">
+    <details><summary>3000 號第 18 至 21 條 <span>職業道德、承接及續任</span></summary><div class="txt">第 18 條 執業人員應遵循：(1)攸關職業道德規範或(2)其他專門職業規範或法令（其嚴謹程度不得低於會計師職業道德規範）。
+第 19 條 案件主持人應確認確信案件之承接及續任（包括客戶關係之評估），已依所隸屬組織之政策或程序執行，且所作成之結論係屬適當。
+第 20 條 僅於符合下列所有條件時，執業人員方得承接或續任確信案件：1.執業人員確認尚無違反攸關職業道德規範（包括獨立性）之情事。2.執業人員確認執行案件之人員具有適當之專業能力及適任能力（包括有足夠時間）以執行案件。3.執行案件之基礎已藉由下列達成協議：(1)確認確信案件之先決條件已成立。(2)確認執業人員及委任方已對案件條款（包括執業人員之報導責任）達成共識。
+第 21 條 案件主持人若於接受委任後，始獲悉先前未知之資訊，而該資訊如於承接或續任客戶關係及案件之前獲悉，可能使其拒絕接受委任，則案件主持人應儘速與所隸屬組織溝通，俾採取必要行動。</div></details>
+    <details><summary>3000 號第 22 至 24 條 <span>先決條件、範圍受限制</span></summary><div class="txt">第 22 條 執業人員應依據對案件情況之初步瞭解及與適當方討論之結果，確認下列先決條件是否存在：1.適當方之角色及責任於當時情況下係屬妥適。2.案件具備下列所有特性：(1)標的係屬適當。(2)執業人員預期編製標的資訊所採用之基準係屬妥適，妥適之基準應具備下列特性：①攸關性。②完整性。③可靠性。④中立性。⑤可瞭解性。(3)預期使用者可取得用以編製標的資訊之基準。(4)執業人員預期可取得支持其結論之證據。(5)執業人員之結論可以適當之格式（合理確信案件或有限確信案件）呈現於書面報告中。(6)正當之目的，包括執業人員預期可對有限確信案件取得具有意義之確信程度。
+第 23 條 如確信案件之先決條件不存在，執業人員應與委任方討論該事項。如無法改變以符合先決條件，除非法令另有規定，執業人員不得承接該確信案件。在先決條件不存在之情況下執行之案件不符合本確信準則之規定，因此執業人員不得於確信報告中提及該案件係依本確信準則執行。
+第 24 條 委任方擬於確信案件之條款中對執業人員工作之範圍加以限制，致執業人員認為該限制將使其無法對標的資訊表示結論時，除非法令另有規定，執業人員不得承接該確信案件。</div></details>
+    <details><summary>3000 號第 25 至 28 條 <span>案件條款</span></summary><div class="txt">第 25 條 執業人員應與委任方就案件條款達成協議。已達成協議之案件條款應於委任書或其他形式之書面協議中詳盡記載或索引至相關法令（如適用時）。
+第 26 條 就續任案件而言，執業人員應評估情況是否改變致須修改該案件之原條款，以及是否須提醒委任方現行之案件條款。
+第 27 條 在無正當理由之情況下，執業人員不得接受案件條款之修改。如案件條款有所修改，執業人員不得忽略修改條款前已取得之證據。
+第 28 條 如法令已明定確信報告之格式或用語，執業人員應評估：1.預期使用者是否可能對確信結論產生誤解。2.如有上述情形，於確信報告中增加額外說明是否可減少可能之誤解。如執業人員認為縱使於確信報告中增加額外說明亦無法減少可能之誤解，除非法令另有規定，執業人員不得承接該案件。依前述法令執行之案件並不符合確信準則之規定，因此執業人員不得於確信報告中提及該案件係依本確信準則或其他確信準則執行。</div></details>
+    <details><summary>3000 號第 29 至 34 條 <span>品質管理</span></summary><div class="txt">第 29 條 案件主持人之資格包括：1.其所隸屬組織應受品質管理準則 1 號或其他嚴謹程度不低於之規範所規範。2.透過充分之訓練及實務應用，而具備執行確信案件之技能與技術。3.對標的及其衡量或評估具有足夠之專業能力，以對其確信結論負責。
+第 30 條 案件主持人應：1.確認執行案件之人員具備適當之專業能力及適任能力（包括有足夠時間）。2.確認執業人員能參與執業人員專家及非屬案件服務團隊之其他執業人員之工作，且參與程度足以對結論負責。3.確認資源足夠且適當，並及時分派。
+第 31 條 案件主持人應對管理並達成案件品質，以及於案件執行過程中充分且適當參與，承擔整體責任。
+第 32 條 案件主持人應對案件服務團隊之成員是否違反職業道德規範保持警覺。
+第 33 條 案件主持人應考量組織監督及改正流程之資訊，並評估是否影響確信案件。
+第 34 條 須執行案件品質複核之案件，案件主持人應與案件品質複核人員討論重大事項及重大判斷，且應於確信報告日前完成該品質複核。</div></details>
+    <details><summary>3000 號第 40、41 條 <span>承接後發現先決條件不存在</span></summary><div class="txt">第 40 條 執業人員如於承接案件後發現該案件之一項或多項先決條件並不存在，應與適當方討論該事項，並確認：1.該事項能否獲得滿意之解決。2.繼續執行該案件是否適當。3.是否及如何於確信報告中溝通該事項。
+第 41 條 執業人員如於承接案件後發現，就該案件而言，適用基準之部分或全部不妥適，抑或標的之部分或全部不適當，應考慮終止委任（如法令允許終止委任）。執業人員如繼續執行該案件，應視情況出具保留結論、否定結論或無法表示結論之確信報告。</div></details>
+    <details><summary>3000 號第 105 至 110 條 <span>基準之妥適性、可取得性、正當目的</span></summary><div class="txt">第 106 條 基準得以不同方式選擇或建立，例如：1.於法令中明定。2.經授權或認可之專業機構依透明之適當程序建立並發布。3.由某團體之成員集體建立，但未依透明之適當程序。4.發表於學術期刊或書籍。5.為獨家銷售而建立。6.於特定案件情況下，為編製標的資訊所特別設計。
+第 107 條 法令明定之基準，除有反證，得被假設為妥適。經授權或認可之專業機構依透明之適當程序建立並發布之基準，如與預期使用者之資訊需求攸關，亦被視為妥適。前述二者均屬一般公認基準。特定使用者亦可能建立更為詳細之基準，於此情況下，執業人員應於確信報告中：1.提醒閱讀者標的資訊係依特殊用途之基準所編製。2.敘明該基準未於法令中明定亦未由專業機構依透明程序建立（如攸關時）。
+第 108 條 基準可藉由下列方式提供予預期使用者：1.公開資訊。2.於標的資訊中以明確方式呈現。3.於確信報告中以明確方式呈現。4.一般性瞭解。
+第 110 條 決定案件是否具正當之目的時，須考量之事項可能包括：1.預期使用者及分送予其他使用者之可能性。2.標的資訊之部分層面是否預期自案件中排除；若是，其原因為何。3.各方關係之性質。4.由何人選取基準及判斷程度。5.對工作範圍之任何重大限制。6.委任方是否意圖以不適當之方式連結執業人員之姓名至標的或標的資訊。</div></details>
+    <details><summary>3410 號第 10、11 條 <span>職業道德、當地法令</span></summary><div class="txt">第 10 條 依確信準則 3000 號之規定，執業人員受攸關職業道德規範或其他專門職業規範或法令所規範。該準則亦規定案件主持人所隸屬組織應受品質管理準則 1 號所規範。
+第 11 條 當確信案件係受當地法令或排放交易制度之規定所規範，本確信準則並不踰越該等法令及規定。當地法令或排放交易制度之規定與本確信準則之規定不同時，執業人員依該等法令或規定執行之案件將不會自動被視為遵循本確信準則。執業人員僅於已遵循本確信準則所有適用之基本準則時，始得聲明除遵循當地法令或排放交易制度之規定外，已遵循本確信準則。</div></details>
+    <details><summary>3410 號第 15 至 17 條 <span>能力、先決條件、案件條款</span></summary><div class="txt">第 15 條 案件主持人應：1.透過充分之訓練及實務應用，而具備執行確信案件之技能與技術，並對排放之量化與報導具有足夠之專業能力，以對其確信結論負責。2.確認執行案件之人員具備適當之專業能力及適任能力（包括對排放之量化與報導及確信）。
+第 16 條 為確認案件之先決條件是否存在：1.案件主持人應確認溫室氣體聲明及案件均包含足夠之範圍，方能對預期使用者有用，特別是考量下列事項：(1)如溫室氣體聲明排除已量化或可能易於量化之重大排放，該排除於當時情況下是否合理。(2)如案件排除對個體所報導之重大排放之確信，該排除於當時情況下是否合理。(3)如案件包含對排放扣減之確信，執業人員對該排放扣減將取得確信之性質及確信報告預期內容是否明確、合理，並為委任方所理解。2.執業人員確認適用基準之妥適性時，應確認該基準是否至少包括：(1)決定組織邊界之方法。(2)須計算之溫室氣體。(3)可接受之量化方法，包括對基準年（排放量）進行調整之方法（如適用時）。(4)充分之揭露，俾使預期使用者能瞭解編製溫室氣體聲明時所作之重大判斷。3.執業人員應就個體已認知並瞭解其下列責任，取得其同意：(1)設計、付諸實行及維持與溫室氣體聲明編製有關之必要內部控制。(2)依照適用基準編製溫室氣體聲明。(3)於溫室氣體聲明中提及或敘明適用基準，以及在基準不易自案件情況中識別時，該基準係由何人所設計。
+第 17 條 須達成協議之案件條款包括：1.案件之目的及範圍。2.執業人員之責任。3.個體之責任，包括第十六條第三款所述者。4.辨認編製溫室氣體聲明之適用基準。5.執業人員擬出具報告之格式及內容，並敘明於某些情況下所出具報告之格式及內容可能與所預期者不同。6.個體同意於執業人員作成確信結論前提供書面聲明之認知。</div></details>
+    <details><summary>3410 號第 91、92 條 <span>獨立性威脅</span></summary><div class="txt">第 91 條 執業人員應運用會計師職業道德規範公報第一號之觀念性架構，以辨認、評估及因應與確信案件有關之獨立性威脅，該等威脅可分為下列類型：1.自我利益，例如過度依賴來自個體之總公費。2.自我評估，例如為個體提供之另一項非確信服務（例如為個體提供排放之量化服務）將直接影響溫室氣體聲明。3.辯護，例如為個體對適用基準之解讀，擔任辯護者。4.熟悉度，例如案件服務團隊之成員與個體內部對溫室氣體聲明之編製具直接且重大影響之員工有長期關係，或具有密切或直系親屬關係。5.脅迫，例如個體為降低公費，迫使執業人員不當減少執行工作之範圍，或威脅透過主管機關撤銷執業人員之註冊資格。
+第 92 條 當已辨認之威脅達不可接受之程度，會計師職業道德規範要求採取適當之措施以消弭產生該等威脅之情況，或是採取防護措施以降低威脅至可接受之程度，抑或終止該案件之委任（如法令允許時）。</div></details>
+    <details><summary>3410 號第 104 至 106 條 <span>專業能力、範圍</span></summary><div class="txt">第 104 條 與溫室氣體相關之專業能力可能包括：1.對氣候科學之基本瞭解。2.瞭解預期使用者及其如何使用資訊。3.瞭解排放交易制度及市場機制。4.瞭解影響個體報導排放之法令。5.瞭解溫室氣體量化與衡量之方法論及替代方法論。6.對適用基準之瞭解，包括排放係數、重大估計、組織邊界方法、允許之排放扣減。
+第 106 條 溫室氣體聲明排除已知之排放源，或案件排除已揭露排放源，其理由可能並不合理，例如：1.個體有重大之範疇 1 排放，但溫室氣體聲明中僅包含範疇 2 排放。2.某個體係一較大法律個體之一部分且具有重大排放，該較大法律個體因決定組織邊界之方式，並未報導前述某個體之排放，而此可能誤導預期使用者時。3.執業人員僅對溫室氣體聲明中總排放之一小部分出具報告。</div></details>
+    <details><summary>3410 號第 109 至 114 條 <span>基準、組織邊界</span></summary><div class="txt">第 109 條 基準可能係「特別設計」或「建立」。當監理機關為預期使用者時，可推定監理機關建立之基準係屬攸關，但某些基準可能為特殊目的而設計，適用於其他情況並不妥適。
+第 110 條 於某些情況下，選擇特別設計之基準可能係屬適當。評估該特別設計基準之中立性及其他特性時，可能須特別注意。
+第 111 條 基準可能包含所建立基準之特定邊界、方法、假設、排放係數等事項，揭露於溫室氣體聲明之解釋性附註。即使有該等補充說明，當該基準未包含第十六條第二款規定之事項時，可能並非妥適。
+第 112 條 基準之妥適性不受確信程度之影響。
+第 113 條 決定個體所擁有或控制之哪些營運應納入個體之溫室氣體聲明中，稱為決定個體之組織邊界。法令可能定義邊界；適用基準可能允許在不同方法間作選擇。可能須對複雜之組織結構及合約關係進行分析。
+第 114 條 決定個體之組織邊界與「營運邊界」不同。營運邊界與納入溫室氣體聲明中之範疇 1、範疇 2 及範疇 3 排放有關，且其係於決定組織邊界後辨認。</div></details>
+    <details><summary>3410 號第 122、123 條 <span>設計基準者、條款修改</span></summary><div class="txt">第 122 條 當溫室氣體聲明係為法令揭露規定或排放交易制度編製，或許可自案件情況明顯辨認該基準係由監理機關所設計。然而在自願報導之情況下，基準係由何人所設計可能並不明確，除非於溫室氣體聲明之解釋性附註中已敘明設計基準者。
+第 123 條 依確信準則 3000 號之規定，在無正當理由之情況下，執業人員不得接受案件條款之修改。例如，個體因執業人員可能對溫室氣體聲明作成修正式結論，而要求將某些排放源排除在案件範圍外時，此修改案件範圍之要求可能不具正當理由。</div></details>
+  </div></div>
+  <p class="small"><a href="02_有限確信與合理確信.html">上一課</a> · <a href="00_總覽地圖.html">回總覽地圖</a> · <a href="04_規劃重大性與風險.html">下一課：規劃、重大性與風險</a></p>
+</section>
+
+<footer>確信準則 3000 號與 3410 號自學課 · 自學筆記，非官方；條文以會計研究發展基金會發布版本為準 · 紀錄只存在這台裝置的瀏覽器</footer>
+</div>
+<script>
+const LESSON_ID = "03", CH = "確信準則 03 承接案件";
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const PROG_KEY = "qx_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與其他教材共用 study_log_v1）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  $$('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  $$('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+$$('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="quiz"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+$$('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok });
+  });
+});
+
+// ===== 章末測驗交卷 =====
+(function(){
+  const sb = document.getElementById('submitQuiz'); if(!sb) return;
+  sb.addEventListener('click',()=>{
+    const qs = $$('#quizCard .q.quiz');
+    let score = 0, answered = 0; const wrong = [];
+    qs.forEach((q,i)=>{
+      const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+      q.classList.remove('correct','wrong');
+      if(sel) answered++;
+      if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+      else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+    });
+    logEv({ type:"quiz", score, total: qs.length, wrong });
+    writeProg({ quiz: { score, total: qs.length } });
+    const r = document.getElementById('quizResult');
+    if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+    else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="quiz"]').classList.add('done'); }
+    else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+    else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+    r.scrollIntoView({behavior:'smooth'});
+  });
+})();
+
+// ===== 實例題自評 =====
+$$('.essay').forEach(es=>{
+  const ta = es.querySelector('textarea'), self = es.querySelector('.self'), ans = es.querySelector('details');
+  const showBtn = es.querySelector('.showans');
+  if(showBtn) showBtn.addEventListener('click',()=>{ if(ans) ans.open = true; self.classList.add('on'); });
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 通用：chips 單選顯示結果 =====
+function chipTool(chipsId, resId, DATA, render, logName){
+  const res = document.getElementById(resId); if(!res) return;
+  $$('#'+chipsId+' .chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      $$('#'+chipsId+' .chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+      c.setAttribute('aria-pressed','true');
+      const d = DATA[c.dataset.k];
+      res.innerHTML = render(d, c.dataset.k);
+      res.classList.add('on');
+      logEv({ type:"tool", q:logName, k:c.dataset.k });
+    });
+  });
+}
+
+// ===== 工具：接案檢核器 =====
+(function(){
+  const MAP = { eth:'條件一：職業道德與獨立性（3000 號第 20 條第 1 款、3410 號第 91 條）', comp:'條件二：專業能力（3000 號第 20 條第 2 款、3410 號第 15 條）', time:'條件二：足夠時間（3000 號第 20 條第 2 款）', role:'先決條件：角色責任妥適、個體認知三項責任（3000 號第 22 條第 1 款、3410 號第 16 條第 3 款）', scope:'先決條件：範圍足夠、正當目的（3410 號第 16 條第 1 款、3000 號第 22 條第 2 款第 6 目）', crit:'先決條件：基準妥適且含四項必備內容（3000 號第 22 條第 2 款第 2 目、3410 號第 16 條第 2 款）', avail:'先決條件：基準可供預期使用者取得（3000 號第 22 條第 2 款第 3 目）', evid:'先決條件：預期可取得證據（3000 號第 22 條第 2 款第 4 目）', terms:'條件三：案件條款達成共識（3000 號第 20 條第 3 款、3410 號第 17 條）' };
+  $('#acceptGo').addEventListener('click',()=>{
+    const boxes = $$('#accept input'); const miss = boxes.filter(b=>!b.checked).map(b=>MAP[b.dataset.g]);
+    const r = $('#acceptRes');
+    if(miss.length===0){ r.innerHTML = '<h3>可以承接</h3><p class="small" style="margin:0">三個承接條件與先決條件都已確認。注意桃園倉儲的範疇 1 雖小，仍納入聲明，沒有「排除可量化之重大排放」的問題。接下來依 3000 號第 25 條把條款寫進委任書。</p>'; }
+    else { r.innerHTML = '<h3>還不能承接</h3><p class="small">還沒確認的項目：</p><ul class="small">'+miss.map(m=>'<li>'+m+'</li>').join('')+'</ul><p class="small muted" style="margin:0">3000 號第 20 條：「僅於符合下列所有條件時」方得承接。先決條件不成立且無法改變，第 23 條不得承接。</p>'; }
+    r.classList.add('on'); logEv({ type:"tool", q:"accept", k:miss.length });
+  });
+})();
+
+// ===== 工具：基準四項檢查 =====
+(function(){
+  $('#critGo').addEventListener('click',()=>{
+    const sel = $$('#crit input').filter(i=>i.checked).map(i=>i.value);
+    const ans = ['boundary','baseyear'];
+    $$('#crit label').forEach(l=>{ const v = l.querySelector('input').value; l.classList.remove('ok','bad'); if(ans.includes(v)) l.classList.add('ok'); else if(sel.includes(v)) l.classList.add('bad'); });
+    const ok = ans.every(a=>sel.includes(a)) && sel.every(s=>ans.includes(s));
+    const r = $('#critRes');
+    r.innerHTML = '<h3>'+(ok?'正確':'再看一次')+'</h3><p class="small">這段說明<b>缺了兩項</b>：(1) 決定組織邊界之方法（第 16 條第 2 款第 1 目）：沒說是營運控制權、財務控制權還是股權比例法。(2) 基準年調整方法（第 2 款第 3 目）：聲明含比較資訊，若有合併、收購或方法變更，要說明怎麼調整基準年。</p><p class="small" style="margin:0">其他三項都有：七種氣體（第 2 目）、排放係數法與係數來源（第 3 目前段）、附註揭露方法與不確定性（第 4 目）。第 111 條提醒：附註再詳細，也補不了缺少的必備項目，所以要請公司把組織邊界方法寫進基準說明，先決條件才成立。</p>';
+    r.classList.add('on'); logEv({ type:"tool", q:"criteria", ok });
+  });
+})();
+
+// ===== 工具：獨立性威脅分類 =====
+chipTool('t2chips','t2res',{
+  a:{ t:'自我評估威脅', k:'3410 號第 91 條第 2 款', why:'建置系統與代為計算都會直接影響溫室氣體聲明，之後再對聲明出結論就是在評估自己的工作。通常無法用防護措施降到可接受程度，應拒絕其中一項服務。' },
+  b:{ t:'熟悉度威脅', k:'第 91 條第 4 款', why:'團隊成員與「對聲明編製具直接且重大影響之員工」有直系親屬關係。主持人應迴避，由其他主持人接案，並記錄於底稿（第 74 條）。' },
+  c:{ t:'脅迫威脅', k:'第 91 條第 5 款', why:'個體以更換事務所施壓，迫使執業人員不當減少工作範圍。第 162 條：有範疇 1 的重要設施不訪查，可能取不到具有意義的確信程度。應依專業判斷決定訪查，不受威脅影響。' },
+  d:{ t:'自我利益威脅', k:'第 91 條第 1 款', why:'過度依賴來自個體之總公費。需評估公費佔比、採取防護措施（例如外部複核），或拒絕續任。' },
+  e:{ t:'辯護威脅', k:'第 91 條第 3 款', why:'為個體對適用基準之解讀擔任辯護者，之後再對依該解讀編製的聲明出結論，立場已不客觀。' },
+  f:{ t:'通常可接受：先諮詢、後確信', k:'3410 號第 121 條', why:'去年諮詢、今年才確信，且本期聲明由公司自行編製，與同一期間內「又算又認證」不同。仍須評估去年諮詢的內容是否延續影響本期聲明（例如公司仍沿用事務所設計的計算模型），並記錄評估結論。' }
+}, d=>'<h3>'+d.t+'　<span class="pill ghg">'+d.k+'</span></h3><p class="small" style="margin:0">'+d.why+'</p>', 'independence');
+
+</script>
+</body>
+</html>

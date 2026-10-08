@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>確信準則｜第 2 課 有限確信與合理確信</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F3F6F5; --card:#FFFFFF;
+  --ink:#1B2A2C; --ink-2:#4A5C5E; --ink-3:#83949A;
+  --rule:rgba(27,42,44,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --std:#0F6E6E; --std-soft:#E0F1F0;
+  --ghg:#5B3A8C; --ghg-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131B1C; --card:#1C2628;
+    --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+    --rule:rgba(232,238,238,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --std:#6CC3C0; --std-soft:#1E3736;
+    --ghg:#B9A0E3; --ghg-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131B1C; --card:#1C2628;
+  --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+  --rule:rgba(232,238,238,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --std:#6CC3C0; --std-soft:#1E3736;
+  --ghg:#B9A0E3; --ghg-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--std);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+code{font-size:.9em;background:var(--paper);padding:.05em .35em;border-radius:4px}
+
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--std);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--std-soft);color:var(--std);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button,nav.tabs a{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none}
+nav.tabs button:hover,nav.tabs a:hover{border-color:var(--std);color:var(--ink)}
+nav.tabs button.active,nav.tabs a.active{background:var(--std);border-color:var(--std);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--std-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--std-soft);border-left:4px solid var(--std);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--std);display:block;margin-bottom:.2em}
+.law.ghg{background:var(--ghg-soft);border-left-color:var(--ghg)}
+.law.ghg b.art{color:var(--ghg)}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.insp{background:var(--green-soft);border-left:4px solid var(--green);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.93rem}
+.insp b.t{color:var(--green);display:block;margin-bottom:.2em}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.std{background:var(--std-soft);border-color:transparent;color:var(--std)}
+.pill.ghg{background:var(--ghg-soft);border-color:transparent;color:var(--ghg)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.pill.signal{background:var(--signal-soft);border-color:transparent;color:var(--signal)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2,.grid3{grid-template-columns:1fr}}
+
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--std)}
+.flow .step.click{cursor:pointer}
+.flow .step.click:hover,.flow .step.on{border-color:var(--std);background:var(--std-soft)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+.roles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:.6rem 0 1rem}
+@media (max-width:720px){.roles{grid-template-columns:1fr 1fr}}
+.role{border:1px solid var(--rule);border-radius:10px;padding:.6rem .7rem;background:var(--paper);font-size:.9rem;cursor:pointer}
+.role b{display:block;color:var(--std)}
+.role:hover,.role.on{border-color:var(--std);background:var(--std-soft)}
+
+.compare{display:grid;grid-template-columns:9em 1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;font-size:.92rem;margin:.6rem 0 1rem}
+.compare>div{padding:.55em .8em;border-bottom:1px solid var(--rule)}
+.compare .h{background:var(--paper);font-weight:700}
+.compare .k{background:var(--paper);font-weight:700;color:var(--ink-2)}
+@media (max-width:720px){.compare{grid-template-columns:7em 1fr 1fr;font-size:.85rem}}
+
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox label.block{display:flex}
+.toolbox select,.toolbox input[type=number],.toolbox input[type=date],.toolbox input[type=text]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);max-width:100%}
+.toolbox input[type=range]{width:100%;max-width:420px}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--std)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--std);color:var(--std);background:var(--std-soft)}
+.chip.ok{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+.chip.bad{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--std);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--std);border:1.5px solid var(--std)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+.report{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 20px;font-size:.93rem;line-height:1.9}
+.report .rh{font-weight:700;text-align:center;font-size:1.05rem;margin-bottom:.6em}
+.report .blank{display:inline-block;min-width:7em;border-bottom:2px dashed var(--std);text-align:center;color:var(--std);cursor:pointer;padding:0 .3em}
+.report .blank.ok{border-bottom-style:solid;color:var(--green);border-color:var(--green)}
+.report .blank.bad{color:var(--warn);border-color:var(--warn)}
+.report .sec{color:var(--std);font-weight:700;margin-top:.5em}
+.list-check label{display:block;padding:.3em .5em;border-radius:6px}
+.list-check label:hover{background:var(--paper)}
+.list-check label.ok{background:var(--green-soft)}
+.list-check label.bad{background:var(--warn-soft)}
+.bar{height:12px;background:var(--paper);border:1px solid var(--rule);border-radius:999px;overflow:hidden;margin:.3rem 0}
+.bar i{display:block;height:100%;background:var(--std)}
+
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--std);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--std);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">確信準則 3000 · 3410 · 第 2 課</span>
+  <h1>有限確信與合理確信</h1>
+  <p>三節加章末測驗。兩種確信程度，差在三件事：可接受的案件風險、程序的性質時間範圍、結論的寫法。不差的也有三件事：重大性、標的適不適當、基準妥不妥適。先把「哪些一樣、哪些不一樣」釘死，後面每一課的「有限／合理」分岔就不會記混。</p>
+  <p class="ver">依確信準則 3000 號與 3410 號編寫。自學筆記，非官方。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">2-1 一樣與不一樣</button>
+  <button data-t="s2">2-2 程序怎麼不一樣</button>
+  <button data-t="s3">2-3 結論怎麼寫</button>
+  <button data-t="quiz">章末測驗</button>
+  <button data-t="arts">條文速查</button>
+</nav>
+
+<!-- ═══════════ 2-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>背得出兩種確信案件的定義，說得出「可接受風險水準」是分野</li>
+      <li>列得出三件「不受確信程度影響」的事：重大性、標的適當性、基準妥適性</li>
+      <li>解釋「具有意義之確信程度」是什麼、為什麼有限確信不能隨便做</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：定義只差一句話</h2>
+    <div class="law"><b class="art">3000 號第 10 條第 13 款第 1 目</b>① 合理確信案件：執業人員執行必要程序將案件風險降低至當時情況下可接受水準，並作成結論之確信案件。執業人員依據前述結論對依基準衡量或評估標的之結果出具意見。<br>② 有限確信案件：執業人員執行必要程序將案件風險降低至當時情況下可接受水準，並作成結論之確信案件，惟其可接受風險水準高於適用於合理確信案件者。該結論說明，執業人員依據其所執行之程序及所獲取之證據，是否未發現標的資訊存有重大不實表達之情事。</div>
+    <p>兩個定義前半句一模一樣，差在「可接受風險水準高於合理確信」。風險可以高一點，所以程序可以少一點，所以結論只能說「沒發現」而不能說「我認為是」。三件事是連在一起的因果鏈。</p>
+    <div class="flow">
+      <div class="step"><b>可接受案件風險</b>有限 ＞ 合理</div>
+      <div class="step"><b>程序的性質、時間、範圍</b>有限較不同、較小</div>
+      <div class="step"><b>結論用語</b>有限：消極式「未發現」<br>合理：積極式「意見」</div>
+    </div>
+    <div class="tip">記法：合理確信出的是「<b>意見</b>」，有限確信出的是「<b>結論</b>」。3000 號定義裡合理確信那一目特別寫「出具意見」，有限確信那一目只寫「結論說明」。考題用字會故意對調。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：三件事不隨確信程度改變</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>不變的事</th><th>條文</th><th>白話</th></tr></thead>
+      <tbody>
+        <tr><td><b>重大性</b></td><td>3000 號第 121 條；3410 號第 134 條</td><td>重大性看的是預期使用者的資訊需求，不是會計師做多少工。同樣的使用者、同樣的目的，有限確信與合理確信的重大性<b>相同</b>。</td></tr>
+        <tr><td><b>標的適當性</b></td><td>3000 號第 102 條</td><td>對合理確信不適當的標的，對有限確信也不適當，反之亦然。</td></tr>
+        <tr><td><b>基準妥適性</b></td><td>3410 號第 112 條</td><td>對合理確信不妥適的基準，對有限確信也不妥適，反之亦然。</td></tr>
+        <tr><td><b>要不要承接</b></td><td>3410 號第 143 條</td><td>不確定性大到不適合承接時，不會因為改做有限確信就變成適合。</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">最常見的錯誤想法：「有限確信比較鬆，所以重大性可以設大一點。」錯。重大性是給使用者看的門檻，和會計師做多少程序無關。檢查底稿時看到「因屬有限確信，重大性採較高比率」這種理由，要寫缺失。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：有限確信也要「有意義」</h2>
+    <div class="law"><b class="art">3000 號第 93 條</b>對有限確信案件，具有意義之確信程度介於下列二者之間：(1) 略低於合理確信；(2) 略高於可提升預期使用者之信賴水準至明顯高於微不足道之確信程度。「具有意義」係依據案件情況（包括預期使用者整體之資訊需求、基準及標的）所作之判斷。</div>
+    <p>有限確信不是「隨便做做」。它有一個下限：使用者的信賴水準必須「明顯高於微不足道」。做不到這個下限，就不符合先決條件裡的「正當之目的」（第 22 條第 2 款第 6 目），不能承接。</p>
+    <p>第 94 條列出判斷「有沒有意義」的五個因素：標的與基準的特性、委任方的指示、同類案件的一般實務、預期使用者整體的資訊需求、使用者對「短時間低成本」的預期。其中第 4 點最重要：不適當結論對使用者影響愈大，所需確信程度愈高，有時高到只有合理確信才算有意義。</p>
+    <div class="note">3410 號第 162 條給了一個溫室氣體版的例子：個體有好幾個具範疇 1 排放的重要設施，有限確信案件如果<b>一個都不去</b>，可能就取不到具有意義的確信程度。</div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：拉一下確信程度，看什麼跟著變</h2>
+    <p class="small muted">拉桿有三格：無確信（協議程序）、有限確信、合理確信。看右邊六個面向哪些變、哪些不變。</p>
+    <div class="toolbox">
+      <input type="range" id="lvl" min="0" max="2" step="1" value="1" aria-label="確信程度">
+      <div class="small muted" style="display:flex;justify-content:space-between;max-width:420px"><span>無確信</span><span>有限確信</span><span>合理確信</span></div>
+      <div class="result on" id="lvlRes"></div>
+    </div>
+  </div>
+
+  <div class="q" data-ans="C">
+    <div class="stem">練習 1：明德事務所的規劃備忘錄寫：「本案為有限確信，故整體重大性採總排放量之 10%；若為合理確信則採 5%。」依準則，這段話的問題是？</div>
+    <label><input type="radio" name="p1" value="A">A. 沒有問題，有限確信本來就可以用較高的重大性</label>
+    <label><input type="radio" name="p1" value="B">B. 百分比太高，準則規定不得超過 5%</label>
+    <label><input type="radio" name="p1" value="C">C. 重大性不受確信程度影響，同一預期使用者與目的下兩者應相同</label>
+    <label><input type="radio" name="p1" value="D">D. 有限確信案件不須決定重大性</label>
+    <button class="btn small check">對答案</button>
+    <div class="fb" data-exp="3000 號第 121 條、3410 號第 134 條。重大性依預期使用者的資訊需求決定，與確信程度無關。" data-diag='{"A":"這正是準則明文否定的想法。","B":"準則沒有規定任何百分比，百分比是專業判斷（3410 號第 135 條）。","D":"3410 號第 19、20 條對兩種案件都要求決定重大性與執行重大性。"}'></div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>列得出 3000 號第 92 條、3410 號第 176 條兩種案件程序上的五大差異</li>
+      <li>知道「瞭解內部控制」在兩種案件分別要做到哪裡</li>
+      <li>知道有限確信裡「察覺可能有重大不實表達」之後要做什麼</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：程序差異的五個面向</h2>
+    <div class="law"><b class="art">3000 號第 92 條（摘要）</b>合理確信案件與有限確信案件中所執行程序之主要差異包括：1. 程序性質的著重點不同（有限確信可能較著重查詢及分析性程序，較不著重控制測試及自外部獲取證據）。2. 有限確信可能選取較少受查項目或執行較少程序。3. 合理確信的分析性程序預期值應足夠精確以辨認重大不實表達；有限確信的分析性程序可能只為佐證對趨勢、關係及比率之預期。4. 有限確信辨認出重大波動時，執行查詢並考量回應即可能取得適當證據。5. 有限確信可能使用高度彙整之資訊，或可靠性測試程度較低之資訊。</div>
+    <div class="compare">
+      <div class="h">面向</div><div class="h">有限確信</div><div class="h">合理確信</div>
+      <div class="k">程序著重</div><div>查詢、分析性程序</div><div>加上控制測試、外部證據（函證）</div>
+      <div class="k">受查項目</div><div>較少；可能只做分析性程序</div><div>分析性程序加細項測試</div>
+      <div class="k">分析性程序的預期值</div><div>佐證趨勢與比率的方向</div><div>足夠精確到能抓出重大不實表達</div>
+      <div class="k">發現重大差異</div><div>向個體查詢、考量回應，通常就夠</div><div>查詢之外還要取得額外證據（3410 號第 48 條）</div>
+      <div class="k">資料顆粒</div><div>區域層級、按月（3410 號第 176 條）</div><div>設施層級、按週</div>
+      <div class="k">瞭解內部控制</div><div>透過查詢瞭解控制環境、資訊系統與溝通、風險評估流程之結果（3410 號第 24 條）</div><div>五個組成要素都要，含攸關控制作業與監督流程，且須評估設計、確認已付諸實行（3410 號第 25、26 條）</div>
+      <div class="k">實地訪查設施數</div><div>較少，但有範疇 1 的重要設施不能一個都不去（3410 號第 162 條）</div><div>通常較多，常須每一重要設施都去</div>
+      <div class="k">彙總流程</div><div>核對或調節至相關紀錄；向個體查詢重大調整（3410 號第 53 條）</div><div>核對或調節；<b>檢查</b>重大調整（3410 號第 55 條）</div>
+    </div>
+    <div class="tip">3410 號第 176 條給了三個很具體的對照例子：連續監測設備的校準，有限確信「查詢校準頻率」，合理確信「檢查校準紀錄或獨立測試」；燃煤特性，有限確信「複核個體實驗室的紀錄」，合理確信「獨立分析煤炭」。考申論題引這兩個例子很加分。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 5：有限確信遇到「怪怪的」要追到底</h2>
+    <div class="law ghg"><b class="art">3410 號第 54 條</b>對有限確信案件，如執業人員獲悉某事項，且認為該事項可能導致溫室氣體聲明存有重大不實表達時，應設計並執行額外程序以取得進一步證據，直至執業人員能：1. 對該事項不太可能導致溫室氣體聲明存有重大不實表達作出結論。 2. 確認該事項導致溫室氣體聲明存有重大不實表達。</div>
+    <p>這是有限確信最容易被誤解的地方。程序少，不代表看到異常可以放過。一旦察覺，就必須追到「應該沒事」或「確實有事」二選一，中間不能停。3000 號第 132 條給了四個觸發情境：分析性程序出現不一致、複核外部資訊發現潛在不實表達、錯誤率接近基準允許上限、分析性程序差異接近可接受金額。</p>
+    <div class="warn">檢查重點：底稿如果有分析性程序差異的紀錄，但後面只寫「經詢問公司人員，係因產線調整」就結案，要看有沒有「考量回應後決定是否執行其他程序」的判斷（3410 號第 40 條）。沒有這個判斷，就是只做了一半。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 6：合理確信特有的三件事</h2>
+    <ul>
+      <li><b>辨認及評估個別聲明的風險</b>（3410 號第 34 條）：合理確信要針對「重大排放類別及揭露事項之<b>聲明</b>」評估風險，有限確信只針對「重大排放類別及揭露事項」（第 33 條）。聲明清單見第 4 課。</li>
+      <li><b>控制測試</b>（3410 號第 43 條）：想信賴控制、或只靠其他程序不夠時，必須做控制測試。有限確信原則上不須瞭解控制作業，但某些情況（例如資料全部電子化）也可能決定做（第 90 條）。</li>
+      <li><b>每一重大排放類別都要有細項測試或分析性程序</b>（3410 號第 45 條）：不論風險評估結果如何。</li>
+    </ul>
+  </div>
+
+  <div class="q" data-ans="B">
+    <div class="stem">練習 2：青山鋼鐵的有限確信案件中，會計師做分析性程序發現台中廠 7 月用電量比產量推估高出 35%。公司回覆「7 月試車新產線」。會計師下一步應該？</div>
+    <label><input type="radio" name="p2" value="A">A. 有限確信不須追查差異，記錄回覆即可</label>
+    <label><input type="radio" name="p2" value="B">B. 考量回覆是否合理，決定是否須執行其他程序；若仍可能有重大不實表達，執行額外程序直到能下結論</label>
+    <label><input type="radio" name="p2" value="C">C. 一律改做合理確信程序，取得試車紀錄與電表讀數</label>
+    <label><input type="radio" name="p2" value="D">D. 直接出具保留結論</label>
+    <button class="btn small check">對答案</button>
+    <div class="fb" data-exp="3410 號第 40 條：向個體查詢，考量回應以決定是否須執行其他程序；第 54 條：若察覺可能有重大不實表達，執行額外程序直到二選一。" data-diag='{"A":"第 40 條要求「考量回應以決定是否須執行其他程序」，不是記錄就好。","C":"不須一律升級成合理確信程序；要不要再做是專業判斷。","D":"還沒取得證據就出保留結論，不符合第 54 條。"}'></div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>寫得出溫室氣體聲明的有限確信與合理確信無保留結論句</li>
+      <li>知道有限確信報告的「工作彙總說明」必須多講哪兩句</li>
+      <li>知道合理確信案件取不到證據時，不能改成有限確信</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 7：結論句型</h2>
+    <div class="law ghg"><b class="art">3410 號第 12 條第 1 款</b>(1) 對於合理確信案件，溫室氣體聲明在所有重大方面是否係依適用基準編製。 (2) 對於有限確信案件，執業人員依據其所執行之程序及所獲得之證據，是否未發現溫室氣體聲明在所有重大方面有未依適用基準編製之情事。</div>
+    <div class="law"><b class="art">3000 號第 71 條第 12 款（節錄）</b>(2) 合理確信案件之結論應以積極之文字表達。 (3) 有限確信案件之結論應說明，執業人員依據其所執行之程序及所獲取之證據，是否未發現標的資訊存有重大不實表達之情事。</div>
+    <p>有限確信結論的固定開頭是「依據所執行之程序及所獲取之證據」，這句不能省，因為它把結論的效力限縮在「我做過的那些事」裡。合理確信結論的開頭是「依本執業人員之意見」。</p>
+  </div>
+
+  <div class="card">
+    <h2>小工具：結論句型產生器</h2>
+    <p class="small muted">選確信程度與結論類型，看溫室氣體聲明案件的結論段怎麼寫、段落標題用什麼。句型依 3000 號第 161、163、168 條與 3410 號第 12 條改寫。</p>
+    <div class="toolbox">
+      <fieldset><legend>確信程度</legend>
+        <label><input type="radio" name="g_lvl" value="L" checked>有限確信</label>
+        <label><input type="radio" name="g_lvl" value="R">合理確信</label>
+      </fieldset>
+      <fieldset><legend>結論類型</legend>
+        <label><input type="radio" name="g_typ" value="U" checked>無保留</label>
+        <label><input type="radio" name="g_typ" value="Q">保留</label>
+        <label><input type="radio" name="g_typ" value="A">否定</label>
+        <label><input type="radio" name="g_typ" value="D">無法表示</label>
+      </fieldset>
+      <div class="result on" id="genRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 8：有限確信報告要多講兩句</h2>
+    <div class="law"><b class="art">3000 號第 71 條第 11 款（節錄）</b>對有限確信案件，所執行工作之彙總說明應包括：(1) 有限確信案件中執行程序之性質及時間與適用於合理確信案件者不同，其範圍亦較小。 (2) 有限確信案件中取得之確信程度明顯低於合理確信案件中取得者。</div>
+    <p>3410 號第 84 條第 11 款第 2 目重複了同樣的要求。第 158 條還說：有限確信報告的工作彙總通常<b>比合理確信更詳細</b>，因為讀者要靠它判斷結論的份量。第 160 條：彙總說明要客觀，不能過於簡潔而模稜兩可，也不能過度誇大或美化。</p>
+    <div class="tip">考題陷阱：「有限確信案件的工作彙總說明可以比合理確信簡略」。錯，第 158 條說的是相反。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 9：取不到證據，不能把合理改成有限</h2>
+    <div class="law"><b class="art">3000 號第 112 條</b>情況改變而影響預期使用者之需求，或對案件性質之誤解，可能為要求修改案件條款（例如由確信案件更改為非確信案件，或由合理確信案件更改為有限確信案件）之合理依據。惟因無法取得足夠及適切之證據以作成合理確信之結論，而要求更改合理確信案件為有限確信案件，並非可接受之理由。</div>
+    <p>3410 號第 123 條再補一個溫室氣體的例子：個體因為會計師可能出修正式結論，就要求把某些排放源排除在案件範圍外，這種修改沒有正當理由。取不到證據的正確出路是第 68 條：保留結論、無法表示結論，或終止委任。</p>
+  </div>
+
+  <div class="card">
+    <h2>小工具：這句是有限還是合理？</h2>
+    <div class="toolbox">
+      <div class="chips" id="t3chips">
+        <button class="chip" data-k="a">「依本會計師之意見，青山鋼鐵 2025 年度溫室氣體聲明在所有重大方面係依適用基準編製。」</button>
+        <button class="chip" data-k="b">「依據所執行之程序及所獲取之證據，本會計師未發現青山鋼鐵 2025 年度溫室氣體聲明在所有重大方面有未依適用基準編製之情事。」</button>
+        <button class="chip" data-k="c">「本會計師認為青山鋼鐵之溫室氣體聲明大致允當，惟未執行合理確信所需之全部程序。」</button>
+        <button class="chip" data-k="d">「本會計師依協議執行下列程序，發現事項如下，不對溫室氣體聲明整體表示任何確信。」</button>
+      </div>
+      <div class="result" id="t3res"></div>
+    </div>
+  </div>
+
+  <div class="insp"><b class="t">檢查人員視角：第 2 課在底稿裡看什麼</b>
+    <ul>
+      <li>委任書寫的確信程度，跟規劃備忘錄、程序、報告結論句是否一致。四個地方只要有一個寫成另一種，就要追。</li>
+      <li>重大性決定的理由有沒有拿「有限確信」當藉口。</li>
+      <li>分析性程序出現差異後，有沒有「考量回應、決定是否再做」的紀錄；有限確信不是查詢完就結束。</li>
+      <li>合理確信案件中途改成有限確信的，看改的理由是不是「取不到證據」（第 112 條）。</li>
+      <li>有限確信報告的工作彙總有沒有那兩句（程序不同且較小、確信程度明顯較低）。</li>
+    </ul>
+  </div>
+
+  <div class="essay" data-id="e1">
+    <div class="stem">實例題：青山鋼鐵委任合理確信。查核中，高雄廠的連續監測設備校準紀錄缺了 4 個月，公司無法補。事務所與公司協議改為有限確信，報告以有限確信結論出具，工作彙總說明寫「本案件程序與合理確信相同，惟確信程度較低」。請指出至少三個問題。</div>
+    <textarea placeholder="先寫你的答案，再看參考答案。"></textarea>
+    <button class="btn small secondary showans">看參考答案並自評</button>
+    <details><summary class="small">參考答案（點開）</summary>
+      <div class="body small">
+        <ol>
+          <li>改變案件條款的理由不正當：因無法取得足夠及適切之證據而把合理確信改為有限確信，3000 號第 112 條明文「並非可接受之理由」；第 27 條規定無正當理由不得接受條款修改。</li>
+          <li>正確出路：3000 號第 68 條，範圍受限制時應出具保留結論、無法表示結論，或終止委任；依第 76 條判斷影響是否重大且廣泛。</li>
+          <li>工作彙總說明錯誤：第 71 條第 11 款要求有限確信報告說明程序性質及時間與合理確信不同、範圍較小、確信程度明顯較低。寫「程序與合理確信相同」自相矛盾，也不符第 160 條「不得過度誇大」。</li>
+          <li>先決條件：若校準紀錄的缺口使得「預期可取得支持結論之證據」（第 22 條第 2 款第 4 目）不成立，第 40 條要求與適當方討論並確認是否繼續。</li>
+          <li>書面紀錄：改變條款與偏離原規劃屬重大事項，第 81 條、第 82 條要求記錄判斷與不一致的處理。</li>
+        </ol>
+      </div>
+    </details>
+    <div class="self"><span class="small">自評：</span><button class="btn small" data-ok="1">寫到了主要幾點</button><button class="btn small secondary" data-ok="0">漏了關鍵條文</button><span class="selfmsg small muted"></span></div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="quiz" class="panel">
+  <div class="card goal"><h2>章末測驗</h2><p>10 題，8 題以上過關。</p></div>
+  <div id="quizCard">
+    <div class="q quiz" data-ans="B"><div class="stem">1. 有限確信與合理確信案件定義上的差別在於？</div>
+      <label><input type="radio" name="q1" value="A">A. 重大性不同</label><label><input type="radio" name="q1" value="B">B. 可接受之案件風險水準不同</label><label><input type="radio" name="q1" value="C">C. 標的不同</label><label><input type="radio" name="q1" value="D">D. 是否須取得書面聲明</label>
+      <div class="fb" data-exp="3000 號第 10 條第 13 款第 1 目：有限確信「可接受風險水準高於適用於合理確信案件者」。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">2. 下列何者「不受」確信程度影響？</div>
+      <label><input type="radio" name="q2" value="A">A. 重大性、標的之適當性、基準之妥適性</label><label><input type="radio" name="q2" value="B">B. 程序之性質、時間及範圍</label><label><input type="radio" name="q2" value="C">C. 結論之用語</label><label><input type="radio" name="q2" value="D">D. 對內部控制之瞭解程度</label>
+      <div class="fb" data-exp="3000 號第 102、121 條；3410 號第 112、134 條。"></div></div>
+    <div class="q quiz" data-ans="D"><div class="stem">3. 有限確信案件「具有意義之確信程度」的下限是？</div>
+      <label><input type="radio" name="q3" value="A">A. 略低於合理確信</label><label><input type="radio" name="q3" value="B">B. 與協議程序相當</label><label><input type="radio" name="q3" value="C">C. 由委任方決定</label><label><input type="radio" name="q3" value="D">D. 使用者信賴水準明顯高於微不足道</label>
+      <div class="fb" data-exp="3000 號第 93 條。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">4. 合理確信案件之結論應以何種方式表達？</div>
+      <label><input type="radio" name="q4" value="A">A. 消極文字</label><label><input type="radio" name="q4" value="B">B. 「未發現……之情事」</label><label><input type="radio" name="q4" value="C">C. 積極文字</label><label><input type="radio" name="q4" value="D">D. 列舉所執行程序之發現</label>
+      <div class="fb" data-exp="3000 號第 71 條第 12 款第 2 目；3410 號第 84 條第 12 款第 1 目。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">5. 依 3410 號第 24 條，有限確信案件對內部控制制度應透過查詢瞭解哪些項目？</div>
+      <label><input type="radio" name="q5" value="A">A. 五個組成要素全部</label><label><input type="radio" name="q5" value="B">B. 控制環境、資訊系統與溝通、個體風險評估流程之結果</label><label><input type="radio" name="q5" value="C">C. 僅控制作業</label><label><input type="radio" name="q5" value="D">D. 不須瞭解內部控制</label>
+      <div class="fb" data-exp="第 24 條三項；合理確信依第 25 條五項。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">6. 合理確信案件因無法取得足夠及適切之證據，委任方要求改為有限確信。執業人員應？</div>
+      <label><input type="radio" name="q6" value="A">A. 不得接受，應依第 68 條出具保留結論、無法表示結論或終止委任</label><label><input type="radio" name="q6" value="B">B. 得接受，但須於報告中說明</label><label><input type="radio" name="q6" value="C">C. 得接受，因條款修改屬雙方合意</label><label><input type="radio" name="q6" value="D">D. 應改為協議程序</label>
+      <div class="fb" data-exp="3000 號第 112 條末句。"></div></div>
+    <div class="q quiz" data-ans="D"><div class="stem">7. 有限確信報告中所執行工作之彙總說明，下列何者正確？</div>
+      <label><input type="radio" name="q7" value="A">A. 可比合理確信簡略</label><label><input type="radio" name="q7" value="B">B. 不須說明確信程度較低</label><label><input type="radio" name="q7" value="C">C. 應逐項列出案件計畫</label><label><input type="radio" name="q7" value="D">D. 應說明程序性質及時間不同、範圍較小，且確信程度明顯低於合理確信</label>
+      <div class="fb" data-exp="3000 號第 71 條第 11 款、第 158 條、第 160 條。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">8. 有限確信案件中，執業人員察覺某事項可能導致溫室氣體聲明重大不實表達，應？</div>
+      <label><input type="radio" name="q8" value="A">A. 記錄後繼續，因有限確信程序較少</label><label><input type="radio" name="q8" value="B">B. 立即改為合理確信</label><label><input type="radio" name="q8" value="C">C. 設計並執行額外程序，直到能結論「不太可能」或「確認存有」重大不實表達</label><label><input type="radio" name="q8" value="D">D. 直接出具無法表示結論</label>
+      <div class="fb" data-exp="3410 號第 54 條；3000 號第 51 條。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">9. 合理確信案件的分析性程序預期值應？</div>
+      <label><input type="radio" name="q9" value="A">A. 只須佐證趨勢方向</label><label><input type="radio" name="q9" value="B">B. 足夠精確以辨認可能之重大不實表達</label><label><input type="radio" name="q9" value="C">C. 使用區域層級資料即可</label><label><input type="radio" name="q9" value="D">D. 不須設定預期值</label>
+      <div class="fb" data-exp="3410 號第 47 條第 3 款；3000 號第 92 條第 3 款。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">10. 個體有數個具範疇 1 排放的重要設施。有限確信案件中，執業人員一個設施都不去，依 3410 號第 162 條可能的後果是？</div>
+      <label><input type="radio" name="q10" value="A">A. 可能無法取得具有意義之確信程度</label><label><input type="radio" name="q10" value="B">B. 沒有影響，有限確信不須實地訪查</label><label><input type="radio" name="q10" value="C">C. 應改為合理確信</label><label><input type="radio" name="q10" value="D">D. 應出具否定結論</label>
+      <div class="fb" data-exp="3410 號第 162 條。替代程序（流程圖複核、問卷、衛星圖像）是「無法有效執行實地程序」時的選項，不是「不想去」的選項。"></div></div>
+  </div>
+  <button class="bigbtn" id="submitQuiz">交卷</button>
+  <div id="quizResult"></div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="arts" class="panel">
+  <div class="card"><h2>本課條文速查</h2>
+  <div class="arts">
+    <details><summary>3000 號第 10 條第 13 款第 1 目 <span>合理確信與有限確信之定義</span></summary><div class="txt">①合理確信案件：執業人員執行必要程序將案件風險降低至當時情況下可接受水準，並作成結論之確信案件。執業人員依據前述結論對依基準衡量或評估標的之結果出具意見。
+②有限確信案件：執業人員執行必要程序將案件風險降低至當時情況下可接受水準，並作成結論之確信案件，惟其可接受風險水準高於適用於合理確信案件者。該結論說明，執業人員依據其所執行之程序及所獲取之證據，是否未發現標的資訊存有重大不實表達之情事。
+相較於合理確信案件，執業人員對有限確信案件所執行程序之性質、時間及範圍較為有限，但仍須取得依其專業判斷具有意義之確信程度。具有意義之確信程度係指預期使用者之信賴水準可提升至明顯高於微不足道之程度。</div></details>
+    <details><summary>3000 號第 44 至 47 條 <span>瞭解標的及案件情況</span></summary><div class="txt">第 44 條 對合理確信案件，執業人員應對標的及其他案件情況取得足夠瞭解，使其能：1.辨認及評估標的資訊之重大不實表達風險。2.針對前述重大不實表達風險設計及執行程序，以取得合理確信並作出執業人員之結論。
+第 45 條 對合理確信案件，執業人員依第四十四條之規定取得瞭解時，應瞭解與編製標的資訊攸關之內部控制。該瞭解包括藉由查詢負責標的資訊之人員並執行其他程序，以評估攸關控制之設計及確認該等控制是否已付諸實行。
+第 46 條 對有限確信案件，執業人員應對標的及其他案件情況取得足夠瞭解，使其能：1.辨認標的資訊可能存有重大不實表達之領域。2.針對前述領域設計及執行程序，以取得有限確信並作出執業人員之結論。
+第 47 條 對有限確信案件，執業人員依第四十六條之規定取得瞭解時，應考量標的資訊之編製流程。</div></details>
+    <details><summary>3000 號第 51 條 <span>有限確信中之額外程序</span></summary><div class="txt">有限確信案件中，執業人員如察覺標的資訊可能存有重大不實表達之情事，應設計及執行額外程序以取得進一步證據，直至執業人員能達成下列結論之一：1.該情事不太可能導致標的資訊存有重大不實表達。2.該情事導致標的資訊存有重大不實表達。</div></details>
+    <details><summary>3000 號第 92 至 94 條 <span>程序差異、具有意義之確信程度</span></summary><div class="txt">第 92 條 因有限確信案件取得之確信程度低於合理確信案件取得者，執業人員就有限確信案件所執行程序之性質及時間與適用於合理確信案件者不同，其範圍亦較小。主要差異包括：1.程序性質之著重可能不同，例如較著重查詢及分析性程序，較不著重控制測試及自外部獲取證據。2.可能選取較少之受查項目或執行較少之程序。3.合理確信案件之分析性程序預期值應足夠精確以辨認重大不實表達；有限確信案件之分析性程序可能係為佐證對趨勢、關係及比率之預期。4.有限確信案件中辨認出重大波動時，執行查詢並考量回應即可能取得適當證據。5.有限確信案件可能使用高度彙整之資訊，或所使用資訊之可靠性測試程度較低。
+第 93 條 對有限確信案件，具有意義之確信程度介於下列二者之間：(1)略低於合理確信；(2)略高於可提升預期使用者之信賴水準至明顯高於微不足道之確信程度。
+第 94 條 判斷是否取得具有意義之確信程度之攸關因素：1.標的及基準之特性。2.委任方之指令或指示。3.類似案件之一般實務。4.預期使用者整體之資訊需求；不適當結論影響愈大，所需確信程度愈高。5.預期使用者對短期間低成本之預期。</div></details>
+    <details><summary>3000 號第 102、112、121 條 <span>不受確信程度影響之事項</span></summary><div class="txt">第 102 條 標的之適當性不受確信程度之影響。對合理確信案件係屬不適當之標的，對有限確信案件亦屬不適當，反之亦然。
+第 112 條 情況改變而影響預期使用者之需求，或對案件性質之誤解，可能為要求修改案件條款之合理依據。惟因無法取得足夠及適切之證據以作成合理確信之結論，而要求更改合理確信案件為有限確信案件，並非可接受之理由。
+第 121 條 對於重大性所作之判斷受執業人員所面對之情況影響，但不受確信程度影響。因重大性係依據預期使用者之資訊需求而定，對於相同預期使用者及目的，合理確信案件之重大性與有限確信案件之重大性相同。</div></details>
+    <details><summary>3000 號第 71 條第 11、12 款 <span>工作彙總與結論</span></summary><div class="txt">11.執業人員為作成結論所執行工作之彙總說明。對有限確信案件，所執行工作之彙總說明應包括：(1)有限確信案件中執行程序之性質及時間與適用於合理確信案件者不同，其範圍亦較小。(2)有限確信案件中取得之確信程度明顯低於合理確信案件中取得者。
+12.執業人員之結論：(2)合理確信案件之結論應以積極之文字表達。(3)有限確信案件之結論應說明，執業人員依據其所執行之程序及所獲取之證據，是否未發現標的資訊存有重大不實表達之情事。(5)執業人員如作成修正式結論，確信報告應包括：①導致修正式結論事項之說明。②執業人員所作成之修正式結論。</div></details>
+    <details><summary>3000 號第 158、160 條 <span>工作彙總之詳細程度</span></summary><div class="txt">第 158 條 有限確信案件中所執行工作之彙總說明，通常較合理確信案件之彙總說明更為詳細，並指出程序之性質、時間及範圍所受之限制。
+第 160 條 彙總說明應以客觀之方式表達，使預期使用者瞭解執業人員為作成結論所執行之工作。彙總說明通常不會詳細至按案件計畫逐項說明，惟其內容亦不宜過於簡潔而模稜兩可，抑或過度誇大或美化。</div></details>
+    <details><summary>3000 號第 161、163、168 條 <span>結論句型例示</span></summary><div class="txt">第 161 條（合理確信）針對標的資訊及適用基準：「依本執業人員之意見，甲公司之擬制性資訊在所有重大方面係依照XX基準編製」。
+第 163 條（有限確信）針對標的資訊及適用基準：「依據所執行之程序及所獲取之證據，本執業人員未發現甲公司之重要績效指標有未依照XX基準評估而須作重大修正之情事」。
+第 168 條 保留結論（有限確信）：「依據所執行之程序及所獲取之證據，除保留結論之基礎之說明段所述事項之影響外，本執業人員未發現……有未允當表達之情事」。否定結論：「由於否定結論之基礎之說明段所述事項之影響重大，……非屬允當表達」。無法表示結論：「由於無法表示結論之基礎之說明段所述事項之影響重大，本執業人員無法……獲得足夠及適切之證據，因此本執業人員無法對該聲明表示結論」。</div></details>
+    <details><summary>3410 號第 8 條 <span>兩種案件之程序</span></summary><div class="txt">除另有規定外，本確信準則之每一基本準則均適用於有限確信及合理確信案件。因有限確信案件中取得之確信程度低於合理確信案件中取得者，執業人員對有限確信案件所執行程序之性質及時間，與適用於合理確信案件者不同，其範圍亦較適用於合理確信案件者小。雖然某些程序僅須適用於合理確信案件，惟於某些情況下，對有限確信案件適用該等程序可能亦屬適當。</div></details>
+    <details><summary>3410 號第 12 條 <span>目的</span></summary><div class="txt">本確信準則之目的係規範執業人員：1.對溫室氣體聲明是否存有導因於舞弊或錯誤之重大不實表達，取得合理確信或有限確信，俾使執業人員得依其發現事項作成結論：(1)對於合理確信案件，溫室氣體聲明在所有重大方面是否係依適用基準編製。(2)對於有限確信案件，執業人員依據其所執行之程序及所獲得之證據，是否未發現溫室氣體聲明在所有重大方面有未依適用基準編製之情事。2.依據執業人員之發現事項，依本確信準則之規定出具報告，並進行溝通。</div></details>
+    <details><summary>3410 號第 24 至 26 條 <span>瞭解內部控制制度</span></summary><div class="txt">第 24 條 對有限確信案件，執業人員應對與排放量化及報導攸關之內部控制制度，透過查詢以取得對下列項目之瞭解：1.控制環境。2.資訊系統（含相關營運流程）及溝通。3.個體風險評估流程之結果。
+第 25 條 對合理確信案件，執業人員應對下列內部控制制度組成要素取得瞭解：1.控制環境。2.資訊系統及溝通。3.個體之風險評估流程。4.與案件攸關之控制作業（依執業人員判斷須瞭解者）。5.個體監督內部控制制度之流程。
+第 26 條 執業人員取得對第二十五條所規定之內部控制制度組成要素之瞭解時，除向個體負責溫室氣體聲明之人員查詢外，應執行其他程序以評估該等控制之設計是否適當，並確認控制是否付諸實行。</div></details>
+    <details><summary>3410 號第 40 條、第 54 條 <span>有限確信：差異查詢與額外程序</span></summary><div class="txt">第 40 條 若分析性程序已辨認之變動或關係與其他攸關資訊不一致，或與數量或比率之預期值間存有重大差異時，執業人員應向個體查詢此等差異。執業人員應考量個體對此等查詢之回應，以決定於當時情況下是否須執行其他程序。
+第 54 條 對有限確信案件，如執業人員獲悉某事項，且認為該事項可能導致溫室氣體聲明存有重大不實表達時，應設計並執行額外程序以取得進一步證據，直至執業人員能：1.對該事項不太可能導致溫室氣體聲明存有重大不實表達作出結論。2.確認該事項導致溫室氣體聲明存有重大不實表達。</div></details>
+    <details><summary>3410 號第 53、55 條 <span>彙總流程</span></summary><div class="txt">第 53 條 對有限確信案件，執業人員對溫室氣體聲明彙總流程應執行之程序包括：1.將溫室氣體聲明與相關紀錄核對或調節。2.藉由向個體查詢，以瞭解其於編製溫室氣體聲明過程中所作之重大調整，並考量於當時情況下是否須執行其他程序。
+第 55 條 對合理確信案件，執業人員對溫室氣體聲明彙總流程應執行之程序包括：1.將溫室氣體聲明與相關紀錄核對或調節。2.檢查個體於編製溫室氣體聲明過程中所作之重大調整。</div></details>
+    <details><summary>3410 號第 134、143、162、176 條 <span>解釋及應用</span></summary><div class="txt">第 134 條 執業人員係依所面臨之情況對重大性作出判斷，該判斷受量化及質性因素之影響。然而重大性之決定不受確信程度影響，亦即合理確信案件與有限確信案件兩者之重大性相同。
+第 143 條 在某些情況下，如不確定性對溫室氣體聲明中資訊之影響甚大，執業人員可能認為承接此確信案件並不適當。……是否承接確信案件之決定，並不受確信程度之影響。
+第 162 條 對有限確信案件，當個體有數個具範疇 1 排放之重要設施，如執業人員未選擇某些重要設施執行程序，則可能無法取得具有意義之確信程度。如執業人員認為無法於該設施實地執行有效果及效率之程序時，可執行下列替代程序：1.複核排放源文件、能源流及原料流之流程圖。2.分析設施管理階層回覆之問卷。3.檢查設施之衛星圖像。
+第 176 條（摘要）兩種案件整體對策及進一步程序之主要差異：1.程序性質之重視程度不同（有限確信較著重查詢及分析性程序；例如校準設備，有限確信查詢校準頻率，合理確信檢查校準紀錄或獨立測試；燃煤特性，合理確信獨立分析，有限確信複核實驗室紀錄）。2.有限確信執行較少之進一步程序（較少受測項目、較少程序、較少設施）。3.合理確信之分析性程序預期值應足夠精確；有限確信可能使用高度彙整資料，資料可靠性測試程度較低。</div></details>
+  </div></div>
+  <p class="small"><a href="01_什麼是確信案件.html">上一課</a> · <a href="00_總覽地圖.html">回總覽地圖</a> · <a href="03_承接案件.html">下一課：承接案件</a></p>
+</section>
+
+<footer>確信準則 3000 號與 3410 號自學課 · 自學筆記，非官方；條文以會計研究發展基金會發布版本為準 · 紀錄只存在這台裝置的瀏覽器</footer>
+</div>
+<script>
+const LESSON_ID = "02", CH = "確信準則 02 有限確信與合理確信";
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const PROG_KEY = "qx_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與其他教材共用 study_log_v1）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  $$('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  $$('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+$$('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="quiz"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+$$('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok });
+  });
+});
+
+// ===== 章末測驗交卷 =====
+(function(){
+  const sb = document.getElementById('submitQuiz'); if(!sb) return;
+  sb.addEventListener('click',()=>{
+    const qs = $$('#quizCard .q.quiz');
+    let score = 0, answered = 0; const wrong = [];
+    qs.forEach((q,i)=>{
+      const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+      q.classList.remove('correct','wrong');
+      if(sel) answered++;
+      if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+      else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+    });
+    logEv({ type:"quiz", score, total: qs.length, wrong });
+    writeProg({ quiz: { score, total: qs.length } });
+    const r = document.getElementById('quizResult');
+    if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+    else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="quiz"]').classList.add('done'); }
+    else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+    else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+    r.scrollIntoView({behavior:'smooth'});
+  });
+})();
+
+// ===== 實例題自評 =====
+$$('.essay').forEach(es=>{
+  const ta = es.querySelector('textarea'), self = es.querySelector('.self'), ans = es.querySelector('details');
+  const showBtn = es.querySelector('.showans');
+  if(showBtn) showBtn.addEventListener('click',()=>{ if(ans) ans.open = true; self.classList.add('on'); });
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 通用：chips 單選顯示結果 =====
+function chipTool(chipsId, resId, DATA, render, logName){
+  const res = document.getElementById(resId); if(!res) return;
+  $$('#'+chipsId+' .chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      $$('#'+chipsId+' .chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+      c.setAttribute('aria-pressed','true');
+      const d = DATA[c.dataset.k];
+      res.innerHTML = render(d, c.dataset.k);
+      res.classList.add('on');
+      logEv({ type:"tool", q:logName, k:c.dataset.k });
+    });
+  });
+}
+
+// ===== 工具：確信程度拉桿 =====
+(function(){
+  const L = [
+    { name:'無確信（協議程序）', risk:'不適用：不作成結論，所以沒有「作成不適當結論」的風險', proc:'執行委任方與相關第三方協議的程序，報告發現事實（3000 號第 90 條）', ic:'不須', mat:'不適用', concl:'「依協議執行下列程序，發現事項如下」，不表示確信', rep:'不是確信報告，不得提及依 3000 號或 3410 號執行' },
+    { name:'有限確信', risk:'可接受水準<b>較高</b>（3000 號第 10 條第 13 款）', proc:'較著重查詢與分析性程序；受查項目較少；設施去得較少（3000 號第 92 條、3410 號第 176 條）。察覺異常仍須追到底（3410 號第 54 條）', ic:'透過查詢瞭解控制環境、資訊系統與溝通、風險評估流程之結果（3410 號第 24 條）', mat:'與合理確信<b>相同</b>（3000 號第 121 條、3410 號第 134 條）', concl:'「依據所執行之程序及所獲取之證據，本會計師未發現……在所有重大方面有未依適用基準編製之情事」', rep:'工作彙總須說明：程序性質及時間不同、範圍較小；確信程度明顯較低（3000 號第 71 條第 11 款）' },
+    { name:'合理確信', risk:'可接受水準<b>較低</b>', proc:'查詢、分析性程序之外加控制測試、外部函證、細項測試；每一重大排放類別都要有細項測試或分析性程序（3410 號第 45 條）；分析性程序預期值須足夠精確（第 47 條）', ic:'五個組成要素都要瞭解，並評估設計、確認付諸實行（3410 號第 25、26 條）', mat:'與有限確信<b>相同</b>', concl:'「依本會計師之意見，……在所有重大方面係依適用基準編製」', rep:'案件係依 3000 號及 3410 號執行之聲明、工作彙總（3410 號第 84 條第 11 款）' }
+  ];
+  const r = $('#lvlRes'), s = $('#lvl');
+  function draw(){
+    const d = L[Number(s.value)];
+    r.innerHTML = '<h3>'+d.name+'</h3><div class="scroll"><table><tbody>'+
+      '<tr><th style="width:9em">可接受案件風險</th><td>'+d.risk+'</td></tr>'+
+      '<tr><th>程序</th><td>'+d.proc+'</td></tr>'+
+      '<tr><th>瞭解內部控制</th><td>'+d.ic+'</td></tr>'+
+      '<tr><th>重大性</th><td>'+d.mat+'</td></tr>'+
+      '<tr><th>結論句</th><td>'+d.concl+'</td></tr>'+
+      '<tr><th>報告特別要寫</th><td>'+d.rep+'</td></tr></tbody></table></div>';
+  }
+  s.addEventListener('input', ()=>{ draw(); logEv({ type:"tool", q:"level", k:s.value }); }); draw();
+})();
+
+// ===== 工具：結論句型產生器 =====
+(function(){
+  const r = $('#genRes');
+  function draw(){
+    const lvl = document.querySelector('input[name=g_lvl]:checked').value, typ = document.querySelector('input[name=g_typ]:checked').value;
+    const R = lvl==='R';
+    let title, basis='', text, note='';
+    const subj = '青山鋼鐵股份有限公司民國 114 年度溫室氣體聲明';
+    if(typ==='U'){
+      title = '結論'; 
+      text = R ? '依本會計師之意見，'+subj+'在所有重大方面係依適用基準編製。'
+               : '依據所執行之程序及所獲取之證據，本會計師未發現'+subj+'在所有重大方面有未依適用基準編製之情事。';
+      note = '無保留結論的條件：3000 號第 74 條。合理確信：標的資訊在所有重大方面依適用基準編製。有限確信：未發現在所有重大方面有未依適用基準編製之情事。';
+    } else if(typ==='Q'){
+      title = '保留結論'; basis = '保留結論之基礎';
+      text = R ? '依本會計師之意見，除保留結論之基礎段所述事項之影響外，'+subj+'在所有重大方面係依適用基準編製。'
+               : '依據所執行之程序及所獲取之證據，除保留結論之基礎段所述事項之影響外，本會計師未發現'+subj+'在所有重大方面有未依適用基準編製之情事。';
+      note = '3000 號第 77 條：影響未重大且廣泛時出具保留結論，以「除……外」表達。保留可能來自範圍受限制（第 76 條第 1 款）或存有重大不實表達（第 2 款）。';
+    } else if(typ==='A'){
+      title = '否定結論'; basis = '否定結論之基礎';
+      text = '由於否定結論之基礎段所述事項之影響重大，'+subj+'未依適用基準編製。';
+      note = '3000 號第 76 條第 2 款：標的資訊存有重大不實表達，且影響重大且廣泛（第 167 條）。有限確信與合理確信的否定結論寫法相同（第 168 條第 2 款例示兩種案件通用）。';
+    } else {
+      title = '無法表示結論'; basis = '無法表示結論之基礎';
+      text = '由於無法表示結論之基礎段所述事項之影響重大，本會計師無法對'+subj+'取得足夠及適切之證據，因此無法對該聲明表示結論。';
+      note = '3000 號第 76 條第 1 款：範圍受限制且影響重大且廣泛。3410 號第 67 條另規定：個體未提供第 65 條第 1、2 款之書面聲明，或對提供者誠信有重大懷疑，應出具無法表示結論或終止委任。';
+    }
+    r.innerHTML = '<div class="report">'+(basis?'<div class="sec">'+basis+'</div><p class="muted small">（說明導致修正式結論之事項，3000 號第 71 條第 12 款第 5 目）</p>':'')+'<div class="sec">'+title+'</div><p>'+text+'</p></div><p class="small muted" style="margin:.6em 0 0">'+note+'　段落標題依 3000 號第 165 條加列。</p>';
+  }
+  $$('input[name=g_lvl],input[name=g_typ]').forEach(i=>i.addEventListener('change',()=>{ draw(); logEv({ type:"tool", q:"concl-gen" }); })); draw();
+})();
+
+// ===== 工具：這句是有限還是合理 =====
+chipTool('t3chips','t3res',{
+  a:{ t:'合理確信的無保留結論', why:'「依本會計師之意見」加積極文字「係依適用基準編製」，是 3000 號第 71 條第 12 款第 2 目的積極表達。' },
+  b:{ t:'有限確信的無保留結論', why:'「依據所執行之程序及所獲取之證據」加「未發現……之情事」，是第 71 條第 12 款第 3 目的消極表達。' },
+  c:{ t:'兩種都不是：不合格的寫法', why:'「大致允當」不是準則認可的結論用語；「未執行全部程序」也不是結論該放的位置，應寫在工作彙總說明（第 71 條第 11 款）。檢查時看到這種結論句，整份報告都要重看。' },
+  d:{ t:'兩種都不是：協議程序報告', why:'只報告發現事項、不表示確信，是 3000 號第 5 條排除的協議程序。不得提及依 3000 號或 3410 號執行。' }
+}, d=>'<h3>'+d.t+'</h3><p class="small" style="margin:0">'+d.why+'</p>', 'which-level');
+
+</script>
+</body>
+</html>

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>確信準則｜第 4 課 規劃、重大性與風險</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F3F6F5; --card:#FFFFFF;
+  --ink:#1B2A2C; --ink-2:#4A5C5E; --ink-3:#83949A;
+  --rule:rgba(27,42,44,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --std:#0F6E6E; --std-soft:#E0F1F0;
+  --ghg:#5B3A8C; --ghg-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131B1C; --card:#1C2628;
+    --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+    --rule:rgba(232,238,238,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --std:#6CC3C0; --std-soft:#1E3736;
+    --ghg:#B9A0E3; --ghg-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131B1C; --card:#1C2628;
+  --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+  --rule:rgba(232,238,238,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --std:#6CC3C0; --std-soft:#1E3736;
+  --ghg:#B9A0E3; --ghg-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--std);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+code{font-size:.9em;background:var(--paper);padding:.05em .35em;border-radius:4px}
+
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--std);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--std-soft);color:var(--std);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button,nav.tabs a{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none}
+nav.tabs button:hover,nav.tabs a:hover{border-color:var(--std);color:var(--ink)}
+nav.tabs button.active,nav.tabs a.active{background:var(--std);border-color:var(--std);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--std-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--std-soft);border-left:4px solid var(--std);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--std);display:block;margin-bottom:.2em}
+.law.ghg{background:var(--ghg-soft);border-left-color:var(--ghg)}
+.law.ghg b.art{color:var(--ghg)}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.insp{background:var(--green-soft);border-left:4px solid var(--green);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.93rem}
+.insp b.t{color:var(--green);display:block;margin-bottom:.2em}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.std{background:var(--std-soft);border-color:transparent;color:var(--std)}
+.pill.ghg{background:var(--ghg-soft);border-color:transparent;color:var(--ghg)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.pill.signal{background:var(--signal-soft);border-color:transparent;color:var(--signal)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2,.grid3{grid-template-columns:1fr}}
+
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--std)}
+.flow .step.click{cursor:pointer}
+.flow .step.click:hover,.flow .step.on{border-color:var(--std);background:var(--std-soft)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+.roles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:.6rem 0 1rem}
+@media (max-width:720px){.roles{grid-template-columns:1fr 1fr}}
+.role{border:1px solid var(--rule);border-radius:10px;padding:.6rem .7rem;background:var(--paper);font-size:.9rem;cursor:pointer}
+.role b{display:block;color:var(--std)}
+.role:hover,.role.on{border-color:var(--std);background:var(--std-soft)}
+
+.compare{display:grid;grid-template-columns:9em 1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;font-size:.92rem;margin:.6rem 0 1rem}
+.compare>div{padding:.55em .8em;border-bottom:1px solid var(--rule)}
+.compare .h{background:var(--paper);font-weight:700}
+.compare .k{background:var(--paper);font-weight:700;color:var(--ink-2)}
+@media (max-width:720px){.compare{grid-template-columns:7em 1fr 1fr;font-size:.85rem}}
+
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox label.block{display:flex}
+.toolbox select,.toolbox input[type=number],.toolbox input[type=date],.toolbox input[type=text]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);max-width:100%}
+.toolbox input[type=range]{width:100%;max-width:420px}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--std)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--std);color:var(--std);background:var(--std-soft)}
+.chip.ok{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+.chip.bad{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--std);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--std);border:1.5px solid var(--std)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+.report{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 20px;font-size:.93rem;line-height:1.9}
+.report .rh{font-weight:700;text-align:center;font-size:1.05rem;margin-bottom:.6em}
+.report .blank{display:inline-block;min-width:7em;border-bottom:2px dashed var(--std);text-align:center;color:var(--std);cursor:pointer;padding:0 .3em}
+.report .blank.ok{border-bottom-style:solid;color:var(--green);border-color:var(--green)}
+.report .blank.bad{color:var(--warn);border-color:var(--warn)}
+.report .sec{color:var(--std);font-weight:700;margin-top:.5em}
+.list-check label{display:block;padding:.3em .5em;border-radius:6px}
+.list-check label:hover{background:var(--paper)}
+.list-check label.ok{background:var(--green-soft)}
+.list-check label.bad{background:var(--warn-soft)}
+.bar{height:12px;background:var(--paper);border:1px solid var(--rule);border-radius:999px;overflow:hidden;margin:.3rem 0}
+.bar i{display:block;height:100%;background:var(--std)}
+
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--std);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--std);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">確信準則 3000 · 3410 · 第 4 課</span>
+  <h1>規劃、重大性與風險</h1>
+  <p>三節加章末測驗。接了案子之後、動手取證之前，有三件事要先決定：怎麼規劃、多少算重大、哪裡最可能錯。3410 號在這一段寫得比 3000 號細很多，因為溫室氣體聲明的錯，常常不是算錯，而是「漏掉一個排放源」或「邊界畫錯」。</p>
+  <p class="ver">依確信準則 3000 號與 3410 號編寫。自學筆記，非官方。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">4-1 規劃與重大性</button>
+  <button data-t="s2">4-2 瞭解個體與內控</button>
+  <button data-t="s3">4-3 風險在哪裡</button>
+  <button data-t="quiz">章末測驗</button>
+  <button data-t="arts">條文速查</button>
+</nav>
+
+<!-- ═══════════ 4-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>列得出 3410 號第 18 條規劃時要做的六件事</li>
+      <li>分得清整體重大性、執行重大性、顯然微小三個層次</li>
+      <li>說得出重大性怎麼決定、何時要修正，以及量化與質性因素</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：規劃是在畫範圍、定方向、排資源</h2>
+    <div class="law"><b class="art">3000 號第 38 條</b>執業人員為有效執行案件，應作適當之規劃，包括設定案件之範圍、時間及方向，以及決定為達成其目的須執行程序之性質、時間及範圍。</div>
+    <div class="law ghg"><b class="art">3410 號第 18 條</b>依確信準則 3000 號之規定對案件執行規劃時，執業人員應：1. 辨認案件之特性，以界定確信範圍。 2. 確定案件之報導目的，以規劃案件之時間及須溝通之內容與方式。 3. 依執業人員之專業判斷考量重要因素，以指引案件服務團隊執行案件之方向。 4. 考量執行承接或續任案件程序之結果，以及案件主持人為同一客戶執行其他案件所取得之資訊與該案件是否攸關。 5. 確認執行案件所需資源之性質、時間及範圍，包括專家及其他執業人員之參與。 6. 決定內部稽核職能（如有時）對案件之影響。</div>
+    <p>3000 號第 119 條把規劃分成兩層：<b>整體策略</b>（範圍、重點、時間、執行）與<b>案件計畫</b>（程序的性質、時間、範圍及其理由）。主持人、主要成員與專家都要參與。第 120 條：規劃是持續修正的過程。</p>
+    <div class="tip">3410 號第 125 條：小案子的規劃不必複雜，一份涵蓋第 18 條六項的討論備忘錄就可以當策略的書面紀錄。第 126 條：可以跟個體討論規劃，但詳細程序的性質與時間講太多，會讓程序被預期而失效。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：重大性的三個層次</h2>
+    <div class="law ghg"><b class="art">3410 號第 19 至 21 條</b>第 19 條 執業人員於訂定整體案件策略時，應決定溫室氣體聲明整體重大性。 第 20 條 執業人員應決定執行重大性，以評估重大不實表達風險及決定進一步程序之性質、時間及範圍。 第 21 條 執業人員於案件過程中如獲悉某些資訊，而該等資訊會導致其於初始即決定不同之重大性時，應修正溫室氣體聲明整體重大性。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>層次</th><th>定義</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td><b>整體重大性</b></td><td>不實表達（含遺漏）個別或彙總可合理預期影響使用者決策的門檻（3000 號第 122 條、3410 號第 130 條）</td><td>評估未更正不實表達是否重大（第 63 條）</td></tr>
+        <tr><td><b>執行重大性</b></td><td>低於整體重大性之數量，使未更正及未偵出不實表達之彙總超過整體重大性的可能性降到適當水準（3410 號第 13 條第 16 款）</td><td>評估風險、決定程序的性質時間範圍（第 20 條）。3000 號第 125 條說明為什麼要低於重大性：只抓個別重大的錯，會漏掉一堆小錯加起來變重大</td></tr>
+        <tr><td><b>顯然微小</b></td><td>不論從金額、性質或情況看都顯然微不足道的門檻（3000 號第 134 條）</td><td>低於它的不實表達不必累計（3410 號第 57 條）。「顯然微小」不等於「不重大」，是另一個完全不同的層次；不確定是否顯然微小的，就不算顯然微小</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：重大性怎麼算出來</h2>
+    <p>3410 號第 135 條：通常以「所選用基準的某一百分比」當起點。基準與百分比會受五件事影響：聲明包含哪些要素（通常以尚未扣減的總排放量為基準）、特定類別可能要設更低的重大性、是否有比較資訊或分配額度（額度低於排放時可能以額度設）、排放的相對波動性（可以用波動範圍的低值）、適用基準自己有沒有規定門檻。</p>
+    <p>第 136 條的質性因素：排放源、氣體類別、資訊用在什麼情境、使用者特別關注的類別、個體的氣候策略與目標達成情形、產業與法令環境。</p>
+    <div class="warn">準則<b>沒有</b>規定任何百分比。第 101 條舉例「15%」是在講重要設施的辨認，不是重大性。底稿寫「依準則規定採 5%」就是錯引。</div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：重大性試算器</h2>
+    <p class="small muted">輸入青山鋼鐵的數字，看三個層次怎麼連動。百分比是你的專業判斷，不是準則給的。</p>
+    <div class="toolbox">
+      <fieldset><legend>基準數</legend>
+        <label>範疇 1 ＋ 範疇 2 總排放（公噸 CO<sub>2</sub>e）<input type="number" id="mTot" value="180140" min="1" step="1"></label>
+        <label>選用基準比率 % <input type="number" id="mPct" value="5" min="0.1" max="20" step="0.5"></label>
+        <label>執行重大性佔整體 % <input type="number" id="mPm" value="70" min="10" max="95" step="5"></label>
+        <label>顯然微小佔整體 % <input type="number" id="mTriv" value="5" min="0.5" max="20" step="0.5"></label>
+      </fieldset>
+      <fieldset><legend>情況</legend>
+        <label><input type="checkbox" id="mAlloc"> 公司有排放交易制度分配額度 165,000 公噸，低於實際排放</label>
+        <label><input type="checkbox" id="mVol"> 近三年排放在 150,000 至 185,000 之間波動</label>
+        <label><input type="checkbox" id="mCrit"> 適用基準自己訂了 5% 的「實質性門檻」</label>
+      </fieldset>
+      <button class="btn small" id="mGo">試算</button>
+      <div class="result" id="mRes"></div>
+    </div>
+  </div>
+
+  <div class="q" data-ans="D">
+    <div class="stem">練習 1：會計師在案件中途發現青山鋼鐵實際排放比規劃時預估的少了 25%。依 3410 號，會計師應？</div>
+    <label><input type="radio" name="p1" value="A">A. 維持原重大性，因規劃階段已決定</label>
+    <label><input type="radio" name="p1" value="B">B. 只在作結論時以實際排放重新評估即可</label>
+    <label><input type="radio" name="p1" value="C">C. 提高重大性以減少工作</label>
+    <label><input type="radio" name="p1" value="D">D. 修正整體重大性，必要時修改執行重大性與進一步程序的性質、時間及範圍</label>
+    <button class="btn small check">對答案</button>
+    <div class="fb" data-exp="3410 號第 21 條與第 137 條：發現實際排放與初始用以決定重大性的排放有重大差異，應修正；第 62 條要求評估未更正不實表達前再確認一次。" data-diag='{"A":"第 21 條明文要求案件過程中修正。","B":"第 62 條的結論前重評是另一道關卡，不能取代第 21 條的中途修正。","C":"方向錯了：排放變少，重大性應該變小，程序可能要加，不是減。"}'></div>
+  </div>
+</section>
+
+<!-- ═══════════ 4-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>列得出 3410 號第 22 條要瞭解個體的七大項</li>
+      <li>知道取得瞭解的三種程序，以及觀察、檢查各自的限制</li>
+      <li>說得出「重要設施」怎麼辨認、何時要去現場、不能去時的替代程序</li>
+      <li>分得清科學不確定性與估計不確定性</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：要瞭解個體的哪些事</h2>
+    <div class="law ghg"><b class="art">3410 號第 22 條（摘要）</b>執業人員應對下列事項取得瞭解：1. 攸關產業、法令及其他外部因素（包括適用基準）。 2. 個體之性質：(1) 組織邊界內營運之性質，含排放源與排放之完整性、對總排放之個別貢獻、報導數量之不確定性。(2) 與前期比較營運性質或範圍之變動，含合併、收購、出售排放源或外包重大排放職能。(3) 營運中斷之頻率與性質。 3. 量化方法與報導政策之選擇及應用，含變動原因及重複計算之可能性。 4. 適用基準中與估計攸關之規定。 5. 個體對氣候變遷之目標及策略，以及相關經濟、監管、實體及聲譽風險。 6. 個體內部對排放資訊之監督及責任。 7. 內部稽核職能及其對排放所執行之作業與主要發現。</div>
+    <p>第 5 項是 3410 號很有意思的一條。第 147 條解釋為什麼要瞭解氣候策略：承諾碳中和的公司有<b>低報</b>誘因，預期將納入排放交易制度的公司有<b>高報</b>誘因（為了拿到更多額度）。瞭解策略就是在找舞弊誘因的方向。</p>
+    <div class="law ghg"><b class="art">3410 號第 23 條</b>對個體及其環境取得瞭解，以及辨認並評估重大不實表達風險之程序應包括：1. 查詢個體內部可能知悉相關資訊之人員。 2. 分析性程序。 3. 觀察及檢查。</div>
+    <p>第 148 條：三種程序都要用，但不必對瞭解的每一個層面都用全部三種。第 152 條：觀察只能證明觀察那一刻，而且被觀察的人會改變行為。第 153 條：檢查內部文件的可靠性取決於產生文件的控制有沒有效。第 139 條：這些程序本身不足以作為結論的基礎。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 5：不確定性不等於標的不適當</h2>
+    <div class="law ghg"><b class="art">3410 號第 140 條（摘要）</b>溫室氣體量化流程很少能絕對精確，其原因包括：1. 科學不確定性：對溫室氣體衡量之科學知識不完整而產生，例如生物匯封存率、全球暖化潛勢值。非個體所能控制。 2. 估計（或衡量）不確定性：在既有科學知識範圍內，量化排放之衡量及計算流程所產生，與資料（參數）或方法（模型）有關。程度常可由個體控制，惟降低可能需較高成本。</div>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>科學不確定性</th><th>估計不確定性</th></tr></thead>
+      <tbody>
+        <tr><td>來源</td><td>科學知識不完整</td><td>測量工具、資料、模型</td></tr>
+        <tr><td>例子</td><td>GWP 值、生物匯封存率</td><td>電表誤差、排放係數的假設、質量平衡模型</td></tr>
+        <tr><td>個體能不能控制</td><td>不能；只能靠基準規定特定係數降低影響</td><td>常可以，但要花錢</td></tr>
+      </tbody>
+    </table></div>
+    <p>第 141 條：有不確定性不代表標的不適當，只要假設與模型合理且充分揭露，通常可成為標的資訊。第 143 條：不確定性大到承接不適當的例子是「大部分排放來自未監測的逸散排放且估計方法不成熟」或「大部分移除來自生物匯」。第 145 條：不管附註有沒有揭露，確信報告都必須提及不確定性（第 84 條第 6 款）。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 6：重要設施與實地訪查</h2>
+    <div class="law ghg"><b class="art">3410 號第 13 條第 20 款</b>重要設施：係指某設施因其排放之規模相對於溫室氣體聲明中之彙總排放具個別重要性，抑或某設施因其特殊性質或情況可能存有特殊之重大不實表達風險。</div>
+    <p>兩種重要設施：<b>量大的</b>（第 101 條，例如超過總產量或總排放 15% 的設施，但百分比是判斷）、<b>性質特殊的</b>（第 102 條，資料蒐集流程不同、計算特別複雜、製程特別）。第 31 條：執業人員應判斷是否須於重要設施實地執行程序。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>條文</th><th>內容</th></tr></thead>
+      <tbody>
+        <tr><td>第 160 條</td><td>實地訪查對瞭解個體很重要；合理確信通常去得比有限確信多</td></tr>
+        <tr><td>第 161 條</td><td>首次承接、考量範疇 1 排放源完整性、確認資料蒐集與估計技術時，去重要設施特別重要</td></tr>
+        <tr><td>第 162 條</td><td>合理確信常須每一重要設施都去；有限確信有範疇 1 重要設施卻一個都不去，可能取不到具有意義之確信程度。無法有效實地執行時的替代程序：複核流程圖、分析問卷、檢查衛星圖像</td></tr>
+        <tr><td>第 163 條</td><td>也可能選一些非重要設施去，考量：排放性質（範疇 1 優先）、數量與規模、流程或技術不同、資料蒐集方法不同、人員經驗、輪流選</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：哪些是重要設施</h2>
+    <p class="small muted">青山鋼鐵三個據點的資料如下。設定你的百分比門檻，再勾選有「特殊性質」的設施，看哪些應該列為重要設施。</p>
+    <div class="toolbox">
+      <div class="scroll"><table>
+        <thead><tr><th>設施</th><th>範疇 1（公噸）</th><th>範疇 2（公噸）</th><th>特殊情況</th></tr></thead>
+        <tbody>
+          <tr><td>高雄廠</td><td>118,000</td><td>22,000</td><td>高爐製程排放以質量平衡估算</td></tr>
+          <tr><td>台中廠</td><td>22,500</td><td>15,200</td><td>鍋爐燃料為生質混燒，碳含量隨批次變動</td></tr>
+          <tr><td>桃園倉儲</td><td>700</td><td>1,740</td><td>只有堆高機用油與辦公用電</td></tr>
+        </tbody>
+      </table></div>
+      <label>量的門檻：佔總排放 % 以上 <input type="number" id="fPct" value="15" min="1" max="50" step="1"></label>
+      <div class="list-check">
+        <label><input type="checkbox" id="fK"> 高雄廠因特殊性質列為重要設施</label>
+        <label><input type="checkbox" id="fT"> 台中廠因特殊性質列為重要設施</label>
+        <label><input type="checkbox" id="fY"> 桃園倉儲因特殊性質列為重要設施</label>
+      </div>
+      <button class="btn small" id="fGo">判斷</button>
+      <div class="result" id="fRes"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 7：內部稽核與其他案件的資訊</h2>
+    <ul>
+      <li>第 27 條：曾為同一個體做過其他案件，要考量那些資訊是否與風險評估攸關（第 159 條：例如控制環境的資訊）。</li>
+      <li>第 32 條：有與案件攸關的內部稽核職能時，決定是否採用其工作及程度，並確定該工作適當。3000 號第 57 條列出評估內部稽核的四件事：職能定位與客觀性、專業能力、系統化嚴謹方法、工作是否適切。</li>
+      <li>第 29 條：主持人、主要成員、專家要討論聲明易發生重大不實表達的可能性與適用基準，並決定與未參加者溝通什麼。</li>
+      <li>第 30 條：評估量化方法與報導政策（含組織邊界）是否適當、是否與產業及前期一致。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════ 4-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>分得清「整體聲明層級」與「個別聲明層級」的風險</li>
+      <li>背得出 3410 號第 168 條的十個聲明</li>
+      <li>列得出第 35 條十一項導致風險的原因，並對應到溫室氣體的實例</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 8：風險評估的兩個層級</h2>
+    <div class="law ghg"><b class="art">3410 號第 33、34 條（摘要）</b>對有限確信案件，執業人員應辨認並評估<b>整體溫室氣體聲明</b>，以及<b>重大排放類別及揭露事項</b>之重大不實表達風險。對合理確信案件，應辨認並評估整體溫室氣體聲明，以及重大排放類別及揭露事項<b>聲明</b>之重大不實表達風險。</div>
+    <p>整體層級的風險（第 165、166 條）是「廣泛」的：薄弱的控制環境、管理階層缺乏專業能力、資料蒐集機制沒有控制、員工不會算、管理階層不參與、排放源沒辨認完全、舞弊、前期資訊基礎不一致、誤導性表達、各設施方法不一致、單位轉換錯誤、不確定性揭露不足。因應方式是第 36 條的「整體對策」（第 5 課）。</p>
+    <p>個別層級的風險掛在「聲明」上。合理確信才要求到聲明層級，但聲明的清單對有限確信也有用，因為它告訴你「錯可能長什麼樣」。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 9：十個聲明</h2>
+    <div class="law ghg"><b class="art">3410 號第 168 條（摘要）</b>1. 與確信期間內排放量化有關之聲明：(1) 發生：所記錄之排放均已發生且與個體有關。(2) 完整性：所有應記錄之排放均已記錄。(3) 正確性：排放量均已適當記錄。(4) 截止：排放已記錄於正確報導期間。(5) 分類：排放已記錄為適當類別。 2. 與表達及揭露有關之聲明：(1) 發生及責任。(2) 完整性。(3) 分類及可瞭解性。(4) 正確性及量化。(5) 一致性：使用與前期一致之量化政策，或其變動有正當理由並已適當適用且充分揭露。</div>
+    <div class="note">跟財報查核的聲明幾乎同一套，少了「存在／權利與義務／評價」，多了「一致性」。溫室氣體聲明最常出事的是<b>完整性</b>（漏排放源）、<b>分類</b>（範疇 1 記成範疇 2）、<b>一致性</b>（邊界或方法改了沒說）。</div>
+    <div class="toolbox">
+      <p class="small muted">每一個錯誤情境對應哪一個聲明？點一個看答案。</p>
+      <div class="chips" id="t3chips">
+        <button class="chip" data-k="a">台中廠 12 月的天然氣用量記到了隔年 1 月</button>
+        <button class="chip" data-k="b">高雄廠冷卻塔的逸散排放完全沒有記錄</button>
+        <button class="chip" data-k="c">公務車油料被記在範疇 2</button>
+        <button class="chip" data-k="d">電力係數用成 0.502，但公告值是 0.474</button>
+        <button class="chip" data-k="e">聲明今年改用營運控制權法，但附註沒說，比較資訊也沒重編</button>
+        <button class="chip" data-k="f">聲明列了一筆已出售子公司的排放</button>
+        <button class="chip" data-k="g">附註沒揭露質量平衡法的主要假設</button>
+      </div>
+      <div class="result" id="t3res"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 10：風險從哪裡來（第 35 條十一項）</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>第 35 條</th><th>溫室氣體的典型例子（第 170 至 175 條）</th></tr></thead>
+      <tbody>
+        <tr><td>1. 故意不實表達之可能性</td><td>報酬掛鉤減碳目標；碳中和承諾（低報誘因）；預期納入交易制度（高報誘因）</td></tr>
+        <tr><td>2. 未遵循法令</td><td>直接影響聲明數字的法令（第 173 條第 1 款）要考量；間接的（營運許可、環保法）要保持警覺</td></tr>
+        <tr><td>3. 遺漏潛在重大排放</td><td>逸散排放這種不明顯的排放源</td></tr>
+        <tr><td>4. 重大經濟或法令變動</td><td>再生能源目標提高、排放額度價格大變，可能導致排放源分類不當</td></tr>
+        <tr><td>5. 營運之性質</td><td>多設施多製程、間歇性運轉、排放與可衡量活動關係薄弱（分析性程序難做）；營運或邊界改變；排放源重複計算</td></tr>
+        <tr><td>6. 量化方法之性質</td><td>該用直接量測卻用係數法；儀器未校準；係數不適合情境；複雜數學模型、大量單位轉換；輸入變數變動（生質碳含量）</td></tr>
+        <tr><td>7. 組織邊界之複雜程度、關係人</td><td>合資、信託、「一方擁有、一方營運、替第三方加工」</td></tr>
+        <tr><td>8. 不尋常或非正常營運之重大排放</td><td>工廠事故、重大外洩等一次性事件</td></tr>
+        <tr><td>9. 排放量化之主觀程度</td><td>管理階層介入高、人為處理多、複雜計算、解讀分歧</td></tr>
+        <tr><td>10. 是否包含範疇 3</td><td>資料不在個體手上、方法不精確、結果波動大（第 117 至 120 條）</td></tr>
+        <tr><td>11. 重大估計如何作成及其資料</td><td>估計所依據的資料、方法與模型、假設、是否用專家、敏感性分析、前期估計的追蹤</td></tr>
+      </tbody>
+    </table></div>
+    <p>第 175 條再補四個：人為錯誤（人員不熟）、設計不良的資訊系統（沒控制的試算表）、對自動紀錄的人工調整（燃燒塔儀器過載）、特定設施受公眾加強監督。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 11：舞弊與法令遵循</h2>
+    <div class="law ghg"><b class="art">3410 號第 28 條</b>執業人員應查詢個體之管理階層及其他適當人員，以確認其是否知悉任何影響個體溫室氣體聲明之已發生、疑似或被指控之舞弊或未遵循法令之事項。</div>
+    <p>第 170 條：舞弊與錯誤的區分在於是否故意。第 172 條：執業人員關注會導致重大不實表達的舞弊，但不對舞弊是否實際發生作法律判定。第 52 條：辨認出舞弊或未遵循法令要適當因應。第 86 條：要與對聲明負監督責任的人溝通內控顯著缺失、舞弊、未遵循法令（顯然微不足道者除外），並確定是否有向內外部其他方報告的責任。</p>
+  </div>
+
+  <div class="insp"><b class="t">檢查人員視角：第 4 課在底稿裡看什麼</b>
+    <ul>
+      <li>規劃備忘錄有沒有涵蓋第 18 條六項，特別是「為同一客戶做的其他案件資訊」與「專家參與」。</li>
+      <li>重大性：三個數字（整體、執行、顯然微小）與選用理由；案件中途有沒有重評（第 21 條）；結論前有沒有再評（第 62 條）。</li>
+      <li>瞭解個體：有沒有針對第 22 條逐項，尤其組織邊界、排放源完整性、氣候策略與誘因方向。</li>
+      <li>重要設施清單與訪查決定：哪些去了、哪些沒去、沒去的理由與替代程序。有限確信一個範疇 1 重要設施都沒去的，要追第 162 條。</li>
+      <li>風險評估表：整體層級與類別層級分開寫；合理確信要到聲明層級。風險評估有沒有連到第 5 課的程序設計，不能評完就放著。</li>
+      <li>舞弊查詢紀錄（第 28 條）與團隊討論紀錄（第 29 條）。</li>
+    </ul>
+  </div>
+
+  <div class="essay" data-id="e1">
+    <div class="stem">實例題：明德事務所的規劃底稿顯示：整體重大性設為總排放 5%，備註「依 3410 號規定」；沒有執行重大性；重要設施欄寫「不適用（有限確信）」；風險評估表只有一行「整體風險：中」。團隊沒有去任何廠。請列出檢查發現並引條文。</div>
+    <textarea placeholder="先寫你的答案，再看參考答案。"></textarea>
+    <button class="btn small secondary showans">看參考答案並自評</button>
+    <details><summary class="small">參考答案（點開）</summary>
+      <div class="body small">
+        <ol>
+          <li>錯引準則：3410 號沒有規定任何重大性百分比（第 135 條：百分比是專業判斷的起點）。底稿應記錄選用基準與比率的理由及質性因素（第 136 條）。</li>
+          <li>缺執行重大性：第 20 條要求決定執行重大性，有限確信與合理確信都適用（第 8 條）。</li>
+          <li>重要設施「不適用」錯誤：第 13 條第 20 款的定義與第 31 條的判斷義務不分確信程度。高雄廠佔總排放約 78%，依第 101 條屬重要設施；台中廠因生質混燒的特殊性質可能依第 102 條列入。</li>
+          <li>未訪查：第 162 條，有限確信案件若有具範疇 1 排放之重要設施而一個都不選，可能無法取得具有意義之確信程度；首次承接時第 161 條特別強調實地程序對完整性的重要。若確實無法去，應記錄替代程序。</li>
+          <li>風險評估不足：第 33 條要求辨認並評估整體聲明及重大排放類別與揭露事項的風險；第 35 條至少考量十一項因素；「整體風險：中」沒有類別層級、沒有因素分析，無法作為設計程序的基礎。</li>
+          <li>程序上也要看：第 23 條三種程序、第 28 條舞弊查詢、第 29 條團隊討論的紀錄是否存在。</li>
+        </ol>
+      </div>
+    </details>
+    <div class="self"><span class="small">自評：</span><button class="btn small" data-ok="1">寫到了主要幾點</button><button class="btn small secondary" data-ok="0">漏了關鍵條文</button><span class="selfmsg small muted"></span></div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="quiz" class="panel">
+  <div class="card goal"><h2>章末測驗</h2><p>10 題，8 題以上過關。</p></div>
+  <div id="quizCard">
+    <div class="q quiz" data-ans="B"><div class="stem">1. 執行重大性的目的是？</div>
+      <label><input type="radio" name="q1" value="A">A. 評估未更正不實表達是否重大</label><label><input type="radio" name="q1" value="B">B. 評估重大不實表達風險及決定進一步程序之性質、時間及範圍</label><label><input type="radio" name="q1" value="C">C. 決定哪些不實表達不必累計</label><label><input type="radio" name="q1" value="D">D. 決定報告的格式</label>
+      <div class="fb" data-exp="3410 號第 20 條。A 是整體重大性的用途，C 是顯然微小門檻。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">2. 關於「顯然微小」，下列何者正確？</div>
+      <label><input type="radio" name="q2" value="A">A. 等同於不重大</label><label><input type="radio" name="q2" value="B">B. 由委任方決定</label><label><input type="radio" name="q2" value="C">C. 與重大性屬全然不同之層次；不確定是否顯然微小者不得視為顯然微小</label><label><input type="radio" name="q2" value="D">D. 準則規定為重大性的 5%</label>
+      <div class="fb" data-exp="3000 號第 134 條。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">3. 3410 號第 135 條，決定重大性通常的起點是？</div>
+      <label><input type="radio" name="q3" value="A">A. 所選用基準之某一百分比</label><label><input type="radio" name="q3" value="B">B. 準則規定之固定金額</label><label><input type="radio" name="q3" value="C">C. 前期的未更正不實表達總數</label><label><input type="radio" name="q3" value="D">D. 個體的碳費金額</label>
+      <div class="fb" data-exp="第 135 條。"></div></div>
+    <div class="q quiz" data-ans="D"><div class="stem">4. 承諾達成碳中和目標的個體，依 3410 號第 147 條可能有何種誘因？</div>
+      <label><input type="radio" name="q4" value="A">A. 高報排放以取得較多額度</label><label><input type="radio" name="q4" value="B">B. 無任何誘因</label><label><input type="radio" name="q4" value="C">C. 延後出具聲明</label><label><input type="radio" name="q4" value="D">D. 低報排放以在期限內達成目標</label>
+      <div class="fb" data-exp="第 147 條：碳中和承諾是低報誘因；預期納入交易制度是高報誘因。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">5. 「全球暖化潛勢值受不完整科學知識影響」屬於哪一種不確定性？</div>
+      <label><input type="radio" name="q5" value="A">A. 估計不確定性</label><label><input type="radio" name="q5" value="B">B. 科學不確定性</label><label><input type="radio" name="q5" value="C">C. 抽樣風險</label><label><input type="radio" name="q5" value="D">D. 控制風險</label>
+      <div class="fb" data-exp="3410 號第 140 條第 1 款。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">6. 依 3410 號第 101 條，「15%」這個數字是用來舉例說明？</div>
+      <label><input type="radio" name="q6" value="A">A. 整體重大性</label><label><input type="radio" name="q6" value="B">B. 執行重大性</label><label><input type="radio" name="q6" value="C">C. 辨認重要設施的百分比門檻（仍屬專業判斷）</label><label><input type="radio" name="q6" value="D">D. 範疇 3 可排除的比例</label>
+      <div class="fb" data-exp="第 101 條。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">7. 有範疇 1 重要設施，但執業人員無法有效實地執行程序。3410 號第 162 條的替代程序<b>不包括</b>？</div>
+      <label><input type="radio" name="q7" value="A">A. 取得個體書面聲明以取代訪查</label><label><input type="radio" name="q7" value="B">B. 複核排放源文件、能源流及原料流之流程圖</label><label><input type="radio" name="q7" value="C">C. 分析設施管理階層回覆之問卷</label><label><input type="radio" name="q7" value="D">D. 檢查設施之衛星圖像</label>
+      <div class="fb" data-exp="第 162 條三項替代程序。書面聲明不能取代可合理取得的其他證據（3000 號第 142 條）。"></div></div>
+    <div class="q quiz" data-ans="D"><div class="stem">8. 「範疇 1 的公務車油料被記在範疇 2」違反哪一個聲明？</div>
+      <label><input type="radio" name="q8" value="A">A. 發生</label><label><input type="radio" name="q8" value="B">B. 完整性</label><label><input type="radio" name="q8" value="C">C. 截止</label><label><input type="radio" name="q8" value="D">D. 分類</label>
+      <div class="fb" data-exp="3410 號第 168 條第 1 款第 5 目。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">9. 合理確信案件的風險評估應做到哪一個層級？</div>
+      <label><input type="radio" name="q9" value="A">A. 僅整體溫室氣體聲明</label><label><input type="radio" name="q9" value="B">B. 整體溫室氣體聲明，以及重大排放類別及揭露事項之「聲明」</label><label><input type="radio" name="q9" value="C">C. 僅重大排放類別</label><label><input type="radio" name="q9" value="D">D. 每一筆交易</label>
+      <div class="fb" data-exp="3410 號第 34 條；有限確信依第 33 條到「重大排放類別及揭露事項」。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">10. 僅為取得對個體之瞭解及辨認評估風險所執行的程序，依 3410 號第 139 條？</div>
+      <label><input type="radio" name="q10" value="A">A. 已足以作為有限確信結論之基礎</label><label><input type="radio" name="q10" value="B">B. 已足以作為合理確信結論之基礎</label><label><input type="radio" name="q10" value="C">C. 無法提供足夠及適切之證據作為結論之基礎</label><label><input type="radio" name="q10" value="D">D. 可取代進一步程序</label>
+      <div class="fb" data-exp="第 139 條。"></div></div>
+  </div>
+  <button class="bigbtn" id="submitQuiz">交卷</button>
+  <div id="quizResult"></div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="arts" class="panel">
+  <div class="card"><h2>本課條文速查</h2>
+  <div class="arts">
+    <details><summary>3000 號第 38、42、43 條 <span>規劃、重大性、查詢</span></summary><div class="txt">第 38 條 執業人員為有效執行案件，應作適當之規劃，包括設定案件之範圍、時間及方向，以及決定為達成其目的須執行程序之性質、時間及範圍。
+第 42 條 執業人員應於執行下列工作時考量重大性：1.規劃及執行確信案件，包括決定程序之性質、時間及範圍。2.評估標的資訊是否存有重大不實表達。
+第 43 條 執業人員應向適當方查詢下列事項：1.是否知悉任何已發生、疑似或傳聞且影響標的資訊之故意不實表達或未遵循法令情事。2.負責方是否設置內部稽核職能。3.負責方於編製標的資訊時是否採用專家之工作。</div></details>
+    <details><summary>3000 號第 119 至 126 條 <span>規劃與重大性之解釋</span></summary><div class="txt">第 119 條 案件主持人、案件服務團隊之其他主要成員及執業人員專家應參與規劃，以建立整體策略及案件計畫。規劃時應考量之主要事項例舉：案件特性、須溝通事項、承接評估結果、案件流程、對適當方之瞭解與風險、預期使用者與重大性、舞弊風險、所需資源、內部稽核職能之影響。
+第 120 條 規劃係屬持續及適時修正之過程。
+第 122 條 如個別不實表達（包含遺漏）或其彙總可被合理預期將影響預期使用者依據標的資訊所作之決策，則被認為具有重大性。執業人員可合理假設預期使用者：1.對標的具有合理認知並願意用心研讀。2.瞭解標的資訊已依適當之重大性編製及取得確信。3.瞭解衡量或估計存有先天不確定性。4.能以標的資訊整體作成適當之決策。
+第 123 條 對重大性之考量涉及質性因素與量化因素。
+第 125 條 規劃擬執行程序之性質、時間及範圍時，執業人員宜決定一低於重大性之金額，以作為決定擬執行程序之性質、時間及範圍之基礎。
+第 134 條 執業人員可設定一門檻，並將數額低於該門檻之不實表達視為顯然微小，且無須加以累計。「顯然微小」不等同於「不重大」，與重大性屬全然不同之層次。當一個或多個項目不確定是否顯然微小時，則不應被視為顯然微小。</div></details>
+    <details><summary>3410 號第 13 條第 16、20 款 <span>執行重大性、重要設施</span></summary><div class="txt">16.執行重大性：執業人員所設定低於溫室氣體聲明整體重大性之單一或多個數量，使未更正及未偵出不實表達之彙總數超過溫室氣體聲明整體重大性之可能性降低至一適當水準。
+20.重要設施：係指某設施因其排放之規模相對於溫室氣體聲明中之彙總排放具個別重要性，抑或某設施因其特殊性質或情況可能存有特殊之重大不實表達風險。</div></details>
+    <details><summary>3410 號第 18 至 21 條 <span>規劃、重大性</span></summary><div class="txt">第 18 條 規劃時執業人員應：1.辨認案件之特性，以界定確信範圍。2.確定案件之報導目的。3.考量重要因素以指引案件服務團隊之方向。4.考量承接或續任程序之結果，以及為同一客戶執行其他案件所取得之資訊。5.確認所需資源之性質、時間及範圍，包括專家及其他執業人員之參與。6.決定內部稽核職能對案件之影響。
+第 19 條 執業人員於訂定整體案件策略時，應決定溫室氣體聲明整體重大性。
+第 20 條 執業人員應決定執行重大性，以評估重大不實表達風險及決定進一步程序之性質、時間及範圍。
+第 21 條 執業人員於案件過程中如獲悉某些資訊，而該等資訊會導致其於初始即決定不同之重大性時，應修正溫室氣體聲明整體重大性。</div></details>
+    <details><summary>3410 號第 22、23、27 至 35 條 <span>瞭解個體、辨認風險</span></summary><div class="txt">第 22 條（見觀念 4）
+第 23 條 取得瞭解及辨認並評估重大不實表達風險之程序應包括：1.查詢。2.分析性程序。3.觀察及檢查。
+第 27 條 案件主持人如曾為同一個體執行其他案件，應考量所取得之資訊是否與辨認及評估重大不實表達風險攸關。
+第 28 條 執業人員應查詢管理階層及其他適當人員，以確認其是否知悉任何已發生、疑似或被指控之舞弊或未遵循法令之事項。
+第 29 條 案件主持人、主要成員及執業人員專家，應討論溫室氣體聲明易發生導因於舞弊或錯誤重大不實表達之可能性，以及適用基準。
+第 30 條 執業人員應評估個體之量化方法及報導政策（包括組織邊界之決定）對個體營運之適當性，以及是否與攸關產業及前期一致。
+第 31 條 執業人員應判斷於案件情況下是否須於重要設施實地執行程序。
+第 32 條 個體如具有與案件攸關之內部稽核職能，執業人員應決定是否採用及採用之程度，並確定該工作適當。
+第 33 條 對有限確信案件，執業人員應辨認並評估整體溫室氣體聲明，以及重大排放類別及揭露事項之重大不實表達風險。
+第 34 條 對合理確信案件，執業人員應辨認並評估整體溫室氣體聲明，以及重大排放類別及揭露事項聲明之重大不實表達風險。
+第 35 條 執業人員至少應考量下列因素：1.故意不實表達之可能性。2.未遵循法令之可能性。3.遺漏潛在重大排放之可能性。4.重大經濟或法令規範之變動。5.營運之性質。6.量化方法之性質。7.決定組織邊界之複雜程度，以及是否涉及關係人。8.是否有不尋常或非正常營運之重大排放。9.排放量化之主觀程度。10.溫室氣體聲明是否包含範疇 3 排放。11.個體如何作重大估計，以及其所依據之資料。</div></details>
+    <details><summary>3410 號第 101、102 條 <span>重要設施之辨認</span></summary><div class="txt">第 101 條 執業人員可能以所選用基準之某一百分比協助辨認具個別排放重要性之設施。辨認所選用基準及決定適當之百分比涉及專業判斷。例如，執業人員可能將超過總產量或總排放百分之十五之設施視為重要設施。在不同情況下，較高或較低之百分比可能被認為適當。
+第 102 條 某設施因其特殊性質或情況，可能導致特殊之重大不實表達風險時，執業人員亦可能將其辨認為重要設施。例如使用不同之資料蒐集流程或量化技術，或須使用特別複雜或專門之計算，抑或涉及特別複雜或專門之化學或物理製程。</div></details>
+    <details><summary>3410 號第 130 至 137 條 <span>重大性之解釋</span></summary><div class="txt">第 132 條 執業人員可合理假設預期使用者：1.對溫室氣體攸關活動具有合理認知並願意用心研讀。2.瞭解聲明已依適當之重大性編製及取得確信。3.瞭解排放之量化涉及不確定性。4.能作成合理之決策。
+第 133 條 預期使用者可能包括：1.自願揭露情況下之投資人及其他利害關係人。2.排放交易制度下之市場參與者。3.法令揭露規定下之監理機關及政策制定者。4.個體之管理階層與治理單位。
+第 135 條 執業人員通常以所選用基準之某一百分比作為決定重大性之起點。適當基準與百分比之辨認，可能受下列因素影響：1.聲明所包含之要素（通常以所報導排放之總量為基準）。2.特定類別排放或特定揭露之性質。3.聲明如何表達攸關資訊（比較資訊、分配額度）。4.排放之相對波動性。5.適用基準之規定。
+第 136 條 質性因素可能包括：排放源、氣體類別、資訊使用情境與決策類型、使用者較關注之類別、個體性質與氣候策略、產業經濟及法令環境。
+第 137 條 執業人員可能因個體情況變動、發現新資訊或執行程序而改變瞭解，而須修正重大性。</div></details>
+    <details><summary>3410 號第 138 至 147 條 <span>瞭解之程度、不確定性、氣候策略</span></summary><div class="txt">第 138 條 執業人員運用專業判斷以決定瞭解之程度。執業人員須瞭解之程度低於管理階層管理該個體所具有之瞭解程度。對於有限確信案件，取得瞭解之程度均低於合理確信案件。
+第 139 條 取得瞭解及辨認並評估重大不實表達風險是一項反覆修正之過程。惟僅為此目的所執行之程序，並無法提供足夠及適切之證據，以作為確信結論之基礎。
+第 140 條 溫室氣體量化流程很少能絕對精確：1.科學不確定性。2.估計（或衡量）不確定性。
+第 141 條 個體排放之量化受不確定性影響之事實不代表以個體之排放作為標的並不適當。
+第 143 條 如不確定性對溫室氣體聲明中資訊之影響甚大，執業人員可能認為承接此確信案件並不適當。是否承接之決定不受確信程度之影響。
+第 145 條 由於不確定性係所有溫室氣體聲明之重要特性，無論聲明之解釋性附註中包含之揭露為何，第八十四條第六款仍要求執業人員於確信報告中提及該不確定性。
+第 147 條 如個體已承諾實現碳中和目標，此可能提供低報排放之誘因。反之，如個體預期在未來將受法令排放交易制度之影響，此可能提供高報排放之誘因。</div></details>
+    <details><summary>3410 號第 160 至 168 條 <span>實地訪查、整體風險、聲明</span></summary><div class="txt">第 161 條 就首次承接之案件而言，當考量溫室氣體聲明中範疇 1 排放源與匯之完整性時，以及對於確認個體之資料蒐集、處理系統及估計技術是否適當時，於個體重要設施實地執行程序，通常特別重要。
+第 163 條 執業人員可能決定選取部分非重要設施實地執行程序。攸關因素：1.不同設施排放之性質。2.設施之數量及規模及其對總排放之貢獻。3.設施是否採用不同流程或技術。4.蒐集排放資訊所採用之方法。5.攸關人員之經驗。6.隨著時間經過而改變對設施之選擇。
+第 165 條 整體溫室氣體聲明之重大不實表達風險係指與整體溫室氣體聲明有廣泛關聯之風險，可能與導因於舞弊之重大不實表達風險特別攸關。
+第 166 條 整體溫室氣體聲明之重大不實表達風險特別可能導因於薄弱之控制環境。亦可能包括：資料蒐集機制不充分、員工缺乏專業能力、缺乏管理階層參與、未正確辨認所有排放源、舞弊風險、前期資訊基礎不一致、誤導性表達、各設施方法不一致、單位轉換錯誤、不確定性揭露不充分。
+第 168 條（見觀念 9）</div></details>
+    <details><summary>3410 號第 170 至 175 條 <span>舞弊、法令、其他風險因素</span></summary><div class="txt">第 170 條 溫室氣體聲明之不實表達可能係導因於舞弊或錯誤。舞弊與錯誤之區分，在於導致溫室氣體聲明不實表達之作為是否係屬故意。
+第 171 條 對溫室氣體聲明作出故意不實表達之誘因，可能包括當直接參與或有機會影響排放報導流程之人員，其報酬之主要部分係取決於是否達到特定溫室氣體目標。
+第 172 條 執業人員對於舞弊是否實際發生不作法律判定。
+第 173 條 本確信準則依個體須遵循之下列法令規範執業人員之責任：1.對溫室氣體聲明中之重大排放量及揭露具直接影響之法令。2.不具直接影響之其他法令，但遵循該等法令可能對個體之業務經營係屬重要；執業人員須對未遵循之可能性保持警覺。
+第 174 條（見觀念 10 表格）
+第 175 條 可能導致重大不實表達風險之其他因素：1.排放量化之人為錯誤。2.過度依賴設計不良之資訊系統，例如使用無適當控制之試算表。3.對自動記錄之作業進行人工調整。4.重大外部擴建，例如特定設施受公眾加強監督。</div></details>
+  </div></div>
+  <p class="small"><a href="03_承接案件.html">上一課</a> · <a href="00_總覽地圖.html">回總覽地圖</a> · <a href="05_執行程序與證據.html">下一課：執行程序與證據</a></p>
+</section>
+
+<footer>確信準則 3000 號與 3410 號自學課 · 自學筆記，非官方；條文以會計研究發展基金會發布版本為準 · 紀錄只存在這台裝置的瀏覽器</footer>
+</div>
+<script>
+const LESSON_ID = "04", CH = "確信準則 04 規劃重大性與風險";
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const PROG_KEY = "qx_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與其他教材共用 study_log_v1）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  $$('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  $$('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+$$('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="quiz"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+$$('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok });
+  });
+});
+
+// ===== 章末測驗交卷 =====
+(function(){
+  const sb = document.getElementById('submitQuiz'); if(!sb) return;
+  sb.addEventListener('click',()=>{
+    const qs = $$('#quizCard .q.quiz');
+    let score = 0, answered = 0; const wrong = [];
+    qs.forEach((q,i)=>{
+      const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+      q.classList.remove('correct','wrong');
+      if(sel) answered++;
+      if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+      else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+    });
+    logEv({ type:"quiz", score, total: qs.length, wrong });
+    writeProg({ quiz: { score, total: qs.length } });
+    const r = document.getElementById('quizResult');
+    if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+    else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="quiz"]').classList.add('done'); }
+    else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+    else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+    r.scrollIntoView({behavior:'smooth'});
+  });
+})();
+
+// ===== 實例題自評 =====
+$$('.essay').forEach(es=>{
+  const ta = es.querySelector('textarea'), self = es.querySelector('.self'), ans = es.querySelector('details');
+  const showBtn = es.querySelector('.showans');
+  if(showBtn) showBtn.addEventListener('click',()=>{ if(ans) ans.open = true; self.classList.add('on'); });
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 通用：chips 單選顯示結果 =====
+function chipTool(chipsId, resId, DATA, render, logName){
+  const res = document.getElementById(resId); if(!res) return;
+  $$('#'+chipsId+' .chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      $$('#'+chipsId+' .chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+      c.setAttribute('aria-pressed','true');
+      const d = DATA[c.dataset.k];
+      res.innerHTML = render(d, c.dataset.k);
+      res.classList.add('on');
+      logEv({ type:"tool", q:logName, k:c.dataset.k });
+    });
+  });
+}
+
+// ===== 工具：重大性試算器 =====
+(function(){
+  const fmt = n => Math.round(n).toLocaleString('zh-Hant-TW');
+  $('#mGo').addEventListener('click',()=>{
+    const tot = Number($('#mTot').value)||0, pct = Number($('#mPct').value)||0, pm = Number($('#mPm').value)||0, triv = Number($('#mTriv').value)||0;
+    const alloc = $('#mAlloc').checked, vol = $('#mVol').checked, crit = $('#mCrit').checked;
+    let base = tot, baseNote = '以尚未扣減的範疇 1 加範疇 2 總排放為基準（第 135 條第 1 款）。';
+    const notes = [];
+    if(alloc && 165000 < tot){ base = 165000; baseNote = '分配額度 165,000 公噸低於實際排放，第 135 條第 3 款：可能以被分配之排放額度設定重大性。'; }
+    if(vol){ notes.push('第 135 條第 4 款：排放波動大時，以波動範圍內的較低值（約 150,000 公噸）設定重大性可能較適當，即使當期較高。'); if(!alloc) { base = Math.min(base, 150000); baseNote = '取波動範圍低值 150,000 公噸為基準（第 135 條第 4 款）。'; } }
+    if(crit){ notes.push('第 135 條第 5 款：適用基準自訂的 5% 門檻可作為決定重大性的參考架構，但仍是執業人員的專業判斷。'); }
+    const M = base*pct/100, PM = M*pm/100, T = M*triv/100;
+    $('#mRes').innerHTML = '<h3>三個層次</h3><div class="scroll"><table><thead><tr><th>層次</th><th>數量（公噸 CO₂e）</th><th>用途</th></tr></thead><tbody>'+
+      '<tr><td>整體重大性</td><td><b>'+fmt(M)+'</b>（'+fmt(base)+' × '+pct+'%）</td><td>結論時評估未更正不實表達（3410 號第 63 條）</td></tr>'+
+      '<tr><td>執行重大性</td><td><b>'+fmt(PM)+'</b>（整體 × '+pm+'%）</td><td>評估風險、設計程序（第 20 條）</td></tr>'+
+      '<tr><td>顯然微小</td><td><b>'+fmt(T)+'</b>（整體 × '+triv+'%）</td><td>低於此者不累計（第 57 條）；不確定就不算顯然微小（3000 號第 134 條）</td></tr></tbody></table></div>'+
+      '<p class="small">'+baseNote+'</p>'+(notes.length?'<ul class="small">'+notes.map(n=>'<li>'+n+'</li>').join('')+'</ul>':'')+
+      '<p class="small muted" style="margin:0">提醒：這些百分比全部是專業判斷，準則沒有規定數字。底稿要寫的是「為什麼選這個基準、這個比率」，以及第 136 條的質性因素。有限確信與合理確信的重大性相同（第 134 條）。</p>';
+    $('#mRes').classList.add('on'); logEv({ type:"tool", q:"materiality", k:pct });
+  });
+})();
+
+// ===== 工具：重要設施 =====
+(function(){
+  const F = [ {n:'高雄廠', s1:118000, s2:22000, id:'fK', sp:'高爐製程排放以質量平衡估算，屬第 102 條「特別複雜或專門之計算」'}, {n:'台中廠', s1:22500, s2:15200, id:'fT', sp:'生質混燒碳含量隨批次變動，屬第 174 條第 4 款「輸入變數之變動」與第 102 條「不同之量化技術」'}, {n:'桃園倉儲', s1:700, s2:1740, id:'fY', sp:'只有堆高機用油與辦公用電，沒有特殊性質'} ];
+  const tot = F.reduce((a,f)=>a+f.s1+f.s2,0);
+  $('#fGo').addEventListener('click',()=>{
+    const pct = Number($('#fPct').value)||15;
+    let rows = '', wrong = [];
+    F.forEach(f=>{
+      const share = (f.s1+f.s2)/tot*100, big = share >= pct, sp = $('#'+f.id).checked;
+      const should = f.n==='桃園倉儲' ? false : true;
+      const spOK = f.n==='桃園倉儲' ? !sp : (f.n==='台中廠' ? sp || big : true);
+      if(f.n==='桃園倉儲' && sp) wrong.push('桃園倉儲沒有特殊性質，不應因第 102 條列入。');
+      if(f.n==='台中廠' && !sp && !big) wrong.push('台中廠佔比 '+share.toFixed(1)+'% 未達你的門檻，但生質混燒的特殊性質應依第 102 條列為重要設施。');
+      rows += '<tr><td>'+f.n+'</td><td>'+share.toFixed(1)+'%</td><td>'+(big?'<span class="pill ghg">量大（第 101 條）</span>':'')+(sp?'<span class="pill signal">特殊性質（第 102 條）</span>':'')+((big||sp)?'':'<span class="pill">非重要設施</span>')+'</td><td class="small">'+f.sp+'</td></tr>';
+    });
+    $('#fRes').innerHTML = '<h3>判斷結果</h3><div class="scroll"><table><thead><tr><th>設施</th><th>佔總排放</th><th>判斷</th><th>說明</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+(wrong.length?'<div class="warn">'+wrong.join('<br>')+'</div>':'<p class="small" style="margin:0">合理。高雄廠量大且性質特殊，台中廠性質特殊，兩者都是重要設施。有限確信案件至少要去其中有範疇 1 排放的重要設施（第 162 條）；首次承接時更要去（第 161 條）。桃園倉儲可依第 163 條決定是否輪流選訪。</p>');
+    $('#fRes').classList.add('on'); logEv({ type:"tool", q:"facility", k:pct });
+  });
+})();
+
+// ===== 工具：聲明配對 =====
+chipTool('t3chips','t3res',{
+  a:{ t:'截止', k:'第 168 條第 1 款第 4 目', why:'排放應記錄於正確的報導期間。年底的用量跨期，是截止錯誤。' },
+  b:{ t:'完整性', k:'第 168 條第 1 款第 2 目', why:'所有應記錄的排放都要記錄。逸散排放是第 174 條第 1 款點名「較不明顯而可能被忽略」的排放源。' },
+  c:{ t:'分類', k:'第 168 條第 1 款第 5 目', why:'公務車是個體擁有或控制的排放源，屬範疇 1（第 94 條移動燃燒）；記成範疇 2 是分類錯誤。' },
+  d:{ t:'正確性', k:'第 168 條第 1 款第 3 目', why:'係數用錯導致排放量未適當記錄。第 180 條第 2 款的程序「將排放係數核對至適當來源」就是針對這個聲明。' },
+  e:{ t:'一致性（表達及揭露）', k:'第 168 條第 2 款第 5 目', why:'量化政策與前期不同時，變動須有正當理由、適當適用且充分揭露，比較資訊要重編（第 69 條）。' },
+  f:{ t:'發生', k:'第 168 條第 1 款第 1 目', why:'所記錄的排放必須已發生且與個體有關。已出售的子公司已不在組織邊界內。' },
+  g:{ t:'完整性（表達及揭露）', k:'第 168 條第 2 款第 2 目', why:'所有應揭露的事項都要揭露。第 115 條第 4 款：不確定性的原因、因應方式與影響應揭露；重大假設也是（第 82 條第 4 款）。' }
+}, d=>'<h3>'+d.t+'　<span class="pill ghg">'+d.k+'</span></h3><p class="small" style="margin:0">'+d.why+'</p>', 'assertion');
+
+</script>
+</body>
+</html>

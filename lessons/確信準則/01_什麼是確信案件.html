@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>確信準則｜第 1 課 什麼是確信案件</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F3F6F5; --card:#FFFFFF;
+  --ink:#1B2A2C; --ink-2:#4A5C5E; --ink-3:#83949A;
+  --rule:rgba(27,42,44,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --std:#0F6E6E; --std-soft:#E0F1F0;
+  --ghg:#5B3A8C; --ghg-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131B1C; --card:#1C2628;
+    --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+    --rule:rgba(232,238,238,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --std:#6CC3C0; --std-soft:#1E3736;
+    --ghg:#B9A0E3; --ghg-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131B1C; --card:#1C2628;
+  --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+  --rule:rgba(232,238,238,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --std:#6CC3C0; --std-soft:#1E3736;
+  --ghg:#B9A0E3; --ghg-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--std);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+code{font-size:.9em;background:var(--paper);padding:.05em .35em;border-radius:4px}
+
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--std);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--std-soft);color:var(--std);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button,nav.tabs a{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none}
+nav.tabs button:hover,nav.tabs a:hover{border-color:var(--std);color:var(--ink)}
+nav.tabs button.active,nav.tabs a.active{background:var(--std);border-color:var(--std);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--std-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--std-soft);border-left:4px solid var(--std);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--std);display:block;margin-bottom:.2em}
+.law.ghg{background:var(--ghg-soft);border-left-color:var(--ghg)}
+.law.ghg b.art{color:var(--ghg)}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.insp{background:var(--green-soft);border-left:4px solid var(--green);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.93rem}
+.insp b.t{color:var(--green);display:block;margin-bottom:.2em}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.std{background:var(--std-soft);border-color:transparent;color:var(--std)}
+.pill.ghg{background:var(--ghg-soft);border-color:transparent;color:var(--ghg)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.pill.signal{background:var(--signal-soft);border-color:transparent;color:var(--signal)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2,.grid3{grid-template-columns:1fr}}
+
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--std)}
+.flow .step.click{cursor:pointer}
+.flow .step.click:hover,.flow .step.on{border-color:var(--std);background:var(--std-soft)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+.roles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:.6rem 0 1rem}
+@media (max-width:720px){.roles{grid-template-columns:1fr 1fr}}
+.role{border:1px solid var(--rule);border-radius:10px;padding:.6rem .7rem;background:var(--paper);font-size:.9rem;cursor:pointer}
+.role b{display:block;color:var(--std)}
+.role:hover,.role.on{border-color:var(--std);background:var(--std-soft)}
+
+.compare{display:grid;grid-template-columns:9em 1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;font-size:.92rem;margin:.6rem 0 1rem}
+.compare>div{padding:.55em .8em;border-bottom:1px solid var(--rule)}
+.compare .h{background:var(--paper);font-weight:700}
+.compare .k{background:var(--paper);font-weight:700;color:var(--ink-2)}
+@media (max-width:720px){.compare{grid-template-columns:7em 1fr 1fr;font-size:.85rem}}
+
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox label.block{display:flex}
+.toolbox select,.toolbox input[type=number],.toolbox input[type=date],.toolbox input[type=text]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);max-width:100%}
+.toolbox input[type=range]{width:100%;max-width:420px}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--std)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--std);color:var(--std);background:var(--std-soft)}
+.chip.ok{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+.chip.bad{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--std);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--std);border:1.5px solid var(--std)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+.report{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 20px;font-size:.93rem;line-height:1.9}
+.report .rh{font-weight:700;text-align:center;font-size:1.05rem;margin-bottom:.6em}
+.report .blank{display:inline-block;min-width:7em;border-bottom:2px dashed var(--std);text-align:center;color:var(--std);cursor:pointer;padding:0 .3em}
+.report .blank.ok{border-bottom-style:solid;color:var(--green);border-color:var(--green)}
+.report .blank.bad{color:var(--warn);border-color:var(--warn)}
+.report .sec{color:var(--std);font-weight:700;margin-top:.5em}
+.list-check label{display:block;padding:.3em .5em;border-radius:6px}
+.list-check label:hover{background:var(--paper)}
+.list-check label.ok{background:var(--green-soft)}
+.list-check label.bad{background:var(--warn-soft)}
+.bar{height:12px;background:var(--paper);border:1px solid var(--rule);border-radius:999px;overflow:hidden;margin:.3rem 0}
+.bar i{display:block;height:100%;background:var(--std)}
+
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--std);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--std);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">確信準則 3000 · 3410 · 第 1 課</span>
+  <h1>什麼是確信案件</h1>
+  <p>三節加章末測驗。這一課只回答一個問題：會計師說「我對這份溫室氣體聲明出具確信報告」，到底是在做什麼。把「標的、標的資訊、基準」三個詞分清楚，後面五課的每一條規定都掛在這三個詞底下。</p>
+  <p class="ver">依確信準則 3000 號（111 年 10 月 4 日發布）與 3410 號編寫。對象：監理機關檢查新人與考試準備者。自學筆記，非官方。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1-1 確信在做什麼</button>
+  <button data-t="s2">1-2 標的、標的資訊、基準</button>
+  <button data-t="s3">1-3 哪些不是、哪些是</button>
+  <button data-t="quiz">章末測驗</button>
+  <button data-t="arts">條文速查</button>
+</nav>
+
+<!-- ═══════════ 1-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>用一句話說出確信案件的定義，並指出定義裡的三個關鍵字（證據、結論、提升信賴水準）</li>
+      <li>畫得出五方關係圖：負責方、衡量方或評估方、委任方、執業人員、預期使用者</li>
+      <li>知道 3000 號管什麼、3410 號管什麼，兩者是「總則與專章」的關係</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>貫穿案例：青山鋼鐵的第一份溫室氣體聲明</h2>
+    <p>青山鋼鐵（股）公司是上市公司，有高雄廠、台中廠與桃園倉儲三個據點。它第一次編了「2025 年度溫室氣體聲明」，委任明德聯合會計師事務所（案件主持人林會計師）執行<b>有限確信</b>案件。你是監理機關的檢查新人小安，今年抽到明德事務所，要去看這一件的工作底稿。</p>
+    <p class="small muted">整套課用這一件案子走到底。每一課結尾的「檢查人員視角」會告訴你：翻底稿時該找什麼、找不到代表什麼。</p>
+  </div>
+
+  <div class="card">
+    <h2>觀念 1：確信案件的一句話定義</h2>
+    <div class="law"><b class="art">3000 號第 10 條第 13 款</b>確信案件：執業人員之目的在於取得足夠及適切之證據以作成結論，該結論係用以提升預期使用者（負責方除外）對標的資訊（即依基準衡量或評估標的之結果）之信賴水準之案件。</div>
+    <p>拆成三段讀：</p>
+    <ol>
+      <li><b>取得足夠及適切之證據</b>：足夠是數量，適切是品質（第 10 條第 16 款）。</li>
+      <li><b>作成結論</b>：結論寫在書面報告裡。沒有結論的工作（例如只報告發現的事實）就不是確信。</li>
+      <li><b>提升預期使用者的信賴水準</b>：服務對象是「看報告的人」，不是「編報告的人」。所以定義特別寫「負責方除外」。</li>
+    </ol>
+    <div class="tip">檢查時的白話版：會計師拿證據，對別人編的數字下一個「可不可信」的結論，讓第三者更敢用這個數字。三件事缺一件，就不是確信案件。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 2：五方關係圖（3000 號附錄一）</h2>
+    <p>每一件確信案件至少有三方：負責方、執業人員、預期使用者（附錄一第 1 條）。視情況再加上衡量方或評估方、委任方。點下面任何一方，看它在青山鋼鐵這件案子裡是誰。</p>
+    <div class="roles" id="roles">
+      <div class="role" data-k="resp"><b>負責方</b>對標的負責</div>
+      <div class="role" data-k="meas"><b>衡量方或評估方</b>依基準衡量標的、產出標的資訊</div>
+      <div class="role" data-k="eng"><b>委任方</b>跟執業人員談案件條款</div>
+      <div class="role" data-k="prac"><b>執業人員</b>取證、作結論、出報告</div>
+      <div class="role" data-k="user"><b>預期使用者</b>拿報告做決策</div>
+    </div>
+    <div class="result" id="rolesRes"></div>
+    <div class="note">附錄一第 3 條的幾個觀察，考題最愛：執業人員<b>不得</b>同時是負責方、委任方或預期使用者；負責方<b>可以</b>同時是衡量方和委任方（企業自己編永續報告再委任會計師，就是這種）；負責方可以是預期使用者之一，但不能是唯一的一個。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 3：3000 號是總則，3410 號是專章</h2>
+    <div class="law ghg"><b class="art">3410 號第 9 條</b>執業人員執行對個體溫室氣體聲明出具報告之確信案件時，須遵循確信準則 3000 號及本確信準則。本確信準則係補充但並未取代確信準則 3000 號，而是更深入規範如何將確信準則 3000 號適用於對溫室氣體聲明出具報告之確信案件。</div>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>3000 號</th><th>3410 號</th></tr></thead>
+      <tbody>
+        <tr><td>管什麼</td><td>所有「非屬歷史性財務資訊查核或核閱」的確信案件（第 1 條）</td><td>只管「溫室氣體聲明」的確信案件（第 2 條）</td></tr>
+        <tr><td>案件種類</td><td>認證案件與直接案件都管（第 2 條）</td><td>只管認證案件（第 5 條）</td></tr>
+        <tr><td>確信程度</td><td>合理確信、有限確信都管</td><td>兩種都管（第 6 條）</td></tr>
+        <tr><td>要不要一起遵循</td><td colspan="2">做溫室氣體聲明確信時，兩號一起遵循，只有全部基本準則都遵循才能在報告裡聲明依準則執行（3000 號第 13 條、3410 號第 14 條）</td></tr>
+        <tr><td>永續報告書裡只有一部分是溫室氣體</td><td colspan="2">溫室氣體那部分適用 3410 號（除非相對不重要），其餘資訊適用 3000 號（3410 號第 3 條）</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn">常錯：以為做溫室氣體確信只要看 3410 號。錯。3410 號很多條文直接寫「依確信準則 3000 號之規定……」，沒有 3000 號，3410 號是讀不懂的。檢查底稿時兩號都要對。</div>
+  </div>
+
+  <div class="q" data-ans="B">
+    <div class="stem">練習 1：下列哪一個敘述符合 3000 號對確信案件的定義？</div>
+    <label><input type="radio" name="p1" value="A">A. 會計師協助青山鋼鐵計算三個廠的排放量，並彙整成溫室氣體聲明</label>
+    <label><input type="radio" name="p1" value="B">B. 會計師取得證據，對青山鋼鐵自行編製的溫室氣體聲明作成結論，讓投資人更敢用這份數字</label>
+    <label><input type="radio" name="p1" value="C">C. 會計師依青山鋼鐵指定的五個程序逐一執行，並報告每一個程序發現的事實</label>
+    <label><input type="radio" name="p1" value="D">D. 會計師對青山鋼鐵的董事會說明 ISO 14064-1 應該怎麼解讀</label>
+    <button class="btn small check">對答案</button>
+    <div class="fb" data-exp="定義三要件：取得證據、作成結論、提升預期使用者的信賴水準。只有 B 三個都有。" data-diag='{"A":"這是代編，第 5 條明列為非確信案件。會計師自己算數字，就沒有「別人編、我來認證」的結構。","C":"這是協議程序，只報告發現事實、不下結論，第 5 條第 1 款排除。","D":"這是諮詢服務，第 5 條第 3 款排除。"}'></div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>看到任何一句話，能立刻判斷它是「標的」「標的資訊」還是「基準」</li>
+      <li>說得出 3410 號把這三個詞各自換成什麼名字</li>
+      <li>知道結論可以針對三種東西表達，而且寫法不同</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 4：三個詞，一條生產線</h2>
+    <div class="law"><b class="art">3000 號第 10 條第 1 至 3 款</b>1. 標的：依基準衡量或評估之項目。 2. 標的資訊：依基準衡量或評估標的之結果。 3. 基準：用以衡量或評估標的之標準。「適用基準」係用於特定案件之基準。</div>
+    <div class="flow">
+      <div class="step"><b>標的</b>被衡量的那個「東西」<br><span class="small muted">青山鋼鐵 2025 年度的溫室氣體排放</span></div>
+      <div class="step"><b>基準</b>拿來量的那把「尺」<br><span class="small muted">ISO 14064-1 加上環境部盤查登錄指引、法定排放係數</span></div>
+      <div class="step"><b>標的資訊</b>量出來的「結果」<br><span class="small muted">溫室氣體聲明書上的 182,340 公噸 CO<sub>2</sub>e 與附註</span></div>
+    </div>
+    <p>會計師的結論，是對「標的資訊」有沒有重大不實表達下的。不實表達的定義就是「標的資訊」與「標的依基準衡量所應有之結果」之間的差異（第 10 條第 17 款）。所以三個詞缺一個，不實表達就定義不出來。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>3000 號的通用名稱</th><th>3410 號的專用名稱</th><th>依據</th></tr></thead>
+      <tbody>
+        <tr><td>標的</td><td>個體之排放（視情況含移除與排放扣減）</td><td>3410 號第 107 條</td></tr>
+        <tr><td>標的資訊</td><td>溫室氣體聲明</td><td>3410 號第 13 條第 13 款末句</td></tr>
+        <tr><td>基準／適用基準</td><td>適用基準：個體用以量化並報導溫室氣體聲明中排放之基準</td><td>3410 號第 13 條第 1 款</td></tr>
+        <tr><td>負責方、衡量方或評估方</td><td>個體</td><td>3410 號第 13 條第 10 款</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：這句話是標的、標的資訊，還是基準？</h2>
+    <p class="small muted">每一題點一個答案。全部答完會告訴你哪一類最容易混。</p>
+    <div class="toolbox" id="sorter"></div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 5：結論可以針對三種東西表達</h2>
+    <div class="law"><b class="art">3000 號第 10 條第 13 款第 2 目之 1</b>認證案件中，執業人員之結論可能針對下列事項表達：a. 標的及適用基準。 b. 標的資訊及適用基準。 c. 適當方之聲明。</div>
+    <div class="scroll"><table>
+      <thead><tr><th>針對</th><th>合理確信寫法（第 161 條）</th><th>有限確信寫法（第 163 條）</th></tr></thead>
+      <tbody>
+        <tr><td>標的及適用基準</td><td>依本執業人員之意見，甲公司在所有重大方面已遵循 XX 法令</td><td>依據所執行之程序及所獲取之證據，本執業人員未發現甲公司在所有重大方面有未遵循 XX 法令之情事</td></tr>
+        <tr><td>標的資訊及適用基準</td><td>依本執業人員之意見，甲公司之擬制性資訊在所有重大方面係依照 XX 基準編製</td><td>……未發現甲公司之重要績效指標有未依照 XX 基準評估而須作重大修正之情事</td></tr>
+        <tr><td>適當方之聲明</td><td>依本執業人員之意見，（適當方）就甲公司已遵循 XX 法令所作之聲明，在所有重大方面係允當表達</td><td>……未發現（適當方）就甲公司已遵循 XX 法令所作之聲明，在所有重大方面有未允當表達之情事</td></tr>
+      </tbody>
+    </table></div>
+    <p>溫室氣體聲明的結論是針對「標的資訊及適用基準」：合理確信寫「溫室氣體聲明在所有重大方面係依適用基準編製」；有限確信寫「未發現溫室氣體聲明在所有重大方面有未依適用基準編製之情事」（3410 號第 12 條）。第 2 課會專門練這兩種句型。</p>
+  </div>
+
+  <div class="q" data-ans="C">
+    <div class="stem">練習 2：青山鋼鐵的溫室氣體聲明附註寫「範疇 2 排放採用經濟部能源署公告之電力排放係數 0.474 kgCO<sub>2</sub>e/度計算」。這段話屬於什麼？</div>
+    <label><input type="radio" name="p2" value="A">A. 標的</label>
+    <label><input type="radio" name="p2" value="B">B. 標的資訊</label>
+    <label><input type="radio" name="p2" value="C">C. 適用基準（在標的資訊裡被揭露出來）</label>
+    <label><input type="radio" name="p2" value="D">D. 證據</label>
+    <button class="btn small check">對答案</button>
+    <div class="fb" data-exp="排放係數是「量的那把尺」的一部分，3410 號第 104 條第 6 款把「辨認適當之排放係數」列為對適用基準的瞭解。它被寫在聲明書附註裡，是因為第 16 條第 2 款第 4 目要求基準要有充分揭露。" data-diag='{"A":"標的是排放本身，不是計算方法。","B":"算出來的噸數才是標的資訊；計算用的係數是尺，不是結果。","D":"證據是執業人員為作成結論所使用的資訊（第 10 條第 16 款），例如電費單；係數本身是基準。"}'></div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>學習目標</h2>
+    <ul>
+      <li>背得出第 5 條、第 7 條列出的「不是確信案件」清單</li>
+      <li>分得清認證案件與直接案件，並知道 3410 號只管哪一種</li>
+      <li>拆得出案件風險的三個成分</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>觀念 6：先排除，再確認</h2>
+    <div class="law"><b class="art">3000 號第 5 條</b>執業人員執行之案件並非皆為本確信準則所定義之確信案件。非屬本確信準則之範圍但經常被執行之案件，包括：1. 協議程序與代編財務資訊案件。 2. 不須出具確信結論之代編稅務申報案件。 3. 諮詢案件，例如管理顧問或稅務諮詢服務。</div>
+    <div class="law"><b class="art">3000 號第 7 條（節錄）</b>下列案件可能符合確信案件之定義，然非屬本確信準則所稱之確信案件：1. 訴訟程序中，對於會計、審計、稅務或其他事項作證之案件。 2. 符合下列所有條件之案件：(1) 意見或見解僅屬附帶性質。(2) 書面報告僅供特定預期使用者使用。(3) 依書面協議該案件非為確信案件。(4) 報告非以確信案件表述。</div>
+    <p>第 5 條是「本來就不是」，第 7 條是「長得像但約定不算」。第 7 條第 2 款四個條件要<b>全部</b>符合才能排除，少一個就回到確信準則。</p>
+    <div class="tip">第 121 條有一個很實務的提醒：企業第一次編溫室氣體聲明、紀錄品質堪憂時，會計師可以先做協議程序或諮詢，下一期再做確信。檢查時看到「同一家事務所去年做諮詢、今年做確信」不是問題，看到「同一年又幫忙算、又出確信報告」才是獨立性問題（第 3 課）。</div>
+  </div>
+
+  <div class="card">
+    <h2>小工具：這算不算確信案件</h2>
+    <div class="toolbox">
+      <div class="chips" id="t1chips">
+        <button class="chip" data-k="ghg">對青山鋼鐵自編的溫室氣體聲明出具有限確信報告</button>
+        <button class="chip" data-k="aup">依銀行指定的 6 個程序核對排放資料並報告發現事實</button>
+        <button class="chip" data-k="comp">會計師幫青山鋼鐵算出三個廠的排放量並編成聲明</button>
+        <button class="chip" data-k="direct">會計師自己依基準衡量某廠排放，把結果附在報告裡出具</button>
+        <button class="chip" data-k="court">會計師在碳費爭訟中出庭說明盤查方法</button>
+        <button class="chip" data-k="ic">對公司「內部控制有效」的聲明出具合理確信報告</button>
+        <button class="chip" data-k="tax">幫公司代編碳費申報書，不出結論</button>
+        <button class="chip" data-k="sr">對永續報告書出具確信，其中溫室氣體只佔一小部分</button>
+      </div>
+      <div class="result" id="t1res"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 7：認證案件與直接案件</h2>
+    <div class="law"><b class="art">3000 號第 2 條（節錄）</b>確信案件包括認證案件及直接案件。前者先由執業人員以外之人員依基準衡量或評估標的，再由執業人員就原衡量或評估結果予以認證；後者則由執業人員直接依基準衡量或評估標的。</div>
+    <div class="compare">
+      <div class="h"></div><div class="h">認證案件</div><div class="h">直接案件</div>
+      <div class="k">誰量標的</div><div>執業人員以外的人（通常是企業自己）</div><div>執業人員自己量</div>
+      <div class="k">標的資訊在哪</div><div>企業的聲明或報告裡</div><div>附在確信報告裡或是報告的一部分</div>
+      <div class="k">結論說什麼</div><div>標的資訊有沒有重大不實表達</div><div>執業人員自己衡量的結果</div>
+      <div class="k">3410 號管不管</div><div>管（第 5 條）</div><div>不管；要做只能回 3000 號調整適用（第 2 條末句）</div>
+      <div class="k">書面聲明</div><div>通常由衡量方或評估方提供（附錄一第 3 條第 8 款）</div><div>附錄一第 3 條第 5 款：直接案件不能靠別人出聲明就變成認證案件</div>
+    </div>
+    <div class="warn">附錄一第 3 條第 5 款的陷阱：執業人員自己量了標的，事後請企業「對結果出一張聲明」，<b>不會</b>把直接案件變成認證案件。檢查時看到報告寫「依 3410 號執行」，就要確認衡量標的的人確實不是會計師。</div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 8：案件風險的三個成分</h2>
+    <div class="law"><b class="art">3000 號第 10 條第 19 款、第 97 條（節錄）</b>案件風險：標的資訊存有重大不實表達時，執業人員作成不適當結論之風險。一般而言由下列要素組成：1. 執業人員未能直接影響之風險：(1) 固有風險 (2) 控制風險。 2. 執業人員可直接影響之風險：偵查風險。</div>
+    <p>跟財報查核的審計風險模型是同一個骨架。合理確信與有限確信的差別，就是「可接受的案件風險水準」不同（第 10 條第 13 款第 1 目）。第 2 課會專門講。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>成分</th><th>青山鋼鐵的例子</th><th>誰能動它</th></tr></thead>
+      <tbody>
+        <tr><td>固有風險</td><td>高爐的製程排放靠質量平衡估算，先天就容易錯</td><td>執業人員不能，只能評估</td></tr>
+        <tr><td>控制風險</td><td>公司沒有人覆核各廠回傳的燃料數據</td><td>執業人員不能，只能評估</td></tr>
+        <tr><td>偵查風險</td><td>會計師只抽兩個月的燃料發票，沒抓到年底的補登</td><td>執業人員能，靠程序的性質、時間、範圍</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>觀念 9：專業懷疑與專業判斷</h2>
+    <div class="law"><b class="art">3000 號第 10 條第 22、23 款</b>專業判斷：執業人員應用相關訓練、知識及經驗，在確信準則及職業道德規範之規定下，就案件之情況作出有根據之決定。 專業懷疑：係一種態度（包含質疑之心態）及對可能顯示存有不實表達之情況隨時保持警覺，並審慎評估所取得之證據。</div>
+    <p>第 116 條：除非案件就是在對文件真實性提供確信，執業人員可以把紀錄和文件當真的，除非有理由相信它不是。第 117 條：就算相信對方誠信，也還是要保持專業懷疑。這兩條考題常拿來出「是非題」。</p>
+  </div>
+
+  <div class="insp"><b class="t">檢查人員視角：第 1 課在底稿裡看什麼</b>
+    <ul>
+      <li>委任書有沒有寫清楚這是「確信案件」、確信程度（有限或合理）、標的、適用基準。寫成「協助」「協助整理」的，要追問到底是不是確信。</li>
+      <li>衡量標的的人是誰。如果底稿顯示會計師自己算了大半排放量，這件就不是 3410 號的認證案件，報告卻寫依 3410 號執行，就是問題。</li>
+      <li>報告的結論句是針對哪一種東西（標的、標的資訊、聲明）。溫室氣體聲明案件應該針對「標的資訊及適用基準」。</li>
+    </ul>
+  </div>
+
+  <div class="essay" data-id="e1">
+    <div class="stem">實例題：青山鋼鐵的委任書寫「本所協助貴公司確認溫室氣體聲明之正確性，並就所執行工作提出報告」。報告標題是「溫室氣體聲明確信報告」，但工作底稿顯示高雄廠的排放量是事務所人員拿公司提供的燃料數據自行套係數算出的。請用 3000 號與 3410 號的條文，指出這件案子有哪些問題。</div>
+    <textarea placeholder="先寫你的答案，再看參考答案。"></textarea>
+    <button class="btn small secondary showans">看參考答案並自評</button>
+    <details><summary class="small">參考答案（點開）</summary>
+      <div class="body small">
+        <ol>
+          <li>委任書用語不清：3000 號第 25 條要求案件條款應以書面詳盡記載，3410 號第 17 條要求條款包含案件目的及範圍、雙方責任、適用基準、報告格式。「協助確認」看不出是確信案件還是協議程序。</li>
+          <li>衡量方是誰：高雄廠排放量由事務所自行計算，表示該部分標的是執業人員自己衡量的，屬直接案件（3000 號第 2 條、附錄一第 3 條第 5 款）。3410 號第 5 條只規範認證案件，報告卻以 3410 號確信報告的形式出具，違反第 14 條「僅於已遵循本確信準則及 3000 號之基本準則時，始得聲明已遵循」。</li>
+          <li>獨立性：為個體提供排放量化服務會直接影響溫室氣體聲明，是 3410 號第 91 條第 2 款的自我評估威脅（第 3 課再深入）。</li>
+          <li>後續動作：檢查人員應請事務所說明案件性質、是否曾評估先決條件（3000 號第 22 條）、以及為何未依第 121 條先做協議程序或諮詢。</li>
+        </ol>
+      </div>
+    </details>
+    <div class="self"><span class="small">自評：</span><button class="btn small" data-ok="1">寫到了主要幾點</button><button class="btn small secondary" data-ok="0">漏了關鍵條文</button><span class="selfmsg small muted"></span></div>
+  </div>
+</section>
+
+<!-- ═══════════ 章末測驗 ═══════════ -->
+<section id="quiz" class="panel">
+  <div class="card goal"><h2>章末測驗</h2><p>10 題，8 題以上過關。答完按最下面的交卷。</p></div>
+  <div id="quizCard">
+    <div class="q quiz" data-ans="C"><div class="stem">1. 依 3000 號第 10 條第 13 款，確信案件結論的目的是提升誰對標的資訊的信賴水準？</div>
+      <label><input type="radio" name="q1" value="A">A. 負責方</label><label><input type="radio" name="q1" value="B">B. 委任方</label><label><input type="radio" name="q1" value="C">C. 預期使用者（負責方除外）</label><label><input type="radio" name="q1" value="D">D. 主管機關</label>
+      <div class="fb" data-exp="定義明寫「預期使用者（負責方除外）」。主管機關可能是預期使用者之一，但不是定義本身。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">2. 「依基準衡量或評估標的之結果」是哪一個名詞的定義？</div>
+      <label><input type="radio" name="q2" value="A">A. 標的</label><label><input type="radio" name="q2" value="B">B. 標的資訊</label><label><input type="radio" name="q2" value="C">C. 適用基準</label><label><input type="radio" name="q2" value="D">D. 證據</label>
+      <div class="fb" data-exp="第 10 條第 2 款。標的是被量的項目，標的資訊是量出來的結果。"></div></div>
+    <div class="q quiz" data-ans="D"><div class="stem">3. 下列何者<b>不是</b>3000 號第 5 條明列的非確信案件？</div>
+      <label><input type="radio" name="q3" value="A">A. 協議程序案件</label><label><input type="radio" name="q3" value="B">B. 代編財務資訊案件</label><label><input type="radio" name="q3" value="C">C. 管理顧問服務</label><label><input type="radio" name="q3" value="D">D. 對永續報告書之有限確信</label>
+      <div class="fb" data-exp="永續報告書確信是第 95 條例舉的認證案件，屬確信案件。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">4. 3410 號規範的案件範圍是？</div>
+      <label><input type="radio" name="q4" value="A">A. 溫室氣體聲明之認證案件，合理確信與有限確信皆規範</label><label><input type="radio" name="q4" value="B">B. 溫室氣體聲明之認證案件與直接案件</label><label><input type="radio" name="q4" value="C">C. 僅溫室氣體聲明之合理確信案件</label><label><input type="radio" name="q4" value="D">D. 所有環境資訊之確信案件</label>
+      <div class="fb" data-exp="3410 號第 5 條只規範認證案件，第 6 條兩種確信程度都規範。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">5. 永續報告書確信案件中，溫室氣體聲明只是其中一小部分。下列敘述何者正確？</div>
+      <label><input type="radio" name="q5" value="A">A. 整份報告都適用 3410 號</label><label><input type="radio" name="q5" value="B">B. 整份報告都只適用 3000 號，3410 號完全不適用</label><label><input type="radio" name="q5" value="C">C. 溫室氣體部分適用 3410 號（除非相對不重要），其餘適用 3000 號</label><label><input type="radio" name="q5" value="D">D. 由委任方決定適用哪一號</label>
+      <div class="fb" data-exp="3410 號第 3 條。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">6. 依 3000 號附錄一，下列角色安排何者<b>不被允許</b>？</div>
+      <label><input type="radio" name="q6" value="A">A. 負責方同時是衡量方與委任方</label><label><input type="radio" name="q6" value="B">B. 執業人員同時是委任方</label><label><input type="radio" name="q6" value="C">C. 負責方是預期使用者之一</label><label><input type="radio" name="q6" value="D">D. 非屬負責方之委任方是預期使用者</label>
+      <div class="fb" data-exp="附錄一第 3 條第 2 款：執業人員不應為負責方、委任方或預期使用者。其餘三項附錄一都明文允許。"></div></div>
+    <div class="q quiz" data-ans="D"><div class="stem">7. 案件風險中，執業人員可直接影響的是？</div>
+      <label><input type="radio" name="q7" value="A">A. 固有風險</label><label><input type="radio" name="q7" value="B">B. 控制風險</label><label><input type="radio" name="q7" value="C">C. 重大不實表達風險</label><label><input type="radio" name="q7" value="D">D. 偵查風險</label>
+      <div class="fb" data-exp="第 97 條第 2 款。"></div></div>
+    <div class="q quiz" data-ans="A"><div class="stem">8. 執業人員自行依基準衡量標的後，請企業對該結果出具書面聲明。此案件屬於？</div>
+      <label><input type="radio" name="q8" value="A">A. 仍是直接案件</label><label><input type="radio" name="q8" value="B">B. 變成認證案件</label><label><input type="radio" name="q8" value="C">C. 變成協議程序</label><label><input type="radio" name="q8" value="D">D. 由案件條款決定</label>
+      <div class="fb" data-exp="附錄一第 3 條第 5 款：直接案件無法透過另一方對標的資訊出具聲明而變更為認證案件。"></div></div>
+    <div class="q quiz" data-ans="C"><div class="stem">9. 依 3000 號第 116 條，執業人員對所取得的紀錄與文件應？</div>
+      <label><input type="radio" name="q9" value="A">A. 一律先查證真實性</label><label><input type="radio" name="q9" value="B">B. 一律視為真實，不必懷疑</label><label><input type="radio" name="q9" value="C">C. 可視為真實，除非有理由相信其非屬真實，且仍須考量可靠性</label><label><input type="radio" name="q9" value="D">D. 只有外部文件可視為真實</label>
+      <div class="fb" data-exp="第 116 條；可靠性的考量回到第 52 條。"></div></div>
+    <div class="q quiz" data-ans="B"><div class="stem">10. 3000 號第 7 條第 2 款，要將「長得像確信案件」的案件排除在準則適用之外，須符合幾個條件？</div>
+      <label><input type="radio" name="q10" value="A">A. 任一個即可</label><label><input type="radio" name="q10" value="B">B. 四個條件全部符合</label><label><input type="radio" name="q10" value="C">C. 只要書面協議約定即可</label><label><input type="radio" name="q10" value="D">D. 只要報告不以確信案件表述即可</label>
+      <div class="fb" data-exp="第 7 條第 2 款：「符合下列所有條件之案件」。"></div></div>
+  </div>
+  <button class="bigbtn" id="submitQuiz">交卷</button>
+  <div id="quizResult"></div>
+</section>
+
+<!-- ═══════════ 條文速查 ═══════════ -->
+<section id="arts" class="panel">
+  <div class="card"><h2>本課條文速查</h2><p class="small muted">點開看條文。只收這一課用到的；完整條文以基金會發布版本為準。</p>
+  <div class="arts">
+    <details><summary>3000 號第 2 條 <span>認證案件與直接案件</span></summary><div class="txt">確信案件包括認證案件及直接案件。前者先由執業人員以外之人員依基準衡量或評估標的，再由執業人員就原衡量或評估結果予以認證；後者則由執業人員直接依基準衡量或評估標的。本確信準則明定對認證案件提供合理確信及有限確信之規定。本確信準則之規定亦得於因應案件情況作適當調整後，適用於提供合理確信及有限確信之直接案件。</div></details>
+    <details><summary>3000 號第 5 條 <span>非屬確信案件</span></summary><div class="txt">執業人員執行之案件並非皆為本確信準則所定義之確信案件。非屬本確信準則之範圍但經常被執行之案件，包括：
+1.協議程序與代編財務資訊案件。
+2.不須出具確信結論之代編稅務申報案件。
+3.諮詢案件，例如管理顧問或稅務諮詢服務。</div></details>
+    <details><summary>3000 號第 7 條 <span>符合定義但不適用本準則</span></summary><div class="txt">下列案件可能符合第十條第十三款確信案件之定義，然非屬本確信準則所稱之確信案件：
+1.訴訟程序中，對於會計、審計、稅務或其他事項作證之案件。
+2.符合下列所有條件之案件（雖使用者可能從案件中之專業意見或見解取得某些確信）：
+(1)該等意見或見解於整體案件中僅屬附帶性質。
+(2)所出具之書面報告，僅供報告中所述之特定預期使用者使用。
+(3)依據與特定預期使用者之書面協議，該案件非為確信案件。
+(4)會計師對該案件出具之報告非以確信案件表述。</div></details>
+    <details><summary>3000 號第 8 條 <span>目的</span></summary><div class="txt">本確信準則之目的係規範執業人員於執行確信案件時：
+1.對於標的資訊是否存有重大不實表達，取得合理確信或有限確信。
+2.對標的之衡量與評估結果作成結論並出具書面報告。該報告提供合理確信或有限確信，並說明作成結論之基礎。
+3.依本確信準則之規定進行進一步溝通。</div></details>
+    <details><summary>3000 號第 10 條（節錄） <span>定義</span></summary><div class="txt">1.標的：依基準衡量或評估之項目。
+2.標的資訊：依基準衡量或評估標的之結果。
+3.基準：用以衡量或評估標的之標準。「適用基準」係用於特定案件之基準。
+9.負責方：對標的負責之人員或單位。
+10.委任方：委任執業人員執行確信案件之人員或單位。
+11.衡量方或評估方：依基準衡量或評估標的之人員或單位。
+12.預期使用者：執業人員預期將會使用確信報告之個人、機構或由其組成之團體。
+13.確信案件：執業人員之目的在於取得足夠及適切之證據以作成結論，該結論係用以提升預期使用者（負責方除外）對標的資訊之信賴水準之案件。
+16.證據：執業人員作成結論時所使用之資訊。足夠性係指數量之衡量，適切性係指品質之衡量。
+17.不實表達：適當方所提供之標的資訊與標的依基準衡量或評估所應有之結果，二者間之差異。不實表達可能為故意或非故意、量化或質性因素，並包含遺漏。
+18.重大不實表達風險：於委任前，標的資訊即存有重大不實表達之風險。
+19.案件風險：標的資訊存有重大不實表達時，執業人員作成不適當結論之風險。
+22.專業判斷：執業人員應用相關訓練、知識及經驗，在確信準則及職業道德規範之規定下，就案件之情況作出有根據之決定。
+23.專業懷疑：係一種態度（包含質疑之心態）及對可能顯示存有不實表達之情況隨時保持警覺，並審慎評估所取得之證據。</div></details>
+    <details><summary>3000 號第 11 條 <span>適當方</span></summary><div class="txt">就本確信準則之目的而言，條文中所提及之適當方係指負責方、委任方、衡量方或評估方，視實際情況而定。</div></details>
+    <details><summary>3000 號第 87 條 <span>標的例舉</span></summary><div class="txt">確信案件之標的例舉如下：
+1.未來財務績效或狀況（例如預測性之財務狀況），標的資訊可能係財務預測中之認列、衡量、表達及揭露。
+2.非財務性績效或狀況（例如某企業之環境保護績效），標的資訊可能係與效率及效果有關之關鍵指標。
+3.實體特性（例如某設備之產能），標的資訊可能係與設備規格有關之文件。
+4.系統及流程（例如某企業之內部控制或資訊系統），標的資訊可能係對其有效性所作之聲明。
+5.企業行為（例如公司治理、法令遵循、人力資源實務），標的資訊可能係對其遵循情形或有效性所作之聲明。</div></details>
+    <details><summary>3000 號第 95 條 <span>認證案件例舉</span></summary><div class="txt">可依本確信準則執行之認證案件例舉如下：
+1.永續發展：對管理階層或其所聘僱或委任之專家（衡量方或評估方）就企業永續發展績效所編製之報告取得確信之案件。
+2.法令遵循：對其他方就已遵循相關法令所作之聲明取得確信之案件。
+3.成本效益：對其他方就成本效益所作衡量或評估取得確信之案件。</div></details>
+    <details><summary>3000 號第 97 條 <span>案件風險之組成</span></summary><div class="txt">一般而言，案件風險由下列要素組成，惟並非全部要素於所有案件中皆存在或係屬重大：
+1.執業人員未能直接影響之風險，包括：
+(1)在不考量適當方相關控制之情況下，標的資訊先天上易存有重大不實表達之風險（固有風險）。
+(2)適當方之內部控制無法及時預防或偵出並改正標的資訊重大不實表達之風險（控制風險）。
+2.執業人員可直接影響之風險，即執業人員所執行之程序未能偵出重大不實表達之風險（偵查風險）。</div></details>
+    <details><summary>3000 號第 116、117 條 <span>文件真實性、誠信</span></summary><div class="txt">第 116 條 除非案件涉及對文件之真實性提供確信，執業人員可將所取得之紀錄及文件視為真實，除非執業人員有理由相信其非屬真實。惟執業人員仍應依第五十二條之規定考量擬作為證據之資訊之可靠性。
+第 117 條 執業人員不應忽視提供證據人員過去有關誠信正直之表現。執業人員縱使相信該等人員誠信且正直，亦應保持專業懷疑。</div></details>
+    <details><summary>3000 號附錄一第 3 條 <span>各方角色之觀察</span></summary><div class="txt">1.每一確信案件除執業人員外，至少有一負責方及預期使用者。
+2.執業人員不應為負責方、委任方或預期使用者。
+3.直接案件中，執業人員亦為衡量方或評估方。
+4.認證案件中，負責方或其他人員（執業人員除外）皆可作為衡量方或評估方。
+5.由執業人員依基準衡量或評估標的之案件係屬直接案件。該等案件因具備此特性，無法透過由另一方對標的之衡量或評估承擔責任（例如由負責方對標的資訊出具聲明而承擔其責任），而變更為認證案件。
+6.負責方可為委任方。
+7.許多認證案件中，負責方可能同時為衡量方或評估方及委任方，由企業委任執業人員對企業自行就永續發展績效所編製之報告執行之確信案件即屬此例。
+8.認證案件中，通常由衡量方或評估方提供執業人員與標的資訊有關之書面聲明。
+9.負責方可為預期使用者之一，但非唯一。
+11.非屬負責方之委任方可為預期使用者。</div></details>
+    <details><summary>3410 號第 2、3、5、6 條 <span>範圍</span></summary><div class="txt">第 2 條 本確信準則係規範對個體溫室氣體聲明出具報告之確信案件。
+第 3 條 於確信案件中，執業人員之結論可能涵蓋溫室氣體聲明以外之資訊，於該等情況下：1.對溫室氣體聲明所執行之確信程序，適用本確信準則之規定，除非該聲明對整體資訊之確信而言，相對不重要。2.對執業人員結論涵蓋之其他資訊所執行之確信程序，則適用確信準則 3000 號（或規範特定標的之其他確信準則）。
+第 5 條 依確信準則 3000 號之規定，確信案件可分為認證案件及直接案件。本確信準則僅規範認證案件。
+第 6 條 依確信準則 3000 號之規定，確信案件可分為有限確信及合理確信案件。本確信準則規範此兩種確信案件。</div></details>
+    <details><summary>3410 號第 9 條 <span>與 3000 號之關係</span></summary><div class="txt">執業人員執行對個體溫室氣體聲明出具報告之確信案件時，須遵循確信準則 3000 號及本確信準則。本確信準則係補充但並未取代確信準則 3000 號，而是更深入規範如何將確信準則 3000 號適用於對溫室氣體聲明出具報告之確信案件。</div></details>
+    <details><summary>3410 號第 13 條（節錄） <span>定義</span></summary><div class="txt">1.適用基準：個體用以量化並報導溫室氣體聲明中排放之基準。
+2.聲明：個體於溫室氣體聲明中以明示或隱含之方式所作之表述，該等表述係個體用以主張溫室氣體聲明係依適用基準編製。
+10.個體：係指與溫室氣體聲明中之排放有關之法律個體、經濟個體、法律或經濟個體之可辨認部分，或是該等個體之結合或部分。
+13.溫室氣體聲明：列出個體於某一期間溫室氣體排放之構成要素及其排放量（有時稱為排放盤查），如適用時亦包括比較資訊及解釋性附註之文件。如案件並未涵蓋溫室氣體聲明之所有部分時，「溫室氣體聲明」一詞將被解讀為案件所涵蓋之部分，即溫室氣體聲明係案件之「標的資訊」。</div></details>
+    <details><summary>3410 號第 14 條 <span>聲明遵循之條件</span></summary><div class="txt">執業人員僅於已遵循本確信準則及確信準則 3000 號之基本準則執行確信案件時，始得聲明已遵循本確信準則。</div></details>
+    <details><summary>3410 號第 107 條 <span>標的之適當性</span></summary><div class="txt">依確信準則 3000 號之規定，執業人員應確認標的是否適當。就溫室氣體聲明之確信案件而言，個體之排放（如適用時亦包含移除與排放扣減）係屬案件之標的。如個體之排放能以妥適之基準進行一致之量化，則該標的係屬適當。</div></details>
+    <details><summary>3410 號第 121 條 <span>先做協議程序或諮詢</span></summary><div class="txt">因對個體紀錄之狀況及可靠性存有疑慮，執業人員可能認為不太可能取得足夠及適切之證據，以對溫室氣體聲明作成無保留結論。當個體編製溫室氣體聲明之經驗有限時，即可能易發生此種情況。於此情況下，執業人員先對排放之量化與報導執行協議程序或提供諮詢服務，再於後續期間執行確信案件可能較為適當。</div></details>
+  </div></div>
+  <p class="small"><a href="00_總覽地圖.html">回總覽地圖</a> · <a href="02_有限確信與合理確信.html">下一課：有限確信與合理確信</a></p>
+</section>
+
+<footer>確信準則 3000 號與 3410 號自學課 · 自學筆記，非官方；條文以會計研究發展基金會發布版本為準 · 紀錄只存在這台裝置的瀏覽器</footer>
+</div>
+<script>
+const LESSON_ID = "01", CH = "確信準則 01 什麼是確信案件";
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const PROG_KEY = "qx_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與其他教材共用 study_log_v1）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  $$('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  $$('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+$$('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="quiz"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+$$('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok });
+  });
+});
+
+// ===== 章末測驗交卷 =====
+(function(){
+  const sb = document.getElementById('submitQuiz'); if(!sb) return;
+  sb.addEventListener('click',()=>{
+    const qs = $$('#quizCard .q.quiz');
+    let score = 0, answered = 0; const wrong = [];
+    qs.forEach((q,i)=>{
+      const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+      q.classList.remove('correct','wrong');
+      if(sel) answered++;
+      if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+      else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+    });
+    logEv({ type:"quiz", score, total: qs.length, wrong });
+    writeProg({ quiz: { score, total: qs.length } });
+    const r = document.getElementById('quizResult');
+    if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+    else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="quiz"]').classList.add('done'); }
+    else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+    else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+    r.scrollIntoView({behavior:'smooth'});
+  });
+})();
+
+// ===== 實例題自評 =====
+$$('.essay').forEach(es=>{
+  const ta = es.querySelector('textarea'), self = es.querySelector('.self'), ans = es.querySelector('details');
+  const showBtn = es.querySelector('.showans');
+  if(showBtn) showBtn.addEventListener('click',()=>{ if(ans) ans.open = true; self.classList.add('on'); });
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 通用：chips 單選顯示結果 =====
+function chipTool(chipsId, resId, DATA, render, logName){
+  const res = document.getElementById(resId); if(!res) return;
+  $$('#'+chipsId+' .chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      $$('#'+chipsId+' .chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+      c.setAttribute('aria-pressed','true');
+      const d = DATA[c.dataset.k];
+      res.innerHTML = render(d, c.dataset.k);
+      res.classList.add('on');
+      logEv({ type:"tool", q:logName, k:c.dataset.k });
+    });
+  });
+}
+
+// ===== 工具：五方角色 =====
+(function(){
+  const DATA = {
+    resp:{ t:'負責方 ＝ 青山鋼鐵（股）公司', why:'對標的（2025 年度的排放）負責的人。3410 號把負責方、衡量方統稱「個體」（第 13 條第 10 款）。' },
+    meas:{ t:'衡量方或評估方 ＝ 青山鋼鐵的永續辦公室', why:'依基準（ISO 14064-1 與法定係數）把排放量出來、編成溫室氣體聲明的人。附錄一第 3 條第 7 款：企業自己編、自己委任，負責方同時是衡量方與委任方。' },
+    eng:{ t:'委任方 ＝ 青山鋼鐵（股）公司', why:'跟明德事務所簽委任書、談案件條款的人（3000 號第 25 條、3410 號第 17 條）。' },
+    prac:{ t:'執業人員 ＝ 明德聯合會計師事務所的案件服務團隊，案件主持人林會計師', why:'取得足夠及適切之證據、作成結論、出具確信報告。不得同時是負責方、委任方或預期使用者（附錄一第 3 條第 2 款）。' },
+    user:{ t:'預期使用者 ＝ 投資人、金管會與證交所、交易相對人', why:'拿確信報告做決策的人。3410 號第 133 條列了四類：投資人與利害關係人、排放交易市場參與者、監理機關與政策制定者、個體的管理階層與治理單位。青山鋼鐵自己可以是使用者之一，但不能是唯一的一個（附錄一第 3 條第 9 款）。' }
+  };
+  const res = $('#rolesRes');
+  $$('#roles .role').forEach(r=>{
+    r.addEventListener('click',()=>{
+      $$('#roles .role').forEach(x=>x.classList.remove('on')); r.classList.add('on');
+      const d = DATA[r.dataset.k];
+      res.innerHTML = '<h3>'+d.t+'</h3><p class="small" style="margin:0">'+d.why+'</p>'; res.classList.add('on');
+      logEv({ type:"tool", q:"roles", k:r.dataset.k });
+    });
+  });
+})();
+
+// ===== 工具：標的／標的資訊／基準分類 =====
+(function(){
+  const ITEMS = [
+    { s:'青山鋼鐵 2025 年 1 月 1 日至 12 月 31 日的溫室氣體排放', a:'標的', why:'被衡量的項目本身。' },
+    { s:'溫室氣體聲明書第一頁的「範疇 1 排放：141,200 公噸 CO₂e」', a:'標的資訊', why:'依基準量出來的結果，寫在聲明裡。' },
+    { s:'ISO 14064-1:2018 與環境部溫室氣體排放量盤查作業指引', a:'基準', why:'量標的用的尺（第 10 條第 3 款）；法令明定或專業機構發布的，第 107 條推定妥適。' },
+    { s:'聲明書附註揭露：組織邊界採營運控制權法', a:'基準', why:'決定組織邊界的方法是基準必備內容（3410 號第 16 條第 2 款第 1 目）；附註揭露是為了讓使用者知道用了哪一把尺。' },
+    { s:'溫室氣體聲明書附註所列的 2024 年比較資訊', a:'標的資訊', why:'比較資訊是溫室氣體聲明的一部分（3410 號第 13 條第 13 款），屬標的資訊。' },
+    { s:'台中廠的高爐、鍋爐與公務車隊', a:'標的', why:'排放源是標的的一部分（3410 號第 13 條第 22 款）。' },
+    { s:'經濟部公告的電力排放係數 0.474 kgCO₂e/度', a:'基準', why:'排放係數把活動數據換算成排放量，是量化方法的一部分，屬基準。' },
+    { s:'聲明書彙總表的範疇 2 排放 38,900 公噸 CO₂e', a:'標的資訊', why:'量出來的結果。' }
+  ];
+  const box = $('#sorter'); let i = 0, wrong = { '標的':0, '標的資訊':0, '基準':0 }, done = 0;
+  function render(){
+    if(i >= ITEMS.length){
+      const worst = Object.entries(wrong).sort((a,b)=>b[1]-a[1])[0];
+      box.innerHTML = '<p><b>全部做完。</b>答錯 '+Object.values(wrong).reduce((a,b)=>a+b,0)+' 題。'+(worst[1]>0 ? '最常混的是「'+worst[0]+'」：回去再讀一次觀念 4 的生產線圖。' : '三個詞都分得很清楚。')+'</p><button class="btn small secondary" id="sorterAgain">再做一輪</button>';
+      $('#sorterAgain').addEventListener('click',()=>{ i=0; wrong={ '標的':0,'標的資訊':0,'基準':0 }; render(); });
+      return;
+    }
+    const it = ITEMS[i];
+    box.innerHTML = '<p><span class="pill std">第 '+(i+1)+' / '+ITEMS.length+' 題</span></p><p><b>'+it.s+'</b></p><div class="chips">'+['標的','標的資訊','基準'].map(k=>'<button class="chip" data-a="'+k+'">'+k+'</button>').join('')+'</div><div class="result" id="sorterRes"></div>';
+    $$('#sorter .chip').forEach(c=>c.addEventListener('click',()=>{
+      const ok = c.dataset.a === it.a;
+      $$('#sorter .chip').forEach(x=>{ x.disabled = true; if(x.dataset.a===it.a) x.classList.add('ok'); });
+      if(!ok){ c.classList.add('bad'); wrong[it.a]++; }
+      const r = $('#sorterRes'); r.innerHTML = '<p class="small" style="margin:0">'+(ok?'對。':'不對，這是<b>'+it.a+'</b>。')+it.why+'</p><p style="margin:.5em 0 0"><button class="btn small" id="sorterNext">下一題</button></p>'; r.classList.add('on');
+      $('#sorterNext').addEventListener('click',()=>{ i++; render(); });
+      logEv({ type:"tool", q:"sorter", k:i, ok });
+    }));
+  }
+  render();
+})();
+
+// ===== 工具：這算不算確信案件 =====
+chipTool('t1chips','t1res',{
+  ghg:{ t:'是確信案件（認證案件）', k:'3410 號', why:'企業自己編（衡量方）、會計師認證，有證據、有結論、服務第三者。依 3000 號加 3410 號執行。' },
+  aup:{ t:'不是：協議程序', k:'3000 號第 5 條第 1 款', why:'只執行約定程序、報告發現事實，不作成結論。第 90 條特別對比：確信案件裡程序的性質、時間、範圍由執業人員決定，協議程序則是跟委任方談好的。' },
+  comp:{ t:'不是：代編', k:'3000 號第 5 條第 1 款', why:'會計師自己算、自己編，沒有「別人編、我認證」的結構，也沒有對標的資訊出結論。若同一年再出確信報告，還有自我評估的獨立性威脅（3410 號第 91 條）。' },
+  direct:{ t:'是確信案件，但屬直接案件，不在 3410 號範圍', k:'3000 號第 2 條、3410 號第 5 條', why:'執業人員自己衡量標的，標的資訊附在報告裡。3410 號只規範認證案件；要做只能回 3000 號「作適當調整後適用」。' },
+  court:{ t:'不是：訴訟作證', k:'3000 號第 7 條第 1 款', why:'可能符合定義，但準則明文排除。' },
+  ic:{ t:'是確信案件（認證案件）', k:'3000 號第 87 條第 4 款、第 88 條', why:'標的是系統及流程，標的資訊是「內部控制於某期間依 XX 基準有效執行」的聲明。這是 3000 號管的，不是 3410 號。' },
+  tax:{ t:'不是：不須出具確信結論之代編申報', k:'3000 號第 5 條第 2 款', why:'準則明列排除。' },
+  sr:{ t:'是確信案件；溫室氣體部分視重要性決定是否適用 3410 號', k:'3410 號第 3 條、第 88 條', why:'溫室氣體聲明對整體相對不重要時，可以只依 3000 號；重不重要是專業判斷（第 88 條）。檢查時要看底稿有沒有記錄這個判斷。' }
+}, d=>'<h3>'+d.t+'　<span class="pill std">'+d.k+'</span></h3><p class="small" style="margin:0">'+d.why+'</p>', 'is-assurance');
+
+</script>
+</body>
+</html>

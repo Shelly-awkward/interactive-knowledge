@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>確信準則｜綜合練習場：跨六課混合題</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F3F6F5; --card:#FFFFFF;
+  --ink:#1B2A2C; --ink-2:#4A5C5E; --ink-3:#83949A;
+  --rule:rgba(27,42,44,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --std:#0F6E6E; --std-soft:#E0F1F0;
+  --ghg:#5B3A8C; --ghg-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131B1C; --card:#1C2628;
+    --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+    --rule:rgba(232,238,238,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --std:#6CC3C0; --std-soft:#1E3736;
+    --ghg:#B9A0E3; --ghg-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131B1C; --card:#1C2628;
+  --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+  --rule:rgba(232,238,238,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --std:#6CC3C0; --std-soft:#1E3736;
+  --ghg:#B9A0E3; --ghg-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--std);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+code{font-size:.9em;background:var(--paper);padding:.05em .35em;border-radius:4px}
+
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--std);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--std-soft);color:var(--std);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button,nav.tabs a{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none}
+nav.tabs button:hover,nav.tabs a:hover{border-color:var(--std);color:var(--ink)}
+nav.tabs button.active,nav.tabs a.active{background:var(--std);border-color:var(--std);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--std-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--std-soft);border-left:4px solid var(--std);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--std);display:block;margin-bottom:.2em}
+.law.ghg{background:var(--ghg-soft);border-left-color:var(--ghg)}
+.law.ghg b.art{color:var(--ghg)}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.insp{background:var(--green-soft);border-left:4px solid var(--green);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.93rem}
+.insp b.t{color:var(--green);display:block;margin-bottom:.2em}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.std{background:var(--std-soft);border-color:transparent;color:var(--std)}
+.pill.ghg{background:var(--ghg-soft);border-color:transparent;color:var(--ghg)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.pill.signal{background:var(--signal-soft);border-color:transparent;color:var(--signal)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2,.grid3{grid-template-columns:1fr}}
+
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--std)}
+.flow .step.click{cursor:pointer}
+.flow .step.click:hover,.flow .step.on{border-color:var(--std);background:var(--std-soft)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+.roles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:.6rem 0 1rem}
+@media (max-width:720px){.roles{grid-template-columns:1fr 1fr}}
+.role{border:1px solid var(--rule);border-radius:10px;padding:.6rem .7rem;background:var(--paper);font-size:.9rem;cursor:pointer}
+.role b{display:block;color:var(--std)}
+.role:hover,.role.on{border-color:var(--std);background:var(--std-soft)}
+
+.compare{display:grid;grid-template-columns:9em 1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;font-size:.92rem;margin:.6rem 0 1rem}
+.compare>div{padding:.55em .8em;border-bottom:1px solid var(--rule)}
+.compare .h{background:var(--paper);font-weight:700}
+.compare .k{background:var(--paper);font-weight:700;color:var(--ink-2)}
+@media (max-width:720px){.compare{grid-template-columns:7em 1fr 1fr;font-size:.85rem}}
+
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox label.block{display:flex}
+.toolbox select,.toolbox input[type=number],.toolbox input[type=date],.toolbox input[type=text]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);max-width:100%}
+.toolbox input[type=range]{width:100%;max-width:420px}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--std)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--std);color:var(--std);background:var(--std-soft)}
+.chip.ok{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+.chip.bad{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--std);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--std);border:1.5px solid var(--std)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+.report{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 20px;font-size:.93rem;line-height:1.9}
+.report .rh{font-weight:700;text-align:center;font-size:1.05rem;margin-bottom:.6em}
+.report .blank{display:inline-block;min-width:7em;border-bottom:2px dashed var(--std);text-align:center;color:var(--std);cursor:pointer;padding:0 .3em}
+.report .blank.ok{border-bottom-style:solid;color:var(--green);border-color:var(--green)}
+.report .blank.bad{color:var(--warn);border-color:var(--warn)}
+.report .sec{color:var(--std);font-weight:700;margin-top:.5em}
+.list-check label{display:block;padding:.3em .5em;border-radius:6px}
+.list-check label:hover{background:var(--paper)}
+.list-check label.ok{background:var(--green-soft)}
+.list-check label.bad{background:var(--warn-soft)}
+.bar{height:12px;background:var(--paper);border:1px solid var(--rule);border-radius:999px;overflow:hidden;margin:.3rem 0}
+.bar i{display:block;height:100%;background:var(--std)}
+
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--std);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--std);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">確信準則 3000 · 3410 · 綜合練習場</span>
+  <h1>綜合練習場：跨六課混合題</h1>
+  <p>三個區。混合題庫每輪抽 10 題，六課交錯出，錯過的題會更常出現；情境判斷練「這種情況該出哪種結論」；弱點頁告訴你哪一課最常錯，直接連回去。紀錄只存在這台裝置的瀏覽器。</p>
+  <p class="ver">題目依確信準則 3000 號與 3410 號編寫。自學筆記，非官方。<a href="00_總覽地圖.html">回總覽地圖</a></p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">混合題庫</button>
+  <button data-t="s2">情境判斷：出哪種結論</button>
+  <button data-t="s3">弱點頁</button>
+</nav>
+
+<section id="s1" class="panel show">
+  <div class="card goal"><h2>每輪 10 題</h2><p>題目從 48 題題庫抽，答錯的題與最弱的課會優先出現。每題答完立刻看解析。</p>
+    <p><button class="btn" id="startRound">開始一輪</button></p></div>
+  <div id="roundBox"></div>
+</section>
+
+<section id="s2" class="panel">
+  <div class="card goal"><h2>情境判斷</h2><p>每個情境選一種處理：無保留、無保留加強調事項段、無保留加其他事項段、保留、否定、無法表示結論（或終止委任）、不得承接。</p>
+    <p><button class="btn" id="startSc">開始</button></p></div>
+  <div id="scBox"></div>
+</section>
+
+<section id="s3" class="panel">
+  <div class="card"><h2>弱點頁</h2><p class="small muted">依這台裝置的練習紀錄統計。做過的題愈多愈準。</p><div id="weakBox"></div>
+    <p><button class="btn small secondary" id="resetMix">清除練習場紀錄</button></p></div>
+</section>
+
+<footer>確信準則 3000 號與 3410 號自學課 · 自學筆記，非官方；條文以會計研究發展基金會發布版本為準 · 紀錄只存在這台裝置的瀏覽器</footer>
+</div>
+<script>
+const LESSON_ID = "mix", CH = "確信準則 綜合練習場";
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const PROG_KEY = "qx_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與其他教材共用 study_log_v1）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  $$('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  $$('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+$$('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="quiz"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+$$('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok });
+  });
+});
+
+// ===== 章末測驗交卷 =====
+(function(){
+  const sb = document.getElementById('submitQuiz'); if(!sb) return;
+  sb.addEventListener('click',()=>{
+    const qs = $$('#quizCard .q.quiz');
+    let score = 0, answered = 0; const wrong = [];
+    qs.forEach((q,i)=>{
+      const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+      q.classList.remove('correct','wrong');
+      if(sel) answered++;
+      if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+      else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+    });
+    logEv({ type:"quiz", score, total: qs.length, wrong });
+    writeProg({ quiz: { score, total: qs.length } });
+    const r = document.getElementById('quizResult');
+    if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+    else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="quiz"]').classList.add('done'); }
+    else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+    else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+    r.scrollIntoView({behavior:'smooth'});
+  });
+})();
+
+// ===== 實例題自評 =====
+$$('.essay').forEach(es=>{
+  const ta = es.querySelector('textarea'), self = es.querySelector('.self'), ans = es.querySelector('details');
+  const showBtn = es.querySelector('.showans');
+  if(showBtn) showBtn.addEventListener('click',()=>{ if(ans) ans.open = true; self.classList.add('on'); });
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 通用：chips 單選顯示結果 =====
+function chipTool(chipsId, resId, DATA, render, logName){
+  const res = document.getElementById(resId); if(!res) return;
+  $$('#'+chipsId+' .chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      $$('#'+chipsId+' .chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+      c.setAttribute('aria-pressed','true');
+      const d = DATA[c.dataset.k];
+      res.innerHTML = render(d, c.dataset.k);
+      res.classList.add('on');
+      logEv({ type:"tool", q:logName, k:c.dataset.k });
+    });
+  });
+}
+
+const MIX_KEY = "qx_mix_v1";
+function readMix(){ try{ const m = JSON.parse(localStorage.getItem(MIX_KEY) || "{}"); m.les = m.les || {}; m.items = m.items || {}; m.sc = m.sc || { n:0, ok:0 }; return m; }catch(e){ return { les:{}, items:{}, sc:{n:0,ok:0} }; } }
+function writeMix(m){ try{ m.t = Date.now(); localStorage.setItem(MIX_KEY, JSON.stringify(m)); }catch(e){} }
+const LNAME = { '01':'第 1 課 什麼是確信案件', '02':'第 2 課 有限與合理確信', '03':'第 3 課 承接案件', '04':'第 4 課 規劃重大性與風險', '05':'第 5 課 執行程序與證據', '06':'第 6 課 結論與報告' };
+const LFILE = { '01':'01_什麼是確信案件.html', '02':'02_有限確信與合理確信.html', '03':'03_承接案件.html', '04':'04_規劃重大性與風險.html', '05':'05_執行程序與證據.html', '06':'06_結論與報告.html' };
+
+// ===== 題庫 =====
+const Q = [
+ {id:'m01',l:'01',q:'「適當方所提供之標的資訊與標的依基準衡量或評估所應有之結果，二者間之差異」是哪個名詞的定義？',o:['案件風險','不實表達','偵查風險','證據'],a:1,e:'3000 號第 10 條第 17 款。不實表達包含故意或非故意、量化或質性，並包含遺漏。'},
+ {id:'m02',l:'01',q:'依 3000 號第 6 條，確信案件若是某一較大案件的一部分，本準則之規定？',o:['適用於整個較大案件','僅與該確信案件部分有關','完全不適用','由委任方決定適用範圍'],a:1,e:'第 6 條。'},
+ {id:'m03',l:'01',q:'3410 號對「溫室氣體聲明」的定義，若案件未涵蓋聲明的所有部分，該詞應解讀為？',o:['整份聲明','案件所涵蓋之部分，即案件之標的資訊','個體所有排放','排放盤查登錄表'],a:1,e:'3410 號第 13 條第 13 款末句。'},
+ {id:'m04',l:'01',q:'下列何者是 3410 號所稱「排放扣減」？',o:['範疇 2 排放','自報導總排放減除且非屬排放移除之項目，例如購買抵換','生物匯之移除','基準年排放'],a:1,e:'第 13 條第 7 款；移除另見第 19 款。'},
+ {id:'m05',l:'01',q:'固定燃燒、移動燃燒、製程排放、逸散性排放屬於？',o:['範疇 1 排放','範疇 2 排放','範疇 3 排放','排放扣減'],a:0,e:'3410 號第 94 條。'},
+ {id:'m06',l:'01',q:'個體購買電力所產生的發電廠排放屬於？',o:['範疇 1','範疇 2','範疇 3','移除'],a:1,e:'3410 號第 95 條。'},
+ {id:'m07',l:'01',q:'員工商務旅行、委外作業、產品使用階段之排放屬於？',o:['範疇 1','範疇 2','範疇 3','不屬溫室氣體聲明'],a:2,e:'3410 號第 96 條。'},
+ {id:'m08',l:'01',q:'執業人員擬採用內部稽核人員之工作時，3000 號第 57 條要求評估的事項「不包括」？',o:['內部稽核職能之定位及客觀性','內部稽核人員之專業能力','內部稽核人員之薪資水準','是否應用系統化且嚴謹之方法'],a:2,e:'第 57 條四項。'},
+ {id:'m09',l:'02',q:'有限確信案件中，對控制作業取得瞭解？',o:['一律必要','原則上無須，但資訊處理全為電子形式等情況下可能決定執行控制測試而須瞭解','禁止執行','由個體決定'],a:1,e:'3410 號第 90 條、第 155 條。'},
+ {id:'m10',l:'02',q:'合理確信案件分析性程序的預期值要求？',o:['佐證趨勢即可','足夠精確以辨認可能之重大不實表達','不須設定','由個體提供'],a:1,e:'3410 號第 47 條第 3 款。'},
+ {id:'m11',l:'02',q:'下列敘述何者正確？',o:['有限確信的重大性通常高於合理確信','標的對合理確信不適當者，對有限確信可能適當','有限確信案件仍須取得具有意義之確信程度','有限確信案件不須決定執行重大性'],a:2,e:'3000 號第 10 條第 13 款第 1 目末段、第 93 條。其餘三項均與第 102、121 條及 3410 號第 20 條相反。'},
+ {id:'m12',l:'02',q:'3000 號第 94 條，判斷有限確信是否取得具有意義之確信程度，「不適當結論對預期使用者之影響愈大」則？',o:['所需確信程度愈低','所需確信程度愈高，甚至須達合理確信','與確信程度無關','應改為協議程序'],a:1,e:'第 94 條第 4 款。'},
+ {id:'m13',l:'02',q:'有限確信案件彙總流程之程序，與合理確信的差別在於對重大調整？',o:['有限：查詢；合理：檢查','有限：檢查；合理：查詢','兩者皆檢查','兩者皆不處理'],a:0,e:'3410 號第 53 條、第 55 條。'},
+ {id:'m14',l:'02',q:'有限確信報告之工作彙總說明，依 3000 號第 158 條通常？',o:['較合理確信簡略','較合理確信更為詳細','與合理確信相同','可省略'],a:1,e:'第 158 條。'},
+ {id:'m15',l:'03',q:'3410 號第 16 條第 1 款，案件主持人應確認溫室氣體聲明及案件均包含足夠之範圍，特別考量？',o:['公費是否足夠','排除已量化或易於量化之重大排放是否合理','是否取得主管機關核准','聲明是否經董事會通過'],a:1,e:'第 16 條第 1 款第 1 目。'},
+ {id:'m16',l:'03',q:'依 3000 號第 107 條，法令明定之基準？',o:['一律妥適','除有反證，得被假設為妥適','須經執業人員重新設計','不得使用'],a:1,e:'第 107 條。'},
+ {id:'m17',l:'03',q:'個體要求執業人員對適用基準之解讀向主管機關擔任辯護者，屬哪類威脅？',o:['自我利益','自我評估','辯護','脅迫'],a:2,e:'3410 號第 91 條第 3 款。'},
+ {id:'m18',l:'03',q:'續任案件，執業人員依 3000 號第 26 條應？',o:['不須重新評估','評估情況是否改變致須修改條款，及是否須提醒委任方現行條款','一律重簽委任書','改為合理確信'],a:1,e:'第 26 條。'},
+ {id:'m19',l:'03',q:'承接案件後發現適用基準之部分不妥適，執業人員應？',o:['忽略','考慮終止委任；繼續執行者視情況出具保留、否定或無法表示結論','改為協議程序','要求個體更換基準後出具無保留結論'],a:1,e:'3000 號第 41 條。'},
+ {id:'m20',l:'03',q:'3000 號第 24 條：委任方擬限制工作範圍致執業人員無法表示結論時？',o:['承接並出具無法表示結論','除非法令另有規定，不得承接','承接並出具保留結論','承接但限制報告使用者'],a:1,e:'第 24 條。'},
+ {id:'m21',l:'03',q:'「組織邊界」與「營運邊界」的關係？',o:['相同','組織邊界決定哪些營運納入；營運邊界於其後辨認範疇 1、2、3','營運邊界先於組織邊界','營運邊界由法令決定'],a:1,e:'3410 號第 113 至 114 條。'},
+ {id:'m22',l:'04',q:'3410 號第 18 條規劃時應考量之事項「不包括」？',o:['辨認案件特性以界定範圍','為同一客戶執行其他案件所取得之資訊','專家及其他執業人員之參與','預先與個體協議程序之詳細時間'],a:3,e:'第 18 條六項；第 126 條反而提醒詳細程序講太多會讓程序被預期。'},
+ {id:'m23',l:'04',q:'執行重大性低於整體重大性的理由是？',o:['降低公費','使未更正及未偵出不實表達之彙總超過整體重大性之可能性降至適當水準','符合法令','方便抽樣'],a:1,e:'3410 號第 13 條第 16 款；3000 號第 125 條。'},
+ {id:'m24',l:'04',q:'3410 號第 135 條，當被分配之排放額度低於所報導排放時？',o:['不得承接','可能以被分配之排放額度設定重大性','應提高重大性','應改為合理確信'],a:1,e:'第 135 條第 3 款。'},
+ {id:'m25',l:'04',q:'觀察所提供的證據限制在於？',o:['僅限於觀察之時點，且受觀察者可能因被觀察而改變行為','一律不可靠','只能用於合理確信','須經個體同意'],a:0,e:'3410 號第 152 條。'},
+ {id:'m26',l:'04',q:'個體有範疇 1 的重要設施，執業人員無法實地執行程序，替代程序包括？',o:['取得書面聲明','複核流程圖、分析管理階層問卷、檢查衛星圖像','不處理','改由個體自行確認'],a:1,e:'3410 號第 162 條。'},
+ {id:'m27',l:'04',q:'「所有應揭露之事項均已揭露」屬哪一類聲明？',o:['量化：完整性','表達及揭露：完整性','表達及揭露：一致性','量化：分類'],a:1,e:'3410 號第 168 條第 2 款第 2 目。'},
+ {id:'m28',l:'04',q:'薄弱之控制環境最可能導致？',o:['個別聲明層級之風險','整體溫室氣體聲明層級之重大不實表達風險','無風險','偵查風險降低'],a:1,e:'3410 號第 166 條。'},
+ {id:'m29',l:'04',q:'報酬主要取決於是否達成溫室氣體目標的人員直接參與排放報導，這是？',a:0,o:['故意不實表達之誘因','估計不確定性','科學不確定性','控制風險降低'],e:'3410 號第 171 條。'},
+ {id:'m30',l:'04',q:'使用無適當控制之試算表處理排放資料，依 3410 號第 175 條屬？',o:['可接受之實務','可能導致重大不實表達風險之因素','合理確信之必要條件','與風險無關'],a:1,e:'第 175 條第 2 款。'},
+ {id:'m31',l:'05',q:'3410 號第 177 條，因應整體聲明重大不實表達風險之整體對策「不包括」？',o:['強調專業懷疑','指派更有經驗之人員或聘用專家','減少督導以提高效率','融入個體無法預期之因素'],a:2,e:'第 177 條第 3 款是「更積極之督導」。'},
+ {id:'m32',l:'05',q:'控制環境無效時，執業人員可能？',o:['於期中執行較多程序','於期末執行較多程序、經由其他程序取得更多證據、增加樣本量與設施數','減少程序','改為有限確信'],a:1,e:'3410 號第 178 條。'},
+ {id:'m33',l:'05',q:'控制測試偵出偏差時，執業人員應決定的事項「不包括」？',o:['已執行之控制測試是否仍提供信賴基礎','是否須額外控制測試','是否須額外其他程序','是否終止委任'],a:3,e:'3410 號第 44 條三項。'},
+ {id:'m34',l:'05',q:'合理確信案件對估計建立區間估計時？',o:['區間愈大愈保守','應依證據縮小區間，直至區間內所有結果皆屬合理','由個體決定區間','不得使用區間'],a:1,e:'3410 號第 50 條第 3 款第 2 目。'},
+ {id:'m35',l:'05',q:'3000 號第 142 條，適當方之書面聲明？',o:['可取代其他證據','不得取代合理預期可取得之其他證據，本身無法提供足夠及適切之證據','是唯一必要之證據','不須取得'],a:1,e:'第 142 條。'},
+ {id:'m36',l:'05',q:'個體拒絕更正執業人員溝通之不實表達，執業人員應？',o:['直接出具否定結論','瞭解拒絕更正之理由，並於形成結論時納入考量','不處理','終止委任'],a:1,e:'3410 號第 61 條。'},
+ {id:'m37',l:'05',q:'結論涵蓋比較資訊，且比較資訊存有重大不實表達未重編，應？',o:['於其他事項段敘明','出具保留或否定結論','不處理','要求重新委任'],a:1,e:'3410 號第 70 條第 2 款第 1 目。'},
+ {id:'m38',l:'05',q:'閱讀其他資訊發現重大不一致，3000 號第 144 條可採之行動「不包括」？',o:['要求適當方諮詢法律顧問','與主管機關溝通','暫不交付確信報告','自行修改其他資訊'],a:3,e:'第 144 條六項均未包含自行修改。'},
+ {id:'m39',l:'05',q:'3410 號第 86 條，執業人員應與對聲明負監督責任者溝通之事項「不包括」？',o:['內部控制顯著缺失','舞弊或疑似舞弊','顯然微不足道之未遵循法令','非顯然微不足道之未遵循法令'],a:2,e:'第 86 條第 3 款「顯然微不足道者除外」。'},
+ {id:'m40',l:'06',q:'3410 號第 82 條要求對量化方法與報導實務之質性評估，包括？',o:['公費是否合理','判斷及決定是否存有可能偏頗之跡象','個體股價','報告頁數'],a:1,e:'第 82 條。'},
+ {id:'m41',l:'06',q:'結論未涵蓋溫室氣體聲明中之所有資訊時，報告應？',o:['不須說明','明確指出涵蓋與排除之資訊，並敘明未對排除資訊執行程序、未作結論','僅於附註說明','出具保留結論'],a:1,e:'3410 號第 84 條第 4 款。'},
+ {id:'m42',l:'06',q:'報告提及執業人員專家之工作時，文字？',o:['應說明責任因專家參與而分擔','不得暗示執業人員對結論之責任因專家參與而降低','應附專家簽名','應列專家公費'],a:1,e:'3000 號第 72 條。'},
+ {id:'m43',l:'06',q:'適當方已於其聲明中辨認並適當說明標的資訊存有重大不實表達，且條款要求針對聲明作結論，執業人員應？',o:['否定結論','無保留結論，並增加強調重大事項之說明段','無法表示結論','不出具報告'],a:1,e:'3000 號第 79 條第 2 款。'},
+ {id:'m44',l:'06',q:'最終案件檔案之彙整屬？',o:['行政管理程序，不涉及程序之增加或新結論','重新執行案件','品質複核之一部分','得增加程序'],a:0,e:'3000 號第 174 條。'},
+ {id:'m45',l:'06',q:'下列何者無須列為案件檔案？',o:['所測試項目之可辨認特性','作廢之工作底稿草稿與更正錯誤前之文稿','重大事項之討論紀錄','獨立性結論'],a:1,e:'3000 號第 170 條。'},
+ {id:'m46',l:'06',q:'確信報告日後發生須增加程序之特殊情況，3410 號第 75 條要求記錄？',o:['僅記錄日期','所發生情況、新增程序與證據結論影響、變動及複核之人員與日期','不得記錄','重新出具委任書'],a:1,e:'第 75 條三項。'},
+ {id:'m47',l:'06',q:'「短式」與「長式」確信報告的差別？',o:['短式不含結論','長式包含其他不影響結論之資訊，且須與結論明確區分','短式不須簽名','長式僅供內部使用'],a:1,e:'3000 號第 150 條、第 70 條。'},
+ {id:'m48',l:'06',q:'有限確信案件以「除……外」表達之結論是？',o:['無保留結論','保留結論','否定結論','無法表示結論'],a:1,e:'3000 號第 77 條、第 168 條第 1 款。'}
+];
+
+// ===== 混合題：加權抽題 =====
+function pickRound(){
+  const m = readMix(); const n = 10;
+  const w = Q.map(q=>{ const it = m.items[q.id]||{n:0,w:0}; const ls = m.les[q.l]||{n:0,ok:0}; const lw = ls.n ? 1 - ls.ok/ls.n : .5; return 1 + it.w*2 + lw*2 + (it.n===0 ? 1 : 0); });
+  const pool = Q.map((q,i)=>({q,w:w[i]})); const out = [];
+  while(out.length < n && pool.length){ const tot = pool.reduce((a,p)=>a+p.w,0); let r = Math.random()*tot; let idx = 0; for(let i=0;i<pool.length;i++){ r -= pool[i].w; if(r<=0){ idx=i; break; } } out.push(pool[idx].q); pool.splice(idx,1); }
+  return out;
+}
+(function(){
+  const box = $('#roundBox'); let round = [], i = 0, ok = 0;
+  function draw(){
+    if(i >= round.length){ box.innerHTML = '<div class="card"><h2>這一輪結束</h2><p>答對 '+ok+' / '+round.length+'。</p><p><button class="btn" id="again">再來一輪</button> <button class="btn secondary" id="toWeak">看弱點頁</button></p></div>'; $('#again').addEventListener('click',start); $('#toWeak').addEventListener('click',()=>{ showTab('s3'); drawWeak(); }); logEv({ type:"quiz", score:ok, total:round.length }); return; }
+    const q = round[i];
+    box.innerHTML = '<div class="q"><div class="stem"><span class="pill std">'+(i+1)+' / '+round.length+'</span> <span class="pill">'+LNAME[q.l]+'</span><br>'+q.q+'</div>'+q.o.map((o,k)=>'<label><input type="radio" name="mq" value="'+k+'"> '+String.fromCharCode(65+k)+'. '+o+'</label>').join('')+'<button class="btn small" id="mcheck">對答案</button><div class="fb" id="mfb"></div></div>';
+    $('#mcheck').addEventListener('click',()=>{
+      const sel = document.querySelector('input[name=mq]:checked'); const fb = $('#mfb'); if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+      const good = Number(sel.value)===q.a; if(good) ok++;
+      fb.className = good ? 'fb ok' : 'fb no'; fb.innerHTML = (good?'答對。':'不對，正解是 '+String.fromCharCode(65+q.a)+'。')+q.e+' <a href="'+LFILE[q.l]+'">回'+LNAME[q.l]+'</a>';
+      $$('input[name=mq]').forEach(x=>x.disabled=true); $('#mcheck').textContent='下一題'; $('#mcheck').onclick = ()=>{ i++; draw(); };
+      const m = readMix(); const it = m.items[q.id] = m.items[q.id]||{n:0,w:0}; it.n++; if(!good) it.w++; const ls = m.les[q.l] = m.les[q.l]||{n:0,ok:0}; ls.n++; if(good) ls.ok++; writeMix(m);
+      logEv({ type:"practice", q:q.id, ok:good });
+    });
+  }
+  function start(){ round = pickRound(); i=0; ok=0; draw(); window.scrollTo({top:0,behavior:'smooth'}); }
+  $('#startRound').addEventListener('click',start);
+})();
+
+// ===== 情境判斷 =====
+const SC = [
+ {s:'有限確信。所有程序執行完畢，未更正不實表達彙總遠低於重大性，附註揭露充分。',a:'U',e:'3000 號第 74 條第 2 款：未發現在所有重大方面有未依適用基準編製之情事。'},
+ {s:'合理確信。高雄廠逸散排放無法取得證據，估計佔總排放 12%（整體重大性 5%），其餘類別證據充分。',a:'Q',e:'範圍受限制（3000 號第 68 條），影響重大但侷限於特定層面、比例未達廣泛（第 167 條）→ 保留結論（第 76 條第 1 款、第 77 條）。'},
+ {s:'合理確信。個體拒絕提供任何排放源的原始資料，僅提供彙總表。',a:'D',e:'範圍受限制且影響廣泛（不侷限於特定層面）→ 無法表示結論或終止委任（3000 號第 76 條第 1 款、第 9 條）。'},
+ {s:'有限確信。個體未提供「已依適用基準編製聲明」與「已提供所有攸關資訊」之書面聲明。',a:'D',e:'3410 號第 67 條：未提供第 65 條第 1、2 款書面聲明 → 無法表示結論或終止委任。'},
+ {s:'有限確信。組織邊界刻意排除持股 100% 且排放佔集團 40% 的子公司，個體拒絕納入。承接前即已知悉。',a:'N',e:'3410 號第 16 條第 1 款、第 106 條第 2 款：排除重大排放不合理，先決條件（正當目的）不成立，3000 號第 23 條不得承接。'},
+ {s:'合理確信。證據顯示範疇 1 排放全面低估約 30%，個體拒絕更正，且影響所有設施。',a:'A',e:'重大且廣泛之不實表達 → 否定結論（3000 號第 76 條第 2 款、第 167 條）。'},
+ {s:'有限確信。附註已充分揭露本年度組織邊界方法由股權比例法改為營運控制權法，比較資訊已重編。執業人員認為此事對瞭解聲明很重要。',a:'E',e:'已在聲明中揭露的重要事項 → 無保留加強調事項段（3410 號第 85 條第 1 款），並明確指出結論未因此修正。'},
+ {s:'有限確信。結論不涵蓋併列的前期比較資訊，但執業人員察覺比較資訊可能存有重大不實表達且未重編。',a:'O',e:'3410 號第 70 條第 2 款第 2 目：結論未涵蓋比較資訊 → 於其他事項段敘明。'},
+ {s:'合理確信。台中廠生質燃料碳含量用了舊版係數，差異佔總排放 7%（整體重大性 5%），個體拒絕更正，其他類別無誤。',a:'Q',e:'重大不實表達但侷限於特定層面、比例未達廣泛 → 保留結論（3000 號第 76 條第 2 款、第 77 條）。'},
+ {s:'承接前，法令規定報告必須使用一套固定用語，執業人員認為即使加說明仍會使使用者誤解結論。',a:'N',e:'3000 號第 28 條：除非法令另有規定，不得承接。'},
+ {s:'有限確信。個體已於聲明中自行辨認並適當說明某排放源存有重大不實表達；案件條款明確要求執業人員針對個體之聲明作結論。',a:'E',e:'3000 號第 79 條第 2 款：無保留結論加強調重大事項之說明段。若條款未如此要求，則應對標的作保留或否定結論。'},
+ {s:'合理確信。期中發現計算錯誤 9,000 公噸（整體重大性 9,000），個體已全數更正，執業人員對更正工作執行程序後確認無其他錯誤。',a:'U',e:'已更正且經程序確認（3410 號第 59 條）→ 未更正不實表達為零，無保留結論。但第 58 條第 1 款：這種性質的錯誤要評估是否修正策略，底稿須有紀錄。'}
+];
+const SCO = [['U','無保留結論'],['E','無保留加強調事項段'],['O','無保留加其他事項段'],['Q','保留結論'],['A','否定結論'],['D','無法表示結論或終止委任'],['N','不得承接']];
+(function(){
+  const box = $('#scBox'); let list = [], i = 0, ok = 0;
+  function draw(){
+    if(i >= list.length){ box.innerHTML = '<div class="card"><h2>結束</h2><p>答對 '+ok+' / '+list.length+'。</p><p><button class="btn" id="scAgain">再來一次</button></p></div>'; $('#scAgain').addEventListener('click',start); return; }
+    const c = list[i];
+    box.innerHTML = '<div class="q"><div class="stem"><span class="pill std">'+(i+1)+' / '+list.length+'</span><span class="case">'+c.s+'</span></div><div class="chips">'+SCO.map(o=>'<button class="chip" data-a="'+o[0]+'">'+o[1]+'</button>').join('')+'</div><div class="fb" id="scfb"></div></div>';
+    $$('#scBox .chip').forEach(ch=>ch.addEventListener('click',()=>{
+      const good = ch.dataset.a===c.a; if(good) ok++;
+      $$('#scBox .chip').forEach(x=>{ x.disabled=true; if(x.dataset.a===c.a) x.classList.add('ok'); }); if(!good) ch.classList.add('bad');
+      const fb = $('#scfb'); fb.className = good?'fb ok':'fb no'; fb.innerHTML = (good?'對。':'不對，應為「'+SCO.find(o=>o[0]===c.a)[1]+'」。')+c.e+'<p style="margin:.5em 0 0"><button class="btn small" id="scNext">下一題</button></p>';
+      $('#scNext').addEventListener('click',()=>{ i++; draw(); });
+      const m = readMix(); m.sc.n++; if(good) m.sc.ok++; writeMix(m); logEv({ type:"practice", q:'sc'+i, ok:good });
+    }));
+  }
+  function start(){ list = shuffle(SC); i=0; ok=0; draw(); }
+  $('#startSc').addEventListener('click',start);
+})();
+
+// ===== 弱點頁 =====
+function drawWeak(){
+  const m = readMix(); const box = $('#weakBox');
+  const rows = Object.keys(LNAME).map(l=>{ const s = m.les[l]||{n:0,ok:0}; const r = s.n ? Math.round(s.ok/s.n*100) : null; return { l, s, r }; });
+  const worst = rows.filter(r=>r.r!==null && r.s.n>=3).sort((a,b)=>a.r-b.r)[0];
+  box.innerHTML = '<div class="scroll"><table><thead><tr><th>課</th><th>做過</th><th>答對率</th><th></th></tr></thead><tbody>'+rows.map(r=>'<tr><td><a href="'+LFILE[r.l]+'">'+LNAME[r.l]+'</a></td><td>'+r.s.n+'</td><td>'+(r.r===null?'—':r.r+'%<div class="bar"><i style="width:'+r.r+'%"></i></div>')+'</td><td>'+(worst&&worst.l===r.l?'<span class="pill warn">最弱</span>':'')+'</td></tr>').join('')+'</tbody></table></div>'+
+    '<p class="small">情境判斷：做過 '+m.sc.n+' 題，答對 '+m.sc.ok+' 題。</p>'+
+    (worst ? '<div class="tip">最常錯的是 <a href="'+LFILE[worst.l]+'">'+LNAME[worst.l]+'</a>。建議先讀那一課的「條文速查」，再回來做一輪。</div>' : '<p class="small muted">做滿 3 題以上才會判斷最弱的課。</p>');
+  const wrongItems = Object.entries(m.items).filter(([id,it])=>it.w>0).sort((a,b)=>b[1].w-a[1].w).slice(0,5);
+  if(wrongItems.length){ box.innerHTML += '<h3>錯最多次的題</h3><ul class="small">'+wrongItems.map(([id,it])=>{ const q = Q.find(x=>x.id===id); return q ? '<li>'+q.q+'（錯 '+it.w+' 次）<br><span class="muted">'+q.e+'</span></li>' : ''; }).join('')+'</ul>'; }
+}
+drawWeak();
+$$('nav.tabs button[data-t="s3"]').forEach(b=>b.addEventListener('click', drawWeak));
+$('#resetMix').addEventListener('click',()=>{ if(confirm('清除練習場紀錄？')){ try{ localStorage.removeItem(MIX_KEY); }catch(e){} drawWeak(); } });
+
+</script>
+</body>
+</html>

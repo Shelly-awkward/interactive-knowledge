@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>確信準則 3000 與 3410｜總覽地圖：一張圖、六課</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F3F6F5; --card:#FFFFFF;
+  --ink:#1B2A2C; --ink-2:#4A5C5E; --ink-3:#83949A;
+  --rule:rgba(27,42,44,.14);
+  --blue:#1F4E8C; --blue-soft:#E3EBF6;
+  --green:#2E7D4F; --green-soft:#E1F0E6;
+  --signal:#B07A00; --signal-soft:#FBF1CF;
+  --warn:#9B2C2C; --warn-soft:#F8E4E4;
+  --std:#0F6E6E; --std-soft:#E0F1F0;
+  --ghg:#5B3A8C; --ghg-soft:#EEE8F7;
+  --focus:#1F4E8C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131B1C; --card:#1C2628;
+    --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+    --rule:rgba(232,238,238,.16);
+    --blue:#7FA7E0; --blue-soft:#243448;
+    --green:#7CC79C; --green-soft:#223A2B;
+    --signal:#F0C24A; --signal-soft:#3A3213;
+    --warn:#F08A8A; --warn-soft:#3F2323;
+    --std:#6CC3C0; --std-soft:#1E3736;
+    --ghg:#B9A0E3; --ghg-soft:#2E2540;
+    --focus:#7FA7E0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131B1C; --card:#1C2628;
+  --ink:#E8EEEE; --ink-2:#B6C3C4; --ink-3:#7E8D90;
+  --rule:rgba(232,238,238,.16);
+  --blue:#7FA7E0; --blue-soft:#243448;
+  --green:#7CC79C; --green-soft:#223A2B;
+  --signal:#F0C24A; --signal-soft:#3A3213;
+  --warn:#F08A8A; --warn-soft:#3F2323;
+  --std:#6CC3C0; --std-soft:#1E3736;
+  --ghg:#B9A0E3; --ghg-soft:#2E2540;
+  --focus:#7FA7E0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.15rem;color:var(--std);display:flex;align-items:center;gap:.5em}
+h3{font-size:1rem;margin-top:1.2em}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.4em}
+li{margin:.25em 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:.5em .7em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.6rem 0 1rem}
+.scroll table{min-width:520px}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+code{font-size:.9em;background:var(--paper);padding:.05em .35em;border-radius:4px}
+
+header.hero{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--std);border-radius:12px;padding:22px 22px 16px;margin-bottom:14px}
+header.hero .badge{display:inline-block;background:var(--std-soft);color:var(--std);border-radius:999px;padding:1px 12px;font-size:.8rem;margin-bottom:8px}
+header.hero p{color:var(--ink-2);font-size:.95rem;margin-bottom:.4em}
+header.hero .ver{font-size:.8rem;color:var(--ink-3)}
+header.hero .ver a{color:var(--ink-3)}
+
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;background:var(--paper);padding:10px 0;z-index:10;border-bottom:1px solid var(--rule)}
+nav.tabs button,nav.tabs a{flex:1 1 auto;min-width:110px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);padding:8px 8px;border-radius:999px;font-size:.88rem;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none}
+nav.tabs button:hover,nav.tabs a:hover{border-color:var(--std);color:var(--ink)}
+nav.tabs button.active,nav.tabs a.active{background:var(--std);border-color:var(--std);color:#fff;font-weight:700}
+nav.tabs button.done::after{content:" ✓";font-weight:700}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card.goal{background:var(--std-soft);border-color:transparent}
+.card.goal h2{color:var(--ink)}
+.law{background:var(--std-soft);border-left:4px solid var(--std);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.95rem}
+.law b.art{color:var(--std);display:block;margin-bottom:.2em}
+.law.ghg{background:var(--ghg-soft);border-left-color:var(--ghg)}
+.law.ghg b.art{color:var(--ghg)}
+.note{background:var(--blue-soft);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.tip{background:var(--signal-soft);border-left:4px solid var(--signal);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:.92rem}
+.insp{background:var(--green-soft);border-left:4px solid var(--green);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.93rem}
+.insp b.t{color:var(--green);display:block;margin-bottom:.2em}
+.pill{display:inline-block;font-size:.78rem;padding:.05em .6em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.3em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.std{background:var(--std-soft);border-color:transparent;color:var(--std)}
+.pill.ghg{background:var(--ghg-soft);border-color:transparent;color:var(--ghg)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.pill.signal{background:var(--signal-soft);border-color:transparent;color:var(--signal)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media (max-width:720px){.grid2,.grid3{grid-template-columns:1fr}}
+
+.flow{display:flex;gap:.6rem;flex-wrap:wrap;align-items:stretch;margin:.6rem 0 1rem}
+.flow .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:.6rem .8rem;font-size:.92rem}
+.flow .step b{display:block;margin-bottom:.15rem;color:var(--std)}
+.flow .step.click{cursor:pointer}
+.flow .step.click:hover,.flow .step.on{border-color:var(--std);background:var(--std-soft)}
+.arrow{text-align:center;color:var(--ink-3);font-size:.85rem;margin:-2px 0}
+
+.roles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:.6rem 0 1rem}
+@media (max-width:720px){.roles{grid-template-columns:1fr 1fr}}
+.role{border:1px solid var(--rule);border-radius:10px;padding:.6rem .7rem;background:var(--paper);font-size:.9rem;cursor:pointer}
+.role b{display:block;color:var(--std)}
+.role:hover,.role.on{border-color:var(--std);background:var(--std-soft)}
+
+.compare{display:grid;grid-template-columns:9em 1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;font-size:.92rem;margin:.6rem 0 1rem}
+.compare>div{padding:.55em .8em;border-bottom:1px solid var(--rule)}
+.compare .h{background:var(--paper);font-weight:700}
+.compare .k{background:var(--paper);font-weight:700;color:var(--ink-2)}
+@media (max-width:720px){.compare{grid-template-columns:7em 1fr 1fr;font-size:.85rem}}
+
+details.example{border:1px solid var(--rule);border-radius:10px;margin:10px 0;overflow:hidden;background:var(--card)}
+details.example summary{cursor:pointer;padding:11px 16px;background:var(--paper);font-weight:700;list-style:none}
+details.example summary::-webkit-details-marker{display:none}
+details.example summary::before{content:"＋ ";color:var(--ink-3)}
+details.example[open] summary::before{content:"－ "}
+details.example .body{padding:12px 16px 6px}
+
+.toolbox{background:var(--paper);border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin:10px 0}
+.toolbox fieldset{border:1px solid var(--rule);border-radius:8px;padding:.5rem .9rem .7rem;margin:0 0 .7rem}
+.toolbox legend{font-weight:700;padding:0 .4em;font-size:.95rem}
+.toolbox label{display:inline-flex;align-items:center;gap:.4em;margin:.15em 1.1em .15em 0;cursor:pointer;font-size:.95rem}
+.toolbox label.block{display:flex}
+.toolbox select,.toolbox input[type=number],.toolbox input[type=date],.toolbox input[type=text]{font:inherit;font-size:.95rem;padding:.35em .6em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);max-width:100%}
+.toolbox input[type=range]{width:100%;max-width:420px}
+.result{display:none;margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--rule)}
+.result.on{display:block}
+.result h3{margin-top:0;color:var(--std)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.chip{font:inherit;font-size:.85rem;border:1.5px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.25em .9em;cursor:pointer}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--std);color:var(--std);background:var(--std-soft)}
+.chip.ok{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+.chip.bad{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.btn{display:inline-block;font:inherit;font-size:.92rem;font-weight:500;color:#fff;background:var(--std);border:0;border-radius:6px;padding:.5em 1.1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--std);border:1.5px solid var(--std)}
+.btn.small{font-size:.85rem;padding:.3em .8em}
+.report{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 20px;font-size:.93rem;line-height:1.9}
+.report .rh{font-weight:700;text-align:center;font-size:1.05rem;margin-bottom:.6em}
+.report .blank{display:inline-block;min-width:7em;border-bottom:2px dashed var(--std);text-align:center;color:var(--std);cursor:pointer;padding:0 .3em}
+.report .blank.ok{border-bottom-style:solid;color:var(--green);border-color:var(--green)}
+.report .blank.bad{color:var(--warn);border-color:var(--warn)}
+.report .sec{color:var(--std);font-weight:700;margin-top:.5em}
+.list-check label{display:block;padding:.3em .5em;border-radius:6px}
+.list-check label:hover{background:var(--paper)}
+.list-check label.ok{background:var(--green-soft)}
+.list-check label.bad{background:var(--warn-soft)}
+.bar{height:12px;background:var(--paper);border:1px solid var(--rule);border-radius:999px;overflow:hidden;margin:.3rem 0}
+.bar i{display:block;height:100%;background:var(--std)}
+
+.q{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin:10px 0;background:var(--card)}
+.q .stem{font-weight:700;margin-bottom:.4rem}
+.q .stem .case{font-weight:400;display:block;background:var(--paper);border-radius:6px;padding:.4em .8em;margin:.3em 0 .5em;font-size:.93rem}
+.q label{display:block;padding:.3em .4em;border-radius:6px;cursor:pointer}
+.q label:hover{background:var(--paper)}
+.q input{margin-right:.5em}
+.q .check{margin-top:.5rem}
+.q .fb{display:none;margin-top:.6rem;padding:.6rem .9rem;border-radius:6px;font-size:.92rem}
+.q .fb.ok{display:block;background:var(--green-soft);color:var(--green)}
+.q .fb.no{display:block;background:var(--warn-soft);color:var(--warn)}
+.q.correct{border-color:var(--green)}
+.q.wrong{border-color:var(--warn)}
+.q .diag{display:block;margin-top:.3em;color:var(--ink)}
+.bigbtn{display:block;width:100%;font:inherit;font-size:1rem;font-weight:700;background:var(--std);color:#fff;border:0;border-radius:10px;padding:14px;cursor:pointer;margin-top:12px}
+#quizResult{display:none;text-align:center;padding:18px;border-radius:10px;margin-top:12px;font-size:1.05rem;font-weight:700}
+#quizResult.good{display:block;background:var(--green-soft);color:var(--green)}
+#quizResult.soso{display:block;background:var(--signal-soft);color:var(--ink)}
+#quizResult.bad{display:block;background:var(--warn-soft);color:var(--warn)}
+.essay{border:1px solid var(--std);border-radius:10px;padding:12px 16px;margin:12px 0;background:var(--card)}
+.essay .stem{font-weight:700}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:.93rem;padding:.6em .8em;border:1.5px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);margin:.5rem 0}
+.essay .self{display:none;margin-top:.5rem}
+.essay .self.on{display:block}
+.essay .self .btn{margin-right:.5rem}
+
+.arts details{border-bottom:1px solid var(--rule)}
+.arts summary{cursor:pointer;padding:.55em .2em;font-weight:700;list-style:none}
+.arts summary::-webkit-details-marker{display:none}
+.arts summary span{font-weight:400;color:var(--ink-2);font-size:.92rem}
+.arts .txt{padding:.2em .6em .9em;font-size:.93rem;white-space:pre-line;color:var(--ink)}
+footer{margin-top:28px;color:var(--ink-3);font-size:.85rem;text-align:center;line-height:1.6}
+footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">確信準則 3000 · 3410 · 總覽地圖</span>
+  <h1>確信準則 3000 號與 3410 號 一張圖、六課</h1>
+  <p>這一頁是入口。先看兩號準則怎麼疊在一起、一件確信案件從接案到歸檔走幾步，再從六張課程卡進去。每一課的小節、章末測驗、實例自評都會記在這台裝置的瀏覽器裡，回到這頁就能看到讀到哪、哪一課還沒過關。</p>
+  <p>對象是監理機關的檢查新人與考試準備者。每一課都有「檢查人員視角」：翻事務所底稿時該找什麼、找不到代表什麼。整套課用同一個案例走到底：青山鋼鐵第一次做溫室氣體聲明的有限確信。</p>
+  <p class="ver">依確信準則 3000 號「非屬歷史性財務資訊查核或核閱之確信案件」（111 年 10 月 4 日發布、111 年 12 月 15 日實施）與確信準則 3410 號「溫室氣體聲明之確信案件」編寫。自學筆記，非官方；條文以會計研究發展基金會發布版本為準。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="map">兩號怎麼疊</button>
+  <button data-t="flow">案件九步</button>
+  <button data-t="lessons">六課</button>
+  <button data-t="progress">學習進度</button>
+  <button data-t="xref">條號對照</button>
+  <button data-t="pace">放假怎麼讀</button>
+</nav>
+
+<!-- ═══════════ 地圖 ═══════════ -->
+<section id="map" class="panel show">
+  <div class="card goal">
+    <h2>這兩號準則的關係</h2>
+    <ul>
+      <li><b>3000 號是總則。</b>所有「不是查核財報、不是核閱財報」的確信案件都歸它管：永續報告、內控有效性、法令遵循、溫室氣體。</li>
+      <li><b>3410 號是專章。</b>只管「溫室氣體聲明」的確信案件，而且只管認證案件。它「補充但不取代」3000 號（3410 號第 9 條）。</li>
+      <li>做溫室氣體確信時，兩號一起遵循；只有全部基本準則都遵循了，報告才能寫「依準則執行」（3000 號第 13 條、3410 號第 14 條）。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>疊圖</h2>
+    <div class="flow">
+      <div class="step" style="flex:2 1 300px;border-color:var(--std)"><b>3000 號（176 條＋附錄）</b>定義、承接、品質管理、規劃、重大性、證據、專家、書面聲明、結論、報告十五要素、修正式結論、書面紀錄</div>
+      <div class="step" style="flex:2 1 300px;border-color:var(--ghg)"><b style="color:var(--ghg)">3410 號（86 條基本準則＋解釋及應用）</b>把每一段套到溫室氣體：範圍足夠、基準四必備、整體與執行重大性、瞭解個體七項、重要設施、十個聲明、十一項風險因素、控制測試、估計、書面聲明六項、比較資訊、報告加三項</div>
+    </div>
+    <p>讀法：3410 號很多條開頭是「依確信準則 3000 號之規定……」，表示那一條是在 3000 號的框架上加料。所以每一課都先講 3000 號的骨架，再講 3410 號加了什麼。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>3000 號管</th><th>3410 號管</th><th>這套課放在</th></tr></thead>
+      <tbody>
+        <tr><td>認證案件與直接案件、合理與有限確信</td><td>只有認證案件；兩種確信程度都管</td><td>第 1、2 課</td></tr>
+        <tr><td>承接三條件、先決條件六項、基準五特性、條款</td><td>範圍足夠、基準四必備、個體三責任、條款六項、能力、獨立性五威脅</td><td>第 3 課</td></tr>
+        <tr><td>規劃、重大性、瞭解標的、風險</td><td>規劃六事、整體與執行重大性、瞭解個體七項、重要設施、十個聲明、十一項風險因素</td><td>第 4 課</td></tr>
+        <tr><td>證據、專家、書面聲明、期後、其他資訊</td><td>整體對策、進一步程序、控制測試、分析性程序、估計、不實表達、書面聲明六項、比較資訊</td><td>第 5 課</td></tr>
+        <tr><td>結論、報告十五要素、修正式結論、書面紀錄</td><td>質性評估、報告加三項、品質複核四事</td><td>第 6 課</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>這套課的貫穿案例</h2>
+    <p><b>青山鋼鐵（股）公司</b>，上市，三個據點（高雄廠、台中廠、桃園倉儲），第一次編製 2025 年度溫室氣體聲明，委任<b>明德聯合會計師事務所</b>（案件主持人林會計師）執行<b>有限確信</b>。你是監理機關的檢查新人<b>小安</b>，抽到明德事務所，要看這件的工作底稿。</p>
+    <p class="small muted">公司、事務所、人名都是虛構的。數字是為了練習設計的，不代表任何真實個體。</p>
+  </div>
+</section>
+
+<!-- ═══════════ 流程 ═══════════ -->
+<section id="flow" class="panel">
+  <div class="card goal">
+    <h2>一件確信案件走九步</h2>
+    <p>點任何一步，看它對應 3000 號與 3410 號的哪些條文、在哪一課。這張圖是整套課的骨架，考試申論題照這九步寫，不會漏。</p>
+  </div>
+  <div class="card">
+    <div class="flow" id="steps">
+      <div class="step click" data-k="1"><b>1 承接與續任</b>三條件、先決條件、獨立性</div>
+      <div class="step click" data-k="2"><b>2 案件條款</b>委任書六項</div>
+      <div class="step click" data-k="3"><b>3 規劃與重大性</b>整體策略、整體與執行重大性</div>
+      <div class="step click" data-k="4"><b>4 瞭解個體與內控</b>七項、重要設施、不確定性</div>
+      <div class="step click" data-k="5"><b>5 辨認並評估風險</b>整體與類別層級、聲明</div>
+      <div class="step click" data-k="6"><b>6 因應風險取得證據</b>整體對策、進一步程序、專家</div>
+      <div class="step click" data-k="7"><b>7 評估不實表達</b>累計、溝通、更正、評估</div>
+      <div class="step click" data-k="8"><b>8 收尾</b>書面聲明、期後、比較資訊、其他資訊</div>
+      <div class="step click" data-k="9"><b>9 結論、報告、歸檔</b>十五要素、修正式結論、60 天、5 年</div>
+    </div>
+    <div class="result" id="stepRes"></div>
+  </div>
+  <div class="card">
+    <h2>五方角色</h2>
+    <p>每一件確信案件至少有負責方、執業人員、預期使用者三方，常見再加衡量方或評估方、委任方（3000 號附錄一）。青山鋼鐵案裡，公司同時是負責方、衡量方、委任方；明德事務所是執業人員；投資人與主管機關是預期使用者。詳見<a href="01_什麼是確信案件.html#s1">第 1 課觀念 2</a>。</p>
+  </div>
+</section>
+
+<!-- ═══════════ 六課 ═══════════ -->
+<section id="lessons" class="panel">
+  <div class="card goal">
+    <h2>六課加練習場</h2>
+    <p>順著讀。第 1、2 課是語言（名詞與兩種確信程度），第 3 課是接案前，第 4、5 課是執行，第 6 課是結論與報告。每課三節、三到四個小工具、三題練習、一題實例自評、十題章末測驗、條文速查。</p>
+  </div>
+  <div id="lessonCards"></div>
+</section>
+
+<!-- ═══════════ 進度 ═══════════ -->
+<section id="progress" class="panel">
+  <div class="card">
+    <h2>學習進度</h2>
+    <p class="small muted">資料來自這個瀏覽器的 localStorage（鍵名 <code>qx_progress_v1</code>）。換裝置或清除網站資料就會歸零；這一頁只讀取，不寫入。</p>
+    <div id="progTable"></div>
+    <p><button class="btn small secondary" id="resetProg">清除本課程所有進度</button></p>
+  </div>
+</section>
+
+<!-- ═══════════ 條號對照 ═══════════ -->
+<section id="xref" class="panel">
+  <div class="card">
+    <h2>條號對照：同一件事，3000 號與 3410 號各在哪一條</h2>
+    <p class="small muted">輸入關鍵字過濾。考試前用這張表掃一遍。</p>
+    <input type="text" id="xq" placeholder="例如：重大性、書面聲明、報告日" style="font:inherit;padding:.4em .7em;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink);width:100%;max-width:420px">
+    <div class="scroll"><table id="xtab"><thead><tr><th>主題</th><th>3000 號</th><th>3410 號</th><th>課</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</section>
+
+<!-- ═══════════ 節奏 ═══════════ -->
+<section id="pace" class="panel">
+  <div class="card">
+    <h2>放假三天怎麼讀</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>時段</th><th>讀什麼</th><th>做什麼</th></tr></thead>
+      <tbody>
+        <tr><td>第 1 天上午</td><td>第 1 課、第 2 課</td><td>把「標的／標的資訊／基準」分類器做到全對；結論句型產生器每個組合點一遍</td></tr>
+        <tr><td>第 1 天下午</td><td>第 3 課</td><td>接案檢核器、獨立性威脅分類；寫實例題再看參考答案</td></tr>
+        <tr><td>第 2 天上午</td><td>第 4 課</td><td>重大性試算器換三組數字；十個聲明配對做到全對</td></tr>
+        <tr><td>第 2 天下午</td><td>第 5 課</td><td>四個情境的程序選擇都做；不實表達三筆走完</td></tr>
+        <tr><td>第 3 天上午</td><td>第 6 課</td><td>報告填空全對；日期檢核故意填錯一次看警告</td></tr>
+        <tr><td>第 3 天下午</td><td>綜合練習場</td><td>混合題做三輪，看弱點頁，回去補最弱的那一課的條文速查</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tip">考試前一晚只做兩件事：條號對照表掃一遍、每課的「檢查人員視角」讀一遍。申論題的架構就是「案件九步」加「有限／合理的分岔」。</div>
+  </div>
+  <div class="card">
+    <h2>這套課沒有涵蓋的</h2>
+    <ul class="small">
+      <li>3410 號第 182 條以後的解釋及應用（控制測試、函證、抽樣、書面聲明、比較資訊、報告內容的補充說明）與附錄的報告範例。基本準則（第 1 至 86 條）已完整涵蓋。</li>
+      <li>職業道德規範公報（查核與核閱以外其他確信案件之獨立性）的細節；第 3 課只教五類威脅的分類。</li>
+      <li>品質管理準則 1 號；第 3、6 課只講案件層級的品質管理與品質複核。</li>
+      <li>國際上新的永續確信準則（ISSA 5000）與台灣是否換版；本課依目前手上的 3000 號（111 年修訂）與 3410 號編寫，使用前請確認版本。</li>
+    </ul>
+  </div>
+</section>
+
+<footer>確信準則 3000 號與 3410 號自學課 · 自學筆記，非官方；條文以會計研究發展基金會發布版本為準 · 紀錄只存在這台裝置的瀏覽器</footer>
+</div>
+<script>
+const LESSON_ID = "00", CH = "確信準則 00 總覽地圖";
+// ===== 課程識別與進度（供 00_總覽地圖 讀取）=====
+const PROG_KEY = "qx_progress_v1";
+function readProg(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY) || "{}"); }catch(e){ return {}; } }
+function writeProg(patch){
+  try{
+    const all = readProg(); const me = all[LESSON_ID] || {};
+    all[LESSON_ID] = Object.assign(me, patch, { t: Date.now() });
+    localStorage.setItem(PROG_KEY, JSON.stringify(all));
+  }catch(e){}
+}
+writeProg({ visited: true });
+
+// ===== 學習紀錄（與其他教材共用 study_log_v1）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+// ===== 分頁切換（支援 #s2 這類網址直接開到某一節）=====
+function showTab(id){
+  const btn = document.querySelector('nav.tabs button[data-t="'+id+'"]');
+  if(!btn) return;
+  $$('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  $$('section.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+$$('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{ showTab(btn.dataset.t); history.replaceState(null,'','#'+btn.dataset.t); window.scrollTo({top:0,behavior:'smooth'}); });
+});
+if(location.hash && document.getElementById(location.hash.slice(1))) showTab(location.hash.slice(1));
+(function(){ const p = readProg()[LESSON_ID]; if(p && p.quiz && p.quiz.score >= 8){ const b=document.querySelector('nav.tabs button[data-t="quiz"]'); if(b) b.classList.add('done'); } })();
+
+// ===== 練習題逐題對答案（錯誤選項各有診斷）=====
+$$('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q'), fb = q.querySelector('.fb'), sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案。'; return; }
+    const ok = sel.value === q.dataset.ans;
+    let diag = '';
+    try{ const d = JSON.parse(fb.dataset.diag || '{}'); if(!ok && d[sel.value]) diag = '<span class="diag">你選的 '+sel.value+'：'+d[sel.value]+'</span>'; }catch(e){}
+    if(ok){ fb.className='fb ok'; fb.innerHTML='答對。'+fb.dataset.exp; q.classList.add('correct'); }
+    else { fb.className='fb no'; fb.innerHTML='不對，正解是 '+q.dataset.ans+'。'+fb.dataset.exp+diag; q.classList.add('wrong'); }
+    logEv({ type:"practice", q: sel.name, ok });
+  });
+});
+
+// ===== 章末測驗交卷 =====
+(function(){
+  const sb = document.getElementById('submitQuiz'); if(!sb) return;
+  sb.addEventListener('click',()=>{
+    const qs = $$('#quizCard .q.quiz');
+    let score = 0, answered = 0; const wrong = [];
+    qs.forEach((q,i)=>{
+      const sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+      q.classList.remove('correct','wrong');
+      if(sel) answered++;
+      if(sel && sel.value === q.dataset.ans){ score++; q.classList.add('correct'); fb.className='fb ok'; fb.innerHTML='正確。'+fb.dataset.exp; }
+      else { q.classList.add('wrong'); wrong.push(i+1); fb.className='fb no'; fb.innerHTML='正解：'+q.dataset.ans+'。'+fb.dataset.exp; }
+    });
+    logEv({ type:"quiz", score, total: qs.length, wrong });
+    writeProg({ quiz: { score, total: qs.length } });
+    const r = document.getElementById('quizResult');
+    if(answered < qs.length){ r.className='bad'; r.textContent=`還有 ${qs.length-answered} 題沒作答（未答以錯誤計）。得分：${score} / ${qs.length}`; }
+    else if(score >= 8){ r.className='good'; r.textContent=`${score} / ${qs.length}，這一課過關。`; document.querySelector('nav.tabs button[data-t="quiz"]').classList.add('done'); }
+    else if(score >= 5){ r.className='soso'; r.textContent=`${score} / ${qs.length}，差一點。回頭看答錯那幾題的條文，再交一次。`; }
+    else { r.className='bad'; r.textContent=`${score} / ${qs.length}，建議回到前面幾節重讀觀念卡與例題。`; }
+    r.scrollIntoView({behavior:'smooth'});
+  });
+})();
+
+// ===== 實例題自評 =====
+$$('.essay').forEach(es=>{
+  const ta = es.querySelector('textarea'), self = es.querySelector('.self'), ans = es.querySelector('details');
+  const showBtn = es.querySelector('.showans');
+  if(showBtn) showBtn.addEventListener('click',()=>{ if(ans) ans.open = true; self.classList.add('on'); });
+  es.querySelectorAll('.self button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const ok = b.dataset.ok === '1';
+      es.querySelector('.selfmsg').textContent = ok ? '已記錄：寫到了。' : '已記錄：再回去看一次條文。';
+      logEv({ type:"essay", q: es.dataset.id, ok });
+      const all = readProg(); const me = (all[LESSON_ID]||{}); const e = me.essay || {}; e[es.dataset.id] = ok; writeProg({ essay: e });
+    });
+  });
+});
+
+// ===== 通用：chips 單選顯示結果 =====
+function chipTool(chipsId, resId, DATA, render, logName){
+  const res = document.getElementById(resId); if(!res) return;
+  $$('#'+chipsId+' .chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      $$('#'+chipsId+' .chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+      c.setAttribute('aria-pressed','true');
+      const d = DATA[c.dataset.k];
+      res.innerHTML = render(d, c.dataset.k);
+      res.classList.add('on');
+      logEv({ type:"tool", q:logName, k:c.dataset.k });
+    });
+  });
+}
+
+// ===== 九步 =====
+(function(){
+  const S = {
+    1:{ t:'承接與續任', a3000:'第 18 條（職業道德）、第 19 至 21 條（承接續任）、第 22 至 24 條（先決條件、範圍受限制）、第 99 至 110 條', a3410:'第 10 條（職業道德）、第 15 條（能力）、第 16 條（範圍足夠、基準四必備、個體三責任）、第 91 至 92 條（獨立性五威脅）、第 104 至 121 條', l:'03_承接案件.html', ln:'第 3 課' },
+    2:{ t:'案件條款', a3000:'第 25 至 28 條、第 111 至 112 條（條款修改的正當理由）', a3410:'第 11 條（當地法令）、第 17 條（六項內容）、第 93 條、第 122 至 123 條', l:'03_承接案件.html#s3', ln:'第 3 課 3-3' },
+    3:{ t:'規劃與重大性', a3000:'第 38 條（規劃）、第 42 條（重大性）、第 119 至 126 條、第 134 條（顯然微小）', a3410:'第 18 條（規劃六事）、第 19 至 21 條（整體、執行重大性、修正）、第 124 至 137 條', l:'04_規劃重大性與風險.html#s1', ln:'第 4 課 4-1' },
+    4:{ t:'瞭解個體與內控', a3000:'第 43 至 47 條（瞭解標的；合理確信瞭解內控並評估設計）', a3410:'第 22 條（七項）、第 23 條（三種程序）、第 24 至 26 條（內控：有限三項、合理五項）、第 27 至 32 條、第 138 至 164 條（不確定性、重要設施、實地訪查）', l:'04_規劃重大性與風險.html#s2', ln:'第 4 課 4-2' },
+    5:{ t:'辨認並評估風險', a3000:'第 44、46 條；第 97 條（案件風險三成分）', a3410:'第 33 條（有限：整體與類別）、第 34 條（合理：到聲明層級）、第 35 條（十一項因素）、第 165 至 175 條（整體風險、十個聲明、舞弊、法令）', l:'04_規劃重大性與風險.html#s3', ln:'第 4 課 4-3' },
+    6:{ t:'因應風險取得證據', a3000:'第 48 至 52 條、第 54 至 57 條（專家、其他執業人員、內部稽核）、第 128 至 132 條、第 145 至 148 條（證據）', a3410:'第 36 至 37 條（整體對策、進一步程序）、第 38 至 41 條（有限）、第 42 至 50 條（合理：控制測試、每類別細項或分析、函證、估計三法）、第 51 條（抽樣）、第 64 條（其他執業人員）、第 176 至 181 條', l:'05_執行程序與證據.html', ln:'第 5 課' },
+    7:{ t:'評估不實表達', a3000:'第 53 條（累計）、第 133 至 134 條', a3410:'第 57 條（累計）、第 58 至 59 條（修正策略、個體更正後再查）、第 60 至 61 條（溝通、拒絕更正）、第 62 至 63 條（重評重大性、評估）', l:'05_執行程序與證據.html#s3', ln:'第 5 課 5-3' },
+    8:{ t:'收尾', a3000:'第 58 至 62 條（書面聲明）、第 63 條（期後）、第 64 條（其他資訊）、第 141 至 144 條', a3410:'第 52 條（舞弊法令）、第 53、55 條（彙總流程）、第 54 條（有限：額外程序）、第 65 至 67 條（書面聲明六項、日期、不給就無法表示）、第 68 條（期後）、第 69 至 70 條（比較資訊）、第 71 條（其他資訊）、第 86 條（溝通）', l:'05_執行程序與證據.html#s2', ln:'第 5 課 5-2、5-3' },
+    9:{ t:'結論、報告、歸檔', a3000:'第 66 至 68 條（結論、範圍受限制）、第 69 至 73 條（報告格式）、第 71 條（十五要素）、第 74 至 79 條（無保留、說明段、修正式）、第 81 至 85 條（書面紀錄）、第 149 至 175 條（60 天、5 年）', a3410:'第 72 至 77 條（書面紀錄）、第 78 條（品質複核四事）、第 79 至 83 條（結論與質性評估）、第 84 條（十五要素）、第 85 條（強調事項、其他事項）', l:'06_結論與報告.html', ln:'第 6 課' }
+  };
+  const r = $('#stepRes');
+  $$('#steps .step').forEach(s=>s.addEventListener('click',()=>{
+    $$('#steps .step').forEach(x=>x.classList.remove('on')); s.classList.add('on');
+    const d = S[s.dataset.k];
+    r.innerHTML = '<h3>'+s.dataset.k+'. '+d.t+'　<a class="pill std" href="'+d.l+'">'+d.ln+'</a></h3><div class="scroll"><table><tbody><tr><th style="width:6em">3000 號</th><td>'+d.a3000+'</td></tr><tr><th>3410 號</th><td>'+d.a3410+'</td></tr></tbody></table></div>';
+    r.classList.add('on'); logEv({ type:"tool", q:"steps", k:s.dataset.k });
+  }));
+})();
+
+// ===== 課程卡與進度 =====
+const LESSONS = [
+  { id:'01', f:'01_什麼是確信案件.html', t:'第 1 課 什麼是確信案件', s:'定義三要件、五方角色、標的／標的資訊／基準、認證與直接案件、案件風險三成分', tool:'這算不算確信案件判斷器、三詞分類器、五方角色圖' },
+  { id:'02', f:'02_有限確信與合理確信.html', t:'第 2 課 有限確信與合理確信', s:'可接受案件風險、程序五大差異、三件不變的事、具有意義之確信程度、結論句型', tool:'確信程度拉桿、結論句型產生器、句型辨認' },
+  { id:'03', f:'03_承接案件.html', t:'第 3 課 承接案件', s:'承接三條件、先決條件六項、基準五特性與四必備、能力、獨立性五威脅、條款六項、品質管理', tool:'接案檢核器、基準四項檢查、獨立性威脅分類' },
+  { id:'04', f:'04_規劃重大性與風險.html', t:'第 4 課 規劃、重大性與風險', s:'規劃六事、整體與執行重大性、瞭解個體七項、不確定性、重要設施與實地訪查、十個聲明、十一項風險因素', tool:'重大性試算器、重要設施辨認、聲明配對' },
+  { id:'05', f:'05_執行程序與證據.html', t:'第 5 課 執行程序與證據', s:'整體對策、進一步程序、控制測試、分析性程序三步、估計三法、證據可靠性、專家、書面聲明六項、不實表達四步、期後、比較資訊、其他資訊', tool:'情境選程序、證據可靠性、不實表達處理' },
+  { id:'06', f:'06_結論與報告.html', t:'第 6 課 結論與報告', s:'結論前兩問、質性評估、報告十五要素、報告日、強調與其他事項段、修正式結論決策樹、書面紀錄、品質複核', tool:'報告填空、報告日檢核、修正式結論決策器' },
+  { id:'mix', f:'綜合練習場.html', t:'綜合練習場', s:'跨六課混合題庫每輪 10 題、錯的多出；情境判斷結論類型；弱點頁連回該課', tool:'隨機出題、弱點統計、條號速查' }
+];
+(function(){
+  const prog = readProg();
+  $('#lessonCards').innerHTML = LESSONS.map(L=>{
+    const p = prog[L.id] || {}; const q = p.quiz;
+    const st = q ? (q.score>=8 ? '<span class="pill green">測驗 '+q.score+'/'+q.total+' 過關</span>' : '<span class="pill signal">測驗 '+q.score+'/'+q.total+'</span>') : (p.visited ? '<span class="pill blue">讀過</span>' : '<span class="pill">未讀</span>');
+    return '<div class="card"><h2><a href="'+L.f+'">'+L.t+'</a> '+st+'</h2><p class="small">'+L.s+'</p><p class="small muted" style="margin:0"><b>互動工具：</b>'+L.tool+'</p></div>';
+  }).join('');
+  const rows = LESSONS.map(L=>{ const p = prog[L.id]||{}; const q=p.quiz; const es = p.essay ? Object.values(p.essay).filter(Boolean).length : 0;
+    return '<tr><td><a href="'+L.f+'">'+L.t+'</a></td><td>'+(p.visited?'✓':'')+'</td><td>'+(q? q.score+' / '+q.total : '')+'</td><td>'+(es?es+' 題自評寫到了':'')+'</td><td class="small muted">'+(p.t? new Date(p.t).toLocaleString('zh-Hant-TW') : '')+'</td></tr>'; }).join('');
+  $('#progTable').innerHTML = '<div class="scroll"><table><thead><tr><th>課</th><th>讀過</th><th>章末測驗</th><th>實例自評</th><th>最後時間</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+  $('#resetProg').addEventListener('click',()=>{ if(confirm('清除這台裝置上本課程的所有進度？練習場紀錄也會一起清除。')){ try{ localStorage.removeItem(PROG_KEY); localStorage.removeItem('qx_mix_v1'); }catch(e){} location.reload(); } });
+})();
+
+// ===== 條號對照 =====
+(function(){
+  const X = [
+    ['確信案件之定義','第 10 條第 13 款','第 13 條第 13 款（溫室氣體聲明＝標的資訊）','1'],
+    ['認證案件／直接案件','第 2 條、第 10 條第 13 款第 2 目、附錄一','第 5 條（僅認證案件）','1'],
+    ['非屬確信案件','第 5 條、第 7 條','第 4 條（不規範的項目）','1'],
+    ['與 3000 號之關係','第 1 條、第 12 至 17 條','第 9 條、第 14 條、第 103 條','1'],
+    ['標的、標的資訊、基準','第 10 條第 1 至 3 款、第 87 至 88 條','第 13 條第 1 款、第 107 至 108 條','1'],
+    ['五方角色','第 10 條第 9 至 12 款、第 100 條、附錄一','第 13 條第 10 款（個體）','1'],
+    ['案件風險三成分','第 10 條第 19 款、第 97 條','—','1'],
+    ['專業懷疑、專業判斷','第 10 條第 22、23 款、第 35 至 37 條、第 115 至 118 條','—','1'],
+    ['合理確信／有限確信定義','第 10 條第 13 款第 1 目','第 6 條、第 8 條、第 12 條','2'],
+    ['程序差異','第 92 條','第 176 條','2'],
+    ['具有意義之確信程度','第 93 至 94 條','第 162 條','2'],
+    ['重大性不受確信程度影響','第 121 條','第 134 條','2'],
+    ['不得因取不到證據改為有限確信','第 112 條','第 123 條','2'],
+    ['有限確信察覺異常之額外程序','第 51 條、第 132 條','第 54 條','2'],
+    ['結論句型','第 161 條、第 163 條、第 168 條','第 12 條、第 84 條第 12 款','2'],
+    ['承接三條件','第 19 至 21 條','第 15 條','3'],
+    ['先決條件','第 22 至 24 條、第 40 至 41 條','第 16 條、第 106 條','3'],
+    ['基準妥適性','第 105 至 109 條','第 16 條第 2 款、第 109 至 112 條','3'],
+    ['組織邊界','—','第 13 條第 15 款、第 113 至 114 條','3'],
+    ['範疇 1、2、3','—','第 13 條第 6 款、第 94 至 96 條、第 116 至 120 條','3'],
+    ['獨立性','第 18 條、第 20 條第 1 款','第 10 條、第 91 至 92 條','3'],
+    ['專業能力','第 29 至 30 條','第 15 條、第 104 至 105 條','3'],
+    ['案件條款','第 25 至 28 條、第 111 條','第 17 條、第 122 條','3'],
+    ['法令規定之報告格式','第 28 條、第 73 條','第 11 條、第 93 條','3'],
+    ['品質管理與主持人責任','第 29 至 34 條','第 74 條、第 78 條','3、6'],
+    ['規劃','第 38 條、第 119 至 120 條','第 18 條、第 124 至 129 條','4'],
+    ['重大性','第 42 條、第 121 至 126 條','第 19 至 21 條、第 130 至 137 條','4'],
+    ['執行重大性','第 125 條','第 13 條第 16 款、第 20 條','4'],
+    ['顯然微小','第 134 條','第 57 條','4、5'],
+    ['瞭解標的／個體','第 43 至 47 條','第 22 至 23 條、第 138 至 154 條','4'],
+    ['瞭解內部控制','第 45 條','第 24 至 26 條、第 155 至 158 條','4'],
+    ['不確定性','—','第 140 至 145 條、第 84 條第 6 款','4、6'],
+    ['重要設施、實地訪查','—','第 13 條第 20 款、第 31 條、第 101 至 102 條、第 160 至 163 條','4'],
+    ['內部稽核','第 43 條第 2 款、第 57 條','第 32 條、第 164 條','4、5'],
+    ['風險辨認與評估','第 44 條、第 46 條、第 48 條、第 50 條','第 33 至 35 條、第 165 至 175 條','4'],
+    ['十個聲明','—','第 13 條第 2 款、第 168 條','4'],
+    ['舞弊、未遵循法令','第 43 條第 1 款','第 28 條、第 35 條第 1 至 2 款、第 52 條、第 86 條、第 170 至 173 條','4、5'],
+    ['整體對策','—','第 36 條、第 177 至 179 條','5'],
+    ['進一步程序','第 48 條、第 50 條、第 128 至 131 條','第 37 至 38 條、第 42 條、第 45 條、第 180 至 181 條','5'],
+    ['控制測試','第 48 條第 2 款','第 43 至 44 條','5'],
+    ['分析性程序','第 92 條第 3 至 5 款','第 39 至 40 條、第 47 至 48 條、第 149 至 151 條','5'],
+    ['估計','—','第 41 條、第 49 至 50 條','5'],
+    ['抽樣','—','第 51 條','5'],
+    ['函證','第 128 條','第 46 條','5'],
+    ['證據之足夠與適切','第 10 條第 16 款、第 52 條、第 66 條、第 145 至 148 條','第 38 條第 2 款、第 42 條第 2 款','5'],
+    ['執業人員專家','第 54 條、第 135 至 140 條','第 18 條第 5 款、第 128 條','5'],
+    ['其他執業人員','第 56 條、第 113 至 114 條','第 64 條、第 129 條','5'],
+    ['彙總流程','—','第 53 條、第 55 條','5'],
+    ['不實表達之累計、溝通、評估','第 53 條、第 67 條、第 133 至 134 條','第 57 至 63 條','5'],
+    ['書面聲明','第 58 至 62 條、第 141 至 142 條','第 17 條第 6 款、第 65 至 67 條','5'],
+    ['期後事項','第 63 條、第 143 條','第 68 條','5'],
+    ['比較資訊','—','第 13 條第 5 款、第 69 至 70 條','5'],
+    ['其他資訊','第 10 條第 20 至 21 款、第 64 條、第 144 條','第 71 條','5'],
+    ['作成結論','第 66 至 68 條','第 79 至 83 條','6'],
+    ['報告要素','第 69 至 73 條、第 149 至 166 條','第 84 條','6'],
+    ['報告日','第 71 條第 14 款、第 166 條','第 84 條第 14 款','6'],
+    ['無保留結論','第 74 條','第 80 至 81 條','6'],
+    ['強調事項段、其他事項段','第 75 條','第 85 條','6'],
+    ['修正式結論','第 76 至 79 條、第 167 至 168 條','第 67 條（無法表示）、第 70 條（比較資訊）','6'],
+    ['廣泛','第 167 條','—','6'],
+    ['書面紀錄','第 81 至 85 條、第 170 至 175 條','第 72 至 77 條','6'],
+    ['歸檔 60 天、保管 5 年','第 173 條、第 175 條','第 76 條','6'],
+    ['案件品質複核','第 34 條','第 78 條','6'],
+    ['其他溝通','第 80 條、第 169 條','第 86 條','5']
+  ];
+  const tb = $('#xtab tbody');
+  function draw(q){ q = (q||'').trim(); tb.innerHTML = X.filter(r=>!q || r.join(' ').includes(q)).map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>').join('') || '<tr><td colspan="4" class="muted">沒有符合的項目</td></tr>'; }
+  $('#xq').addEventListener('input',e=>draw(e.target.value)); draw('');
+})();
+
+</script>
+</body>
+</html>
