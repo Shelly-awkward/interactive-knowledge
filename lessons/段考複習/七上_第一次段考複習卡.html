@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>七上段考複習卡</title>
+<style>
+:root{
+  --bg:#F5F6F8; --card:#FFFFFF; --ink:#1D2330; --soft:#5B6475; --line:#DFE3EA;
+  --accent:#2F6FDB; --accent-soft:#E6EEFB; --warn:#B45309; --warn-soft:#FDF1E1;
+  --ok:#15803D; --mask:#E9ECF1;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151C; --card:#1A202A; --ink:#E7EAF0; --soft:#9AA3B3; --line:#2B3340;
+    --accent:#7FA8F0; --accent-soft:#1F2C44; --warn:#F2B36B; --warn-soft:#3A2A16;
+    --ok:#6FD39A; --mask:#2A313D;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151C; --card:#1A202A; --ink:#E7EAF0; --soft:#9AA3B3; --line:#2B3340;
+  --accent:#7FA8F0; --accent-soft:#1F2C44; --warn:#F2B36B; --warn-soft:#3A2A16;
+  --ok:#6FD39A; --mask:#2A313D;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.6;font-size:16px}
+header{padding:20px 16px 8px;max-width:860px;margin:0 auto}
+header h1{font-size:1.35rem;font-weight:800;letter-spacing:.03em}
+header p{color:var(--soft);font-size:.88rem;margin-top:4px}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs{max-width:860px;margin:0 auto;padding:8px 16px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;font:inherit;font-size:.86rem;font-weight:700;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--soft);cursor:pointer}
+.tabs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.bar{max-width:860px;margin:0 auto;padding:6px 16px 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:.82rem;color:var(--soft)}
+.bar button{font:inherit;font-size:.82rem;padding:4px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+main{max-width:860px;margin:0 auto;padding:6px 16px 60px}
+section{display:none}
+section.on{display:block}
+h2{font-size:1.05rem;margin:18px 0 8px;font-weight:800}
+h2 small{font-weight:500;color:var(--soft);font-size:.8rem;margin-left:6px}
+.tip{background:var(--accent-soft);border-radius:10px;padding:10px 12px;font-size:.88rem;margin:8px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px;cursor:pointer;display:flex;flex-direction:column;gap:4px;-webkit-tap-highlight-color:transparent}
+.item .q{font-size:.95rem}
+.item .q .no{color:var(--soft);font-size:.78rem;font-variant-numeric:tabular-nums}
+.item .a{font-weight:800;color:var(--accent);font-size:1.02rem;border-radius:6px;transition:background .15s,color .15s}
+.item .why{font-size:.83rem;color:var(--soft)}
+.masked .item:not(.open) .a,.masked .item:not(.open) .why{color:transparent;background:var(--mask);user-select:none}
+.masked .item:not(.open) .a::after{content:"點一下看答案";color:var(--soft);font-weight:500;font-size:.78rem;padding:0 8px}
+.masked .item:not(.open) .a{position:relative}
+.masked .item:not(.open) .a > *{display:none}
+.item.wide{grid-column:1/-1}
+.flag{display:inline-block;font-size:.72rem;font-weight:700;color:var(--warn);background:var(--warn-soft);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+.hl{color:var(--warn);font-weight:800}
+.mark{margin-left:auto;font-size:.75rem;color:var(--soft)}
+.item.known{border-color:var(--ok)}
+.item.known .q .no::after{content:"✓ ";color:var(--ok);font-weight:800}
+footer{max-width:860px;margin:0 auto;padding:0 16px 40px;color:var(--soft);font-size:.78rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>七上第一次段考 考前複習卡</h1>
+  <p>英文＋國文。題目照老師發的複習卷，答案先遮住，自己先想，再點一下看答案。標「待核對」的是卷子印不清楚或答案有爭議，考前跟老師的答案對一下。</p>
+</header>
+<nav>
+  <div class="tabs" id="tabs"></div>
+  <div class="bar">
+    <button id="toggleMask" type="button">全部顯示答案</button>
+    <button id="resetKnown" type="button">清除「我會了」</button>
+    <span id="stat"></span>
+    <span class="mark">連點兩下＝標記「我會了」</span>
+  </div>
+</nav>
+<main id="main"></main>
+<footer>臨時複習卡，考完可以刪。答案依教育部國語辭典與一般課本寫法整理；跟課本或老師答案不同時，以課本和老師為準。</footer>
+
+<script>
+// 每個區塊：t 標題、tip 提醒、cols 欄寬（wide＝一題一整行）、items [題目, 答案, 說明, 待核對?]
+var DATA = [
+{ id:"en", name:"英文單字", blocks:[
+  { t:"單字複習｜中翻英", n:"60 個", tip:"括號裡的字母是開頭提示。名詞複數、片語的空格數要對上。", items:[
+    ["節目（s…）","show"],["鵝（單數）","goose"],["獅子","lion"],["更多的","more"],["蜜蜂","bee"],["斑馬","zebra"],
+    ["大象","elephant"],["老鼠（複數）","mice"],["綿羊","sheep"],["生氣的","angry"],["乾淨的","clean"],["河馬","hippo"],
+    ["棕色的","brown"],["熊","bear"],["最喜愛的","favorite"],["森林","forest"],["明信片","postcard"],["…歲（兩字）","years old"],
+    ["漂亮的（b…）","beautiful"],["困難的、堅硬的","hard"],["遲的、晚的","late"],
+    ["圖畫（p…）","picture"],["分數、觀點","point"],["猴子","monkey"],["贏家","winner"],["青蛙","frog"],["生日","birthday"],
+    ["老鼠（單數）","mouse"],["螞蟻","ant"],["山羊","goat"],["年輕的","young"],["骯髒的","dirty"],["強壯的","strong"],
+    ["但是","but"],["水果","fruit"],["毛茸茸的","furry","也可能是 fluffy，看課本單字表",1],["腳印","footprint"],
+    ["美國（兩字）","the U.S.","兩個字的寫法依課本，常見是 the U.S. 或 the USA",1],["有名的","famous"],["世界各地（四字）","all over the world"],
+    ["簡單的","easy"],["明天","tomorrow"],
+    ["家庭、家人","family"],["家庭主婦","homemaker","有的課本寫 housewife",1],["女演員","actress"],["女兒","daughter"],["妻子","wife"],
+    ["明星、星星","star"],["可愛的","cute"],["地方","place"],["創辦者","founder"],["農夫","farmer"],["職員","clerk"],["兒子","son"],
+    ["丈夫","husband"],["國中（三字）","junior high school"],["還、仍然","still"],["絕妙的、極好的（w…）","wonderful"],
+    ["主題樂園","theme park"],["卡通","cartoon"]
+  ]},
+  { t:"單數變複數", n:"10 個", tip:"一般加 s；s 結尾加 es；子音＋y 改 ies；f/fe 改 ves；不規則的要背。", items:[
+    ["book","books","一般加 s"],["boy","boys","母音＋y，直接加 s"],["wife","wives","fe 改 ves"],["mouse","mice","不規則"],
+    ["fish","fish","單複數同形"],["bus","buses","s 結尾加 es"],["baby","babies","子音＋y，改 ies"],["woman","women","不規則"],
+    ["goose","geese","不規則"],["sheep","sheep","單複數同形"]
+  ]},
+  { t:"雜誌複習｜英文對中文代號", n:"42 個", tip:"答案是選項代號加中文。42 個代號剛好各用一次。", items:[
+    ["environment","01 環境"],["plate","23 盤子"],["rice","17 米飯、米"],["bill","33 帳單"],["server","07 服務生"],
+    ["couple","40 幾個"],["breakfast","19 早餐"],["unique","27 獨特的"],["onion","08 洋蔥"],["owe","38 欠"],
+    ["text","13 給…傳簡訊"],["mall","30 購物中心"],["local","02 當地的、本地的"],["finish","26 完成"],
+    ["guy","09 男人、傢伙"],["protein","21 蛋白質"],["library","32 圖書館"],["dish","05 菜、盤子"],["restaurant","37 餐廳"],
+    ["fish","18 魚"],["star","24 明星"],["fuel","03 燃料"],["treat","34 款待"],["bottom","22 底層的"],
+    ["downtown","41 在市中心"],["uncomfortable","12 不舒服、不自在的"],["choose","42 選擇"],["concerned","06 掛念的、擔心的"],
+    ["leftovers","20 剩菜"],["for free","29 免費"],["join","11 加入、參加"],["invite","35 邀請"],["visit","25 參觀、拜訪"],
+    ["pack","15 打包"],["costume","28 服裝、戲服"],["ugly","04 難看的、醜陋的"],["split","36 分攤"],["fruit","16 水果"],
+    ["total","31 總數"],["apartment","10 公寓"],["cost","39 花費"],["almost","14 幾乎"]
+  ]}
+]},
+{ id:"ens", name:"英文句型", blocks:[
+  { t:"依照畫線部分造出原問句", n:"5 題", wide:1, tip:"先看畫線的是什麼：東西用 What，年紀用 How old，地方用 Where，職業用 What。be 動詞搬到主詞前面。", items:[
+    ["1. The quokka is my favorite animal.（畫線：The quokka）","What is your favorite animal?","my 要改成 your"],
+    ["2. Yes, it is a cat.（畫線：Yes）","Is it a cat?","Yes／No 回答的，原問句就是 Is…? 開頭"],
+    ["3. Momo's dogs are two years old.（畫線：two years old）","How old are Momo's dogs?","問年紀用 How old，dogs 是複數所以用 are"],
+    ["4. Lily is from Australia.（畫線：Australia）","Where is Lily from?","from 留在句尾"],
+    ["5. Amelia is a teacher.（畫線：a teacher）","What is Amelia?","問職業。也可以寫 What does Amelia do?，看課本教哪一種",1]
+  ]},
+  { t:"依提示作答", n:"3 題", wide:1, tip:"簡答用代名詞，不要重複人名。those 換成 they，Jimmy 換成 he。", items:[
+    ["1. Are those small bears?（先肯定簡答再詳答）","Yes, they are. They are small bears.","those 回答時換成 they"],
+    ["2. Is Jimmy eighteen years old?（先否定簡答，再用「他是個 21 歲的學生」回答）","No, he isn't. He is a twenty-one-year-old student.","「21 歲的」放在名詞前要用連字號，而且 year 不加 s。也可寫 a 21-year-old student"],
+    ["3. Where are Judy and Nick?（用「他們在家裡」回答）","They are at home.","在家是 at home，home 前面不加 the"]
+  ]}
+]},
+{ id:"zy", name:"注音一百題", blocks:[
+  { t:"第一次段考 國字注音複習 1–50", n:"", tip:"「」裡是注音就寫國字，「」裡是國字就寫注音。同音字成對出現，要分清楚部首。", items:"ZY1"},
+  { t:"第一次段考 國字注音複習 51–100", n:"", tip:"79–85、95、100 跟神話寓言有關（女媧、共工、夸父、南郭先生），把故事一起記。", items:"ZY2"}
+]},
+{ id:"za", name:"國文模擬卷", blocks:[
+  { t:"一、注音國字", n:"10 題", items:[
+    ["1.「撒」嬌","ㄙㄚ"],["2.「ㄕㄠˋ」縱即逝","稍"],["3. 口「ㄇㄧˋ」腹劍","蜜"],["4. 山「巒」","ㄌㄨㄢˊ"],["5. 教「誨」","ㄏㄨㄟˋ"],
+    ["6.「ㄘㄨㄟ」促","催"],["7.「擬」人化","ㄋㄧˇ"],["8. 混「沌」無知","ㄉㄨㄣˋ"],["9.「ㄌㄢˋ」竽充數","濫"],["10. 骨「髓」","ㄙㄨㄟˇ"]
+  ]},
+  { t:"二、注釋", n:"8 題", items:[
+    ["1.「闔」上眼睛","闔：閉上、合上"],["2. 鄧林","桃林（夸父的手杖變成的樹林）"],["3. 說嘴","誇口、吹牛"],
+    ["4. 廩食「以」數百人","以：用、拿","整句：官府拿糧食供養這幾百個吹竽的人。照課本注釋寫",1],
+    ["5. 生書","新教的、還沒讀熟的書"],["6.「擰」我的肉","用手指夾住皮肉扭轉"],["7.「完全」的人","完美、沒有缺點的人"],
+    ["8. 梢（卷子這題印不完整）","—","題目被截掉，看不出考哪個詞，請看原卷",1]
+  ]},
+  { t:"三、改錯", n:"4 字", wide:1, items:[
+    ["小明…上課時「慢」不經心…對功課「莫」不關心，最後未能金榜「提」名，才深深感到後「侮」。","漫不經心、漠不關心、金榜題名、後悔","卷子掃描模糊，錯的那幾個字依常見錯法判斷；四個正確寫法一定要會",1]
+  ]},
+  { t:"四、綜合測驗", n:"18 題", wide:1, items:[
+    ["1. 〈母親的教誨〉對話用「老子」「跌他的股」「說嘴」等方言，用意？","D","對話變得生動，使人如臨其境"],
+    ["2. 〈無心的錯誤〉用「笑嘻嘻」「開玩笑」「沒有惡意」描寫主角，用意？","B","說明年輕人犯錯時的心態"],
+    ["3. 楊喚的詩有色彩、有畫面，還置入發得出聲響的器樂，被稱為？","A","有聲音的詩"],
+    ["4. 最能表現「夏夜」景色的？","A","提燈的螢火蟲，螢火蟲是夏天的代表"],
+    ["5. 關於寓言和神話，何者錯誤？","B","「把道理寄託在故事中」是寓言，不是神話"],
+    ["6. 母親「只對我一望」「不是借此出氣叫別人聽的」，管教態度？","C","顧及作者尊嚴，使他能反省錯誤的嚴重性"],
+    ["7. 〈無心的錯誤〉連續三個問句的用意？","D","要兒子思考「無心有可能就是錯誤」"],
+    ["8. 《山海經》應龍那段，何者正確？","B","旱災時扮成應龍的樣子求雨，就能下大雨"],
+    ["9.「『無心』往往就是一種錯誤」最佳詮釋？","D","無論動機為何，犯罪的事實不會改變"],
+    ["10.「偶爾試一次毒品…是有心犯罪嗎？」最接近？","C","吸毒犯法，即使偶一為之也算"],
+    ["11. 〈母親的教誨〉抒發對母親感念的方式？","D","以生活片段呈現母親的關懷"],
+    ["12. 〈夏夜〉最能表現夏夜來臨時「輕巧」動作的？","B","來了！來了！從山坡上輕輕地爬下來了"],
+    ["13. 學堂門的鎖匙那段，作者上課前會做什麼？","D","先到學堂門口一望，再去先生家拿鑰匙"],
+    ["14. 還原省略主詞，何者錯誤？","C","湣王即位後「好一一聽之」的是湣王，不是宣王"],
+    ["15. 以聲音襯托寧靜，和「只有綠色的小河還醒著，低聲地歌唱著」相同？","C","蟬噪林逾靜，鳥鳴山更幽"],
+    ["16. 劉墉「在別人肯定你之前，你先得肯定自己」最接近？","A","人必自重而後人重之"],
+    ["17.「1筷省水」寫作手法，相差最遠？","C","「筷」和「塊」是字音相關（諧音），不是詞義相關；也沒有「省一塊錢」的意思",1],
+    ["18. 讀音標示正確的？","D","頒布 ㄅㄢ 正確。黴 ㄇㄟˊ、熱忱 ㄔㄣˊ、舞蹈 ㄉㄠˋ（臺灣讀四聲）"]
+  ]},
+  { t:"五、閱讀測驗", n:"4 題", wide:1, items:[
+    ["1. 胡適兒時的眼疾可能是？","C","黑睛翳（黴菌感染引起的角膜病變）"],
+    ["2. 關於「眼翳病」，何者正確？","C","「目睭勾到蛤仔肉」指的就是眼翳病。黑睛翳不是眼翳病的別稱"],
+    ["3. 媒體「無心」之過對民眾最可能的影響？","B","弱勢群體承受汙名，形成難以扭轉的刻板印象"],
+    ["4.「偏見式的命名與連結」最接近？","A","把特定群體反覆連結負面形象"]
+  ]}
+]},
+{ id:"zb", name:"國文複習卷", blocks:[
+  { t:"一、國字注音", n:"10 題", items:[
+    ["1.「ㄏㄜˊ」第光臨","闔"],["2. 碎「ㄒㄧㄝˋ」","屑"],["3. 慫「ㄩㄥˇ」","恿"],
+    ["4. 嚴「ㄌㄧˋ」","厲","卷子第一個字印得很糊，看起來像「嚴」",1],["5. 箭「ㄅㄚˇ」","靶"],["6.「撒」了一地","ㄙㄚˇ","撒嬌是一聲，撒了一地是三聲"],
+    ["7. 心「悸」","ㄐㄧˋ","卷子印得糊，看起來是「悸」",1],["8. 聯「繫」","ㄒㄧˋ"],["9. 派「遣」","ㄑㄧㄢˇ"],["10.「法」子","ㄈㄚˇ"]
+  ]},
+  { t:"二、解釋", n:"5 題", items:[
+    ["1. 心悸","因害怕而心跳加快",null,1],["2. 驚惶","驚慌害怕"],["3. 頹喪","精神萎靡、提不起勁"],["4. 教誨","教導、訓誡"],["5. 生書","新教的、還沒讀熟的書"]
+  ]},
+  { t:"三、改錯", n:"2 句", wide:1, items:[
+    ["1. 在＿有自由的今日，人人應以寬廣的胸＿尊重他人發言的權＿，讓各種思想言＿都有揮＿的空間。","在<span class=hl>擁</span>有自由的今日，人人應以寬廣的胸<span class=hl>襟</span>尊重他人發言的權<span class=hl>利</span>，讓各種思想言<span class=hl>論</span>都有揮<span class=hl>灑</span>的空間。","掃描太糊，錯字以老師批改為準。上面標色的是最常寫錯的字",1],
+    ["2. 他＿長武術，喜歡行俠仗義、＿弱扶傾，個性豪放不＿、不＿小＿，真是名符其實的英雄。","他<span class=hl>擅</span>長武術，喜歡行俠仗義、<span class=hl>濟</span>弱扶傾，個性豪放不<span class=hl>羈</span>、不<span class=hl>拘</span>小<span class=hl>節</span>，真是名符其實的英雄。","「濟弱扶傾」是幫助弱小，不是「鋤」。名符其實也可寫名副其實",1]
+  ]},
+  { t:"四、成語填空", n:"5 題", wide:1, tip:"選項只有四個，另外兩格要自己想。「廢寢忘食」是陷阱，五句都不適合。", items:[
+    ["1. 遠在異鄉的女兒利用視訊電話每天（　　），好讓父母親放心。","晨昏定省","早晚向父母問安"],
+    ["2. 此事不宜躁進，大家應該要冷靜下來，（　　）。","從長計議","不在選項裡，類似答案如「三思而行」也合理"],
+    ["3. 原本（　　）的他們，竟然為了爭奪家產而反目成仇。","情同手足","不在選項裡，也可寫「親密無間」"],
+    ["4. 露營區（　　），只有遠方傳來彷彿催眠般的潺潺水聲。","夜深人靜"],
+    ["5. 媽媽因償還不了家裡的負債而整夜（　　）。","輾轉反側","卷上印成「根持反側」，正確是輾轉反側"]
+  ]},
+  { t:"五、基礎題", n:"15 題", wide:1, items:[
+    ["1. 讀音相同的一組？","C","孺慕、儒雅都讀 ㄖㄨˊ"],
+    ["2. 注音寫成國字後字形相同？","B","趁火打劫、劫後餘生都是「劫」"],
+    ["3. 字音與字義完全正確？","D","朽 ㄒㄧㄡˇ，腐爛的。揣度 ㄉㄨㄛˋ、荷槍 ㄏㄜˋ；肇是「引起」不是闖禍"],
+    ["4. 用字完全正確？","C","美輪美奐不是「侖」；營造氣氛不是「紛」"],
+    ["5.「書中的智慧遠比黃金屋更珍貴□書中的知識遠比顏如玉更迷人」","A","「體認到」後面用冒號，兩個並列句之間用分號"],
+    ["6.「犯錯乃是取得進步所必須交付的學費」誰的理解正確？","D","人總是在錯誤中學習"],
+    ["7. 最貼近〈無心的錯誤〉主旨？","C","凡事停、看、聽，多想三秒就能避免許多過錯"],
+    ["8.「放棄□只要一句話□成功□卻要無數的堅持」","B","，；，"],
+    ["9. 〈夏夜〉何者予人富麗璀璨之感？","B","撒了滿天的珍珠和一枚又大又亮的銀幣"],
+    ["10. 詞性相同的一組？","A","兩個「瀰漫」都是動詞"],
+    ["11. 詞性為形容詞？","C","「廣漠」的人海"],
+    ["12. 關於〈夏夜〉的說明，何者有誤？","D","「小河還醒著」「夜風還醒著」寫的是夜的寧靜，不是悶熱"],
+    ["13. 反義詞？","B","輕佻／莊重"],
+    ["14. 兒子「他們沒有惡意，我也無心」對犯錯的看法？","A","只要沒有壞動機就不算錯誤"],
+    ["15. 語氣說明有誤？","D","「紅糖同白糖，不是差不多嗎」是不在乎、辯解，不是生氣"]
+  ]},
+  { t:"學力精熟題｜進階題", n:"7 題", wide:1, items:[
+    ["1.「每一個因緣都可能將自己推向另一個高峰」主旨最接近？","C","四個選項都不太貼，天助自助最接近；請對老師答案",1],
+    ["2. 柏拉圖訓斥小男孩的真正原因？","D","擔心他養成終生受害的壞習慣"],
+    ["3.「真學問是在一個人的□□□□上體現」","B","待人接物"],
+    ["4. 破折號使用正確？","C","「他欠我一個道歉——算了」是語意轉變"],
+    ["5.「黏住小蚊子…可別飛到這裡來給我送蜜糖」歌詠對象？","A","小蜘蛛，結網黏蟲"],
+    ["6. 廖玉蕙「最重要的是陪伴和分享」說明正確？","D","互相傾聽才能彼此包容"],
+    ["7.「他一溜煙地跑開說：你屋裡有燈」，他是？","A","蝙蝠怕光，夜裡才出來"]
+  ]},
+  { t:"閱讀測驗與素養題", n:"7 題", wide:1, items:[
+    ["(一) 1. 老爺為何吩咐開窗？","A","屋內爐火燒得太旺"],
+    ["(一) 2. 當時天氣如何？","D","十分寒冷，叫化子對著北風喊要死"],
+    ["(一) 3. 屋裡與屋外對照描寫，是什麼修辭？","C","映襯"],
+    ["(二) 4. 末段意旨？","B","肯定上一代無私付出，讓生命繁衍不息"],
+    ["(二) 5. 作者的體悟來自？","B","尊敬大地所得到的教育"],
+    ["素養 1.「月有陰晴圓缺」是什麼天文現象？","D","每天反射陽光的月面不同"],
+    ["素養 2. 哪一天最可能看到滿月？","C","中元節是農曆七月十五，滿月在每月十五前後"]
+  ]}
+]}
+];
+
+var ZY = [
+["呼風「ㄏㄨㄢˋ」雨","喚"],["容光「ㄏㄨㄢˋ」發","煥"],["精神「ㄏㄨㄢˋ」散","渙"],["美輪美「ㄏㄨㄢˋ」","奐"],
+["文學先「ㄑㄩ」","驅"],["為國捐「ㄑㄩ」","軀"],["喜上眉「ㄕㄠ」","梢"],["「ㄕㄠ」來口信","捎"],
+["「撒」了滿地","ㄙㄚˇ"],["「撒」嬌","ㄙㄚ"],["錢「ㄅㄧˋ」","幣"],["考試作「ㄅㄧˋ」","弊"],
+["「闔」家光臨","ㄏㄜˊ"],["文化隔「閡」","ㄏㄜˊ"],["山「ㄌㄨㄢˊ」起伏","巒"],["四肢痙「ㄌㄨㄢˊ」","攣"],
+["「ㄌㄨㄢˊ」生兄弟","孿"],["「ㄧㄥˊ」光幕","螢"],["晶「ㄧㄥˊ」剔透","瑩"],["「溜」之大吉","ㄌㄧㄡ"],
+["英語很「溜」","ㄌㄧㄡˋ"],["面容安「ㄒㄧㄤˊ」","詳"],["慈「ㄒㄧㄤˊ」和藹","祥"],["月色「朦」朧","ㄇㄥˊ"],
+["「ㄇㄢˋ」延滋長","蔓"],["停留「ㄓㄨˋ」足","駐"],["感情真「ㄓˋ」","摯"],["「椰」子汁","ㄧㄝˊ"],
+["口「ㄇㄧˋ」腹劍","蜜"],["保守祕「ㄇㄧˋ」","密"],["曲終人「散」","ㄙㄢˋ"],["生機「ㄆㄥˊ」勃","蓬"],
+["廣「ㄇㄛˋ」人海","漠"],["神情落「ㄇㄛˋ」","寞"],["鎖「匙」","˙ㄕ","鑰匙、鎖匙讀輕聲"],["湯「匙」","ㄔˊ"],
+["四季遞「ㄕㄢˋ」","嬗"],["「ㄔˇ」奪公權","褫"],["「擰」乾毛巾","ㄋㄧㄥˊ","教育部辭典：擰毛巾二聲，擰瓶蓋三聲。課文「擰我的肉」照課本注音",1],["地面泥「濘」","ㄋㄧㄥˋ"],
+["「傍」晚時分","ㄅㄤ"],["依山「傍」水","ㄅㄤˋ"],["態度輕「薄」","ㄅㄛˊ"],["潮溼發「ㄇㄟˊ」","霉"],
+["「ㄇㄟˊ」菌滋生","黴"],["具體而「ㄨㄟˊ」","微"],["紀念「ㄏㄨㄟ」章","徽"],["「ㄊㄧㄢˇ」冰棒","舔"],
+["無「ㄊㄧㄢˇ」所生","忝","不要辱沒了生你的父母"],["老牛「ㄕˋ」犢","舐"],
+["三「催」四請","ㄘㄨㄟ"],["無堅不「摧」","ㄘㄨㄟ"],["「璀」璨耀眼","ㄘㄨㄟˇ"],["諄諄教「誨」","ㄏㄨㄟˋ"],
+["風雨如「晦」","ㄏㄨㄟˋ"],["眼「ㄧˋ」病","翳"],["一層薄「膜」","ㄇㄛˊ"],["「闡」揚科學","ㄔㄢˇ"],
+["耳「ㄊㄧˊ」面命","提"],["略施薄「懲」","ㄔㄥˊ"],["一絲一「ㄏㄠˊ」","毫"],["「混」為一談","ㄏㄨㄣˋ"],
+["懸梁刺「ㄍㄨˇ」","股"],["病入膏「ㄏㄨㄤ」","肓","下面是「月」，不是「目」的盲"],["「ㄖㄨˊ」慕之情","孺"],["「ㄌㄧˋ」屬","隸"],
+["口頭勉「ㄌㄧˋ」","勵"],["「ㄋㄧㄡˇ」轉乾坤","扭"],["成「ㄐㄧ」亮眼","績"],["優柔「ㄍㄨㄚˇ」斷","寡"],
+["一團混「沌」","ㄉㄨㄣˋ"],["涇「渭」分明","ㄨㄟˋ"],["三山五「ㄩㄝˋ」","嶽"],["鋃鐺入「ㄩˋ」","獄"],
+["血「液」檢查","ㄧㄝˋ"],["角「ㄓㄨˊ」影后","逐"],["茹毛「飲」血","ㄧㄣˇ"],["食「髓」知味","ㄙㄨㄟˇ"],
+["女「媧」補天","ㄨㄚ"],["「共」工撞山","ㄍㄨㄥˋ","人名，教育部辭典讀四聲；課本若不同以課本為準",1],["「夸」父逐日","ㄎㄨㄚ"],["身體「羸」弱","ㄌㄟˊ"],
+["餘「ㄐㄧˋ」猶存","悸"],["「ㄘㄤ」海桑田","滄"],["祭祀神「祇」","ㄑㄧˊ","不是「只」的 ㄓˇ"],["陳腔「ㄌㄢˋ」調","濫"],
+["衣衫「ㄌㄢˊ」褸","襤"],["「擎」天大柱","ㄑㄧㄥˊ"],["琴「ㄙㄜˋ」和鳴","瑟"],["「ㄎㄨㄚ」大其辭","誇"],
+["政權「ㄎㄨㄚˇ」臺","垮"],["「矇」騙過關","ㄇㄥˊ"],["淚眼「矇」矓","ㄇㄥˊ"],["半身不「遂」","ㄙㄨㄟˋ"],
+["倉「廩」充實","ㄌㄧㄣˇ"],["沼「ㄗㄜˊ」叢林","澤"],["飢不「ㄗㄜˊ」食","擇"],["謄「ㄌㄨˋ」資料","錄"],
+["公家俸「ㄌㄨˋ」","祿"],["宣王「說」之","ㄩㄝˋ","說通「悅」，喜歡"]
+];
+ZY.forEach(function(r,i){ r[0] = (i+1) + ". " + r[0]; });
+var LISTS = { ZY1: ZY.slice(0,50), ZY2: ZY.slice(50) };
+
+var KEY = "exam_g7_mid1_known_v1";
+var known = {};
+try { known = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e) { known = {}; }
+function saveKnown(){ try { localStorage.setItem(KEY, JSON.stringify(known)); } catch(e) {} }
+
+var tabs = document.getElementById("tabs"), main = document.getElementById("main");
+var total = 0;
+
+DATA.forEach(function(sec, si){
+  var b = document.createElement("button");
+  b.type = "button"; b.textContent = sec.name; b.setAttribute("data-id", sec.id);
+  b.addEventListener("click", function(){ show(sec.id); });
+  tabs.appendChild(b);
+
+  var s = document.createElement("section");
+  s.id = "sec-" + sec.id; s.className = "masked";
+  sec.blocks.forEach(function(bl, bi){
+    var h = document.createElement("h2");
+    h.textContent = bl.t;
+    if (bl.n) { var sm = document.createElement("small"); sm.textContent = bl.n; h.appendChild(sm); }
+    s.appendChild(h);
+    if (bl.tip) { var tp = document.createElement("div"); tp.className = "tip"; tp.textContent = bl.tip; s.appendChild(tp); }
+    var g = document.createElement("div"); g.className = "grid";
+    var items = typeof bl.items === "string" ? LISTS[bl.items] : bl.items;
+    items.forEach(function(it, ii){
+      var id = sec.id + "-" + bi + "-" + ii;
+      var d = document.createElement("div");
+      d.className = "item" + (bl.wide ? " wide" : "") + (known[id] ? " known" : "");
+      var q = document.createElement("div"); q.className = "q";
+      var no = document.createElement("span"); no.className = "no"; q.appendChild(no);
+      q.appendChild(document.createTextNode(it[0]));
+      if (it[3]) { var f = document.createElement("span"); f.className = "flag"; f.textContent = "待核對"; q.appendChild(f); }
+      var a = document.createElement("div"); a.className = "a";
+      var inner = document.createElement("span"); inner.innerHTML = it[1]; a.appendChild(inner);
+      d.appendChild(q); d.appendChild(a);
+      if (it[2]) { var w = document.createElement("div"); w.className = "why"; w.textContent = it[2]; d.appendChild(w); }
+      d.addEventListener("click", function(){ d.classList.toggle("open"); });
+      d.addEventListener("dblclick", function(){
+        if (known[id]) { delete known[id]; d.classList.remove("known"); }
+        else { known[id] = 1; d.classList.add("known"); }
+        saveKnown(); stat();
+      });
+      g.appendChild(d); total++;
+    });
+    s.appendChild(g);
+  });
+  main.appendChild(s);
+});
+
+var current = DATA[0].id;
+function show(id){
+  current = id;
+  Array.prototype.forEach.call(tabs.children, function(b){ b.className = b.getAttribute("data-id") === id ? "on" : ""; });
+  Array.prototype.forEach.call(main.children, function(s){ s.classList.toggle("on", s.id === "sec-" + id); });
+  syncToggle();
+  try { localStorage.setItem("exam_g7_mid1_tab", id); } catch(e) {}
+  window.scrollTo(0,0);
+}
+var tg = document.getElementById("toggleMask");
+function syncToggle(){
+  var s = document.getElementById("sec-" + current);
+  tg.textContent = s.classList.contains("masked") ? "全部顯示答案" : "全部遮住答案";
+}
+tg.addEventListener("click", function(){
+  var s = document.getElementById("sec-" + current);
+  s.classList.toggle("masked");
+  Array.prototype.forEach.call(s.querySelectorAll(".item.open"), function(d){ d.classList.remove("open"); });
+  syncToggle();
+});
+document.getElementById("resetKnown").addEventListener("click", function(){
+  known = {}; saveKnown();
+  Array.prototype.forEach.call(document.querySelectorAll(".item.known"), function(d){ d.classList.remove("known"); });
+  stat();
+});
+function stat(){
+  document.getElementById("stat").textContent = "我會了 " + Object.keys(known).length + "／" + total;
+}
+var start = DATA[0].id;
+try { var t = localStorage.getItem("exam_g7_mid1_tab"); if (t && document.getElementById("sec-" + t)) start = t; } catch(e) {}
+var hs = (location.hash || "").slice(1); if (hs && document.getElementById("sec-" + hs)) start = hs;
+show(start); stat();
+</script>
+</body>
+</html>
