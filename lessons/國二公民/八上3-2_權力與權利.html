@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國二公民｜權力與權利：只差一個字，差很多</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff; --border:#e5e7eb; --radius:14px;
+    --blue:#2563eb; --blue-soft:#dbeafe;
+    --green:#16a34a; --green-soft:#dcfce7; --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --pow:#c2410c; --pow-soft:#fff1e6; --pow-mid:#fdba8c;
+    --rig:#1d4ed8; --rig-soft:#e8efff; --rig-mid:#a5bdf7;
+    --law:#0f766e; --law-soft:#e0f5f1; --accent:#134e4a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  [hidden]{display:none !important;}
+  body{font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:960px; margin:0 auto; padding:24px 16px 80px;}
+  header.hero{background:linear-gradient(120deg,#9a3412 0%,#c2410c 30%,#1e40af 72%,#1d4ed8 100%); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.2); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.55rem; margin-bottom:8px; line-height:1.4;}
+  header.hero p{opacity:.95; font-size:.95rem;}
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:110px; border:1px solid var(--border); background:var(--card); color:var(--ink); padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--law);}
+  nav.tabs button.active{background:var(--law); border-color:var(--law); color:#fff; font-weight:bold;}
+  section.panel{display:none;} section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--accent); margin-bottom:10px;}
+  .card h3{font-size:1rem; margin:16px 0 6px;}
+  .card ul,.card ol{margin-left:1.3em;}
+  .card p + p{margin-top:8px;}
+  .goal{background:var(--law-soft); border:none;}
+  .sub{color:var(--sub); font-size:.9rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:9px 14px; margin:10px 0; font-size:.92rem; color:#1e3a8a;}
+  .warn{background:var(--amber-soft); border-radius:8px; padding:9px 14px; margin:10px 0; font-size:.92rem; color:#7c2d12;}
+  b.pow{color:var(--pow);} b.rig{color:var(--rig);}
+  mark{background:#fef08a; padding:0 2px; border-radius:3px; color:inherit;}
+  .btn{display:inline-block; background:var(--law); color:#fff; border:none; border-radius:10px; padding:10px 18px; font-size:.95rem; cursor:pointer; font-family:inherit;}
+  .btn.ghost{background:#fff; color:var(--law); border:1px solid var(--law);}
+  .btn:disabled{opacity:.45; cursor:default;}
+  .bigbtn{display:block; width:100%; background:var(--law); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:10px;}
+  .fb{margin-top:10px; padding:10px 14px; border-radius:10px; font-size:.93rem; display:none;}
+  .fb.ok{display:block; background:var(--green-soft); color:#14532d;} .fb.no{display:block; background:var(--red-soft); color:#7f1d1d;}
+
+  /* 力 vs 利 */
+  .duo{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; margin:10px 0;}
+  .duo > div{border-radius:12px; padding:14px 16px; border:2px solid;}
+  .duo .pw{border-color:var(--pow-mid); background:var(--pow-soft);} .duo .rt{border-color:var(--rig-mid); background:var(--rig-soft);}
+  .duo h4{font-size:1.1rem;} .duo .pw h4{color:var(--pow);} .duo .rt h4{color:var(--rig);}
+  .duo .big{font-size:2.6rem; font-weight:900; line-height:1.1; letter-spacing:.05em;}
+  .duo .pw .big{color:var(--pow);} .duo .rt .big{color:var(--rig);}
+  .duo .big small{font-size:.9rem; font-weight:bold; letter-spacing:0; color:var(--sub); margin-left:6px;}
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.cmp{border-collapse:collapse; width:100%; min-width:520px; font-size:.92rem;}
+  table.cmp th,table.cmp td{border:1px solid var(--border); padding:8px 10px; vertical-align:top;}
+  table.cmp th{background:#f3f4f6; font-size:.88rem; text-align:left;}
+  table.cmp th.pw{background:var(--pow-soft); color:var(--pow);} table.cmp th.rt{background:var(--rig-soft); color:var(--rig);}
+  table.cmp td.k{font-weight:bold; background:#fafafa; width:20%;}
+  .fill{display:grid; gap:8px; margin-top:8px;}
+  .fill .row{display:flex; flex-wrap:wrap; align-items:center; gap:8px; justify-content:space-between; border:1px solid var(--border); border-radius:10px; padding:9px 12px; background:#fff;}
+  .fill .row .st{flex:1 1 280px; font-size:.98rem;}
+  .fill .row .blank{display:inline-block; min-width:2.2em; text-align:center; border-bottom:2px solid #94a3b8; font-weight:bold; margin:0 2px;}
+  .fill .row.ok .blank{color:var(--green); border-color:var(--green);} .fill .row.no .blank{color:var(--red); border-color:var(--red);}
+  .fill .row .chs{display:flex; gap:6px;}
+  .fill .row .chs button{font-family:inherit; width:48px; height:40px; border-radius:8px; border:2px solid; background:#fff; cursor:pointer; font-size:1.15rem; font-weight:bold;}
+  .fill .row .chs .cp{border-color:var(--pow); color:var(--pow);} .fill .row .chs .cr{border-color:var(--rig); color:var(--rig);}
+  .fill .row .why{flex-basis:100%; font-size:.88rem; color:var(--sub); display:none;}
+  .fill .row.ok .why,.fill .row.no .why{display:block;}
+  .fill .row.ok{border-color:var(--green);} .fill .row.no{border-color:var(--red);}
+  .score{font-size:.92rem; color:var(--sub); margin-top:6px;}
+
+  /* 權力循環圖 */
+  .modebar{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 10px;}
+  .modebar button{flex:1 1 160px; font-family:inherit; font-size:.95rem; padding:9px 10px; border-radius:99px; cursor:pointer; border:2px solid var(--border); background:#fff; color:var(--ink);}
+  .modebar button.on-demo{border-color:var(--law); background:var(--law); color:#fff; font-weight:bold;}
+  .modebar button.on-auto{border-color:#7f1d1d; background:#7f1d1d; color:#fff; font-weight:bold;}
+  .modebar button:disabled{opacity:.55; cursor:wait;}
+  .modelwrap{display:grid; grid-template-columns:1fr; gap:12px; align-items:start;}
+  @media (min-width:760px){ .modelwrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);} }
+  .svgbox{background:#fbfcfe; border:1px solid var(--border); border-radius:12px; overflow:hidden;}
+  .svgbox svg{display:block; width:100%; max-width:520px; height:auto; margin:0 auto;}
+  .st-node rect{transition:fill .5s, stroke .5s;}
+  .st-node .nt{font-size:17px; font-weight:bold; fill:#1f2937;}
+  .st-node .ns{font-size:12.5px; fill:#6b7280;}
+  .arc{fill:none; stroke-width:3; transition:stroke .5s, opacity .5s;}
+  .arc.on{stroke:#0f766e;} .arc.auto{stroke:#7f1d1d;} .arc.back{stroke:#2563eb; stroke-dasharray:8 6;} .arc.dead{stroke:#cbd5e1; stroke-dasharray:6 6;}
+  .al{font-size:14px; fill:#334155;} .al.blue{fill:#2563eb;} .al.dead{fill:#9ca3af;}
+  .arc.flash{animation:flash 1.5s ease;}
+  @keyframes flash{0%,100%{stroke-width:3;} 35%{stroke-width:8;} 70%{stroke-width:5;}}
+  .token{font-size:22px;}
+  .bump{animation:bump .5s ease 2;}
+  @keyframes bump{0%,100%{opacity:1;} 50%{opacity:.25;}}
+  @media (max-width:480px){ .al{font-size:16px;} .st-node .ns{font-size:14px;} .st-node .nt{font-size:18px;} }
+  .steps{list-style:none; margin:8px 0 0 !important; padding:0; display:grid; gap:6px;}
+  .steps li{border:1px solid var(--border); border-radius:10px; padding:8px 12px; font-size:.93rem; background:#fff; opacity:.45; transition:.3s;}
+  .steps li.lit{opacity:1; border-color:var(--law); background:var(--law-soft);}
+  .steps.auto li.lit{border-color:#7f1d1d; background:#fdecec;}
+  .rel{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin-top:8px;}
+  .rel div{border:1px solid var(--border); border-radius:12px; padding:12px 14px; background:#fcfcfd; font-size:.93rem;}
+  .rel div h4{font-size:.98rem; color:var(--accent); margin-bottom:4px;}
+
+  /* 權力之手 vs 權利盾牌 */
+  .shields{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:8px; margin:10px 0;}
+  .shields button{font-family:inherit; border:2px solid var(--rig-mid); background:var(--rig-soft); color:var(--rig); border-radius:12px; padding:8px 6px; cursor:pointer; font-size:.92rem; line-height:1.35;}
+  .shields button small{display:block; color:var(--sub); font-size:.78rem;}
+  .shields button:hover{border-color:var(--rig);}
+  .shields button.hit{background:var(--rig); color:#fff;} .shields button.hit small{color:#dbeafe;}
+  .shields.locked button{opacity:.5; cursor:default;}
+  .shields.ask button{animation:ask 1.2s ease infinite;}
+  @keyframes ask{0%,100%{box-shadow:0 0 0 0 rgba(29,78,216,.0);} 50%{box-shadow:0 0 0 4px rgba(29,78,216,.25);}}
+  .scene{position:relative; height:86px; background:linear-gradient(90deg,#fff7ed,#f8fafc 45%,#eff6ff); border:1px solid var(--border); border-radius:12px; margin:10px 0; overflow:hidden;}
+  .scene .gov{position:absolute; left:12px; top:16px; font-size:2.2rem;}
+  .scene .hand{position:absolute; left:64px; top:20px; font-size:2rem; transition:transform .7s cubic-bezier(.5,0,.2,1);}
+  .scene .person{position:absolute; right:16px; top:16px; font-size:2.2rem;}
+  .scene .shieldpop{position:absolute; right:74px; top:14px; font-size:2.4rem; opacity:0; transform:scale(.3); transition:.35s;}
+  .scene .shieldpop.on{opacity:1; transform:scale(1);}
+  .scene .tagline{position:absolute; left:0; right:0; bottom:4px; text-align:center; font-size:.8rem; color:var(--sub);}
+  .actcard{font-size:1.04rem; padding:14px 16px; border-radius:12px; background:#f9fafb; border:1px dashed #cbd5e1;}
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;}
+  .two button{font-family:inherit; font-size:1rem; padding:11px; border-radius:12px; cursor:pointer; border:2px solid; background:#fff; font-weight:bold;}
+  .two .ok{border-color:var(--green); color:#166534;} .two .bad{border-color:var(--red); color:#991b1b;}
+  .two .neg{border-color:#7c3aed; color:#6d28d9;} .two .pos{border-color:#0891b2; color:#0e7490;}
+  .two button:disabled{opacity:.4; cursor:default;}
+  .prog{font-size:.85rem; color:var(--sub); display:flex; justify-content:space-between;}
+  .pbar{height:8px; background:var(--border); border-radius:4px; overflow:hidden; margin:4px 0 10px;}
+  .pbar i{display:block; height:100%; background:var(--law); transition:width .4s;}
+  .rule3{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:8px; margin:8px 0;}
+  .rule3 div{background:var(--law-soft); border-radius:10px; padding:8px 12px; font-size:.93rem;}
+  .rule3 div b{color:var(--law);}
+
+  /* 消極 vs 積極 */
+  .npbox{display:grid; grid-template-columns:1fr; gap:12px; align-items:center;}
+  @media (min-width:760px){ .npbox{grid-template-columns:minmax(0,1fr) minmax(0,1fr);} }
+  .np-svg svg{display:block; width:100%; max-width:440px; height:auto; margin:0 auto;}
+  .np-hand{transition:transform .8s cubic-bezier(.5,0,.2,1);}
+  .np-cap{border-radius:10px; padding:10px 14px; font-size:.95rem; background:#f3f4f6; min-height:3em;}
+  .np-cap.neg{background:#f3e8ff; color:#4c1d95;} .np-cap.pos{background:#e0f7fa; color:#155e75;}
+
+  /* 選擇題 */
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--law); background:#f0fdfa;} .q input{margin-right:8px;}
+  .q.correct{border-color:var(--green);} .q.wrong{border-color:var(--red);}
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;} #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;} #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  details summary{cursor:pointer;}
+  .nextlinks{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px; margin-top:8px;}
+  .nextlinks a{display:block; text-decoration:none; color:inherit; border:1px solid var(--border); border-radius:12px; padding:12px 14px; background:#fff;}
+  .nextlinks a:hover{border-color:var(--law); background:#f0fdfa;}
+  .nextlinks a b{color:var(--law);}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:560px){
+    nav.tabs button{min-width:30%; font-size:.86rem; padding:8px 4px;}
+    header.hero h1{font-size:1.3rem;} header.hero{padding:22px 18px;}
+    .card{padding:16px 15px;}
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 翰林版八上 第3章 法治與權力分立 ② · 公Ab-Ⅳ-1</span>
+  <h1>權力與權利：只差一個字，差很多</h1>
+  <p>政府可以開罰單、收稅、抓人——這是<b>權力</b>。你可以說話、信教、不被亂抓——這是<b>權利</b>。上一課說「法治的法律要保障人民權利、也限制政府」，這一課就來看：政府手上的權力從哪裡來？什麼時候用得對、什麼時候叫濫用？你手上的權利又怎麼擋住它？</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1 力還是利？</button>
+  <button data-t="s2">2 權力從哪來</button>
+  <button data-t="s3">3 手 vs 盾牌</button>
+  <button data-t="s4">4 退後 vs 上前</button>
+  <button data-t="s5">🏁 小測驗</button>
+</nav>
+
+<!-- ═══════════ 1 力還是利 ═══════════ -->
+<section class="panel show" id="s1">
+  <div class="card goal">
+    <h2>🎯 這一課要學會</h2>
+    <ul>
+      <li>分清楚<b class="pow">權力</b>（支配的力量）和<b class="rig">權利</b>（保護人們不受權力濫用傷害的保障）</li>
+      <li>說出兩者的關聯：民主國家的權力<b>來自人民</b>、<b>為了保障權利</b>、<b>受權利限制</b></li>
+      <li>分辨<b>消極權利</b>（要國家不要干涉）和<b>積極權利</b>（要國家提供幫助）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>✍️ 先把兩個字分清楚</h2>
+    <div class="duo">
+      <div class="pw">
+        <div class="big">權力<small>power</small></div>
+        <h4>💪 支配的力量</h4>
+        <p>能要求別人做（或不做）某件事，不照做就會有後果。</p>
+        <p class="sub">例：警察開罰單、法院判刑、政府收稅。政府的權力叫<b>公權力</b>。</p>
+      </div>
+      <div class="rt">
+        <div class="big">權利<small>right</small></div>
+        <h4>🛡️ 保護你的保障</h4>
+        <p>讓人免於受到權力濫用的傷害，確保活得有尊嚴，也能促進公共利益。</p>
+        <p class="sub">例：人身自由、言論自由、受教育、財產權。每個人都有。</p>
+      </div>
+    </div>
+    <div class="note">🔑 口訣：權「<b class="pow">力</b>」有「力」氣——拿來支配、命令別人；權「<b class="rig">利</b>」對你有「利」——拿來保護自己。</div>
+    <div class="tblbox">
+      <table class="cmp">
+        <thead><tr><th>比一比</th><th class="pw">💪 權力</th><th class="rt">🛡️ 權利</th></tr></thead>
+        <tbody>
+          <tr><td class="k">是什麼</td><td>支配別人的力量</td><td>保護人們免受權力濫用的傷害、確保生存尊嚴</td></tr>
+          <tr><td class="k">誰手上有</td><td>主要是政府（公權力）；生活中有職位的人也有，像班長、老師</td><td>每一個人</td></tr>
+          <tr><td class="k">方向</td><td>由上往下：要求別人服從</td><td>保護自己：擋住不當的支配，也可以要求國家提供協助</td></tr>
+          <tr><td class="k">例子</td><td>開罰單、收稅、判刑、徵收土地</td><td>人身自由、言論自由、財產權、受教育</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 練習：這裡該填「力」還是「利」？</h2>
+    <p class="sub">考卷上寫錯字一樣扣分。每一句按一個字。</p>
+    <div class="fill" id="fill"></div>
+    <div class="score" id="fillScore"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 2 權力從哪來 ═══════════ -->
+<section class="panel" id="s2">
+  <div class="card">
+    <h2>🔄 權力從哪裡來？往哪裡去？</h2>
+    <p>在民主國家，權力和權利是一個<b>圈</b>：權力從人民來，最後回到保障人民。切換到「專制國家」比一比——這個圈會斷掉。</p>
+    <div class="modebar"><button id="btnDemo" class="on-demo">🗳️ 民主國家</button><button id="btnAuto">👑 專制國家</button></div>
+    <div class="modelwrap">
+      <div class="svgbox">
+        <svg id="loop" viewBox="0 0 440 400" role="img" aria-label="權力與權利的循環圖">
+          <defs>
+            <marker id="mkOn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0f766e"/></marker>
+            <marker id="mkAuto" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#7f1d1d"/></marker>
+            <marker id="mkBack" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#2563eb"/></marker>
+            <marker id="mkDead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#cbd5e1"/></marker>
+          </defs>
+          <path id="arc1" class="arc on" d="M305 56 Q372 56 372 164" marker-end="url(#mkOn)"/>
+          <path id="arc2" class="arc on" d="M372 230 Q372 340 308 340" marker-end="url(#mkOn)"/>
+          <path id="arc3" class="arc on" d="M132 340 Q68 340 68 232" marker-end="url(#mkOn)"/>
+          <path id="arc4" class="arc on" d="M68 166 Q68 56 134 56" marker-end="url(#mkOn)"/>
+          <path id="arcB" class="arc back" d="M220 88 L220 306" marker-end="url(#mkBack)"/>
+          <text id="l1" class="al" x="398" y="104" text-anchor="middle">① 投票授權</text>
+          <text id="l2" class="al" x="398" y="300" text-anchor="middle">② 取得權力</text>
+          <text id="l3" class="al" x="100" y="292">③ 依法使用</text>
+          <text id="l4" class="al" x="100" y="118">④ 人民受益</text>
+          <text id="lb1" class="al blue" x="230" y="146">⑤ 濫用時</text>
+          <text id="lb2" class="al blue" x="230" y="166">人民用權利</text>
+          <text id="lb3" class="al blue" x="230" y="186">反制政府</text>
+          <text id="xB" x="220" y="210" text-anchor="middle" font-size="30" fill="#dc2626" font-weight="bold" opacity="0">✘</text>
+          <text id="x1" x="352" y="92" text-anchor="middle" font-size="26" fill="#dc2626" font-weight="bold" opacity="0">✘</text>
+          <g class="st-node" id="sP" transform="translate(220,56)"><rect x="-85" y="-30" width="170" height="60" rx="14" stroke-width="2.5" fill="#fff" stroke="#0f766e"/><text class="nt" y="-3" text-anchor="middle">👥 人民</text><text class="ns" y="17" text-anchor="middle">國家的主人</text></g>
+          <g class="st-node" id="sR" transform="translate(372,197)"><rect x="-64" y="-30" width="128" height="60" rx="14" stroke-width="2.5" fill="#fff" stroke="#0f766e"/><text class="nt" y="-3" text-anchor="middle">🗳️ 選舉</text><text class="ns" y="17" text-anchor="middle">把權力交出去</text></g>
+          <g class="st-node" id="sG" transform="translate(220,340)"><rect x="-85" y="-30" width="170" height="60" rx="14" stroke-width="2.5" fill="#fff" stroke="#0f766e"/><text class="nt" y="-3" text-anchor="middle">🏛️ 政府</text><text class="ns" y="17" text-anchor="middle">握有公權力</text></g>
+          <g class="st-node" id="sL" transform="translate(68,199)"><rect x="-64" y="-30" width="128" height="60" rx="14" stroke-width="2.5" fill="#fff" stroke="#0f766e"/><text class="nt" y="-3" text-anchor="middle">🛡️ 保障權利</text><text class="ns" y="17" text-anchor="middle">增進公共利益</text></g>
+        </svg>
+      </div>
+      <div>
+        <p><button class="btn" id="walk">▶ 跟著權力走一圈</button></p>
+        <ol class="steps" id="steps"></ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔗 權力和權利的四個關聯（民主國家）</h2>
+    <div class="rel">
+      <div><h4>① 權力來自人民</h4>人民是國家的主人（主權在民），透過選舉把權力交給政府。</div>
+      <div><h4>② 權力是為了保障權利</h4>警察抓小偷，保護你的財產；法院審判，保護被害人的權利。政府用權力，要增進公共利益。</div>
+      <div><h4>③ 權利是權力的界線</h4>政府不能想做什麼就做什麼：要有法律依據，而且只能在必要的範圍內限制人民的權利。</div>
+      <div><h4>④ 權利被侵害可以救濟</h4>權力被濫用時，人民可以投票換人、批評監督，或依法提出訴願、訴訟、請求國家賠償。</div>
+    </div>
+    <div class="warn">⚠ 常見錯誤：「權力是壞東西，越少越好」✘——沒有權力，警察抓不了小偷、法院判不了案，你的權利反而沒人保護。重點是權力要<b>依法、為了保障權利</b>來用。</div>
+  </div>
+</section>
+
+<!-- ═══════════ 3 權力之手 vs 權利盾牌 ═══════════ -->
+<section class="panel" id="s3">
+  <div class="card">
+    <h2>✋ 權力之手 vs 🛡️ 權利盾牌</h2>
+    <p>政府伸出權力之手時，什麼時候合法、什麼時候是濫用？先記三個條件：</p>
+    <div class="rule3">
+      <div><b>① 依法</b>：有法律依據，不是官員自己想的</div>
+      <div><b>② 為了公共利益</b>：不是為了私人、為了掌權者自己</div>
+      <div><b>③ 不過頭</b>：只限制到必要的程度</div>
+    </div>
+    <p>三個都做到，是<b>合法行使權力</b>；做不到，就是<b>權力濫用</b>——這時候，憲法保障的權利就是擋住它的盾牌：</p>
+    <div class="shields locked" id="shields"></div>
+    <div class="scene" aria-hidden="true"><span class="gov">🏛️</span><span class="hand" id="hand">👉</span><span class="shieldpop" id="shieldPop">🛡️</span><span class="person">🧑</span><span class="tagline" id="tagline">政府的權力之手 → 人民</span></div>
+    <div id="actBox"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 4 消極 vs 積極 ═══════════ -->
+<section class="panel" id="s4">
+  <div class="card">
+    <h2>🙅 不要管我 vs 🙋 幫幫我：兩種權利</h2>
+    <p>權利跟權力的關係有兩個方向：有些權利叫政府<b>退後</b>，有些權利叫政府<b>上前</b>。按按看：</p>
+    <div class="npbox">
+      <div class="np-svg">
+        <svg viewBox="0 0 440 220" role="img" aria-label="消極權利與積極權利示意圖">
+          <circle cx="300" cy="110" r="86" fill="#f8fafc" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="8 6" id="npCircle"/>
+          <text x="300" y="72" text-anchor="middle" font-size="17" fill="#64748b">我的生活圈</text>
+          <text x="300" y="128" text-anchor="middle" font-size="48">🧑</text>
+          <g class="np-hand" id="npHand"><text x="0" y="0" font-size="40">🏛️</text><text x="50" y="-2" font-size="34">👉</text><text id="npGift" x="98" y="-6" font-size="26"></text></g>
+          <text id="npLabel" x="110" y="206" text-anchor="middle" font-size="19" fill="#334155">政府</text>
+        </svg>
+      </div>
+      <div>
+        <div class="two">
+          <button class="neg" id="npNeg">🙅 消極權利<br><small>政府，請退後</small></button>
+          <button class="pos" id="npPos">🙋 積極權利<br><small>政府，請來幫忙</small></button>
+        </div>
+        <div class="np-cap" id="npCap" style="margin-top:10px">按一個按鈕看看政府的手怎麼動。</div>
+      </div>
+    </div>
+    <div class="tblbox">
+      <table class="cmp">
+        <thead><tr><th>比一比</th><th>🙅 消極權利</th><th>🙋 積極權利</th></tr></thead>
+        <tbody>
+          <tr><td class="k">要國家做什麼</td><td><b>不要</b>干涉、不要侵犯</td><td><b>要</b>提供服務、給予協助</td></tr>
+          <tr><td class="k">常見的例子</td><td>人身自由、言論自由、宗教信仰自由、秘密通訊自由、居住遷徙自由</td><td>受國民教育、訴願與訴訟、請求國家賠償、社會救助</td></tr>
+          <tr><td class="k">一句話</td><td>「這是我的事，請別管。」</td><td>「這件事，需要國家幫忙。」</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">課綱要求消極權利和積極權利「並重」：國家既要守住不亂伸手的界線，也要主動照顧人民。</p>
+  </div>
+
+  <div class="card">
+    <h2>🎯 練習：這句話是叫政府退後，還是上前？</h2>
+    <div id="npGame"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 5 小測驗 ═══════════ -->
+<section class="panel" id="s5">
+  <div class="card">
+    <details open>
+      <summary><b>📋 考前一張表（點標題可收合）</b></summary>
+      <div class="tblbox">
+        <table class="cmp">
+          <tbody>
+            <tr><td class="k">權力</td><td>支配的力量。政府的權力叫公權力，例：開罰單、收稅、判刑</td></tr>
+            <tr><td class="k">權利</td><td>免於受到權力濫用的傷害、確保生存尊嚴、促進公共利益。每個人都有</td></tr>
+            <tr><td class="k">四個關聯</td><td>① 權力來自人民 ② 權力是為了保障權利 ③ 權利是權力的界線（要依法、必要）④ 權利被侵害可以救濟</td></tr>
+            <tr><td class="k">合法 vs 濫用</td><td>依法＋為了公共利益＋不過頭 → 合法；做不到 → 濫用</td></tr>
+            <tr><td class="k">消極權利</td><td>要國家「不要」干涉：人身、言論、宗教信仰、秘密通訊、居住遷徙自由</td></tr>
+            <tr><td class="k">積極權利</td><td>要國家「要」提供：受國民教育、訴願訴訟、國家賠償、社會救助</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <div class="card" id="quizCard">
+    <h2>🏁 小測驗（10 題）</h2>
+    <p class="sub">全部作答後按「交卷」，會顯示每一題的解析。</p>
+    <div id="quizBox"></div>
+    <button class="bigbtn" id="submitQuiz">交卷</button>
+    <div id="quizResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>➡️ 同一章的其他課</h2>
+    <div class="nextlinks">
+      <a href="八上3-1_人治與法治.html"><b>◀ ① 人治與法治</b><br>統治者和法律，誰在上面？</a>
+      <a href="八上3-3_權力分立.html"><b>③ 權力分立 ▶</b><br>權力這麼大，怎麼防止被濫用？把它拆開來，互相牽制。</a>
+    </div>
+  </div>
+</section>
+
+<footer>依 108 課綱（公Ab-Ⅳ-1 民主國家中權力與權利的差別及關聯）與翰林版八上第 3 章的架構原創編寫，不是出版社教材；用語若和課本不同，以課本為準。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（只存在這台瀏覽器）=====
+const LOG_KEY = "study_log_v1", CH = "公民八上3-2 權力與權利";
+function logEv(ev){ try{ const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); a.push(Object.assign({ t: Date.now(), ch: CH }, ev)); localStorage.setItem(LOG_KEY, JSON.stringify(a)); }catch(e){} }
+const CLOUD_URL = (function(){ try{ return localStorage.getItem("cloud_url_v1") || ""; }catch(e){ return ""; } })();
+function cloudSend(row){ if(!CLOUD_URL) return; const body = JSON.stringify(Object.assign({ ch: CH }, row)); try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} } }
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){ const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7); logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{ if(document.visibilityState !== "visible") return; studySec += 30; try{ const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); const v = a.find(e => e.vid === vid); if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); } }catch(e){} }, 30000); })();
+window.addEventListener("pagehide", ()=>{ const min = Math.round(studySec / 6) / 10; if(min < 0.5 && pracCount === 0) return; cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" }); studySec = 0; pracCount = 0; pracOk = 0; });
+function prac(q, ok){ logEv({ type:'practice', q, ok }); pracCount++; if(ok) pracOk++; }
+
+const $ = s => document.querySelector(s);
+function shuffle(a){ for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function showTab(id){ document.querySelectorAll('nav.tabs button').forEach(b => b.classList.toggle('active', b.dataset.t === id)); document.querySelectorAll('section.panel').forEach(p => p.classList.toggle('show', p.id === id)); window.scrollTo({ top:0, behavior:'smooth' }); }
+document.querySelectorAll('nav.tabs button').forEach(b => b.addEventListener('click', () => showTab(b.dataset.t)));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+// ===== 1 力還是利 =====
+const FILL = [
+  { s:'警察依法對闖紅燈的人開罰單，這是在行使公權＿。', a:'力', why:'開罰單是政府支配人民的力量：權力。' },
+  { s:'每個孩子都有受教育的權＿。', a:'利', why:'受教育是保障每個人的利益：權利。' },
+  { s:'艾克頓說：「絕對的權＿使人絕對腐化。」', a:'力', why:'會讓人腐化的，是支配別人的力量：權力。' },
+  { s:'被冤枉的人，可以到法院主張自己的權＿。', a:'利', why:'用來保護自己的，是權利。' },
+  { s:'立法院擁有議決法律案的權＿。', a:'力', why:'立法院的職權是國家權力的一部分：權力。' },
+  { s:'網路購物的消費者，有在七天內退貨的權＿。', a:'利', why:'法律保障消費者的利益：權利。' },
+  { s:'法院擁有審判的權＿。', a:'力', why:'審判能決定別人要不要受處罰，是支配的力量：權力。' },
+  { s:'言論自由是憲法保障人民的基本權＿。', a:'利', why:'憲法保障人民的是權利。' },
+  { s:'班長有登記遲到的權＿，但不能拿來公報私仇。', a:'力', why:'班長能管同學，是權力；不能濫用。' },
+  { s:'兒童有休息和遊戲的權＿。', a:'利', why:'保障兒童的利益：權利（兒童權利公約也有規定）。' }
+];
+let fillDone = 0, fillOk = 0;
+$('#fill').innerHTML = FILL.map((x, i) => `<div class="row" data-i="${i}"><div class="st">${i + 1}. ${x.s.replace('＿', '<span class="blank">＿</span>')}</div><div class="chs"><button class="cp" data-v="力">力</button><button class="cr" data-v="利">利</button></div><div class="why"></div></div>`).join('');
+document.querySelectorAll('#fill .row').forEach(row => {
+  const x = FILL[row.dataset.i];
+  row.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const first = !row.classList.contains('ok') && !row.classList.contains('no');
+    const ok = b.dataset.v === x.a;
+    row.className = 'row ' + (ok ? 'ok' : 'no');
+    row.querySelector('.blank').textContent = b.dataset.v;
+    row.querySelector('.why').innerHTML = (ok ? '✔ ' : '✘ 應該是「' + x.a + '」。') + x.why;
+    if(first){ fillDone++; if(ok) fillOk++; prac('力利_' + (+row.dataset.i + 1), ok); }
+    $('#fillScore').textContent = `已作答 ${fillDone} / ${FILL.length}，第一次就答對 ${fillOk} 題。` + (fillDone === FILL.length ? (fillOk >= 9 ? ' 🎉 兩個字分得很清楚！' : ' 錯的那幾句再念一次口訣：有「力」氣的是權力，對你有「利」的是權利。') : '');
+  }));
+});
+
+// ===== 2 權力循環圖 =====
+const MODES = {
+  demo: {
+    nodes:{ sP:['👥 人民', '國家的主人'], sR:['🗳️ 選舉', '把權力交出去'], sG:['🏛️ 政府', '握有公權力'], sL:['🛡️ 保障權利', '增進公共利益'] },
+    stroke:'#0f766e', labels:{ l1:'① 投票授權', l2:'② 取得權力', l3:'③ 依法使用', l4:'④ 人民受益' },
+    arcs:{ arc1:'on', arc2:'on', arc3:'on', arc4:'on', arcB:'back' }, x1:0, xB:0, back:true,
+    steps:[
+      ['arc1', '🗳️', '① 人民是國家的主人（主權在民），透過選舉把權力交給政府。'],
+      ['arc2', '⚡', '② 政府因此取得權力（公權力），可以依法要求人民配合：收稅、開罰單、徵收土地。'],
+      ['arc3', '⚡', '③ 政府用權力，是為了保障人民的權利、增進公共利益：警察抓小偷，保護你的財產。'],
+      ['arc4', '🛡️', '④ 人民的權利受到保障，活得安全、有尊嚴。'],
+      ['arcB', '📣', '⑤ 如果政府濫用權力，人民可以用權利反制：投票換人、批評監督、提起訴願或訴訟、請求國家賠償。']
+    ]
+  },
+  auto: {
+    nodes:{ sP:['👥 人民', '只能服從'], sR:['⚔️ 武力・世襲', '權力不是人民給的'], sG:['👑 統治者', '握有權力'], sL:['🏰 鞏固統治', '保護統治者的位子'] },
+    stroke:'#7f1d1d', labels:{ l1:'沒有授權', l2:'① 奪取權力', l3:'② 用來鞏固自己', l4:'③ 管住人民' },
+    arcs:{ arc1:'dead', arc2:'auto', arc3:'auto', arc4:'auto', arcB:'dead' }, x1:1, xB:1, back:false,
+    steps:[
+      ['arc2', '⚔️', '① 統治者的權力來自武力或世襲，不是人民交給他的。'],
+      ['arc3', '⚡', '② 權力被拿來鞏固統治者自己的位子，不是為了人民。'],
+      ['arc4', '⛓️', '③ 法律和權力都拿來管住人民——這就是上一課的「人治」。'],
+      ['arcB', '📣', '④ 人民的權利被侵害時，沒有管道反制：不能投票換人，法院也聽統治者的。', { stop:.45, blocked:true }]
+    ]
+  }
+};
+let loopMode = 'demo', loopBusy = false;
+const MK = { on:'url(#mkOn)', auto:'url(#mkAuto)', back:'url(#mkBack)', dead:'url(#mkDead)' };
+function setLoop(m){
+  loopMode = m; const M = MODES[m];
+  Object.entries(M.nodes).forEach(([id, [t, s]]) => { const g = document.getElementById(id); g.querySelector('.nt').textContent = t; g.querySelector('.ns').textContent = s; g.querySelector('rect').setAttribute('stroke', id === 'sP' && m === 'auto' ? '#9ca3af' : M.stroke); });
+  Object.entries(M.labels).forEach(([id, t]) => { const el = document.getElementById(id); el.textContent = t; el.setAttribute('class', 'al' + (id === 'l1' && m === 'auto' ? ' dead' : '')); });
+  Object.entries(M.arcs).forEach(([id, c]) => { const p = document.getElementById(id); p.setAttribute('class', 'arc ' + c); p.setAttribute('marker-end', MK[c]); });
+  ['lb1', 'lb2', 'lb3'].forEach((id, i) => { const el = document.getElementById(id); el.setAttribute('class', 'al ' + (M.back ? 'blue' : 'dead')); el.textContent = M.back ? ['⑤ 濫用時', '人民用權利', '反制政府'][i] : ['人民', '無法反制', ''][i]; });
+  document.getElementById('x1').setAttribute('opacity', M.x1); document.getElementById('xB').setAttribute('opacity', M.xB);
+  $('#btnDemo').className = m === 'demo' ? 'on-demo' : ''; $('#btnAuto').className = m === 'auto' ? 'on-auto' : '';
+  const ol = $('#steps'); ol.className = 'steps' + (m === 'auto' ? ' auto' : '');
+  ol.innerHTML = M.steps.map(s => `<li>${s[2]}</li>`).join('');
+}
+function travel(svg, pathId, emoji, opt){
+  opt = opt || {};
+  return new Promise(res => {
+    const path = document.getElementById(pathId);
+    path.classList.remove('flash'); void path.getBoundingClientRect(); path.classList.add('flash');
+    const len = path.getTotalLength(), stop = opt.stop || 1, dur = opt.dur || 1100;
+    const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    t.setAttribute('class', 'token'); t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'central'); t.textContent = emoji;
+    svg.appendChild(t);
+    const t0 = Date.now();
+    (function step(){
+      const p = Math.min(1, (Date.now() - t0) / dur), e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      const pt = path.getPointAtLength(len * stop * e); t.setAttribute('x', pt.x); t.setAttribute('y', pt.y);
+      if(p < 1) setTimeout(step, 16);
+      else { if(opt.blocked) t.classList.add('bump'); setTimeout(() => { t.remove(); res(); }, opt.blocked ? 1000 : 300); }
+    })();
+  });
+}
+$('#btnDemo').addEventListener('click', () => { if(!loopBusy) setLoop('demo'); });
+$('#btnAuto').addEventListener('click', () => { if(!loopBusy) setLoop('auto'); });
+function lockLoop(on){ loopBusy = on; ['#walk', '#btnDemo', '#btnAuto'].forEach(s => $(s).disabled = on); }
+$('#walk').addEventListener('click', async () => {
+  if(loopBusy) return; lockLoop(true);
+  const M = MODES[loopMode], lis = document.querySelectorAll('#steps li');
+  lis.forEach(li => li.classList.remove('lit'));
+  for(let i = 0; i < M.steps.length; i++){
+    lis[i].classList.add('lit');
+    await travel($('#loop'), M.steps[i][0], M.steps[i][1], M.steps[i][3]);
+    await sleep(450);
+  }
+  logEv({ type:'practice', q:'權力循環_' + loopMode, ok:true });
+  lockLoop(false); $('#walk').textContent = '▶ 再走一圈';
+});
+setLoop('demo');
+
+// ===== 3 權力之手 vs 權利盾牌 =====
+const SHIELDS = [
+  { id:'body', e:'🚶', n:'人身自由', art:'憲法第 8 條' },
+  { id:'speech', e:'🗣️', n:'言論自由', art:'憲法第 11 條' },
+  { id:'mail', e:'✉️', n:'秘密通訊自由', art:'憲法第 12 條' },
+  { id:'faith', e:'🙏', n:'宗教信仰自由', art:'憲法第 13 條' },
+  { id:'prop', e:'🏠', n:'財產權', art:'憲法第 15 條' },
+  { id:'equal', e:'⚖️', n:'平等權', art:'憲法第 7 條' }
+];
+const ACTS = [
+  { t:'警察依照交通法規，對闖紅燈的機車騎士開罰單。', ok:true, e:'有法律依據、為了交通安全（公共利益），處罰也不過頭——合法行使權力。' },
+  { t:'市政府下令：報社不准刊登批評市長的文章。', ok:false, s:'speech', e:'政府不能因為被批評就封住媒體的嘴，這侵害了言論（出版）自由。' },
+  { t:'國稅局依照所得稅法，向有收入的人課稅。', ok:true, e:'憲法規定人民有「依法律」納稅的義務。有法律依據的課稅，是合法的權力。' },
+  { t:'官員沒有任何法律依據，就把民眾的土地拿去蓋停車場，也不給補償。', ok:false, s:'prop', e:'沒有法律依據、沒有補償就拿走人民的土地，侵害了財產權。' },
+  { t:'調查人員沒有經過法院同意，就偷看民眾的私人信件和手機訊息。', ok:false, s:'mail', e:'政府要看人民的通訊，必須有法律依據並經法院核准。偷看侵害了秘密通訊自由。' },
+  { t:'公立學校規定：原住民學生不能參加校隊。', ok:false, s:'equal', e:'因為族群就差別對待，侵害了平等權。憲法規定人民無分男女、宗教、種族、階級、黨派，在法律上一律平等。' },
+  { t:'法院依法審判後，判決搶劫犯要坐牢。', ok:true, e:'法院依照法律、經過審判程序做出判決，是合法行使司法權，也在保護其他人的權利。' },
+  { t:'政府規定：全國人民只能信仰同一個宗教。', ok:false, s:'faith', e:'信什麼宗教（或不信）是個人的自由，政府不能強迫，這侵害了宗教信仰自由。' },
+  { t:'警察沒有任何理由，就把路人帶回警局關了三天。', ok:false, s:'body', e:'沒有法律依據、沒經過法院就把人關起來，侵害了人身自由。憲法規定，被逮捕的人至遲 24 小時內要移送法院審問。' },
+  { t:'衛生局依照食品安全的法律，到餐廳檢查廚房、要求改善。', ok:true, e:'有法律依據、為了大家吃得安全（公共利益）——合法行使權力。' },
+  { t:'傳染病流行時，政府依照防疫的法律，要求確診的人在家隔離幾天。', ok:true, e:'這確實限制了人身自由，但有法律依據、為了公共利益，而且只在必要的範圍內，所以合法。<b>權利不是完全不能限制，而是要依法、必要。</b>' }
+];
+$('#shields').innerHTML = SHIELDS.map(s => `<button data-s="${s.id}">${s.e} ${s.n}<small>${s.art}</small></button>`).join('');
+let aq = [], aCur = -1, aStage = 0, aDone = 0, aFirst = 0, aMiss = false;
+// 手要伸多遠依場景寬度算：伸到人面前＝寬度-160；被盾牌擋在前面＝回到原位
+function handTo(kind){ const w = $('.scene').clientWidth; $('#hand').style.transform = 'translateX(' + (kind === 'reach' ? Math.max(0, w - 160) : 0) + 'px)'; }
+function sceneReset(){ handTo('home'); $('#shieldPop').classList.remove('on'); $('#tagline').textContent = '政府的權力之手 → 人民'; document.querySelectorAll('#shields button').forEach(b => b.classList.remove('hit')); }
+function startActs(){ aq = shuffle(ACTS.map((a, i) => i)); aDone = 0; aFirst = 0; nextAct(); }
+function nextAct(){
+  sceneReset();
+  if(!aq.length) return finishActs();
+  aCur = aq.shift(); aStage = 1; aMiss = false;
+  const a = ACTS[aCur];
+  $('#shields').className = 'shields locked';
+  $('#actBox').innerHTML = `<div class="prog"><span>第 ${aDone + 1} / ${ACTS.length} 張</span><span>一次全對 ${aFirst} 張</span></div><div class="pbar"><i style="width:${aDone / ACTS.length * 100}%"></i></div>
+    <div class="actcard">${a.t}</div>
+    <div class="two"><button class="ok" data-v="ok">✅ 合法行使權力</button><button class="bad" data-v="bad">🚫 權力濫用</button></div>
+    <div class="fb" id="afb" aria-live="polite"></div><div id="ahint" aria-live="polite"></div><div id="anext" style="margin-top:8px"></div>`;
+  document.querySelectorAll('#actBox .two button').forEach(b => b.addEventListener('click', () => judgeAct(b.dataset.v === 'ok')));
+}
+function judgeAct(sayOk){
+  if(aStage !== 1) return;
+  const a = ACTS[aCur], fb = $('#afb');
+  document.querySelectorAll('#actBox .two button').forEach(b => b.disabled = true);
+  if(sayOk === a.ok){
+    if(a.ok){
+      handTo('reach');
+      $('#tagline').textContent = '✔ 依法行使的權力：可以伸過去';
+      fb.className = 'fb ok'; fb.innerHTML = '✔ 對，這是合法行使權力。' + a.e;
+      endAct(true);
+    } else {
+      aStage = 2;
+      handTo('reach');
+      $('#tagline').textContent = '🚫 權力伸過頭了！哪一面盾牌擋得住？';
+      fb.className = 'fb ok'; fb.innerHTML = '✔ 對，這是權力濫用。<b>第二步：選出被侵害的權利——哪一面盾牌擋得住？</b>'
+        + `<div class="shields ask" id="shields2" style="margin-top:8px">${SHIELDS.map(x => `<button data-s="${x.id}">${x.e} ${x.n}<small>${x.art}</small></button>`).join('')}</div>`;
+      document.querySelectorAll('#shields2 button').forEach(b => { b.onclick = () => pickShield(b.dataset.s); });
+    }
+  } else {
+    fb.className = 'fb no';
+    fb.innerHTML = a.ok ? '✘ 這其實是合法行使權力。' + a.e : '✘ 這是權力濫用。' + a.e + `（被侵害的是：${SHIELDS.find(s => s.id === a.s).n}）`;
+    if(!a.ok){ $('#shieldPop').classList.add('on'); document.querySelector(`#shields button[data-s="${a.s}"]`).classList.add('hit'); }
+    endAct(false);
+  }
+}
+function pickShield(id){
+  if(aStage !== 2) return;
+  const a = ACTS[aCur], fb = $('#afb');
+  if(id === a.s){
+    aStage = 3;
+    document.querySelector(`#shields button[data-s="${id}"]`).classList.add('hit');
+    $('#shieldPop').classList.add('on'); handTo('home');
+    const hit = SHIELDS.find(s => s.id === id);
+    $('#tagline').textContent = '🛡️ 權利盾牌擋住了權力濫用';
+    fb.className = 'fb ok'; fb.innerHTML = `✔ 擋住了！${hit.e} ${hit.n}（${hit.art}）。` + a.e;
+    endAct(!aMiss);
+  } else {
+    aMiss = true;
+    const btn = document.querySelector(`#shields2 button[data-s="${id}"]`); if(btn){ btn.disabled = true; btn.style.opacity = '.4'; }
+    $('#ahint').innerHTML = `<div class="fb no">✘ ${SHIELDS.find(s => s.id === id).n}擋不住這一招。想一想：政府到底侵犯了這個人的什麼？再選一次。</div>`;
+  }
+}
+function endAct(ok){
+  aStage = 3; aDone++; if(ok) aFirst++;
+  prac('盾牌_' + (aCur + 1), ok);
+  document.querySelectorAll('#shields2 button').forEach(b => { b.onclick = null; b.disabled = true; });
+  if($('#ahint')) $('#ahint').innerHTML = '';
+  $('#anext').innerHTML = `<button class="btn" id="abtn">${aq.length ? '下一張 ▶' : '看結果 ▶'}</button>`;
+  $('#abtn').addEventListener('click', nextAct);
+}
+function finishActs(){
+  $('#shields').className = 'shields locked';
+  $('#actBox').innerHTML = `<div class="actcard">🎉 11 張全部完成！一次全對 <b>${aFirst}</b> 張。<br>記住：權力不是越少越好——依法、為了公共利益、不過頭，就是合法；權利不是完全不能限制——要依法、必要。</div><p style="margin-top:10px"><button class="btn ghost" id="aagain">🔁 重新洗牌再練一次</button></p>`;
+  $('#aagain').addEventListener('click', startActs);
+  logEv({ type:'practice', q:'盾牌_完成', ok: aFirst >= 9 });
+}
+startActs();
+
+// ===== 4 消極 vs 積極 =====
+function npShow(kind){
+  const hand = $('#npHand'), cap = $('#npCap'), circle = $('#npCircle');
+  if(kind === 'neg'){
+    hand.style.transform = 'translate(0px,120px)'; $('#npGift').textContent = '';
+    circle.setAttribute('stroke', '#7c3aed'); circle.setAttribute('stroke-dasharray', '0'); circle.setAttribute('fill', '#faf5ff');
+    $('#npLabel').textContent = '政府：退後，不干涉';
+    cap.className = 'np-cap neg'; cap.innerHTML = '🙅 <b>消極權利</b>：要國家「不要」做——不要亂抓人、不要偷看信、不要管我信什麼。政府的手要留在生活圈外面。';
+  } else {
+    hand.style.transform = 'translate(150px,120px)'; $('#npGift').textContent = '📚';
+    circle.setAttribute('stroke', '#0891b2'); circle.setAttribute('stroke-dasharray', '8 6'); circle.setAttribute('fill', '#ecfeff');
+    $('#npLabel').textContent = '政府：上前，提供幫助';
+    cap.className = 'np-cap pos'; cap.innerHTML = '🙋 <b>積極權利</b>：要國家「要」做——提供國民教育、讓人能打官司、出事能請求賠償、生活有困難能得到協助。';
+  }
+  logEv({ type:'practice', q:'消極積極示意_' + kind, ok:true });
+}
+$('#npHand').style.transform = 'translate(60px,120px)';
+$('#npNeg').addEventListener('click', () => npShow('neg'));
+$('#npPos').addEventListener('click', () => npShow('pos'));
+
+const NP = [
+  { t:'不要隨便把我抓去關。', a:'neg', r:'人身自由' },
+  { t:'不要偷看我的信件和手機訊息。', a:'neg', r:'秘密通訊自由' },
+  { t:'不要管我信什麼宗教。', a:'neg', r:'宗教信仰自由' },
+  { t:'不要禁止我發表意見、批評政府。', a:'neg', r:'言論自由' },
+  { t:'不要限制我搬家、出國。', a:'neg', r:'居住遷徙自由' },
+  { t:'請讓我免費讀國民小學和國民中學。', a:'pos', r:'受國民教育的權利' },
+  { t:'公務員違法害我受傷，請國家賠償我。', a:'pos', r:'請求國家賠償' },
+  { t:'我和別人有糾紛，請法院幫我審判。', a:'pos', r:'訴訟權' },
+  { t:'我遭遇急難、生活過不下去，請政府提供基本的生活協助。', a:'pos', r:'社會救助' },
+  { t:'我不服政府對我的處分，請上級機關重新審查。', a:'pos', r:'訴願權' }
+];
+let nq = [], nCur = -1, nDone = 0, nFirst = 0, nAns = false, nWrong = {};
+function startNP(){ nq = shuffle(NP.map((x, i) => i)); nDone = 0; nFirst = 0; nWrong = {}; nextNP(); }
+function nextNP(){
+  if(!nq.length) return finishNP();
+  nCur = nq.shift(); nAns = false;
+  $('#npGame').innerHTML = `<div class="prog"><span>答對 ${nDone} / ${NP.length}</span><span>${nWrong[nCur] ? '🔁 這句之前錯過' : ''}</span></div><div class="pbar"><i style="width:${nDone / NP.length * 100}%"></i></div>
+    <div class="actcard">「${NP[nCur].t}」</div>
+    <div class="two"><button class="neg" data-v="neg">🙅 消極：請政府退後</button><button class="pos" data-v="pos">🙋 積極：請政府上前</button></div>
+    <div class="fb" id="nfb" aria-live="polite"></div><div id="nnext" style="margin-top:8px"></div>`;
+  document.querySelectorAll('#npGame .two button').forEach(b => b.addEventListener('click', () => answerNP(b.dataset.v)));
+}
+function answerNP(v){
+  if(nAns) return; nAns = true;
+  const x = NP[nCur], ok = v === x.a, fb = $('#nfb');
+  document.querySelectorAll('#npGame .two button').forEach(b => b.disabled = true);
+  if(ok){ nDone++; if(!nWrong[nCur]) nFirst++; } else { nWrong[nCur] = 1; nq.splice(Math.min(nq.length, 2), 0, nCur); }
+  fb.className = 'fb ' + (ok ? 'ok' : 'no');
+  fb.innerHTML = (ok ? '✔ 對！' : '✘ 這句是' + (x.a === 'neg' ? '消極權利' : '積極權利') + '。') + `這是<b>${x.r}</b>：` + (x.a === 'neg' ? '要國家「不要」干涉。' : '要國家「提供」協助。') + (ok ? '' : '（過兩題會再出現）');
+  prac('消極積極_' + (nCur + 1), ok);
+  $('#nnext').innerHTML = `<button class="btn" id="nbtn">${nq.length ? '下一句 ▶' : '看結果 ▶'}</button>`;
+  $('#nbtn').addEventListener('click', nextNP);
+}
+function finishNP(){
+  $('#npGame').innerHTML = `<div class="actcard">🎉 10 句全部完成！一次就答對 <b>${nFirst}</b> 句。<br>口訣：消極叫政府「退後」，積極叫政府「上前」。</div><p style="margin-top:10px"><button class="btn ghost" id="nagain">🔁 再練一次</button></p>`;
+  $('#nagain').addEventListener('click', startNP);
+  logEv({ type:'practice', q:'消極積極_完成', ok: nFirst >= 8 });
+}
+startNP();
+
+// ===== 5 小測驗 =====
+const QUIZ = [
+  { q:'下列何者屬於「權力」的行使？', o:['學生向學校申請助學金', '民眾在網路上發表意見', '消費者要求退貨', '警察依法對違規停車的人開罰單'], a:3, e:'權力是支配的力量。開罰單是政府要求人民接受處罰，是公權力的行使；其他三個都是人民在行使權利。' },
+  { q:'「權利」的主要意義是什麼？', o:['保護人們免受權力濫用的傷害，確保活得有尊嚴', '支配別人的力量', '統治者管理人民的工具', '政府命令人民服從的能力'], a:0, e:'課綱說：權力是支配的力量，權利則是免於人們受到權力濫用的傷害，確保生存尊嚴，並能促進公共利益。' },
+  { q:'民主國家中，政府的權力是從哪裡來的？', o:['統治者的血統', '人民的授權', '武力', '天命'], a:1, e:'民主國家主權在民，人民透過選舉把權力交給政府。' },
+  { q:'下列何者是「權力濫用」、侵害人民權利的例子？', o:['法院依法判決竊盜犯有罪', '國稅局依法徵收所得稅', '警察沒有理由就把路人帶回警局關三天', '衛生局依法檢查餐廳衛生'], a:2, e:'沒有法律依據就限制人身自由，是權力濫用；其他三個都有法律依據，是合法行使權力。' },
+  { q:'「警察依法逮捕搶匪，保護民眾的財產安全。」這句話最能說明權力與權利的哪一種關聯？', o:['權力的行使是為了保障人民的權利', '權力與權利毫無關係', '權利是用來支配別人的', '有權力的人就不必守法'], a:0, e:'政府行使權力，是為了保障人民的權利、增進公共利益。' },
+  { q:'下列何者屬於「消極權利」？', o:['要求政府提供國民教育', '請求國家賠償', '向法院提起訴訟', '要求政府不得任意檢查自己的信件'], a:3, e:'消極權利是要國家「不要」干涉，例如秘密通訊自由；其他三個是要國家提供服務，屬於積極權利。' },
+  { q:'下列何者屬於「積極權利」？', o:['宗教信仰自由', '受國民教育的權利', '言論自由', '居住遷徙自由'], a:1, e:'受國民教育是要求國家提供教育，是積極權利；其他三個是各種自由，屬於消極權利。' },
+  { q:'傳染病流行時，政府依照防疫的法律，要求確診者在家隔離。下列敘述何者最正確？', o:['政府侵害人身自由，一定違法', '確診者的權利因此完全消失', '政府有法律依據、為了公共利益，在必要範圍內限制權利', '只要政府想做，就可以限制人民的權利'], a:2, e:'權利可以被限制，但必須有法律依據、為了公共利益，而且只在必要的範圍內。' },
+  { q:'小美說：「權力和權利只差一個字，意思一樣啦！」下列哪一個回應最正確？', o:['對，兩者都是政府擁有的', '對，兩者都是人民擁有的', '錯，權利只屬於政府', '錯，權力是支配的力量，權利是保護人們不受權力濫用傷害的保障'], a:3, e:'有「力」氣的是權力（支配）；對你有「利」的是權利（保障）。' },
+  { q:'當人民的權利被政府違法侵害時，下列哪一個做法最適當？', o:['只能自認倒楣', '依法提出訴願、行政訴訟或請求國家賠償', '用暴力報復', '私下找人威脅官員'], a:1, e:'權利被侵害時可以依法請求救濟：訴願、行政訴訟、國家賠償等。' }
+];
+const ABCD = ['(A)', '(B)', '(C)', '(D)'];
+$('#quizBox').innerHTML = QUIZ.map((x, i) => `<div class="q" data-i="${i}"><div class="stem">${i + 1}. ${x.q}</div>${x.o.map((o, j) => `<label><input type="radio" name="qz${i}" value="${j}">${ABCD[j]} ${o}</label>`).join('')}<div class="fb"></div></div>`).join('');
+$('#submitQuiz').addEventListener('click', () => {
+  const qs = document.querySelectorAll('#quizBox .q'); let score = 0, answered = 0; const wrong = [];
+  qs.forEach((q, i) => {
+    const x = QUIZ[i], sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+    q.classList.remove('correct', 'wrong'); if(sel) answered++;
+    if(sel && +sel.value === x.a){ score++; q.classList.add('correct'); fb.className = 'fb ok'; fb.innerHTML = '✔ 正確！' + x.e; }
+    else { wrong.push(i + 1); q.classList.add('wrong'); fb.className = 'fb no'; fb.innerHTML = '✘ 正解：' + ABCD[x.a] + '。' + x.e; }
+  });
+  logEv({ type:'quiz', score, total:qs.length, wrong });
+  cloudSend({ type:'單元測驗', detail: wrong.length ? '錯第 ' + wrong.join('、') + ' 題' : '全對', score: score + '/' + qs.length });
+  const r = $('#quizResult');
+  if(answered < qs.length){ r.className = 'bad'; r.textContent = `還有 ${qs.length - answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`; }
+  else if(score >= 8){ r.className = 'good'; r.textContent = `🎉 ${score} / ${qs.length}！權力、權利分得很清楚。`; }
+  else if(score >= 6){ r.className = 'soso'; r.textContent = `${score} / ${qs.length}。看一下錯的題目解析，再回第 3 頁把盾牌遊戲玩一遍。`; }
+  else { r.className = 'bad'; r.textContent = `${score} / ${qs.length}。先回第 1 頁把「力」「利」分清楚，再看第 2 頁的循環圖。`; }
+  r.scrollIntoView({ behavior:'smooth', block:'center' });
+});
+</script>
+</body>
+</html>

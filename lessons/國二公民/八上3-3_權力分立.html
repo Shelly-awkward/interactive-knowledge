@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國二公民｜權力分立：把權力拆開，互相牽制</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff; --border:#e5e7eb; --radius:14px;
+    --blue:#2563eb; --blue-soft:#dbeafe;
+    --green:#16a34a; --green-soft:#dcfce7; --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --law:#0f766e; --law-soft:#e0f5f1; --accent:#134e4a;
+    --exe:#ea580c; --leg:#2563eb; --jud:#7c3aed; --exam:#0891b2; --ctrl:#be123c;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  [hidden]{display:none !important;}
+  body{font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:960px; margin:0 auto; padding:24px 16px 80px;}
+  header.hero{background:linear-gradient(120deg,#312e81 0%,#4338ca 38%,#115e59 78%,#0f766e 100%); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.2); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.55rem; margin-bottom:8px; line-height:1.4;}
+  header.hero p{opacity:.95; font-size:.95rem;}
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:110px; border:1px solid var(--border); background:var(--card); color:var(--ink); padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--law);}
+  nav.tabs button.active{background:var(--law); border-color:var(--law); color:#fff; font-weight:bold;}
+  section.panel{display:none;} section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--accent); margin-bottom:10px;}
+  .card h3{font-size:1rem; margin:16px 0 6px;}
+  .card ul,.card ol{margin-left:1.3em;}
+  .card p + p{margin-top:8px;}
+  .goal{background:var(--law-soft); border:none;}
+  .sub{color:var(--sub); font-size:.9rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:9px 14px; margin:10px 0; font-size:.92rem; color:#1e3a8a;}
+  .warn{background:var(--amber-soft); border-radius:8px; padding:9px 14px; margin:10px 0; font-size:.92rem; color:#7c2d12;}
+  mark{background:#fef08a; padding:0 2px; border-radius:3px; color:inherit;}
+  blockquote{border-left:4px solid #a5b4fc; padding:2px 12px; margin:6px 0; color:#334155; background:#f8fafc;}
+  .btn{display:inline-block; background:var(--law); color:#fff; border:none; border-radius:10px; padding:10px 18px; font-size:.95rem; cursor:pointer; font-family:inherit;}
+  .btn.ghost{background:#fff; color:var(--law); border:1px solid var(--law);}
+  .btn:disabled{opacity:.45; cursor:default;}
+  .bigbtn{display:block; width:100%; background:var(--law); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:10px;}
+  .fb{margin-top:10px; padding:10px 14px; border-radius:10px; font-size:.93rem; display:none;}
+  .fb.ok{display:block; background:var(--green-soft); color:#14532d;} .fb.no{display:block; background:var(--red-soft); color:#7f1d1d;}
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.cmp{border-collapse:collapse; width:100%; min-width:520px; font-size:.92rem;}
+  table.cmp th,table.cmp td{border:1px solid var(--border); padding:8px 10px; vertical-align:top;}
+  table.cmp th{background:#f3f4f6; font-size:.88rem; text-align:left;}
+  table.cmp td.k{font-weight:bold; background:#fafafa; width:22%;}
+
+  /* 班級劇場 */
+  .comic{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin:10px 0;}
+  .panelc{border:2px solid var(--border); border-radius:12px; padding:12px 14px; background:#fff; display:none;}
+  .panelc.on{display:block; animation:fade .3s ease;}
+  .panelc .no{font-size:.8rem; color:var(--sub); font-weight:bold;}
+  .panelc .pic{font-size:1.9rem; line-height:1.3;}
+  .panelc p{font-size:.93rem;}
+  .panelc .say{background:#f1f5f9; border-radius:10px; padding:4px 10px; margin-top:4px; font-size:.9rem;}
+  .hats{display:grid; gap:8px; margin:10px 0;}
+  .hats .row{display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#fff;}
+  .hats .ht{flex:1 1 210px; font-weight:bold;}
+  .hats .ht small{display:block; font-weight:normal; color:var(--sub); font-size:.8rem;}
+  .seg{display:flex; gap:6px; flex:1 1 320px;}
+  .seg button{flex:1; font-family:inherit; font-size:.9rem; padding:8px 6px; border-radius:8px; border:1px solid var(--border); background:#fff; cursor:pointer; color:var(--ink);}
+  .seg button.sel{background:#4338ca; color:#fff; border-color:#4338ca; font-weight:bold;}
+  .replay{display:grid; gap:8px; margin-top:10px;}
+  .replay div{border-radius:10px; padding:9px 12px; font-size:.93rem; border:1px solid var(--border); background:#fff;}
+  .replay .g{border-color:#86efac; background:var(--green-soft);} .replay .b{border-color:#fca5a5; background:var(--red-soft);} .replay .m{border-color:#fcd34d; background:var(--amber-soft);}
+  .verdict{border-radius:10px; padding:12px 14px; font-size:.98rem; margin-top:10px; font-weight:bold;}
+  .verdict.g{background:var(--green-soft); color:#14532d;} .verdict.b{background:var(--red-soft); color:#7f1d1d;} .verdict.m{background:var(--amber-soft); color:#7c2d12;}
+  .presets{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:6px 0; font-size:.9rem;}
+  .presets button{font-family:inherit; font-size:.86rem; padding:5px 12px; border-radius:99px; border:1px dashed var(--accent); background:#fff; color:var(--accent); cursor:pointer;}
+
+  /* 拆權力 */
+  .modebar{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 10px;}
+  .modebar button{flex:1 1 150px; font-family:inherit; font-size:.93rem; padding:9px 10px; border-radius:99px; cursor:pointer; border:2px solid var(--border); background:#fff; color:var(--ink);}
+  .modebar button.on{border-color:#4338ca; background:#4338ca; color:#fff; font-weight:bold;}
+  .modelwrap{display:grid; grid-template-columns:1fr; gap:12px; align-items:start;}
+  @media (min-width:760px){ .modelwrap{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);} }
+  .svgbox{background:#fbfcfe; border:1px solid var(--border); border-radius:12px; overflow:hidden;}
+  .svgbox svg{display:block; width:100%; max-width:540px; height:auto; margin:0 auto;}
+  .pw{transition:transform .9s cubic-bezier(.5,0,.2,1), opacity .6s; cursor:pointer;}
+  .pw .t1{font-size:17px; font-weight:bold; fill:#fff;} .pw .t2{font-size:13px; fill:#fff;}
+  .pw:hover circle{stroke:#111827; stroke-width:3;}
+  .pw.sel circle{stroke:#facc15; stroke-width:5;}
+  .fade{transition:opacity .6s;}
+  .info{border:1px solid var(--border); border-radius:12px; padding:12px 14px; background:#fff; min-height:8em; font-size:.95rem;}
+  .info h4{font-size:1.05rem; margin-bottom:4px;}
+  @media (max-width:480px){ .pw .t1{font-size:19px;} .pw .t2{font-size:15px;} }
+
+  /* 牽制卡 */
+  .actcard{font-size:1.04rem; padding:14px 16px; border-radius:12px; background:#f9fafb; border:1px dashed #cbd5e1;}
+  .six{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:8px; margin-top:10px;}
+  .six button{font-family:inherit; font-size:.95rem; padding:10px 6px; border-radius:10px; cursor:pointer; border:2px solid var(--border); background:#fff; color:var(--ink); font-weight:bold;}
+  .six button:hover{border-color:#4338ca;}
+  .six button.right{background:var(--green-soft); border-color:var(--green);} .six button.wrongpick{background:var(--red-soft); border-color:var(--red);}
+  .six button:disabled{cursor:default;}
+  .prog{font-size:.85rem; color:var(--sub); display:flex; justify-content:space-between;}
+  .pbar{height:8px; background:var(--border); border-radius:4px; overflow:hidden; margin:4px 0 10px;}
+  .pbar i{display:block; height:100%; background:var(--law); transition:width .4s;}
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;}
+  .two button{font-family:inherit; font-size:1rem; padding:11px; border-radius:12px; cursor:pointer; border:2px solid; background:#fff; font-weight:bold;}
+  .two .yes{border-color:var(--green); color:#166534;} .two .nope{border-color:var(--red); color:#991b1b;}
+  .two button:disabled{opacity:.4; cursor:default;}
+
+  /* 修法 vs 修憲 */
+  .ladders{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; margin:10px 0;}
+  .ladder{border:1px solid var(--border); border-radius:12px; padding:12px 14px; background:#fff;}
+  .ladder h4{font-size:1rem; margin-bottom:6px;}
+  .ladder ol{list-style:none; margin:0 !important; display:grid; gap:6px;}
+  .ladder li{border-radius:8px; padding:6px 10px; font-size:.9rem; position:relative;}
+  .ladder.easy li{background:var(--blue-soft);} .ladder.hard li{background:#ede9fe;}
+  .ladder li::before{content:"▲ "; color:var(--sub); font-size:.75rem;}
+
+  /* 選擇題 */
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q .src{display:inline-block; font-size:.75rem; font-weight:normal; background:#eef2ff; color:#4338ca; border-radius:99px; padding:0 8px; margin-left:6px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--law); background:#f0fdfa;} .q input{margin-right:8px;}
+  .q.correct{border-color:var(--green);} .q.wrong{border-color:var(--red);}
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;} #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;} #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .weak{margin-top:10px; font-size:.93rem;}
+  details summary{cursor:pointer;}
+  .nextlinks{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px; margin-top:8px;}
+  .nextlinks a{display:block; text-decoration:none; color:inherit; border:1px solid var(--border); border-radius:12px; padding:12px 14px; background:#fff;}
+  .nextlinks a:hover{border-color:var(--law); background:#f0fdfa;}
+  .nextlinks a b{color:var(--law);}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:560px){
+    nav.tabs button{min-width:30%; font-size:.86rem; padding:8px 4px;}
+    header.hero h1{font-size:1.3rem;} header.hero{padding:22px 18px;}
+    .card{padding:16px 15px;}
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 翰林版八上 第3章 法治與權力分立 ③ · 公Be-Ⅳ-1、公Be-Ⅳ-2</span>
+  <h1>權力分立：把權力拆開，互相牽制</h1>
+  <p>前兩課說：法治要讓法律管得住統治者，權力要拿來保障權利。可是權力這麼大，誰管得住它？答案是一個設計：<b>不要把權力全放在同一個人手上</b>。先從一個你一定見過的場景開始——班上的副班長登記遲到。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1 副班長事件</button>
+  <button data-t="s2">2 三權 → 五權</button>
+  <button data-t="s3">3 誰來牽制？</button>
+  <button data-t="s4">4 有限政府</button>
+  <button data-t="s5">🏁 章末總複習</button>
+</nav>
+
+<!-- ═══════════ 1 副班長事件 ═══════════ -->
+<section class="panel show" id="s1">
+  <div class="card goal">
+    <h2>🎯 這一課要學會</h2>
+    <ul>
+      <li>說出權力分立的目的：<b>消極</b>是避免政府濫權，<b>積極</b>是保障人民的權利</li>
+      <li>知道三權分立（立法、行政、司法）和我國的五權分立（再加考試、監察）</li>
+      <li>看懂五院怎麼互相牽制，以及為什麼政府的權力要寫進憲法（有限政府）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🏫 班級劇場：副班長登記遲到</h2>
+    <p>老師請副班長負責登記遲到。接下來四天發生了什麼事？按「下一格」看下去。</p>
+    <div class="comic" id="comic">
+      <div class="panelc"><div class="no">第 1 天</div><div class="pic">🧒📢</div><p>副班長一上任就宣布新規定。全班歡呼：「好耶！」</p><div class="say">「以後 7:32 才算遲到！」</div></div>
+      <div class="panelc"><div class="no">第 2 天</div><div class="pic">🧒🏃⏰</div><p>副班長自己 7:35 才到。同學說：「你遲到了，要登記自己！」</p><div class="say">「從今天起，7:40 才算遲到。」</div></div>
+      <div class="panelc"><div class="no">第 3 天</div><div class="pic">🧒📝😠</div><p>小明 7:33 到，被登記遲到——他前天才跟副班長吵過架。副班長的好朋友 7:38 到，卻沒被登記。</p></div>
+      <div class="panelc"><div class="no">第 4 天</div><div class="pic">😤➡️🧒</div><p>小明去找人評理，結果評理的人還是副班長。</p><div class="say">「我說你遲到就是遲到，誰管你？」</div></div>
+    </div>
+    <p><button class="btn" id="comicNext">下一格 ▶</button></p>
+    <div id="comicQ" hidden>
+      <h3>🤔 問題出在哪裡？</h3>
+      <p>副班長一個人手上有<b>三種權力</b>：</p>
+      <ul>
+        <li>📝 <b>訂規則</b>（第 1、2 天：想怎麼訂就怎麼訂、想改就改）</li>
+        <li>🚩 <b>執行規則</b>（第 3 天：想登記誰就登記誰）</li>
+        <li>⚖️ <b>判斷對錯</b>（第 4 天：自己判自己贏）</li>
+      </ul>
+      <p>三種權力集中在同一個人身上，就沒有人管得住他。換一個「好人」當副班長行不行？上一課說過：好人也會變，而且我們不能只靠運氣。所以要改的是<b>制度</b>。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎩 重新分配三頂帽子</h2>
+    <p>把三頂帽子分給不同的人，再按「照這樣重演」，看看這四天會變成怎樣。<b>目標：四天都打 ✔。</b></p>
+    <div class="hats" id="hats"></div>
+    <div class="presets">快速試：<button data-p="all">全給副班長（原本的樣子）</button><button data-p="teacher">全給老師</button><button data-p="mix">訂規則給副班長，其他給老師</button></div>
+    <p><button class="btn" id="replayBtn">▶ 照這樣重演</button></p>
+    <div class="replay" id="replay" aria-live="polite"></div>
+    <div id="hatVerdict"></div>
+    <div id="hatMap" hidden>
+      <h3>🏛️ 對應到國家</h3>
+      <div class="tblbox"><table class="cmp">
+        <thead><tr><th>帽子</th><th>班上誰戴</th><th>國家的哪一種權力</th><th>我國由誰負責</th></tr></thead>
+        <tbody>
+          <tr><td>📝 訂規則</td><td>全班班會</td><td><b>立法權</b></td><td>立法院（人民選出的立法委員）</td></tr>
+          <tr><td>🚩 執行規則</td><td>副班長</td><td><b>行政權</b></td><td>行政院</td></tr>
+          <tr><td>⚖️ 判斷對錯</td><td>老師（中立的第三者）</td><td><b>司法權</b></td><td>司法院、各級法院</td></tr>
+        </tbody>
+      </table></div>
+      <p>這就是<b>權力分立</b>：把權力分給不同的機關，彼此監督、互相制衡。目的有兩個——<mark>消極：避免政府濫權</mark>；<mark>積極：保障人民的權利</mark>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2 三權 → 五權 ═══════════ -->
+<section class="panel" id="s2">
+  <div class="card">
+    <h2>✂️ 把權力拆開：三權分立 → 我國的五權分立</h2>
+    <p>按上面三個按鈕，看權力怎麼被拆開；點圓圈看它負責什麼。</p>
+    <div class="modebar"><button data-m="0" class="on">👑 集中在一人</button><button data-m="1">✂️ 三權分立</button><button data-m="2">✂️ 我國：五權分立</button></div>
+    <div class="modelwrap">
+      <div class="svgbox">
+        <svg id="split" viewBox="0 0 440 320" role="img" aria-label="權力分立示意圖">
+          <defs>
+            <marker id="mkG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#64748b"/></marker>
+          </defs>
+          <g class="fade" id="bal1" opacity="0"><text x="151" y="160" text-anchor="middle" font-size="26" fill="#475569">⇄</text><text x="289" y="160" text-anchor="middle" font-size="26" fill="#475569">⇄</text><text x="220" y="262" text-anchor="middle" font-size="15" fill="#475569">三個機關分開、互相監督制衡</text></g>
+          <g class="fade" id="split2" opacity="0">
+            <path d="M82 154 L82 188" stroke="#64748b" stroke-width="2.5" marker-end="url(#mkG)"/><text x="90" y="176" font-size="13" fill="#475569">分出</text>
+            <path d="M220 154 L220 188" stroke="#64748b" stroke-width="2.5" marker-end="url(#mkG)"/><text x="228" y="176" font-size="13" fill="#475569">分出</text>
+            <text x="358" y="226" text-anchor="middle" font-size="14" fill="#475569">孫中山：</text>
+            <text x="358" y="246" text-anchor="middle" font-size="14" fill="#475569">在三權之外</text>
+            <text x="358" y="266" text-anchor="middle" font-size="14" fill="#475569">再分出兩權</text>
+          </g>
+          <g class="pw" id="pBig" data-k="big"><circle r="100" fill="#7f1d1d" stroke="#fff" stroke-width="3"/><text class="t1" y="-8" text-anchor="middle">👑 國家權力</text><text class="t2" y="16" text-anchor="middle">全部在一個人手上</text></g>
+          <g class="pw" id="pExam" data-k="exam"><circle r="52" fill="#0891b2" stroke="#fff" stroke-width="3"/><text class="t1" y="-4" text-anchor="middle">🎓 考試院</text><text class="t2" y="16" text-anchor="middle">國家考試</text></g>
+          <g class="pw" id="pCtrl" data-k="ctrl"><circle r="52" fill="#be123c" stroke="#fff" stroke-width="3"/><text class="t1" y="-4" text-anchor="middle">🔍 監察院</text><text class="t2" y="16" text-anchor="middle">彈劾、審計</text></g>
+          <g class="pw" id="pExe" data-k="exe"><circle r="58" fill="#ea580c" stroke="#fff" stroke-width="3"/><text class="t1" y="-4" text-anchor="middle">🚩 行政</text><text class="t2" y="16" text-anchor="middle">執行法律</text></g>
+          <g class="pw" id="pLeg" data-k="leg"><circle r="58" fill="#2563eb" stroke="#fff" stroke-width="3"/><text class="t1" y="-4" text-anchor="middle">📝 立法</text><text class="t2" y="16" text-anchor="middle">制定法律</text></g>
+          <g class="pw" id="pJud" data-k="jud"><circle r="58" fill="#7c3aed" stroke="#fff" stroke-width="3"/><text class="t1" y="-4" text-anchor="middle">⚖️ 司法</text><text class="t2" y="16" text-anchor="middle">審判</text></g>
+        </svg>
+      </div>
+      <div class="info" id="info" aria-live="polite"></div>
+    </div>
+    <p class="sub" style="margin-top:8px">※ 我國中央政府還有<b>總統</b>（國家元首），和五院一起組成中央政府，下一章會細說。</p>
+  </div>
+
+  <div class="card">
+    <h2>👤 兩位關鍵人物</h2>
+    <div class="tblbox"><table class="cmp">
+      <tbody>
+        <tr><td class="k">孟德斯鳩<br><span class="sub">法國，18 世紀</span></td><td>在《論法的精神》提出<b>三權分立</b>：把政府的權力分成<b>立法、行政、司法</b>，交給不同機關，互相制衡，避免權力集中而被濫用。後來歐美許多民主國家都採用。</td></tr>
+        <tr><td class="k">孫中山</td><td>參考中國古代的科舉和監察（御史）制度，主張<b>五權分立</b>：把<b>考試權</b>從行政權獨立出來（避免行政首長只任用自己人），把<b>監察權</b>從立法權獨立出來（避免國會權力過大）。我國的五院制就是這樣來的。</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note">🔑 背法：<b>考試</b>從<b>行政</b>分出、<b>監察</b>從<b>立法</b>分出。想成「選人的事，不讓用人的老闆自己來」、「抓官員的事，不讓國會自己兼」。</div>
+  </div>
+</section>
+
+<!-- ═══════════ 3 誰來牽制 ═══════════ -->
+<section class="panel" id="s3">
+  <div class="card">
+    <h2>🔁 誰來牽制？九個情境</h2>
+    <p>權力拆開還不夠，還要<b>互相牽制</b>：一個機關做錯事，另一個機關（或人民）可以管它。每一題選一個。</p>
+    <div id="chkBox"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 4 有限政府 ═══════════ -->
+<section class="panel" id="s4">
+  <div class="card">
+    <h2>📜 有限政府：把權力的「說明書」寫進憲法</h2>
+    <p>權力分立之後，每個機關到底可以做什麼？答案寫在<b>憲法</b>裡。政府的權力有範圍、有界線，不是無限大——這叫<b>有限政府</b>。</p>
+    <div class="tblbox"><table class="cmp"><tbody>
+      <tr><td class="k">① 明確</td><td>寫清楚每個機關的職權，大家都知道政府可以做什麼、不能做什麼。</td></tr>
+      <tr><td class="k">② 穩定</td><td>憲法很難修改，不會因為換了掌權的人就跟著變。</td></tr>
+      <tr><td class="k">③ 保障權利</td><td>權力有界線，人民的權利才安全——這就是第 1 課「法律在統治者上面」的具體做法。</td></tr>
+    </tbody></table></div>
+    <h3>🪜 改一般法律 vs 改憲法：難度差多少？</h3>
+    <div class="ladders">
+      <div class="ladder easy"><h4>📘 改一般法律</h4><ol>
+        <li>立法院開會，經過三讀</li>
+        <li>出席的立法委員過半數同意</li>
+        <li>總統公布，就生效</li>
+      </ol></div>
+      <div class="ladder hard"><h4>📕 改憲法</h4><ol>
+        <li>立法委員四分之一提議</li>
+        <li>四分之三出席，出席者四分之三同意，才能提出修正案</li>
+        <li>公告半年，讓大家討論</li>
+        <li>全國公民投票：同意票要超過<b>全體選舉人</b>的一半</li>
+      </ol></div>
+    </div>
+    <p class="sub">憲法的門檻這麼高，就是要讓「權力的說明書」穩定，不會被掌權的人隨手改掉。</p>
+  </div>
+
+  <div class="card">
+    <h2>🔍 翻翻說明書：憲法允許嗎？</h2>
+    <div id="limBox"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 5 章末總複習 ═══════════ -->
+<section class="panel" id="s5">
+  <div class="card">
+    <details open>
+      <summary><b>📋 第 3 章一張表（點標題可收合）</b></summary>
+      <div class="tblbox">
+        <table class="cmp">
+          <tbody>
+            <tr><td class="k">① 人治 vs 法治</td><td>差在統治者和法律誰在上面。人治：法律是統治者的工具、統治者不守法、法律隨統治者改變。法治：法律保障人民權利、政府和人民都守法、法律由人民的代表依程序制定</td></tr>
+            <tr><td class="k">② 權力 vs 權利</td><td>權力是支配的力量；權利是免於權力濫用的傷害、確保尊嚴。民主國家的權力來自人民、為了保障權利、受權利限制。消極權利要國家不干涉，積極權利要國家提供協助</td></tr>
+            <tr><td class="k">③ 權力分立</td><td>目的：消極避免濫權、積極保障權利。孟德斯鳩三權（立法、行政、司法）；我國五權再加考試（從行政分出）、監察（從立法分出）</td></tr>
+            <tr><td class="k">五院一句話</td><td>行政院：執行法律、推動政策｜立法院：制定法律、審查預算｜司法院：審判、大法官憲法法庭｜考試院：國家考試｜監察院：彈劾、糾舉、審計</td></tr>
+            <tr><td class="k">有限政府</td><td>政府職權寫進憲法：明確、穩定、保障權利；修憲門檻比修法高很多</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <div class="card" id="quizCard">
+    <h2>🏁 章末總複習（15 題，三課混合）</h2>
+    <p class="sub">題目後面的小標籤是出自哪一課。全部作答後按「交卷」。</p>
+    <div id="quizBox"></div>
+    <button class="bigbtn" id="submitQuiz">交卷</button>
+    <div id="quizResult"></div>
+    <div class="weak" id="weak"></div>
+  </div>
+
+  <div class="card">
+    <h2>➡️ 同一章的其他課</h2>
+    <div class="nextlinks">
+      <a href="八上3-1_人治與法治.html"><b>◀ ① 人治與法治</b><br>統治者和法律，誰在上面？</a>
+      <a href="八上3-2_權力與權利.html"><b>◀ ② 權力與權利</b><br>只差一個字，差很多。</a>
+    </div>
+  </div>
+</section>
+
+<footer>依 108 課綱（公Be-Ⅳ-1 權力分立、公Be-Ⅳ-2 政府職權規範在憲法中）與翰林版八上第 3 章的架構原創編寫，不是出版社教材；用語若和課本不同，以課本為準。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（只存在這台瀏覽器）=====
+const LOG_KEY = "study_log_v1", CH = "公民八上3-3 權力分立";
+function logEv(ev){ try{ const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); a.push(Object.assign({ t: Date.now(), ch: CH }, ev)); localStorage.setItem(LOG_KEY, JSON.stringify(a)); }catch(e){} }
+const CLOUD_URL = (function(){ try{ return localStorage.getItem("cloud_url_v1") || ""; }catch(e){ return ""; } })();
+function cloudSend(row){ if(!CLOUD_URL) return; const body = JSON.stringify(Object.assign({ ch: CH }, row)); try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} } }
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){ const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7); logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{ if(document.visibilityState !== "visible") return; studySec += 30; try{ const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); const v = a.find(e => e.vid === vid); if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); } }catch(e){} }, 30000); })();
+window.addEventListener("pagehide", ()=>{ const min = Math.round(studySec / 6) / 10; if(min < 0.5 && pracCount === 0) return; cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" }); studySec = 0; pracCount = 0; pracOk = 0; });
+function prac(q, ok){ logEv({ type:'practice', q, ok }); pracCount++; if(ok) pracOk++; }
+
+const $ = s => document.querySelector(s);
+function shuffle(a){ for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function showTab(id){ document.querySelectorAll('nav.tabs button').forEach(b => b.classList.toggle('active', b.dataset.t === id)); document.querySelectorAll('section.panel').forEach(p => p.classList.toggle('show', p.id === id)); window.scrollTo({ top:0, behavior:'smooth' }); }
+document.querySelectorAll('nav.tabs button').forEach(b => b.addEventListener('click', () => showTab(b.dataset.t)));
+
+// ===== 1 班級劇場 =====
+let comicI = 0;
+const comicPanels = document.querySelectorAll('#comic .panelc');
+function showComic(){ comicPanels.forEach((p, i) => p.classList.toggle('on', i < comicI)); }
+$('#comicNext').addEventListener('click', () => {
+  if(comicI < comicPanels.length){ comicI++; showComic(); }
+  if(comicI >= comicPanels.length){ $('#comicNext').hidden = true; $('#comicQ').hidden = false; logEv({ type:'practice', q:'副班長劇場_看完', ok:true }); }
+  else $('#comicNext').textContent = `下一格 ▶（${comicI} / ${comicPanels.length}）`;
+});
+comicI = 1; showComic(); $('#comicNext').textContent = `下一格 ▶（1 / ${comicPanels.length}）`;
+
+const WHO = { vp:'🧒 副班長', cls:'👥 全班班會', tch:'👩‍🏫 老師' };
+const NAME = { vp:'副班長', cls:'全班', tch:'老師' };
+const HATS = [
+  { id:'make', e:'📝', n:'訂規則', s:'幾點算遲到？要不要改？' },
+  { id:'do', e:'🚩', n:'執行規則', s:'每天早上登記遲到' },
+  { id:'judge', e:'⚖️', n:'判斷對錯', s:'有人覺得被冤枉時，誰來評理' }
+];
+const assign = { make:'vp', do:'vp', judge:'vp' };
+$('#hats').innerHTML = HATS.map(h => `<div class="row"><div class="ht">${h.e} ${h.n}<small>${h.s}</small></div><div class="seg" data-h="${h.id}">${Object.keys(WHO).map(k => `<button data-k="${k}">${WHO[k]}</button>`).join('')}</div></div>`).join('');
+function paintHats(){ document.querySelectorAll('#hats .seg').forEach(seg => seg.querySelectorAll('button').forEach(b => b.classList.toggle('sel', assign[seg.dataset.h] === b.dataset.k))); }
+document.querySelectorAll('#hats .seg button').forEach(b => b.addEventListener('click', () => { assign[b.closest('.seg').dataset.h] = b.dataset.k; paintHats(); $('#replay').innerHTML = ''; $('#hatVerdict').innerHTML = ''; }));
+const HP = { all:{ make:'vp', do:'vp', judge:'vp' }, teacher:{ make:'tch', do:'tch', judge:'tch' }, mix:{ make:'vp', do:'tch', judge:'tch' } };
+document.querySelectorAll('.presets button').forEach(b => b.addEventListener('click', () => { Object.assign(assign, HP[b.dataset.p]); paintHats(); runReplay(); }));
+paintHats();
+
+function day1(){
+  if(assign.make === 'vp') return ['b', '📝 副班長自己訂：「7:32 才算遲到。」規則他想怎麼訂就怎麼訂，以後也能隨時改。'];
+  if(assign.make === 'cls') return ['g', '📝 全班開班會表決：7:30 算遲到。規則是大家一起決定的，副班長一個人改不了。'];
+  return ['m', '📝 老師訂：7:30 算遲到。副班長改不了規則了；不過班規最好由全班一起決定——就像國家的法律由人民選出的代表制定。'];
+}
+function day2(){
+  if(assign.make === 'vp') return ['b', '⏰ 副班長 7:35 到，立刻宣布：「從今天起 7:40 才算遲到！」訂規則的人，可以為自己改規則。'];
+  if(assign.do === 'vp' && assign.judge === 'vp') return ['b', '⏰ 規則不是他訂的，但他就是不登記自己——判斷對錯的也是他，沒有人能說他錯。'];
+  if(assign.do === 'vp') return ['g', `⏰ 副班長想偷偷不登記自己。同學向${NAME[assign.judge]}反映，${NAME[assign.judge]}依班規判斷：要登記。`];
+  return ['g', `⏰ 登記的人是${NAME[assign.do]}，副班長 7:35 到，照樣被登記。`];
+}
+function day3(){
+  if(assign.do === assign.judge) return ['b', `📝 ${NAME[assign.do]}又登記、又評理：登記錯了，申訴也是找同一個人，等於沒有人能糾正。` + (assign.do === 'vp' ? '副班長登記了吵過架的小明，放過自己的好朋友。' : '')];
+  if(assign.do === 'cls') return ['m', '📝 全班一起登記遲到？每天早上吵成一團、互相包庇。執行規則最好交給專人負責。'];
+  return ['g', `📝 ${NAME[assign.do]}負責登記；如果登記不公平，小明可以向${NAME[assign.judge]}申訴，請他依班規判斷。`];
+}
+function day4(){
+  if(assign.judge === 'vp' && assign.do === 'vp') return ['b', '😤 找副班長評理？他就是被告的人，自己判自己贏。'];
+  if(assign.judge === 'vp') return ['b', '😤 找副班長評理？他前天才跟小明吵過架，難免偏心。評理要找中立的第三者。'];
+  if(assign.judge === assign.do) return ['b', `😤 評理的${NAME[assign.judge]}，就是登記的人，等於自己判自己。`];
+  if(assign.judge === 'cls') return ['m', '😤 全班表決誰對誰錯？大家都是同學，難免看交情。判斷對錯最好交給中立的第三者。'];
+  return ['g', '😤 小明找老師評理。老師是中立的第三者，依照班規判斷，副班長也要服從。'];
+}
+function runReplay(){
+  const rows = [day1(), day2(), day3(), day4()];
+  const mark = { g:'✔', b:'✘', m:'△' };
+  $('#replay').innerHTML = rows.map((r, i) => `<div class="${r[0]}"><b>${mark[r[0]]} 第 ${i + 1} 天</b>　${r[1]}</div>`).join('');
+  const good = rows.filter(r => r[0] === 'g').length, same = assign.make === assign.do && assign.do === assign.judge;
+  let v;
+  if(good === 4) v = ['g', '🎉 四天全部 ✔！這就是權力分立：📝 訂規則＝立法、🚩 執行＝行政、⚖️ 判斷＝司法，分給不同的人，互相牽制。'];
+  else if(same) v = ['b', `🚨 三頂帽子全在${NAME[assign.make]}頭上：權力集中，跟人治的國王一樣——就算他是好人，出錯也沒有人能糾正。`];
+  else v = ['m', `目前 ${good} 天 ✔。看看打 ✘ 和 △ 的那幾天，再換換帽子。提示：訂規則的人不該是執行的人；評理的人要中立。`];
+  $('#hatVerdict').innerHTML = `<div class="verdict ${v[0]}">${v[1]}</div>`;
+  $('#hatMap').hidden = good !== 4;
+  prac('三頂帽子_' + assign.make + assign.do + assign.judge, good === 4);
+}
+$('#replayBtn').addEventListener('click', runReplay);
+
+// ===== 2 三權 → 五權 =====
+const LAYOUT = {
+  0:{ pBig:[220,155,1,1], pExe:[220,155,.5,0], pLeg:[220,155,.5,0], pJud:[220,155,.5,0], pExam:[220,155,.5,0], pCtrl:[220,155,.5,0], bal1:0, split2:0 },
+  1:{ pBig:[220,155,.4,0], pExe:[82,150,.9,1], pLeg:[220,150,.9,1], pJud:[358,150,.9,1], pExam:[82,150,.5,0], pCtrl:[220,150,.5,0], bal1:1, split2:0 },
+  2:{ pBig:[220,155,.4,0], pExe:[82,96,.92,1], pLeg:[220,96,.92,1], pJud:[358,96,.92,1], pExam:[82,244,1,1], pCtrl:[220,244,1,1], bal1:0, split2:1 }
+};
+const LABELS = {
+  1:{ pExe:['🚩 行政', '執行法律'], pLeg:['📝 立法', '制定法律'], pJud:['⚖️ 司法', '審判'] },
+  2:{ pExe:['🚩 行政院', '執行政策'], pLeg:['📝 立法院', '立法、審預算'], pJud:['⚖️ 司法院', '審判、釋憲'] }
+};
+const INFO = {
+  0:{ big:['👑 權力集中在一個人', '他可以自己訂規則、自己執行、自己判誰對誰錯——就像副班長。英國學者艾克頓說：<blockquote>權力使人腐化，絕對的權力使人絕對腐化。</blockquote>按上面的「✂️ 三權分立」把它拆開。'] },
+  1:{
+    exe:['🚩 行政權', '<b>執行法律、推動政策</b>。例：警察維持治安、衛生單位檢查食品。像班上負責登記遲到的副班長。'],
+    leg:['📝 立法權', '<b>制定法律</b>。由人民選出的代表組成國會來行使。像班上開班會訂班規。'],
+    jud:['⚖️ 司法權', '<b>依法審判、解決糾紛</b>，判斷誰違法。法官要獨立審判。像班上中立評理的老師。'],
+    _:['✂️ 三權分立（孟德斯鳩）', '國家權力拆成<b>立法、行政、司法</b>三種，交給不同機關，彼此監督制衡。點三個圓圈看各自負責什麼。']
+  },
+  2:{
+    exe:['🚩 行政院', '<b>國家最高行政機關</b>。執行法律、推動政策，底下有各部會（例：教育部、交通部、衛生福利部）。'],
+    leg:['📝 立法院', '<b>國家最高立法機關</b>。立法委員由人民選出，制定法律、審查預算，也監督行政院。'],
+    jud:['⚖️ 司法院', '<b>國家最高司法機關</b>。掌理審判；大法官組成<b>憲法法庭</b>，可以宣告違反憲法的法律失效。'],
+    exam:['🎓 考試院', '<b>國家最高考試機關</b>。舉辦國家考試（例：高普考），公平選拔公務人員——避免掌權的人只用自己人。它是從<b>行政權</b>分出來的。'],
+    ctrl:['🔍 監察院', '<b>國家最高監察機關</b>。對違法失職的公務人員提出<b>彈劾、糾舉</b>，並<b>審計</b>政府花錢的帳目。它是從<b>立法權</b>分出來的。'],
+    _:['✂️ 我國的五權分立', '孫中山在三權之外，把<b>考試權</b>從行政權分出來、把<b>監察權</b>從立法權分出來，成為<b>行政、立法、司法、考試、監察</b>五院。點圓圈看各院負責什麼。']
+  }
+};
+let splitMode = 0, selK = null;
+function setSplit(m){
+  splitMode = m; selK = null;
+  const L = LAYOUT[m];
+  Object.entries(L).forEach(([id, v]) => {
+    const el = document.getElementById(id);
+    if(Array.isArray(v)){ el.style.transform = `translate(${v[0]}px,${v[1]}px) scale(${v[2]})`; el.style.opacity = v[3]; el.style.pointerEvents = v[3] ? 'auto' : 'none'; el.classList.remove('sel'); }
+    else el.setAttribute('opacity', v);
+  });
+  if(LABELS[m]) Object.entries(LABELS[m]).forEach(([id, [a, b]]) => { const g = document.getElementById(id); g.querySelector('.t1').textContent = a; g.querySelector('.t2').textContent = b; });
+  document.querySelectorAll('#s2 .modebar button').forEach(b => b.classList.toggle('on', +b.dataset.m === m));
+  const I = INFO[m][m === 0 ? 'big' : '_'];
+  $('#info').innerHTML = `<h4>${I[0]}</h4>${I[1]}`;
+}
+document.querySelectorAll('#s2 .modebar button').forEach(b => b.addEventListener('click', () => { setSplit(+b.dataset.m); logEv({ type:'practice', q:'拆權力_' + b.dataset.m, ok:true }); }));
+document.querySelectorAll('#split .pw').forEach(g => g.addEventListener('click', () => {
+  const k = g.dataset.k, I = INFO[splitMode][k]; if(!I) return;
+  document.querySelectorAll('#split .pw').forEach(x => x.classList.toggle('sel', x === g));
+  $('#info').innerHTML = `<h4>${I[0]}</h4>${I[1]}`;
+}));
+setSplit(0);
+
+// ===== 3 誰來牽制 =====
+const OPTS6 = [ ['exe', '🚩 行政院'], ['leg', '📝 立法院'], ['jud', '⚖️ 司法院'], ['exam', '🎓 考試院'], ['ctrl', '🔍 監察院'], ['ppl', '👥 人民'] ];
+const CHECKS = [
+  { t:'行政院想花一大筆錢蓋新的國際機場。誰可以審查這筆錢該不該花？', a:'leg', e:'預算要經立法院審查通過，行政院不能想花就花。' },
+  { t:'立法院通過一條法律，有人認為它侵害了言論自由。誰可以審查它有沒有違憲？', a:'jud', e:'司法院大法官組成憲法法庭，可以宣告違反憲法的法律失效。' },
+  { t:'某位部長被發現違法失職。誰可以對他提出彈劾？', a:'ctrl', e:'監察院可以對違法失職的公務人員提出彈劾、糾舉。' },
+  { t:'政府要找人當公務員。怎樣避免首長只任用自己的親友？', a:'exam', e:'考試院舉辦國家考試，公平選拔公務人員。' },
+  { t:'政府去年花的錢，有沒有亂花？誰來查帳？', a:'ctrl', e:'監察院行使審計權（由所屬的審計部審核政府的決算）。' },
+  { t:'法官審案時，有高官打電話要他「判輕一點」。法官該怎麼做？', a:'jud', e:'法官依據法律獨立審判，不受任何干涉——這叫司法獨立，司法院和各級法院都要守住。' },
+  { t:'立法院通過了法律。誰負責把它執行出來？', a:'exe', e:'行政院和底下的各部會負責執行法律、推動政策。' },
+  { t:'人民覺得某位立法委員表現很差。人民可以怎麼牽制他？', a:'ppl', e:'定期選舉：用選票讓表現不好的人下台。權力來自人民，也可以被人民收回。' },
+  { t:'人民被政府處罰，覺得不合理，最後可以請誰判斷政府有沒有違法？', a:'jud', e:'可以依法提起行政訴訟，由法院（司法）判斷政府的處分有沒有違法。' }
+];
+let cq = [], cCur = -1, cDone = 0, cFirst = 0, cTry = 0;
+function startChk(){ cq = shuffle(CHECKS.map((c, i) => i)); cDone = 0; cFirst = 0; nextChk(); }
+function nextChk(){
+  if(!cq.length) return finishChk();
+  cCur = cq.shift(); cTry = 0;
+  $('#chkBox').innerHTML = `<div class="prog"><span>第 ${cDone + 1} / ${CHECKS.length} 題</span><span>一次就對 ${cFirst} 題</span></div><div class="pbar"><i style="width:${cDone / CHECKS.length * 100}%"></i></div>
+    <div class="actcard">${CHECKS[cCur].t}</div>
+    <div class="six">${OPTS6.map(([k, n]) => `<button data-k="${k}">${n}</button>`).join('')}</div>
+    <div class="fb" id="cfb" aria-live="polite"></div><div id="cnext" style="margin-top:8px"></div>`;
+  document.querySelectorAll('#chkBox .six button').forEach(b => b.addEventListener('click', () => pickChk(b)));
+}
+function pickChk(b){
+  const c = CHECKS[cCur], fb = $('#cfb');
+  if(b.disabled) return;
+  cTry++;
+  if(b.dataset.k === c.a){
+    b.classList.add('right');
+    document.querySelectorAll('#chkBox .six button').forEach(x => x.disabled = true);
+    fb.className = 'fb ok'; fb.innerHTML = (cTry === 1 ? '✔ 一次就對！' : '✔ 對了！') + c.e;
+    cDone++; if(cTry === 1) cFirst++;
+    prac('牽制_' + (cCur + 1), cTry === 1);
+    $('#cnext').innerHTML = `<button class="btn" id="cbtn">${cq.length ? '下一題 ▶' : '看結果 ▶'}</button>`;
+    $('#cbtn').addEventListener('click', nextChk);
+  } else {
+    b.classList.add('wrongpick'); b.disabled = true;
+    fb.className = 'fb no'; fb.innerHTML = '✘ 不是它。想一想：這件事是在「訂法律／管錢」、「執行」、「審判」、「考試選人」、「彈劾查帳」，還是要靠「選票」？再選一次。';
+  }
+}
+function finishChk(){
+  $('#chkBox').innerHTML = `<div class="actcard">🎉 九題全部完成！一次就對 <b>${cFirst}</b> 題。<br>記住：立法院管錢和法律、司法院判對錯和違憲、監察院彈劾和查帳、考試院公平選人、行政院負責執行——還有人民手上的選票。</div><p style="margin-top:10px"><button class="btn ghost" id="cagain">🔁 重新洗牌再練一次</button></p>`;
+  $('#cagain').addEventListener('click', startChk);
+  logEv({ type:'practice', q:'牽制_完成', ok: cFirst >= 7 });
+}
+startChk();
+
+// ===== 4 有限政府 =====
+const LIMITS = [
+  { t:'總統想自己決定：明天起，所有人的稅都加倍。', ok:false, e:'人民是依「法律」納稅（憲法第 19 條），法律要經立法院通過，總統一個人說了不算。' },
+  { t:'立法院審查行政院的預算，刪掉不必要的支出。', ok:true, e:'議決預算案是憲法交給立法院的職權（憲法第 63 條）。' },
+  { t:'某位院長覺得一個判決不公平，下令法官改判。', ok:false, e:'法官依據法律獨立審判，不受任何干涉（憲法第 80 條）。誰都不能命令法官怎麼判。' },
+  { t:'監察院對違法失職的官員提出彈劾。', ok:true, e:'彈劾、糾舉、審計是憲法交給監察院的職權。' },
+  { t:'某位首長想把「總統任期四年」改成十年，隔天就公布生效。', ok:false, e:'總統任期寫在憲法裡。修憲要立法委員四分之三出席、出席者四分之三同意提出，再經全國公民投票通過——一個人改不了。' }
+];
+let li = 0, liFirst = 0;
+function renderLim(){
+  if(li >= LIMITS.length){
+    $('#limBox').innerHTML = `<div class="actcard">🎉 五題完成！一次就對 <b>${liFirst}</b> 題。<br>政府能做什麼、不能做什麼，答案都在憲法這本「說明書」裡——這就是有限政府。</div><p style="margin-top:10px"><button class="btn ghost" id="lagain">🔁 再練一次</button></p>`;
+    $('#lagain').addEventListener('click', () => { li = 0; liFirst = 0; renderLim(); });
+    return;
+  }
+  const x = LIMITS[li];
+  $('#limBox').innerHTML = `<div class="prog"><span>第 ${li + 1} / ${LIMITS.length} 題</span><span></span></div><div class="actcard">${x.t}</div>
+    <div class="two"><button class="yes" data-v="1">✅ 憲法允許</button><button class="nope" data-v="0">❌ 憲法不允許</button></div>
+    <div class="fb" id="lfb" aria-live="polite"></div><div id="lnext" style="margin-top:8px"></div>`;
+  document.querySelectorAll('#limBox .two button').forEach(b => b.addEventListener('click', () => {
+    const ok = (b.dataset.v === '1') === x.ok;
+    document.querySelectorAll('#limBox .two button').forEach(y => y.disabled = true);
+    if(ok) liFirst++;
+    $('#lfb').className = 'fb ' + (ok ? 'ok' : 'no'); $('#lfb').innerHTML = (ok ? '✔ 對！' : '✘ 答案是「' + (x.ok ? '憲法允許' : '憲法不允許') + '」。') + x.e;
+    prac('有限政府_' + (li + 1), ok);
+    $('#lnext').innerHTML = `<button class="btn" id="lbtn">${li < LIMITS.length - 1 ? '下一題 ▶' : '看結果 ▶'}</button>`;
+    $('#lbtn').addEventListener('click', () => { li++; renderLim(); });
+  }));
+}
+renderLim();
+
+// ===== 5 章末總複習 =====
+const QUIZ = [
+  { c:'③', q:'民主國家採行權力分立，最主要的目的是什麼？', o:['讓政府做事更有效率', '避免權力集中而被濫用，並保障人民的權利', '讓總統擁有最大的權力', '減少政府機關的數量'], a:1, e:'權力分立的目的：消極在避免政府濫權，積極在保障人民的權利。' },
+  { c:'③', q:'「把國家權力分為立法、行政、司法，分別由不同機關行使，互相制衡。」提出這個主張的是誰？', o:['艾克頓', '孫中山', '孟德斯鳩', '路易十四'], a:2, e:'孟德斯鳩提出三權分立；孫中山主張五權分立；艾克頓說「權力使人腐化」。' },
+  { c:'③', q:'我國的五權分立，是在三權之外再分出兩權。下列何者正確？', o:['從行政權分出考試權、從立法權分出監察權', '從司法權分出考試權、從行政權分出監察權', '從立法權分出考試權、從司法權分出監察權', '從總統的權力分出考試權和監察權'], a:0, e:'考試權從行政權獨立（避免首長只用自己人），監察權從立法權獨立。' },
+  { c:'③', q:'行政院想編列預算蓋新的國際機場，必須經過哪一個機關審查同意？', o:['司法院', '考試院', '監察院', '立法院'], a:3, e:'立法院有議決預算案的權力，行政院不能想花就花。' },
+  { c:'③', q:'某位部長涉嫌違法失職，下列哪一個機關可以對他提出彈劾？', o:['監察院', '考試院', '行政院', '司法院'], a:0, e:'監察院行使彈劾、糾舉、審計權。' },
+  { c:'③', q:'立法院通過的法律如果被認為違反憲法，可以由誰審查、宣告失效？', o:['行政院院長', '總統', '立法院院長', '司法院大法官組成的憲法法庭'], a:3, e:'司法院大法官組成憲法法庭，可以宣告違憲的法律失效。' },
+  { c:'③', q:'為什麼政府的主要職權要寫在憲法裡？', o:['讓政府的權力沒有限制', '讓政府的權力有明確的界線，而且不會輕易改變', '讓總統可以隨時修改', '讓法律比憲法更重要'], a:1, e:'有限政府：職權寫進憲法，維持明確性與穩定性，權力有界線，人民權利才有保障。' },
+  { c:'③', q:'副班長自己訂遲到規則、自己登記、別人抗議也由他評理。這個情況最大的問題是什麼？', o:['副班長的權利太少', '訂規則、執行、判斷的權力全集中在一個人身上，沒有人牽制', '班上的規則太多', '全班同學太守規矩'], a:1, e:'三種權力集中在一個人，出錯沒有人能糾正——所以要權力分立。' },
+  { c:'①', q:'下列何者最能說明「人治」與「法治」的根本差異？', o:['統治者是否也要受法律約束', '法律條文的多寡', '有沒有設立法院', '處罰是否嚴厲'], a:0, e:'關鍵是統治者和法律誰在上面；人治也有法律、也可能有法院。' },
+  { c:'①', q:'秦朝法律又多又嚴，但皇帝不受法律限制。下列判斷何者最適當？', o:['法律很多，所以是法治', '處罰很重，所以是法治', '皇帝在法律之上，所以仍是人治', '有法律就不可能是人治'], a:2, e:'有法律不等於法治；統治者不受法律限制，就是人治。' },
+  { c:'①', q:'「其人存，則其政舉；其人亡，則其政息。」最能說明哪一種統治方式的缺點？', o:['法治', '權力分立', '人治', '依法行政'], a:2, e:'政策好壞和存廢全看統治者這個人，是人治的弱點。' },
+  { c:'①', q:'下列哪一個情況，最能展現「法律之前人人平等」？', o:['國王生日時宣布大赦天下', '市長的兒子違規停車，警察照樣依法開單', '皇帝的命令高於一切法令', '校長規定學生不准批評學校'], a:1, e:'不論身分，違法一樣依法處理。' },
+  { c:'②', q:'下列何者屬於人民的「權利」？', o:['警察開罰單', '法院判刑', '言論自由', '國稅局課稅'], a:2, e:'開罰單、判刑、課稅都是政府的權力；言論自由是人民的權利。' },
+  { c:'②', q:'下列何者屬於「消極權利」？', o:['要求政府不得任意檢查自己的信件', '請求國家賠償', '要求政府提供國民教育', '向法院提起訴訟'], a:0, e:'消極權利是要國家「不要」干涉；其他三個是要國家提供服務，屬於積極權利。' },
+  { c:'②', q:'下列何者是「權力濫用」、侵害人民權利的例子？', o:['衛生局依法檢查餐廳衛生', '法院依法判決竊盜犯有罪', '國稅局依法徵收所得稅', '警察沒有理由就把路人帶回警局關三天'], a:3, e:'沒有法律依據就限制人身自由，是權力濫用。' }
+];
+const ABCD = ['(A)', '(B)', '(C)', '(D)'];
+const SRC = { '①':'① 人治與法治', '②':'② 權力與權利', '③':'③ 權力分立' };
+$('#quizBox').innerHTML = QUIZ.map((x, i) => `<div class="q" data-i="${i}"><div class="stem">${i + 1}. ${x.q}<span class="src">${SRC[x.c]}</span></div>${x.o.map((o, j) => `<label><input type="radio" name="qz${i}" value="${j}">${ABCD[j]} ${o}</label>`).join('')}<div class="fb"></div></div>`).join('');
+$('#submitQuiz').addEventListener('click', () => {
+  const qs = document.querySelectorAll('#quizBox .q'); let score = 0, answered = 0; const wrong = [], bySrc = {};
+  qs.forEach((q, i) => {
+    const x = QUIZ[i], sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+    q.classList.remove('correct', 'wrong'); if(sel) answered++;
+    if(sel && +sel.value === x.a){ score++; q.classList.add('correct'); fb.className = 'fb ok'; fb.innerHTML = '✔ 正確！' + x.e; }
+    else { wrong.push(i + 1); bySrc[x.c] = (bySrc[x.c] || 0) + 1; q.classList.add('wrong'); fb.className = 'fb no'; fb.innerHTML = '✘ 正解：' + ABCD[x.a] + '。' + x.e; }
+  });
+  logEv({ type:'quiz', score, total:qs.length, wrong });
+  cloudSend({ type:'章末總複習', detail: wrong.length ? '錯第 ' + wrong.join('、') + ' 題' : '全對', score: score + '/' + qs.length });
+  const r = $('#quizResult');
+  if(answered < qs.length){ r.className = 'bad'; r.textContent = `還有 ${qs.length - answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`; }
+  else if(score >= 13){ r.className = 'good'; r.textContent = `🎉 ${score} / ${qs.length}！第 3 章「法治與權力分立」你已經掌握了。`; }
+  else if(score >= 10){ r.className = 'soso'; r.textContent = `${score} / ${qs.length}。看一下錯的題目解析，再回去練錯最多的那一課。`; }
+  else { r.className = 'bad'; r.textContent = `${score} / ${qs.length}。建議從第 ① 課開始，把互動練習都玩一遍再回來。`; }
+  const LINK = { '①':'八上3-1_人治與法治.html', '②':'八上3-2_權力與權利.html', '③':'#' };
+  const ws = Object.entries(bySrc).sort((a, b) => b[1] - a[1]);
+  $('#weak').innerHTML = ws.length ? '📌 錯題分布：' + ws.map(([c, n]) => c === '③' ? `${SRC[c]}（${n} 題，就在這一課）` : `<a href="${LINK[c]}">${SRC[c]}</a>（${n} 題）`).join('、') : '';
+  r.scrollIntoView({ behavior:'smooth', block:'center' });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國二公民｜人治與法治：國王大，還是法律大？</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff; --border:#e5e7eb; --radius:14px;
+    --blue:#2563eb; --blue-soft:#dbeafe;
+    --green:#16a34a; --green-soft:#dcfce7; --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --man:#b91c1c; --man-soft:#fdecec; --man-mid:#f4b4b4;
+    --law:#0f766e; --law-soft:#e0f5f1; --law-mid:#8fd3c7;
+    --accent:#134e4a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  [hidden]{display:none !important;}
+  body{font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:960px; margin:0 auto; padding:24px 16px 80px;}
+  header.hero{background:linear-gradient(120deg,#7f1d1d 0%,#9f1239 30%,#115e59 70%,#0f766e 100%); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.2); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.55rem; margin-bottom:8px; line-height:1.4;}
+  header.hero p{opacity:.95; font-size:.95rem;}
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:110px; border:1px solid var(--border); background:var(--card); color:var(--ink); padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--law);}
+  nav.tabs button.active{background:var(--law); border-color:var(--law); color:#fff; font-weight:bold;}
+  section.panel{display:none;} section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--accent); margin-bottom:10px;}
+  .card h3{font-size:1rem; margin:16px 0 6px;}
+  .card ul,.card ol{margin-left:1.3em;}
+  .card p + p{margin-top:8px;}
+  .goal{background:var(--law-soft); border:none;}
+  .sub{color:var(--sub); font-size:.9rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:9px 14px; margin:10px 0; font-size:.92rem; color:#1e3a8a;}
+  .warn{background:var(--amber-soft); border-radius:8px; padding:9px 14px; margin:10px 0; font-size:.92rem; color:#7c2d12;}
+  .tag-man,.tag-law{display:inline-block; border-radius:99px; padding:0 10px; font-size:.88rem; font-weight:bold;}
+  .tag-man{background:var(--man-soft); color:var(--man);} .tag-law{background:var(--law-soft); color:var(--law);}
+  b.man{color:var(--man);} b.law{color:var(--law);}
+  mark{background:#fef08a; padding:0 2px; border-radius:3px; color:inherit;}
+  .btn{display:inline-block; background:var(--law); color:#fff; border:none; border-radius:10px; padding:10px 18px; font-size:.95rem; cursor:pointer; font-family:inherit;}
+  .btn.ghost{background:#fff; color:var(--law); border:1px solid var(--law);}
+  .btn:disabled{opacity:.45; cursor:default;}
+  .bigbtn{display:block; width:100%; background:var(--law); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:10px;}
+
+  /* 兩國面板 */
+  .countries{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0;}
+  .country{border-radius:12px; padding:12px 14px; border:2px solid;}
+  .country.man{border-color:var(--man-mid); background:var(--man-soft);}
+  .country.law{border-color:var(--law-mid); background:var(--law-soft);}
+  .country h4{font-size:1rem;}
+  .country .motto{font-size:.82rem; color:var(--sub);}
+  .country .shop{font-size:2rem; line-height:1.3; margin-top:4px;}
+  .country .status{font-size:.88rem; min-height:3.2em;}
+  .country ul{font-size:.9rem; margin:6px 0 0 1.2em;}
+  .meter-l{font-size:.78rem; color:var(--sub); display:flex; justify-content:space-between;}
+  .meter{height:12px; background:#fff; border-radius:6px; overflow:hidden; border:1px solid var(--border);}
+  .meter i{display:block; height:100%; transition:width .7s;}
+  .country.man .meter i{background:var(--man);} .country.law .meter i{background:var(--law);}
+
+  /* 開店記 */
+  .timeline{display:flex; gap:6px; margin:6px 0 12px;}
+  .timeline span{flex:1; height:8px; border-radius:4px; background:var(--border);}
+  .timeline span.done{background:var(--law);} .timeline span.now{background:var(--amber);}
+  .event{background:#fff; border:1px solid var(--border); border-left:6px solid var(--amber); border-radius:12px; padding:14px 16px;}
+  .event .yr{font-size:.85rem; color:var(--amber); font-weight:bold;}
+  .event h3{margin:2px 0 4px; font-size:1.1rem;}
+  .outs{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; margin-top:10px;}
+  .out{border:2px solid var(--border); border-radius:12px; padding:12px 14px; background:#fff; transition:background .25s, border-color .25s;}
+  .out p{font-size:.95rem; margin-bottom:8px;}
+  .out .pick{display:flex; gap:6px; flex-wrap:wrap;}
+  .out .pick button{flex:1 1 120px; font-family:inherit; font-size:.9rem; padding:8px; border-radius:8px; cursor:pointer; border:1px solid; background:#fff;}
+  .out .pick .bm{border-color:var(--man); color:var(--man);} .out .pick .bl{border-color:var(--law); color:var(--law);}
+  .out .pick .bm:hover{background:var(--man-soft);} .out .pick .bl:hover{background:var(--law-soft);}
+  .out .who{display:none; font-weight:bold; font-size:.9rem; margin-bottom:4px;}
+  .out.is-man{border-color:var(--man); background:var(--man-soft);} .out.is-law{border-color:var(--law); background:var(--law-soft);}
+  .out.is-man .who,.out.is-law .who{display:block;}
+  .out.is-man .who{color:var(--man);} .out.is-law .who{color:var(--law);}
+  .out.is-man .pick,.out.is-law .pick{display:none;}
+  .shake{animation:shake .35s;}
+  @keyframes shake{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .fb{margin-top:10px; padding:10px 14px; border-radius:10px; font-size:.93rem; display:none;}
+  .fb.ok{display:block; background:var(--green-soft); color:#14532d;} .fb.no{display:block; background:var(--red-soft); color:#7f1d1d;}
+
+  /* 比較表 */
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.cmp{border-collapse:collapse; width:100%; min-width:520px; font-size:.92rem;}
+  table.cmp th,table.cmp td{border:1px solid var(--border); padding:8px 10px; vertical-align:top;}
+  table.cmp th{background:#f3f4f6; font-size:.88rem; text-align:left;}
+  table.cmp th.man{background:var(--man-soft); color:var(--man);} table.cmp th.law{background:var(--law-soft); color:var(--law);}
+  table.cmp td.k{font-weight:bold; background:#fafafa; width:24%;}
+  table.cmp tr.locked td{color:#9ca3af; font-style:italic;}
+  table.cmp tr.new td{animation:glow 1.4s;}
+  @keyframes glow{from{background-color:#fef08a;} to{background-color:rgba(254,240,138,0);}}
+  .defs{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; margin:10px 0;}
+  .def{border-radius:12px; padding:12px 16px; border:2px solid;}
+  .def.man{border-color:var(--man-mid); background:var(--man-soft);} .def.law{border-color:var(--law-mid); background:var(--law-soft);}
+  .def h4{font-size:1.05rem; margin-bottom:4px;} .def.man h4{color:var(--man);} .def.law h4{color:var(--law);}
+  .def ul{margin-left:1.2em; font-size:.95rem;}
+
+  /* 誰在上面 模型 */
+  .modebar{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 10px;}
+  .modebar button{flex:1 1 160px; font-family:inherit; font-size:.95rem; padding:9px 10px; border-radius:99px; cursor:pointer; border:2px solid var(--border); background:#fff; color:var(--ink);}
+  .modebar button.on-man{border-color:var(--man); background:var(--man); color:#fff; font-weight:bold;}
+  .modebar button.on-law{border-color:var(--law); background:var(--law); color:#fff; font-weight:bold;}
+  .modelwrap{display:grid; grid-template-columns:1fr; gap:12px; align-items:start;}
+  @media (min-width:760px){ .modelwrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);} .modelwrap h3{margin-top:10px;} }
+  .svgbox{background:#fbfcfe; border:1px solid var(--border); border-radius:12px; overflow:hidden;}
+  .svgbox svg{display:block; width:100%; max-width:520px; height:auto; margin:0 auto;}
+  .node{transition:transform .9s cubic-bezier(.5,0,.2,1);}
+  .node rect{transition:fill .5s, stroke .5s;}
+  .node .nt{font-size:19px; font-weight:bold; fill:#1f2937;}
+  .node .ns{font-size:13.5px; fill:#6b7280;}
+  .arrows{transition:opacity .5s;}
+  .arrows.off{opacity:0; pointer-events:none;}
+  .arr{fill:none; stroke-width:3;}
+  .arr.man{stroke:#b91c1c;} .arr.law{stroke:#0f766e;} .arr.blue{stroke:#2563eb;} .arr.gray{stroke:#9ca3af;}
+  .arr.dash{stroke-dasharray:8 6;}
+  .al{font-size:15px;} .al.man{fill:#b91c1c;}
+  @media (max-width:480px){ .al{font-size:17px;} .node .ns{font-size:15px;} .node .nt{font-size:20px;} } .al.law{fill:#0f766e;} .al.blue{fill:#2563eb;} .al.gray{fill:#6b7280;}
+  .arr.flash{animation:flash 1.6s ease;}
+  @keyframes flash{0%,100%{stroke-width:3;} 30%{stroke-width:8;} 65%{stroke-width:5;}}
+  .node rect.pulse{animation:pulse 1.4s ease;}
+  @keyframes pulse{0%,100%{stroke-width:2.5;} 40%{stroke-width:7;}}
+  .token{font-size:24px;}
+  .bump{animation:bump .5s ease 2;}
+  @keyframes bump{0%,100%{opacity:1;} 50%{opacity:.25;}}
+  .cap{font-size:.93rem; margin-top:8px; padding:8px 12px; border-radius:8px;}
+  .cap.man{background:var(--man-soft); color:#7f1d1d;} .cap.law{background:var(--law-soft); color:#134e4a;}
+  .tests{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px; margin:10px 0;}
+  .tests button{font-family:inherit; font-size:.93rem; padding:10px 8px; border-radius:10px; border:1px solid var(--border); background:#fff; cursor:pointer; color:var(--ink);}
+  .tests button:hover{border-color:var(--accent); background:#f8fafc;}
+  .result{min-height:3.4em; border-radius:10px; padding:10px 14px; font-size:.95rem; background:#f3f4f6;}
+  .result.man{background:var(--man-soft); color:#7f1d1d;} .result.law{background:var(--law-soft); color:#134e4a;}
+
+  /* 法治三問 */
+  .q3{display:grid; gap:8px; margin:10px 0;}
+  .q3 .row{display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#fff;}
+  .q3 .qt{flex:1 1 200px; font-weight:bold;}
+  .seg{display:flex; gap:6px; flex:1 1 300px;}
+  .seg button{flex:1; font-family:inherit; font-size:.9rem; padding:7px 8px; border-radius:8px; border:1px solid var(--border); background:#fff; cursor:pointer; color:var(--ink);}
+  .seg button.sel-law{background:var(--law); color:#fff; border-color:var(--law);}
+  .seg button.sel-man{background:var(--man); color:#fff; border-color:var(--man);}
+  .verdict{border-radius:10px; padding:12px 14px; font-size:.97rem; background:#f3f4f6; margin-top:8px;}
+  .verdict.law{background:var(--law-soft); color:#134e4a;} .verdict.man{background:var(--man-soft); color:#7f1d1d;}
+  .presets{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:6px 0; font-size:.9rem;}
+  .presets button{font-family:inherit; font-size:.86rem; padding:5px 12px; border-radius:99px; border:1px dashed var(--accent); background:#fff; color:var(--accent); cursor:pointer;}
+
+  /* 選擇題 */
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--law); background:#f0fdfa;} .q input{margin-right:8px;}
+  .q.correct{border-color:var(--green);} .q.wrong{border-color:var(--red);}
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;} #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;} #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+
+  /* 換國王實驗 */
+  .simctl{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0;}
+  .ticker{font-size:.88rem; background:#111827; color:#e5e7eb; border-radius:8px; padding:7px 12px; margin:8px 0; min-height:2.4em;}
+  .chart h4{font-size:.98rem; margin:12px 0 4px;}
+  .chart svg{display:block; width:100%; height:auto; background:#fff; border:1px solid var(--border); border-radius:10px;}
+  .stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:6px; margin:6px 0 4px;}
+  .stats div{background:#f9fafb; border:1px solid var(--border); border-radius:8px; padding:6px 10px; font-size:.82rem; color:var(--sub);}
+  .stats div b{display:block; font-size:1.1rem; color:var(--ink);}
+  .legend{display:flex; flex-wrap:wrap; gap:4px 14px; font-size:.84rem; color:var(--sub); margin:8px 0;}
+  .legend i{display:inline-block; width:14px; height:11px; border-radius:2px; margin-right:4px; vertical-align:-1px; border:1px solid rgba(0,0,0,.12);}
+  .points{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:10px;}
+  .points div{border:1px solid var(--border); border-radius:12px; padding:12px 14px; background:#fcfcfd; font-size:.94rem;}
+  .points div h4{font-size:1rem; margin-bottom:4px; color:var(--accent);}
+  blockquote{border-left:4px solid var(--law-mid); padding:2px 12px; margin:6px 0; color:#334155; background:#f8fafc;}
+
+  /* 判斷卡 */
+  .sorter{border:1px solid var(--border); border-radius:12px; padding:16px; background:#fff;}
+  .sorter .prog{font-size:.85rem; color:var(--sub); display:flex; justify-content:space-between;}
+  .sorter .pbar{height:8px; background:var(--border); border-radius:4px; overflow:hidden; margin:4px 0 12px;}
+  .sorter .pbar i{display:block; height:100%; background:var(--law); transition:width .4s;}
+  .scard{font-size:1.06rem; padding:16px 18px; border-radius:12px; background:#f9fafb; border:1px dashed #cbd5e1; min-height:5em;}
+  .sbtns{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;}
+  .sbtns button{font-family:inherit; font-size:1.02rem; padding:12px; border-radius:12px; cursor:pointer; border:2px solid; background:#fff; font-weight:bold;}
+  .sbtns .bm{border-color:var(--man); color:var(--man);} .sbtns .bl{border-color:var(--law); color:var(--law);}
+  .sbtns .bm:hover{background:var(--man-soft);} .sbtns .bl:hover{background:var(--law-soft);}
+  .sbtns button:disabled{opacity:.4; cursor:default;}
+  .qbadge{display:inline-block; font-size:.8rem; background:var(--amber-soft); color:#92400e; border-radius:99px; padding:0 9px; margin-left:4px;}
+  .hintbox{font-size:.88rem; color:var(--sub); margin-top:8px;}
+  .tf{display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin:8px 0; background:#fff;}
+  .tf .st{flex:1 1 300px;}
+  .tf .tfb{display:flex; gap:6px;}
+  .tf .tfb button{font-family:inherit; width:48px; height:40px; border-radius:8px; border:1px solid var(--border); background:#fff; cursor:pointer; font-size:1.1rem; color:var(--ink);}
+  .tf .exp{flex-basis:100%; font-size:.9rem; display:none; padding:8px 12px; border-radius:8px;}
+  .tf.ok{border-color:var(--green);} .tf.no{border-color:var(--red);}
+  .tf.ok .exp{display:block; background:var(--green-soft); color:#14532d;} .tf.no .exp{display:block; background:var(--red-soft); color:#7f1d1d;}
+
+  details summary{cursor:pointer;}
+  .nextlinks{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px; margin-top:8px;}
+  .nextlinks a{display:block; text-decoration:none; color:inherit; border:1px solid var(--border); border-radius:12px; padding:12px 14px; background:#fff;}
+  .nextlinks a:hover{border-color:var(--law); background:#f0fdfa;}
+  .nextlinks a b{color:var(--law);}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:560px){
+    nav.tabs button{min-width:30%; font-size:.86rem; padding:8px 4px;}
+    header.hero h1{font-size:1.3rem;} header.hero{padding:22px 18px;}
+    .card{padding:16px 15px;} .countries{gap:6px;} .country{padding:10px;}
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 翰林版八上 第3章 法治與權力分立 ① · 公Bf-Ⅳ-1</span>
+  <h1>人治與法治：國王大，還是法律大？</h1>
+  <p>人治、法治只差一個字。很多人以為差在「有沒有法律」——其實人治的國家也有法律，還可能又多又嚴。真正的差別是一個問題：<b>統治者和法律，誰在上面？</b>這一課先讓你到兩個國家各開一家店，親身感受差在哪，再把感受變成課本上的定義。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1 兩國開店記</button>
+  <button data-t="s2">2 誰在上面？</button>
+  <button data-t="s3">3 換一個國王</button>
+  <button data-t="s4">4 判斷練習</button>
+  <button data-t="s5">🏁 小測驗</button>
+</nav>
+
+<!-- ═══════════ 1 兩國開店記 ═══════════ -->
+<section class="panel show" id="s1">
+  <div class="card goal">
+    <h2>🎯 這一課要學會</h2>
+    <ul>
+      <li>說出人治和法治差在哪：<b>統治者要不要守法</b>、<b>法律是用來做什麼的</b>、<b>法律怎麼改</b></li>
+      <li>知道「人治也有法律」——有法律，不等於法治</li>
+      <li>看到一個生活或歷史的例子，能判斷它比較像人治還是法治</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🧋 兩國開店記</h2>
+    <p>你長大了，存了一筆錢，想開一家珍珠奶茶店。有兩個國家可以選：</p>
+    <div class="countries">
+      <div class="country man">
+        <h4>👑 王說了算國</h4>
+        <div class="motto">國王的話就是規則</div>
+        <div class="shop" id="shopMan">🏪</div>
+        <div class="status" id="stMan">店還沒開</div>
+        <div class="meter-l"><span>安心指數</span><span id="mvMan">100</span></div>
+        <div class="meter"><i id="mMan" style="width:100%"></i></div>
+      </div>
+      <div class="country law">
+        <h4>⚖️ 法說了算國</h4>
+        <div class="motto">寫在法律裡的才是規則，總統也要守</div>
+        <div class="shop" id="shopLaw">🏪</div>
+        <div class="status" id="stLaw">店還沒開</div>
+        <div class="meter-l"><span>安心指數</span><span id="mvLaw">100</span></div>
+        <div class="meter"><i id="mLaw" style="width:100%"></i></div>
+      </div>
+    </div>
+    <p>接下來六年，<b>兩個國家會發生一模一樣的事</b>，結果卻不一樣。每一年會出現兩種結果，請你判斷：<b>哪個結果發生在哪個國家？</b></p>
+    <div class="timeline" id="tl"></div>
+    <div id="game"></div>
+  </div>
+
+  <div class="card">
+    <h2>📋 比一比：兩個國家差在哪</h2>
+    <p class="sub">每過完一年，表格就多解鎖一列。六列都解鎖，就是一張人治／法治比較表。</p>
+    <div class="tblbox">
+      <table class="cmp">
+        <thead><tr><th>比一比</th><th class="man">👑 王說了算國（人治）</th><th class="law">⚖️ 法說了算國（法治）</th></tr></thead>
+        <tbody id="cmpBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" id="defCard" hidden>
+    <h2>📖 六年過去了：這就是課本說的</h2>
+    <p id="endStory"></p>
+    <div class="defs">
+      <div class="def man"><h4>👑 人治</h4><ul>
+        <li>統治者<mark>站在法律上面</mark>，自己不必守法</li>
+        <li>法律是統治者用來<mark>管理、限制人民的工具</mark></li>
+        <li>法律<mark>隨統治者的喜好或更替而改變</mark></li>
+      </ul></div>
+      <div class="def law"><h4>⚖️ 法治</h4><ul>
+        <li>法律最主要的功能是<mark>保障人民的權利</mark></li>
+        <li><mark>政府與人民都要遵守法律</mark>：政府依法行政，法律之前人人平等</li>
+        <li>法律由<mark>人民選出的代表依照程序</mark>制定、修改</li>
+      </ul></div>
+    </div>
+    <p>等一下！如果王說了算國的國王是個<b>好國王</b>呢？說不定他會幫你，日子比法說了算國還好？這個問題很重要，我們用實驗來回答。</p>
+    <p style="margin-top:10px"><button class="btn" data-go="s2">先看「誰在上面」一張圖 ▶</button> <button class="btn ghost" data-go="s3">直接去「換一個國王」做實驗 ▶</button> <button class="btn ghost" id="replay">🔁 再玩一次</button></p>
+  </div>
+</section>
+
+<!-- ═══════════ 2 誰在上面 ═══════════ -->
+<section class="panel" id="s2">
+  <div class="card">
+    <h2>⚖️ 誰在上面？一張圖看懂</h2>
+    <p>課綱要你從「<b>統治者和法律的關係</b>」分辨人治和法治。按下面兩個按鈕切換，看看三個角色怎麼移動。</p>
+    <div class="modebar"><button id="btnMan" class="on-man">👑 人治的排法</button><button id="btnLaw">⚖️ 法治的排法</button></div>
+    <div class="modelwrap">
+      <div class="svgbox">
+        <svg id="model" viewBox="0 0 440 420" role="img" aria-label="統治者、法律、人民三者的關係圖">
+          <defs>
+            <marker id="mkMan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#b91c1c"/></marker>
+            <marker id="mkLaw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0f766e"/></marker>
+            <marker id="mkBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#2563eb"/></marker>
+            <marker id="mkGray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#9ca3af"/></marker>
+          </defs>
+          <!-- 人治的箭頭 -->
+          <g class="arrows" id="aMan">
+            <path id="a1" class="arr man" d="M220 86 L220 164" marker-end="url(#mkMan)"/>
+            <text x="234" y="118" class="al man">想寫就寫</text><text x="234" y="139" class="al man">想改就改</text>
+            <path id="a2" class="arr man" d="M220 234 L220 312" marker-end="url(#mkMan)"/>
+            <text x="234" y="266" class="al man">拿來管人民</text><text x="234" y="287" class="al man">罰人民</text>
+            <path id="a3" class="arr gray dash" d="M123 206 C 50 196, 50 64, 138 54" marker-end="url(#mkGray)"/>
+            <text x="70" y="142" text-anchor="middle" font-size="30" fill="#dc2626" font-weight="bold">✘</text>
+            <text x="112" y="108" text-anchor="middle" class="al gray">法律</text><text x="112" y="129" text-anchor="middle" class="al gray">管不到</text><text x="112" y="150" text-anchor="middle" class="al gray">統治者</text>
+          </g>
+          <!-- 法治的箭頭 -->
+          <g class="arrows off" id="aLaw">
+            <path id="b1" class="arr law" d="M180 86 L110 300" marker-end="url(#mkLaw)"/>
+            <text x="136" y="180" text-anchor="end" class="al law">管政府</text><text x="136" y="201" text-anchor="end" class="al law">（依法行政）</text>
+            <path id="b2" class="arr law" d="M252 86 L322 300" marker-end="url(#mkLaw)"/>
+            <text x="277" y="198" text-anchor="end" class="al law">保障人民權利</text><text x="277" y="219" text-anchor="end" class="al law">也要人民守法</text>
+            <path id="b3" class="arr blue" d="M372 300 L302 86" marker-end="url(#mkBlue)"/>
+            <text x="344" y="170" class="al blue">人民選代表</text><text x="344" y="191" class="al blue">依程序立法</text>
+            <text x="220" y="404" text-anchor="middle" class="al" fill="#334155">政府和人民，都站在法律下面</text>
+          </g>
+          <!-- 三個角色 -->
+          <g class="node" id="nLaw"><rect x="-95" y="-32" width="190" height="64" rx="14" stroke-width="2.5"/><text class="nt" y="-3" text-anchor="middle"></text><text class="ns" y="19" text-anchor="middle"></text></g>
+          <g class="node" id="nRuler"><rect x="-80" y="-32" width="160" height="64" rx="14" stroke-width="2.5"/><text class="nt" y="-3" text-anchor="middle"></text><text class="ns" y="19" text-anchor="middle"></text></g>
+          <g class="node" id="nPeople"><rect x="-80" y="-32" width="160" height="64" rx="14" stroke-width="2.5"/><text class="nt" y="-3" text-anchor="middle"></text><text class="ns" y="19" text-anchor="middle"></text></g>
+        </svg>
+      </div>
+      <div>
+        <p class="cap man" id="modelCap"></p>
+        <h3>🧪 按按看：發生這些事的時候會怎樣？</h3>
+        <div class="tests">
+          <button data-test="light">🚦 統治者闖紅燈</button>
+          <button data-test="tax">💰 統治者想多收稅</button>
+          <button data-test="talk">📢 有人批評統治者</button>
+          <button data-test="swap">🔄 換一個統治者</button>
+        </div>
+        <div class="result" id="testRes" aria-live="polite">先選上面一種排法，再按一個情況。兩種排法都試試看，比較結果。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 課本定義（考試一定考）</h2>
+    <div class="defs">
+      <div class="def man"><h4>👑 人治</h4><ul>
+        <li>由統治者的意志決定一切，統治者<mark>站在法律上面</mark>，不必遵守法律</li>
+        <li>法律是統治者用來<mark>管理、限制人民的工具</mark></li>
+        <li>法律<mark>隨統治者的喜好或更替而改變</mark></li>
+      </ul></div>
+      <div class="def law"><h4>⚖️ 法治</h4><ul>
+        <li>法律最主要的功能是<mark>保障人民的權利</mark></li>
+        <li><mark>政府與人民都要遵守法律</mark>：政府依法行政，法律之前人人平等</li>
+        <li>法律要由<mark>人民選出的代表依照程序</mark>制定、修改，不能任意改變</li>
+      </ul></div>
+    </div>
+    <div class="warn">⚠ <b>陷阱一：「人治就是沒有法律」✘</b>——人治也有法律（還記得王說了算國那條「不准批評國王」嗎？）。差別在於法律<b>管不管得到統治者</b>、是在<b>保護誰</b>。</div>
+    <div class="warn">⚠ <b>陷阱二：「法律又多又嚴，就是法治」✘</b>——秦朝的法律又多又嚴，但皇帝不受法律限制，還是人治。這只是統治者「拿法律來管人民」（有些書叫<b>以法而治</b>），不是讓法律管住所有人的法治。</div>
+    <div class="warn">⚠ <b>陷阱三：「法治的法律不能改」✘</b>——法律可以改，只是要經過人民選出的代表、照著程序改，不能統治者一句話就改。</div>
+  </div>
+
+  <div class="card">
+    <h2>🔑 法治三問：判斷的萬用鑰匙</h2>
+    <p>碰到任何一個國家（或一個班級），問三個問題。<b>三題都選左邊才是法治；只要有一題選到右邊，就不是真正的法治。</b></p>
+    <div class="q3" id="q3"></div>
+    <div class="presets">試試看：<button data-p="qin">秦朝</button><button data-p="tw">今天的臺灣</button><button data-p="cls">班長自己訂班規的班級</button><button data-p="half">「統治者守法，但法律都是他一個人訂的」</button></div>
+    <div class="verdict" id="q3v" aria-live="polite">三題都選好，就會出現判斷結果。</div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 隨堂三題</h2>
+    <div id="prac2"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 3 換一個國王 ═══════════ -->
+<section class="panel" id="s3">
+  <div class="card">
+    <h2>🎲 換一個國王：人治是在賭運氣</h2>
+    <p>你可能會想：「王說了算國如果遇到一個<b>好國王</b>，不是很好嗎？說不定比吵吵鬧鬧的法說了算國還有效率！」</p>
+    <p>來做實驗。讓兩個國家各過 60 年，看人民的<b>安心指數</b>（權利有沒有保障、規則能不能預測）怎麼變化。</p>
+    <div class="countries">
+      <div class="country man"><h4>👑 王說了算國的規則</h4><ul>
+        <li>國王做到過世才換人，一任 6～20 年</li>
+        <li>下一任是誰看運氣：😇 明君、🙂 普通、😵 昏君、😈 暴君</li>
+        <li>國王做久了，可能慢慢變壞</li>
+      </ul></div>
+      <div class="country law"><h4>⚖️ 法說了算國的規則</h4><ul>
+        <li>每 4 年選一次總統，最多連任一次</li>
+        <li>總統有好有壞，政策各有不同</li>
+        <li>但每一任都要守同一套憲法和法律</li>
+      </ul></div>
+    </div>
+    <div class="simctl"><button class="btn" id="simRun">▶ 跑 60 年歷史</button><button class="btn ghost" id="simFast">⏩ 直接看結果</button></div>
+    <div class="ticker" id="ticker" aria-live="polite">按「跑 60 年歷史」開始。每跑一次，歷史都不一樣。</div>
+    <div class="chart"><h4>👑 王說了算國的安心指數</h4><svg id="chMan" viewBox="0 0 640 200"></svg><div class="stats" id="statMan"></div></div>
+    <div class="chart"><h4>⚖️ 法說了算國的安心指數</h4><svg id="chLaw" viewBox="0 0 640 200"></svg><div class="stats" id="statLaw"></div></div>
+    <div class="legend">
+      <span><i style="background:#dcfce7"></i>😇 明君</span><span><i style="background:#f1f5f9"></i>🙂 普通國王</span><span><i style="background:#fef3c7"></i>😵 昏君</span><span><i style="background:#fee2e2"></i>😈 暴君</span><span>⚠ 國王變壞了</span><span><i style="background:#f0fdfa"></i>🗳️ 一任總統</span>
+    </div>
+    <div class="note" id="simAcc">多跑幾次，比一比每次的結果。</div>
+  </div>
+
+  <div class="card">
+    <h2>💡 實驗告訴我們什麼</h2>
+    <div class="points">
+      <div><h4>🎰 人治＝賭運氣</h4>遇到明君，日子可能很好，甚至比法說了算國還好；遇到昏君、暴君就很慘。問題是：人民<b>沒辦法選國王，也沒辦法換掉他</b>。</div>
+      <div><h4>😈 好國王也會變</h4>英國學者艾克頓爵士說：
+        <blockquote>權力使人腐化，絕對的權力使人絕對腐化。</blockquote>
+        像唐玄宗，前期用心治國，開創「開元之治」；後期沉迷享樂、重用奸臣，最後爆發安史之亂。</div>
+      <div><h4>📜 人存政舉，人亡政息</h4>《中庸》說：
+        <blockquote>其人存，則其政舉；其人亡，則其政息。</blockquote>
+        人在，好政策推得動；人一走，政策就停了。好壞全看統治者這個人，這是人治最大的弱點。</div>
+      <div><h4>⚖️ 法治靠制度，不靠運氣</h4>法說了算國的總統也有好有壞，政策也會被罵、會吵架。但壞總統能造成的傷害<b>有上限</b>：他也要守法、有法院可以告他，而且幾年後人民可以投票換人。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 隨堂兩題</h2>
+    <div id="prac3"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 4 判斷練習 ═══════════ -->
+<section class="panel" id="s4">
+  <div class="card">
+    <h2>🔍 人治還是法治？16 張情境卡</h2>
+    <p>一次一張，判斷它比較像 <span class="tag-man">👑 人治</span> 還是 <span class="tag-law">⚖️ 法治</span>。答錯的卡過幾張會再出現。卡住的時候，用「法治三問」想一想。</p>
+    <div class="sorter" id="sorter"></div>
+  </div>
+  <div class="card">
+    <h2>🕵️ 抓錯：這句話對不對？</h2>
+    <p>考卷最愛的陷阱都在這裡。對的按 ○，錯的按 ✕。</p>
+    <div id="tfBox"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 5 小測驗 ═══════════ -->
+<section class="panel" id="s5">
+  <div class="card">
+    <details open>
+      <summary><b>📋 考前一張表（點標題可收合）</b></summary>
+      <div class="tblbox">
+        <table class="cmp">
+          <thead><tr><th>比一比</th><th class="man">👑 人治</th><th class="law">⚖️ 法治</th></tr></thead>
+          <tbody>
+            <tr><td class="k">統治者和法律</td><td>統治者在法律上面</td><td>法律在統治者上面</td></tr>
+            <tr><td class="k">統治者要守法嗎</td><td>不必</td><td>要：政府依法行政、法律之前人人平等</td></tr>
+            <tr><td class="k">法律的功能</td><td>統治者管理、限制人民的工具</td><td>保障人民權利，也約束政府和人民</td></tr>
+            <tr><td class="k">法律怎麼改</td><td>隨統治者的喜好、更替而改變</td><td>人民選出的代表依程序制定、修改</td></tr>
+            <tr><td class="k">人民的權利</td><td>看統治者賢不賢明（賭運氣）</td><td>有制度保障</td></tr>
+            <tr><td class="k">一句話記</td><td>人存政舉，人亡政息</td><td>好人壞人上台，都守同一套規則</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sub">三個陷阱：人治也有法律 ／ 法律多又嚴 ≠ 法治 ／ 法治的法律可以改，但要照程序。</p>
+    </details>
+  </div>
+
+  <div class="card" id="quizCard">
+    <h2>🏁 小測驗（10 題）</h2>
+    <p class="sub">全部作答後按「交卷」，會顯示每一題的解析。</p>
+    <div id="quizBox"></div>
+    <button class="bigbtn" id="submitQuiz">交卷</button>
+    <div id="quizResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>➡️ 下一步：法治要靠什麼撐住？</h2>
+    <p>知道法治比較好還不夠。要讓「法律管得到統治者」，還要搞懂兩件事：</p>
+    <div class="nextlinks">
+      <a href="八上3-2_權力與權利.html"><b>② 權力與權利 ▶</b><br>政府手上的「權力」和你手上的「權利」，只差一個字，差在哪？</a>
+      <a href="八上3-3_權力分立.html"><b>③ 權力分立 ▶</b><br>為什麼權力不能全放在一個人手上？三權、五權怎麼互相牽制？</a>
+    </div>
+  </div>
+</section>
+
+<footer>依 108 課綱（公Bf-Ⅳ-1 法治與人治的差異）與翰林版八上第 3 章的架構原創編寫，不是出版社教材；用語若和課本不同，以課本為準。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（只存在這台瀏覽器）=====
+const LOG_KEY = "study_log_v1", CH = "公民八上3-1 人治與法治";
+function logEv(ev){ try{ const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); a.push(Object.assign({ t: Date.now(), ch: CH }, ev)); localStorage.setItem(LOG_KEY, JSON.stringify(a)); }catch(e){} }
+const CLOUD_URL = (function(){ try{ return localStorage.getItem("cloud_url_v1") || ""; }catch(e){ return ""; } })();
+function cloudSend(row){ if(!CLOUD_URL) return; const body = JSON.stringify(Object.assign({ ch: CH }, row)); try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} } }
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){ const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7); logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{ if(document.visibilityState !== "visible") return; studySec += 30; try{ const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); const v = a.find(e => e.vid === vid); if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); } }catch(e){} }, 30000); })();
+window.addEventListener("pagehide", ()=>{ const min = Math.round(studySec / 6) / 10; if(min < 0.5 && pracCount === 0) return; cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" }); studySec = 0; pracCount = 0; pracOk = 0; });
+function prac(q, ok){ logEv({ type:'practice', q, ok }); pracCount++; if(ok) pracOk++; }
+
+const $ = s => document.querySelector(s);
+function shuffle(a){ for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function showTab(id){ document.querySelectorAll('nav.tabs button').forEach(b => b.classList.toggle('active', b.dataset.t === id)); document.querySelectorAll('section.panel').forEach(p => p.classList.toggle('show', p.id === id)); window.scrollTo({ top:0, behavior:'smooth' });
+  if(id === 's3'){ try{ if(!simCur) drawEmpty(); }catch(e){} } } // 第一次看到圖表頁時，依實際寬度重畫空白圖
+document.querySelectorAll('nav.tabs button').forEach(b => b.addEventListener('click', () => showTab(b.dataset.t)));
+document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => showTab(b.dataset.go)));
+
+// 小工具：即時對答案的選擇題
+function mountPrac(boxId, items, tag){
+  const box = document.getElementById(boxId);
+  box.innerHTML = items.map((it, i) => `<div class="q" data-i="${i}"><div class="stem">${i + 1}. ${it.q}</div>${it.o.map((o, j) => `<label><input type="radio" name="${boxId}_${i}" value="${j}">${o}</label>`).join('')}<div class="fb"></div></div>`).join('');
+  box.querySelectorAll('.q').forEach(qd => {
+    const it = items[qd.dataset.i];
+    qd.querySelectorAll('input').forEach(inp => inp.addEventListener('change', () => {
+      const ok = +inp.value === it.a, fb = qd.querySelector('.fb');
+      qd.classList.toggle('correct', ok); qd.classList.toggle('wrong', !ok);
+      fb.className = 'fb ' + (ok ? 'ok' : 'no'); fb.innerHTML = (ok ? '✔ 對！' : '✘ 再想想。') + it.e;
+      prac(tag + '_' + (+qd.dataset.i + 1), ok);
+    }));
+  });
+}
+
+// ===== 1 兩國開店記 =====
+const YEARS = [
+  { icon:'🏪', title:'開店', ev:'你想開一家珍奶店。開店前要先弄清楚規則：要申請什麼？哪些事不能做？',
+    man:'沒有寫清楚的規則。有人偷偷告訴你：先送一份大禮給國王的大臣，再看國王的心情。',
+    law:'上網就查得到法規：辦好營業登記、通過食品衛生檢查，就能開店。規則公開寫好，誰來申請都一樣。',
+    hint:'哪一個結果裡，規則是「看統治者的心情」？那就是王說了算國。',
+    exp:'法治國家的規則<b>事先寫好、公開</b>，人民知道什麼能做、什麼不能做，可以安心規劃；人治國家的規則藏在統治者心裡，今天這樣，明天可能不一樣。',
+    row:['規則在哪裡？', '在統治者心裡，事先不知道', '公開寫在法律裡，大家都查得到'],
+    rm:['🏪', '送了禮才開成，心裡很不踏實', -10], rl:['🏪', '照規則申請，順利開幕', 0] },
+  { icon:'💥', title:'統治者的姪子來鬧事', ev:'統治者的姪子來店裡，喝了 10 杯不付錢，走的時候還把你的招牌踢壞。',
+    man:'你去告狀，國王揮揮手：「自家孩子不懂事，算了吧。」你只能自認倒楣。',
+    law:'你到法院告他。法官依照法律判他要賠錢——就算他是總統的姪子，也跟一般人一樣。',
+    hint:'哪一個結果裡，統治者家的人可以不守法？',
+    exp:'法治國家講<b>法律之前人人平等</b>：統治者和他的家人、親信，犯了法一樣要負責。人治國家的統治者站在法律上面，連他身邊的人都跟著有特權。',
+    row:['統治者和親信要守法嗎？', '不用，站在法律上面', '要，法律之前人人平等'],
+    rm:['🏚️', '招牌被砸，只能自認倒楣', -15], rl:['🏪', '拿到賠償，換了新招牌', 0] },
+  { icon:'💰', title:'國家要多收稅', ev:'國家想蓋一座大建築，需要很多錢，打算向人民多收稅。',
+    man:'國王一早宣布：「從明天起，奶茶稅變成三倍！」沒有人能反對。',
+    law:'政府要先提出加稅的法律草案，送到人民選出的立法委員那裡討論、表決，通過、公布後才能實施。你也可以表達意見。',
+    hint:'哪一個結果裡，法律是統治者一句話就改的？',
+    exp:'法治國家<b>改法律要經過人民選出的代表、依照程序</b>，政府自己說了不算（我國憲法也規定，人民是「依法律」納稅）。人治國家的法律，統治者一句話就能改。',
+    row:['法律怎麼改？', '統治者一句話就改', '人民選出的代表依程序制定、修改'],
+    rm:['💸', '稅變三倍，賺的錢剩一點點', -20], rl:['🏪', '稅小幅調整，事先就知道，可以準備', -5] },
+  { icon:'📢', title:'你批評政府', ev:'你覺得加稅不合理，在店門口貼了一張海報批評這個政策。',
+    man:'隔天官兵上門：「依照王國法第 1 條：不准批評國王！」把你抓去關，店停業三個月。',
+    law:'沒有人來抓你。憲法保障言論自由，政府不能因為被批評就抓人。你的海報還上了新聞，大家一起討論。',
+    hint:'哪一個結果裡，法律被拿來保護統治者、管住人民？',
+    exp:'注意！王說了算國<b>也有「法律」</b>——「不准批評國王」就是一條法律。人治不是沒有法律，而是法律變成<b>統治者管人民的工具</b>。法治國家的法律，最主要是<b>保障人民的權利</b>，也限制政府不能亂來。',
+    row:['法律是用來……', '管住人民、保護統治者的工具', '保障人民的權利，也限制政府'],
+    rm:['🔒', '被關三個月，店停業', -20], rl:['📰', '意見上了新聞，大家一起討論', 0] },
+  { icon:'🚧', title:'政府要開馬路', ev:'政府說要在你的店這裡開一條新馬路。',
+    man:'官員貼了一張紙：「三天內搬走。」第四天怪手就來了，一毛錢補償都沒有。',
+    law:'政府要照法律的程序來：先公告、說明、給你補償。你覺得補償不合理，還可以依法申訴、到法院打官司。',
+    hint:'哪一個結果裡，官員想怎樣就怎樣？',
+    exp:'法治國家的政府做事要有法律依據、照程序來，這叫<b>依法行政</b>；人民的權利被侵害時，還可以請法院主持公道。人治國家的官員代表統治者，說了就算。',
+    row:['政府做事', '官員說了算', '依法行政；權利受損，可以找法院'],
+    rm:['🏚️', '店被拆，沒有補償', -15], rl:['🏪', '拿到補償，搬到新店面', -5] },
+  { icon:'🔄', title:'統治者換人了', ev:'統治者換人了，而且新的統治者不太喜歡奶茶。',
+    man:'新國王宣布：「奶茶有害，全國禁賣！」你的店一夕關門。',
+    law:'新總統上任，政策可能會調整，但法律不會因為換人就自動改變。賣奶茶合法，店照樣開。',
+    hint:'哪一個結果裡，法律跟著統治者一起換掉？',
+    exp:'人治國家的法律<b>隨統治者的更替而改變</b>，古書說「其人存，則其政舉；其人亡，則其政息」——人在，政策在；人走，政策就停。法治國家換總統，法律照舊，要改還是得經過立法程序。',
+    row:['換統治者的時候', '法律跟著換：人存政舉，人亡政息', '法律照舊，制度穩定'],
+    rm:['🔒', '奶茶被禁，店倒了', -100], rl:['🧋', '店照樣開，還準備開第二家', 0] }
+];
+let yi = 0, tries = 0, firstTry = 0, mvMan = 100, mvLaw = 100;
+function renderTimeline(){ $('#tl').innerHTML = YEARS.map((y, i) => `<span class="${i < yi ? 'done' : (i === yi ? 'now' : '')}" title="第 ${i + 1} 年"></span>`).join(''); }
+function renderTable(){
+  $('#cmpBody').innerHTML = YEARS.map((y, i) => `<tr class="locked" id="row${i}"><td class="k">第 ${i + 1} 年解鎖</td><td>？</td><td>？</td></tr>`).join('');
+}
+function unlockRow(i){
+  const tr = document.getElementById('row' + i), r = YEARS[i].row;
+  tr.className = 'new'; tr.innerHTML = `<td class="k">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td>`;
+}
+function setCountry(s, r, v){ $('#shop' + s).textContent = r[0]; $('#st' + s).textContent = r[1]; $('#mv' + s).textContent = v; $('#m' + s).style.width = v + '%'; }
+function renderYear(){
+  const y = YEARS[yi]; tries = 0;
+  const outs = shuffle([{ k:'man', t:y.man }, { k:'law', t:y.law }]);
+  $('#game').innerHTML = `<div class="event"><div class="yr">第 ${yi + 1} 年／共 ${YEARS.length} 年</div><h3>${y.icon} ${y.title}</h3><p>${y.ev}</p></div>
+    <div class="outs">${outs.map(o => `<div class="out" data-k="${o.k}"><div class="who">${o.k === 'man' ? '👑 發生在王說了算國' : '⚖️ 發生在法說了算國'}</div><p>${o.t}</p><div class="pick"><button class="bm" data-g="man">👑 王說了算國</button><button class="bl" data-g="law">⚖️ 法說了算國</button></div></div>`).join('')}</div>
+    <div class="fb" id="gfb" aria-live="polite"></div><div id="gnext" style="margin-top:10px"></div>`;
+  $('#game').querySelectorAll('.out .pick button').forEach(b => b.addEventListener('click', () => pickOut(b)));
+  renderTimeline();
+}
+function pickOut(btn){
+  const out = btn.closest('.out'), y = YEARS[yi], fb = $('#gfb');
+  tries++;
+  if(btn.dataset.g === out.dataset.k){
+    $('#game').querySelectorAll('.out').forEach(o => o.classList.add(o.dataset.k === 'man' ? 'is-man' : 'is-law'));
+    if(tries === 1) firstTry++;
+    fb.className = 'fb ok'; fb.innerHTML = (tries === 1 ? '✔ 一次就對！' : '✔ 對了！') + y.exp
+      + `<div style="margin-top:6px; font-size:.88rem">店況 → 👑 ${y.rm[0]} ${y.rm[1]}　｜　⚖️ ${y.rl[0]} ${y.rl[1]}</div>`;
+    prac('開店記_第' + (yi + 1) + '年', tries === 1);
+    mvMan = yi === YEARS.length - 1 ? 0 : Math.max(0, mvMan + y.rm[2]);
+    mvLaw = Math.max(0, mvLaw + y.rl[2]);
+    setCountry('Man', y.rm, mvMan); setCountry('Law', y.rl, mvLaw);
+    unlockRow(yi);
+    const last = yi === YEARS.length - 1;
+    $('#gnext').innerHTML = `<button class="btn" id="gbtn">${last ? '看六年後的結果 ▶' : '下一年 ▶'}</button>`;
+    $('#gbtn').addEventListener('click', () => { if(last){ finishGame(); } else { yi++; renderYear(); } });
+  } else {
+    out.classList.remove('shake'); void out.offsetWidth; out.classList.add('shake');
+    fb.className = 'fb no'; fb.innerHTML = '再想想：' + y.hint;
+  }
+}
+function finishGame(){
+  yi = YEARS.length; renderTimeline();
+  $('#game').innerHTML = `<div class="event" style="border-left-color:var(--law)"><h3>🎬 六年過去了</h3><p>👑 <b class="man">王說了算國</b>：送禮才開成店、招牌被砸、稅變三倍、被抓去關、店被拆，最後奶茶全面禁賣。安心指數：<b>0</b>。<br>⚖️ <b class="law">法說了算國</b>：照規則開店、有人賠償、加稅事先知道、意見上新聞、拆遷有補償，換總統也照樣營業。安心指數：<b>${mvLaw}</b>。</p><p class="sub">六年裡，你一次就判斷對的有 ${firstTry} 年。</p></div>`;
+  $('#endStory').innerHTML = `你剛剛在兩個國家看到的差別，課本把它整理成下面兩段。對照上面的比較表讀一遍：`;
+  $('#defCard').hidden = false;
+  logEv({ type:'practice', q:'開店記_完成', ok:true });
+  setTimeout(() => $('#defCard').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+}
+function startGame(){
+  yi = 0; firstTry = 0; mvMan = 100; mvLaw = 100;
+  setCountry('Man', ['🏪', '店還沒開'], 100); setCountry('Law', ['🏪', '店還沒開'], 100);
+  $('#defCard').hidden = true; renderTable(); renderYear();
+}
+$('#replay').addEventListener('click', () => { startGame(); $('#s1').scrollIntoView({ behavior:'smooth' }); });
+startGame();
+
+// ===== 2 誰在上面：模型 =====
+const NODES = {
+  man: {
+    nRuler:{ p:[220, 52], t:'👑 統治者', s:'不受法律管', fill:'#fdecec', stroke:'#b91c1c' },
+    nLaw:{ p:[220, 200], t:'📜 法律', s:'統治者手上的工具', fill:'#ffffff', stroke:'#9ca3af' },
+    nPeople:{ p:[220, 348], t:'👥 人民', s:'只能服從', fill:'#ffffff', stroke:'#9ca3af' }
+  },
+  law: {
+    nLaw:{ p:[220, 52], t:'📜 憲法・法律', s:'在最上面，大家都要守', fill:'#e0f5f1', stroke:'#0f766e' },
+    nRuler:{ p:[92, 334], t:'🏛️ 政府・總統', s:'權力受法律限制', fill:'#ffffff', stroke:'#64748b' },
+    nPeople:{ p:[348, 334], t:'👥 人民', s:'權利受到保障', fill:'#ffffff', stroke:'#64748b' }
+  }
+};
+const CAPS = {
+  man:'👑 人治是一條<b>往下</b>的箭頭：統治者 → 法律 → 人民。法律握在統治者手上，管得到人民，管不到統治者。',
+  law:'⚖️ 法治是一個<b>圈</b>：人民選出代表制定法律，法律在最上面，同時管住政府、保障人民。統治者也站在法律下面。'
+};
+let mode = 'man', busy = false;
+function setMode(m){
+  mode = m;
+  Object.entries(NODES[m]).forEach(([id, d]) => {
+    const g = document.getElementById(id);
+    g.style.transform = `translate(${d.p[0]}px,${d.p[1]}px)`;
+    const r = g.querySelector('rect'); r.setAttribute('fill', d.fill); r.setAttribute('stroke', d.stroke);
+    g.querySelector('.nt').textContent = d.t; g.querySelector('.ns').textContent = d.s;
+  });
+  const on = m === 'man' ? $('#aMan') : $('#aLaw'), off = m === 'man' ? $('#aLaw') : $('#aMan');
+  off.style.transitionDelay = '0s'; off.classList.add('off');
+  on.style.transitionDelay = '.6s'; on.classList.remove('off');
+  $('#btnMan').className = m === 'man' ? 'on-man' : ''; $('#btnLaw').className = m === 'law' ? 'on-law' : '';
+  const cap = $('#modelCap'); cap.className = 'cap ' + m; cap.innerHTML = CAPS[m];
+  const res = $('#testRes'); res.className = 'result'; res.innerHTML = m === 'man' ? '現在是「人治的排法」。按一個情況看看會怎樣。' : '現在是「法治的排法」。按同一個情況，跟人治比一比。';
+}
+$('#btnMan').addEventListener('click', () => { if(!busy) setMode('man'); });
+$('#btnLaw').addEventListener('click', () => { if(!busy) setMode('law'); });
+setMode('man');
+
+function travel(pathId, emoji, opt){
+  opt = opt || {};
+  return new Promise(res => {
+    const path = document.getElementById(pathId), svg = $('#model');
+    path.classList.remove('flash'); void path.getBoundingClientRect(); path.classList.add('flash');
+    const len = path.getTotalLength(), stop = opt.stop || 1, dur = opt.dur || 1100;
+    const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    t.setAttribute('class', 'token'); t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'central'); t.textContent = emoji;
+    svg.appendChild(t);
+    // 用 setTimeout 推進（不用 requestAnimationFrame）：畫面暫時沒在繪製時，動畫也會照常走完，不會卡住按鈕
+    const t0 = Date.now();
+    (function step(){
+      const p = Math.min(1, (Date.now() - t0) / dur), e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      const pt = path.getPointAtLength(len * stop * e); t.setAttribute('x', pt.x); t.setAttribute('y', pt.y);
+      if(p < 1) setTimeout(step, 16);
+      else { if(opt.blocked) t.classList.add('bump'); setTimeout(() => { t.remove(); res(); }, opt.blocked ? 1000 : 350); }
+    })();
+  });
+}
+const TESTS = {
+  light:{ man:{ seq:[['a3', '🚨', { stop:.5, blocked:true }]], txt:'🚨 警察想開罰單，卻<b>管不到統治者</b>。人治國家的統治者站在法律上面，法律只拿來管人民。' },
+          law:{ seq:[['b1', '🚨']], txt:'🚨 照樣開罰單！法律在最上面，<b>政府、總統也要守法</b>——法律之前人人平等。' } },
+  tax:{ man:{ seq:[['a1', '✏️'], ['a2', '💸']], txt:'✏️ 統治者自己改法律，💸 隔天人民就得繳。<b>法律隨統治者的意思改變</b>，人民沒有說話的餘地。' },
+        law:{ seq:[['b3', '🗳️']], txt:'🗳️ 想加稅，要寫成法律草案，交給<b>人民選出的立法委員</b>討論、表決；政府自己說了不算。' } },
+  talk:{ man:{ seq:[['a2', '⛓️']], txt:'⛓️ 拿「不准批評國王」的法律抓人。<b>法律變成統治者管人民的工具</b>（注意：這裡也有法律！）' },
+         law:{ seq:[['b2', '🛡️']], txt:'🛡️ 憲法保障言論自由，法律像盾牌一樣<b>保護人民的權利</b>，政府不能因為被批評就抓人。' } },
+  swap:{ man:{ seq:[['a1', '📜'], ['a2', '📜']], swap:'👑 新國王', txt:'👑 新國王上台，把法律整本換掉，人民又要重新適應。<b>人存政舉，人亡政息</b>：好壞全看這一任是誰。' },
+         law:{ seq:[['b1', '📜']], swap:'🏛️ 新總統', txt:'🏛️ 新總統上任，<b>一樣要守同一本憲法和法律</b>；想改法律，還是要經過立法程序。' } }
+};
+document.querySelectorAll('.tests button').forEach(b => b.addEventListener('click', async () => {
+  if(busy) return; busy = true;
+  const T = TESTS[b.dataset.test][mode], res = $('#testRes');
+  res.className = 'result'; res.textContent = '……';
+  const g = document.getElementById('nRuler'), nt = g.querySelector('.nt'), oldT = nt.textContent, rect = g.querySelector('rect');
+  if(T.swap){ nt.textContent = T.swap; rect.classList.remove('pulse'); void rect.getBoundingClientRect(); rect.classList.add('pulse'); }
+  for(const [id, emo, opt] of T.seq){ await travel(id, emo, opt); }
+  res.className = 'result ' + mode; res.innerHTML = (mode === 'man' ? '【人治】' : '【法治】') + T.txt;
+  if(T.swap) setTimeout(() => { nt.textContent = oldT; }, 900);
+  logEv({ type:'practice', q:'模型_' + b.dataset.test + '_' + mode, ok:true });
+  busy = false;
+}));
+
+// 法治三問
+const Q3 = [
+  { q:'① 統治者（政府）也要守法嗎？', law:'要，跟人民一樣', man:'不用，他在法律上面', why:'統治者站在法律上面' },
+  { q:'② 法律主要在保護什麼？', law:'人民的權利', man:'統治者的權力', why:'法律變成統治者管人民的工具' },
+  { q:'③ 法律由誰、怎麼改？', law:'人民選出的代表依程序改', man:'統治者說了算', why:'法律隨統治者的意思改變' }
+];
+const PRESETS = {
+  qin:{ a:['man', 'man', 'man'], note:'秦朝法律又多又嚴，但皇帝不受限制、想改就改，法律是拿來控制人民的。<b>有法律 ≠ 法治</b>。' },
+  tw:{ a:['law', 'law', 'law'], note:'我國憲法規定人民在法律上一律平等，政府要依法行政，法律由人民選出的立法委員依程序制定。' },
+  cls:{ a:['man', 'man', 'man'], note:'班長自己訂規則、自己不用守，班規只拿來管同學——這個班級是「人治」。' },
+  half:{ a:['law', 'man', 'man'], note:'統治者今天守法，可是法律是他一個人訂的，他隨時能把法律改成對自己有利的樣子。只過了第一關，還不是法治。' }
+};
+const q3a = [null, null, null];
+let q3note = '';
+$('#q3').innerHTML = Q3.map((x, i) => `<div class="row"><div class="qt">${x.q}</div><div class="seg"><button data-i="${i}" data-v="law">${x.law}</button><button data-i="${i}" data-v="man">${x.man}</button></div></div>`).join('');
+function paintQ3(){
+  document.querySelectorAll('#q3 .seg button').forEach(b => { const v = q3a[b.dataset.i]; b.className = v === b.dataset.v ? 'sel-' + v : ''; });
+  const v = $('#q3v');
+  if(q3a.includes(null)){ v.className = 'verdict'; v.innerHTML = '三題都選好，就會出現判斷結果。'; return; }
+  const bad = Q3.filter((x, i) => q3a[i] === 'man');
+  if(!bad.length){ v.className = 'verdict law'; v.innerHTML = '⚖️ <b>法治</b>：統治者也守法、法律保障人民、法律由人民的代表依程序改。' + (q3note ? '<br>' + q3note : ''); }
+  else { v.className = 'verdict man'; v.innerHTML = '👑 <b>人治（不是真正的法治）</b>：' + bad.map(x => x.why).join('；') + '。' + (q3note ? '<br>' + q3note : ''); }
+}
+document.querySelectorAll('#q3 .seg button').forEach(b => b.addEventListener('click', () => { q3a[b.dataset.i] = b.dataset.v; q3note = ''; paintQ3(); }));
+document.querySelectorAll('.presets button').forEach(b => b.addEventListener('click', () => { const p = PRESETS[b.dataset.p]; p.a.forEach((v, i) => q3a[i] = v); q3note = p.note; paintQ3(); logEv({ type:'practice', q:'三問_' + b.dataset.p, ok:true }); }));
+
+mountPrac('prac2', [
+  { q:'人治的國家有沒有法律？', o:['沒有，所以才叫人治', '有，但法律是統治者管人民的工具，管不到統治者自己'], a:1, e:'人治也有法律，甚至很多、很嚴。差別在於法律管不管得到統治者。' },
+  { q:'在法治國家，總統違法時會怎樣？', o:['總統的命令就是法律，不算違法', '和一般人一樣，要負法律責任'], a:1, e:'法治國家裡政府與人民都要守法，法律之前人人平等。' },
+  { q:'判斷人治還是法治，最關鍵的是看什麼？', o:['法律條文多不多、罰得重不重', '統治者和法律，誰在上面'], a:1, e:'課綱的重點就是「統治者和法律的關係」。法律多、罰得重，也可能是人治（例如秦朝）。' }
+], '誰在上面隨堂');
+
+// ===== 3 換一個國王：60 年實驗 =====
+const TYPES = {
+  sage:{ n:'明君', e:'😇', base:90, bg:'#dcfce7' },
+  normal:{ n:'普通國王', e:'🙂', base:64, bg:'#f1f5f9' },
+  dim:{ n:'昏君', e:'😵', base:32, bg:'#fef3c7' },
+  tyrant:{ n:'暴君', e:'😈', base:10, bg:'#fee2e2' }
+};
+const ORDER = ['sage', 'normal', 'dim', 'tyrant'];
+const YRS = 60, BAD = 30, FLOOR = 55;
+// 圖表的 viewBox 寬度＝實際顯示寬度（1 單位＝1 像素），手機上字才不會縮小
+let CWID = 640, CHGT = 200, PX0 = 34, PX1 = 630, PY0 = 34, PY1 = 170;
+function chartDims(){
+  const w = document.getElementById('chMan').clientWidth || 640;
+  CWID = Math.round(Math.max(300, Math.min(w, 900))); CHGT = CWID < 520 ? 210 : 200;
+  PX1 = CWID - 10; PY1 = CHGT - 30;
+  ['chMan', 'chLaw'].forEach(id => document.getElementById(id).setAttribute('viewBox', `0 0 ${CWID} ${CHGT}`));
+}
+const X = y => PX0 + (PX1 - PX0) * y / (YRS - 1);
+const Xb = y => Math.max(PX0, Math.min(PX1, X(y)));
+const Y = v => PY1 - (PY1 - PY0) * v / 100;
+const rint = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+// 機率調過：約一成的歷史裡，王說了算國 60 年平均反而比法說了算國好（遇到明君），讓孩子看到「是賭運氣」而不是一面倒
+function drawType(){ const r = Math.random(); return r < .3 ? 'sage' : (r < .7 ? 'normal' : (r < .9 ? 'dim' : 'tyrant')); }
+function genMan(){
+  const vals = [], segs = [], notes = []; let v = 58, y = 0, k = 0;
+  while(y < YRS){
+    k++; let type = drawType(); const len = rint(6, 20);
+    const seg = { start:y, k, parts:[{ from:y, type }] };
+    for(let i = 0; i < len && y < YRS; i++, y++){
+      if(i >= 3 && type !== 'tyrant' && Math.random() < .035){ type = ORDER[ORDER.indexOf(type) + 1]; seg.parts.push({ from:y, type }); notes.push({ y, k, type }); }
+      v += (TYPES[type].base - v) * .35 + (Math.random() * 8 - 4);
+      v = Math.max(2, Math.min(98, v)); vals.push(v);
+    }
+    seg.end = y; segs.push(seg);
+  }
+  return { vals, segs, notes };
+}
+function genLaw(){
+  const vals = [], segs = []; let v = 66, y = 0, k = 0;
+  while(y < YRS){
+    k++; const base = 64 + Math.random() * 16, len = Math.random() < .5 ? 8 : 4, start = y;
+    for(let i = 0; i < len && y < YRS; i++, y++){ v += (base - v) * .35 + (Math.random() * 6 - 3); v = Math.max(FLOOR, Math.min(95, v)); vals.push(v); }
+    segs.push({ start, end:y, k });
+  }
+  return { vals, segs };
+}
+function axis(){
+  let s = '';
+  [0, 50, 100].forEach(v => { s += `<line x1="${PX0}" x2="${PX1}" y1="${Y(v)}" y2="${Y(v)}" stroke="#eef0f4"/><text x="${PX0 - 5}" y="${Y(v) + 4}" font-size="11" text-anchor="end" fill="#9ca3af">${v}</text>`; });
+  [[0, '第1年'], [19, '第20年'], [39, '第40年'], [59, '第60年']].forEach(([i, l]) => { s += `<text x="${X(i)}" y="${PY1 + 20}" font-size="12" text-anchor="${i === 0 ? 'start' : (i === 59 ? 'end' : 'middle')}" fill="#9ca3af">${l}</text>`; });
+  return s;
+}
+function drawBase(kind, D){
+  if(kind === 'man') chartDims();
+  let s = '';
+  if(kind === 'man'){
+    D.segs.forEach(seg => seg.parts.forEach((p, i) => {
+      const to = i < seg.parts.length - 1 ? seg.parts[i + 1].from : seg.end, x0 = Xb(p.from - .5), x1 = Xb(to - .5);
+      s += `<rect x="${x0}" y="${PY0}" width="${x1 - x0}" height="${PY1 - PY0}" fill="${TYPES[p.type].bg}"/>`;
+      if(x1 - x0 > 20) s += `<text x="${(x0 + x1) / 2}" y="${PY0 - 10}" font-size="15" text-anchor="middle">${TYPES[p.type].e}</text>`;
+    }));
+    D.segs.forEach(seg => { if(seg.start > 0) s += `<line x1="${Xb(seg.start - .5)}" x2="${Xb(seg.start - .5)}" y1="${PY0}" y2="${PY1}" stroke="#94a3b8" stroke-dasharray="3 3"/>`; });
+    D.notes.forEach(n => { s += `<text x="${X(n.y)}" y="${PY0 + 16}" font-size="13" text-anchor="middle">⚠</text>`; });
+    s += axis() + `<line x1="${PX0}" x2="${PX1}" y1="${Y(BAD)}" y2="${Y(BAD)}" stroke="#dc2626" stroke-dasharray="6 4"/><text x="${PX1 - 4}" y="${Y(BAD) - 4}" font-size="12" text-anchor="end" fill="#dc2626">苦日子線 30</text>`;
+  } else {
+    D.segs.forEach((seg, i) => {
+      const x0 = Xb(seg.start - .5), x1 = Xb(seg.end - .5);
+      s += `<rect x="${x0}" y="${PY0}" width="${x1 - x0}" height="${PY1 - PY0}" fill="${i % 2 ? '#ffffff' : '#f0fdfa'}"/>`;
+      if(seg.start > 0) s += `<text x="${x0}" y="${PY0 - 10}" font-size="13" text-anchor="middle">🗳️</text>`;
+    });
+    s += axis() + `<line x1="${PX0}" x2="${PX1}" y1="${Y(FLOOR)}" y2="${Y(FLOOR)}" stroke="#0f766e" stroke-dasharray="6 4"/><text x="${PX1 - 4}" y="${Y(FLOOR) + 14}" font-size="12" text-anchor="end" fill="#0f766e">憲法保障的底線</text>`
+      + `<line x1="${PX0}" x2="${PX1}" y1="${Y(BAD)}" y2="${Y(BAD)}" stroke="#dc2626" stroke-dasharray="6 4" opacity=".5"/><text x="${PX1 - 4}" y="${Y(BAD) - 4}" font-size="12" text-anchor="end" fill="#dc2626" opacity=".7">苦日子線 30</text>`;
+  }
+  const col = kind === 'man' ? '#b91c1c' : '#0f766e';
+  s += `<polygon class="area" fill="${col}" opacity=".12" points=""/><polyline class="line" fill="none" stroke="${col}" stroke-width="2.6" stroke-linejoin="round" points=""/><line class="now" y1="${PY0}" y2="${PY1}" stroke="#111827" stroke-width="1" opacity=".5" x1="-9" x2="-9"/>`;
+  document.getElementById(kind === 'man' ? 'chMan' : 'chLaw').innerHTML = s;
+}
+function drawTo(kind, vals, t){
+  const svg = document.getElementById(kind === 'man' ? 'chMan' : 'chLaw');
+  const pts = vals.slice(0, t + 1).map((v, i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`);
+  svg.querySelector('.line').setAttribute('points', pts.join(' '));
+  svg.querySelector('.area').setAttribute('points', pts.length ? `${X(0)},${PY1} ${pts.join(' ')} ${X(t).toFixed(1)},${PY1}` : '');
+  const nl = svg.querySelector('.now'); nl.setAttribute('x1', X(t)); nl.setAttribute('x2', X(t));
+}
+function rulerAt(M, t){
+  const seg = M.segs.find(s => t >= s.start && t < s.end); let type = seg.parts[0].type;
+  seg.parts.forEach(p => { if(p.from <= t) type = p.type; });
+  return { k:seg.k, type };
+}
+function statHtml(vals, n, who){
+  const mx = Math.max(...vals), mn = Math.min(...vals), bad = vals.filter(v => v < BAD).length;
+  return `<div>最好的一年<b>${Math.round(mx)}</b></div><div>最差的一年<b>${Math.round(mn)}</b></div><div>苦日子（低於 30）<b>${bad} 年</b></div><div>${who === 'man' ? '換了幾任國王' : '選了幾任總統'}<b>${n} 任</b></div>`;
+}
+let simTimer = null, simCur = null, simRuns = 0;
+const acc = { manBad:0, lawBad:0, tyrRuns:0, sageRuns:0 };
+function finishSim(){
+  clearInterval(simTimer); simTimer = null;
+  const { M, L } = simCur;
+  drawTo('man', M.vals, YRS - 1); drawTo('law', L.vals, YRS - 1);
+  const nm = M.segs.length, nl = L.segs.length;
+  $('#statMan').innerHTML = statHtml(M.vals, nm, 'man'); $('#statLaw').innerHTML = statHtml(L.vals, nl, 'law');
+  const types = new Set(); M.segs.forEach(s => s.parts.forEach(p => types.add(p.type)));
+  simRuns++; acc.manBad += M.vals.filter(v => v < BAD).length; acc.lawBad += L.vals.filter(v => v < BAD).length;
+  if(types.has('tyrant')) acc.tyrRuns++; if(types.has('sage')) acc.sageRuns++;
+  const best = Math.round(Math.max(...M.vals)), bestL = Math.round(Math.max(...L.vals));
+  const avg = a => a.reduce((s, v) => s + v, 0) / a.length, avgM = Math.round(avg(M.vals)), avgL = Math.round(avg(L.vals));
+  $('#ticker').textContent = `60 年結束。王說了算國換了 ${nm} 任國王${M.notes.length ? `，其中 ${M.notes.length} 次國王做到一半變壞` : ''}；法說了算國選了 ${nl} 任總統。`;
+  let msg;
+  if(avgM > avgL) msg = `🍀 這一次王說了算國運氣超好：60 年平均 ${avgM}，比法說了算國的 ${avgL} 還高！但這是<b>賭贏了</b>——下一次你敢再賭嗎？多跑幾次看看。`;
+  else if(best > bestL) msg = `注意這一次：王說了算國最好的一年（${best}）比法說了算國（${bestL}）還高——遇到明君時，人治可能很好。人治的問題不是「一定比較差」，是<b>好壞全看運氣、而且沒有底線</b>。`;
+  else msg = '多跑幾次：有時候王說了算國遇到明君，那幾年會比法說了算國還好。但它沒有底線，一遇到暴君就跌到谷底。';
+  $('#simAcc').innerHTML = `你已經跑了 <b>${simRuns}</b> 次歷史：👑 王說了算國有 ${acc.tyrRuns} 次出現暴君，平均每次 <b>${(acc.manBad / simRuns).toFixed(1)} 年</b>苦日子；⚖️ 法說了算國平均 <b>${(acc.lawBad / simRuns).toFixed(1)} 年</b>。<br>` + msg;
+  $('#simRun').textContent = '🔁 再跑一次'; $('#simFast').textContent = '⏩ 直接看結果';
+  logEv({ type:'practice', q:'換國王實驗', ok:true });
+}
+function newSim(){ simCur = { M:genMan(), L:genLaw() }; drawBase('man', simCur.M); drawBase('law', simCur.L); $('#statMan').innerHTML = ''; $('#statLaw').innerHTML = ''; }
+$('#simRun').addEventListener('click', () => {
+  if(simTimer) return;
+  newSim(); let t = 0; const { M, L } = simCur;
+  $('#simRun').textContent = '⏳ 歷史進行中…';
+  simTimer = setInterval(() => {
+    drawTo('man', M.vals, t); drawTo('law', L.vals, t);
+    const r = rulerAt(M, t), ls = L.segs.find(s => t >= s.start && t < s.end), note = M.notes.find(n => n.y === t);
+    $('#ticker').textContent = `第 ${t + 1} 年｜👑 第 ${r.k} 任國王：${TYPES[r.type].e} ${TYPES[r.type].n}｜⚖️ 第 ${ls.k} 任總統` + (note ? `｜⚠ 權力使人腐化：國王變成${TYPES[note.type].n}了！` : '');
+    t++; if(t >= YRS) finishSim();
+  }, 75);
+});
+$('#simFast').addEventListener('click', () => { if(!simTimer) newSim(); finishSim(); });
+function drawEmpty(){ const empty = { vals:[], segs:[], notes:[] }; drawBase('man', empty); drawBase('law', empty); }
+drawEmpty();
+
+mountPrac('prac3', [
+  { q:'某國人民說：「我們的國王很賢明，所以不需要法治。」這個說法最大的問題是什麼？', o:['賢明的國王一定會變成暴君', '人民的權利只靠國王的品德；換了國王或國王變了，就沒有保障', '賢明的國王不會制定法律'], a:1, e:'人治下人民的權利是國王「給的」，不是制度保障的。明君不一定會變暴君，但沒有人能保證下一任、或他十年後還是明君。' },
+  { q:'「權力使人腐化，絕對的權力使人絕對腐化。」這句話提醒我們什麼？', o:['只要選到好人當統治者就沒問題', '不管好人壞人，權力都需要受到限制', '有權力的人一定是壞人'], a:1, e:'艾克頓沒有說掌權的是好人還是壞人：任何人握有不受限制的權力，都可能被腐化，所以要用法律和制度限制權力。' }
+], '換國王隨堂');
+
+// ===== 4 判斷練習 =====
+const QN = { 1:'① 統治者守不守法', 2:'② 法律保護誰', 3:'③ 法律怎麼改' };
+const CARDS = [
+  { t:'相傳法國國王路易十四說：「朕即國家。」國王的意思就是國家的意思。', a:'man', q:1, e:'國王把自己當成國家，站在一切規則上面。' },
+  { t:'警察要進民宅搜索，原則上要先向法院申請搜索票，不能自己想搜就搜。', a:'law', q:1, e:'政府（警察）做事也要照法律程序，這是依法行政：政府同樣受法律約束。' },
+  { t:'新皇帝一登基，就把前朝的法律全部廢掉，改用自己訂的規矩。', a:'man', q:3, e:'法律隨統治者的更替而改變。' },
+  { t:'總統的兒子酒駕被抓，跟一般人一樣被依法起訴、判刑。', a:'law', q:1, e:'法律之前人人平等，統治者的家人也沒有特權。' },
+  { t:'古代有「刑不上大夫」的說法：當官的人犯罪，可以不用和平民受一樣的刑罰。', a:'man', q:1, e:'有身分的人可以不受同樣的法律約束，這是特權，不是法治。' },
+  { t:'立法院三讀通過修正道路交通的法律，再由總統公布施行。', a:'law', q:3, e:'法律由人民選出的代表依程序修改，再由總統公布。' },
+  { t:'縣長被報紙批評，一氣之下下令把報社關掉。', a:'man', q:2, e:'掌權的人用權力打壓批評，人民的言論自由沒有保障。' },
+  { t:'法官依照法律獨立審判，總統打電話來關說也沒用。', a:'law', q:1, e:'司法獨立：連總統都不能干涉審判，統治者也在法律下面。' },
+  { t:'國王心情好就減稅，心情不好就加稅。', a:'man', q:3, e:'稅（法律）隨統治者的喜好改變，人民無法預測。' },
+  { t:'政府要徵收土地開馬路，必須依法公告、給補償；地主不服，可以到法院打官司。', a:'law', q:2, e:'政府依法行政，人民的財產權受到保障，被侵害時可以找法院。' },
+  { t:'班長宣布：「規則是我訂的，我遲到不用記。」', a:'man', q:1, e:'訂規則的人自己不守規則，站在規則上面。' },
+  { t:'全班開班會表決通過班規，班長自己違規，一樣要被記點。', a:'law', q:3, e:'規則由大家依程序決定，連班長都要遵守。' },
+  { t:'秦朝的法律又多又嚴，但皇帝想殺誰就殺誰，不受法律限制。', a:'man', q:1, e:'法律再多再嚴，皇帝不受限制，就還是人治。有法律 ≠ 法治。' },
+  { t:'卸任的總統被控貪汙，和一般人一樣在法院接受審判。', a:'law', q:1, e:'當過總統也沒有特權，法律之前人人平等。' },
+  { t:'某國領導人一句話，就把「總統最多連任一次」的規定刪掉，讓自己可以一直當下去。', a:'man', q:3, e:'統治者一句話改掉限制自己的規定：法律隨統治者的意思改變。' },
+  { t:'政府要限制人民的自由，必須有法律依據，而且只能限制到必要的程度。', a:'law', q:2, e:'法律用來保障人民權利、限制政府：政府不能想限制就限制。' }
+];
+let sq = [], sDone = 0, sFirst = 0, sCur = -1, sAns = false, sWrong = {};
+function startSorter(){ sq = shuffle(CARDS.map((c, i) => i)); sDone = 0; sFirst = 0; sWrong = {}; nextCard(); }
+function nextCard(){
+  if(!sq.length) return finishSorter();
+  sCur = sq.shift(); sAns = false; const c = CARDS[sCur];
+  $('#sorter').innerHTML = `<div class="prog"><span>答對 ${sDone} / ${CARDS.length}</span><span>${sWrong[sCur] ? '🔁 這張之前錯過' : ''}</span></div><div class="pbar"><i style="width:${sDone / CARDS.length * 100}%"></i></div>
+    <div class="scard">${c.t}</div>
+    <div class="sbtns"><button class="bm" data-g="man">👑 人治</button><button class="bl" data-g="law">⚖️ 法治</button></div>
+    <div class="fb" id="sfb" aria-live="polite"></div><div id="snext" style="margin-top:8px"></div>
+    <div class="hintbox">💡 法治三問：① 統治者也要守法嗎？② 法律在保護誰？③ 法律由誰、怎麼改？</div>`;
+  $('#sorter').querySelectorAll('.sbtns button').forEach(b => b.addEventListener('click', () => answerCard(b.dataset.g)));
+}
+function answerCard(g){
+  if(sAns) return; sAns = true;
+  const c = CARDS[sCur], ok = g === c.a, fb = $('#sfb');
+  $('#sorter').querySelectorAll('.sbtns button').forEach(b => b.disabled = true);
+  if(ok){ sDone++; if(!sWrong[sCur]) sFirst++; }
+  else { sWrong[sCur] = (sWrong[sCur] || 0) + 1; sq.splice(Math.min(sq.length, 3), 0, sCur); }
+  fb.className = 'fb ' + (ok ? 'ok' : 'no');
+  fb.innerHTML = (ok ? '✔ 對！' : '✘ 這張是 ' + (c.a === 'man' ? '👑 人治' : '⚖️ 法治') + '。') + `<span class="qbadge">關鍵：${QN[c.q]}</span><br>` + c.e + (ok ? '' : '（這張過幾張會再出現）');
+  prac('判斷卡_' + (sCur + 1), ok);
+  $('#snext').innerHTML = `<button class="btn" id="sbtn">${sq.length ? '下一張 ▶' : '看結果 ▶'}</button>`;
+  $('#sbtn').addEventListener('click', nextCard);
+}
+function finishSorter(){
+  const wrongList = Object.keys(sWrong).map(Number);
+  $('#sorter').innerHTML = `<div class="prog"><span>答對 ${CARDS.length} / ${CARDS.length}</span><span></span></div><div class="pbar"><i style="width:100%"></i></div>
+    <div class="scard">🎉 16 張全部完成！一次就答對 <b>${sFirst}</b> 張。${wrongList.length ? '<br>錯過的卡：<ul style="margin:6px 0 0 1.2em">' + wrongList.map(i => `<li>${CARDS[i].t}（${CARDS[i].a === 'man' ? '人治' : '法治'}）</li>`).join('') + '</ul>' : '<br>全部一次就對，太強了！'}</div>
+    <p style="margin-top:10px"><button class="btn ghost" id="sagain">🔁 重新洗牌再練一次</button></p>`;
+  $('#sagain').addEventListener('click', startSorter);
+  logEv({ type:'practice', q:'判斷卡_完成', ok: sFirst >= 13 });
+}
+startSorter();
+
+const TF = [
+  { s:'人治的國家沒有法律。', a:false, e:'人治也有法律，甚至很多、很嚴；只是法律是統治者管人民的工具，管不到統治者自己。' },
+  { s:'只要一個國家法律很多、處罰很重，就是法治國家。', a:false, e:'重點不是法律多不多、重不重，而是統治者是否也受法律約束、法律是否保障人民權利。' },
+  { s:'法治國家裡，政府和人民都必須遵守法律。', a:true, e:'這正是法治的核心：法律在最上面，政府依法行政，人民也要守法。' },
+  { s:'法治國家的法律一旦制定，就永遠不能修改。', a:false, e:'法律可以修改，但要由人民選出的代表依照程序修改，不能統治者一句話就改。' },
+  { s:'人治國家只要遇到賢明的君主，人民的權利就一定有保障。', a:false, e:'就算遇到明君，權利也只是國王「給的」；國王換人或變了，權利就可能被收回，沒有制度保障。' },
+  { s:'法治社會中，法律最主要的功能是保障人民的權利。', a:true, e:'法治的法律首先在保障人民權利，同時也約束政府和人民的行為。' },
+  { s:'在法治國家，總統的命令可以高於法律。', a:false, e:'法治國家中，命令不能違反法律，法律不能違反憲法；總統也必須依法做事。' }
+];
+$('#tfBox').innerHTML = TF.map((x, i) => `<div class="tf" data-i="${i}"><div class="st">${i + 1}. ${x.s}</div><div class="tfb"><button data-v="1" aria-label="對">○</button><button data-v="0" aria-label="錯">✕</button></div><div class="exp"></div></div>`).join('');
+document.querySelectorAll('#tfBox .tf').forEach(el => {
+  const x = TF[el.dataset.i];
+  el.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const ok = (b.dataset.v === '1') === x.a;
+    el.className = 'tf ' + (ok ? 'ok' : 'no');
+    el.querySelector('.exp').innerHTML = (ok ? '✔ 答對了。' : '✘ 答案是「' + (x.a ? '○ 對' : '✕ 錯') + '」。') + x.e;
+    prac('抓錯_' + (+el.dataset.i + 1), ok);
+  }));
+});
+
+// ===== 5 小測驗 =====
+const QUIZ = [
+  { q:'下列何者最能說明「人治」與「法治」的根本差異？', o:['有沒有制定法律', '法律條文的多寡', '統治者是否也要受法律約束', '處罰是否嚴厲'], a:2, e:'課綱說要從「統治者和法律的關係」來分辨：統治者在法律上面是人治，在法律下面是法治。人治也有法律，也可能很多、很嚴。' },
+  { q:'史書記載：「某國國王常依自己的喜好修改法令，大臣的親戚犯法也常被赦免。」這個國家最符合下列哪一種情形？', o:['法治：法律保障人民權利', '人治：法律是統治者統治人民的工具', '法治：政府依法行政', '法治：法律之前人人平等'], a:1, e:'法令隨國王喜好改變、統治者身邊的人有特權，是人治的特徵。' },
+  { q:'下列哪一個情況，最能展現「法律之前人人平等」？', o:['市長的兒子違規停車，警察照樣依法開單', '國王生日時宣布大赦天下', '校長規定學生不准批評學校', '皇帝的命令高於一切法令'], a:0, e:'不論身分，違法一樣依法處理，就是法律之前人人平等。' },
+  { q:'「其人存，則其政舉；其人亡，則其政息。」這句話最能說明哪一種統治方式的缺點？', o:['法治', '人治', '依法行政', '權力分立'], a:1, e:'政策的好壞和存廢全看統治者這個人：人在，政策在；人走，政策停。這是人治的弱點。' },
+  { q:'下列有關法治的敘述，何者正確？', o:['法治國家的法律一經制定就不能修改', '法治國家中只有人民需要守法', '法治國家中，法律的主要功能是保障人民權利', '法治就是用很重的刑罰管理人民'], a:2, e:'法律可以依程序修改；政府和人民都要守法；重刑不等於法治。法治的法律首先在保障人民權利。' },
+  { q:'甲國：「總統的命令要有法律依據，法院可以審查政府的作為是否違法。」乙國：「統治者的命令就是法律，法官必須聽統治者的。」下列敘述何者正確？', o:['甲國屬於人治', '兩國都有法院，所以都是法治國家', '乙國人民的權利比較有保障', '甲國比較符合依法行政的精神'], a:3, e:'甲國政府受法律約束、法院可以審查，符合依法行政；乙國統治者在法律之上，是人治。有法院不代表就是法治。' },
+  { q:'秦朝法律又多又嚴，但皇帝不受法律限制。關於秦朝的統治，下列判斷何者最適當？', o:['皇帝在法律之上，所以仍是人治', '法律很多，所以是法治', '處罰很重，所以是法治', '有法律就不可能是人治'], a:0, e:'判斷的關鍵是統治者是否受法律約束，不是法律多不多、重不重。' },
+  { q:'阿芳想判斷一個國家是不是法治國家，下列哪一個問題「最不」需要問？', o:['統治者是否也要守法？', '法律主要在保障誰？', '法律要怎麼修改、由誰修改？', '這個國家的法律條文一共有幾條？'], a:3, e:'(A)(B)(C) 就是法治三問；法律條文的數量和是不是法治無關。' },
+  { q:'班上規定由風紀股長登記遲到。股長自己遲到卻說：「規則我說了算，我不用記。」這個情況最接近哪一種統治方式？', o:['人治', '法治', '依法行政', '法律之前人人平等'], a:0, e:'執行規則的人自己不守規則，站在規則上面，就是人治。' },
+  { q:'在法治國家，下列哪一種是「修改法律」的正確方式？', o:['總統在電視上宣布新規定，隔天生效', '由人民選出的立法委員依照程序討論、表決通過，再由總統公布', '由行政院長一個人決定就可以', '由法官自行修改法律條文'], a:1, e:'法治國家的法律要由人民選出的代表依程序制定、修改，再由總統公布。' }
+];
+const ABCD = ['(A)', '(B)', '(C)', '(D)'];
+$('#quizBox').innerHTML = QUIZ.map((x, i) => `<div class="q quiz" data-i="${i}"><div class="stem">${i + 1}. ${x.q}</div>${x.o.map((o, j) => `<label><input type="radio" name="qz${i}" value="${j}">${ABCD[j]} ${o}</label>`).join('')}<div class="fb"></div></div>`).join('');
+$('#submitQuiz').addEventListener('click', () => {
+  const qs = document.querySelectorAll('#quizBox .q'); let score = 0, answered = 0; const wrong = [];
+  qs.forEach((q, i) => {
+    const x = QUIZ[i], sel = q.querySelector('input:checked'), fb = q.querySelector('.fb');
+    q.classList.remove('correct', 'wrong'); if(sel) answered++;
+    if(sel && +sel.value === x.a){ score++; q.classList.add('correct'); fb.className = 'fb ok'; fb.innerHTML = '✔ 正確！' + x.e; }
+    else { wrong.push(i + 1); q.classList.add('wrong'); fb.className = 'fb no'; fb.innerHTML = '✘ 正解：' + ABCD[x.a] + '。' + x.e; }
+  });
+  logEv({ type:'quiz', score, total:qs.length, wrong });
+  cloudSend({ type:'單元測驗', detail: wrong.length ? '錯第 ' + wrong.join('、') + ' 題' : '全對', score: score + '/' + qs.length });
+  const r = $('#quizResult');
+  if(answered < qs.length){ r.className = 'bad'; r.textContent = `還有 ${qs.length - answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`; }
+  else if(score >= 8){ r.className = 'good'; r.textContent = `🎉 ${score} / ${qs.length}！人治、法治差在哪，你已經說得出來了。`; }
+  else if(score >= 6){ r.className = 'soso'; r.textContent = `${score} / ${qs.length}。看一下錯的題目解析，再回第 2 頁用「法治三問」把三個關鍵記熟。`; }
+  else { r.className = 'bad'; r.textContent = `${score} / ${qs.length}。先回第 1 頁把「兩國開店記」玩一遍，再回來試一次。`; }
+  r.scrollIntoView({ behavior:'smooth', block:'center' });
+});
+</script>
+</body>
+</html>
