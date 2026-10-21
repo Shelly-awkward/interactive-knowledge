@@ -3,91 +3,39 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>未強制適用者的永續揭露｜一頁總整理（歐盟 VSME 與日韓澳）</title>
+<title>國際主要市場對未納入強制適用永續揭露準則者之揭露要求彙整</title>
 <style>
-:root{
-  --paper:#F4F6F3;--card:#FFFFFF;--ink:#1C2A30;--ink-2:#4B5A62;--ink-3:#8593A0;
-  --rule:rgba(28,42,48,.16);
-  --blue:#1F4E8C;--blue-soft:#E3EBF6;--green:#2E7D4F;--green-soft:#E1F0E6;
-  --signal:#E0A100;--signal-soft:#FBF1CF;--warn:#9B2C2C;--warn-soft:#F8E4E4;
-  --purple:#5B3E8C;--purple-soft:#ECE6F6;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#141B1F;--card:#1D262B;--ink:#E9EEF0;--ink-2:#B8C3CA;--ink-3:#7F8C95;--rule:rgba(233,238,240,.18);
-    --blue:#7FA7E0;--blue-soft:#243448;--green:#7CC79C;--green-soft:#223A2B;--signal:#F0C24A;--signal-soft:#3A3213;
-    --warn:#F08A8A;--warn-soft:#3F2323;--purple:#B9A3E6;--purple-soft:#2E2540;
-  }
-}
+:root{--paper:#F5F6F7;--card:#FFFFFF;--ink:#1A1F24;--ink-2:#444C55;--ink-3:#7A838D;--rule:#C9CFD6;--head:#1F3A5F;--head-soft:#EAF0F7;--note:#FFF8E6;--note-line:#C9A227}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#15191E;--card:#1E242B;--ink:#E8ECF0;--ink-2:#B9C2CB;--ink-3:#8A949E;--rule:#3A434D;--head:#9DB8DC;--head-soft:#24303F;--note:#2E2A1A;--note-line:#C9A227}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
-a{color:var(--blue)}
-.sheet{max-width:1040px;margin:0 auto;padding:1.2rem 1rem 3rem}
-.bar{display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap;margin-bottom:.8rem}
-.bar .links a{font-size:.85rem;margin-right:.9rem}
-.btn{font:inherit;font-size:.85rem;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.4em .9em;cursor:pointer}
-h1{font-size:1.55rem;margin:0 0 .15rem;line-height:1.25}
-.sub{color:var(--ink-2);font-size:.9rem;margin:0 0 .9rem}
-h2{font-size:1.08rem;margin:0 0 .45rem;padding-bottom:.2rem;border-bottom:2px solid var(--blue);display:flex;align-items:baseline;gap:.5rem}
-h2 .no{font-size:.75rem;color:var(--ink-3);font-weight:500}
-h3{font-size:.95rem;margin:.6rem 0 .3rem}
-p{margin:0 0 .5rem}
-ul,ol{margin:0 0 .5rem;padding-left:1.25em}
-li{margin:.12em 0}
-section{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:.85rem 1rem;margin:0 0 .8rem}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
-@media (max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
-.box{border:1px solid var(--rule);border-left:4px solid var(--blue);border-radius:6px;padding:.5rem .7rem;margin:0 0 .6rem;background:var(--card)}
-.box.green{border-left-color:var(--green)}
-.box.purple{border-left-color:var(--purple)}
-.box.signal{border-left-color:var(--signal);background:var(--signal-soft)}
-.box.warn{border-left-color:var(--warn);background:var(--warn-soft)}
-.box.blue{background:var(--blue-soft)}
-.one{font-size:1rem;font-weight:700}
-table{border-collapse:collapse;width:100%;font-size:.84rem;margin:0 0 .5rem}
-th,td{text-align:left;vertical-align:top;padding:.3em .45em;border-bottom:1px solid var(--rule)}
-th{color:var(--ink-2);font-weight:700;background:var(--blue-soft)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Serif TC","PingFang TC","Noto Sans TC","Microsoft JhengHei","Heiti TC",serif;font-size:15px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--head)}
+.sheet{max-width:960px;margin:0 auto;padding:1.4rem 1.2rem 3rem;background:var(--card);border:1px solid var(--rule)}
+.bar{display:flex;justify-content:flex-end;gap:.8rem;flex-wrap:wrap;margin-bottom:.6rem;font-size:.86rem}
+.btn{font:inherit;font-size:.86rem;color:#fff;background:var(--head);border:0;border-radius:4px;padding:.35em .9em;cursor:pointer}
+h1{font-size:1.45rem;text-align:center;margin:.2rem 0 .3rem;line-height:1.4;letter-spacing:.02em}
+.meta{text-align:center;color:var(--ink-2);font-size:.9rem;margin:0 0 1.2rem}
+h2{font-size:1.1rem;color:var(--head);margin:1.5rem 0 .5rem;padding-left:.6rem;border-left:4px solid var(--head);line-height:1.4}
+p{margin:0 0 .6rem;text-align:justify}
+p.item{padding-left:2.2em;text-indent:-2.2em}
+p.sub{padding-left:3.6em;text-indent:-1.4em}
+table{border-collapse:collapse;width:100%;font-size:.86rem;margin:.4rem 0 .8rem;line-height:1.5}
+th,td{border:1px solid var(--rule);padding:.35em .5em;vertical-align:top;text-align:left}
+th{background:var(--head-soft);font-weight:700}
 td:first-child{white-space:nowrap;font-weight:600}
 .scroll{overflow-x:auto}
-.ladder{list-style:none;padding:0;margin:0 0 .5rem;display:grid;gap:.25rem}
-.ladder li{display:grid;grid-template-columns:2rem 1fr;gap:.4rem;align-items:start;border:1px solid var(--rule);border-radius:6px;padding:.3rem .55rem}
-.ladder .lv{font-weight:700;color:var(--blue);font-size:1.05rem}
-.ladder b{display:block}
-.ladder .who{color:var(--ink-2);font-size:.82rem}
-.tl{list-style:none;margin:0 0 .4rem;padding:0 0 0 .2rem;border-left:2px solid var(--rule);margin-left:.3rem}
-.tl li{padding:0 0 .25rem .7rem;position:relative;font-size:.88rem}
-.tl li::before{content:"";position:absolute;left:-6px;top:.5em;width:8px;height:8px;border-radius:50%;background:var(--blue)}
-.tl li.future::before{background:var(--card);border:2px solid var(--blue);width:6px;height:6px}
-.tl time{font-weight:700;margin-right:.4em;white-space:nowrap}
-.items{display:grid;grid-template-columns:1fr 1fr;gap:.1rem .9rem;font-size:.84rem;margin:0 0 .4rem}
-.items div{display:grid;grid-template-columns:2.4rem 1fr;gap:.3rem;padding:.12em 0;border-bottom:1px dotted var(--rule)}
-.items .k{font-weight:700;color:var(--blue)}
-.items .must{color:var(--warn);font-size:.75rem;margin-left:.3em}
-.items.c .k{color:var(--purple)}
-.pill{display:inline-block;font-size:.72rem;padding:0 .5em;border-radius:999px;background:var(--signal-soft);color:#7A5600;border:1px solid var(--signal);white-space:nowrap}
-.small{font-size:.82rem}
-.muted{color:var(--ink-2)}
-dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:.1rem .9rem;font-size:.82rem}
-dl div{border-bottom:1px dotted var(--rule);padding:.15em 0}
-dt{font-weight:700;display:inline}
-dt::after{content:"：";}
-dd{display:inline;margin:0}
-.foot{font-size:.78rem;color:var(--ink-3);margin-top:.6rem}
+.src{font-size:.84rem;color:var(--ink-2)}
+.src p{margin:0 0 .3rem}
+.foot{font-size:.82rem;color:var(--ink-3);margin-top:1rem;border-top:1px solid var(--rule);padding-top:.6rem}
 @media print{
-  :root{--paper:#fff;--card:#fff;--ink:#111;--ink-2:#333;--ink-3:#666;--rule:#bbb;--blue:#1F4E8C;--blue-soft:#eef2f8;--green-soft:#eaf4ee;--signal-soft:#fbf3d9;--warn-soft:#f9e8e8;--purple-soft:#f0ecf7}
-  @page{size:A4;margin:11mm 10mm}
-  body{font-size:10.4px;line-height:1.42;background:#fff}
-  .sheet{max-width:none;padding:0}
-  .bar .links,.btn{display:none}
-  section{border:1px solid #ccc;padding:.55rem .7rem;margin-bottom:.5rem}
-  .box,tr,.ladder li,.tl li,.items div,dl div,h2,h3{page-break-inside:avoid}
-  h2,h3{page-break-after:avoid}
-  h1{font-size:1.35rem}h2{font-size:.98rem}h3{font-size:.86rem;margin:.4rem 0 .2rem}
-  table{font-size:.78rem}th,td{padding:.2em .35em}
-  .items{font-size:.76rem}.ladder .who{font-size:.76rem}.tl li{font-size:.8rem}
-  dl{font-size:.76rem}
-  .grid2,.grid3{gap:.5rem}
+  :root{--paper:#fff;--card:#fff;--ink:#000;--ink-2:#222;--ink-3:#555;--rule:#999;--head:#1F3A5F;--head-soft:#eef2f7}
+  @page{size:A4;margin:14mm 13mm}
+  body{font-size:10.8px;line-height:1.55}
+  .sheet{max-width:none;padding:0;border:0}
+  .bar{display:none}
+  h1{font-size:1.3rem}h2{font-size:1.02rem;margin:1rem 0 .35rem}
+  table{font-size:.8rem}th,td{padding:.25em .4em}
+  tr,p{page-break-inside:avoid}h2{page-break-after:avoid}
   a{color:inherit;text-decoration:none}
 }
 </style>
@@ -95,290 +43,94 @@ dd{display:inline;margin:0}
 <body>
 <div class="sheet">
 <div class="bar">
-  <div>
-    <h1>未強制適用者的永續揭露｜一頁總整理</h1>
-    <p class="sub">歐盟 VSME／VS 與日本、韓國、澳洲對「沒被強制適用永續報導」的公司要求到什麼程度。內容截至 2026.10.21，私人學習用，非法律意見。</p>
-  </div>
-  <div class="links">
-    <a href="未強制適用者的永續揭露_VSME與日韓澳.html">完整九站互動版</a>
-    <a href="未強制適用者的永續揭露_一頁總整理.pdf">下載 PDF</a>
-    <button class="btn" onclick="window.print()">列印／存成 PDF</button>
-  </div>
+  <a href="未強制適用者的永續揭露_VSME與日韓澳.html">互動版自學頁</a>
+  <a href="台灣永續揭露政策地圖.html">我國永續揭露政策地圖</a>
+  <a href="未強制適用者的永續揭露_一頁總整理.pdf">PDF 版</a>
+  <button class="btn" onclick="window.print()">列印／存成 PDF</button>
 </div>
 
-<!-- 0 -->
-<section>
-  <h2><span class="no">0</span>先講結論</h2>
-  <div class="box signal"><p class="one" style="margin:0">四個地方都把「全套 ISSB 式永續報導」留給大公司。沒被點名的公司「不必做全套」，但不等於「什麼都不用做」，差別在各地給的「地板」不同。</p></div>
-  <div class="grid2">
-    <ul class="ladder">
-      <li><span class="lv">0</span><div><b>沒有任何永續揭露義務</b><span class="who">韓國 KOSDAQ 與多數中小企業；澳洲多數小型企業、非營利組織；日本沒有提出有價證券報告書的公司</span></div></li>
-      <li><span class="lv">1</span><div><b>只有既有環境法規（主要是溫室氣體申報）</b><span class="who">日本溫對法特定排出者、韓國 K-ETS／目標管理制對象、澳洲 NGER 申報者</span></div></li>
-      <li><span class="lv">2</span><div><b>法定文件裡要有永續／治理最低段落，不綁特定標準</b><span class="who">日本所有有價證券報告書提出者（2023 年起）；韓國全體 KOSPI 的公司治理報告書（2026 年起）</span></div></li>
-      <li><span class="lv">3</span><div><b>有官方自願標準，而且大客戶不能要求超過它</b><span class="who">歐盟 VSME／VS：價值鏈裡員工 1,000 人以下的受保護企業（2027 年起的會計年度）</span></div></li>
-      <li><span class="lv">4</span><div><b>自願採用全套國家版 ISSB 標準</b><span class="who">日本 SSBJ、韓國 KSDS、澳洲 AASB S1／S2 都開放自願；澳洲一旦宣稱採用就要全部符合</span></div></li>
-    </ul>
-    <div>
-      <div class="box blue"><b>三個觀察</b>
-        <ol>
-          <li><b>歐盟是唯一把「自願標準」寫成法律工具的地方。</b>VSME 從 2025 年的「建議」變成 2026 年 Omnibus I 的「價值鏈上限」依據，大公司向小供應商要永續資料不能超過它的範圍。</li>
-          <li><b>日韓澳的共同邏輯：</b>只強制「氣候」或「規模最大的一層」，其餘靠既有法規（溫室氣體申報、公司治理報告、年報既有段落）與市場壓力。</li>
-          <li><b>「自願」不代表「不會被罰」。</b>澳洲反漂綠執法對自願聲明一樣適用；日本有價證券報告書本來就受不實記載責任拘束。</li>
-        </ol>
-      </div>
-      <div class="box green"><b>一句話記四地</b>
-        <ul>
-          <li><b>歐盟</b>「不強制你，但保護你」：VSME 是小公司擋大客戶問卷的盾牌。</li>
-          <li><b>日本</b>「先全體寫一段，再讓大的做全套」：年報永續欄是地板，SSBJ 是天花板。</li>
-          <li><b>韓國</b>「治理先行，氣候等法」：治理報告書已全面強制，永續報告還在等修法。</li>
-          <li><b>澳洲</b>「算門檻，守誠實」：沒到門檻不用做，但自願說的每句都受反漂綠法管。</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
+<h1>國際主要市場對未納入強制適用永續揭露準則之公司<br>其揭露要求彙整</h1>
+<p class="meta">參考資料｜資料截至 2026 年 10 月 21 日｜依各主管機關公開文件整理，非法律意見</p>
 
-<!-- 1 -->
-<section>
-  <h2><span class="no">1</span>歐盟 VSME／VS：從「建議」變成「上限」</h2>
-  <div class="grid2">
-    <div>
-      <h3>時間軸</h3>
-      <ul class="tl">
-        <li><time>2024.12.17</time>EFRAG 交出 VSME 最終版，給員工 250 人以下的非上市中小企業。</li>
-        <li><time>2025.02.26</time>執委會提出 Omnibus I：縮小 CSRD 範圍、提出「價值鏈上限」。</li>
-        <li><time>2025.04</time>「停鐘」指令 (EU) 2025/794：第二、三波公司延後兩年。</li>
-        <li><time>2025.07.30</time>執委會建議 (EU) 2025/1710：建議中小企業用 VSME、建議銀行與大客戶只要 VSME 範圍內的資訊。只是建議，無拘束力。</li>
-        <li><time>2026.03.18</time>Omnibus I 最終版 Directive (EU) 2026/470 生效。CSRD 門檻改為員工 1,000 人以上<b>且</b>淨營業額 4.5 億歐元以上；會員國 2027.3.19 前轉國內法。</li>
-        <li><time>2026.07.03</time>執委會通過授權法規採納自願標準，改名 VS；審查期 9.4 屆滿無異議。</li>
-        <li><time>2026.09.21</time>Delegated Regulation (EU) 2026/1560 刊登公報，9.24 生效。</li>
-        <li class="future"><time>2027.01.01 起的會計年度</time>價值鏈上限正式適用；縮小後的 CSRD 範圍也從 2027 年開始的會計年度報導。</li>
-      </ul>
-    </div>
-    <div>
-      <h3>價值鏈上限（Value Chain Cap）：對非歐盟公司最有感</h3>
-      <div class="box warn small"><b>以前：</b>大客戶為了 CSRD 報告想問供應商什麼就問什麼，問卷一家一個版本。</div>
-      <div class="box green small"><b>2027 年起：</b>員工平均 1,000 人以下的價值鏈公司是「受保護企業」。CSRD 報導者<b>不得</b>索取超過 VS 範圍的資訊，受保護企業可以拒絕；報導者可憑供應商自我聲明認定身分，不必查證。</div>
-      <div class="box signal small"><b>四個限制</b>
-        <ul>
-          <li>只管「為了 CSRD 報導」的要求；合約、採購政策、金融機構風險評估的要求不在內。</li>
-          <li>該產業通常都會互相分享的永續資訊，仍可以要求。</li>
-          <li>禁止的是「要求提供」，不是「問」；供應商可自願多給。</li>
-          <li>台灣供應商員工 1,000 人以下，面對歐盟客戶就可援引。先備好一份 VSME 基本模組資料，等於有了通用答案。</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <h3>VS 長什麼樣（依 EFRAG 2024.12 版；2026.9 公報版結構相同，只做配合修訂後 ESRS 的最小調整）</h3>
-  <div class="grid2">
-    <div>
-      <p class="small muted" style="margin:0 0 .2rem"><b>基本模組 B1–B11</b>：微型企業（10 人以下）的目標版本、其他公司的最低要求。<b>不做重大性分析</b>，用「如適用」；沒填會被讀成「與你無關」，所以不能亂跳過。可因商業機密省略，但要在 B1 說明。</p>
-      <div class="items">
-        <div><span class="k">B1</span><span>編製基礎<span class="must">必填</span></span></div>
-        <div><span class="k">B2</span><span>永續作法、政策與未來行動<span class="must">必填</span></span></div>
-        <div><span class="k">B3</span><span>能源與溫室氣體（範疇一、二；範疇三自願）<span class="must">必填</span></span></div>
-        <div><span class="k">B4</span><span>空氣、水、土壤污染（如適用）</span></div>
-        <div><span class="k">B5</span><span>生物多樣性（如適用）</span></div>
-        <div><span class="k">B6</span><span>水（如適用）</span></div>
-        <div><span class="k">B7</span><span>資源使用、循環經濟、廢棄物（如適用）</span></div>
-        <div><span class="k">B8</span><span>員工一般特徵<span class="must">必填</span></span></div>
-        <div><span class="k">B9</span><span>員工健康與安全<span class="must">必填</span></span></div>
-        <div><span class="k">B10</span><span>薪酬、團體協商、訓練<span class="must">必填</span></span></div>
-        <div><span class="k">B11</span><span>貪腐與賄賂的定罪與罰款（如適用）</span></div>
-      </div>
-    </div>
-    <div>
-      <p class="small muted" style="margin:0 0 .2rem"><b>綜合模組 C1–C9</b>：銀行、投資人、大客戶比較會追問的項目。要先做完基本模組；選了就整組做完（仍受「如適用」）。沒有確信要求，不要求範疇三。</p>
-      <div class="items c">
-        <div><span class="k">C1</span><span>策略：商業模式與永續行動<span class="must">必填</span></span></div>
-        <div><span class="k">C2</span><span>政策與未來行動（進階）</span></div>
-        <div><span class="k">C3</span><span>溫室氣體減量目標與氣候轉型 ★銀行常問</span></div>
-        <div><span class="k">C4</span><span>氣候風險（實體、轉型） ★銀行常問</span></div>
-        <div><span class="k">C5</span><span>員工附加特徵</span></div>
-        <div><span class="k">C6</span><span>人權政策與流程</span></div>
-        <div><span class="k">C7</span><span>嚴重的人權負面事件</span></div>
-        <div><span class="k">C8</span><span>特定產業營收、排除於歐盟基準指數</span></div>
-        <div><span class="k">C9</span><span>治理機構性別比例</span></div>
-      </div>
-      <table>
-        <thead><tr><th></th><th>ESRS（強制）</th><th>VS（自願）</th></tr></thead>
-        <tbody>
-          <tr><td>對象</td><td>員工 1,000 人以上且營業額 4.5 億歐元以上</td><td>所有不在強制範圍者可用；上限保護 1,000 人以下</td></tr>
-          <tr><td>重大性</td><td>雙重重大性</td><td>基本模組不做，用「如適用」</td></tr>
-          <tr><td>範疇三／確信</td><td>要／有限確信</td><td>不要求／不要求</td></tr>
-          <tr><td>篇幅</td><td>上千個資料點（簡化中）</td><td>基本 11 項＋綜合 9 項</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
+<h2>壹、緣由</h2>
+<p class="item">一、金管會與環境部於 2026 年 9 月 23 日聯合宣布，在國家永續目標不變之前提下，參考歐盟及亞洲鄰近市場永續揭露準則簡化趨勢，調整上市櫃公司適用 IFRS 永續揭露準則（下稱永續準則）之相關規定：強制適用對象調整為實收資本額新臺幣 20 億元以上及受環境部納管應盤查及查驗之上市櫃公司（約 560 家，市值占比逾 87%）；資本額未達 20 億元且非環境部納管之上市櫃公司（約 1,410 家）仍須揭露氣候相關治理、風險管理、溫室氣體範疇一及二等基本資訊，並以簡易揭露範例及 ESG 評鑑加分鼓勵其自願接軌，預計於 2030 年再行檢討。</p>
+<p class="item">二、上開調整係參考國際主要市場對中小型企業之處理方式。爰彙整 IFRS 永續揭露準則本身對自願適用者之規範，以及歐盟、日本、韓國、澳洲、新加坡、香港及馬來西亞對「未納入強制適用範圍之公司」之揭露要求，俾供比較參考。</p>
 
-<!-- 2 -->
-<section>
-  <h2><span class="no">2</span>日本：三層地板，最底層比你想的高</h2>
-  <div class="grid2">
-    <div>
-      <ul class="ladder">
-        <li><span class="lv">A</span><div><b>所有有價證券報告書提出者（約 4,000 家，含部分非上市）</b><span class="who">2023 年 3 月期起內閣府令要求「サステナビリティ」欄：<b>治理、風險管理必填</b>；策略、指標及目標依重大性。<b>人力資本例外</b>：人才培育與內部環境整備方針及指標不論重大性都要寫；女性管理職比率、男性育嬰假、男女薪資差異放「從業員狀況」。不綁特定標準。</span></div></li>
-        <li><span class="lv">B</span><div><b>東證 Prime 市場上市公司</b><span class="who">公司治理守則補充原則 3-1③：依 TCFD 或同等架構揭露氣候資訊，遵循或解釋。Standard、Growth 只要求揭露永續作為。</span></div></li>
-        <li><span class="lv">C</span><div><b>SSBJ 標準強制（分三梯次，只有 Prime 市值達門檻者）</b><span class="who">見右表。其餘 Prime 未定。</span></div></li>
-      </ul>
-      <div class="box green small"><b>既有環境法規（與上市無關）：</b>地球溫暖化對策推進法「算定・報告・公表制度」，能源起源 CO₂ 年排放 3,000 公噸以上的特定排出者要申報；2026 年度起 GX-ETS 排放交易法定化，直接排放 10 萬公噸以上參加。</div>
-    </div>
-    <div>
-      <table>
-        <thead><tr><th>梯次</th><th>Prime 市值</th><th>首次強制</th><th>第三方確信</th></tr></thead>
-        <tbody>
-          <tr><td>第一梯</td><td>3 兆日圓以上（約 60–70 家）</td><td>2027 年 3 月期</td><td>2028 年 3 月期起；前兩年只確信範疇一、二及治理、風險管理</td></tr>
-          <tr><td>第二梯</td><td>1 兆日圓以上</td><td>2028 年 3 月期</td><td>適用後一年</td></tr>
-          <tr><td>第三梯</td><td>5,000 億日圓以上</td><td>2029 年 3 月期</td><td>適用後一年</td></tr>
-          <tr><td>其餘 Prime</td><td>5,000 億以下</td><td>未定</td><td>未定</td></tr>
-        </tbody>
-      </table>
-      <ul class="tl">
-        <li><time>2025.03.05</time>SSBJ 公布適用基準、一般基準、氣候基準（對應 IFRS S1、S2）。</li>
-        <li><time>2026 年 3 月期起</time>任何公司（含非上市）可自願採用 SSBJ。</li>
-        <li><time>2026.01 / 02.26</time>金融廳公布路徑圖；修訂內閣府令定案，第一、二梯次成為法定義務。</li>
-        <li><time>2026.07.15</time>金融商品交易法修正通過，揭露與確信（確信提供者登錄）條文 2027.4.1 施行。</li>
-      </ul>
-      <div class="box blue small"><b>沒被強制的日本公司要做什麼：</b>只要有提出有價證券報告書，永續欄就要寫（治理、風險管理、人力資本必填）；Prime 另加 TCFD 遵循或解釋；可自願採 SSBJ。非上市中小企業沒有永續揭露義務，只有溫對法申報；日本<b>沒有</b>像歐盟的索資上限。</div>
-    </div>
-  </div>
-</section>
+<h2>貳、IFRS 永續揭露準則對自願適用者之規範</h2>
+<p class="item">一、適用範圍由各轄區決定。IFRS S1、S2 本身未設定適用門檻，是否強制、適用對象及時程均由各轄區主管機關決定；ISSB 於 2024 年 9 月發布《自願適用 ISSB 準則：編製者指南》，說明在轄區尚未強制或未限制自願適用之情形下，公司自願適用時應注意之事項。</p>
+<p class="item">二、遵循聲明須全部符合。公司須符合 IFRS S1 及 IFRS S2 之全部規定，始得聲明遵循 ISSB 準則；未能全部符合者，不得聲明遵循，應說明其適用之範圍與程度（即「部分適用」），指明未符合之規定，並定期更新其邁向全面遵循之進度。</p>
+<p class="item">三、過渡性豁免限於首次適用年度。準則內建之過渡性豁免包括：（一）氣候優先，首年得僅揭露氣候相關風險與機會；（二）首年永續相關財務資訊得於財務報表發布後、隨半年度財務報告揭露；（三）首年免提供比較資訊；（四）首年得沿用原有之溫室氣體衡量方法；（五）首年免揭露範疇三溫室氣體排放。使用上開豁免仍得聲明遵循；惟自願適用者若將豁免延長至首年以後，即不得聲明遵循，應改以部分適用說明之。各轄區得另行延長豁免期間（例如馬來西亞延長為前兩個報導期間，我國第三階段公司氣候以外資訊延後二年）。</p>
+<p class="item">四、比例原則機制可長期適用。準則以「於報導日無須過度成本或努力即可取得之合理且可佐證資訊」及「個體可用之技能、能力與資源」兩項概念，容許公司於若干規定以質性方式取代量化分析；此等機制屬準則之一部分，使用後仍得聲明遵循，對初次適用及資源有限之公司尤具意義。</p>
+<p class="item">五、2025 年 12 月 IFRS S2 修正。ISSB 發布《溫室氣體排放揭露之修正》，自 2027 年 1 月 1 日以後開始之報導期間生效，得提前適用：範疇三第 15 類得限於融資排放；得採用 GICS 以外之產業分類；溫室氣體盤查議定書之轄區豁免得適用於個體之一部分；得採用轄區規定之全球暖化潛勢值。</p>
+<p class="item">六、無中小企業簡化版本。ISSB 迄未發布針對中小企業之簡化準則，而係以上開過渡性豁免與比例原則機制因應不同規模與成熟度之公司；針對未納入強制適用者另訂簡化標準者，目前僅歐盟（VS）有正式法律文件。</p>
 
-<!-- 3 -->
-<section>
-  <h2><span class="no">3</span>韓國：拖最久，路徑圖定了但法還沒修</h2>
-  <div class="grid2">
-    <div>
-      <ul class="tl">
-        <li><time>2021.01</time>KRX 發布 ESG 揭露指引，上市公司可自願申報永續報告書。</li>
-        <li><time>2024.04</time>KSSB 公布 KSDS 草案（門檻原提 30 兆韓元）。</li>
-        <li><time>2026.02.26</time>KSSB 公布最終版 KSDS 1、2，開放自願採用。</li>
-        <li><time>2026.05.31</time>全體 KOSPI（以 2024 年底計 842 家）首次全部提出公司治理報告書。</li>
-        <li><time>2026.07.08</time>金融委員會公布最終路徑圖（右表）。</li>
-        <li class="future"><time>待定</time>資本市場法與相關規則修正後才生效。<span class="pill">尚未立法</span></li>
-      </ul>
-      <table>
-        <thead><tr><th>梯次</th><th>KOSPI 合併總資產</th><th>首次揭露</th><th>範疇三</th></tr></thead>
-        <tbody>
-          <tr><td>第一梯</td><td>10 兆韓元以上</td><td>2028 年（2027 年度資料），放法定事業報告書，先只強制氣候</td><td>2031 年起</td></tr>
-          <tr><td>第二梯</td><td>5 兆韓元以上</td><td>2029 年（2028 年度資料）</td><td>2032 年起</td></tr>
-          <tr><td>之後</td><td>2 兆韓元以上</td><td>2030 年以後，視 2028–29 執行狀況再決定</td><td>—</td></tr>
-        </tbody>
-      </table>
-      <p class="small muted">第三方確信 2030 年起；提議前三年免責；低碳排產業研議豁免範疇三（2026.10）。金融委員會估 2028 年約 291 家、2029 年約 3,171 家（含子公司）納入。</p>
-    </div>
-    <div>
-      <h3>沒被強制的韓國公司，現在的地板</h3>
-      <ul class="ladder">
-        <li><span class="lv">治</span><div><b>公司治理報告書：全體 KOSPI</b><span class="who">2019 年 2 兆韓元起步 → 2022 年 1 兆 → 2024 年 5,000 億 → 2026 年全體 KOSPI。15 項核心指標，遵循或解釋，每年 5 月 31 日前。只有治理，不含環境與社會；KOSDAQ 不在內。</span></div></li>
-        <li><span class="lv">環</span><div><b>環境資訊公開制度</b><span class="who">環境技術及環境產業支援法第 16 條之 8：公共機構、大型排放源、合併總資產 2 兆韓元以上的上市公司要在環境資訊公開系統申報。</span></div></li>
-        <li><span class="lv">碳</span><div><b>K-ETS 與目標管理制</b><span class="who">年排放 12.5 萬公噸以上的企業（或 2.5 萬公噸的設施）納入 K-ETS，經查證後申報；目標管理制門檻較低。</span></div></li>
-        <li><span class="lv">願</span><div><b>向 KRX 自願申報永續報告書</b><span class="who">依 2021 年指引；路徑圖表示會更新為接受依 KSDS 編製的報告，強制前鼓勵先自願。</span></div></li>
-      </ul>
-    </div>
-  </div>
-</section>
+<h2>參、歐盟</h2>
+<p class="item">一、強制適用範圍大幅縮減。Omnibus I 指令（Directive (EU) 2026/470，2026 年 2 月 24 日制定、2 月 26 日刊登公報、3 月 18 日生效）將企業永續報導指令（CSRD）之強制適用對象調整為員工逾 1,000 人<strong>且</strong>淨營業額逾 4.5 億歐元之公司，會員國應於 2027 年 3 月 19 日前轉換為國內法；縮減後之範圍自 2027 年開始之會計年度適用（非歐盟母公司自 2028 年）。確信維持有限確信，原規劃之合理確信已取消。</p>
+<p class="item">二、自願適用標準 VS 已成為正式法律文件。執委會於 2026 年 7 月 3 日通過授權法規，將 EFRAG 2024 年 12 月提交之 VSME（非上市中小企業自願永續報導標準）改稱 VS（Voluntary Standard），正式名稱為「供受價值鏈上限保護之企業自願使用之永續報導準則」；歐洲議會及理事會審查期於 9 月 4 日屆滿未提異議，9 月 21 日以 Delegated Regulation (EU) 2026/1560 刊登公報，9 月 24 日生效，2025 年 7 月 30 日之執委會建議 (EU) 2025/1710 同日失效。其要點如下：</p>
+<p class="sub">（一）適用對象：不在 CSRD 強制範圍之公司均得自願採用；標準本文載明係為員工平均 1,000 人以下之公司設計（原 VSME 版限員工 250 人以下之非上市企業）。</p>
+<p class="sub">（二）結構：基本模組 B1 至 B11（編製基礎、永續作法與政策、能源與溫室氣體（範疇一及地點基礎之範疇二）、污染、生物多樣性、水、資源與廢棄物、員工特徵、健康與安全、薪酬與訓練、貪腐定罪與罰款）及綜合模組 C1 至 C9（策略與商業模式、進階政策、減量目標與氣候轉型、氣候風險、員工附加特徵、人權政策、人權事件、特定產業營收、治理機構性別比例）。採基本模組為採綜合模組之前提；選定之模組應整組遵循。</p>
+<p class="sub">（三）簡化設計：基本模組不作重大性評估，改採「如適用」原則，公司無該項情事者即毋須揭露，惟省略即推定為不適用；員工 10 人以下之公司，B3、B6、B7 等部分資料點改為自願；不要求範疇三；不要求確信；得因商業機密省略個別資料，惟應於 B1 說明。</p>
+<p class="item">三、價值鏈上限（value chain cap）自 2027 年起適用。依 Omnibus I 指令及前開授權法規，CSRD 報導公司不得向其價值鏈中員工平均<strong>不超過 1,000 人</strong>之公司（受保護企業）索取超過授權法規附件二所列「必要資料點」之永續資訊；受保護企業得拒絕逾越上限之要求，並得以自我聲明證明其規模，報導公司毋須另行查證。上限自 2027 年 1 月 1 日以後開始之會計年度適用，並有三項限制：（一）僅適用於為 CSRD 報導目的之資訊蒐集，依契約、其他歐盟或國內法令之資訊義務不受影響；（二）不禁止自願提供，該產業慣常互相分享之資訊亦不受限；（三）員工 10 人以下之公司另適用較短之資料點清單。</p>
+<p class="item">四、對我國之意涵。我國員工 1,000 人以下之供應商，面對歐盟客戶為 CSRD 報導目的之資料要求，自 2027 年起得援引價值鏈上限，將回覆範圍限縮於 VS 之必要資料點。</p>
 
-<!-- 4 -->
-<section>
-  <h2><span class="no">4</span>澳洲：門檻算得最清楚，自願也管最嚴</h2>
-  <div class="grid2">
-    <div>
-      <p class="small muted" style="margin-bottom:.3rem">2024 年 9 月立法（Treasury Laws Amendment (Financial Market Infrastructure and Other Measures) Act 2024），只強制<b>氣候</b>（AASB S2）；AASB S1 自願。只掛在「本來就要依公司法第 2M 章提財務報告」的公司上。</p>
-      <table>
-        <thead><tr><th>群組</th><th>會計年度始於</th><th>規模門檻（三選二）</th><th>另外抓進來</th></tr></thead>
-        <tbody>
-          <tr><td>Group 1</td><td>2025.1.1</td><td>營收 5 億澳元／資產 10 億／員工 500 人</td><td>NGER 申報超過公布門檻者</td></tr>
-          <tr><td>Group 2</td><td>2026.7.1</td><td>營收 2 億／資產 5 億／員工 250 人</td><td>所有 NGER 登記者；管理資產 50 億澳元以上的資產持有者</td></tr>
-          <tr><td>Group 3</td><td>2027.7.1</td><td>營收 5,000 萬／資產 2,500 萬／員工 100 人</td><td>無</td></tr>
-        </tbody>
-      </table>
-      <div class="box signal small"><b>2026–27 預算案</b>提議大型私人公司門檻加倍（營收 1 億、資產 5,000 萬澳元，員工維持 100 人），Group 3 跟著縮小，約 1,500 家會掉出。財政部 2026.10.18 公布法規草案，諮詢至 11.2。<b>尚未定案</b>，現行門檻照舊。</div>
-      <ul class="small">
-        <li>範疇一、二第一年就要；範疇三從第二個報導年度開始。</li>
-        <li>確信由有限走到合理，2030.7 以後開始的年度全部合理確信。</li>
-        <li>ASIC RG 280（2025.3.31）：過渡期「合比例、務實」監理，可個案豁免。</li>
-      </ul>
-    </div>
-    <div>
-      <div class="box green small"><b>Group 3「沒有重大氣候風險」聲明：</b>評估後認為沒有重大的氣候相關財務風險或機會，可只出具一份聲明，不做完整永續報告。</div>
-      <div class="box blue small"><b>修正責任期（modified liability）：</b>2025.1.1 至 2027.12.31 之間開始的會計年度，永續報告裡範疇三、情境分析、轉型計畫的「受保護聲明」，除刑事訴追外只有 ASIC 能告；2025 年開始的年度（Group 1 第一年）更涵蓋所有前瞻性氣候聲明。是<b>固定期間</b>，不是各群組各三年；只保護為符合準則而做的聲明。</div>
-      <div class="box purple small"><b>自願採用要全套：</b>門檻以下的公司、外國母公司或子公司可自願採 AASB S1／S2，但宣稱「依 AASB S1／S2 編製」就必須全部符合。</div>
-      <div class="box warn small"><b>反漂綠不分強制或自願：</b>ASIC 依 ASIC 法與公司法「誤導或欺罔」條款執法，2024 年起對 Mercer、Vanguard、Active Super 取得上千萬澳元罰金判決；INFO 271 說明如何避免。自願的永續聲明一樣適用。</div>
-      <div class="box small"><b>ASIC 給小企業的話：</b>不在範圍就不必編永續報告，但可能被大客戶要供應鏈資料，沒有法律義務提供；財政部 2026 年在諮詢「供應商資料索取」效率調整。</div>
-    </div>
-  </div>
-</section>
+<h2>肆、日本</h2>
+<p class="item">一、全體有價證券報告書提出公司之基本揭露義務。依 2023 年 1 月修正之「企業內容等の開示に関する内閣府令」，自 2023 年 3 月期起，所有提出有價證券報告書之公司（約 4,000 家，含部分非上市公司）均應設置「サステナビリティに関する考え方及び取組」欄：治理及風險管理為必填，策略及指標與目標依重大性揭露；人力資本（人才培育方針、內部環境整備方針及其指標）不論重大性均應揭露，並於「從業員狀況」揭露女性管理職比率、男性育嬰假取得率及男女薪資差異。不指定特定準則。</p>
+<p class="item">二、東證 Prime 市場之氣候揭露。依公司治理守則（2021 年 6 月修訂）補充原則 3-1③，Prime 市場上市公司應依 TCFD 或同等架構揭露氣候相關資訊，採遵循或解釋；Standard 及 Growth 市場僅要求揭露永續相關作為。</p>
+<p class="item">三、SSBJ 準則分梯次強制適用。金融審議會工作小組於 2026 年 1 月 8 日提出報告；金融廳於 2026 年 2 月 20 日公布並施行修正後之內閣府令，Prime 市場平均市值 1 兆日圓以上之公司依 SSBJ 準則揭露成為法定義務：平均市值 3 兆日圓以上者自 2027 年 3 月期（約 60 至 70 家）、1 兆日圓以上者自 2028 年 3 月期；5,000 億日圓以上者預定自 2029 年 3 月期，惟尚未訂入府令。第三方確信自各梯次適用後一年起，前二年限於範疇一、二及治理、風險管理。過渡措施：適用開始前二個年度得採兩階段揭露，永續資訊得於翌期半期報告書提出期限前以訂正報告書補交；範疇三等估計資訊設有安全港，合理記載差異原因及推論過程者不負虛偽記載責任。金融商品交易法修正案於 2026 年 4 月 10 日提交第 221 回國會、7 月 15 日成立、7 月 23 日公布（令和 8 年法律第 64 號），納入特定非財務資訊之揭露與確信制度，確信相關條文預定 2027 年 4 月 1 日施行。</p>
+<p class="item">四、未納入強制適用者之要求。（一）有提出有價證券報告書者：仍應依第一點揭露永續欄，Prime 市場公司並應依第二點辦理；（二）自 2026 年 3 月期起，任何公司（含非上市）得自願適用 SSBJ 準則；（三）非上市中小企業：無永續揭露義務，僅依地球溫暖化對策推進法「算定・報告・公表制度」，能源起源二氧化碳年排放達 3,000 公噸以上之特定排出者應向政府申報；（四）日本未設類似歐盟之索資上限。</p>
 
-<!-- 5 -->
-<section>
-  <h2><span class="no">5</span>四地比較：誰強制、誰自願、地板在哪</h2>
-  <div class="scroll"><table>
-    <thead><tr><th></th><th>歐盟</th><th>日本</th><th>韓國</th><th>澳洲</th></tr></thead>
-    <tbody>
-      <tr><td>強制標準</td><td>ESRS（簡化版 2026 採納）</td><td>SSBJ（對應 IFRS S1、S2）</td><td>KSDS 1、2（對應 IFRS S1、S2）</td><td>AASB S2（氣候）</td></tr>
-      <tr><td>強制範圍</td><td>員工 1,000 人以上且營業額 4.5 億歐元以上</td><td>Prime 市值 3 兆、1 兆、5,000 億日圓三梯</td><td>KOSPI 資產 10 兆、5 兆韓元兩梯</td><td>三群組，三選二規模門檻</td></tr>
-      <tr><td>主題範圍</td><td>全主題（雙重重大性）</td><td>一般＋氣候</td><td>先只強制氣候</td><td>只強制氣候</td></tr>
-      <tr><td>首次強制年</td><td>已實施（2024 年度第一波）</td><td>2027 年 3 月期</td><td>2028 年（2027 年度資料）</td><td>2025.1 起的年度</td></tr>
-      <tr><td>法律狀態</td><td>已生效，2027.3 前轉國內法；VS 已刊登公報</td><td>府令（2026.2）與金商法（2026.7）都已修</td><td>路徑圖定案，法律未修</td><td>已立法</td></tr>
-      <tr><td>非強制者的官方自願標準</td><td><b>有</b>：VSME／VS，且是價值鏈上限</td><td>可自願用 SSBJ；無簡化版</td><td>可自願用 KSDS；無簡化版</td><td>AASB S1 自願；S2 可自願但要全套</td></tr>
-      <tr><td>非強制者的法定地板</td><td>無（各國公司法另有非財務資訊規定）</td><td>有價證券報告書永續欄（治理、風險管理、人力資本必填）</td><td>公司治理報告書（全 KOSPI）、環境資訊公開</td><td>無；NGER 申報另計</td></tr>
-      <tr><td>大客戶索資限制</td><td><b>有</b>：不得超過 VS 範圍（2027 年起）</td><td>無</td><td>無</td><td>無，財政部 2026 年諮詢中</td></tr>
-      <tr><td>確信</td><td>有限確信（合理確信已取消）</td><td>適用後一年起，先範疇一、二</td><td>2030 年起</td><td>有限→合理，2030.7 後全合理</td></tr>
-    </tbody>
-  </table></div>
-</section>
+<h2>伍、韓國</h2>
+<p class="item">一、永續揭露路徑圖已定案，法律尚待修正。金融委員會於 2026 年 7 月 8 日公布最終路徑圖：KOSPI 上市公司合併總資產 10 兆韓元以上者自 2028 年起（揭露 2027 年度資料）、5 兆韓元以上者自 2029 年起，依韓國永續揭露準則（KSDS，對應 IFRS S1、S2）於法定事業報告書揭露<strong>氣候</strong>資訊；2 兆韓元以上者於 2030 年以後視 2028 至 2029 年執行情形再定。範疇三各延後三年（分別自 2031、2032、2033 年起），中小企業及非高碳排企業豁免；第三方確信自 2030 年起；首三年除故意漂綠外免除損害賠償、行政處分及刑事責任，其後對有合理依據之預測、估計及第三方資料適用安全港；首年得排除占合併資產或營收 10% 以下之子公司。金融委員會估計 2028 年約 291 家、2029 年約 3,171 家（含子公司）納入；資本市場法及相關規則修正完成後始正式生效。</p>
+<p class="item">二、未納入強制適用者之要求。（一）公司治理報告書：依金融委員會 2025 年 7 月 9 日核定之韓國交易所揭露規則修正，自 2026 年起全體 KOSPI 上市公司（以 2024 年底計 842 家，原為總資產 5,000 億韓元以上之 541 家）均應於每年 5 月 31 日前提出，就 15 項核心指標採遵循或解釋，僅涵蓋治理，KOSDAQ 不在內；（二）環境資訊公開制度：依環境技術及環境產業支援法第 16 條之 8，公共機構、大型排放源及合併總資產 2 兆韓元以上之上市公司應申報；（三）排放交易制（K-ETS）及目標管理制：年排放 12.5 萬公噸以上之企業或 2.5 萬公噸以上之設施納入 K-ETS，經查證後申報；（四）得自願適用 2026 年 2 月公布之 KSDS 第 1 號、第 2 號，並依韓國交易所 2021 年指引自願申報永續報告書，交易所系統將更新以受理依 KSDS 編製之自願報告。</p>
 
-<!-- 6 -->
-<section>
-  <h2><span class="no">6</span>延伸：新加坡、香港，以及對台灣的意義</h2>
-  <div class="grid3">
-    <div class="box blue small"><b>新加坡</b>
-      <ul>
-        <li>所有 SGX 上市公司 2025 年度起依 ISSB 式要求揭露氣候（範疇一、二）。</li>
-        <li>大型非上市公司（營收 10 億新幣<b>且</b>資產 5 億新幣以上）原定 2027 年度，2025.8.25 延到 <b>2030 年度</b>；範疇三自願；外部確信延到 2032 年度。</li>
-        <li>其他非上市公司：無義務。</li>
-      </ul>
-    </div>
-    <div class="box green small"><b>香港</b>
-      <ul>
-        <li>港交所新氣候規定 2025.1.1 起：所有發行人範疇一、二強制，其餘遵循或解釋；恒生綜合大型股成分股 2026 年起全面強制。</li>
-        <li>2024.12 路徑圖：具公眾責任實體（上市公司與重要金融機構）最遲 2028 年全面採用香港版 ISSB 標準。</li>
-        <li>一般非上市公司：目前沒有強制。</li>
-      </ul>
-    </div>
-    <div class="box signal small"><b>對台灣的三個意義</b>
-      <ol>
-        <li><b>台灣供應商可以用歐盟的價值鏈上限。</b>員工 1,000 人以下，面對歐盟客戶為 CSRD 而來的問卷，可把回覆限縮在 VS 範圍。</li>
-        <li><b>台灣的強制範圍其實比日韓廣。</b>以實收資本額分梯，2028 年全體上市櫃都要用 IFRS 永續揭露準則；日本只管 Prime 前幾十家，韓國只管資產 5 兆韓元以上。</li>
-        <li><b>台灣的非強制者目前沒有自願簡化版。</b>VSME「基本 11 項、不做重大性」是可參考的範本。</li>
-      </ol>
-    </div>
-  </div>
-</section>
+<h2>陸、澳洲</h2>
+<p class="item">一、僅氣候揭露為強制，依規模分三群組。依 2024 年 9 月通過之 Treasury Laws Amendment (Financial Market Infrastructure and Other Measures) Act 2024，AASB S2（氣候）為強制準則，AASB S1（一般永續）為自願準則；義務僅及於原應依公司法第 2M 章提出財務報告之公司。規模門檻採三項符合二項：Group 1（2025 年 1 月 1 日以後開始之會計年度）營收 5 億澳元、資產 10 億澳元、員工 500 人，另納入溫室氣體申報超過公布門檻者；Group 2（2026 年 7 月 1 日起）營收 2 億、資產 5 億、員工 250 人，另納入所有 NGER 登記者及管理資產 50 億澳元以上之資產持有者；Group 3（2027 年 7 月 1 日起）營收 5,000 萬、資產 2,500 萬、員工 100 人。範疇三自第二個報導年度起；確信由有限確信逐步提升，2030 年 7 月 1 日以後開始之年度全部採合理確信。</p>
+<p class="item">二、過渡保護。（一）Group 3 公司評估後認無重大氣候相關財務風險或機會者，得僅出具聲明而免編製完整永續報告；（二）修正責任期：2025 年 1 月 1 日至 2027 年 12 月 31 日間開始之會計年度，永續報告內關於範疇三、情境分析及轉型計畫之受保護聲明，除刑事訴追外僅 ASIC 得提起訴訟，2025 年開始之會計年度並擴及所有前瞻性氣候聲明；此為固定期間，且僅保護為符合準則所為之聲明；（三）ASIC 監理指引 RG 280（2025 年 3 月 31 日）採合比例、務實之監理，並得個案豁免。</p>
+<p class="item">三、門檻調整仍在研議。2026–27 年度預算案提議將大型私人公司之營收及資產門檻加倍（營收 1 億、資產 5,000 萬澳元，員工 100 人不變），Group 3 範圍將隨之縮小，政府估計約 1,500 家私人公司將退出強制範圍；財政部於 2026 年 10 月 18 日公布法規草案徵詢意見至 11 月 2 日，尚未定案，現行門檻照舊適用。</p>
+<p class="item">四、未納入強制適用者之要求。（一）無永續報告義務；（二）得自願適用 AASB S1 或 S2，惟宣稱依該準則編製者須全部符合，不得部分遵循；（三）自願揭露之永續聲明仍受 ASIC 法及公司法「誤導或欺罔」規定拘束，ASIC 自 2024 年起已對 Mercer、Vanguard、Active Super 等取得鉅額罰金判決，並發布資訊單 INFO 271 說明漂綠之避免；（四）小型企業雖可能被報導主體要求提供供應鏈資料，惟無法律上提供義務，財政部於 2026 年就供應商資料索取之效率調整另行諮詢。</p>
 
-<!-- 7 -->
-<section>
-  <h2><span class="no">7</span>名詞速查與核對來源</h2>
-  <dl>
-    <div><dt>VSME／VS</dt><dd>歐盟自願永續報導標準；EFRAG 2024.12 版稱 VSME，執委會 2026.7 採納後改稱 VS，2026.9.21 刊登公報 (EU) 2026/1560</dd></div>
-    <div><dt>CSRD／ESRS</dt><dd>企業永續報導指令與歐洲永續報導準則，強制報導者用</dd></div>
-    <div><dt>Omnibus I</dt><dd>2025.2 提出、2026.2 通過的簡化法案 Directive (EU) 2026/470，縮小 CSRD 範圍並加入價值鏈上限</dd></div>
-    <div><dt>價值鏈上限</dt><dd>CSRD 報導者不得向員工 1,000 人以下的價值鏈公司索取超過 VS 的資訊，2027 年起的會計年度適用</dd></div>
-    <div><dt>受保護企業</dt><dd>員工平均 1,000 人以下、受價值鏈上限保護的公司；可自我聲明</dd></div>
-    <div><dt>SSBJ</dt><dd>日本永續基準委員會，2025.3 發布對應 IFRS S1、S2 的標準</dd></div>
-    <div><dt>有価証券報告書</dt><dd>日本法定年報；2023 年起有永續欄</dd></div>
-    <div><dt>KSSB／KSDS</dt><dd>韓國永續準則委員會及其韓國永續揭露準則</dd></div>
-    <div><dt>사업보고서</dt><dd>韓國法定年報（事業報告書），強制永續揭露將放這裡</dd></div>
-    <div><dt>AASB S1／S2</dt><dd>澳洲永續準則；S1 一般永續（自願）、S2 氣候（強制）</dd></div>
-    <div><dt>NGER</dt><dd>澳洲國家溫室氣體與能源申報法</dd></div>
-    <div><dt>修正責任期</dt><dd>澳洲 2025–2027 年開始的會計年度內，特定氣候聲明只有 ASIC 能告（刑事除外）</dd></div>
-    <div><dt>遵循或解釋</dt><dd>不做也可以，但要公開說明為什麼不做</dd></div>
-  </dl>
-  <p class="foot">原始出處（引用前請核對）：歐盟 EUR-Lex 的 Directive (EU) 2026/470、Recommendation (EU) 2025/1710、Delegated Regulation (EU) 2026/1560 與 EFRAG VSME 全文；日本金融廳 WG 資料、企業內容等の開示に關する內閣府令、SSBJ；韓國 FSC 2026.7.8 新聞稿、KSSB；澳洲 Treasury Laws Amendment Act 2024、AASB S1／S2、ASIC RG 280 與 INFO 271、財政部 2026.10 法規草案諮詢。本頁依公開二手來源整理並於 2026.10.21 重新核對，不是法律意見。</p>
-</section>
+<h2>柒、新加坡、香港及馬來西亞</h2>
+<p class="item">一、新加坡。所有新加坡交易所上市公司自 2025 年度起依 ISSB 式要求揭露氣候資訊（含範疇一、二）；大型非上市公司（年營收 10 億新幣以上且總資產 5 億新幣以上）原定 2027 年度起，經會計與企業管制局（ACRA）及 SGX RegCo 於 2025 年 8 月 25 日延後至 2030 年度，範疇一、二之外部有限確信延至 2032 年度，範疇三維持自願；其他非上市公司無義務。</p>
+<p class="item">二、香港。港交所新氣候規定自 2025 年 1 月 1 日起生效：所有發行人範疇一、二強制揭露，其餘氣候規定採遵循或解釋；恒生綜合大型股指數成分股自 2026 年起全面強制。依 2024 年 12 月財經事務及庫務局路徑圖，具公眾責任之實體（上市公司及重要金融機構）最遲於 2028 年全面採用香港永續揭露準則；一般非上市公司目前無強制要求。</p>
+<p class="item">三、馬來西亞。證券委員會 2024 年 9 月發布國家永續報導框架（NSRF），採用 IFRS S1、S2：主板市值 20 億令吉以上公司自 2025 年、其餘主板公司自 2026 年、ACE 板公司及年營收 20 億令吉以上之大型非上市公司自 2027 年起適用；並將準則內建之氣候優先及範疇三豁免延長為前兩個報導期間。其他非上市公司無義務。</p>
+
+<h2>捌、我國現況（依 2026 年 9 月 23 日新聞稿及附件）</h2>
+<p class="item">一、強制適用對象：實收資本額 20 億元以上之上市櫃公司（第一階段資本額 100 億元以上 126 家自 2026 年度、第二階段 50 至 100 億元 118 家自 2027 年度、第三階段 20 至 50 億元 316 家自 2028 年度）及資本額未達 20 億元惟受環境部公告應盤查登錄及查驗者（約 25 家），合計約 560 家；金融業、保險業及證券期貨業另依「綠色及轉型金融行動方案」辦理。</p>
+<p class="item">二、第三階段過渡措施：接軌前二年僅揭露氣候相關資訊（氣候以外資訊自第三年即 2030 年起）；範疇三改為自願揭露；第二及第三階段公司免除母公司個體溫室氣體（範疇一、二）確信；全體接軌公司首次適用前二年，永續專章最遲得依年報時限（股東會前 14 日）申報。</p>
+<p class="item">三、未納入強制適用之上市櫃公司（資本額未達 20 億元且非環境部納管，約 1,410 家）：仍須於年報揭露氣候相關治理、風險管理、溫室氣體範疇一及二等基本資訊（配合修正年報準則第 10 條之 1）；溫室氣體確信改為自願；主管機關將訂定簡易揭露範例，並以 ESG 評鑑加分鼓勵自願接軌永續準則；預計 2030 年視國際趨勢及企業準備情形再行檢討。</p>
+
+<h2>玖、比較表</h2>
+<div class="scroll"><table>
+<thead><tr><th>項目</th><th>歐盟</th><th>日本</th><th>韓國</th><th>澳洲</th><th>我國</th></tr></thead>
+<tbody>
+<tr><td>強制適用準則</td><td>ESRS（簡化版）</td><td>SSBJ（對應 IFRS S1、S2）</td><td>KSDS 1、2（對應 IFRS S1、S2）</td><td>AASB S2（氣候）</td><td>IFRS 永續揭露準則（S1、S2）</td></tr>
+<tr><td>強制適用範圍</td><td>員工逾 1,000 人且營業額逾 4.5 億歐元</td><td>Prime 市場平均市值 3 兆、1 兆（5,000 億預定）日圓</td><td>KOSPI 合併資產 10 兆、5 兆韓元</td><td>三群組，三項規模門檻符合二項</td><td>實收資本額 20 億元以上及環境部納管者</td></tr>
+<tr><td>首次強制年度</td><td>第一波已實施；新範圍 2027 年度</td><td>2027 年 3 月期</td><td>2028 年（2027 年度資料）</td><td>2025 年 1 月起之年度</td><td>2026 年度（第一階段）</td></tr>
+<tr><td>主題範圍</td><td>全主題，雙重重大性</td><td>一般及氣候</td><td>先僅氣候</td><td>僅氣候</td><td>氣候優先，第三階段氣候以外延後二年</td></tr>
+<tr><td>未納入者之法定揭露</td><td>無（各國公司法另有規定）</td><td>有價證券報告書永續欄（治理、風險管理、人力資本必填）</td><td>公司治理報告書（全體 KOSPI）、環境資訊公開</td><td>無；NGER 申報另計</td><td>氣候相關治理、風險管理、範疇一及二基本資訊</td></tr>
+<tr><td>官方自願標準</td><td>有，VS（Delegated Regulation (EU) 2026/1560）</td><td>得自願適用 SSBJ，無簡化版</td><td>得自願適用 KSDS，無簡化版</td><td>AASB S1 自願；S2 自願適用須全部符合</td><td>鼓勵自願接軌永續準則，另訂簡易揭露範例</td></tr>
+<tr><td>大客戶索資限制</td><td>有，價值鏈上限（2027 年起）</td><td>無</td><td>無</td><td>無，財政部諮詢中</td><td>無</td></tr>
+<tr><td>確信</td><td>有限確信</td><td>適用後一年起，先範疇一、二</td><td>2030 年起</td><td>有限確信逐步至合理確信（2030 年 7 月後）</td><td>合併層級範疇一、二有限確信；20 億元以下自願</td></tr>
+<tr><td>法律狀態</td><td>指令已生效，VS 已刊登公報</td><td>府令及金商法均已修正</td><td>路徑圖定案，法律待修</td><td>已立法，門檻調整草案諮詢中</td><td>藍圖及路徑圖已修正，年報準則及函令年底前修正</td></tr>
+</tbody></table></div>
+
+<h2>拾、綜合觀察</h2>
+<p class="item">一、各市場均將完整之 ISSB 式永續報導留予大型公司，對未納入者之處理可分為四種層級：無義務（韓國 KOSDAQ、澳洲多數小型企業）；僅既有環境法規之溫室氣體申報（日本溫對法、韓國 K-ETS、澳洲 NGER）；法定文件內之最低限度永續或治理段落（日本有價證券報告書永續欄、韓國公司治理報告書、我國資本額 20 億元以下之氣候基本資訊）；以及官方自願標準（歐盟 VS）。我國對未納入者仍課以氣候基本資訊揭露義務，其層級高於日韓澳三地對非上市公司之要求，與日本對全體有價證券報告書提出公司之作法相近。</p>
+<p class="item">二、歐盟係唯一將自願標準訂為法律文件並賦予「索資上限」效力之市場；日、韓、澳對未納入者均未設自願簡化標準，而以準則內建之過渡性豁免及比例原則機制因應。我國擬訂之簡易揭露範例與歐盟 VS 基本模組「不作重大性評估、逐項如適用」之設計方向相近，可供後續參考。</p>
+<p class="item">三、自願適用不等於免除責任。依 ISSB 指南，未全部符合者不得聲明遵循；澳洲對自願永續聲明適用反漂綠執法；日本有價證券報告書之永續欄受不實記載責任拘束；韓國於首三年免責後亦僅對有合理依據之估計適用安全港。</p>
+
+<h2>拾壹、資料來源（已直接核對之官方文件）</h2>
+<div class="src">
+<p>一、ISSB：<a href="https://www.ifrs.org/content/dam/ifrs/supporting-implementation/issb-standards/issb-voluntary-application-preparers.pdf">Voluntarily applying ISSB Standards—A guide for preparers（2024.9）</a>；<a href="https://www.ifrs.org/news-and-events/news/2025/12/issb-issues-targeted-amendments-ifrs-s2/">Amendments to Greenhouse Gas Emissions Disclosures（2025.12）</a>。</p>
+<p>二、歐盟：<a href="https://eur-lex.europa.eu/eli/dir/2026/470/oj/eng">Directive (EU) 2026/470</a>；<a href="https://eur-lex.europa.eu/eli/reg_del/2026/1560/oj/eng">Commission Delegated Regulation (EU) 2026/1560</a>；<a href="https://www.efrag.org/en/projects/voluntary-reporting-standard-for-smes-vsme/concluded">EFRAG VSME 專案頁</a>。</p>
+<p>三、日本：<a href="https://www.fsa.go.jp/news/r7/shouken/20260220/20260220.html">金融庁 2026.2.20 內閣府令改正公布</a>；<a href="https://www.fsa.go.jp/singi/singi_kinyu/tosin/20260108/02.pdf">金融審議会ワーキング・グループ報告（2026.1.8）</a>；<a href="https://www.sangiin.go.jp/japanese/joho1/kousei/gian/221/meisai/m221080221057.htm">參議院 金商法改正法案議案情報</a>。</p>
+<p>四、韓國：<a href="https://www.fsc.go.kr/eng/pr010101/87276">金融委員會 2026.7.8 新聞稿</a>；<a href="https://www.fsc.go.kr/eng/pr010101/84905">金融委員會 2025.7.9 新聞稿</a>。</p>
+<p>五、澳洲：<a href="https://aasb.gov.au/media/xpilzp2e/overviewofasrs_04-25.pdf">AASB, Overview of ASRS（2025.4）</a>；<a href="https://download.asic.gov.au/media/j4rhwyiz/rg280-published-31-march-2025.pdf">ASIC RG 280（2025.3.31）</a>；<a href="https://consult.treasury.gov.au/c2026-811281">財政部法規草案諮詢（2026.10）</a>。</p>
+<p>六、新加坡、香港、馬來西亞：<a href="https://www.acra.gov.sg/news-events/news-announcements/887/">ACRA 2025.8.25 公告</a>；<a href="https://www.hkex.com.hk/News/Regulatory-Announcements/2024/240419news?sc_lang=en">HKEX 2024.4.19 諮詢總結</a>；<a href="https://www.sc.com.my/nsrf">馬來西亞證券委員會 NSRF</a>。</p>
+<p>七、我國：<a href="https://www.fsc.gov.tw/ch/home.jsp?id=96&parentpath=0&mcustomize=news_view.jsp&dataserno=202609230001&dtable=News">金管會 2026.9.23 新聞稿「接軌國際　行穩致遠」</a>及附件 2、附件 3。</p>
+<p>八、仍依二手來源之事項：日本金商法確信條文 2027.4.1 施行日、Prime 市場市值 3 兆日圓以上家數、韓國 KSDS 最終版公布日期、日本 GX-ETS 及韓國 K-ETS 門檻、澳洲反漂綠判決案例。</p>
+</div>
+<p class="foot">本彙整依各主管機關公開文件整理，供內部參考，不構成法律意見；引用前請以原始文件為準。</p>
 </div>
 </body>
 </html>
