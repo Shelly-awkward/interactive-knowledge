@@ -97,6 +97,12 @@ details.schema summary{cursor:pointer;color:var(--blue)}
 .restable th{position:sticky;top:0;background:var(--card);color:var(--ink-2)}
 .restable td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tablewrap{max-height:50vh;overflow:auto;border:1px solid var(--rule);border-radius:8px}
+.rz-table th .rz{position:absolute;top:0;right:-4px;width:9px;height:100%;cursor:col-resize;z-index:3;touch-action:none}
+.rz-table th .rz:hover,.rz-table th .rz:focus-visible,.rz-table th .rz.on{background:var(--blue);opacity:.45;outline:none}
+.rz-table.fixed{table-layout:fixed}
+.rz-table.fixed th,.rz-table.fixed td{overflow:hidden;text-overflow:ellipsis}
+.rz-table.fixed td{white-space:normal;word-break:break-word}
+.rz-table.fixed td.num{white-space:nowrap}
 .explain{font-size:.92rem}
 .explain ul{margin:.2rem 0 .4rem}
 .hist{list-style:none;padding:0;margin:0}
@@ -225,6 +231,7 @@ details.schema summary{cursor:pointer;color:var(--blue)}
     <textarea class="code" id="sql" spellcheck="false"></textarea>
     <div class="toolbar"><button class="btn small" id="sql-run" type="button">重跑</button><button class="btn small secondary" id="sql-copy" type="button">複製 SQL</button><span class="small muted">只允許 SELECT 查詢；在記憶體副本上執行，不會改到你的檔案。</span></div>
   </details>
+  <p class="small muted" style="margin:.2rem 0">表格欄寬可調：拖曳表頭欄位之間的框線；雙擊框線依內容自動調整。</p>
   <div class="tablewrap" id="table"></div>
 </section>
 
@@ -608,6 +615,36 @@ function renderTable(cols,rows){
   var num=cols.map(function(c,i){return rows.length&&rows.every(function(r){return r[i]==null||typeof r[i]==='number'})});
   var lim=500;
   $('#table').innerHTML='<table class="restable"><tr>'+cols.map(function(c){return '<th>'+esc(c)+'</th>'}).join('')+'</tr>'+rows.slice(0,lim).map(function(r){return '<tr>'+r.map(function(v,i){return '<td'+(num[i]?' class="num"':'')+'>'+(v==null?'<span class="muted">—</span>':esc(num[i]?fmtNum(v):String(v).length>120?String(v).slice(0,120)+'…':v))+'</td>'}).join('')+'</tr>'}).join('')+'</table>'+(rows.length>lim?'<p class="small muted" style="padding:.4rem">只顯示前 '+lim+' 列，共 '+rows.length.toLocaleString()+' 列；完整結果請下載 CSV。</p>':'');
+  makeResizable($('#table table'),'qa-colw');
+}
+/* 表頭框線拖曳調整欄寬；雙擊依內容自動調整；方向鍵微調；寬度依欄名記在這台電腦 */
+function makeResizable(table,key){
+  if(!table||!table.rows.length)return;
+  var ths=Array.prototype.slice.call(table.rows[0].cells);
+  var saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')||{};}catch(e){}
+  var save=function(){try{localStorage.setItem(key,JSON.stringify(saved));}catch(e){}};
+  var names=ths.map(function(th){return th.textContent;});
+  var w=ths.map(function(th,i){return saved[names[i]]||Math.min(480,Math.ceil(th.getBoundingClientRect().width));});
+  var apply=function(){ths.forEach(function(th,i){th.style.width=w[i]+'px';});table.style.width=w.reduce(function(a,b){return a+b;},0)+'px';};
+  var commit=function(i){saved[names[i]]=w[i];save();};
+  table.classList.add('rz-table','fixed');apply();
+  ths.forEach(function(th,i){
+    if(getComputedStyle(th).position==='static')th.style.position='relative';
+    var h=document.createElement('span');h.className='rz';h.tabIndex=0;h.setAttribute('role','separator');h.setAttribute('aria-label','調整「'+names[i]+'」欄寬');h.title='拖曳調整欄寬；雙擊依內容自動調整';
+    th.appendChild(h);
+    h.addEventListener('pointerdown',function(e){
+      e.preventDefault();e.stopPropagation();var x0=e.clientX,w0=w[i];h.classList.add('on');try{h.setPointerCapture(e.pointerId);}catch(_){}
+      var mv=function(ev){w[i]=Math.max(36,Math.round(w0+ev.clientX-x0));apply();};
+      var up=function(){h.classList.remove('on');h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);h.removeEventListener('pointercancel',up);commit(i);};
+      h.addEventListener('pointermove',mv);h.addEventListener('pointerup',up);h.addEventListener('pointercancel',up);
+    });
+    h.addEventListener('dblclick',function(e){
+      e.stopPropagation();table.classList.remove('fixed');var tw=table.style.width;table.style.width='max-content';th.style.width='';
+      var nat=Math.ceil(th.getBoundingClientRect().width);table.style.width=tw;table.classList.add('fixed');
+      w[i]=Math.max(36,Math.min(600,nat));apply();delete saved[names[i]];save();
+    });
+    h.addEventListener('keydown',function(e){if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();w[i]=Math.max(36,w[i]+(e.key==='ArrowRight'?16:-16));apply();commit(i);}});
+  });
 }
 function fmtNum(v){if(typeof v!=='number')return v;if(Number.isInteger(v))return Math.abs(v)>=10000&&!/^(19|20|1[0-2])\d$/.test(String(v))?v.toLocaleString():String(v);return Math.abs(v)>=1000?v.toLocaleString(undefined,{maximumFractionDigits:1}):String(+v.toFixed(4));}
 function compact(v){var a=Math.abs(v);if(a>=1e8)return (v/1e8).toFixed(a>=1e9?0:1)+'億';if(a>=1e4)return (v/1e4).toFixed(a>=1e5?0:1)+'萬';return Number.isInteger(v)?String(v):String(+v.toFixed(2));}
