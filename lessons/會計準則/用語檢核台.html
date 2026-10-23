@@ -481,7 +481,7 @@ $('#doc-sample').addEventListener('click',function(){
 });
 $('#doc-clear').addEventListener('click',function(){$('#doc').value='';doc={text:'',arts:[]};$('#docview').innerHTML='<span class="muted">尚未分析。</span>';setFoot();});
 $('#doc-run').addEventListener('click',analyzeDoc);
-var DOC_ART_RE=/^第\s*([一二三四五六七八九十百〇零\d]+)\s*條(?:之([一二三四五六七八九十\d]+))?\s*$/;
+var DOC_ART_RE=/^第\s*([一二三四五六七八九十百〇零\d]+)\s*條(?:之([一二三四五六七八九十\d]+))?\s*(?:[（(][^）)]{0,10}[）)])?\s*$/; /* 允許「第十條之二（新增）」這類條頭 */
 function analyzeDoc(){
   doc.text=$('#doc').value;doc.arts=[];
   var pos=0;doc.text.split('\n').forEach(function(line){var m=line.trim().match(DOC_ART_RE);if(m){doc.arts.push({no:cnToInt(m[1]),sub:m[2]?cnToInt(m[2]):0,start:pos});}pos+=line.length+1;});
@@ -625,6 +625,8 @@ function runChecks(){
   if($('#ck-term').checked){glossary.merged.forEach(function(t){if(t.status==='棄用')return;
     t.variants.forEach(function(v){if(v.length<2)return;findAll(text,v).forEach(function(p){
       if(text.slice(Math.max(0,p-1),p)==='「'||text.slice(p+v.length,p+v.length+1)==='」')return;
+      if(/^\s*[（(]\s*(以下簡稱|以下稱|下稱)/.test(text.slice(p+v.length,p+v.length+12)))return; /* 定義處的全名不算變體 */
+      if(/^[\s　]*令\b|^[\s　]*令$|^[\s　]*令[\s　]/.test(text.slice(p+v.length,p+v.length+4))||/^[\s　]*令/.test(text.slice(p+v.length,p+v.length+3)))return; /* 公文發文者全銜（例：金融監督管理委員會　令） */
       var before=text.slice(0,p);if((before.match(/「/g)||[]).length>(before.match(/」/g)||[]).length){add('info','詞彙',p,p+v.length,'引述文字內的變體寫法（標準詞：'+t.key+'）');return;}
       add('warning','詞彙',p,p+v.length,'非標準用語，建議改為「'+t.key+'」'+(t.source?'（'+t.source+'）':''),t.key);});});
     t.forbidden.forEach(function(v){findAll(text,v).forEach(function(p){add('error','詞彙',p,p+v.length,'禁用寫法，應作「'+t.key+'」',t.key);});});
@@ -646,12 +648,16 @@ function runChecks(){
     while((c=CITE_RE.exec(text))){
       var s=c.index,e=s+c[0].length;var lawName=c[1]||'';var no=cnToInt(c[2]),sub=c[3]?cnToInt(c[3]):0,para=c[4]?cnToInt(c[4]):null,item=c[5]?cnToInt(c[5]):null;
       var ls=text.lastIndexOf('\n',s-1)+1,le=text.indexOf('\n',e);if(le<0)le=text.length;if(DOC_ART_RE.test(text.slice(ls,le).trim()))continue; /* 條頭本身不是引用 */
+      /* 法規名稱前常黏著「依」「經」「或其」等字，先剝掉；「本準則」等指本法規 */
+      lawName=lawName.replace(/^(?:但|並|且|及|或其|或|其|依|經|按|照|準用|參照|適用|違反|即|仍|均|亦|應|得|如|除|指|已|未|須|另|再|皆|係|為|與|同|有|無|非|屬|符合|前述|上開|上述)+/,'');
+      var selfRef=/^(本準則|本法|本辦法|本規則|本要點|本細則|本條例|本法規)$/.test(lawName);
       var target=null,label='';
-      if(lawName){var hit=null;Object.keys(lawByName).forEach(function(n){if(lawName.endsWith(n)&&(!hit||n.length>hit.length))hit=n;});if(hit){target=lawByName[hit];label=hit;}else{add('info','引用',s,e,'引用「'+lawName+'」，該法規未載入語料，未驗證');continue;}}
+      if(lawName&&!selfRef){var hit=null;Object.keys(lawByName).forEach(function(n){if(lawName.endsWith(n)&&(!hit||n.length>hit.length))hit=n;});if(hit){target=lawByName[hit];label=hit;}else{var shown=lawName.replace(/^.*?(?:經依|依|經|按|照|準用|參照|即|指|或|其)(?=[一-鿿]{2,})/,'');add('info','引用',s,e,'引用「'+(shown||lawName)+'」，該法規未載入語料，未驗證');continue;}}
       else{target=curLaw;label=curLawName||'（未指定本法規）';}
       if(!target){add('info','引用',s,e,'未指定「本法規」，無法驗證條號');continue;}
       var a=target._arts[no+'-'+sub];
-      if(!a){add('error','引用',s,e,label+'沒有第'+no+(sub?'條之'+sub:'條')+(target.unit==='點'?'（此法規以「點」計）':''));continue;}
+      var inDoc=(!lawName||selfRef)&&doc.arts.some(function(d){return d.no===no&&d.sub===sub});
+      if(!a){if(inDoc)add('info','引用',s,e,label+'現行條文無第'+no+(sub?'條之'+sub:'條')+'，但本文件有此條頭，視為草案新增條文');else add('error','引用',s,e,label+'沒有第'+no+(sub?'條之'+sub:'條')+(target.unit==='點'?'（此法規以「點」計）':''));continue;}
       if(/^（刪除）|^\(刪除\)|^（已刪除）/.test(a[2].trim())){add('error','引用',s,e,label+'第'+no+(sub?'條之'+sub:'條')+'已刪除');continue;}
       var cur=docArticleAt(s);if(!lawName&&cur&&cur.no===no&&cur.sub===sub)add('warning','引用',s,e,'引用本條自身，宜改用「本條」「前項」等相對寫法');
       if(para!=null){var nPara=a[2].split('\n').filter(function(l){return !/^([一二三四五六七八九十]+、|（[一二三四五六七八九十]+）|\d+\.)/.test(l)}).length||1;if(para>nPara)add('error','引用',s,e,label+'第'+no+'條只有 '+nPara+' 項，引用第'+para+'項');}
