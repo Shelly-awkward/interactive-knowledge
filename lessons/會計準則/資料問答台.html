@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>資料問答台｜用中文問 .db 資料庫並自動出圖</title>
+<style>
+:root{
+  box-sizing:border-box;color-scheme:light;
+  --paper:#F4F6F3;--card:#FFFFFF;--surface:#fcfcfb;--ink:#1C2A30;--ink-2:#4B5A62;--ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);--grid:#e6e6e3;--blue:#1F4E8C;--blue-soft:#E3EBF6;--green:#2E7D4F;--green-soft:#E1F0E6;
+  --signal:#E0A100;--signal-soft:#FBF1CF;--warn:#9B2C2C;--warn-soft:#F8E4E4;--focus:#1F4E8C;
+  --code-bg:#1E2630;--code-ink:#E6EDF3;
+  --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#6250d6;--s8:#e34948;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#141B1F;--card:#1D262B;--surface:#1a1a19;--ink:#E9EEF0;--ink-2:#B8C3CA;--ink-3:#7F8C95;--rule:rgba(233,238,240,.16);--grid:#33332f;
+    --blue:#7FA7E0;--blue-soft:#243448;--green:#7CC79C;--green-soft:#223A2B;--signal:#F0C24A;--signal-soft:#3A3213;
+    --warn:#F08A8A;--warn-soft:#3F2323;--focus:#7FA7E0;--code-bg:#0D1117;
+    --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#141B1F;--card:#1D262B;--surface:#1a1a19;--ink:#E9EEF0;--ink-2:#B8C3CA;--ink-3:#7F8C95;--rule:rgba(233,238,240,.16);--grid:#33332f;
+  --blue:#7FA7E0;--blue-soft:#243448;--green:#7CC79C;--green-soft:#223A2B;--signal:#F0C24A;--signal-soft:#3A3213;
+  --warn:#F08A8A;--warn-soft:#3F2323;--focus:#7FA7E0;--code-bg:#0D1117;
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.25rem}h2{font-size:1.1rem}h3{font-size:1rem}
+p{margin:0 0 .7em}ul{margin:0 0 .7em;padding-left:1.3em}
+.top{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+.top-inner{max-width:1200px;margin:0 auto;padding:.55rem 1rem;display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}
+.tag{font-size:.78rem;color:var(--ink-2);background:var(--signal-soft);border:1px solid var(--signal);border-radius:999px;padding:.05em .7em;white-space:nowrap}
+main{max-width:1200px;margin:0 auto;padding:1rem 1rem 4rem}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:1rem 1.1rem;margin:0 0 1rem}
+.card.blue{border-left:5px solid var(--blue)}.card.signal{border-left:5px solid var(--signal);background:var(--signal-soft)}.card.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.btn{display:inline-block;font:inherit;font-size:.9rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.45em 1em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.small{font-size:.8rem;padding:.28em .7em}
+.btn:disabled{opacity:.5;cursor:default}
+.toolbar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.4rem 0}
+.muted{color:var(--ink-2)}.small{font-size:.86rem}.hidden{display:none!important}
+input[type=text],input[type=password],select,textarea{font:inherit;font-size:.92rem;padding:.38em .55em;border:1px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
+textarea{width:100%;resize:vertical}
+textarea.q{min-height:4.5em;font-size:1rem}
+textarea.code{min-height:7em;background:var(--code-bg);color:var(--code-ink);font-family:Consolas,"Cascadia Code",monospace;font-size:.86rem;line-height:1.5;border-color:transparent}
+.drop{border:2px dashed var(--rule);border-radius:10px;padding:1rem;text-align:center;color:var(--ink-2)}
+.drop.over{border-color:var(--blue);background:var(--blue-soft)}
+.status{font-size:.86rem;color:var(--ink-2)}
+.tabs{display:flex;gap:.25rem;flex-wrap:wrap;margin-bottom:.6rem;border-bottom:1px solid var(--rule)}
+.tabs button{font:inherit;font-size:.9rem;border:1px solid var(--rule);border-bottom:0;background:var(--card);color:var(--ink-2);border-radius:6px 6px 0 0;padding:.35em .9em;cursor:pointer;margin-bottom:-1px}
+.tabs button.on{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:700}
+.mode{display:none}.mode.on{display:block}
+.chips{display:flex;gap:.4rem;flex-wrap:wrap;margin:.4rem 0}
+.chips button{font:inherit;font-size:.82rem;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:999px;padding:.2em .75em;cursor:pointer;text-align:left}
+.chips button:hover{border-color:var(--blue);color:var(--blue)}
+.builder{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.6rem}
+.builder label{font-size:.8rem;color:var(--ink-2);display:block}
+.builder select,.builder input{width:100%}
+.filters .row{display:flex;gap:.4rem;margin:.3rem 0;flex-wrap:wrap}
+.filters select,.filters input{flex:1;min-width:120px}
+details.schema summary{cursor:pointer;color:var(--blue)}
+.schema-body{font-size:.84rem;max-height:40vh;overflow:auto;margin-top:.5rem}
+.schema-body table{border-collapse:collapse;width:100%}
+.schema-body td,.schema-body th{border-bottom:1px solid var(--rule);padding:.25em .4em;text-align:left;vertical-align:top}
+.keybox{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.keybox input[type=password]{flex:1;min-width:220px}
+.pill{display:inline-block;font-size:.76rem;padding:.02em .55em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);white-space:nowrap}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.pill.signal{background:var(--signal-soft);border-color:transparent;color:#7a5a00}
+.viz-root{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:1rem}
+.viz-title{font-weight:700;margin:0 0 .2rem}
+.viz-sub{font-size:.84rem;color:var(--ink-2);margin:0 0 .6rem}
+.chart-box{position:relative;height:420px}
+.kpi{padding:1rem 0}
+.kpi .label{color:var(--ink-2);font-size:.95rem}
+.kpi .value{font-size:3.2rem;font-weight:600;line-height:1.1;color:var(--ink)}
+.kpi-row{display:flex;gap:2.5rem;flex-wrap:wrap}
+.heat{border-collapse:separate;border-spacing:2px;font-size:.84rem}
+.heat th{font-weight:600;color:var(--ink-2);padding:.25em .5em;text-align:left;white-space:nowrap}
+.heat td{padding:.35em .55em;text-align:right;font-variant-numeric:tabular-nums;border-radius:3px;min-width:4.2em}
+.heat-legend{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--ink-2);margin-top:.5rem}
+.heat-legend span.sw{display:inline-block;width:22px;height:10px;border-radius:2px}
+.restable{border-collapse:collapse;width:100%;font-size:.86rem}
+.restable th,.restable td{border-bottom:1px solid var(--rule);padding:.3em .5em;text-align:left;vertical-align:top}
+.restable th{position:sticky;top:0;background:var(--card);color:var(--ink-2)}
+.restable td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tablewrap{max-height:50vh;overflow:auto;border:1px solid var(--rule);border-radius:8px}
+.explain{font-size:.92rem}
+.explain ul{margin:.2rem 0 .4rem}
+.hist{list-style:none;padding:0;margin:0}
+.hist li{border-bottom:1px dashed var(--rule);padding:.35rem 0;display:flex;gap:.5rem;align-items:baseline}
+.hist li button.q{flex:1;text-align:left;font:inherit;font-size:.88rem;background:none;border:0;color:var(--ink);cursor:pointer;padding:0}
+.hist li button.q:hover{color:var(--blue)}
+.hist .t{font-size:.75rem;color:var(--ink-3);white-space:nowrap}
+.spinner{display:inline-block;width:1em;height:1em;border:2px solid var(--rule);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;vertical-align:-.15em}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){.spinner{animation:none}}
+.footnote{font-size:.8rem;color:var(--ink-3)}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-inner">
+  <h1 style="margin:0">資料問答台</h1>
+  <span class="tag">資料庫不上傳・運算都在瀏覽器</span>
+  <span class="small muted" id="top-status">尚未載入資料庫</span>
+</div></header>
+<main>
+
+<!-- ───── 1 資料庫 ───── -->
+<section class="card blue">
+  <h2>1 載入資料庫</h2>
+  <div class="grid2">
+    <div>
+      <div class="drop" id="drop">把 .db、.sqlite 檔拖到這裡，或
+        <label class="btn small secondary" for="dbfile" style="cursor:pointer">選擇檔案</label>
+        <input type="file" id="dbfile" accept=".db,.sqlite,.sqlite3" class="hidden">
+        <div class="small" style="margin-top:.4rem">檔案只在這台電腦的瀏覽器裡讀取，不會上傳。</div>
+      </div>
+      <div class="toolbar"><button class="btn small secondary" id="sample" type="button">用範例：ESG 氣候揭露（精簡版 7 MB）</button><span class="status" id="db-status"></span></div>
+    </div>
+    <div>
+      <details class="schema" id="schema-wrap"><summary>資料表結構（載入後顯示）</summary><div class="schema-body" id="schema"></div></details>
+      <label class="small muted" for="notes" style="display:block;margin-top:.6rem">資料說明（會一起給 AI 參考；例如欄位意義、揭露率怎麼算。依檔名記在這台電腦）</label>
+      <textarea id="notes" rows="4" placeholder="例如：有揭露＝1 表示有揭露；揭露率＝AVG(有揭露)×100；年度是民國年"></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- ───── 2 提問 ───── -->
+<section class="card">
+  <h2>2 你想看什麼</h2>
+  <div class="tabs" id="tabs">
+    <button type="button" data-m="m-ai" class="on">AI 直接回答（需 API 金鑰）</button>
+    <button type="button" data-m="m-copy">複製到 claude.ai（不需金鑰）</button>
+    <button type="button" data-m="m-guide">引導式（不用 AI）</button>
+  </div>
+
+  <div class="mode on" id="m-ai">
+    <textarea class="q" id="q-ai" placeholder="例如：114 年各資本額級距的情境分析與內部碳定價揭露率，用長條圖比較"></textarea>
+    <div class="chips" id="chips-ai"></div>
+    <details id="key-details" open>
+      <summary class="small">API 金鑰與模型 <span id="key-badge" class="pill">未設定</span></summary>
+      <div style="margin-top:.5rem">
+        <div class="keybox">
+          <input type="password" id="apikey" placeholder="貼上你的 Anthropic API 金鑰（sk-ant-…）" autocomplete="off" spellcheck="false">
+          <label class="small"><input type="radio" name="keystore" value="session" checked> 只在這個分頁</label>
+          <label class="small"><input type="radio" name="keystore" value="local"> 記在這台電腦</label>
+          <button class="btn small secondary" id="key-save" type="button">使用此金鑰</button>
+          <button class="btn small secondary" id="key-clear" type="button">清除金鑰</button>
+        </div>
+        <div class="toolbar">
+          <label class="small">模型 <select id="model">
+            <option value="claude-opus-5-5" selected>Claude Opus 5.5（預設）</option>
+            <option value="claude-sonnet-5-5">Claude Sonnet 5.5（較便宜）</option>
+            <option value="claude-haiku-5-5">Claude Haiku 5.5（最便宜）</option>
+            <option value="claude-fable-5-1">Claude Fable 5.1（最強、最貴）</option>
+          </select></label>
+          <label class="small">思考深度 <select id="effort"><option value="low">低（快）</option><option value="medium" selected>中</option><option value="high">高（慢、準）</option></select></label>
+          <label class="small"><input type="checkbox" id="interpret"> 出圖後請 AI 寫一段解讀（會送出前 50 列結果）</label>
+        </div>
+        <p class="small muted">金鑰只存在這個瀏覽器（「只在這個分頁」關掉分頁就消失），不會寫進任何檔案、匯出或歷史紀錄。按「問」時，會把<b>你的問題、資料表結構、各欄位的值樣本與資料說明</b>直接送到 Anthropic API（api.anthropic.com，境外）；<b>不會送出資料列</b>，除非你勾選「寫解讀」。費用依你的 API 帳戶計價。</p>
+      </div>
+    </details>
+    <div class="toolbar"><button class="btn" id="ask" type="button">問</button><span class="status" id="ai-status"></span></div>
+  </div>
+
+  <div class="mode" id="m-copy">
+    <textarea class="q" id="q-copy" placeholder="例如：上市與上櫃各指標揭露率比較，只看附表第 1～8 項"></textarea>
+    <div class="chips" id="chips-copy"></div>
+    <div class="toolbar"><button class="btn" id="copy-make" type="button">產生提示並複製</button><span class="status" id="copy-status"></span></div>
+    <p class="small muted">步驟：按上面按鈕，打開 claude.ai 貼上送出；把 Claude 回覆的整段文字（含大括號的那段）貼到下面，按「執行」。送出去的只有問題與資料表結構，不含資料列。</p>
+    <textarea id="copy-prompt" rows="4" readonly class="hidden"></textarea>
+    <textarea id="copy-reply" rows="5" placeholder="把 claude.ai 的回覆貼在這裡"></textarea>
+    <div class="toolbar"><button class="btn" id="copy-run" type="button">執行</button></div>
+  </div>
+
+  <div class="mode" id="m-guide">
+    <div class="builder">
+      <div><label>從哪張表</label><select id="g-table"></select></div>
+      <div><label>算什麼</label><select id="g-agg">
+        <option value="count">列數</option><option value="rate" selected>比率（平均×100，%）</option><option value="avg">平均</option><option value="sum">總和</option><option value="max">最大</option><option value="min">最小</option>
+      </select></div>
+      <div><label>算哪一欄</label><select id="g-col"></select></div>
+      <div><label>依什麼分組</label><select id="g-g1"></select></div>
+      <div><label>再依什麼分組（選填）</label><select id="g-g2"></select></div>
+      <div><label>最多幾列</label><select id="g-limit"><option>20</option><option selected>50</option><option>200</option></select></div>
+    </div>
+    <div class="filters" id="g-filters"><div class="small muted" style="margin-top:.6rem">篩選條件</div></div>
+    <div class="toolbar"><button class="btn small secondary" id="g-addf" type="button">加一個篩選</button><button class="btn" id="g-run" type="button">查詢並出圖</button></div>
+  </div>
+</section>
+
+<!-- ───── 3 結果 ───── -->
+<section class="card hidden" id="result">
+  <h2>3 結果</h2>
+  <div class="explain" id="explain"></div>
+  <div class="viz-root" id="viz">
+    <p class="viz-title" id="viz-title"></p>
+    <p class="viz-sub" id="viz-sub"></p>
+    <div class="chart-box" id="chart-box"><canvas id="chart" aria-label="查詢結果圖表" role="img"></canvas></div>
+    <div id="alt-view"></div>
+  </div>
+  <div class="toolbar">
+    <label class="small">圖表 <select id="chart-type">
+      <option value="auto">自動</option><option value="bar">長條</option><option value="hbar">水平長條</option><option value="grouped">分組長條</option><option value="line">折線</option><option value="heatmap">熱力表</option><option value="kpi">數值卡</option><option value="table">只看表格</option>
+    </select></label>
+    <button class="btn small secondary" id="dl-png" type="button">下載圖（PNG）</button>
+    <button class="btn small secondary" id="dl-csv" type="button">下載表（CSV）</button>
+    <span class="status" id="res-status"></span>
+  </div>
+  <div id="interp" class="card signal hidden" style="margin-top:.6rem"></div>
+  <details style="margin:.6rem 0"><summary class="small">SQL（可修改後重跑）</summary>
+    <textarea class="code" id="sql" spellcheck="false"></textarea>
+    <div class="toolbar"><button class="btn small" id="sql-run" type="button">重跑</button><button class="btn small secondary" id="sql-copy" type="button">複製 SQL</button><span class="small muted">只允許 SELECT 查詢；在記憶體副本上執行，不會改到你的檔案。</span></div>
+  </details>
+  <div class="tablewrap" id="table"></div>
+</section>
+
+<!-- ───── 歷史 ───── -->
+<section class="card">
+  <h2>最近的問題</h2>
+  <ul class="hist" id="hist"><li class="small muted">還沒有紀錄。</li></ul>
+  <div class="toolbar"><button class="btn small secondary" id="hist-clear" type="button">清除紀錄</button></div>
+  <p class="footnote">紀錄（問題、SQL、圖表設定）只存在這台電腦的瀏覽器，依資料庫檔名分開；不含金鑰與資料列。</p>
+</section>
+</main>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function store(kind){try{return kind==='local'?window.localStorage:window.sessionStorage}catch(e){return null}}
+function sget(k,kind){try{var s=store(kind||'local');return s?s.getItem(k):null}catch(e){return null}}
+function sset(k,v,kind){try{var s=store(kind||'local');if(s)s.setItem(k,v)}catch(e){}}
+function sdel(k,kind){try{var s=store(kind||'local');if(s)s.removeItem(k)}catch(e){}}
+
+var SQLJS='https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.13.0/';
+var CHARTJS='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
+var SAMPLE='../../data/esg/'+encodeURIComponent('ESG氣候揭露_精簡版.db');
+var API_URL='https://api.anthropic.com/v1/messages';
+var API_VERSION='2026-10-21';
+var FALLBACK_MODELS={'claude-opus-5-5':1,'claude-sonnet-5-5':1,'claude-fable-5-1':1};
+
+var SQL=null, db=null, dbName='', schema=null, schemaText='';
+var current=null; // {question, sql, explanation, assumptions, chart, cols, rows}
+var chart=null;
+
+function loadScript(src){return new Promise(function(res,rej){if(document.querySelector('script[src="'+src+'"]'))return res();var s=document.createElement('script');s.src=src;s.onload=res;s.onerror=function(){rej(new Error('無法載入 '+src+'（需要網路）'))};document.head.appendChild(s);});}
+function initSql(){if(SQL)return Promise.resolve(SQL);return loadScript(SQLJS+'sql-wasm.js').then(function(){return window.initSqlJs({locateFile:function(f){return SQLJS+f}})}).then(function(s){SQL=s;return s});}
+
+/* ───────── 1 載入資料庫 ───────── */
+function openBytes(bytes,name){
+  $('#db-status').innerHTML='<span class="spinner"></span> 開啟 '+esc(name)+'…';
+  return initSql().then(function(S){
+    if(db){db.close();}
+    db=new S.Database(new Uint8Array(bytes));dbName=name;
+    var t0=performance.now();schema=readSchema();schemaText=schemaToText(schema);
+    renderSchema();loadNotes();buildGuide();renderHistory();renderChips();
+    var n=schema.objs.length;
+    $('#db-status').textContent='已開啟 '+name+'：'+n+' 個表／檢視（'+Math.round(performance.now()-t0)+' ms 讀結構）';
+    $('#top-status').textContent='資料庫：'+name;
+  }).catch(function(e){$('#db-status').textContent='開啟失敗：'+e.message;});
+}
+$('#dbfile').addEventListener('change',function(){var f=this.files[0];if(f)f.arrayBuffer().then(function(b){openBytes(b,f.name)});});
+var drop=$('#drop');
+['dragenter','dragover'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.add('over')});});
+['dragleave','drop'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.remove('over')});});
+drop.addEventListener('drop',function(e){var f=e.dataTransfer.files[0];if(f)f.arrayBuffer().then(function(b){openBytes(b,f.name)});});
+$('#sample').addEventListener('click',function(){
+  $('#db-status').innerHTML='<span class="spinner"></span> 下載範例…';
+  fetch(SAMPLE).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.arrayBuffer()}).then(function(b){return openBytes(b,'ESG氣候揭露_精簡版.db')}).catch(function(e){$('#db-status').textContent='範例下載失敗：'+e.message;});
+});
+
+function q1(sql){var r=db.exec(sql);return r.length?r[0]:{columns:[],values:[]};}
+function readSchema(){
+  var objs=q1("SELECT type,name,sql FROM sqlite_master WHERE type IN ('table','view') AND name NOT LIKE 'sqlite_%' ORDER BY type DESC,name").values.map(function(r){return {type:r[0],name:r[1],sql:r[2]||''}});
+  var colStats={};
+  objs.forEach(function(o){
+    o.cols=q1('PRAGMA table_info("'+o.name.replace(/"/g,'""')+'")').values.map(function(r){return {name:r[1],type:r[2]||''}});
+    try{o.rows=q1('SELECT COUNT(*) FROM "'+o.name.replace(/"/g,'""')+'"').values[0][0];}catch(e){o.rows=null;}
+    if(o.type!=='table')return;
+    o.cols.forEach(function(c){
+      var qn='"'+c.name.replace(/"/g,'""')+'"',tn='"'+o.name.replace(/"/g,'""')+'"';
+      try{
+        var samp=q1('SELECT '+qn+' FROM '+tn+' WHERE '+qn+' IS NOT NULL LIMIT 300').values.map(function(r){return r[0]});
+        var isNum=samp.length&&samp.every(function(v){return typeof v==='number'});
+        var avgLen=samp.length?samp.reduce(function(a,v){return a+String(v).length},0)/samp.length:0;
+        c.kind=isNum?'num':(avgLen>60?'longtext':'text');
+        if(c.kind==='longtext'){c.note='長文字';}
+        else{
+          var nd=q1('SELECT COUNT(DISTINCT '+qn+') FROM '+tn).values[0][0];c.distinct=nd;
+          if(isNum){var mm=q1('SELECT MIN('+qn+'),MAX('+qn+') FROM '+tn).values[0];c.min=mm[0];c.max=mm[1];if(nd<=30)c.values=q1('SELECT DISTINCT '+qn+' FROM '+tn+' ORDER BY 1').values.map(function(r){return r[0]});}
+          else{
+            if(nd<=60)c.values=q1('SELECT '+qn+',COUNT(*) FROM '+tn+' GROUP BY 1 ORDER BY 2 DESC').values.map(function(r){return r[0]});
+            else c.examples=q1('SELECT DISTINCT '+qn+' FROM '+tn+' WHERE '+qn+' IS NOT NULL LIMIT 4').values.map(function(r){return r[0]});
+          }
+        }
+        colStats[c.name]=c;
+      }catch(e){c.kind='?';}
+    });
+  });
+  objs.forEach(function(o){if(o.type==='view')o.cols.forEach(function(c){var s=colStats[c.name];if(s){c.kind=s.kind;c.values=s.values;c.examples=s.examples;c.min=s.min;c.max=s.max;c.distinct=s.distinct;c.note=s.note;}});});
+  return {objs:objs};
+}
+function fmtVal(v){var s=String(v);return s.length>40?s.slice(0,40)+'…':s;}
+function colDesc(c){
+  var d=c.name+' '+(c.type||'');
+  if(c.kind==='longtext')return d+'：長文字（不適合分組）';
+  if(c.values&&c.values.length)return d+'：'+c.values.length+' 種＝'+c.values.map(fmtVal).join('｜');
+  if(c.kind==='num'&&c.min!=null)return d+'：數值，範圍 '+c.min+'～'+c.max+(c.distinct!=null?'，'+c.distinct+' 種':'');
+  if(c.examples)return d+'：'+(c.distinct!=null?c.distinct+' 種，':'')+'例 '+c.examples.map(fmtVal).join('、');
+  return d;
+}
+function schemaToText(s){
+  return s.objs.map(function(o){
+    var h=(o.type==='view'?'檢視 ':'表 ')+o.name+'（'+(o.rows!=null?o.rows.toLocaleString():'?')+' 列）';
+    var body=o.cols.map(function(c){return '- '+colDesc(c)}).join('\n');
+    if(o.type==='view'&&o.sql)body+='\n  定義：'+o.sql.replace(/\s+/g,' ').slice(0,600);
+    return h+'\n'+body;
+  }).join('\n\n');
+}
+function renderSchema(){
+  $('#schema').innerHTML=schema.objs.map(function(o){
+    return '<h3 style="margin:.6rem 0 .2rem">'+(o.type==='view'?'檢視 ':'表 ')+esc(o.name)+' <span class="small muted">'+(o.rows!=null?o.rows.toLocaleString()+' 列':'')+'</span></h3><table>'+o.cols.map(function(c){return '<tr><td style="white-space:nowrap"><b>'+esc(c.name)+'</b></td><td class="muted">'+esc(colDesc(c).slice(c.name.length+(c.type?c.type.length+1:0)+1))+'</td></tr>'}).join('')+'</table>';
+  }).join('');
+  $('#schema-wrap').open=true;
+}
+function notesKey(){return 'qa-notes:'+dbName;}
+function loadNotes(){
+  var saved=sget(notesKey());
+  if(saved!=null){$('#notes').value=saved;return;}
+  var hasNote=schema.objs.filter(function(o){return o.name==='說明'&&o.type==='table'})[0];
+  if(hasNote){try{$('#notes').value=q1('SELECT 項目, 內容 FROM 說明').values.map(function(r){return r[0]+'：'+r[1]}).join('\n');}catch(e){}}
+  else $('#notes').value='';
+}
+$('#notes').addEventListener('change',function(){if(dbName)sset(notesKey(),this.value);});
+
+/* ───────── 範例問題 ───────── */
+var SAMPLE_QS=[
+  '114 年各資本額級距的情境分析與內部碳定價揭露率，用長條圖比較',
+  '上市與上櫃在附表第 1～8 項各指標的揭露率比較',
+  '各指標 113 年到 114 年揭露率的變化，列出增減',
+  '114 年範疇一排放量前 15 大公司',
+  '內部碳定價揭露率最高的 10 個產業（申報家數 10 家以上）',
+  '114 年各資本額級距在第 5 到第 8 項的原揭露率與嚴格揭露率'
+];
+function renderChips(){
+  var isEsg=schema&&schema.objs.some(function(o){return o.name==='v_揭露'});
+  ['#chips-ai','#chips-copy'].forEach(function(id){
+    $(id).innerHTML=isEsg?SAMPLE_QS.map(function(q){return '<button type="button">'+esc(q)+'</button>'}).join(''):'';
+  });
+}
+['#chips-ai','#chips-copy'].forEach(function(id,i){$(id).addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;$(i?'#q-copy':'#q-ai').value=b.textContent;});});
+
+/* ───────── 模式切換 ───────── */
+$$('#tabs button').forEach(function(b){b.addEventListener('click',function(){$$('#tabs button').forEach(function(x){x.classList.toggle('on',x===b)});$$('.mode').forEach(function(m){m.classList.toggle('on',m.id===b.getAttribute('data-m'))});});});
+
+/* ───────── 提示詞 ───────── */
+var OUTPUT_SCHEMA={
+  type:'object',additionalProperties:false,
+  required:['sql','explanation','assumptions','chart','cannot_answer'],
+  properties:{
+    sql:{type:'string',description:'一個 SQLite SELECT（或 WITH…SELECT）查詢，不含分號以外的第二個語句'},
+    explanation:{type:'string',description:'用一兩句繁體中文白話說明這個查詢算的是什麼、用了哪些條件'},
+    assumptions:{type:'array',items:{type:'string'},description:'問題有歧義時你所做的假設，沒有就空陣列'},
+    chart:{type:'object',additionalProperties:false,required:['type','x','y','series','title','percent'],properties:{
+      type:{type:'string',enum:['bar','hbar','grouped','line','heatmap','kpi','table']},
+      x:{type:'string',description:'類別或時間軸的欄位名稱；沒有就空字串'},
+      y:{type:'array',items:{type:'string'},description:'數值欄位名稱（一或多個，同一單位）'},
+      series:{type:'string',description:'分組長條或熱力表的系列欄位名稱；沒有就空字串'},
+      title:{type:'string',description:'圖表標題，繁體中文，簡短'},
+      percent:{type:'boolean',description:'數值是否為百分比（0～100）'}
+    }},
+    cannot_answer:{type:'string',description:'資料無法回答時說明原因；可以回答就空字串'}
+  }
+};
+function systemPrompt(){
+  return [
+    '你是資料分析助理，負責把使用者的繁體中文問題轉成可在瀏覽器 SQLite（sql.js）執行的唯讀查詢，並指定最合適的圖表。',
+    '',
+    '規則：',
+    '1. 只寫一個 SELECT 或 WITH…SELECT 查詢；不可修改資料，不可使用 PRAGMA、ATTACH。',
+    '2. 表名與欄位名稱必須完全照下方結構，中文名稱可直接使用；含特殊字元時用雙引號。文字比對要用下方列出的實際值。',
+    '3. 比率類問題，若資料說明有定義算法就照做；百分比用 ROUND(… * 100, 1)。',
+    '4. 結果欄位用簡短繁體中文命名（例如 揭露率、家數）；列數控制在 200 以內，除非使用者要全部。',
+    '5. 有自然順序的類別（例如資本額級距、年度）用 CASE 或數值排序，不要照字母排序。',
+    '6. 圖表選擇：一個類別配一個數值用 bar（類別多於 8 個或名稱長用 hbar）；兩個類別配一個數值且系列 8 個以內用 grouped，否則 heatmap；時間序列用 line；單一數字用 kpi；其他用 table。多個數值欄位只有在同一單位時才放在同一張圖。不要做雙軸。',
+    '7. 問題有歧義時，選最合理的解讀並寫進 assumptions；資料真的無法回答時，sql 填空字串並在 cannot_answer 說明。',
+    '',
+    '資料說明：',
+    ($('#notes').value||'（無）'),
+    '',
+    '資料庫結構（各欄位附值的種類與樣本）：',
+    schemaText
+  ].join('\n');
+}
+function copyPrompt(question){
+  return systemPrompt()+'\n\n────────\n問題：'+question+'\n\n請只回覆一個 JSON 物件（不要其他文字），格式：\n'+
+    '{"sql":"SELECT …","explanation":"白話說明","assumptions":["…"],"chart":{"type":"bar|hbar|grouped|line|heatmap|kpi|table","x":"類別欄","y":["數值欄"],"series":"系列欄或空字串","title":"圖表標題","percent":true},"cannot_answer":""}';
+}
+
+/* ───────── AI：金鑰 ───────── */
+var KEY_NAME='qa-anthropic-key';
+function getKey(){return sget(KEY_NAME,'session')||sget(KEY_NAME,'local')||'';}
+function paintKey(){var k=getKey();var b=$('#key-badge');if(k){b.className='pill green';b.textContent='已設定（…'+k.slice(-4)+'，'+(sget(KEY_NAME,'local')?'記在這台電腦':'只在這個分頁')+'）';$('#key-details').open=false;}else{b.className='pill';b.textContent='未設定';}}
+$('#key-save').addEventListener('click',function(){
+  var k=$('#apikey').value.trim();if(!k){alert('請先貼上金鑰');return;}
+  if(!/^sk-ant-/.test(k)&&!confirm('金鑰通常以 sk-ant- 開頭，確定要使用嗎？'))return;
+  var kind=$$('input[name=keystore]').filter(function(r){return r.checked})[0].value;
+  sdel(KEY_NAME,'session');sdel(KEY_NAME,'local');sset(KEY_NAME,k,kind);$('#apikey').value='';paintKey();
+});
+$('#key-clear').addEventListener('click',function(){sdel(KEY_NAME,'session');sdel(KEY_NAME,'local');$('#apikey').value='';paintKey();});
+paintKey();
+['model','effort'].forEach(function(id){var v=sget('qa-'+id);if(v)$('#'+id).value=v;$('#'+id).addEventListener('change',function(){sset('qa-'+id,this.value);});});
+
+/* ───────── AI：呼叫 ───────── */
+var noFallback=false;
+function callClaude(messages,opts){
+  var key=getKey();if(!key)return Promise.reject(new Error('還沒設定 API 金鑰。'));
+  var model=$('#model').value;
+  var body={model:model,max_tokens:16000,system:[{type:'text',text:opts.system,cache_control:{type:'ephemeral'}}],messages:messages,output_config:{effort:$('#effort').value}};
+  if(opts.schema)body.output_config.format={type:'json_schema',schema:opts.schema};
+  var headers={'content-type':'application/json','x-api-key':key,'anthropic-version':API_VERSION,'anthropic-dangerous-direct-browser-access':'true'};
+  var useFb=FALLBACK_MODELS[model]&&!noFallback;
+  if(useFb){body.fallbacks='default';headers['anthropic-beta']='server-side-fallback-2026-07-01';}
+  return fetch(API_URL,{method:'POST',headers:headers,body:JSON.stringify(body)}).catch(function(){throw new Error('連不到 api.anthropic.com。可能是網路斷線，或所在網路封鎖了這個網址。');})
+  .then(function(r){return r.json().catch(function(){return {}}).then(function(j){
+    if(r.ok)return j;
+    var msg=(j.error&&j.error.message)||('HTTP '+r.status);
+    if(r.status===400&&useFb&&/fallback/i.test(msg)){noFallback=true;return callClaude(messages,opts);}
+    var hint={401:'金鑰無效或已撤銷。',403:'這把金鑰沒有權限使用此模型。',404:'找不到模型，請換一個模型。',413:'送出的內容太大，請精簡資料說明。',429:'請求太頻繁或額度用完，請稍後再試'+(r.headers.get('retry-after')?'（約 '+r.headers.get('retry-after')+' 秒後）':'')+'。',500:'Anthropic 伺服器錯誤，請稍後再試。',529:'Anthropic 服務忙碌，請稍後再試。'}[r.status]||'';
+    throw new Error((hint?hint+' ':'')+'（'+r.status+'：'+msg+'）');
+  });});
+}
+function textOf(resp){
+  if(resp.stop_reason==='refusal')throw new Error('模型拒絕回答這個請求'+(resp.stop_details&&resp.stop_details.category?'（類別：'+resp.stop_details.category+'）':'')+'。請換個說法。');
+  if(resp.stop_reason==='max_tokens')throw new Error('回覆被截斷（超過長度上限），請把問題縮小。');
+  var t=(resp.content||[]).filter(function(b){return b.type==='text'}).map(function(b){return b.text}).join('');
+  if(!t)throw new Error('模型沒有回傳文字。');
+  return t;
+}
+$('#ask').addEventListener('click',function(){
+  var question=$('#q-ai').value.trim();
+  if(!db){$('#ai-status').textContent='先載入資料庫。';return;}
+  if(!question){$('#ai-status').textContent='請輸入問題。';return;}
+  if(!getKey()){$('#key-details').open=true;$('#ai-status').textContent='請先設定 API 金鑰，或改用「複製到 claude.ai」。';return;}
+  var btn=this;btn.disabled=true;
+  var sys=systemPrompt();
+  var messages=[{role:'user',content:'問題：'+question}];
+  var attempt=0,t0=performance.now();
+  function step(){
+    attempt++;
+    $('#ai-status').innerHTML='<span class="spinner"></span> '+(attempt===1?'Claude 正在寫查詢…':'查詢出錯，請 Claude 修正（第 '+attempt+' 次）…');
+    return callClaude(messages,{system:sys,schema:OUTPUT_SCHEMA}).then(function(resp){
+      var spec=JSON.parse(textOf(resp));
+      if(spec.cannot_answer&&!spec.sql){throw new Error('Claude 判斷資料無法回答：'+spec.cannot_answer);}
+      var res=runSql(spec.sql);
+      if(res.error&&attempt<3){
+        messages.push({role:'assistant',content:resp.content});
+        messages.push({role:'user',content:'這個 SQL 執行失敗，錯誤訊息：'+res.error+'\n請依資料庫結構修正後重新回覆。'});
+        return step();
+      }
+      var u=resp.usage||{};
+      show({question:question,sql:spec.sql,explanation:spec.explanation,assumptions:spec.assumptions,chart:spec.chart,source:'AI（'+(resp.model||$('#model').value)+'）'},res);
+      $('#ai-status').textContent='完成（'+((performance.now()-t0)/1000).toFixed(1)+' 秒；輸入 '+(u.input_tokens||0).toLocaleString()+'、快取讀取 '+(u.cache_read_input_tokens||0).toLocaleString()+'、輸出 '+(u.output_tokens||0).toLocaleString()+' tokens）';
+      if(!res.error&&$('#interpret').checked)interpret(question,spec.sql,res);
+    });
+  }
+  step().catch(function(e){$('#ai-status').textContent=e.message;}).then(function(){btn.disabled=false;});
+});
+function interpret(question,sql,res){
+  var box=$('#interp');box.classList.remove('hidden');box.innerHTML='<span class="spinner"></span> Claude 正在解讀結果…';
+  var csv=[res.cols.join(',')].concat(res.rows.slice(0,50).map(function(r){return r.map(function(v){return v==null?'':String(v).replace(/,/g,'，')}).join(',')})).join('\n');
+  callClaude([{role:'user',content:'問題：'+question+'\n\nSQL：\n'+sql+'\n\n結果（前 '+Math.min(50,res.rows.length)+' 列，共 '+res.rows.length+' 列）：\n'+csv+'\n\n請用繁體中文寫 3 到 5 句解讀：先講最重要的發現，再講值得注意的差異或例外；只根據這些數字，不要推測資料以外的原因。'}],{system:'你是資料分析助理。資料說明：\n'+($('#notes').value||'（無）')})
+  .then(function(resp){box.innerHTML='<b>Claude 的解讀</b><p style="margin:.3rem 0 0">'+esc(textOf(resp)).replace(/\n/g,'<br>')+'</p><p class="footnote" style="margin:.3rem 0 0">解讀由 AI 產生，請對照圖表與表格核實。</p>';})
+  .catch(function(e){box.textContent='解讀失敗：'+e.message;});
+}
+
+/* ───────── 複製貼上模式 ───────── */
+$('#copy-make').addEventListener('click',function(){
+  var question=$('#q-copy').value.trim();
+  if(!db){$('#copy-status').textContent='先載入資料庫。';return;}
+  if(!question){$('#copy-status').textContent='請輸入問題。';return;}
+  var p=copyPrompt(question);var ta=$('#copy-prompt');ta.value=p;ta.classList.remove('hidden');
+  copyText(p).then(function(){$('#copy-status').textContent='已複製（'+p.length.toLocaleString()+' 字）。到 claude.ai 貼上送出。';},function(){ta.select();$('#copy-status').textContent='請手動複製上面的提示。';});
+});
+$('#copy-run').addEventListener('click',function(){
+  var t=$('#copy-reply').value;var m=t.match(/```(?:json)?\s*([\s\S]*?)```/);var s=m?m[1]:t;
+  var a=s.indexOf('{'),b=s.lastIndexOf('}');
+  if(a<0||b<a){$('#copy-status').textContent='找不到 JSON，請貼上 Claude 回覆中含大括號的整段。';return;}
+  var spec;try{spec=JSON.parse(s.slice(a,b+1));}catch(e){$('#copy-status').textContent='JSON 格式有誤：'+e.message;return;}
+  if(!spec.sql){$('#copy-status').textContent=spec.cannot_answer?'Claude 判斷無法回答：'+spec.cannot_answer:'回覆裡沒有 sql。';return;}
+  var res=runSql(spec.sql);
+  show({question:$('#q-copy').value.trim(),sql:spec.sql,explanation:spec.explanation,assumptions:spec.assumptions,chart:spec.chart,source:'claude.ai 貼回'},res);
+  $('#copy-status').textContent=res.error?'SQL 執行失敗，可把錯誤訊息貼回 claude.ai 請它修正。':'完成。';
+});
+function copyText(t){if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t);return new Promise(function(res,rej){var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');res();}catch(e){rej(e)}document.body.removeChild(ta);});}
+
+/* ───────── 引導式 ───────── */
+function qid(n){return '"'+String(n).replace(/"/g,'""')+'"';}
+function buildGuide(){
+  var opts=schema.objs.map(function(o){return '<option value="'+esc(o.name)+'">'+(o.type==='view'?'檢視 ':'表 ')+esc(o.name)+'</option>'}).join('');
+  $('#g-table').innerHTML=opts;
+  var pref=schema.objs.filter(function(o){return o.name==='v_揭露'})[0];if(pref)$('#g-table').value='v_揭露';
+  guideCols();
+}
+function guideObj(){var n=$('#g-table').value;return schema.objs.filter(function(o){return o.name===n})[0];}
+function guideCols(){
+  var o=guideObj();if(!o)return;
+  var nums=o.cols.filter(function(c){return c.kind==='num'}),cats=o.cols.filter(function(c){return c.kind!=='longtext'});
+  $('#g-col').innerHTML=nums.map(function(c){return '<option>'+esc(c.name)+'</option>'}).join('');
+  if(nums.some(function(c){return c.name==='有揭露'}))$('#g-col').value='有揭露';
+  var g='<option value="">（不分組）</option>'+cats.map(function(c){return '<option>'+esc(c.name)+'</option>'}).join('');
+  $('#g-g1').innerHTML=g;$('#g-g2').innerHTML=g;
+  if(cats.some(function(c){return c.name==='資本額分級'}))$('#g-g1').value='資本額分級';
+  $$('#g-filters .row').forEach(function(r){r.remove()});
+  if(o.name==='v_揭露'){var iv=(o.cols.filter(function(c){return c.name==='指標名稱'})[0].values||[]);addFilter('年度','114');addFilter('指標名稱',iv.filter(function(v){return /情境分析/.test(v)})[0]||iv[0]||'');}
+}
+$('#g-table').addEventListener('change',guideCols);
+function addFilter(col,val){
+  var o=guideObj();var cats=o.cols.filter(function(c){return c.kind!=='longtext'});
+  var row=document.createElement('div');row.className='row';
+  row.innerHTML='<select class="fc">'+cats.map(function(c){return '<option>'+esc(c.name)+'</option>'}).join('')+'</select><select class="fo"><option value="=">等於</option><option value="!=">不等於</option><option value="like">包含</option><option value=">=">≥</option><option value="<=">≤</option></select><span class="fv"></span><button class="btn small secondary" type="button">刪</button>';
+  $('#g-filters').appendChild(row);
+  var fc=$('.fc',row);if(col)fc.value=col;
+  function paintVal(){var c=o.cols.filter(function(x){return x.name===fc.value})[0];var span=$('.fv',row);
+    if(c&&c.values&&c.values.length)span.innerHTML='<select class="fvv">'+c.values.map(function(v){return '<option>'+esc(v)+'</option>'}).join('')+'</select>';
+    else span.innerHTML='<input type="text" class="fvv" placeholder="值">';}
+  fc.addEventListener('change',paintVal);paintVal();
+  if(val!=null&&val!=='')$('.fvv',row).value=val;
+  $('button',row).addEventListener('click',function(){row.remove()});
+}
+$('#g-addf').addEventListener('click',function(){if(db)addFilter();});
+$('#g-run').addEventListener('click',function(){
+  if(!db)return;var o=guideObj();
+  var agg=$('#g-agg').value,col=$('#g-col').value,g1=$('#g-g1').value,g2=$('#g-g2').value,lim=$('#g-limit').value;
+  var measure,mname;
+  if(agg==='count'){measure='COUNT(*)';mname='列數';}
+  else if(!col){alert('這張表沒有數值欄位，只能算列數');return;}
+  else if(agg==='rate'){measure='ROUND(AVG('+qid(col)+') * 100, 1)';mname=col+'比率';}
+  else{measure='ROUND('+agg.toUpperCase()+'('+qid(col)+'), 2)';mname={avg:'平均',sum:'總和',max:'最大',min:'最小'}[agg]+col;}
+  var where=$$('#g-filters .row').map(function(r){var c=$('.fc',r).value,op=$('.fo',r).value,v=$('.fvv',r).value;var cs=o.cols.filter(function(x){return x.name===c})[0];var isNum=cs&&cs.kind==='num'&&v!==''&&!isNaN(+v);
+    if(op==='like')return qid(c)+" LIKE '%"+String(v).replace(/'/g,"''")+"%'";return qid(c)+' '+op+' '+(isNum?(+v):"'"+String(v).replace(/'/g,"''")+"'");});
+  var groups=[g1,g2].filter(Boolean);
+  var sel=groups.map(qid).concat([measure+' AS '+qid(mname)]);
+  var sql='SELECT '+sel.join(', ')+'\nFROM '+qid(o.name)+(where.length?'\nWHERE '+where.join('\n  AND '):'')+(groups.length?'\nGROUP BY '+groups.map(qid).join(', ')+'\nORDER BY '+(groups.length===1?qid(mname)+' DESC':groups.map(qid).join(', ')):'')+'\nLIMIT '+lim;
+  var ch={type:groups.length===2?'grouped':groups.length===1?'bar':'kpi',x:g1||'',y:[mname],series:g2||'',title:(groups.length?groups.join('×')+'的':'')+mname,percent:agg==='rate'};
+  var res=runSql(sql);
+  show({question:'引導式：'+ch.title,sql:sql,explanation:'依你選的條件組出的查詢。',assumptions:[],chart:ch,source:'引導式'},res);
+});
+
+/* ───────── 執行 SQL ───────── */
+function stripSql(s){return s.replace(/--[^\n]*/g,' ').replace(/\/\*[\s\S]*?\*\//g,' ').replace(/'(?:''|[^'])*'/g,"''");}
+function checkReadOnly(sql){
+  var s=stripSql(sql).trim().replace(/;\s*$/,'');
+  if(!/^(select|with)\b/i.test(s))return '只允許 SELECT 查詢。';
+  if(s.indexOf(';')>=0)return '一次只能執行一個查詢。';
+  if(/\b(insert|update|delete|drop|alter|create|replace|attach|detach|pragma|vacuum|reindex)\b/i.test(s))return '查詢含有修改資料的指令，已拒絕執行。';
+  return '';
+}
+function runSql(sql){
+  if(!db)return {error:'尚未載入資料庫。',cols:[],rows:[]};
+  var bad=checkReadOnly(sql);if(bad)return {error:bad,cols:[],rows:[]};
+  var t0=performance.now();
+  try{var r=db.exec(sql);var ms=Math.round(performance.now()-t0);if(!r.length)return {cols:[],rows:[],ms:ms};return {cols:r[0].columns,rows:r[0].values,ms:ms};}
+  catch(e){return {error:String(e.message||e),cols:[],rows:[]};}
+}
+$('#sql-run').addEventListener('click',function(){if(!current)return;var sql=$('#sql').value;var res=runSql(sql);var base=String(current.question||'').replace(/（手動修改）$/,'');show({question:base+'（手動修改）',sql:sql,explanation:'你修改過的查詢；圖表依結果自動選擇。',assumptions:[],chart:null,source:'手動修改'},res);});
+$('#sql-copy').addEventListener('click',function(){copyText($('#sql').value).then(function(){$('#res-status').textContent='已複製 SQL。';});});
+
+/* ───────── 顯示結果 ───────── */
+function show(spec,res){
+  current=Object.assign({},spec,{cols:res.cols,rows:res.rows});
+  $('#result').classList.remove('hidden');$('#interp').classList.add('hidden');
+  $('#sql').value=spec.sql;
+  var h='<p style="margin:0 0 .3rem"><span class="pill">'+esc(spec.source||'')+'</span> <b>'+esc(spec.question||'')+'</b></p>';
+  if(spec.explanation)h+='<p style="margin:0 0 .3rem">'+esc(spec.explanation)+'</p>';
+  if(spec.assumptions&&spec.assumptions.length)h+='<div class="small"><span class="pill signal">假設</span><ul>'+spec.assumptions.map(function(a){return '<li>'+esc(a)+'</li>'}).join('')+'</ul></div>';
+  if(res.error)h+='<div class="card warn" style="margin:.4rem 0"><b>SQL 執行失敗</b><br><code>'+esc(res.error)+'</code></div>';
+  $('#explain').innerHTML=h;
+  $('#chart-type').value='auto';
+  renderResult();
+  if(!res.error){addHistory(current);$('#res-status').textContent=res.rows.length.toLocaleString()+' 列、'+res.cols.length+' 欄（'+res.ms+' ms）';}
+  else $('#res-status').textContent='';
+  $('#result').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function renderResult(){
+  if(!current)return;
+  renderTable(current.cols,current.rows);
+  drawChart();
+}
+function renderTable(cols,rows){
+  if(!cols.length){$('#table').innerHTML='<p class="small muted" style="padding:.5rem">沒有結果列。</p>';return;}
+  var num=cols.map(function(c,i){return rows.length&&rows.every(function(r){return r[i]==null||typeof r[i]==='number'})});
+  var lim=500;
+  $('#table').innerHTML='<table class="restable"><tr>'+cols.map(function(c){return '<th>'+esc(c)+'</th>'}).join('')+'</tr>'+rows.slice(0,lim).map(function(r){return '<tr>'+r.map(function(v,i){return '<td'+(num[i]?' class="num"':'')+'>'+(v==null?'<span class="muted">—</span>':esc(num[i]?fmtNum(v):String(v).length>120?String(v).slice(0,120)+'…':v))+'</td>'}).join('')+'</tr>'}).join('')+'</table>'+(rows.length>lim?'<p class="small muted" style="padding:.4rem">只顯示前 '+lim+' 列，共 '+rows.length.toLocaleString()+' 列；完整結果請下載 CSV。</p>':'');
+}
+function fmtNum(v){if(typeof v!=='number')return v;if(Number.isInteger(v))return Math.abs(v)>=10000&&!/^(19|20|1[0-2])\d$/.test(String(v))?v.toLocaleString():String(v);return Math.abs(v)>=1000?v.toLocaleString(undefined,{maximumFractionDigits:1}):String(+v.toFixed(4));}
+function compact(v){var a=Math.abs(v);if(a>=1e8)return (v/1e8).toFixed(a>=1e9?0:1)+'億';if(a>=1e4)return (v/1e4).toFixed(a>=1e5?0:1)+'萬';return Number.isInteger(v)?String(v):String(+v.toFixed(2));}
+
+/* ───────── 選圖 ───────── */
+function isYearCol(name,vals){return /年度|年$|^年|year/i.test(name)&&vals.every(function(v){return v==null||(typeof v==='number'&&((v>=1900&&v<=2100)||(v>=80&&v<=200)))||/^\d{2,4}/.test(String(v))});}
+function analyze(cols,rows){
+  var info=cols.map(function(c,i){var vals=rows.map(function(r){return r[i]});var isNum=vals.length&&vals.every(function(v){return v==null||typeof v==='number'});return {name:c,i:i,num:isNum,year:isYearCol(c,vals),distinct:new Set(vals.map(String)).size};});
+  return info;
+}
+function autoChart(cols,rows){
+  var info=analyze(cols,rows);
+  var nums=info.filter(function(c){return c.num&&!c.year}),cats=info.filter(function(c){return !c.num||c.year});
+  if(!rows.length)return {type:'table'};
+  if(rows.length===1&&nums.length&&!cats.length)return {type:'kpi',y:nums.map(function(c){return c.name})};
+  if(!nums.length)return {type:'table'};
+  if(cats.length>=2&&nums.length===1){
+    var x=cats[0],s=cats[1];if(s.year&&!x.year){var t=x;x=s;s=t;}
+    if(x.year&&s.distinct<=8)return {type:'line',x:x.name,y:[nums[0].name],series:s.name};
+    return {type:s.distinct<=8?'grouped':'heatmap',x:x.name,y:[nums[0].name],series:s.name};
+  }
+  if(cats.length>=1){
+    var xc=cats[0];var ys=nums.slice(0,8).map(function(c){return c.name});
+    if(xc.year)return {type:'line',x:xc.name,y:ys,series:''};
+    if(ys.length>1)return {type:'grouped',x:xc.name,y:ys,series:''};
+    var long=rows.some(function(r){return String(r[xc.i]).length>6});
+    return {type:(rows.length>8||long)?'hbar':'bar',x:xc.name,y:ys,series:''};
+  }
+  return {type:'table'};
+}
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()||getComputedStyle($('#viz')).getPropertyValue(n).trim();}
+function seriesColors(){return ['--s1','--s2','--s3','--s4','--s5','--s6','--s7','--s8'].map(cssVar);}
+function resolveSpec(){
+  var cols=current.cols,rows=current.rows;
+  var want=$('#chart-type').value;
+  var ai=current.chart||{};
+  var valid=function(n){return !n||cols.indexOf(n)>=0};
+  var spec=null;
+  if(want==='auto'){
+    if(ai.type&&valid(ai.x)&&valid(ai.series)&&(ai.y||[]).every(valid)&&(ai.type==='table'||ai.type==='kpi'||ai.x))spec={type:ai.type,x:ai.x,y:(ai.y&&ai.y.length?ai.y:null),series:ai.series};
+    if(!spec||!spec.y)spec=Object.assign(autoChart(cols,rows),spec&&spec.type?{type:spec.type}:{} );
+  }else{spec=Object.assign(autoChart(cols,rows),{type:want});}
+  var a=autoChart(cols,rows);
+  spec.x=spec.x||a.x;spec.y=(spec.y&&spec.y.length)?spec.y:(a.y||[]);spec.series=spec.series!=null?spec.series:(a.series||'');
+  if((spec.type==='grouped'||spec.type==='heatmap')&&!spec.series&&spec.y.length<2){var i2=analyze(cols,rows).filter(function(c){return (!c.num||c.year)&&c.name!==spec.x})[0];if(i2)spec.series=i2.name;else if(spec.type==='heatmap')spec.type='table';else spec.type='bar';}
+  spec.percent=ai.percent!=null&&want==='auto'?ai.percent:spec.y.some(function(n){return /率|%|％/.test(n)});
+  spec.title=ai.title||current.question||'';
+  return spec;
+}
+function drawChart(){
+  if(chart){chart.destroy();chart=null;}
+  $('#alt-view').innerHTML='';$('#chart-box').classList.add('hidden');$('#dl-png').disabled=true;
+  var cols=current.cols,rows=current.rows;
+  $('#viz-title').textContent='';$('#viz-sub').textContent='';
+  if(!rows.length){$('#alt-view').innerHTML='<p class="muted small">沒有資料可畫。</p>';return;}
+  var spec=resolveSpec();
+  $('#viz-title').textContent=spec.title;
+  if(spec.type==='table'){$('#viz').classList.add('hidden');return;}
+  $('#viz').classList.remove('hidden');
+  var ci=function(n){return cols.indexOf(n)};
+  if(spec.type==='kpi'){
+    $('#alt-view').innerHTML='<div class="kpi-row">'+spec.y.map(function(n){var v=rows[0][ci(n)];return '<div class="kpi"><div class="label">'+esc(n)+'</div><div class="value">'+esc(typeof v==='number'?fmtNum(v):v)+(spec.percent&&typeof v==='number'?'%':'')+'</div></div>'}).join('')+'</div>';
+    return;
+  }
+  if(spec.type==='heatmap'){drawHeatmap(spec);return;}
+  loadScript(CHARTJS).then(function(){drawChartJs(spec);}).catch(function(e){$('#alt-view').innerHTML='<p class="small">'+esc(e.message)+'</p>';});
+}
+function pivot(spec){
+  var cols=current.cols,rows=current.rows,xi=cols.indexOf(spec.x);
+  var labels=[],seen={};rows.forEach(function(r){var k=String(r[xi]);if(!seen[k]){seen[k]=1;labels.push(k);}});
+  /* 級距類標籤（例：100億以上、未達20億）依金額由大到小排 */
+  if(labels.length>1&&labels.every(function(l){return /\d+\s*億/.test(l)})){var tk=function(l){var n=+(l.match(/(\d+)\s*億/)[1]);return /^未達/.test(l)?n-0.5:n;};labels.sort(function(a,b){return tk(b)-tk(a)});}
+  var datasets=[];
+  if(spec.series){
+    var si=cols.indexOf(spec.series),yi=cols.indexOf(spec.y[0]);var sers=[],ss={};
+    rows.forEach(function(r){var k=String(r[si]);if(!ss[k]){ss[k]=1;sers.push(k);}});
+    sers.slice(0,8).forEach(function(s){var m={};rows.forEach(function(r){if(String(r[si])===s)m[String(r[xi])]=r[yi];});datasets.push({label:s,data:labels.map(function(l){return m[l]==null?null:m[l]})});});
+    return {labels:labels,datasets:datasets,more:sers.length>8?sers.length-8:0};
+  }
+  spec.y.slice(0,8).forEach(function(n){var yi=cols.indexOf(n);var m={};rows.forEach(function(r){m[String(r[xi])]=r[yi];});datasets.push({label:n,data:labels.map(function(l){return m[l]})});});
+  return {labels:labels,datasets:datasets,more:0};
+}
+function drawChartJs(spec){
+  var p=pivot(spec);var colors=seriesColors();
+  var maxCat=spec.type==='hbar'?40:30;
+  var cut=0;if(p.labels.length>maxCat){cut=p.labels.length-maxCat;p.labels=p.labels.slice(0,maxCat);p.datasets.forEach(function(d){d.data=d.data.slice(0,maxCat)});}
+  if(spec.type==='line'){var order=p.labels.map(function(l,i){return [l,i]}).sort(function(a,b){return (+a[0]||0)-(+b[0]||0)||String(a[0]).localeCompare(String(b[0]))});p.labels=order.map(function(o){return o[0]});p.datasets.forEach(function(d){var old=d.data;d.data=order.map(function(o){return old[o[1]]});});}
+  var surface=cssVar('--surface'),ink=cssVar('--ink'),ink2=cssVar('--ink-2'),grid=cssVar('--grid');
+  var horizontal=spec.type==='hbar';
+  var datasets=p.datasets.map(function(d,i){var c=colors[i%8];
+    if(spec.type==='line')return {label:d.label,data:d.data,borderColor:c,backgroundColor:c,borderWidth:2,pointRadius:4,pointHoverRadius:6,pointBorderColor:surface,pointBorderWidth:2,tension:0,spanGaps:true};
+    return {label:d.label,data:d.data,backgroundColor:c,borderRadius:4,borderSkipped:'start',maxBarThickness:24,borderWidth:0};});
+  var allVals=[].concat.apply([],p.datasets.map(function(d){return d.data})).filter(function(v){return typeof v==='number'});
+  var pct=spec.percent&&allVals.every(function(v){return v>=0&&v<=100});
+  var valAxis={beginAtZero:spec.type!=='line',grid:{color:grid,lineWidth:1,drawTicks:false},border:{display:false},ticks:{color:ink2,callback:function(v){return pct?v+'%':compact(v)}}};
+  if(pct)valAxis.max=100;
+  var catAxis={grid:{display:false},border:{color:grid},ticks:{color:ink2,autoSkip:!horizontal,maxRotation:0,callback:function(v){var l=this.getLabelForValue(v);return String(l).length>14?String(l).slice(0,13)+'…':l}}};
+  $('#chart-box').classList.remove('hidden');
+  $('#chart-box').style.height=horizontal?Math.max(260,Math.min(1200,p.labels.length*(p.datasets.length>1?34:26)+80))+'px':'420px';
+  var canvas=$('#chart');
+  Chart.defaults.font.family='"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif';
+  chart=new Chart(canvas,{type:spec.type==='line'?'line':'bar',data:{labels:p.labels,datasets:datasets},options:{
+    responsive:true,maintainAspectRatio:false,indexAxis:horizontal?'y':'x',animation:false,
+    interaction:{mode:spec.type==='line'?'index':'nearest',intersect:spec.type!=='line',axis:horizontal?'y':'x'},
+    plugins:{legend:{display:datasets.length>1,position:'top',align:'start',labels:{color:ink,usePointStyle:true,pointStyle:spec.type==='line'?'line':'rectRounded',boxWidth:14}},
+      tooltip:{callbacks:{label:function(c){var v=c.parsed[horizontal?'x':'y'];return (datasets.length>1?c.dataset.label+'：':'')+(v==null?'—':fmtNum(v)+(pct?'%':''))}}}},
+    scales:horizontal?{x:valAxis,y:catAxis}:{x:catAxis,y:valAxis}}});
+  var sub=[];if(spec.y.length===1&&!spec.series)sub.push(spec.y[0]+(pct&&!/百分點/.test(spec.y[0])?'（%）':''));if(spec.series)sub.push('依「'+spec.series+'」分組');if(cut)sub.push('只畫前 '+maxCat+' 項，另 '+cut+' 項見表格');if(p.more)sub.push('系列超過 8 個，只畫前 8 個；全部請改看熱力表或表格');
+  $('#viz-sub').textContent=sub.join('；');
+  $('#dl-png').disabled=false;
+}
+var RAMP=['#cde2fb','#b7d3f6','#9ec5f4','#86b6ef','#6da7ec','#5598e7','#3987e5','#2a78d6','#256abf','#1c5cab','#184f95','#104281','#0d366b'];
+function lum(hex){var n=parseInt(hex.slice(1),16),r=(n>>16&255)/255,g=(n>>8&255)/255,b=(n&255)/255;var f=function(c){return c<=.03928?c/12.92:Math.pow((c+.055)/1.055,2.4)};return .2126*f(r)+.7152*f(g)+.0722*f(b);}
+function drawHeatmap(spec){
+  var cols=current.cols,rows=current.rows;var xi=cols.indexOf(spec.x),si=cols.indexOf(spec.series),yi=cols.indexOf(spec.y[0]);
+  if(si<0){$('#alt-view').innerHTML='<p class="small muted">熱力表需要兩個分類欄位。</p>';return;}
+  var xs=[],ss=[],m={},sx={},sy={};rows.forEach(function(r){var x=String(r[xi]),s=String(r[si]);if(!sx[x]){sx[x]=1;xs.push(x)}if(!sy[s]){sy[s]=1;ss.push(s)}m[x+'\u0001'+s]=r[yi];});
+  var vals=rows.map(function(r){return r[yi]}).filter(function(v){return typeof v==='number'});var lo=Math.min.apply(null,vals),hi=Math.max.apply(null,vals);
+  var pct=spec.percent&&vals.every(function(v){return v>=0&&v<=100});if(pct){lo=0;hi=100;}
+  var pick=function(v){if(typeof v!=='number')return null;var t=hi>lo?(v-lo)/(hi-lo):.5;return RAMP[Math.min(RAMP.length-1,Math.floor(t*RAMP.length))];};
+  var h='<div style="overflow:auto"><table class="heat"><tr><th></th>'+ss.map(function(s){return '<th>'+esc(s)+'</th>'}).join('')+'</tr>'+xs.map(function(x){return '<tr><th>'+esc(x)+'</th>'+ss.map(function(s){var v=m[x+'\u0001'+s];var c=pick(v);return '<td title="'+esc(x+'・'+s+'：'+(v==null?'—':fmtNum(v)))+'" style="'+(c?'background:'+c+';color:'+(lum(c)>.35?'#0b0b0b':'#ffffff'):'')+'">'+(v==null?'—':esc(fmtNum(v))+(pct?'%':''))+'</td>'}).join('')+'</tr>'}).join('')+'</table></div>';
+  h+='<div class="heat-legend">'+esc(fmtNum(lo))+(pct?'%':'')+' '+RAMP.filter(function(_,i){return i%2===0}).map(function(c){return '<span class="sw" style="background:'+c+'"></span>'}).join('')+' '+esc(fmtNum(hi))+(pct?'%':'')+'　<span>'+esc(spec.y[0])+'</span></div>';
+  $('#alt-view').innerHTML=h;$('#viz-sub').textContent='列＝'+spec.x+'，欄＝'+spec.series+'；顏色越深數值越大';
+}
+$('#chart-type').addEventListener('change',function(){if(current)drawChart();});
+if(window.matchMedia){var mq=window.matchMedia('(prefers-color-scheme: dark)');var rr=function(){if(current)drawChart()};if(mq.addEventListener)mq.addEventListener('change',rr);else if(mq.addListener)mq.addListener(rr);}
+
+/* ───────── 下載 ───────── */
+function download(name,blob){var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},500);}
+function safeName(s){return String(s||'查詢結果').replace(/[\\/:*?"<>|\s]+/g,'_').slice(0,40);}
+$('#dl-png').addEventListener('click',function(){
+  if(!chart)return;var src=$('#chart');var pad=24,title=$('#viz-title').textContent,sub=$('#viz-sub').textContent;
+  var c=document.createElement('canvas');var scale=src.width/src.clientWidth||1;c.width=src.width+pad*2*scale;c.height=src.height+(pad*2+50)*scale;
+  var x=c.getContext('2d');x.fillStyle=cssVar('--surface');x.fillRect(0,0,c.width,c.height);
+  x.fillStyle=cssVar('--ink');x.font='600 '+(16*scale)+'px "Microsoft JhengHei",sans-serif';x.fillText(title,pad*scale,(pad+16)*scale);
+  x.fillStyle=cssVar('--ink-2');x.font=(12*scale)+'px "Microsoft JhengHei",sans-serif';x.fillText(sub,pad*scale,(pad+36)*scale);
+  x.drawImage(src,pad*scale,(pad+50)*scale);
+  c.toBlob(function(b){download(safeName(title)+'.png',b);});
+});
+$('#dl-csv').addEventListener('click',function(){
+  if(!current)return;var q=function(v){v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+  var csv='﻿'+[current.cols.map(q).join(',')].concat(current.rows.map(function(r){return r.map(q).join(',')})).join('\r\n');
+  download(safeName($('#viz-title').textContent||current.question)+'.csv',new Blob([csv],{type:'text/csv;charset=utf-8'}));
+});
+
+/* ───────── 歷史 ───────── */
+function histKey(){return 'qa-hist:'+dbName;}
+function getHist(){try{return JSON.parse(sget(histKey())||'[]')}catch(e){return []}}
+function addHistory(c){if(!dbName)return;var h=getHist().filter(function(x){return x.sql!==c.sql});h.unshift({q:c.question,sql:c.sql,explanation:c.explanation||'',assumptions:c.assumptions||[],chart:c.chart||null,source:c.source||'',ts:Date.now()});sset(histKey(),JSON.stringify(h.slice(0,30)));renderHistory();}
+function renderHistory(){
+  var h=dbName?getHist():[];
+  $('#hist').innerHTML=h.length?h.map(function(x,i){return '<li><button type="button" class="q" data-i="'+i+'">'+esc(x.q||x.sql.slice(0,60))+'</button><span class="t">'+esc(x.source||'')+'・'+new Date(x.ts).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})+'</span></li>'}).join(''):'<li class="small muted">還沒有紀錄。</li>';
+}
+$('#hist').addEventListener('click',function(e){var b=e.target.closest('button.q');if(!b||!db)return;var x=getHist()[+b.getAttribute('data-i')];var res=runSql(x.sql);show({question:x.q,sql:x.sql,explanation:x.explanation,assumptions:x.assumptions,chart:x.chart,source:(x.source||'')+'・紀錄'},res);});
+$('#hist-clear').addEventListener('click',function(){if(dbName&&confirm('清除這個資料庫的問題紀錄？')){sdel(histKey());renderHistory();}});
+
+/* debug hook for testing (no key involved) */
+window.__qa={systemPrompt:systemPrompt,schema:OUTPUT_SCHEMA,runSql:runSql,show:show,autoChart:autoChart,checkReadOnly:checkReadOnly};
+})();
+</script>
+</body>
+</html>
