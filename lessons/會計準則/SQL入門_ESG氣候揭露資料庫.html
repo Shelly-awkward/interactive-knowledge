@@ -90,6 +90,12 @@ textarea.sql:focus{border-color:var(--blue)}
 .kw{color:var(--kw)}.str{color:var(--str)}.nm{color:var(--num)}
 .toolbar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.3rem 0 .6rem}
 .result{border:1px solid var(--rule);border-radius:8px;background:var(--card);padding:.5rem .7rem;margin:.4rem 0 .8rem}
+.rz-table th .rz{position:absolute;top:0;right:-4px;width:9px;height:100%;cursor:col-resize;z-index:3;touch-action:none}
+.rz-table th .rz:hover,.rz-table th .rz:focus-visible,.rz-table th .rz.on{background:var(--blue);opacity:.45;outline:none}
+.rz-table.fixed{table-layout:fixed}
+.rz-table.fixed th,.rz-table.fixed td{overflow:hidden;text-overflow:ellipsis}
+.rz-table.fixed td{white-space:normal;word-break:break-word}
+.rz-table.fixed td.num{white-space:nowrap}
 .result .meta{font-size:.82rem;color:var(--ink-3);margin-bottom:.3rem}
 .result.err{border-color:var(--warn);background:var(--warn-soft)}
 .result.ok{border-left:4px solid var(--green)}
@@ -254,7 +260,7 @@ kbd{font-family:inherit;font-size:.85em;border:1px solid var(--rule);border-bott
 <!-- ───────── 4 ───────── -->
 <section class="station" id="s4">
   <div class="station-head"><span class="no">第 4 站</span><h2>十三個實作查詢（約 40 分鐘）</h2></div>
-  <p class="lead">每一題都可以改。改壞了按「還原」。「預期結果」是我用完整資料庫跑出來的前幾列，拿來對答案。</p>
+  <p class="lead">每一題都可以改。改壞了按「還原」。結果表格的欄寬可以拖曳表頭框線調整，雙擊框線依內容自動調整。「預期結果」是我用完整資料庫跑出來的前幾列，拿來對答案。</p>
   <p class="small muted">在 DB Browser：切到「執行 SQL」分頁，貼上，按藍色三角形或 <kbd>Ctrl</kbd>+<kbd>Enter</kbd>。在這一頁：啟動引擎後直接按「執行」。</p>
   <div id="queries"></div>
   <div class="next"><a class="btn" href="#s5">下一站：資料的限制</a></div>
@@ -468,6 +474,36 @@ window.__QUERIES__ = [{"title": "Q1 看前10家公司", "sql": "SELECT * FROM v_
     if(rows.length>lim)h+='<p class="small muted">只顯示前 '+lim+' 列，共 '+rows.length.toLocaleString()+' 列。</p>';
     return h;
   }
+  /* 表頭框線拖曳調整欄寬；雙擊依內容自動調整；方向鍵微調；寬度依欄名記在這台電腦 */
+  function makeResizable(table,key){
+    if(!table||!table.rows.length)return;
+    var ths=Array.prototype.slice.call(table.rows[0].cells);
+    var saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')||{};}catch(e){}
+    var save=function(){try{localStorage.setItem(key,JSON.stringify(saved));}catch(e){}};
+    var names=ths.map(function(th){return th.textContent;});
+    var w=ths.map(function(th,i){return saved[names[i]]||Math.min(480,Math.ceil(th.getBoundingClientRect().width));});
+    var apply=function(){ths.forEach(function(th,i){th.style.width=w[i]+'px';});table.style.width=w.reduce(function(a,b){return a+b;},0)+'px';};
+    var commit=function(i){saved[names[i]]=w[i];save();};
+    table.classList.add('rz-table','fixed');apply();
+    ths.forEach(function(th,i){
+      if(getComputedStyle(th).position==='static')th.style.position='relative';
+      var h=document.createElement('span');h.className='rz';h.tabIndex=0;h.setAttribute('role','separator');h.setAttribute('aria-label','調整「'+names[i]+'」欄寬');h.title='拖曳調整欄寬；雙擊依內容自動調整';
+      th.appendChild(h);
+      h.addEventListener('pointerdown',function(e){
+        e.preventDefault();e.stopPropagation();var x0=e.clientX,w0=w[i];h.classList.add('on');try{h.setPointerCapture(e.pointerId);}catch(_){}
+        var mv=function(ev){w[i]=Math.max(36,Math.round(w0+ev.clientX-x0));apply();};
+        var up=function(){h.classList.remove('on');h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);h.removeEventListener('pointercancel',up);commit(i);};
+        h.addEventListener('pointermove',mv);h.addEventListener('pointerup',up);h.addEventListener('pointercancel',up);
+      });
+      h.addEventListener('dblclick',function(e){
+        e.stopPropagation();table.classList.remove('fixed');var tw=table.style.width;table.style.width='max-content';th.style.width='';
+        var nat=Math.ceil(th.getBoundingClientRect().width);table.style.width=tw;table.classList.add('fixed');
+        w[i]=Math.max(36,Math.min(600,nat));apply();delete saved[names[i]];save();
+      });
+      h.addEventListener('keydown',function(e){if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();w[i]=Math.max(36,w[i]+(e.key==='ArrowRight'?16:-16));apply();commit(i);}});
+    });
+  }
+  
   function toCSV(cols,rows){
     var q=function(v){v=v===null||v===undefined?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
     return '﻿'+[cols.map(q).join(',')].concat(rows.map(function(r){return r.map(q).join(',')})).join('\r\n');
@@ -483,6 +519,7 @@ window.__QUERIES__ = [{"title": "Q1 看前10家公司", "sql": "SELECT * FROM v_
       var note=(mode==='builtin'&&/原文/.test(sql))?'<p class="small muted" style="margin:.2rem 0 0">內建資料沒有原文，這一欄會是 NULL；要看原文請在下方改用完整 .db 檔。</p>':'';
       box.className='result ok';
       box.innerHTML='<div class="meta">'+rows.length.toLocaleString()+' 列、'+cols.length+' 欄（'+ms+' ms）'+(mode==='builtin'?'・內建資料':'・完整檔')+' <button class="btn small secondary" type="button" data-csv>下載 CSV</button></div>'+renderTable(cols,rows)+note;
+      makeResizable(box.querySelector('table'),'sql-lesson-colw');
       box.querySelector('[data-csv]').addEventListener('click',function(){
         var blob=new Blob([toCSV(cols,rows)],{type:'text/csv;charset=utf-8'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(name||'query')+'.csv';a.click();
       });
