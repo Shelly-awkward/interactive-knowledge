@@ -1,0 +1,75 @@
+{
+ "built": "2026-10-23",
+ "sources": [
+  {
+   "src": "fsc_sfb",
+   "label": "金管會證券期貨局主管法規",
+   "file": "fsc_sfb.json",
+   "laws": 2446,
+   "units": 11027,
+   "chars": 2994217,
+   "bytes": 9646494,
+   "built": "2026-10-23"
+  },
+  {
+   "src": "moj_law",
+   "label": "全國法規資料庫：法律",
+   "file": "moj_law.json",
+   "laws": 1344,
+   "units": 47349,
+   "chars": 5818126,
+   "bytes": 19154347,
+   "built": "2026-10-23"
+  },
+  {
+   "src": "fsc_bank",
+   "label": "金管會銀行局主管法規",
+   "file": "fsc_bank.json",
+   "laws": 1566,
+   "units": 8885,
+   "chars": 2223916,
+   "bytes": 7101498,
+   "built": "2026-10-23"
+  },
+  {
+   "src": "fsc_ins",
+   "label": "金管會保險局主管法規",
+   "file": "fsc_ins.json",
+   "laws": 1848,
+   "units": 8479,
+   "chars": 2129288,
+   "bytes": 6967996,
+   "built": "2026-10-23"
+  },
+  {
+   "src": "fsc_exam",
+   "label": "金管會檢查局主管法規",
+   "file": "fsc_exam.json",
+   "laws": 105,
+   "units": 290,
+   "chars": 78151,
+   "bytes": 277968,
+   "built": "2026-10-23"
+  },
+  {
+   "src": "fsc_hq",
+   "label": "金管會本會主管法規",
+   "file": "fsc_hq.json",
+   "laws": 117,
+   "units": 994,
+   "chars": 200747,
+   "bytes": 643203,
+   "built": "2026-10-23"
+  },
+  {
+   "src": "twse",
+   "label": "證交所法規分享知識庫（市場規章）",
+   "file": "twse.json",
+   "laws": 263,
+   "units": 2003,
+   "chars": 771564,
+   "bytes": 2203232,
+   "built": "2026-10-23"
+  }
+ ]
+}

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>用語檢核台｜修法草案的詞目索引、歧義與引用檢查（私人工作用）</title>
+<style>
+:root{
+  box-sizing:border-box;
+  --paper:#F4F6F3;--card:#FFFFFF;--ink:#1C2A30;--ink-2:#4B5A62;--ink-3:#8593A0;
+  --rule:rgba(28,42,48,.14);--blue:#1F4E8C;--blue-soft:#E3EBF6;--green:#2E7D4F;--green-soft:#E1F0E6;
+  --signal:#E0A100;--signal-soft:#FBF1CF;--warn:#9B2C2C;--warn-soft:#F8E4E4;--focus:#1F4E8C;--mark:#FFE58A;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B1F;--card:#1D262B;--ink:#E9EEF0;--ink-2:#B8C3CA;--ink-3:#7F8C95;--rule:rgba(233,238,240,.16);
+    --blue:#7FA7E0;--blue-soft:#243448;--green:#7CC79C;--green-soft:#223A2B;--signal:#F0C24A;--signal-soft:#3A3213;
+    --warn:#F08A8A;--warn-soft:#3F2323;--focus:#7FA7E0;--mark:#6B5A14;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B1F;--card:#1D262B;--ink:#E9EEF0;--ink-2:#B8C3CA;--ink-3:#7F8C95;--rule:rgba(233,238,240,.16);
+  --blue:#7FA7E0;--blue-soft:#243448;--green:#7CC79C;--green-soft:#223A2B;--signal:#F0C24A;--signal-soft:#3A3213;
+  --warn:#F08A8A;--warn-soft:#3F2323;--focus:#7FA7E0;--mark:#6B5A14;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{line-height:1.3;margin:0 0 .5em;font-weight:700}
+h1{font-size:1.25rem}h2{font-size:1.15rem}h3{font-size:1rem;margin-top:1em}
+p{margin:0 0 .8em}ul,ol{margin:0 0 .8em;padding-left:1.3em}li{margin:.2em 0}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;vertical-align:top;padding:.35em .5em;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--ink-2);position:sticky;top:0;background:var(--card)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.scroll{overflow:auto;max-height:60vh}
+code{font-family:Consolas,"Cascadia Code",monospace;font-size:.92em;background:var(--blue-soft);padding:.05em .35em;border-radius:4px}
+mark{background:var(--mark);color:inherit;padding:0 .1em;border-radius:2px}
+.top{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+.top-inner{max-width:1400px;margin:0 auto;padding:.5rem 1rem .3rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.top .tag{font-size:.78rem;color:var(--ink-2);background:var(--signal-soft);border:1px solid var(--signal);border-radius:999px;padding:.05em .7em;white-space:nowrap}
+.tabs{display:flex;gap:.2rem;flex-wrap:wrap}
+.tabs button{font:inherit;font-size:.88rem;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);border-radius:6px 6px 0 0;padding:.3em .8em;cursor:pointer}
+.tabs button.on{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:700}
+.tabs button .n{font-size:.75rem;opacity:.8;margin-left:.3em}
+main{max-width:1400px;margin:0 auto;padding:.8rem 1rem 3rem}
+.panel{display:none}.panel.on{display:block}
+.layout{display:grid;grid-template-columns:minmax(300px,2fr) minmax(300px,3fr);gap:1rem}
+@media (max-width:900px){.layout{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:.8rem 1rem;margin:0 0 .8rem}
+.card.blue{border-left:5px solid var(--blue)}.card.green{border-left:5px solid var(--green)}
+.card.signal{border-left:5px solid var(--signal);background:var(--signal-soft)}
+.card.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.btn{display:inline-block;font:inherit;font-size:.88rem;font-weight:500;color:#fff;background:var(--blue);border:0;border-radius:6px;padding:.42em .95em;cursor:pointer;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.green{background:var(--green)}.btn.small{font-size:.8rem;padding:.28em .7em}
+.btn:disabled{opacity:.5;cursor:default}
+.toolbar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.3rem 0 .6rem}
+.muted{color:var(--ink-2)}.small{font-size:.86rem}.hidden{display:none!important}
+.pill{display:inline-block;font-size:.76rem;padding:.02em .55em;border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);margin-right:.25em;white-space:nowrap}
+.pill.blue{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.pill.green{background:var(--green-soft);border-color:transparent;color:var(--green)}
+.pill.signal{background:var(--signal-soft);border-color:transparent;color:#7a5a00}
+.pill.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+textarea.doc{width:100%;min-height:52vh;font:inherit;font-size:.92rem;line-height:1.7;padding:.6rem .8rem;border:1px solid var(--rule);border-radius:8px;background:var(--card);color:var(--ink);resize:vertical}
+.docview{white-space:pre-wrap;word-break:break-all;font-size:.92rem;line-height:1.8;max-height:60vh;overflow:auto;padding:.6rem .8rem;border:1px solid var(--rule);border-radius:8px;background:var(--card)}
+.docview .hit{background:var(--mark);border-radius:2px}
+.docview .cur{outline:2px solid var(--warn)}
+.src-list label{display:flex;gap:.5rem;align-items:center;padding:.3rem 0;border-bottom:1px dashed var(--rule);font-size:.9rem}
+.src-list .meta{color:var(--ink-3);font-size:.8rem;margin-left:auto;white-space:nowrap}
+.prog{height:8px;background:var(--blue-soft);border-radius:4px;overflow:hidden;margin:.3rem 0}
+.prog div{height:100%;background:var(--blue);width:0;transition:width .2s}
+input[type=search],input[type=text],select{font:inherit;font-size:.9rem;padding:.35em .55em;border:1px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
+.termlist{max-height:60vh;overflow:auto;border:1px solid var(--rule);border-radius:8px;background:var(--card)}
+.termlist button{display:block;width:100%;text-align:left;font:inherit;font-size:.88rem;border:0;border-bottom:1px solid var(--rule);background:transparent;color:var(--ink);padding:.4em .7em;cursor:pointer}
+.termlist button:hover{background:var(--blue-soft)}
+.termlist button.on{background:var(--blue-soft);font-weight:700}
+.termlist button .c{float:right;color:var(--ink-3);font-size:.78rem}
+.termlist button .y{color:#7a5a00}
+.occ{font-size:.88rem;padding:.3em 0;border-bottom:1px dashed var(--rule)}
+.occ .where{color:var(--ink-3);font-size:.78rem;margin-right:.4em;white-space:nowrap}
+.occ .ctx{word-break:break-all}
+.occ .kind{font-size:.74rem;margin-left:.3em}
+.grp{margin:.6rem 0}
+.grp h4{margin:.3rem 0;font-size:.95rem;display:flex;align-items:center;gap:.5rem}
+.grp h4 .c{color:var(--ink-3);font-weight:400;font-size:.8rem}
+.more{font-size:.82rem;color:var(--blue);cursor:pointer;background:none;border:0;padding:.2em 0}
+.matrix td.hot{background:var(--signal-soft);font-weight:700}
+.colloc{display:flex;gap:.3rem;flex-wrap:wrap}
+.colloc span{font-size:.8rem;background:var(--blue-soft);border-radius:4px;padding:.05em .45em}
+.finding{padding:.4em .6em;border-left:4px solid var(--rule);margin:.3rem 0;font-size:.88rem;background:var(--card);border-radius:0 6px 6px 0}
+.finding.error{border-color:var(--warn)}.finding.warning{border-color:var(--signal)}.finding.info{border-color:var(--blue)}
+.finding .q{font-weight:700}
+.finding .loc{color:var(--ink-3);font-size:.78rem}
+.glos td input,.glos td select{width:100%}
+.glos td:first-child{font-weight:700;white-space:nowrap}
+kbd{font-family:inherit;font-size:.85em;border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;padding:0 .4em;background:var(--card)}
+.status{font-size:.82rem;color:var(--ink-2)}
+.sticky-foot{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--rule);padding:.4rem 1rem;font-size:.84rem;z-index:15}
+.sticky-foot .inner{max-width:1400px;margin:0 auto;display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+details summary{cursor:pointer;color:var(--blue)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <h1 style="margin:0">用語檢核台</h1>
+    <span class="tag">文件不上傳・運算都在瀏覽器</span>
+    <nav class="tabs" id="tabs">
+      <button data-p="p-doc" class="on">1 文件</button>
+      <button data-p="p-corpus">2 語料<span class="n" id="n-corpus"></span></button>
+      <button data-p="p-index">3 詞目索引</button>
+      <button data-p="p-sense">4 意義與搭配</button>
+      <button data-p="p-check">5 文件檢查<span class="n" id="n-check"></span></button>
+      <button data-p="p-glos">6 詞彙表<span class="n" id="n-glos"></span></button>
+      <button data-p="p-export">7 匯出與提示</button>
+      <button data-p="p-help">說明</button>
+    </nav>
+  </div>
+</header>
+<main>
+
+<!-- ───── 1 文件 ───── -->
+<section class="panel on" id="p-doc">
+  <div class="layout">
+    <div>
+      <div class="card blue">
+        <h2>載入草案</h2>
+        <p class="small muted">貼上修正條文或整部草案，或上傳 Word（.docx）。Word 的追蹤修訂會納入新增文字、排除刪除文字。</p>
+        <div class="toolbar">
+          <label class="btn small secondary" for="docx" style="cursor:pointer">上傳 .docx</label><input type="file" id="docx" accept=".docx" class="hidden">
+          <button class="btn small secondary" id="doc-sample" type="button">貼入測試文字</button>
+          <button class="btn small secondary" id="doc-clear" type="button">清空</button>
+          <label class="small">本法規（引用「本法／本準則」時指向）<select id="doc-law"><option value="">（載入語料後選擇）</option></select></label>
+        </div>
+        <textarea class="doc" id="doc" spellcheck="false" placeholder="在這裡貼上條文…"></textarea>
+        <div class="toolbar"><button class="btn" id="doc-run" type="button">分析文件</button><span class="status" id="doc-status"></span></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h2>文件檢視</h2>
+        <p class="small muted">分析後，詞彙表裡的詞目會標黃；點第 3、5 頁的結果會跳到這裡對應位置。</p>
+        <div class="docview" id="docview"><span class="muted">尚未分析。</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───── 2 語料 ───── -->
+<section class="panel" id="p-corpus">
+  <div class="layout">
+    <div>
+      <div class="card blue">
+        <h2>選擇語料來源</h2>
+        <p class="small muted">語料由本機腳本從金管會開放資料、全國法規資料庫、證交所法規分享知識庫產生，一條（或一點）一筆。第一次載入會下載，之後存在瀏覽器快取，離線也能用。</p>
+        <div class="src-list" id="src-list"><span class="muted small">讀取 manifest 中…</span></div>
+        <div class="toolbar">
+          <button class="btn" id="src-load" type="button">載入勾選的來源</button>
+          <button class="btn small secondary" id="src-folder" type="button" title="無法連外時，選共用磁碟上的 lawcorpus 資料夾">選擇本機語料資料夾</button>
+          <button class="btn small secondary" id="src-clearcache" type="button">清除快取</button>
+        </div>
+        <div class="prog"><div id="src-prog"></div></div>
+        <div class="status" id="src-status"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h2>快速查一個詞</h2>
+        <p class="small muted">不用詞彙表也能查：輸入任何字串，看它在哪些法規出現。</p>
+        <div class="toolbar"><input type="search" id="quick-q" placeholder="例如：確信、永續相關財務資訊、第三十六條" style="flex:1;min-width:200px"><button class="btn" id="quick-run" type="button">搜尋</button></div>
+        <div id="quick-res" class="small"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───── 3 詞目索引 ───── -->
+<section class="panel" id="p-index">
+  <div class="layout">
+    <div>
+      <div class="card">
+        <h2>詞目</h2>
+        <div class="toolbar"><input type="search" id="term-filter" placeholder="篩選詞目" style="flex:1"><button class="btn small" id="index-run" type="button">重算全部</button></div>
+        <p class="small muted">數字＝文件＋已載入語料的出現次數；黃色＝不只一種寫法。</p>
+        <div class="termlist" id="termlist"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card" id="index-detail"><p class="muted">左邊點一個詞目。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───── 4 意義與搭配 ───── -->
+<section class="panel" id="p-sense">
+  <div class="card blue">
+    <h2>同一個詞，在不同法規是不是同一個意思？</h2>
+    <p class="small muted">機器不判斷語意，只把線索排好：每筆出現歸類為「定義處」「引述他法」「一般使用」，再統計前後搭配詞。搭配詞差異大的，標「請人工判斷」。要讓 AI 幫忙判斷，到第 7 頁複製提示。</p>
+    <div class="toolbar"><select id="sense-term"><option value="">（先在第 3 頁計算索引）</option></select><button class="btn small" id="sense-run" type="button">分析</button></div>
+  </div>
+  <div id="sense-out"></div>
+</section>
+
+<!-- ───── 5 文件檢查 ───── -->
+<section class="panel" id="p-check">
+  <div class="layout">
+    <div>
+      <div class="card blue">
+        <h2>規則檢查</h2>
+        <p class="small muted">只檢查第 1 頁的文件。條號引用會對照已載入的語料。</p>
+        <div class="toolbar">
+          <label class="small"><input type="checkbox" id="ck-term" checked> 詞彙變體</label>
+          <label class="small"><input type="checkbox" id="ck-def" checked> 定義詞</label>
+          <label class="small"><input type="checkbox" id="ck-cite" checked> 條號引用</label>
+          <label class="small"><input type="checkbox" id="ck-style" checked> 體例</label>
+          <button class="btn small" id="check-run" type="button">執行檢查</button>
+        </div>
+        <div class="status" id="check-status"></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">規則說明</h3>
+        <ul class="small">
+          <li><b>詞彙變體</b>：文件中出現詞彙表的變體或禁用寫法（第 6 頁可改）。</li>
+          <li><b>定義詞</b>：「（以下簡稱 X）」出現前已使用 X；定義後仍用全名；同一簡稱定義兩次。</li>
+          <li><b>條號引用</b>：「第 X 條（之 Y）（第 Z 項）（第 W 款）」在語料中是否存在、是否「（刪除）」、是否引用自己；「前項」在第 1 項內；法規名稱未載入標「未驗證」。</li>
+          <li><b>體例</b>：條、項、款、年、元、日前接阿拉伯數字；半形標點；中文間空白；「金管會」應作「本會」（年報準則與令）。</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card"><h2>結果 <span class="small muted" id="check-count"></span></h2><div id="check-out"><p class="muted">尚未執行。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───── 6 詞彙表 ───── -->
+<section class="panel" id="p-glos">
+  <div class="card blue">
+    <h2>詞彙表與變體</h2>
+    <p class="small muted">內建基準來自「永續資訊揭露_詞彙表」。共用版放在部門共用磁碟的 <code>glossary_shared.json</code>：開啟後會覆蓋同名詞目並加入新詞目，改完按「儲存到共用檔」大家就同步。瀏覽器不支援直接寫檔時改用匯出。</p>
+    <div class="toolbar">
+      <button class="btn small" id="glos-open" type="button">開啟共用檔</button>
+      <button class="btn small green" id="glos-save" type="button" disabled>儲存到共用檔</button>
+      <label class="btn small secondary" for="glos-import" style="cursor:pointer">匯入 JSON</label><input type="file" id="glos-import" accept=".json" class="hidden">
+      <button class="btn small secondary" id="glos-export" type="button">匯出 JSON</button>
+      <button class="btn small secondary" id="glos-add" type="button">新增詞目</button>
+      <input type="search" id="glos-filter" placeholder="篩選" style="margin-left:auto">
+      <span class="status" id="glos-status"></span>
+    </div>
+  </div>
+  <div class="card scroll"><table class="glos" id="glos-table"></table></div>
+</section>
+
+<!-- ───── 7 匯出與提示 ───── -->
+<section class="panel" id="p-export">
+  <div class="layout">
+    <div>
+      <div class="card blue">
+        <h2>匯出</h2>
+        <div class="toolbar">
+          <button class="btn small" id="exp-index" type="button">詞目索引 CSV</button>
+          <button class="btn small" id="exp-check" type="button">文件檢查 CSV</button>
+          <button class="btn small" id="exp-summary" type="button">複製檢核摘要（貼進 Word）</button>
+        </div>
+        <p class="small muted">CSV 用 Excel 開啟時選「資料 → 從文字/CSV」，原始檔案選 65001 UTF-8。</p>
+      </div>
+    </div>
+    <div>
+      <div class="card green">
+        <h2>複製給 Claude 的提示</h2>
+        <p class="small muted">選一個詞目，把它在文件與語料中的片段、詞彙表定義整理成提示文字，貼到 claude.ai 請它判斷各處意義是否一致、哪裡可能歧義。本頁不會自己呼叫 AI。</p>
+        <div class="toolbar"><select id="prompt-term"><option value="">（先計算索引）</option></select><label class="small">每部法規最多 <input type="text" id="prompt-n" value="5" style="width:3em"> 筆</label><button class="btn small" id="prompt-copy" type="button">複製提示</button></div>
+        <textarea id="prompt-out" class="doc" style="min-height:30vh" readonly placeholder="提示文字會出現在這裡"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───── 說明 ───── -->
+<section class="panel" id="p-help">
+  <div class="card">
+    <h2>怎麼用</h2>
+    <ol>
+      <li><b>第 2 頁</b>載入語料（第一次約 30 MB，之後走快取）。機關不能連外時，把 <code>lawcorpus</code> 資料夾放到共用磁碟，用 Edge 開這一頁再按「選擇本機語料資料夾」。</li>
+      <li><b>第 1 頁</b>貼上或上傳草案，選「本法規」，按分析。</li>
+      <li><b>第 3 頁</b>看每個詞目在文件與所有法規的位置與寫法；<b>第 4 頁</b>看意義線索；<b>第 5 頁</b>看引用與體例問題。</li>
+      <li><b>第 6 頁</b>維護詞彙表，與同事共用一個 JSON。</li>
+      <li>改完 Word 後再貼回來檢一次。Word 負責共編與追蹤修訂，這裡負責看全局。</li>
+    </ol>
+    <h3>限制</h3>
+    <ul class="small">
+      <li>語意判斷交給人或 claude.ai；這裡只做規則與統計。</li>
+      <li>語料是建置當天的快照（見第 2 頁日期）；更新要重跑建置腳本。</li>
+      <li>條號引用只對照已載入的語料；引用其他法規而該法未載入時標「未驗證」。</li>
+      <li>直接寫共用檔需要 Edge 或 Chrome；其他瀏覽器用匯入匯出。</li>
+    </ul>
+    <h3>資料來源</h3>
+    <ul class="small">
+      <li>金管會主管法規開放資料（law.fsc.gov.tw/opendata）：證券期貨局、銀行局、保險局、檢查局、本會。</li>
+      <li>全國法規資料庫 Open API：法律層級全部。</li>
+      <li>臺灣證券交易所法規分享知識庫：市場規章。</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<div class="sticky-foot"><div class="inner">
+  <span id="foot-corpus">語料：未載入</span>
+  <span id="foot-doc">文件：無</span>
+  <span id="foot-glos">詞彙：—</span>
+  <span class="muted" style="margin-left:auto">資料不離開你的電腦</span>
+</div></div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var DATA_BASE='../../data/lawcorpus/';
+var CACHE_NAME='lawcorpus-v1';
+
+/* ───────── tabs ───────── */
+$$('#tabs button').forEach(function(b){b.addEventListener('click',function(){showTab(b.getAttribute('data-p'));});});
+function showTab(id){$$('#tabs button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-p')===id);});$$('.panel').forEach(function(p){p.classList.toggle('on',p.id===id);});}
+
+/* ───────── 中文數字 ───────── */
+var CN={'〇':0,'零':0,'一':1,'二':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9};
+function cnToInt(s){s=String(s).trim();if(/^\d+$/.test(s))return +s;var total=0,num=0,units={'十':10,'百':100,'千':1000};for(var i=0;i<s.length;i++){var ch=s[i];if(ch in CN){num=CN[ch];}else if(ch in units){total+=(num||1)*units[ch];num=0;}else return null;}return total+num;}
+function intToCn(n){if(n==null)return '';var d='零一二三四五六七八九';if(n<10)return d[n];if(n<20)return '十'+(n%10?d[n%10]:'');if(n<100)return d[Math.floor(n/10)]+'十'+(n%10?d[n%10]:'');var h=Math.floor(n/100),r=n%100;return d[h]+'百'+(r?(r<10?'零'+d[r]:intToCn(r)):'');}
+
+/* ───────── 狀態 ───────── */
+var corpus={laws:[],bySrc:{},loadedSrc:[],manifest:null};   // laws: {id,src,name,...,articles:[[no,sub,text,chapter]]}
+var lawByName={}, lawIndexById={};
+var doc={text:'',arts:[]};  // arts: [{no,sub,start,end}] 文件內的條頭位置
+var glossary={base:[],shared:[],merged:[],handle:null};
+var indexResult=null; // {terms:[{term,forms:[...],total,doc:[],corpus:[...],byForm:{},byLaw:{}}]}
+var checkResult=[];
+
+function setFoot(){
+  $('#foot-corpus').textContent='語料：'+(corpus.laws.length?corpus.laws.length.toLocaleString()+' 部（'+corpus.loadedSrc.join('、')+'）':'未載入');
+  $('#foot-doc').textContent='文件：'+(doc.text?doc.text.length.toLocaleString()+' 字':'無');
+  $('#foot-glos').textContent='詞彙：'+glossary.merged.length+' 條'+(glossary.handle?'（共用檔已連結）':'');
+  $('#n-corpus').textContent=corpus.laws.length?'('+corpus.laws.length+')':'';
+  $('#n-glos').textContent='('+glossary.merged.length+')';
+}
+
+/* ───────── 語料載入 ───────── */
+function manifestLoad(){
+  return fetchJSON(DATA_BASE+'manifest.json').then(function(m){corpus.manifest=m;renderSrcList(m);}).catch(function(e){
+    $('#src-list').innerHTML='<p class="small muted">讀不到 manifest（'+esc(e.message)+'）。若是從檔案直接開啟，請按「選擇本機語料資料夾」。</p>';
+  });
+}
+function fetchJSON(url){return fetch(url).then(function(r){if(!r.ok)throw new Error(r.status+' '+url);return r.json();});}
+function renderSrcList(m){
+  var defaults={fsc_sfb:1,moj_law:1};
+  $('#src-list').innerHTML=m.sources.map(function(s){
+    return '<label><input type="checkbox" data-src="'+esc(s.src)+'" '+(defaults[s.src]?'checked':'')+'> '+esc(s.label)+'<span class="meta">'+s.laws.toLocaleString()+' 部・'+s.units.toLocaleString()+' 條點・'+(s.bytes/1e6).toFixed(1)+' MB・'+esc(s.built)+'</span></label>';
+  }).join('')+'<p class="small muted" style="margin:.4rem 0 0">語料建置日：'+esc(m.built)+'</p>';
+}
+function cachedFetch(url,onProgress){
+  if(!('caches' in window))return fetch(url).then(function(r){return r.json();});
+  return caches.open(CACHE_NAME).then(function(c){return c.match(url).then(function(hit){
+    if(hit){return hit.json();}
+    return fetch(url).then(function(r){if(!r.ok)throw new Error(r.status+' '+url);var cl=r.clone();return c.put(url,cl).then(function(){return r.json();});});
+  });});
+}
+function ingest(shard){
+  if(corpus.bySrc[shard.src]){corpus.laws=corpus.laws.filter(function(l){return l.src!==shard.src});}
+  corpus.bySrc[shard.src]=shard;
+  shard.laws.forEach(function(l){corpus.laws.push(l);});
+  if(corpus.loadedSrc.indexOf(shard.label)<0)corpus.loadedSrc.push(shard.label);
+  rebuildLawIndex();
+}
+function rebuildLawIndex(){
+  lawByName={};lawIndexById={};
+  corpus.laws.forEach(function(l,i){lawIndexById[l.id]=l;if(!lawByName[l.name]||!l.status)lawByName[l.name]=l;l._arts={};l.articles.forEach(function(a){l._arts[a[0]+'-'+a[1]]=a;});});
+  var sel=$('#doc-law');var cur=sel.value;
+  var prefer=['公開發行公司年報應行記載事項準則','證券交易法'];
+  var names=Object.keys(lawByName).sort(function(a,b){var pa=prefer.indexOf(a),pb=prefer.indexOf(b);if(pa>=0||pb>=0)return (pa<0?99:pa)-(pb<0?99:pb);return a.localeCompare(b,'zh-Hant');});
+  sel.innerHTML='<option value="">（不指定）</option>'+names.map(function(n){return '<option value="'+esc(n)+'">'+esc(n)+'</option>'}).join('');
+  sel.value=cur||(lawByName[prefer[0]]?prefer[0]:'');
+  setFoot();
+}
+$('#src-load').addEventListener('click',function(){
+  var srcs=$$('#src-list input:checked').map(function(c){return c.getAttribute('data-src')});
+  if(!srcs.length){$('#src-status').textContent='沒有勾選來源。';return;}
+  var done=0;$('#src-prog').style.width='0%';$('#src-status').textContent='載入中…';
+  var chain=Promise.resolve();
+  srcs.forEach(function(s){
+    chain=chain.then(function(){$('#src-status').textContent='載入 '+s+'…';return cachedFetch(DATA_BASE+s+'.json').then(function(j){ingest(j);done++;$('#src-prog').style.width=Math.round(done/srcs.length*100)+'%';});});
+  });
+  chain.then(function(){$('#src-status').textContent='完成：'+corpus.laws.length.toLocaleString()+' 部法規已在記憶體。';loadGlossaryBase();}).catch(function(e){$('#src-status').textContent='失敗：'+e.message;});
+});
+$('#src-clearcache').addEventListener('click',function(){if('caches' in window){caches.delete(CACHE_NAME).then(function(){$('#src-status').textContent='快取已清除，下次載入會重新下載。';});}});
+$('#src-folder').addEventListener('click',function(){
+  if(!window.showDirectoryPicker){$('#src-status').textContent='這個瀏覽器不支援選資料夾，請改用 Edge 或 Chrome，或把頁面放到網站上開啟。';return;}
+  window.showDirectoryPicker().then(function(dir){
+    return dir.getFileHandle('manifest.json').then(function(h){return h.getFile()}).then(function(f){return f.text()}).then(function(t){
+      var m=JSON.parse(t);corpus.manifest=m;renderSrcList(m);
+      var chain=Promise.resolve();var n=0;
+      m.sources.forEach(function(s){chain=chain.then(function(){return dir.getFileHandle(s.file).then(function(h){return h.getFile()}).then(function(f){return f.text()}).then(function(t){ingest(JSON.parse(t));n++;$('#src-prog').style.width=Math.round(n/m.sources.length*100)+'%';$('#src-status').textContent='已讀 '+s.label;}).catch(function(){});});});
+      return chain.then(function(){return dir.getFileHandle('glossary_base.json').then(function(h){return h.getFile()}).then(function(f){return f.text()}).then(function(t){glossary.base=JSON.parse(t).terms;mergeGlossary();}).catch(function(){});});
+    });
+  }).then(function(){$('#src-status').textContent='資料夾載入完成：'+corpus.laws.length+' 部。';}).catch(function(e){$('#src-status').textContent='未載入：'+e.message;});
+});
+
+/* ───────── 詞彙表 ───────── */
+function loadGlossaryBase(){
+  if(glossary.base.length)return Promise.resolve();
+  return fetchJSON(DATA_BASE+'glossary_base.json').then(function(g){glossary.base=g.terms;mergeGlossary();}).catch(function(){});
+}
+function termKey(t){return t.replace(/（.*?）|\(.*?\)/g,'').trim();}
+function mergeGlossary(){
+  var map={};
+  glossary.base.forEach(function(t){map[t.term]=Object.assign({},t,{origin:'base'});});
+  glossary.shared.forEach(function(t){map[t.term]=Object.assign({},map[t.term]||{},t,{origin:'shared'});});
+  glossary.merged=Object.keys(map).map(function(k){var t=map[k];t.variants=t.variants||[];t.forbidden=t.forbidden||[];
+    var key=termKey(t.term);var m=t.term.match(/（(.*?)）/);t.forms=[key].concat(m&&m[1]&&m[1].length>=2?[m[1]]:[]).concat(t.variants).filter(function(x,i,a){return x&&a.indexOf(x)===i});t.key=key;return t;});
+  renderGlossary();setFoot();
+}
+function renderGlossary(){
+  var q=($('#glos-filter').value||'').trim();
+  var rows=glossary.merged.filter(function(t){return !q||(t.term+t.note+t.variants.join()+t.category).indexOf(q)>=0;});
+  var h='<tr><th>詞目</th><th>類別</th><th>出處</th><th>說明</th><th>同義變體（頓號分隔）</th><th>禁用寫法</th><th>狀態</th><th>備註</th><th></th></tr>';
+  rows.forEach(function(t){
+    h+='<tr data-term="'+esc(t.term)+'"><td>'+esc(t.term)+(t.origin==='shared'?' <span class="pill green">共用</span>':'')+'</td><td><input data-f="category" value="'+esc(t.category)+'"></td><td><input data-f="source" value="'+esc(t.source)+'"></td><td><input data-f="note" value="'+esc(t.note)+'"></td><td><input data-f="variants" value="'+esc(t.variants.join('、'))+'"></td><td><input data-f="forbidden" value="'+esc(t.forbidden.join('、'))+'"></td><td><select data-f="status">'+['草擬','確認','棄用'].map(function(s){return '<option'+(t.status===s?' selected':'')+'>'+s+'</option>'}).join('')+'</select></td><td><input data-f="memo" value="'+esc(t.memo||'')+'"></td><td><button class="btn small secondary" data-del type="button">刪</button></td></tr>';
+  });
+  $('#glos-table').innerHTML=h;
+}
+$('#glos-filter').addEventListener('input',renderGlossary);
+$('#glos-table').addEventListener('change',function(e){
+  var tr=e.target.closest('tr');if(!tr)return;var term=tr.getAttribute('data-term');var f=e.target.getAttribute('data-f');if(!f)return;
+  var t=findShared(term,true);var v=e.target.value;
+  if(f==='variants'||f==='forbidden')t[f]=v.split(/[、,，;；]/).map(function(s){return s.trim()}).filter(Boolean);else t[f]=v;
+  mergeGlossary();$('#glos-status').textContent='已修改（尚未儲存到共用檔）';
+});
+$('#glos-table').addEventListener('click',function(e){
+  if(!e.target.hasAttribute('data-del'))return;var term=e.target.closest('tr').getAttribute('data-term');
+  if(!confirm('刪除「'+term+'」？只影響共用版，內建基準會保留但會被標記棄用。'))return;
+  var t=findShared(term,true);t.status='棄用';mergeGlossary();
+});
+function findShared(term,create){
+  var t=glossary.shared.filter(function(x){return x.term===term})[0];
+  if(!t&&create){var b=glossary.base.filter(function(x){return x.term===term})[0]||{term:term,category:'',source:'',note:'',variants:[],forbidden:[],status:'草擬',memo:''};t=JSON.parse(JSON.stringify(b));glossary.shared.push(t);}
+  return t;
+}
+$('#glos-add').addEventListener('click',function(){var term=prompt('新詞目（標準寫法）');if(!term)return;findShared(term.trim(),true);mergeGlossary();});
+$('#glos-open').addEventListener('click',function(){
+  if(!window.showOpenFilePicker){$('#glos-status').textContent='此瀏覽器不支援直接開檔，請用「匯入 JSON」。';return;}
+  window.showOpenFilePicker({types:[{description:'JSON',accept:{'application/json':['.json']}}]}).then(function(hs){glossary.handle=hs[0];return hs[0].getFile();}).then(function(f){return f.text();}).then(function(t){
+    var g=JSON.parse(t);glossary.shared=g.terms||[];mergeGlossary();$('#glos-save').disabled=false;$('#glos-status').textContent='已開啟共用檔：'+glossary.handle.name+'（'+glossary.shared.length+' 條）';
+  }).catch(function(e){$('#glos-status').textContent='未開啟：'+e.message;});
+});
+$('#glos-save').addEventListener('click',function(){
+  if(!glossary.handle)return;
+  glossary.handle.createWritable().then(function(w){return w.write(JSON.stringify({version:1,saved:new Date().toISOString(),terms:glossary.shared},null,1)).then(function(){return w.close();});}).then(function(){$('#glos-status').textContent='已儲存到 '+glossary.handle.name;}).catch(function(e){$('#glos-status').textContent='儲存失敗：'+e.message;});
+});
+$('#glos-import').addEventListener('change',function(){var f=this.files[0];if(!f)return;f.text().then(function(t){var g=JSON.parse(t);glossary.shared=g.terms||[];mergeGlossary();$('#glos-status').textContent='已匯入 '+f.name;});});
+$('#glos-export').addEventListener('click',function(){download('glossary_shared.json',JSON.stringify({version:1,saved:new Date().toISOString(),terms:glossary.shared.length?glossary.shared:glossary.merged},null,1),'application/json');});
+
+/* ───────── 文件 ───────── */
+$('#docx').addEventListener('change',function(){
+  var f=this.files[0];if(!f)return;$('#doc-status').textContent='讀取 '+f.name+'…';
+  loadScript('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js').then(function(){return f.arrayBuffer();}).then(function(buf){return JSZip.loadAsync(buf);}).then(function(z){return z.file('word/document.xml').async('string');}).then(function(xml){
+    $('#doc').value=docxToText(xml);$('#doc-status').textContent='已載入 '+f.name+'（追蹤修訂：含新增、不含刪除）';analyzeDoc();
+  }).catch(function(e){$('#doc-status').textContent='讀取失敗：'+e.message;});
+});
+function loadScript(src){return new Promise(function(res,rej){if(document.querySelector('script[src="'+src+'"]'))return res();var s=document.createElement('script');s.src=src;s.onload=res;s.onerror=function(){rej(new Error('無法載入 '+src))};document.head.appendChild(s);});}
+function docxToText(xml){
+  xml=xml.replace(/<w:del\b[\s\S]*?<\/w:del>/g,'').replace(/<w:delText\b[\s\S]*?<\/w:delText>/g,'');
+  var paras=xml.split(/<\/w:p>/);
+  return paras.map(function(p){var t='';p.replace(/<w:tab\/>/g,function(){t+='\t';return ''}).replace(/<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>/g,function(m,s){t+=s;return ''});return t.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'");}).filter(function(s){return s.trim()}).join('\n');
+}
+$('#doc-sample').addEventListener('click',function(){
+  $('#doc').value='第十條之一\n符合第七條第二項一定條件之公司，其永續財務資訊之編製及揭露，應依下列各款及有關法令辦理，其未規定者，依金管會認可之國際財務報導準則永續揭露準則（以下簡稱永續揭露準則）辦理：\n一、公司應依永續揭露準則及參考永續會計準則理事會（SASB）準則所定之行業揭露主題辨認永續相關風險與機會，並揭露重大資訊。\n二、前項資訊之報導個體及所涵蓋之報導期間應與相關期間財務報告一致。\n三、公司編製氣候相關資訊中有關範疇一及類別二溫室氣體排放資訊應依本會規定方式取得獨立第三方之保證意見，並依第十條之二及第二十三條之一規定辦理。\n四、本專章（以下簡稱專章）應於2027年3月31日前申報；專章內容參照第 23 條第 2 項。\n(一) 前款所稱確信機構，應符合確信機構管理要點之規定。';
+  analyzeDoc();
+});
+$('#doc-clear').addEventListener('click',function(){$('#doc').value='';doc={text:'',arts:[]};$('#docview').innerHTML='<span class="muted">尚未分析。</span>';setFoot();});
+$('#doc-run').addEventListener('click',analyzeDoc);
+var DOC_ART_RE=/^第\s*([一二三四五六七八九十百〇零\d]+)\s*條(?:之([一二三四五六七八九十\d]+))?\s*$/;
+function analyzeDoc(){
+  doc.text=$('#doc').value;doc.arts=[];
+  var pos=0;doc.text.split('\n').forEach(function(line){var m=line.trim().match(DOC_ART_RE);if(m){doc.arts.push({no:cnToInt(m[1]),sub:m[2]?cnToInt(m[2]):0,start:pos});}pos+=line.length+1;});
+  doc.arts.forEach(function(a,i){a.end=doc.arts[i+1]?doc.arts[i+1].start:doc.text.length;});
+  renderDocView([]);setFoot();$('#doc-status').textContent='已分析：'+doc.text.length.toLocaleString()+' 字，'+(doc.arts.length?doc.arts.length+' 個條頭':'未偵測到「第 N 條」條頭');
+  if(glossary.merged.length)runIndex();
+}
+function renderDocView(hits,cur){
+  if(!doc.text){$('#docview').innerHTML='<span class="muted">尚未分析。</span>';return;}
+  hits=hits.slice().sort(function(a,b){return a.s-b.s});
+  var h='',p=0;
+  hits.forEach(function(x,i){if(x.s<p)return;h+=esc(doc.text.slice(p,x.s))+'<span class="hit'+(cur===i?' cur':'')+'" id="dh'+i+'">'+esc(doc.text.slice(x.s,x.e))+'</span>';p=x.e;});
+  h+=esc(doc.text.slice(p));$('#docview').innerHTML=h;
+}
+function docArticleAt(pos){var r=null;doc.arts.forEach(function(a){if(pos>=a.start&&pos<a.end)r=a;});return r;}
+function jumpDoc(s,e){showTab('p-doc');var hits=(indexResult?indexResult.docHits:[]).slice();hits.push({s:s,e:e});renderDocView(hits,hits.length-1);var el=document.getElementById('dh'+(hits.length-1));if(el)el.scrollIntoView({block:'center'});}
+
+/* ───────── 索引（concordance）───────── */
+function findAll(hay,needle){var out=[],i=0;while((i=hay.indexOf(needle,i))>=0){out.push(i);i+=needle.length;}return out;}
+function ctxOf(text,s,e,w){w=w||30;return {pre:text.slice(Math.max(0,s-w),s),hit:text.slice(s,e),post:text.slice(e,e+w)};}
+function classify(text,s,e){
+  var pre=text.slice(Math.max(0,s-14),s),post=text.slice(e,e+4);
+  var before=text.slice(0,s);var open=(before.match(/「/g)||[]).length,close=(before.match(/」/g)||[]).length;
+  if(open>close)return '引述';
+  if(/以下簡稱|以下稱|下稱|所稱|所謂/.test(pre)||/^(係指|指|，指|，係指|者，指|謂)/.test(post))return '定義';
+  return '一般';
+}
+function runIndex(){
+  if(!glossary.merged.length){loadGlossaryBase().then(runIndex);return;}
+  var t0=performance.now();
+  var res={terms:[],docHits:[]};
+  var active=glossary.merged.filter(function(t){return t.status!=='棄用'&&t.key&&t.key.length>=2});
+  active.forEach(function(t){
+    var forms=t.forms.filter(function(f){return f.length>=1});
+    var byForm={},byLaw={},docOcc=[],corpOcc=[];
+    forms.forEach(function(f){
+      byForm[f]=byForm[f]||{doc:0,corpus:0};
+      if(doc.text){findAll(doc.text,f).forEach(function(p){
+        if(f.length<2&&!isWordBoundary(doc.text,p,f.length))return;
+        docOcc.push({form:f,s:p,e:p+f.length,kind:classify(doc.text,p,p+f.length)});byForm[f].doc++;res.docHits.push({s:p,e:p+f.length});});}
+      corpus.laws.forEach(function(l){
+        if(l.status&&/廢止/.test(l.status))return;
+        l.articles.forEach(function(a){
+          var txt=a[2];if(txt.indexOf(f)<0)return;
+          findAll(txt,f).forEach(function(p){
+            corpOcc.push({form:f,law:l.id,no:a[0],sub:a[1],s:p,e:p+f.length,kind:classify(txt,p,p+f.length)});
+            byForm[f].corpus++;byLaw[l.id]=byLaw[l.id]||{};byLaw[l.id][f]=(byLaw[l.id][f]||0)+1;
+          });
+        });
+      });
+    });
+    var nForms=Object.keys(byForm).filter(function(f){return byForm[f].doc+byForm[f].corpus>0}).length;
+    res.terms.push({term:t.term,key:t.key,forms:forms,byForm:byForm,byLaw:byLaw,doc:docOcc,corpus:corpOcc,total:docOcc.length+corpOcc.length,multi:nForms>1,glos:t});
+  });
+  indexResult=res;
+  renderTermList();renderDocView(res.docHits);
+  var sel='<option value="">（選詞目）</option>'+res.terms.filter(function(t){return t.total}).map(function(t){return '<option value="'+esc(t.term)+'">'+esc(t.term)+'（'+t.total+'）</option>'}).join('');
+  $('#sense-term').innerHTML=sel;$('#prompt-term').innerHTML=sel;
+  $('#index-detail').innerHTML='<p class="muted">索引完成（'+Math.round(performance.now()-t0)+' ms，'+corpus.laws.length+' 部法規）。左邊點一個詞目。</p>';
+}
+function isWordBoundary(t,p,n){var a=t[p-1]||'',b=t[p+n]||'';return !(/[一-鿿]/.test(a)||/[一-鿿]/.test(b));}
+$('#index-run').addEventListener('click',runIndex);
+$('#term-filter').addEventListener('input',renderTermList);
+function renderTermList(){
+  if(!indexResult)return;var q=$('#term-filter').value.trim();
+  var items=indexResult.terms.filter(function(t){return !q||t.term.indexOf(q)>=0}).sort(function(a,b){return b.total-a.total});
+  $('#termlist').innerHTML=items.map(function(t){return '<button type="button" data-t="'+esc(t.term)+'" class="'+(t.multi?'y':'')+'">'+esc(t.term)+(t.multi?' <span class="pill signal">多寫法</span>':'')+'<span class="c">'+t.doc.length+' / '+t.corpus.length+'</span></button>'}).join('')||'<p class="small muted" style="padding:.5rem">沒有符合的詞目。</p>';
+}
+$('#termlist').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;$$('#termlist button').forEach(function(x){x.classList.toggle('on',x===b)});renderTermDetail(b.getAttribute('data-t'));});
+function lawLabel(id){var l=lawIndexById[id];return l?l.name:id;}
+function unitLabel(l,no,sub){return l.unit==='點'?'第'+intToCn(no)+'點':'第'+no+(sub?'-'+sub:'')+'條';}
+function renderTermDetail(term){
+  var t=indexResult.terms.filter(function(x){return x.term===term})[0];if(!t)return;
+  var h='<h2>'+esc(t.term)+' <span class="small muted">'+esc(t.glos.category||'')+'</span></h2>';
+  if(t.glos.note)h+='<p class="small">'+esc(t.glos.note)+'</p>';
+  if(t.glos.source)h+='<p class="small muted">出處：'+esc(t.glos.source)+'</p>';
+  h+='<h3>寫法</h3><table><tr><th>寫法</th><th class="num">文件</th><th class="num">語料</th></tr>'+Object.keys(t.byForm).map(function(f){var c=t.byForm[f];return '<tr><td>'+esc(f)+(f===t.key?' <span class="pill blue">標準</span>':' <span class="pill signal">變體</span>')+'</td><td class="num">'+c.doc+'</td><td class="num">'+c.corpus+'</td></tr>'}).join('')+'</table>';
+  var lawIds=Object.keys(t.byLaw).sort(function(a,b){return sum(t.byLaw[b])-sum(t.byLaw[a])});
+  if(lawIds.length){
+    h+='<h3>寫法 × 法規（前 25 部）</h3><div class="scroll" style="max-height:40vh"><table class="matrix"><tr><th>法規</th>'+t.forms.map(function(f){return '<th class="num">'+esc(f)+'</th>'}).join('')+'</tr>';
+    lawIds.slice(0,25).forEach(function(id){var row=t.byLaw[id];var multi=Object.keys(row).length>1;h+='<tr><td>'+esc(lawLabel(id))+(multi?' <span class="pill signal">混用</span>':'')+'</td>'+t.forms.map(function(f){return '<td class="num'+(row[f]&&multi?' hot':'')+'">'+(row[f]||'')+'</td>'}).join('')+'</tr>';});
+    h+='</table></div>';
+  }
+  if(t.doc.length){h+='<div class="grp"><h4>文件中 <span class="c">'+t.doc.length+' 筆</span></h4>'+t.doc.map(function(o){var c=ctxOf(doc.text,o.s,o.e);var a=docArticleAt(o.s);return '<div class="occ"><span class="where">'+(a?'第'+a.no+(a.sub?'-'+a.sub:'')+'條':'')+'</span><span class="ctx">'+esc(c.pre)+'<mark>'+esc(c.hit)+'</mark>'+esc(c.post)+'</span><span class="pill kind">'+o.kind+'</span> <button class="more" data-jump="'+o.s+','+o.e+'">跳到</button></div>'}).join('')+'</div>';}
+  var byLawOcc={};t.corpus.forEach(function(o){(byLawOcc[o.law]=byLawOcc[o.law]||[]).push(o);});
+  lawIds.slice(0,40).forEach(function(id){var l=lawIndexById[id];var occ=byLawOcc[id]||[];
+    h+='<div class="grp"><h4>'+esc(l.name)+' <span class="c">'+occ.length+' 筆・'+esc(l.cat||'')+(l.date?'・'+esc(l.date):'')+'</span>'+(l.url?' <a class="small" href="'+esc(l.url)+'" target="_blank" rel="noopener">原文</a>':'')+'</h4>';
+    h+=occ.slice(0,20).map(function(o){var a=l._arts[o.no+'-'+o.sub];var c=ctxOf(a[2],o.s,o.e);return '<div class="occ"><span class="where">'+unitLabel(l,o.no,o.sub)+'</span><span class="ctx">'+esc(c.pre)+'<mark>'+esc(c.hit)+'</mark>'+esc(c.post)+'</span><span class="pill kind">'+o.kind+'</span></div>'}).join('');
+    if(occ.length>20)h+='<details><summary>再看 '+(occ.length-20)+' 筆</summary>'+occ.slice(20).map(function(o){var a=l._arts[o.no+'-'+o.sub];var c=ctxOf(a[2],o.s,o.e);return '<div class="occ"><span class="where">'+unitLabel(l,o.no,o.sub)+'</span><span class="ctx">'+esc(c.pre)+'<mark>'+esc(c.hit)+'</mark>'+esc(c.post)+'</span></div>'}).join('')+'</details>';
+    h+='</div>';});
+  if(lawIds.length>40)h+='<p class="small muted">另有 '+(lawIds.length-40)+' 部法規含此詞，匯出 CSV 可看全部。</p>';
+  $('#index-detail').innerHTML=h;
+}
+function sum(o){return Object.keys(o).reduce(function(a,k){return a+o[k]},0)}
+$('#index-detail').addEventListener('click',function(e){var b=e.target.closest('[data-jump]');if(!b)return;var p=b.getAttribute('data-jump').split(',');jumpDoc(+p[0],+p[1]);});
+
+/* ───────── 快速查 ───────── */
+$('#quick-run').addEventListener('click',quick);$('#quick-q').addEventListener('keydown',function(e){if(e.key==='Enter')quick();});
+function quick(){
+  var q=$('#quick-q').value.trim();if(!q)return;var out=[],total=0;
+  corpus.laws.forEach(function(l){var n=0;l.articles.forEach(function(a){n+=findAll(a[2],q).length});if(n){out.push([l,n]);total+=n;}});
+  out.sort(function(a,b){return b[1]-a[1]});
+  $('#quick-res').innerHTML='<p>「'+esc(q)+'」：'+total.toLocaleString()+' 次，'+out.length+' 部法規。</p><div class="scroll" style="max-height:45vh"><table><tr><th>法規</th><th>類別</th><th class="num">次數</th></tr>'+out.slice(0,200).map(function(x){return '<tr><td>'+esc(x[0].name)+'</td><td>'+esc(x[0].cat)+'</td><td class="num">'+x[1]+'</td></tr>'}).join('')+'</table></div>';
+}
+
+/* ───────── 意義與搭配 ───────── */
+$('#sense-run').addEventListener('click',function(){var term=$('#sense-term').value;if(!term)return;renderSense(term);});
+function collocs(occs,getText){
+  var pre={},post={};
+  occs.forEach(function(o){var t=getText(o);var a=t.slice(Math.max(0,o.s-3),o.s).replace(/[^一-鿿]/g,''),b=t.slice(o.e,o.e+3).replace(/[^一-鿿]/g,'');
+    if(a){a=a.slice(-2);pre[a]=(pre[a]||0)+1;}if(b){b=b.slice(0,2);post[b]=(post[b]||0)+1;}});
+  var top=function(m){return Object.keys(m).sort(function(x,y){return m[y]-m[x]}).slice(0,8).map(function(k){return [k,m[k]]})};
+  return {pre:top(pre),post:top(post)};
+}
+function renderSense(term){
+  var t=indexResult.terms.filter(function(x){return x.term===term})[0];if(!t)return;
+  var groups={};
+  if(t.doc.length)groups['（文件）']={occ:t.doc,get:function(){return doc.text},kinds:{}};
+  t.corpus.forEach(function(o){var g=groups[o.law]=groups[o.law]||{occ:[],get:function(o){return lawIndexById[o.law]._arts[o.no+'-'+o.sub][2]},kinds:{}};g.occ.push(o);});
+  var ids=Object.keys(groups).sort(function(a,b){return groups[b].occ.length-groups[a].occ.length});
+  var allPost={};
+  var h='<div class="card"><h3 style="margin-top:0">'+esc(term)+'：'+ids.length+' 個來源</h3><table><tr><th>來源</th><th class="num">筆數</th><th>定義處</th><th>引述</th><th>前接</th><th>後接</th></tr>';
+  ids.slice(0,60).forEach(function(id){var g=groups[id];var k={定義:0,引述:0,一般:0};g.occ.forEach(function(o){k[o.kind]++});var c=collocs(g.occ,g.get);c.post.forEach(function(p){allPost[p[0]]=allPost[p[0]]||{};allPost[p[0]][id]=p[1];});
+    h+='<tr><td>'+esc(id==='（文件）'?id:lawLabel(id))+'</td><td class="num">'+g.occ.length+'</td><td>'+(k.定義?'<span class="pill green">'+k.定義+'</span>':'')+'</td><td>'+(k.引述?'<span class="pill blue">'+k.引述+'</span>':'')+'</td><td><div class="colloc">'+c.pre.map(function(p){return '<span>'+esc(p[0])+'<small>'+p[1]+'</small></span>'}).join('')+'</div></td><td><div class="colloc">'+c.post.map(function(p){return '<span>'+esc(p[0])+'<small>'+p[1]+'</small></span>'}).join('')+'</div></td></tr>';});
+  h+='</table></div>';
+  var posts=Object.keys(allPost).filter(function(p){return Object.keys(allPost[p]).length>=1});
+  var spread=posts.filter(function(p){return Object.keys(allPost[p]).length===1}).length;
+  var defs=[];ids.forEach(function(id){groups[id].occ.filter(function(o){return o.kind==='定義'}).slice(0,2).forEach(function(o){var txt=groups[id].get(o);defs.push({src:id==='（文件）'?id:lawLabel(id),ctx:ctxOf(txt,o.s,o.e,60)});});});
+  h+='<div class="card '+(posts.length>=4&&spread/posts.length>.5?'signal':'green')+'"><h3 style="margin-top:0">判讀提示</h3><p class="small">後接搭配詞共 '+posts.length+' 種，其中 '+spread+' 種只出現在單一來源。'+(posts.length>=4&&spread/posts.length>.5?'搭配差異大，請人工判斷是否指不同概念。':'搭配集中，各來源用法大致一致。')+'</p>'+(defs.length?'<h4 style="margin:.3rem 0">定義處（各來源最多 2 筆）</h4>'+defs.map(function(d){return '<div class="occ"><span class="where">'+esc(d.src)+'</span><span class="ctx">'+esc(d.ctx.pre)+'<mark>'+esc(d.ctx.hit)+'</mark>'+esc(d.ctx.post)+'</span></div>'}).join(''):'<p class="small muted">沒有偵測到定義處。</p>')+'</div>';
+  $('#sense-out').innerHTML=h;
+}
+
+/* ───────── 文件檢查 ───────── */
+$('#check-run').addEventListener('click',runChecks);
+var CITE_RE=/(?:([一-鿿（）()]{2,25}?(?:法|準則|辦法|要點|規則|守則|細則|條例))?)?第\s*([一二三四五六七八九十百〇零\d]+)\s*條(?:之([一二三四五六七八九十\d]+))?(?:第\s*([一二三四五六七八九十\d]+)\s*項)?(?:第\s*([一二三四五六七八九十\d]+)\s*款)?(?:第\s*([一二三四五六七八九十\d]+)\s*目)?/g;
+function runChecks(){
+  var text=doc.text;if(!text){$('#check-out').innerHTML='<p class="muted">先在第 1 頁載入文件。</p>';return;}
+  var F=[];var add=function(sev,rule,s,e,msg,sug){F.push({sev:sev,rule:rule,s:s,e:e,q:text.slice(s,e),msg:msg,sug:sug||''});};
+  var curLawName=$('#doc-law').value;var curLaw=lawByName[curLawName];
+  /* 詞彙變體 */
+  if($('#ck-term').checked){glossary.merged.forEach(function(t){if(t.status==='棄用')return;
+    t.variants.forEach(function(v){if(v.length<2)return;findAll(text,v).forEach(function(p){
+      if(text.slice(Math.max(0,p-1),p)==='「'||text.slice(p+v.length,p+v.length+1)==='」')return;
+      var before=text.slice(0,p);if((before.match(/「/g)||[]).length>(before.match(/」/g)||[]).length){add('info','詞彙',p,p+v.length,'引述文字內的變體寫法（標準詞：'+t.key+'）');return;}
+      add('warning','詞彙',p,p+v.length,'非標準用語，建議改為「'+t.key+'」'+(t.source?'（'+t.source+'）':''),t.key);});});
+    t.forbidden.forEach(function(v){findAll(text,v).forEach(function(p){add('error','詞彙',p,p+v.length,'禁用寫法，應作「'+t.key+'」',t.key);});});
+  });}
+  /* 定義詞 */
+  if($('#ck-def').checked){
+    var defs=[];var re=/[（(]\s*(?:以下簡稱|以下稱|下稱)\s*([^）)]{1,20})\s*[）)]/g,m;
+    while((m=re.exec(text))){var abbr=m[1].trim();var pre=text.slice(Math.max(0,m.index-40),m.index);defs.push({abbr:abbr,pos:m.index,end:m.index+m[0].length,pre:pre});}
+    var seen={};defs.forEach(function(d){
+      if(seen[d.abbr]){add('error','定義詞',d.pos,d.end,'簡稱「'+d.abbr+'」已在前面定義過（第 '+(seen[d.abbr]+1)+' 字）');}else seen[d.abbr]=d.pos;
+      var full=(d.pre.match(/[一-鿿]{2,}$/)||[''])[0];
+      findAll(text,d.abbr).forEach(function(p){if(p<d.pos&&p+d.abbr.length<=d.pos-full.length){ if(text.slice(Math.max(0,p-10),p).indexOf('以下簡稱')<0)add('warning','定義詞',p,p+d.abbr.length,'簡稱「'+d.abbr+'」在定義（第 '+(d.pos+1)+' 字）之前就使用');}});
+      if(full&&full.length>d.abbr.length){findAll(text,full).forEach(function(p){if(p>d.end)add('info','定義詞',p,p+full.length,'已有簡稱「'+d.abbr+'」，此處仍用全名');});}
+    });
+  }
+  /* 條號引用 */
+  if($('#ck-cite').checked){
+    CITE_RE.lastIndex=0;var c;
+    while((c=CITE_RE.exec(text))){
+      var s=c.index,e=s+c[0].length;var lawName=c[1]||'';var no=cnToInt(c[2]),sub=c[3]?cnToInt(c[3]):0,para=c[4]?cnToInt(c[4]):null,item=c[5]?cnToInt(c[5]):null;
+      var ls=text.lastIndexOf('\n',s-1)+1,le=text.indexOf('\n',e);if(le<0)le=text.length;if(DOC_ART_RE.test(text.slice(ls,le).trim()))continue; /* 條頭本身不是引用 */
+      var target=null,label='';
+      if(lawName){var hit=null;Object.keys(lawByName).forEach(function(n){if(lawName.endsWith(n)&&(!hit||n.length>hit.length))hit=n;});if(hit){target=lawByName[hit];label=hit;}else{add('info','引用',s,e,'引用「'+lawName+'」，該法規未載入語料，未驗證');continue;}}
+      else{target=curLaw;label=curLawName||'（未指定本法規）';}
+      if(!target){add('info','引用',s,e,'未指定「本法規」，無法驗證條號');continue;}
+      var a=target._arts[no+'-'+sub];
+      if(!a){add('error','引用',s,e,label+'沒有第'+no+(sub?'條之'+sub:'條')+(target.unit==='點'?'（此法規以「點」計）':''));continue;}
+      if(/^（刪除）|^\(刪除\)|^（已刪除）/.test(a[2].trim())){add('error','引用',s,e,label+'第'+no+(sub?'條之'+sub:'條')+'已刪除');continue;}
+      var cur=docArticleAt(s);if(!lawName&&cur&&cur.no===no&&cur.sub===sub)add('warning','引用',s,e,'引用本條自身，宜改用「本條」「前項」等相對寫法');
+      if(para!=null){var nPara=a[2].split('\n').filter(function(l){return !/^([一二三四五六七八九十]+、|（[一二三四五六七八九十]+）|\d+\.)/.test(l)}).length||1;if(para>nPara)add('error','引用',s,e,label+'第'+no+'條只有 '+nPara+' 項，引用第'+para+'項');}
+      if(item!=null){var nItem=(a[2].match(/(^|\n)[一二三四五六七八九十]+、/g)||[]).length;if(nItem&&item>nItem)add('error','引用',s,e,label+'第'+no+'條只有 '+nItem+' 款，引用第'+item+'款');}
+    }
+    var pm;var preRe=/前項|前二項|前三項/g;while((pm=preRe.exec(text))){var cur2=docArticleAt(pm.index);if(cur2){var body=text.slice(cur2.start,pm.index);var paraIdx=body.split('\n').filter(function(l,i){return i>0&&l.trim()&&!/^([一二三四五六七八九十]+、|（[一二三四五六七八九十]+）|\d+\.)/.test(l.trim())}).length;if(paraIdx<=1)add('error','引用',pm.index,pm.index+pm[0].length,'位於第 1 項內卻引用「'+pm[0]+'」');}}
+  }
+  /* 體例 */
+  if($('#ck-style').checked){
+    var sm;var r1=/第\s*\d+\s*(條|項|款|目)|\b\d{2,4}\s*年|新臺幣\s*\d[\d,]*|\d+\s*日前/g;
+    while((sm=r1.exec(text))){add('warning','體例',sm.index,sm.index+sm[0].length,'條文內數字宜用中文數字');}
+    var r2=/[(),;:]/g;while((sm=r2.exec(text))){var ch=sm[0];var ascii=text.slice(Math.max(0,sm.index-3),sm.index+4);if(/[A-Za-z0-9]{2,}/.test(ascii)&&/[(),]/.test(ch))continue;add('warning','體例',sm.index,sm.index+1,'半形標點，應用全形',{'(':'（',')':'）',',':'，',';':'；',':':'：'}[ch]);}
+    var r3=/(?<=[一-鿿])[ 　]+(?=[一-鿿])/g;while((sm=r3.exec(text))){add('info','體例',sm.index,sm.index+sm[0].length,'中文間多餘空白');}
+    var hasFscTerm=glossary.merged.some(function(t){return t.key==='本會'&&t.status!=='棄用'});
+    if(!hasFscTerm&&(!curLawName||/年報|準則|令/.test(curLawName))){findAll(text,'金管會').forEach(function(p){add('warning','體例',p,p+3,'年報準則與令內以「本會」稱金管會（第 2 條定義後）','本會');});}
+  }
+  F.sort(function(a,b){return a.s-b.s});checkResult=F;
+  var cnt={error:0,warning:0,info:0};F.forEach(function(f){cnt[f.sev]++});
+  $('#check-count').textContent=F.length?'錯誤 '+cnt.error+'・警告 '+cnt.warning+'・提示 '+cnt.info:'沒有發現';$('#n-check').textContent=F.length?'('+F.length+')':'';
+  $('#check-out').innerHTML=F.length?F.map(function(f,i){var a=docArticleAt(f.s);return '<div class="finding '+f.sev+'"><span class="pill '+(f.sev==='error'?'warn':f.sev==='warning'?'signal':'blue')+'">'+f.rule+'</span> <span class="q">'+esc(f.q)+'</span> <span class="loc">'+(a?'第'+a.no+(a.sub?'-'+a.sub:'')+'條・':'')+'第 '+(f.s+1)+' 字</span><br>'+esc(f.msg)+(f.sug?' <span class="pill green">建議：'+esc(f.sug)+'</span>':'')+' <button class="more" data-jump="'+f.s+','+f.e+'">跳到</button></div>'}).join(''):'<p class="muted">沒有發現問題。</p>';
+  $('#check-status').textContent='完成，'+F.length+' 筆。';
+}
+$('#check-out').addEventListener('click',function(e){var b=e.target.closest('[data-jump]');if(!b)return;var p=b.getAttribute('data-jump').split(',');jumpDoc(+p[0],+p[1]);});
+
+/* ───────── 匯出與提示 ───────── */
+function download(name,content,type){var blob=new Blob([content],{type:type||'text/plain;charset=utf-8'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();}
+function csv(rows){var q=function(v){v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};return '﻿'+rows.map(function(r){return r.map(q).join(',')}).join('\r\n');}
+$('#exp-index').addEventListener('click',function(){
+  if(!indexResult){alert('先計算索引');return;}var rows=[['詞目','寫法','來源','法規','條點','類型','前文','命中','後文']];
+  indexResult.terms.forEach(function(t){t.doc.forEach(function(o){var c=ctxOf(doc.text,o.s,o.e);var a=docArticleAt(o.s);rows.push([t.term,o.form,'文件','',a?a.no+(a.sub?'-'+a.sub:''):'',o.kind,c.pre,c.hit,c.post]);});
+    t.corpus.forEach(function(o){var l=lawIndexById[o.law];var a=l._arts[o.no+'-'+o.sub];var c=ctxOf(a[2],o.s,o.e);rows.push([t.term,o.form,l.src,l.name,unitLabel(l,o.no,o.sub),o.kind,c.pre,c.hit,c.post]);});});
+  download('詞目索引.csv',csv(rows),'text/csv;charset=utf-8');
+});
+$('#exp-check').addEventListener('click',function(){var rows=[['嚴重度','規則','位置','條','文字','說明','建議']];checkResult.forEach(function(f){var a=docArticleAt(f.s);rows.push([f.sev,f.rule,f.s+1,a?a.no+(a.sub?'-'+a.sub:''):'',f.q,f.msg,f.sug]);});download('文件檢查.csv',csv(rows),'text/csv;charset=utf-8');});
+$('#exp-summary').addEventListener('click',function(){
+  var lines=['用語檢核摘要（'+new Date().toLocaleString('zh-TW')+'）','文件 '+doc.text.length+' 字；語料 '+corpus.laws.length+' 部；詞彙 '+glossary.merged.length+' 條',''];
+  if(indexResult){lines.push('一、多種寫法的詞目');indexResult.terms.filter(function(t){return t.multi}).forEach(function(t){lines.push('・'+t.term+'：'+Object.keys(t.byForm).filter(function(f){return t.byForm[f].doc+t.byForm[f].corpus}).map(function(f){return f+'（文件 '+t.byForm[f].doc+'、語料 '+t.byForm[f].corpus+'）'}).join('；'));});lines.push('');}
+  if(checkResult.length){lines.push('二、文件檢查');checkResult.forEach(function(f){var a=docArticleAt(f.s);lines.push('・['+f.rule+'] '+(a?'第'+a.no+'條 ':'')+f.q+'：'+f.msg+(f.sug?'（建議：'+f.sug+'）':''));});}
+  copyText(lines.join('\n'),this);
+});
+function copyText(t,btn){var done=function(){if(btn){var o=btn.textContent;btn.textContent='已複製';setTimeout(function(){btn.textContent=o},1200);}};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,function(){fb()});else fb();
+  function fb(){var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}}
+$('#prompt-copy').addEventListener('click',function(){
+  var term=$('#prompt-term').value;if(!term||!indexResult){alert('先選詞目');return;}var n=+$('#prompt-n').value||5;
+  var t=indexResult.terms.filter(function(x){return x.term===term})[0];
+  var L=['你是台灣金管會法規人員的審稿助理。請判斷下列各處的「'+term+'」是否指同一個概念、哪些地方可能有歧義、哪些寫法應統一，並逐條說明理由與建議改法。只依所給片段判斷，不確定就說不確定。','','【詞彙表定義】'+(t.glos.note||'（無）')+(t.glos.source?'　出處：'+t.glos.source:''),'【標準寫法】'+t.key+'　【已知變體】'+(t.glos.variants.join('、')||'（無）'),''];
+  if(t.doc.length){L.push('【草案文件】');t.doc.slice(0,n*2).forEach(function(o){var c=ctxOf(doc.text,o.s,o.e,50);var a=docArticleAt(o.s);L.push('- '+(a?'第'+a.no+'條 ':'')+c.pre+'【'+c.hit+'】'+c.post);});L.push('');}
+  var byLaw={};t.corpus.forEach(function(o){(byLaw[o.law]=byLaw[o.law]||[]).push(o)});
+  Object.keys(byLaw).sort(function(a,b){return byLaw[b].length-byLaw[a].length}).slice(0,12).forEach(function(id){var l=lawIndexById[id];L.push('【'+l.name+'】'+(l.date?'（'+l.date+'）':''));byLaw[id].slice(0,n).forEach(function(o){var a=l._arts[o.no+'-'+o.sub];var c=ctxOf(a[2],o.s,o.e,50);L.push('- '+unitLabel(l,o.no,o.sub)+'：'+c.pre+'【'+c.hit+'】'+c.post);});L.push('');});
+  L.push('請用表格回答：來源｜片段｜意義歸類｜是否與草案一致｜建議。');
+  $('#prompt-out').value=L.join('\n');copyText($('#prompt-out').value,this);
+});
+
+/* ───────── init ───────── */
+manifestLoad().then(loadGlossaryBase);
+setFoot();
+})();
+</script>
+</body>
+</html>
