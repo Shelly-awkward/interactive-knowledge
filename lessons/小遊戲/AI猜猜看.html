@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 猜猜看</title>
+<style>
+:root{
+  --bg:#F4F6FA;
+  --card:#FFFFFF;
+  --ink:#1E2430;
+  --ink-soft:#5A6478;
+  --line:#DDE3EE;
+  --yes:#1F7A4D;
+  --no:#B3392F;
+  --again:#14213D;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#10141D;
+    --card:#1A2030;
+    --ink:#E8ECF4;
+    --ink-soft:#9AA5BA;
+    --line:#2C3448;
+    --yes:#2E9E66;
+    --no:#D0574B;
+    --again:#FCA311;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.6;
+  display:flex;align-items:center;justify-content:center;
+  padding:16px;
+}
+.card{
+  width:100%;max-width:480px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:32px 20px 24px;
+  text-align:center;
+}
+#main{
+  min-height:4.5em;
+  display:flex;align-items:center;justify-content:center;
+  font-size:clamp(1.5rem,6vw,1.9rem);font-weight:800;
+}
+#note{min-height:1.6em;margin:8px 0 28px;color:var(--ink-soft);font-size:.95rem;}
+#answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+#answers[hidden],#again[hidden]{display:none;}
+button{
+  font:inherit;font-size:1.4rem;font-weight:800;
+  min-height:72px;width:100%;
+  border:0;border-radius:16px;
+  color:#fff;cursor:pointer;
+  touch-action:manipulation;
+}
+button:disabled{opacity:.4;cursor:default;}
+#yes{background:var(--yes);}
+#no{background:var(--no);}
+#again{background:var(--again);color:var(--card);}
+</style>
+</head>
+<body>
+<main class="card">
+  <p id="main" aria-live="polite"></p>
+  <p id="note"></p>
+  <div id="answers">
+    <button id="yes">是</button>
+    <button id="no">不是</button>
+  </div>
+  <button id="again" hidden>再玩一次</button>
+</main>
+
+<script>
+// ===== 設定：要換 API 或模型，改這兩行 =====
+const API_URL = 'https://api.anthropic.com/v1/messages';
+const MODEL = 'claude-opus-5-5';
+
+const MAX_TURNS = 20;      // 最多問幾題（猜也算一題）
+const KEY_NAME = 'ai-guess-api-key';
+
+const SYSTEM_PROMPT = `你在玩「20 個問題」猜謎。玩家心裡想了一個東西，你用是非題把它猜出來。玩家只會回答「是」或「不是」。
+
+- 每題只問一件事，而且要能用是或不是回答。
+- 從大分類問起（例如：是生物嗎？是動物嗎？是哺乳類嗎？），每題盡量排除一半的可能。
+- 範圍小到只剩一兩個候選，才猜。
+- 不要問答案已經能從紀錄推出來的問題，也不要再猜被否定過的東西。
+- 猜也算一題，全部最多 ${MAX_TURNS} 題。最後一題一定要猜。
+- 用台灣慣用的繁體中文。
+
+只回傳 JSON：問問題用 {"type":"question","text":"問題"}，猜答案用 {"type":"guess","text":"東西的名稱"}。猜的時候 text 只放名稱，例如「貓」，不要加「我猜是」。`;
+
+// 要求 API 只回傳這個形狀的 JSON
+const STEP_SCHEMA = {
+  type: 'object',
+  properties: {
+    type: { type: 'string', enum: ['question', 'guess'] },
+    text: { type: 'string' }
+  },
+  required: ['type', 'text'],
+  additionalProperties: false
+};
+
+const $ = (id) => document.getElementById(id);
+let phase = 'ready';   // ready：等玩家想好；playing：遊戲中；end：結束
+let history = [];      // 每筆 { type, text, answer }
+let current = null;    // AI 這一步 { type, text }
+
+// mode：'yesno' 顯示是／不是；'busy' 按鈕暫停；'again' 只顯示再玩一次
+function view(main, note, mode) {
+  $('main').textContent = main;
+  $('note').textContent = note;
+  $('yes').disabled = $('no').disabled = (mode === 'busy');
+  $('answers').hidden = (mode === 'again');
+  $('again').hidden = (mode !== 'again');
+  if (mode === 'again') $('again').focus();
+}
+
+function reset() {
+  phase = 'ready';
+  history = [];
+  current = null;
+  view('心裡想好一個東西了嗎？', '想好就按「是」，我會開始問問題。', 'yesno');
+}
+
+function finish(main, note) {
+  phase = 'end';
+  view(main, note, 'again');
+}
+
+function answer(a) {
+  if (phase === 'ready') {
+    if (a === '不是') return view('沒關係，慢慢想。', '想好了再按「是」。', 'yesno');
+    phase = 'playing';
+    return next();
+  }
+  if (phase !== 'playing') return;
+
+  history.push({ type: current.type, text: current.text, answer: a });
+  if (current.type === 'guess' && a === '是') {
+    return finish('猜中了！', `答案是「${current.text}」，我用了 ${history.length} 題。`);
+  }
+  if (history.length >= MAX_TURNS) {
+    return finish('我猜不到，你贏了！', `${MAX_TURNS} 題用完了。`);
+  }
+  next();
+}
+
+async function next() {
+  const n = history.length + 1;
+  view('想一下…', `第 ${n} / ${MAX_TURNS} 題`, 'busy');
+  try {
+    current = await askAI();
+  } catch (e) {
+    return finish('連線失敗', e.message);
+  }
+  const text = current.type === 'guess' ? `我猜是：${current.text}，對嗎？` : current.text;
+  view(text, `第 ${n} / ${MAX_TURNS} 題`, 'yesno');
+}
+
+// 直接連 Anthropic 需要金鑰：第一次會跳出視窗詢問，只存在這台裝置的瀏覽器
+function getKey() {
+  let key = '';
+  try { key = localStorage.getItem(KEY_NAME) || ''; } catch (e) {}
+  if (!key) {
+    key = (prompt('請貼上 Anthropic API 金鑰（只存在這台裝置的瀏覽器）') || '').trim();
+    if (!key) throw new Error('沒有輸入 API 金鑰。');
+    try { localStorage.setItem(KEY_NAME, key); } catch (e) {}
+  }
+  return key;
+}
+
+async function askAI() {
+  const n = history.length + 1;
+  const log = history.length
+    ? history.map((h, i) => `${i + 1}. ${h.type === 'guess' ? '猜' : '問'}：${h.text} → ${h.answer}`).join('\n')
+    : '（還沒有）';
+  let content = `問答紀錄：\n${log}\n\n現在是第 ${n} 題，最多 ${MAX_TURNS} 題。`;
+  if (n === MAX_TURNS) content += '這是最後一題，請直接猜。';
+
+  const headers = { 'content-type': 'application/json', 'anthropic-version': '2026-10-21' };
+  const body = {
+    model: MODEL,
+    max_tokens: 16000,
+    system: SYSTEM_PROMPT,
+    messages: [{ role: 'user', content }],
+    output_config: { effort: 'low', format: { type: 'json_schema', schema: STEP_SCHEMA } }
+  };
+  if (API_URL.includes('api.anthropic.com')) {
+    headers['x-api-key'] = getKey();
+    headers['anthropic-dangerous-direct-browser-access'] = 'true';
+    // 模型拒答時改由伺服器挑別的模型回答；只有部分模型支援
+    if (/^claude-(opus-5|sonnet-5-5|fable-5-1)/.test(MODEL)) {
+      headers['anthropic-beta'] = 'server-side-fallback-2026-07-01';
+      body.fallbacks = 'default';
+    }
+  }
+
+  let res;
+  try {
+    res = await fetch(API_URL, { method: 'POST', headers, body: JSON.stringify(body) });
+  } catch (e) {
+    throw new Error('連不到伺服器，請檢查網路。');
+  }
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    if (res.status === 401) {
+      try { localStorage.removeItem(KEY_NAME); } catch (e) {}
+      throw new Error('API 金鑰無效。按「再玩一次」會重新詢問金鑰。');
+    }
+    throw new Error(`伺服器回應 ${res.status}：${(data.error && data.error.message) || ''}`);
+  }
+  if (data.stop_reason === 'refusal') throw new Error('AI 拒絕回答這一步。');
+
+  const text = (data.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('');
+  let step;
+  try { step = JSON.parse(text); } catch (e) { throw new Error('AI 回傳的不是 JSON。'); }
+  if ((step.type !== 'question' && step.type !== 'guess') || !step.text) {
+    throw new Error('AI 回傳的格式不對。');
+  }
+  return step;
+}
+
+$('yes').addEventListener('click', () => answer('是'));
+$('no').addEventListener('click', () => answer('不是'));
+$('again').addEventListener('click', reset);
+reset();
+</script>
+</body>
+</html>
