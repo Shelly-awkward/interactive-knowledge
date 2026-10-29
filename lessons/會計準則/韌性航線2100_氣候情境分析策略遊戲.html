@@ -1,0 +1,2549 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>韌性航線 2100｜氣候情境分析策略遊戲</title>
+<script>
+/* ==== REGION:DATA ==== 擁有者：總指揮（遊戲內容）。要改公司、事件、數字、台詞，只改這一段。 */
+/*
+ * 數字標記：
+ *   src:'demo'    ＝ 臺灣證券交易所《氣候情境分析應用與案例懶人包》（2026.10）的示範數字，畫面要標「示範數字，非現行最佳估計」
+ *   src:'assumed' ＝ 遊戲自訂的教學用假設值，畫面要標「遊戲假設」
+ * 金額單位：億元（新臺幣）。排放量單位：萬噸 CO2e／年。產能單位：%。
+ */
+const GAME_DATA = {
+  meta: {
+    title: '韌性航線 2100',
+    subtitle: '氣候情境分析策略遊戲',
+    version: '0.1',
+    source: '臺灣證券交易所《氣候情境分析應用與案例懶人包》（2026.10）'
+  },
+
+  text: {
+    disclaimer: '本遊戲的計算只是教學用，不能當作實際風險評估或 IFRS S2 揭露數字。',
+    fictional: '公司、地名、人物全部虛構。',
+    demoLabel: '示範數字，非現行最佳估計',
+    assumedLabel: '遊戲假設',
+    sasbNote: '公司卡上的 SASB 主題是遊戲簡化標示；實際判斷請查 SASB 該行業的標準。',
+    gapNote: 'TCCIP 的中期是 2041–2060、長期是 2081–2100，中間的 2061–2080 不在定義裡，遊戲直接跳過。',
+    worldNote: '一家公司的排放推不動全球氣候。這兩條進度條由「世界路線」決定，不由你決定。',
+    notPrediction: '情境分析不是預測。它檢驗的是：在各種未來下，你的策略撐不撐得住。',
+    resilienceDef: '氣候韌性：企業管理氣候風險、把握機會、調整策略的能力。',
+    twoQuestions: ['會不會營運中斷、影響產能？', '長期現金流會不會轉負？'],
+    proportionality: '比例原則：暴險高、資源足就做量化；暴險低、資源少就做定性；暴險高但能力不足，先簡化，再逐步精進。',
+    sixSteps: ['辨識攸關領域', '下載情境資料', '查參數', '結合內部資料估影響', '評估韌性', '納入既有風險管理']
+  },
+
+  rules: {
+    capacityThreshold: 80,          // 任一回合產能低於這個值 → 第一題答「會」
+    depthOrder: ['qualitative', 'simplified', 'full'],
+    depths: {
+      qualitative: { name: '定性', cost: 1, desc: '用文字描述方向：會變好還是變壞。' },
+      simplified:  { name: '簡化量化', cost: 2, desc: '估個量級：輕微、中等、嚴重。' },
+      full:        { name: '完整量化', cost: 4, desc: '結合內部資料算出數字。' }
+    },
+    ermBonus: 1,                    // 第 6 步做到「指派負責單位＋監控指標」，之後每回合分析點 +1（可累積）
+    irrelevantFamilyApCost: 1,      // 第 2 步每多選一類不相關的資料，本回合分析點 −1
+    overAnalysisCostFrac: 0.1,      // 分析深度每超過正解一級，花掉本回合預算的 10%
+    usdToTwd: { value: 30, src: 'assumed' },
+    bands: {                        // 簡化量化時用的量級
+      capacity: [[5, '輕微'], [15, '中等'], [Infinity, '嚴重']],          // 產能損失百分點
+      cfFrac:   [[0.05, '輕微'], [0.2, '中等'], [Infinity, '嚴重']]        // 現金流影響 ÷ 營收
+    },
+    hazardRelevance: { flood: 0.6, sealevel: 1.0, slope: 0.6, heat: 1.0 }  // 廠址風險係數達到這個值，該風險才算攸關
+  },
+
+  turns: [
+    { id: 'short', name: '短期', label: '回合 1', years: '2021–2040', repYear: 2030 },
+    { id: 'mid',   name: '中期', label: '回合 2', years: '2041–2060', repYear: 2050 },
+    { id: 'long',  name: '長期', label: '回合 3', years: '2081–2100', repYear: 2090 }
+  ],
+
+  routes: {
+    high: {
+      id: 'high', name: '高排放路線', scenarioNote: 'SSP5-8.5',
+      desc: '全球排放持續走高。實體風險（淹水、強降雨、高溫、海平面上升）一路加劇，碳價維持低檔。',
+      climatePhase: [2, 3, 5], policyPressure: [1, 1, 2],
+      carbonPrice: [
+        { twd: 300, src: 'demo', note: '國內碳費費率 NT$300／噸' },
+        { twd: 300, src: 'assumed', note: '假設維持現行國內費率' },
+        { twd: 300, src: 'assumed', note: '假設維持現行國內費率' }
+      ]
+    },
+    netzero: {
+      id: 'netzero', name: '積極減碳路線', scenarioNote: 'SSP1-1.9／IEA NZE',
+      desc: '全球積極減碳。碳價、法規、客戶要求快速升高，實體風險增幅較小。',
+      climatePhase: [2, 2, 2], policyPressure: [3, 4, 5],
+      carbonPrice: [
+        { usd: 303, src: 'demo', note: 'SSP1-1.9 亞洲碳價，2030 年 US$303／噸' },
+        { usd: 651, src: 'demo', note: 'SSP1-1.9 亞洲碳價，2050 年 US$651／噸' },
+        { usd: 651, src: 'assumed', note: '懶人包沒有 2090 年的值，遊戲假設維持 2050 年水準' }
+      ]
+    }
+  },
+
+  scenarios: [
+    { id: 'SSP5-8.5',  side: 'high',      name: 'SSP5-8.5',  desc: '高排放，實體風險最嚴重。' },
+    { id: 'SSP1-1.9',  side: 'netzero',   name: 'SSP1-1.9',  desc: '積極淨零。' },
+    { id: 'IEA NZE',   side: 'netzero',   name: 'IEA NZE',   desc: 'IEA 的 2050 淨零排放情境。' },
+    { id: 'IEA STEPS', side: 'reference', name: 'IEA STEPS', desc: 'IEA 的現行政策情境，適合當對照組，不是極端情境。' }
+  ],
+
+  risks: [
+    { id: 'flood',     name: '淹水',       kind: 'physical',   families: ['climate'] },
+    { id: 'rain',      name: '強降雨',     kind: 'physical',   families: ['climate'] },
+    { id: 'heat',      name: '高溫',       kind: 'physical',   families: ['climate'] },
+    { id: 'sealevel',  name: '海平面上升', kind: 'physical',   families: ['climate'] },
+    { id: 'carbonfee', name: '碳費',       kind: 'transition', families: ['energy'] },
+    { id: 'policy',    name: '政策法規',   kind: 'transition', families: ['landuse', 'energy'] },
+    { id: 'tech',      name: '技術轉變',   kind: 'transition', families: ['energy'] },
+    { id: 'market',    name: '市場偏好改變', kind: 'transition', families: ['energy', 'macro'] }
+  ],
+
+  dataFamilies: [
+    { id: 'climate', name: '氣候系統參數', when: '有「Physical Impacts of Climate Change」主題，或營運高度暴露在戶外',
+      examples: '年最大一日降雨、高溫日數、海平面',
+      sources: [
+        { name: 'IPCC', note: '' },
+        { name: 'TCCIP', note: '下載資料要先申請個人金鑰。' },
+        { name: 'NCDR Dr.A', note: '40 公尺網格檔只開放政府機關和學研單位申請，一般公司申請不到。' }
+      ] },
+    { id: 'energy', name: '能源系統參數', when: '有「GHG Emissions」或「Energy Management」主題',
+      examples: '碳價、能源價格、電力結構',
+      sources: [ { name: 'IEA', note: '' }, { name: 'SSP Public Database', note: '' } ] },
+    { id: 'macro', name: '總體經濟參數', when: 'B2C、民生消費',
+      examples: '人口、GDP',
+      sources: [ { name: 'SSP Public Database', note: '人口、GDP 推估' } ] },
+    { id: 'landuse', name: '土地利用參數', when: '依賴自然資源',
+      examples: '農地、林地面積變化',
+      sources: [ { name: 'SSP Public Database', note: '土地利用變數' } ] },
+    { id: 'none', name: '查無相關主題，不下載', when: '以上都不相關（例如教育業）',
+      examples: '可以合理結論「無可合理預期的氣候風險」', sources: [] }
+  ],
+  siteChangeNote: '各網站都可能改版，找不到按鈕不是你的錯。',
+
+  parameters: [
+    { id: 'rx1day', family: 'climate', name: '年最大一日降雨（X 案例地點）', base: '基期 162.9 毫米', baseSrc: 'demo',
+      values: {
+        'SSP5-8.5': [ { text: '略增' }, { text: '明顯增加' }, { text: '約 219 毫米（+34.8%）', src: 'demo' } ],
+        'SSP1-1.9': [ { text: '略增' }, { text: '略增' }, { text: '增幅較小' } ]
+      } },
+    { id: 'supplierFloodShare', family: 'climate', name: '位在淹水潛勢區的供應商（X 案例）', base: '351 家中 90 家', baseSrc: 'demo', values: {} },
+    { id: 'hotDays', family: 'climate', name: '高溫日數',
+      values: {
+        'SSP5-8.5': [ { text: '增加' }, { text: '明顯增加' }, { text: '大幅增加' } ],
+        'SSP1-1.9': [ { text: '增加' }, { text: '略增' }, { text: '大致持平' } ]
+      } },
+    { id: 'sealevelRise', family: 'climate', name: '海平面',
+      values: {
+        'SSP5-8.5': [ { text: '緩慢上升' }, { text: '上升' }, { text: '明顯上升' } ],
+        'SSP1-1.9': [ { text: '緩慢上升' }, { text: '緩慢上升' }, { text: '上升較少' } ]
+      } },
+    { id: 'carbonPrice', family: 'energy', name: '碳價／碳費', base: '國內碳費費率 NT$300／噸（現行）', baseSrc: 'demo',
+      values: {
+        'SSP1-1.9': [ { text: '亞洲碳價 US$303／噸（2030 年）', src: 'demo' }, { text: '亞洲碳價 US$651／噸（2050 年）', src: 'demo' }, { text: '懶人包未提供；遊戲假設維持 2050 年水準', src: 'assumed' } ],
+        'IEA NZE':  [ { text: '碳價快速上升（懶人包未給數字，遊戲不列）' }, { text: '碳價高' }, { text: '碳價高' } ],
+        'IEA STEPS':[ { text: '依現行政策，上升有限' }, { text: '依現行政策，上升有限' }, { text: '依現行政策，上升有限' } ],
+        'SSP5-8.5': [ { text: '碳價低' }, { text: '碳價低' }, { text: '碳價低' } ]
+      } },
+    { id: 'carbonFeeFormula', family: 'energy', name: '碳費公式', base: '碳費 ＝（排放量 − 免徵額度）× 費率', values: {} },
+    { id: 'popGdp', family: 'macro', name: '人口與 GDP',
+      values: {
+        'SSP5-8.5': [ { text: '經濟成長快，能源需求高' }, { text: '經濟成長快' }, { text: '經濟成長快' } ],
+        'SSP1-1.9': [ { text: '走向永續發展，消費型態轉變' }, { text: '偏好低碳、在地商品' }, { text: '偏好低碳、在地商品' } ]
+      } },
+    { id: 'landUse', family: 'landuse', name: '農地與林地',
+      values: {
+        'SSP5-8.5': [ { text: '極端降雨讓收成更不穩' }, { text: '極端降雨讓收成更不穩' }, { text: '收成波動大' } ],
+        'SSP1-1.9': [ { text: '開始有農地轉作造林' }, { text: '部分農地轉作造林或生質能源' }, { text: '農地面積明顯縮減' } ]
+      } }
+  ],
+
+  terrains: {
+    estuary:  { name: '河口低地', pros: '地租便宜、靠近港口', cons: '淹水潛勢高', siteAdjFrac: 0.02,
+                hazards: { flood: 1.5, sealevel: 1.2, heat: 1.0, slope: 0.2 } },
+    coast:    { name: '海岸', pros: '物流方便', cons: '怕海平面上升', siteAdjFrac: 0.01,
+                hazards: { flood: 1.0, sealevel: 1.5, heat: 0.9, slope: 0.2 } },
+    plain:    { name: '平原', pros: '各方面中等', cons: '中度淹水', siteAdjFrac: 0,
+                hazards: { flood: 0.8, sealevel: 0, heat: 1.0, slope: 0.2 } },
+    city:     { name: '都會', pros: '人才多、離客戶近', cons: '熱島高溫', siteAdjFrac: 0.01,
+                hazards: { flood: 0.6, sealevel: 0, heat: 1.4, slope: 0.2 } },
+    slope:    { name: '山坡', pros: '土地大又便宜', cons: '強降雨坡地災害', siteAdjFrac: 0,
+                hazards: { flood: 0.3, sealevel: 0, heat: 0.8, slope: 1.5 } },
+    highland: { name: '高地', pros: '天然災害風險低', cons: '物流成本高', siteAdjFrac: -0.04,
+                hazards: { flood: 0.1, sealevel: 0, heat: 0.6, slope: 0.6 } }
+  },
+  terrainSrc: 'assumed',
+  hazardBadges: { flood: '淹', sealevel: '潮', heat: '熱', slope: '坡' },
+
+  map: {
+    name: '澐灣地區',
+    note: '西邊靠海，一條河從東邊高地流到西邊河口。',
+    caseHint: { terrain: 'estuary', text: '懶人包 X 案例的第二總部，就位在這類高淹水風險區。' },
+    rows: [
+      ['coast',   'plain',   'plain',  'slope',  'highland', 'highland'],
+      ['coast',   'city',    'city',   'plain',  'slope',    'highland'],
+      ['estuary', 'estuary', 'city',   'plain',  'slope',    'slope'],
+      ['estuary', 'plain',   'plain',  'plain',  'slope',    'highland'],
+      ['coast',   'plain',   'city',   'plain',  'slope',    'highland'],
+      ['coast',   'coast',   'plain',  'plain',  'plain',    'slope']
+    ]
+  },
+
+  companies: [
+    { id: 'X', name: 'X 工程', industry: '工程營造', caseRef: '懶人包案例 X', size: '中型',
+      ap: 4, budget: 6, revenue: 20, fixedCost: 12, emissions: 0,
+      exposure: 'high', siteSensitive: true, heatSensitive: true,
+      baseRisks: ['flood', 'rain', 'heat'], baseFamilies: ['climate'],
+      sasb: ['營運高度暴露在戶外'],
+      clues: ['戶外施工比例高，遇到豪雨、高溫就停工', '要找地方蓋第二總部', '351 家供應商中有 90 家位在淹水潛勢區', '主要客戶是政府公共工程'],
+      clueSrc: { 2: 'demo' } },
+    { id: 'Y', name: 'Y 半導體', industry: '半導體製造', caseRef: '懶人包案例 Y', size: '大型',
+      ap: 6, budget: 20, revenue: 150, fixedCost: 90, emissions: { value: 30, src: 'assumed', note: '應繳碳費的排放量（排放量 − 免徵額度）' },
+      exposure: 'high', siteSensitive: true, heatSensitive: false,
+      baseRisks: ['carbonfee', 'market'], baseFamilies: ['energy'],
+      sasb: ['GHG Emissions', 'Energy Management'],
+      clues: ['製程很耗電，每年排放量大', '應繳碳費的排放量 30 萬噸', '大客戶開始要求供應鏈用再生能源', '新廠的地點還沒決定'],
+      clueSrc: { 1: 'assumed' } },
+    { id: 'Z', name: 'Z 教育', industry: '教育服務', caseRef: '懶人包案例 Z', size: '小型',
+      ap: 2, budget: 1, revenue: 5, fixedCost: 3.5, emissions: 0,
+      exposure: 'none', siteSensitive: false, heatSensitive: false,
+      baseRisks: [], baseFamilies: ['none'],
+      sasb: ['無氣候相關主題'],
+      clues: ['以線上課程為主', '辦公室用租的，隨時可以搬', 'SASB 主題裡沒有排放，也沒有實體衝擊'] },
+    { id: 'W', name: 'W 民生零售', industry: '民生消費零售', caseRef: null, size: '中型',
+      ap: 3, budget: 3, revenue: 30, fixedCost: 25, emissions: 0,
+      exposure: 'mid', siteSensitive: true, heatSensitive: true,
+      baseRisks: ['market'], baseFamilies: ['macro'],
+      sasb: ['B2C 民生消費'],
+      clues: ['B2C，全台門市賣日用品', '需求跟著人口和經濟走', '門市和冷鏈很耗電，夏天越熱電費越高', '利潤薄，營收掉一點現金流就吃緊', '要選物流中心的位置'] },
+    { id: 'V', name: 'V 農產加工', industry: '農產加工', caseRef: null, size: '小型',
+      ap: 2, budget: 1.5, revenue: 12, fixedCost: 10, emissions: 0,
+      exposure: 'high', siteSensitive: true, heatSensitive: false,
+      baseRisks: ['rain', 'policy'], baseFamilies: ['landuse', 'climate'],
+      sasb: ['依賴自然資源', '營運高度暴露在戶外'],
+      clues: ['原料靠契作農地', '契作田在戶外，強降雨會影響收成', '農地政策一變，契作面積就跟著變', '分析團隊只有兩個人'] }
+  ],
+  companyNumbersSrc: 'assumed',   // 各公司的營收、固定成本、預算、分析點都是遊戲假設
+
+  measures: [
+    { id: 'floodgate', name: '防水閘門與抽水設備', for: ['X', 'Y', 'W', 'V'], costFrac: 0.4, opexFrac: 0,
+      mitigate: { flood: 0.6, rainSlope: 0.3 }, desc: '降低淹水和強降雨造成的停工。' },
+    { id: 'elevate', name: '廠房墊高或遷到高處', for: ['X', 'Y', 'W', 'V'], costFrac: 0.9, opexFrac: 0,
+      mitigate: { flood: 0.9, seaLevel: 0.9, rainSlope: 0.5 }, desc: '最貴，但幾乎擋掉淹水與海平面上升。' },
+    { id: 'supplierBackup', name: '供應商備援', for: ['X'], costFrac: 0.3, opexFrac: 0,
+      mitigate: { supplierFlood: 0.7 }, desc: '把淹水潛勢區的供應商分散，找替代來源。' },
+    { id: 'heatShift', name: '高溫作業調整', for: ['X', 'V'], costFrac: 0.2, opexFrac: 0.005,
+      mitigate: { heatOutdoor: 0.6, cropYield: 0.2 }, desc: '調整戶外工時、增加降溫設備。' },
+    { id: 'bcp', name: '營運持續計畫', for: ['X', 'Y', 'Z', 'W', 'V'], costFrac: 0.15, opexFrac: 0,
+      mitigateAllPhysical: 0.2, desc: '災害發生時更快恢復營運。所有實體風險造成的停工再少 20%。' },
+    { id: 'renewable', name: '再生能源採購', for: ['Y', 'W'], costFrac: 0.5, opexFrac: 0.015,
+      emissionCut: 0.3, mitigate: { customerRE: 0.8 }, desc: '降低排放，也符合客戶要求。每年有額外電費。' },
+    { id: 'efficiency', name: '製程與門市節能', for: ['Y', 'W'], costFrac: 0.4, opexFrac: 0,
+      emissionCut: 0.25, mitigate: { heatPower: 0.5 }, desc: '少用電，排放和電費一起降。' },
+    { id: 'icp', name: '內部碳定價', for: ['Y'], costFrac: 0.05, opexFrac: 0,
+      emissionCut: 0.15, desc: '投資決策先算進碳價，逐步把高碳選項淘汰。' },
+    { id: 'lowCarbonLine', name: '低碳產品與工法', for: ['X', 'Y', 'W'], costFrac: 0.5, opexFrac: 0,
+      mitigate: { consumerShift: 0.8 }, desc: '把握機會：開發低碳產品、低碳工法。' },
+    { id: 'sourcingDiversify', name: '契作產區分散', for: ['V'], costFrac: 0.4, opexFrac: 0.01,
+      mitigate: { cropYield: 0.6, landUse: 0.6 }, desc: '把契作田分散到不同地區。' }
+  ],
+  measureNumbersSrc: 'assumed',
+
+  /*
+   * 事件：magnitude[路線][回合]
+   *   metric:'capacity' → 產能損失百分點（再乘廠址係數 hazard）
+   *   metric:'cf'       → 每年現金流影響（億元），負數是損失、正數是收益
+   *   special:'carbonFee' → 依碳價與排放量計算
+   *   requires          → 機會事件：要先有這些措施之一才會實現
+   */
+  events: [
+    { id: 'flood', risk: 'flood', kind: 'physical', title: '豪雨淹水', metric: 'capacity', hazard: 'flood',
+      appliesTo: ['X', 'Y', 'W', 'V'], magnitude: { high: [6, 12, 20], netzero: [5, 7, 8] },
+      text: '豪雨讓據點淹水，停工清理。',
+      textLong: { high: '年最大一日降雨從基期 162.9 毫米增加到約 219 毫米（+34.8%）。', src: 'demo' } },
+    { id: 'rainSlope', risk: 'rain', kind: 'physical', title: '強降雨坡地災害', metric: 'capacity', hazard: 'slope',
+      appliesTo: ['X', 'Y', 'W', 'V'], magnitude: { high: [4, 8, 14], netzero: [3, 4, 5] },
+      text: '強降雨造成邊坡崩塌、道路中斷。' },
+    { id: 'supplierFlood', risk: 'flood', kind: 'physical', title: '供應商淹水停工', metric: 'capacity', hazard: null,
+      appliesTo: ['X'], magnitude: { high: [4, 8, 14], netzero: [3, 4, 5] },
+      text: '351 家供應商中 90 家位在淹水潛勢區，淹水時材料斷供。', textSrc: 'demo' },
+    { id: 'heatOutdoor', risk: 'heat', kind: 'physical', title: '高溫停工', metric: 'capacity', hazard: 'heat',
+      appliesTo: ['X'], magnitude: { high: [3, 6, 12], netzero: [2, 3, 4] },
+      text: '高溫讓戶外施工時間縮短。' },
+    { id: 'heatPower', risk: 'heat', kind: 'physical', title: '高溫推高電費', metric: 'cf', hazard: 'heat',
+      appliesTo: ['W'], magnitude: { high: [-0.3, -0.6, -1.2], netzero: [-0.2, -0.3, -0.4] },
+      text: '夏天更熱，門市空調和冷鏈電費上升。' },
+    { id: 'seaLevel', risk: 'sealevel', kind: 'physical', title: '海平面上升', metric: 'capacity', hazard: 'sealevel',
+      appliesTo: ['X', 'Y', 'W', 'V'], magnitude: { high: [0, 3, 10], netzero: [0, 1, 3] },
+      text: '海平面上升加上暴潮，低窪據點更常淹水。' },
+    { id: 'cropYield', risk: 'rain', kind: 'physical', title: '契作收成不穩', metric: 'capacity', hazard: null,
+      appliesTo: ['V'], magnitude: { high: [6, 12, 20], netzero: [4, 5, 6] },
+      text: '強降雨與乾旱交替，契作田收成減少，原料不夠。' },
+    { id: 'carbonFee', risk: 'carbonfee', kind: 'transition', title: '碳費', metric: 'cf', special: 'carbonFee',
+      appliesTo: ['Y'], text: '碳費 ＝（排放量 − 免徵額度）× 費率。' },
+    { id: 'customerRE', risk: 'market', kind: 'transition', title: '客戶要求再生能源', metric: 'cf', hazard: null,
+      appliesTo: ['Y'], magnitude: { high: [0, 0, -5], netzero: [0, -15, -25] },
+      text: '大客戶要求供應鏈使用再生能源，做不到就丟訂單。' },
+    { id: 'consumerShift', risk: 'market', kind: 'transition', title: '消費偏好轉向低碳', metric: 'cf', hazard: null,
+      appliesTo: ['W'], magnitude: { high: [0, 0, 0], netzero: [0, -0.5, -1.0] },
+      text: '消費者偏好低碳、在地商品，傳統品項賣不動。' },
+    { id: 'landUse', risk: 'policy', kind: 'transition', title: '農地轉作造林與生質能源', metric: 'cf', hazard: null,
+      appliesTo: ['V'], magnitude: { high: [0, 0, 0], netzero: [-0.2, -0.5, -0.8] },
+      text: '為了減碳，部分農地轉作造林或生質能源，契作面積變少、原料變貴。' },
+    { id: 'floodWorks', risk: null, kind: 'opportunity', title: '防洪工程需求增加', metric: 'cf', hazard: null,
+      appliesTo: ['X'], magnitude: { high: [0.5, 1.0, 2.0], netzero: [0.3, 0.5, 0.5] },
+      text: '政府加碼防洪與排水工程，工程公司接到更多標案。' },
+    { id: 'lowCarbonChips', risk: 'market', kind: 'opportunity', title: '低碳晶片訂單', metric: 'cf', hazard: null,
+      appliesTo: ['Y'], requires: ['renewable', 'efficiency'], magnitude: { high: [0, 0, 2], netzero: [0, 8, 12] },
+      text: '客戶指定低碳製程，先減碳的廠商拿到訂單。' },
+    { id: 'greenBuildOpp', risk: 'tech', kind: 'opportunity', title: '低碳工法標案', metric: 'cf', hazard: null,
+      appliesTo: ['X'], requires: ['lowCarbonLine'], magnitude: { high: [0, 0, 0], netzero: [0, 0.8, 1.2] },
+      text: '公共工程開始指定低碳工法，有準備的廠商得標。' },
+    { id: 'lowCarbonGoods', risk: 'market', kind: 'opportunity', title: '低碳商品熱賣', metric: 'cf', hazard: null,
+      appliesTo: ['W'], requires: ['lowCarbonLine'], magnitude: { high: [0, 0, 0.2], netzero: [0, 0.4, 0.8] },
+      text: '低碳、在地商品成為門市新賣點。' },
+    { id: 'demandGrowth', risk: 'market', kind: 'opportunity', title: '經濟成長帶動需求', metric: 'cf', hazard: null,
+      appliesTo: ['W'], magnitude: { high: [0.1, 0.2, 0.4], netzero: [0, 0, 0] },
+      text: '高成長情境下，消費需求增加（定性方向參考 SSP5 的情境敘事）。' }
+  ],
+  eventNumbersSrc: 'assumed',
+  noEventText: '本回合沒有事件打到你：這家公司的營運不受這些災害與政策影響。',
+
+  erm: {
+    owners: ['總務部', '財務部', '營運部', '永續辦公室', '風險管理委員會'],
+    kris: [
+      { id: 'kriRain', name: '年最大一日降雨、據點淹水次數', risks: ['flood', 'rain'] },
+      { id: 'kriHeat', name: '高溫日數、戶外停工時數、夏季電費', risks: ['heat'] },
+      { id: 'kriSea', name: '海平面與暴潮監測', risks: ['sealevel'] },
+      { id: 'kriCarbon', name: '碳價與應繳碳費', risks: ['carbonfee'] },
+      { id: 'kriCustomer', name: '客戶與消費者的低碳要求', risks: ['market'] },
+      { id: 'kriPolicy', name: '農地與減碳政策變動', risks: ['policy'] },
+      { id: 'kriTech', name: '低碳技術與工法規範', risks: ['tech'] },
+      { id: 'kriReview', name: '每年複核一次是否出現新的氣候相關主題', risks: [] }
+    ]
+  },
+
+  advisor: {
+    name: '阿嵐',
+    title: '氣候策略顧問',
+    bio: '氣象觀測員出身，後來轉做企業顧問。講話直，不嚇人。',
+    catchphrase: '這不是預言，是壓力測試。',
+    intro: '我是阿嵐，你的氣候顧問。先說清楚：我不會告訴你未來長怎樣。我給你兩種未來，你的策略要在兩種裡都站得住。這不是預言，是壓力測試。',
+    turnStart: {
+      X: [
+        { text: '你的據點在{site}。短期兩條路線差不多，強降雨略增。先去氣候系統資料庫查降雨和淹水潛勢。供應商也要看：351 家裡有 90 家在淹水潛勢區。', src: 'demo' },
+        { text: '接下來二十年，如果是高排放，極端降雨和高溫都會明顯增加，戶外施工停工天數會變多。如果是積極減碳，公共工程會開始指定低碳工法，這是機會。兩邊都要測。' },
+        { text: '長期最關鍵。高排放情境下，年最大一日降雨從 162.9 毫米增加到約 219 毫米（+34.8%）。這時據點如果還在淹水區，產能撐不住。', src: 'demo' }
+      ],
+      Y: [
+        { text: '你的 SASB 主題有 GHG Emissions 和 Energy Management，該查能源系統參數。現在國內碳費每噸 NT$300，2030 年你繳不到 2 億。但世界如果往淨零走，SSP1-1.9 的亞洲碳價是每噸 US$303。同一個公式，帳單會變成 25 億以上。', src: 'demo' },
+        { text: '2050 年，SSP1-1.9 的亞洲碳價到每噸 US$651。大客戶也可能要求供應鏈用再生能源，跟不上就丟訂單。反過來，低碳晶片也是機會。', src: 'demo' },
+        { text: '長期碳價懶人包沒給，遊戲假設維持 2050 年水準。重點是：在淨零路線下，你的長期現金流還是正的嗎？' }
+      ],
+      Z: [
+        { text: '你以線上課程為主，辦公室用租的，SASB 主題裡沒有排放，也沒有實體衝擊。還是照六步驟查一次，看看有沒有攸關的風險。' },
+        { text: '查過一次，就不用每回合重做大工程。每年複核一次有沒有新的攸關主題就好。' },
+        { text: '長期也一樣。結論可以寫「無可合理預期的氣候風險」，不用硬套參數。' }
+      ],
+      W: [
+        { text: 'B2C 民生消費，需求跟著人口和經濟走，要看總體經濟參數。你的物流中心在{site}，也看一下淹水和高溫。' },
+        { text: '高排放情境下，夏天更熱，門市和冷鏈電費往上衝。積極減碳情境下，消費者開始偏好低碳商品。' },
+        { text: '長期來看，高溫電費和消費偏好都更明顯。你的利潤本來就薄，小小的成本變化就會讓現金流翻負。' }
+      ],
+      V: [
+        { text: '原料靠契作農地，要看土地利用參數。契作田在戶外，也要看氣候系統參數。你的團隊只有兩個人，先用簡化方法估個量級，下一輪再補細。' },
+        { text: '高排放情境下，強降雨讓收成更不穩。積極減碳情境下，部分農地可能轉作造林或生質能源，契作面積變少、原料變貴。' },
+        { text: '你有沒有把風險放進既有的風險管理流程，到長期會差很多。有做的話，分析能力已經累積起來，可以做完整量化了。' }
+      ]
+    },
+    feedback: {
+      step1Ok: '抓得很準。',
+      step1Missing: '你漏了：{list}。看看公司卡的線索，和廠址格子上的風險徽章。',
+      step1Extra: '{list} 跟這家公司關係不大，先不用花力氣。',
+      step1NoneOk: '對。找不到攸關的氣候風險，就照實說。',
+      step2Ok: '資料選對了。',
+      step2Missing: '少了「{list}」。沒有這類資料，相關風險就估不出來。',
+      step2Irrelevant: '「{list}」跟你的主題不相關，白花了 {n} 個分析點。',
+      step2NoneOk: '對。查無相關主題，就不用硬套參數。',
+      step2NoneWrong: '你的公司有攸關的氣候風險，不能直接跳過。',
+      dbLimits: '提醒：NCDR 的 40 公尺網格檔只開放政府機關和學研單位申請，一般公司申請不到。TCCIP 下載要先申請個人金鑰。網站也可能改版，找不到按鈕不是你的錯。',
+      step3Ok: '一個高排放、一個積極減碳，兩頭都測到了。',
+      step3SameSide: '兩個情境在同一邊，等於只測了一種未來。',
+      step3Reference: 'IEA STEPS 是現行政策，適合當對照組。兩頭的極端情境還是要各選一個。',
+      step3NotNeeded: '不用查參數。沒有攸關風險，就沒有要查的東西。',
+      step4Full: '暴險高、資源也夠，做完整量化。',
+      step4SimplifyFirst: '暴險高但能力還不夠，先簡化，再逐步精進。這就是比例原則。',
+      step4Simplified: '暴險中等，估個量級就夠用。',
+      step4Qualitative: '暴險低、資源少，定性說明就夠了。',
+      step4Over: '殺雞用牛刀了，多花了 {cost}。',
+      step4Under: '你的暴險不小，只做「{depth}」看不清楚影響有多大。',
+      step5Score: '你答對 {n}／{m} 題。',
+      step6Ok: '好。指派了負責單位和監控指標，之後每回合分析點 +1。',
+      step6Missing: '分析做完不是結束。沒有負責單位和監控指標，下一輪又要從零開始。'
+    },
+    endingReveal: '世界這次走的是「{route}」。你做決策的時候並不知道，這就是情境分析要面對的真實狀況。'
+  },
+
+  prologue: {
+    title: '序章：你會找誰代購？',
+    intro: '你要請人去外地幫你買一個限量商品。預算 10,000 元，商品在 A 地定價 8,000 元。三位代購各交了一份計畫書。你要把錢交給誰？',
+    src: 'assumed',
+    agents: [
+      { id: 'casual',   name: '隨興代購', plan: '「到了再說。」', fee: 300, planFee: 0, maps: '不做氣候分析' },
+      { id: 'bet',      name: '押寶代購', plan: '看了一份天氣預報（說會放晴），排了一條路線，直接去 A 地買。', fee: 300, planFee: 200, maps: '只押一個預測，不是情境分析' },
+      { id: 'scenario', name: '情境代購', plan: '分路線、分地區列出交通、價格、天氣。颱風就改走 B 路線；A 地漲價就改去 B 地買（B 地 9,000 元）；超過預算就不買。', fee: 300, planFee: 500, maps: '情境分析：幾種未來各有對策' }
+    ],
+    situations: [
+      { id: 'sunny', name: '晴天順暢',
+        results: {
+          casual:   { ok: true,  total: 8300, note: '最便宜，省下規劃費' },
+          bet:      { ok: true,  total: 8500, note: '預報猜對了' },
+          scenario: { ok: true,  total: 8800, note: '最貴，備案都沒用上' } } },
+      { id: 'typhoon', name: '颱風封路',
+        results: {
+          casual:   { ok: false, total: 300, note: '到了才發現路斷了，空手而回' },
+          bet:      { ok: false, total: 500, note: '唯一的路線封了，空手而回' },
+          scenario: { ok: true,  total: 9100, note: '改走 B 路線，多花 300 元交通費' } } },
+      { id: 'priceUp', name: 'A 地漲價到 11,000 元',
+        results: {
+          casual:   { ok: true,  total: 11300, over: true, note: '照買，超出預算 1,300 元' },
+          bet:      { ok: true,  total: 11500, over: true, note: '照買，超出預算 1,500 元' },
+          scenario: { ok: true,  total: 9800, note: '改去 B 地買，沒有超支' } } }
+    ],
+    lesson: '情境代購不是每種狀況都最好：晴天時，隨興代購最便宜。但每種狀況，情境代購都撐得住。',
+    round2: {
+      question: '第二次委託：幫你到樓下超商買一瓶 30 元的飲料。情境代購要不要照樣寫十頁計畫書、收 500 元規劃費？',
+      options: ['要，計畫越詳細越好', '不用，一句話說明「沒有可合理預期的風險」就好'],
+      answer: 1,
+      explain: '這就是比例原則。風險低、事情小，定性說明就夠了。懶人包的 Z 教育案例也是這樣：查完沒有攸關風險，就不用硬做量化。'
+    },
+    disclosure: '投資人就像委託人，公司就像代購。委託人事前看不到運氣，只看得到計畫書。所以 IFRS S2 要求公司用情境分析說明策略的韌性，讓投資人比較誰在各種未來都撐得住。現在換你當代購：經營一家公司，寫出你的計畫書。'
+  },
+
+  ending: {
+    verdicts: {
+      resilient: { name: '具韌性', text: '產能沒有中斷，長期現金流也沒有轉負。' },
+      partial:   { name: '需補強', text: '兩個問題中，有一個答「會」。' },
+      weak:      { name: '韌性不足', text: '產能會中斷，長期現金流也會轉負。' }
+    },
+    noRiskConclusion: '具韌性：查無可合理預期的氣候風險，不用硬做量化。',
+    crossRoute: '同一套決策放到「{route}」：{verdict}。',
+    bothOk: '兩種未來都撐得住。這才是情境分析要的答案。',
+    finalQuestion: '如果你是委託人，看了這張表，會把錢交給這家公司嗎？',
+    tableHeaders: ['風險', '類型', '資料與情境', '影響', '調適措施', '韌性結論']
+  }
+};
+/* ==== END:DATA ==== */
+</script>
+<style>
+/* ==== REGION:STYLE-CORE ==== 擁有者：總指揮。共用色票與基本重設，各任務只能引用、不能改。 */
+:root{
+  --bg:#F4F6FA; --card:#FFFFFF; --ink:#1E2430; --ink-soft:#5A6478; --line:#DDE3EE;
+  --night:#14213D; --accent:#FCA311;
+  --phys:#2B6CB0; --phys-bg:#E6F0FA;      /* 實體風險：藍 */
+  --trans:#C05621; --trans-bg:#FDEEE2;    /* 轉型風險：橘 */
+  --opp:#2F855A; --opp-bg:#E3F4EA;        /* 機會：綠 */
+  --good:#2F855A; --warn:#B7791F; --bad:#C53030;
+  --radius:14px; --tap:44px;
+  --font:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.7;overflow-x:hidden;}
+button,input,select{font:inherit;}
+button{min-height:var(--tap);cursor:pointer;}
+.tag-demo,.tag-assumed{display:inline-block;font-size:.72rem;line-height:1.4;border-radius:999px;padding:1px 8px;margin-left:4px;vertical-align:middle;white-space:nowrap;}
+.tag-demo{background:#FFF4D6;color:#7A5200;border:1px solid #F2D27A;}
+.tag-assumed{background:#EEF1F6;color:#4A5568;border:1px solid #D5DBE5;}
+/* ==== END:STYLE-CORE ==== */
+
+/* ==== REGION:STYLE-ENGINE ==== 擁有者：T1（版面、HUD、步驟畫面、序章） */
+#app{min-height:100vh;}
+.cg-wrap{max-width:760px;margin:0 auto;padding:16px 16px 64px;}
+.cg-wrap h1:focus,.cg-wrap h2:focus{outline:none;}
+.cg-title{font-size:1.35rem;font-weight:900;letter-spacing:.02em;margin:8px 0 10px;line-height:1.4;}
+.cg-sub{font-size:1.05rem;font-weight:800;margin:18px 0 8px;}
+.cg-lead{font-size:1rem;margin:6px 0 12px;}
+.cg-muted{color:var(--ink-soft);font-size:.86rem;}
+.cg-fine{color:var(--ink-soft);font-size:.78rem;margin-top:18px;}
+.cg-note{background:#FFF8E6;border:1px solid #F2D27A;border-radius:10px;padding:10px 12px;font-size:.9rem;margin:8px 0 12px;}
+.cg-ok{color:var(--good);}
+.cg-bad{color:var(--bad);}
+.cg-error{background:#FDECEC;color:var(--bad);border:1px solid #F3B4B4;border-radius:10px;padding:10px 12px;margin-top:10px;font-size:.9rem;}
+.cg-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin:12px 0;}
+.cg-card h2{font-size:1.05rem;font-weight:800;margin-bottom:8px;}
+.cg-card p+p{margin-top:6px;}
+.cg-q{padding-left:1.4em;margin:6px 0 10px;font-weight:700;}
+/* 按鈕 */
+.cg-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--tap);padding:10px 18px;border-radius:10px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;font-size:.95rem;text-align:center;line-height:1.4;}
+.cg-btn:hover{border-color:#B9C3D6;}
+.cg-btn:focus-visible,.cg-check input:focus-visible+span,.cg-radio input:focus-visible+span,.cg-select select:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+.cg-btn.primary{background:var(--night);border-color:var(--night);color:#fff;}
+.cg-btn.primary:hover{background:#1F3260;}
+.cg-btn[disabled]{opacity:.45;cursor:not-allowed;}
+.cg-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+.cg-actions .cg-btn{flex:1 1 160px;}
+.cg-stack{flex-direction:column;}
+.cg-stack .cg-btn{flex:none;width:100%;justify-content:flex-start;text-align:left;}
+/* 首頁 */
+.cg-hero{background:linear-gradient(180deg,#0C1428 0%,var(--night) 100%);color:#fff;border-radius:var(--radius);padding:28px 20px 24px;margin:4px 0 8px;}
+.cg-hero h1{font-size:clamp(1.8rem,8vw,2.6rem);font-weight:900;letter-spacing:.06em;line-height:1.25;}
+.cg-hero p{color:#C7D0E4;margin-top:10px;}
+.cg-eyebrow{display:inline-block;color:var(--accent)!important;font-weight:700;letter-spacing:.2em;font-size:.78rem;border:1px solid rgba(252,163,17,.5);padding:2px 12px;border-radius:999px;margin:0 0 10px!important;}
+/* HUD */
+.cg-hud{position:sticky;top:0;z-index:10;background:var(--night);color:#fff;padding:8px 16px;font-size:.84rem;box-shadow:0 2px 8px rgba(20,33,61,.18);}
+.cg-hud-row{max-width:728px;margin:0 auto;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;}
+.cg-hud-row strong{font-size:.95rem;}
+.cg-hud-row span{color:#C7D0E4;}
+.cg-hud-stats b{color:#fff;}
+/* 序章 */
+.cg-agents{display:grid;gap:10px;}
+.cg-agent{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:14px 16px;}
+.cg-agent-name{font-size:1.05rem;font-weight:800;}
+.cg-agent-plan{font-weight:400;margin:4px 0;}
+.cg-agent-fee{font-weight:400;font-size:.84rem;color:var(--ink-soft);}
+.cg-banner{background:var(--night);color:#fff;border-radius:10px;padding:10px 14px;margin:6px 0 12px;}
+.cg-sits{display:grid;gap:10px;}
+.cg-sit{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;}
+.cg-sit.is-drawn{border:2px solid var(--accent);}
+.cg-sit h2{font-size:1rem;font-weight:800;margin-bottom:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.cg-sit ul{list-style:none;display:grid;gap:6px;}
+.cg-sit li{font-size:.9rem;padding-left:10px;border-left:4px solid var(--line);}
+.cg-sit li .cg-muted{display:block;}
+.cg-sit li.is-ok{border-left-color:var(--good);}
+.cg-sit li.is-warn{border-left-color:var(--warn);}
+.cg-sit li.is-bad{border-left-color:var(--bad);}
+.cg-sit li.is-mine{background:#F7F9FD;}
+.cg-pill{font-size:.72rem;background:var(--accent);color:#14213D;border-radius:999px;padding:1px 8px;font-weight:800;}
+.cg-lesson{font-weight:800;background:#EEF3FB;border-radius:10px;padding:12px 14px;margin:12px 0;}
+/* 六步驟進度 */
+.cg-progress{list-style:none;display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:6px 0 4px;}
+.cg-progress li{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.66rem;color:var(--ink-soft);text-align:center;line-height:1.25;}
+.cg-progress li span{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#E3E8F1;font-weight:800;font-size:.8rem;color:var(--ink-soft);}
+.cg-progress li em{font-style:normal;}
+.cg-progress li.is-done span{background:var(--night);color:#fff;}
+.cg-progress li.is-now span{background:var(--accent);color:#14213D;}
+.cg-progress li.is-now{color:var(--ink);font-weight:700;}
+@media (max-width:420px){.cg-progress li em{display:none;}.cg-progress li.is-now em{display:none;}}
+.cg-talk{margin:6px 0 10px;}
+/* 表單 */
+.cg-form{display:grid;gap:10px;}
+.cg-group{border:1px solid var(--line);border-radius:12px;padding:10px 12px 12px;background:var(--card);margin:10px 0;min-width:0;}
+.cg-group legend{font-weight:800;padding:0 6px;font-size:.95rem;}
+.cg-group.is-phys{border-left:5px solid var(--phys);}
+.cg-group.is-trans{border-left:5px solid var(--trans);}
+.cg-check,.cg-radio{display:flex;align-items:flex-start;gap:10px;min-height:var(--tap);padding:10px 4px;cursor:pointer;border-bottom:1px solid #EEF1F6;}
+.cg-check:last-child,.cg-radio:last-child{border-bottom:none;}
+.cg-check input,.cg-radio input{width:22px;height:22px;margin-top:2px;flex:0 0 auto;accent-color:var(--night);}
+.cg-check span,.cg-radio span{flex:1;min-width:0;overflow-wrap:anywhere;}
+.cg-check.is-off,.cg-radio.is-off{opacity:.55;cursor:not-allowed;}
+.cg-clues{padding-left:1.2em;margin-bottom:6px;}
+.cg-depths{display:grid;gap:8px;}
+.cg-depths .cg-radio{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;}
+.cg-radio em{color:var(--bad);font-style:normal;font-size:.85rem;}
+.cg-scens{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:10px;}
+.cg-scen{flex-direction:column;align-items:flex-start;text-align:left;font-weight:400;padding:10px 12px;}
+.cg-scen b{font-size:1rem;}
+.cg-scen span{font-size:.82rem;color:var(--ink-soft);}
+.cg-scen[aria-pressed="true"],.cg-choice[aria-pressed="true"]{background:var(--night);border-color:var(--night);color:#fff;}
+.cg-scen[aria-pressed="true"] span{color:#C7D0E4;}
+.cg-ask h2{font-size:1rem;}
+.cg-ask-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:8px 0;border-top:1px solid #EEF1F6;}
+.cg-ask-row p{flex:1 1 180px;font-weight:700;}
+.cg-pair{display:flex;gap:8px;}
+.cg-choice{min-width:76px;}
+.cg-measures small{color:var(--ink-soft);}
+.cg-money{position:sticky;bottom:0;background:#FFFDF6;border:1px solid #F2D27A;border-radius:10px;padding:10px 12px;font-size:.92rem;z-index:5;}
+.cg-select{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:4px 0 8px;}
+.cg-select span{font-weight:700;}
+.cg-select select{min-height:var(--tap);padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:#fff;max-width:100%;}
+/* 結算 */
+.cg-meter{margin:8px 0 12px;}
+.cg-meter-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;font-weight:700;}
+.cg-bar{position:relative;height:14px;background:#E3E8F1;border-radius:999px;margin-top:6px;overflow:hidden;}
+.cg-bar i{position:absolute;left:0;top:0;bottom:0;background:var(--night);border-radius:999px;}
+.cg-bar s{position:absolute;top:-2px;bottom:-2px;width:3px;background:var(--bad);text-decoration:none;}
+.cg-world p{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:6px 0;}
+.cg-world p>span:first-child{min-width:5em;font-weight:700;}
+.cg-pips{display:inline-flex;gap:4px;}
+.cg-pips i{width:22px;height:12px;border-radius:3px;background:#E3E8F1;}
+.cg-pips i.on{background:var(--trans);}
+/* ==== END:STYLE-ENGINE ==== */
+
+/* ==== REGION:STYLE-MAP ==== 擁有者：T2（公司卡、地圖） */
+/* 公司卡 */
+.mp-companies{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));}
+.mp-co{display:flex;flex-direction:column;align-items:stretch;gap:6px;text-align:left;width:100%;min-height:var(--tap);padding:14px 16px;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);color:var(--ink);font-weight:400;line-height:1.55;}
+.mp-co:hover{border-color:#B9C3D6;box-shadow:0 6px 18px rgba(20,33,61,.08);}
+.mp-co:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+.mp-co[aria-pressed="true"]{border:2px solid var(--night);}
+.mp-co-head{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;justify-content:space-between;}
+.mp-co-name{font-size:1.15rem;font-weight:900;}
+.mp-case{font-size:.72rem;font-weight:800;border-radius:999px;padding:2px 10px;background:rgba(252,163,17,.18);color:#8A5A00;}
+.mp-case.is-extra{background:#EAEEF6;color:var(--ink-soft);}
+.mp-co-meta{font-size:.85rem;color:var(--ink-soft);}
+.mp-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.mp-tag{font-size:.76rem;background:#EAF1FB;color:#24508A;border-radius:6px;padding:2px 8px;font-weight:700;}
+.mp-clues{display:flex;flex-direction:column;gap:4px;padding:8px 10px;background:#F7F9FC;border-radius:10px;}
+.mp-clue{font-size:.9rem;padding-left:12px;position:relative;}
+.mp-clue::before{content:"";position:absolute;left:0;top:.65em;width:5px;height:5px;border-radius:50%;background:var(--ink-soft);}
+.mp-co-foot{font-size:.8rem;color:var(--ink-soft);}
+.mp-note{font-size:.8rem;color:var(--ink-soft);margin-top:10px;}
+/* 地圖 */
+.mp-head h2{font-size:1.1rem;font-weight:900;}
+.mp-head p{font-size:.88rem;color:var(--ink-soft);}
+.mp-legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.78rem;color:var(--ink-soft);margin:8px 0;}
+.mp-legend b{color:var(--ink);}
+.mp-grid{display:grid;gap:4px;max-width:560px;margin:6px 0 10px;}
+.mp-tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;min-width:0;min-height:58px;padding:5px 2px;
+  border:1px solid rgba(30,36,48,.12);border-radius:8px;color:var(--ink);font-weight:400;line-height:1.2;}
+.mp-tile:focus-visible{outline:3px solid var(--accent);outline-offset:1px;z-index:1;}
+.mp-tile.is-on{outline:3px solid var(--night);outline-offset:-1px;z-index:1;}
+.mp-tname{font-size:.68rem;font-weight:800;white-space:nowrap;}
+.mp-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;}
+.mp-badges i,.mp-haz i{font-style:normal;font-size:.62rem;font-weight:700;border-radius:4px;padding:0 3px;line-height:1.5;}
+.is-hi{background:#C53030;color:#fff;}
+.is-mid{background:#F6AD55;color:#3A2600;}
+.is-lo{background:#E2E8F0;color:#2D3748;}
+.is-none{background:transparent;color:var(--ink-soft);}
+.t-estuary{background:#CFE3F5;}
+.t-coast{background:#D3EEF0;}
+.t-plain{background:#E7F1D6;}
+.t-city{background:#E6E1EE;}
+.t-slope{background:#EFE3CB;}
+.t-highland{background:#E0DCD2;}
+.mp-case-dot{position:absolute;bottom:3px;right:3px;width:8px;height:8px;border-radius:50%;background:var(--accent);border:1px solid #8A5A00;}
+.mp-case-dot.is-legend{position:static;display:inline-block;margin-right:4px;vertical-align:middle;}
+.mp-info{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;max-width:560px;}
+.mp-info h3{font-size:1rem;font-weight:800;margin-bottom:4px;}
+.mp-haz{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px;margin:8px 0 4px;}
+.mp-haz li{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:.86rem;}
+.mp-haz i{font-size:.78rem;}
+.mp-case-note{font-size:.84rem;background:#FFF4D6;border-radius:8px;padding:6px 10px;margin-top:6px;}
+.mp-empty{color:var(--ink-soft);font-size:.9rem;}
+/* ==== END:STYLE-MAP ==== */
+
+/* ==== REGION:STYLE-EVENTS ==== 擁有者：T3（顧問、事件卡、資料庫卡、參數卡、預估） */
+/* 顧問 */
+.ev-say{display:flex;gap:10px;align-items:flex-start;margin:8px 0;}
+.ev-avatar{flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#2F4A85,var(--night));
+  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;border:2px solid var(--accent);}
+.ev-bubble{flex:1;min-width:0;background:#EEF3FB;border-radius:4px 14px 14px 14px;padding:8px 12px;}
+.ev-who{font-size:.74rem;font-weight:800;color:#24508A;}
+.ev-bubble p+p{margin-top:2px;}
+.ev-fine{font-size:.8rem;color:var(--ink-soft);margin-top:6px;}
+/* 資料庫卡 */
+.ev-dbs{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));}
+.ev-db{display:flex;flex-direction:column;align-items:stretch;gap:4px;text-align:left;min-height:var(--tap);padding:12px 14px;width:100%;
+  background:var(--card);border:1px solid var(--line);border-radius:12px;color:var(--ink);font-weight:400;line-height:1.5;}
+.ev-db:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+.ev-db[aria-pressed="true"]{border:2px solid var(--night);background:#F3F6FC;}
+.ev-db-top{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;}
+.ev-db-name{font-weight:900;font-size:1rem;}
+.ev-db-mark{font-size:.74rem;border-radius:999px;padding:1px 9px;background:#EAEEF6;color:var(--ink-soft);font-weight:700;}
+.ev-db[aria-pressed="true"] .ev-db-mark{background:var(--night);color:#fff;}
+.ev-db-when,.ev-db-ex{font-size:.86rem;}
+.ev-db-src{display:flex;flex-direction:column;gap:2px;font-size:.82rem;color:var(--ink-soft);border-top:1px dashed var(--line);padding-top:6px;margin-top:2px;}
+.ev-db.is-none{background:#FAFAFA;}
+/* 參數卡 */
+.ev-params{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;}
+.ev-params h3{font-size:.98rem;font-weight:900;margin-bottom:6px;}
+.ev-param{padding:8px 0;border-top:1px solid #EEF1F6;}
+.ev-param:first-of-type{border-top:none;}
+.ev-param-name{font-weight:800;}
+.ev-param-base{font-size:.86rem;color:var(--ink-soft);}
+.ev-param ul{list-style:none;margin-top:4px;display:grid;gap:4px;}
+.ev-param li{display:flex;flex-wrap:wrap;gap:2px 10px;font-size:.88rem;}
+.ev-param li span:first-child{font-weight:700;min-width:6.5em;}
+.ev-param em{color:var(--ink-soft);font-style:normal;}
+/* 預估 */
+.ev-fc{display:grid;gap:10px;margin:8px 0;}
+.ev-fc-route{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--night);border-radius:12px;padding:12px 14px;}
+.ev-fc-route h3{font-size:.98rem;font-weight:900;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;}
+.ev-fc-route h3 small{font-weight:400;color:var(--ink-soft);font-size:.8rem;}
+.ev-fc-meters{background:#F7F9FC;border-radius:8px;padding:6px 10px;margin:6px 0;font-size:.9rem;}
+.ev-fc-route ul{padding-left:1.1em;font-size:.88rem;display:grid;gap:2px;}
+.ev-miss{color:var(--bad);}
+.ev-quiet{color:var(--ink-soft);}
+.ev-opp{color:var(--opp);}
+.ev-hidden{font-size:.84rem;color:var(--warn);margin-top:6px;font-weight:700;}
+/* 事件卡 */
+.ev-cards{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));margin:8px 0;}
+.ev-card{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0;}
+.ev-card h3{font-size:1rem;font-weight:900;margin:2px 0 4px;}
+.ev-card p{font-size:.9rem;}
+.ev-kind{font-size:.74rem!important;font-weight:800;letter-spacing:.04em;}
+.ev-card.is-physical{border-left-color:var(--phys);}
+.ev-card.is-physical .ev-kind{color:var(--phys);}
+.ev-card.is-transition{border-left-color:var(--trans);}
+.ev-card.is-transition .ev-kind{color:var(--trans);}
+.ev-card.is-opportunity{border-left-color:var(--opp);}
+.ev-card.is-opportunity .ev-kind{color:var(--opp);}
+.ev-card.is-missed{background:#FAFAFA;}
+.ev-card.is-calm{border-left-color:var(--good);}
+.ev-effect{font-weight:800;margin-top:6px;}
+.ev-effect small{font-weight:400;color:var(--ink-soft);}
+.ev-by{font-size:.84rem!important;color:var(--good);margin-top:2px;}
+.ev-long{background:#FFF8E6;border-radius:8px;padding:4px 8px;margin-top:6px;}
+.ev-formula{background:#F7F9FC;border-radius:8px;padding:6px 8px;margin-top:6px;font-size:.86rem!important;overflow-wrap:anywhere;}
+/* ==== END:STYLE-EVENTS ==== */
+
+/* ==== REGION:STYLE-ENDING ==== 擁有者：T4（結局、整理表） */
+.ed-page{display:block;}
+.ed-title{font-size:1.35rem;font-weight:900;margin:8px 0 6px;}
+.ed-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin:12px 0;}
+.ed-card h2{font-size:1.05rem;font-weight:900;margin-bottom:6px;}
+.ed-muted{color:var(--ink-soft);font-size:.86rem;}
+.ed-ok{color:var(--good);}
+.ed-bad{color:var(--bad);}
+.ed-warn{color:var(--warn);}
+/* 評語 */
+.ed-verdict{border-radius:var(--radius);padding:16px;margin:12px 0;border:2px solid var(--line);background:var(--card);}
+.ed-verdict.is-resilient{border-color:var(--good);background:#F0FAF4;}
+.ed-verdict.is-partial{border-color:var(--warn);background:#FFF8E6;}
+.ed-verdict.is-weak{border-color:var(--bad);background:#FDF1F1;}
+.ed-route{font-size:.86rem;color:var(--ink-soft);}
+.ed-badge{font-size:1.6rem;font-weight:900;letter-spacing:.06em;margin:2px 0;}
+.is-resilient .ed-badge{color:var(--good);}
+.is-partial .ed-badge{color:var(--warn);}
+.is-weak .ed-badge{color:var(--bad);}
+.ed-verdict-text{font-weight:700;}
+.ed-qs{list-style:none;display:grid;gap:8px;margin-top:10px;}
+.ed-qs li{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;background:rgba(255,255,255,.7);border-radius:10px;padding:8px 12px;}
+.ed-qs li b{font-size:1.2rem;}
+.ed-qs li small{grid-column:1 / -1;color:var(--ink-soft);}
+/* 兩路線小表 */
+.ed-mini-wrap{max-width:100%;overflow-x:auto;}
+.ed-mini{width:100%;border-collapse:collapse;font-size:.84rem;margin-top:8px;}
+.ed-mini caption{text-align:left;font-size:.78rem;color:var(--ink-soft);padding-bottom:4px;}
+.ed-mini th,.ed-mini td{border-bottom:1px solid #EEF1F6;padding:6px 4px;text-align:right;white-space:nowrap;}
+.ed-mini th[scope="row"]{text-align:left;white-space:normal;font-weight:700;min-width:7em;}
+.ed-mini td small{display:block;font-size:.7rem;font-weight:800;}
+.ed-cell-bad{color:var(--bad);background:#FDF1F1;}
+/* 整理表 */
+.ed-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:8px;}
+.ed-table th,.ed-table td{border:1px solid var(--line);padding:8px;vertical-align:top;text-align:left;overflow-wrap:anywhere;}
+.ed-table thead th{background:var(--night);color:#fff;font-weight:700;}
+.ed-kind{display:inline-block;border-radius:999px;padding:0 8px;font-size:.78rem;font-weight:800;}
+.ed-kind.is-phys{background:var(--phys-bg);color:var(--phys);}
+.ed-kind.is-trans{background:var(--trans-bg);color:var(--trans);}
+.ed-kind.is-opp{background:var(--opp-bg);color:var(--opp);}
+@media (max-width:640px){
+  .ed-table,.ed-table tbody,.ed-table tr,.ed-table th,.ed-table td{display:block;width:100%;}
+  .ed-table thead{display:none;}
+  .ed-table tr{border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden;background:var(--card);}
+  .ed-table th,.ed-table td{border:none;border-top:1px solid #EEF1F6;padding:6px 12px;}
+  .ed-table tbody th{background:#F3F6FC;border-top:none;font-size:.98rem;}
+  .ed-table td::before,.ed-table tbody th::before{content:attr(data-label);display:block;font-size:.72rem;font-weight:800;color:var(--ink-soft);}
+}
+/* 學習紀錄 */
+.ed-learn{list-style:none;display:grid;gap:4px;counter-reset:s;}
+.ed-learn li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #EEF1F6;padding:6px 0;counter-increment:s;}
+.ed-learn li span::before{content:counter(s) ". ";color:var(--ink-soft);}
+/* 底部 */
+.ed-foot{font-size:.82rem;color:var(--ink-soft);margin:16px 0 8px;}
+.ed-foot p+p{margin-top:4px;}
+.ed-final{font-size:1.15rem;font-weight:900;color:var(--ink);background:#EEF3FB;border-radius:12px;padding:14px;margin-top:12px!important;}
+.ed-actions{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 8px;}
+.ed-btn{flex:1 1 180px;min-height:var(--tap);padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;}
+.ed-btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+.ed-btn.is-primary{background:var(--night);border-color:var(--night);color:#fff;}
+.ed-print{flex:0 1 auto;}
+@media print{
+  .cg-hud,.ed-actions,.ed-talk{display:none!important;}
+  body{background:#fff;}
+  .ed-card,.ed-verdict{break-inside:avoid;}
+}
+/* ==== END:STYLE-ENDING ==== */
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<noscript>這個遊戲需要開啟 JavaScript 才能玩。</noscript>
+
+<script>
+/* ==== REGION:CORE ==== 擁有者：總指揮（規則與介面契約）。Codex 任務只能呼叫，不能修改。 */
+window.CG = window.CG || {};
+(function () {
+  'use strict';
+  const D = GAME_DATA;
+  const R = D.rules;
+  const byId = (arr) => Object.fromEntries(arr.map((x) => [x.id, x]));
+  const COMPANIES = byId(D.companies);
+  const MEASURES = byId(D.measures);
+  const EVENTS = byId(D.events);
+  const RISKS = byId(D.risks);
+  const FAMILIES = byId(D.dataFamilies);
+  const SCENARIOS = byId(D.scenarios);
+  const TILES = {};
+  const TILE_LIST = [];
+  D.map.rows.forEach((row, r) => row.forEach((terrain, c) => {
+    const t = { id: 'r' + r + 'c' + c, row: r, col: c, terrain: terrain };
+    TILES[t.id] = t; TILE_LIST.push(t);
+  }));
+
+  const num = (v) => (v && typeof v === 'object') ? Number(v.value) : Number(v || 0);
+  const round = (n, d) => { const k = Math.pow(10, d == null ? 2 : d); return Math.round(n * k) / k; };
+  const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+  const uniq = (arr) => Array.from(new Set(arr));
+  const ROUTE_IDS = ['high', 'netzero'];
+
+  function company(id) { return COMPANIES[id] || null; }
+  function measure(id) { return MEASURES[id] || null; }
+  function event(id) { return EVENTS[id] || null; }
+  function risk(id) { return RISKS[id] || null; }
+  function family(id) { return FAMILIES[id] || null; }
+  function scenario(id) { return SCENARIOS[id] || null; }
+  function route(id) { return D.routes[id] || null; }
+  function tile(id) { return TILES[id] || null; }
+  function tiles() { return TILE_LIST.map((t) => Object.assign({}, t)); }
+  function terrainOf(tileId) {
+    const t = TILES[tileId];
+    return t ? Object.assign({ id: t.terrain }, D.terrains[t.terrain]) : null;
+  }
+  function otherRoute(routeId) { return routeId === 'high' ? 'netzero' : 'high'; }
+
+  /* 這家公司在這個廠址，哪些風險算「攸關」 */
+  function relevantRisks(companyId, tileId) {
+    const co = company(companyId);
+    if (!co) return [];
+    const set = new Set(co.baseRisks);
+    const terr = co.siteSensitive ? terrainOf(tileId) : null;
+    if (terr) {
+      const h = terr.hazards, th = R.hazardRelevance;
+      if (h.flood >= th.flood) set.add('flood');
+      if (h.sealevel >= th.sealevel) set.add('sealevel');
+      if (h.slope >= th.slope) set.add('rain');
+      if (co.heatSensitive && h.heat >= th.heat) set.add('heat');
+    }
+    return D.risks.map((r) => r.id).filter((id) => set.has(id));
+  }
+
+  /* 這家公司該下載哪幾類資料（依 SASB 主題＋實體風險） */
+  function requiredFamilies(companyId, tileId) {
+    const co = company(companyId);
+    if (!co) return [];
+    const set = new Set(co.baseFamilies);
+    if (relevantRisks(companyId, tileId).some((id) => RISKS[id].kind === 'physical')) set.add('climate');
+    if (set.has('none') && set.size > 1) set.delete('none');
+    return D.dataFamilies.map((f) => f.id).filter((id) => set.has(id));
+  }
+
+  function ermCountBefore(state, turnIndex) {
+    let n = 0;
+    for (let i = 0; i < turnIndex; i++) if (state.turns[i] && state.turns[i].checks && state.turns[i].checks.step6 && state.turns[i].checks.step6.ok) n++;
+    return n;
+  }
+  /* 本回合可用分析點＝公司基本值＋前面回合做好第 6 步的次數 − 本回合選了不相關資料的扣點 */
+  function apAvailable(state, turnIndex) {
+    const co = company(state.companyId);
+    const t = state.turns[turnIndex] || {};
+    return Math.max(1, co.ap + R.ermBonus * ermCountBefore(state, turnIndex) - (t.apPenalty || 0));
+  }
+
+  function correctDepth(companyId, ap) {
+    const exp = company(companyId).exposure;
+    if (exp === 'none' || exp === 'low') return 'qualitative';
+    if (exp === 'mid') return 'simplified';
+    return ap >= R.depths.full.cost ? 'full' : 'simplified';
+  }
+
+  function coverage(scenarioIds) {
+    const sides = (scenarioIds || []).map((id) => scenario(id)).filter(Boolean).map((s) => s.side);
+    return { high: sides.includes('high'), netzero: sides.includes('netzero'), reference: sides.includes('reference') };
+  }
+
+  function measuresFor(companyId) { return D.measures.filter((m) => m.for.includes(companyId)); }
+  function measureCost(measureId, companyId) { return round(measure(measureId).costFrac * company(companyId).budget, 2); }
+  function measureOpex(measureId, companyId) { return round((measure(measureId).opexFrac || 0) * company(companyId).revenue, 3); }
+  function activeMeasures(boughtByTurn, turnIndex) {
+    const out = [];
+    for (let i = 0; i <= turnIndex; i++) (boughtByTurn[i] || []).forEach((id) => out.push(id));
+    return uniq(out);
+  }
+  function emissionFactor(measureIds) {
+    return (measureIds || []).reduce((f, id) => f * (1 - ((measure(id) || {}).emissionCut || 0)), 1);
+  }
+  function carbonPrice(routeId, turnIndex) {
+    const p = route(routeId).carbonPrice[turnIndex];
+    const twd = p.twd != null ? p.twd : p.usd * R.usdToTwd.value;
+    return { twd: twd, usd: p.usd != null ? p.usd : null, src: p.src, note: p.note, fxSrc: p.usd != null ? R.usdToTwd.src : null };
+  }
+
+  /*
+   * 算出某回合、某路線下，這家公司被哪些事件打到。
+   * 回傳 EventResult[]：
+   *   { id, title, kind, risk, metric, raw, value, mitigatedBy[], missed, src, text, extra }
+   *   capacity：raw/value 是「產能損失百分點」（正數）
+   *   cf：raw/value 是「每年現金流影響（億元）」，負數是損失
+   */
+  function resolve(o) {
+    const co = company(o.companyId);
+    if (!co) return [];
+    const ids = o.measureIds || [];
+    const terr = co.siteSensitive ? terrainOf(o.tileId) : null;
+    const out = [];
+    D.events.forEach((ev) => {
+      if (!ev.appliesTo.includes(co.id)) return;
+      if (ev.special === 'carbonFee') {
+        const E = num(co.emissions);
+        if (E <= 0) return;
+        const price = carbonPrice(o.routeId, o.turnIndex);
+        const f = emissionFactor(ids);
+        const raw = -(E * price.twd) / 1e4;   // 萬噸 × 元／噸 ＝ 萬元；÷ 1e4 → 億元
+        out.push({ id: ev.id, title: ev.title, kind: ev.kind, risk: ev.risk, metric: 'cf',
+          raw: round(raw, 2), value: round(raw * f, 2),
+          mitigatedBy: ids.filter((id) => (measure(id) || {}).emissionCut),
+          missed: false, src: price.src, text: ev.text,
+          extra: { price: price, emissions: E, emissionsAfter: round(E * f, 2), emissionsSrc: co.emissions.src || null } });
+        return;
+      }
+      const mag = ((ev.magnitude || {})[o.routeId] || [])[o.turnIndex] || 0;
+      if (!mag) return;
+      const factor = (ev.hazard && terr) ? (terr.hazards[ev.hazard] || 0) : 1;
+      const raw = mag * factor;
+      if (!raw) return;
+      if (ev.requires && !ev.requires.some((id) => ids.includes(id))) {
+        out.push({ id: ev.id, title: ev.title, kind: ev.kind, risk: ev.risk, metric: ev.metric,
+          raw: round(raw, 2), value: 0, mitigatedBy: [], missed: true, src: 'assumed', text: ev.text, extra: { requires: ev.requires } });
+        return;
+      }
+      let remain = 1;
+      const by = [];
+      if (ev.kind !== 'opportunity') {
+        ids.forEach((id) => {
+          const m = measure(id);
+          if (!m) return;
+          let frac = (m.mitigate && m.mitigate[ev.id]) || 0;
+          if (frac) { remain *= (1 - frac); by.push(id); }
+          if (m.mitigateAllPhysical && ev.kind === 'physical' && ev.metric === 'capacity') {
+            remain *= (1 - m.mitigateAllPhysical);
+            if (!by.includes(id)) by.push(id);
+          }
+        });
+      }
+      const extra = {};
+      if (ev.textLong && o.routeId === 'high' && o.turnIndex === 2 && co.id === 'X') extra.longNote = { text: ev.textLong.high, src: ev.textLong.src };
+      out.push({ id: ev.id, title: ev.title, kind: ev.kind, risk: ev.risk, metric: ev.metric,
+        raw: round(raw, 2), value: round(raw * remain, 2), mitigatedBy: by, missed: false,
+        src: ev.textSrc || 'assumed', text: ev.text, extra: extra });
+    });
+    return out;
+  }
+
+  /* 把事件結果換算成兩個儀表：產能（%）與年現金流（億元） */
+  function meters(o) {
+    const co = company(o.companyId);
+    const ids = o.measureIds || [];
+    const events = o.events || [];
+    const capLoss = events.filter((e) => e.metric === 'capacity').reduce((s, e) => s + e.value, 0);
+    const capacity = clamp(100 - capLoss, 0, 100);
+    const revenue = co.revenue * capacity / 100;
+    const terr = co.siteSensitive ? terrainOf(o.tileId) : null;
+    const siteAdj = terr ? terr.siteAdjFrac * co.revenue : 0;
+    const opex = ids.reduce((s, id) => s + measureOpex(id, co.id), 0);
+    const eventsCf = events.filter((e) => e.metric === 'cf').reduce((s, e) => s + e.value, 0);
+    const cf = revenue - co.fixedCost + siteAdj - opex + eventsCf;
+    return { capacity: round(capacity, 1), cf: round(cf, 2),
+      parts: { revenue: round(revenue, 2), fixedCost: co.fixedCost, siteAdj: round(siteAdj, 2), opex: round(opex, 2), eventsCf: round(eventsCf, 2), capLoss: round(capLoss, 1) } };
+  }
+
+  function project(o) {
+    const events = resolve(o);
+    return Object.assign({ turnIndex: o.turnIndex, routeId: o.routeId, measureIds: (o.measureIds || []).slice(), events: events }, meters({ companyId: o.companyId, tileId: o.tileId, measureIds: o.measureIds, events: events }));
+  }
+
+  function verdict(q1, q2) { return (!q1 && !q2) ? 'resilient' : (q1 && q2) ? 'weak' : 'partial'; }
+
+  /* 用一組「每回合買了哪些措施」跑完三回合，回答兩個韌性問題 */
+  function evaluate(o) {
+    const turns = D.turns.map((_, t) => project({ companyId: o.companyId, tileId: o.tileId, routeId: o.routeId, turnIndex: t, measureIds: activeMeasures(o.boughtByTurn || [], t) }));
+    const q1 = turns.some((x) => x.capacity < R.capacityThreshold);
+    const q2 = turns[turns.length - 1].cf < 0;
+    return { routeId: o.routeId, turns: turns, q1: q1, q2: q2, verdict: verdict(q1, q2) };
+  }
+
+  /* 第 5 步：照目前（含 extra）的措施、之後不再加碼，從本回合看到長期，兩個問題的答案 */
+  function assess(state, routeId, turnIndex, extraIds) {
+    const bought = state.turns.map((t, i) => (i < turnIndex ? (t.bought || []).slice() : []));
+    bought[turnIndex] = (extraIds || []).slice();
+    const ev = evaluate({ companyId: state.companyId, tileId: state.tileId, routeId: routeId, boughtByTurn: bought });
+    const ahead = ev.turns.slice(turnIndex);
+    return { routeId: routeId, turns: ev.turns, q1: ahead.some((x) => x.capacity < R.capacityThreshold), q2: ev.q2 };
+  }
+
+  const check = {
+    step1(companyId, tileId, selected) {
+      const rel = relevantRisks(companyId, tileId);
+      const sel = (selected || []).slice();
+      if (rel.length === 0) {
+        const ok = sel.length === 1 && sel[0] === 'none';
+        return { ok: ok, relevant: rel, missing: [], extra: sel.filter((id) => id !== 'none'), noneCase: true };
+      }
+      const chosen = sel.includes('none') ? [] : sel;
+      const missing = rel.filter((id) => !chosen.includes(id));
+      const extra = chosen.filter((id) => !rel.includes(id));
+      return { ok: missing.length === 0 && extra.length === 0, relevant: rel, missing: missing, extra: extra, noneCase: false };
+    },
+    step2(companyId, tileId, families) {
+      const req = requiredFamilies(companyId, tileId);
+      const sel = (families || []).slice();
+      if (req.length === 1 && req[0] === 'none') {
+        const irrelevant = sel.filter((id) => id !== 'none');
+        return { ok: sel.includes('none') && irrelevant.length === 0, required: req, missing: sel.includes('none') ? [] : ['none'],
+          irrelevant: irrelevant, apPenalty: irrelevant.length * R.irrelevantFamilyApCost, noneOk: sel.includes('none'), noneWrong: false, showDbLimits: sel.includes('climate') };
+      }
+      const noneWrong = sel.includes('none');
+      const missing = req.filter((id) => !sel.includes(id));
+      const irrelevant = sel.filter((id) => id !== 'none' && !req.includes(id));
+      return { ok: !noneWrong && missing.length === 0 && irrelevant.length === 0, required: req, missing: missing, irrelevant: irrelevant,
+        apPenalty: irrelevant.length * R.irrelevantFamilyApCost, noneOk: false, noneWrong: noneWrong, showDbLimits: sel.includes('climate') };
+    },
+    step3(scenarioIds, families) {
+      const cov = coverage(scenarioIds);
+      const fams = (families || []).filter((id) => id !== 'none');
+      if (fams.length === 0) return { ok: true, coverage: cov, reason: 'notNeeded' };
+      const ok = cov.high && cov.netzero;
+      let reason = 'ok';
+      if (!ok) reason = (cov.reference && !cov.high && !cov.netzero) ? 'reference' : 'sameSide';
+      return { ok: ok, coverage: cov, reason: reason };
+    },
+    step4(companyId, depth, ap) {
+      const order = R.depthOrder;
+      const correct = correctDepth(companyId, ap);
+      const diff = order.indexOf(depth) - order.indexOf(correct);
+      const co = company(companyId);
+      const overCost = diff > 0 ? round(diff * R.overAnalysisCostFrac * co.budget, 2) : 0;
+      let reasonKey = 'step4Qualitative';
+      if (correct === 'full') reasonKey = 'step4Full';
+      else if (correct === 'simplified') reasonKey = co.exposure === 'high' ? 'step4SimplifyFirst' : 'step4Simplified';
+      return { ok: diff === 0, correct: correct, diff: diff, overCost: overCost, affordable: R.depths[depth] ? R.depths[depth].cost <= ap : false, reasonKey: reasonKey };
+    },
+    step5(predictions, truths) {
+      let n = 0, m = 0;
+      Object.keys(truths || {}).forEach((rid) => {
+        ['q1', 'q2'].forEach((q) => {
+          m++;
+          if (predictions && predictions[rid] && predictions[rid][q] === truths[rid][q]) n++;
+        });
+      });
+      return { ok: m > 0 && n === m, correct: n, total: m };
+    },
+    step6(companyId, tileId, erm) {
+      const rel = relevantRisks(companyId, tileId);
+      const kris = (erm && erm.kris) || [];
+      const owner = erm && erm.owner;
+      if (!owner) return { ok: false, reason: 'noOwner' };
+      if (rel.length === 0) return { ok: kris.includes('kriReview'), reason: kris.includes('kriReview') ? 'ok' : 'noKri' };
+      const hit = D.erm.kris.some((k) => kris.includes(k.id) && k.risks.some((r) => rel.includes(r)));
+      return { ok: hit, reason: hit ? 'ok' : 'noKri' };
+    }
+  };
+
+  /* 這個風險在這回合能看到多細：hidden（沒辨識）／noData（沒下載對的資料）／qualitative／simplified／full */
+  function forecastLevel(turnRecord, riskId) {
+    if (!turnRecord || !(turnRecord.risks || []).includes(riskId)) return 'hidden';
+    const fams = (RISKS[riskId] || {}).families || [];
+    if (!fams.some((f) => (turnRecord.families || []).includes(f))) return 'noData';
+    return turnRecord.depth || 'qualitative';
+  }
+
+  function band(metric, value, companyId) {
+    const v = Math.abs(value);
+    const table = metric === 'capacity' ? R.bands.capacity : R.bands.cfFrac;
+    const x = metric === 'capacity' ? v : v / company(companyId).revenue;
+    for (const [lim, name] of table) if (x < lim) return name;
+    return table[table.length - 1][1];
+  }
+
+  function fmtYi(n) {
+    const v = round(n, 2);
+    const s = Math.abs(v) >= 10 ? v.toFixed(1) : v.toFixed(2);
+    return s.replace(/\.?0+$/, '') + ' 億元';
+  }
+  function fmtPct(n) { return round(n, 1) + '%'; }
+
+  /* 結局整理表：每列 { risk, kind, data, impact, measures, conclusion, flags[] } */
+  function summaryRows(state, actual) {
+    const co = company(state.companyId);
+    const rel = relevantRisks(state.companyId, state.tileId);
+    const allEvents = actual.turns.flatMap((t) => t.events.map((e) => Object.assign({ turnIndex: t.turnIndex }, e)));
+    const hitRisks = uniq(allEvents.filter((e) => e.kind !== 'opportunity' && e.risk && e.value !== 0).map((e) => e.risk));
+    const riskIds = D.risks.map((r) => r.id).filter((id) => rel.includes(id) || hitRisks.includes(id));
+    const scenarioNames = uniq(state.turns.flatMap((t) => t.scenarios || []));
+    const rows = [];
+    if (riskIds.length === 0) {
+      rows.push({ risk: '無可合理預期的氣候風險', kind: '—', data: '查過 SASB 主題，判斷不需下載情境資料', impact: '無',
+        measures: '不需要', conclusion: '具韌性', flags: [] });
+    }
+    riskIds.forEach((rid) => {
+      const r = RISKS[rid];
+      const levels = state.turns.map((t) => forecastLevel(t, rid));
+      const order = ['hidden', 'noData', 'qualitative', 'simplified', 'full'];
+      const best = levels.reduce((a, b) => (order.indexOf(b) > order.indexOf(a) ? b : a), 'hidden');
+      const famNames = uniq(state.turns.flatMap((t) => (t.families || []).filter((f) => r.families.includes(f)))).map((f) => FAMILIES[f].name);
+      const data = famNames.length ? famNames.join('、') + (scenarioNames.length ? '；' + scenarioNames.join('、') : '') : '未下載相關資料';
+      const evs = allEvents.filter((e) => e.risk === rid && e.kind !== 'opportunity');
+      /* 同一回合、同一種影響先加總，再挑調適前影響最大的那個回合 */
+      const perTurn = (metric) => D.turns.map((_, ti) => {
+        const list = evs.filter((e) => e.turnIndex === ti && e.metric === metric);
+        return { turnIndex: ti, n: list.length, raw: list.reduce((s, e) => s + e.raw, 0), value: list.reduce((s, e) => s + e.value, 0) };
+      }).filter((x) => x.n > 0);
+      const worst = (metric) => perTurn(metric).reduce((a, x) => (!a || Math.abs(x.raw) > Math.abs(a.raw) ? x : a), null);
+      const wc = worst('capacity'), wf = worst('cf');
+      const longNote = evs.map((e) => e.extra && e.extra.longNote).find(Boolean);
+      const turnName = (e) => D.turns[e.turnIndex].name;
+      let impact;
+      if (best === 'hidden') impact = '未辨識，沒有分析';
+      else if (best === 'noData') impact = '有辨識，但沒下載對的資料，估不出來';
+      else {
+        const parts = [];
+        if (wc) parts.push(best === 'full' ? turnName(wc) + '產能 −' + round(wc.value, 1) + ' 個百分點（調適前 −' + round(wc.raw, 1) + '）'
+          : best === 'simplified' ? turnName(wc) + '產能影響「' + band('capacity', wc.raw, co.id) + '」' : '產能會下降');
+        if (wf) parts.push(best === 'full' ? turnName(wf) + '每年 ' + (wf.value < 0 ? '−' : '+') + fmtYi(Math.abs(wf.value)) + '（調適前 ' + (wf.raw < 0 ? '−' : '+') + fmtYi(Math.abs(wf.raw)) + '）'
+          : best === 'simplified' ? turnName(wf) + '現金流影響「' + band('cf', wf.raw, co.id) + '」' : '現金流會受影響');
+        if (!parts.length) parts.push('這條路線上影響很小');
+        if (longNote) parts.push(longNote.text);
+        impact = parts.join('；');
+      }
+      const usedMeasures = uniq(evs.flatMap((e) => e.mitigatedBy)).map((id) => MEASURES[id].name);
+      /* 調適後最嚴重的殘餘影響：輕微＝已控制；中等＝仍有中等影響；嚴重＝仍需補強 */
+      const bands = perTurn('capacity').map((x) => band('capacity', x.value, co.id)).concat(perTurn('cf').map((x) => band('cf', x.value, co.id)));
+      const residual = bands.includes('嚴重') ? 2 : bands.includes('中等') ? 1 : 0;
+      const flags = [];
+      if (rid === 'flood' && co.id === 'X') flags.push('demo');
+      if (rid === 'carbonfee') flags.push(evs.some((e) => e.src === 'demo') ? 'demo' : 'assumed');
+      rows.push({ risk: r.name, kind: r.kind === 'physical' ? '實體' : '轉型', data: data, impact: impact,
+        measures: usedMeasures.length ? usedMeasures.join('、') : '沒有採取措施',
+        conclusion: evs.length === 0 ? '這條路線上沒有發生' : residual === 2 ? '仍需補強' : residual === 1 ? '仍有中等影響' : best === 'hidden' ? '影響輕微' : '已控制', flags: flags });
+    });
+    const opps = uniq(allEvents.filter((e) => e.kind === 'opportunity').map((e) => e.id));
+    opps.forEach((id) => {
+      const evs = allEvents.filter((e) => e.id === id);
+      const got = evs.filter((e) => !e.missed && e.value > 0);
+      const missed = evs.filter((e) => e.missed);
+      const best = (list, key) => list.reduce((a, e) => Math.max(a, e[key]), 0);
+      const ev = EVENTS[id];
+      rows.push({ risk: ev.title, kind: '機會', data: '—',
+        impact: got.length ? '每年最多 +' + fmtYi(best(got, 'value')) : '錯過：每年最多 +' + fmtYi(best(missed, 'raw')),
+        measures: ev.requires ? ev.requires.map((m) => MEASURES[m].name).join(' 或 ') : '本業自然受惠',
+        conclusion: got.length ? '已把握' : '錯過機會', flags: [] });
+    });
+    return rows;
+  }
+
+  function learningRecord(state) {
+    const steps = D.text.sixSteps;
+    return steps.map((name, i) => {
+      const key = 'step' + (i + 1);
+      let ok = 0, total = 0;
+      state.turns.forEach((t) => {
+        const c = t.checks && t.checks[key];
+        if (!c) return;
+        if (key === 'step5') { ok += c.correct; total += c.total; } else { total++; if (c.ok) ok++; }
+      });
+      return { step: name, ok: ok, total: total };
+    });
+  }
+
+  function blankTurn() {
+    return { risks: [], families: [], scenarios: [], depth: null, predictions: {}, truths: {}, bought: [],
+      erm: { owner: null, kris: [] }, checks: {}, apPenalty: 0, overCost: 0, outcome: null };
+  }
+
+  /* 開新局。routeId 不給就隨機暗抽（rng 預設 Math.random）。 */
+  function newGame(o) {
+    const co = company(o.companyId);
+    const rng = o.rng || Math.random;
+    const routeId = o.routeId || (rng() < 0.5 ? 'high' : 'netzero');
+    return { version: 1, companyId: co.id, tileId: o.tileId, routeId: routeId,
+      turnIndex: 0, stepIndex: 0, budget: co.budget, spent: 0,
+      turns: D.turns.map(blankTurn) };
+  }
+
+  /* 結算目前回合（實際路線）：回傳要存進 turns[t].outcome 的東西 */
+  function settleTurn(state) {
+    const t = state.turnIndex;
+    const bought = state.turns.map((x) => (x.bought || []).slice());
+    return project({ companyId: state.companyId, tileId: state.tileId, routeId: state.routeId, turnIndex: t, measureIds: activeMeasures(bought, t) });
+  }
+
+  function boughtByTurn(state) { return state.turns.map((x) => (x.bought || []).slice()); }
+
+  CG.core = {
+    data: D, ROUTE_IDS: ROUTE_IDS,
+    company, measure, event, risk, family, scenario, route, tile, tiles, terrainOf, otherRoute,
+    relevantRisks, requiredFamilies, apAvailable, ermCountBefore, correctDepth, coverage,
+    measuresFor, measureCost, measureOpex, activeMeasures, emissionFactor, carbonPrice,
+    resolve, meters, project, evaluate, assess, verdict, check, forecastLevel, band,
+    summaryRows, learningRecord, newGame, settleTurn, boughtByTurn,
+    fmtYi, fmtPct, round
+  };
+})();
+/* ==== END:CORE ==== */
+</script>
+
+<script>
+/* ==== REGION:STUBS ==== 擁有者：總指揮。最陽春的預設畫面，讓每個任務可以單獨測試；T1–T4 的區塊會覆蓋這些函式。 */
+(function () {
+  'use strict';
+  const ui = CG.ui = CG.ui || {};
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  ui.esc = esc;
+  ui.srcTag = (src) => src === 'demo' ? '<span class="tag-demo">' + esc(GAME_DATA.text.demoLabel) + '</span>'
+    : src === 'assumed' ? '<span class="tag-assumed">' + esc(GAME_DATA.text.assumedLabel) + '</span>' : '';
+  /* T2 */
+  ui.renderCompanyPicker = function (el, ctx, onPick) {
+    el.innerHTML = GAME_DATA.companies.map((c) => '<button type="button" data-id="' + c.id + '">' + esc(c.name) + '</button>').join(' ');
+    el.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => onPick(b.dataset.id)));
+  };
+  ui.renderMap = function (el, ctx, onPick) {
+    el.innerHTML = CG.core.tiles().map((t) => '<button type="button" data-id="' + t.id + '">' + esc(GAME_DATA.terrains[t.terrain].name) + '</button>').join(' ');
+    el.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => onPick(b.dataset.id)));
+  };
+  /* T3 */
+  ui.advisorTurnStart = function (state) {
+    const line = GAME_DATA.advisor.turnStart[state.companyId][state.turnIndex];
+    const terr = CG.core.terrainOf(state.tileId);
+    return { text: line.text.replace('{site}', terr ? terr.name : ''), src: line.src || null };
+  };
+  ui.feedbackLines = function () { return []; };
+  ui.renderAdvisor = function (el, line) { const p = document.createElement('p'); p.textContent = GAME_DATA.advisor.name + '：' + line.text; el.appendChild(p); };
+  ui.renderEventCards = function (el, events) { el.innerHTML = '<pre>' + esc(JSON.stringify(events, null, 1)) + '</pre>'; };
+  ui.renderDatabaseCards = function () {};
+  ui.renderParameterCards = function () {};
+  ui.renderForecast = function () {};
+  /* T4 */
+  ui.renderEnding = function (el, ctx, handlers) {
+    el.innerHTML = '<pre>' + esc(JSON.stringify({ actual: ctx.actual.verdict, other: ctx.other.verdict }, null, 1)) + '</pre>';
+  };
+  /* T1 */
+  CG.app = CG.app || {
+    start(el) { el.innerHTML = '<p style="padding:16px">遊戲流程（T1）尚未完成。</p>'; },
+    act() { throw new Error('CG.app.act 尚未實作（T1）'); },
+    getState() { return null; }
+  };
+})();
+/* ==== END:STUBS ==== */
+</script>
+
+<script>
+/* ==== REGION:ENGINE ==== 擁有者：T1（狀態機、回合流程、畫面切換、HUD、序章、步驟畫面、CG.debug.autoplay） */
+(function () {
+  'use strict';
+  const D = GAME_DATA;
+  const C = CG.core;
+  const esc = (s) => CG.ui.esc(s);
+  const tag = (src) => CG.ui.srcTag(src);
+  const clone = (x) => JSON.parse(JSON.stringify(x));
+  const uniq = (a) => Array.from(new Set(a));
+  const RISK_IDS = D.risks.map((r) => r.id);
+  const FAMILY_IDS = D.dataFamilies.map((f) => f.id);
+  const SCEN_IDS = D.scenarios.map((s) => s.id);
+  const KRI_IDS = D.erm.kris.map((k) => k.id);
+  const LAST_TURN = D.turns.length - 1;
+
+  /* ---------- 狀態 ---------- */
+  function initState() {
+    return { screen: 'title', prologue: { pick: null, situation: null, round2: null },
+      draft: { companyId: null, tileId: null }, game: null, feedback: [] };
+  }
+  let S = initState();
+  let root = null;
+  let local = {};          // 畫面上還沒送出的選擇
+  let localKey = '';
+
+  const fail = (msg) => { throw new Error(msg); };
+  const need = (cond, msg) => { if (!cond) fail(msg); };
+
+  function atStep(s, n) {
+    need(s.screen === 'step' && s.game && s.game.stepIndex === n, '現在不是第 ' + (n + 1) + ' 步');
+  }
+  /* 第 5、6 步要看哪幾條路線：第 3 步選到的那幾邊；不需要查參數時兩邊都看 */
+  function routesToAnswer(game, t) {
+    const tr = game.turns[t];
+    const c3 = C.check.step3(tr.scenarios, tr.families);
+    if (c3.reason === 'notNeeded') return C.ROUTE_IDS.slice();
+    return C.ROUTE_IDS.filter((r) => c3.coverage[r]);
+  }
+  function truthsFor(game, t, routes) {
+    const out = {};
+    routes.forEach((r) => { const a = C.assess(game, r, t, []); out[r] = { q1: a.q1, q2: a.q2 }; });
+    return out;
+  }
+  function feedbackOf(n, check, game) {
+    return (CG.ui.feedbackLines(n, check, game) || []).map((x) => ({ text: String(x.text), src: x.src || null }));
+  }
+
+  function reduce(s, type, p) {
+    const g = s.game;
+    const t = g ? g.turnIndex : 0;
+    const tr = g ? g.turns[t] : null;
+    switch (type) {
+      case 'title/start':
+        need(s.screen === 'title', '只能在首頁開始');
+        s.prologue = { pick: null, situation: null, round2: null };
+        s.screen = 'prologue';
+        return;
+      case 'prologue/skip':
+        need(s.screen === 'title' || s.screen === 'prologue', '現在不能跳過序章');
+        s.screen = 'company';
+        return;
+      case 'prologue/pick': {
+        need(s.screen === 'prologue', '不在序章');
+        need(D.prologue.agents.some((a) => a.id === p.agentId), '沒有這位代購');
+        const sits = D.prologue.situations;
+        let sid = p.situationId;
+        if (sid == null) sid = sits[Math.floor((p.rng || Math.random)() * sits.length)].id;
+        need(sits.some((x) => x.id === sid), '沒有這種狀況');
+        s.prologue = { pick: p.agentId, situation: sid, round2: null };
+        return;
+      }
+      case 'prologue/round2':
+        need(s.screen === 'prologue' && s.prologue.pick, '要先選代購');
+        need(p.option === 0 || p.option === 1, '選項只有 0 或 1');
+        s.prologue.round2 = p.option;
+        return;
+      case 'prologue/done':
+        need(s.screen === 'prologue' && s.prologue.round2 != null, '要先回答第二輪');
+        s.screen = 'company';
+        return;
+      case 'company/pick':
+        need(s.screen === 'company', '不在選公司畫面');
+        need(C.company(p.companyId), '沒有這家公司');
+        s.draft = { companyId: p.companyId, tileId: null };
+        s.screen = 'site';
+        return;
+      case 'site/pick':
+        need(s.screen === 'site', '不在選據點畫面');
+        need(C.tile(p.tileId), '沒有這一格');
+        s.draft.tileId = p.tileId;
+        return;
+      case 'site/back':
+        need(s.screen === 'site', '不在選據點畫面');
+        s.screen = 'company';
+        return;
+      case 'game/start':
+        need(s.screen === 'site', '不在選據點畫面');
+        need(s.draft.companyId && s.draft.tileId, '還沒選據點');
+        if (p.routeId != null) need(C.route(p.routeId), '沒有這條路線');
+        s.game = C.newGame({ companyId: s.draft.companyId, tileId: s.draft.tileId, routeId: p.routeId || null, rng: p.rng });
+        s.feedback = [];
+        s.screen = 'turnIntro';
+        return;
+      case 'turn/begin':
+        need(s.screen === 'turnIntro', '不在回合開場');
+        s.screen = 'step';
+        g.stepIndex = 0;
+        s.feedback = [];
+        return;
+      case 'step1': {
+        atStep(s, 0);
+        const risks = p.risks;
+        need(Array.isArray(risks) && risks.length > 0, '至少要選一項');
+        need(risks.every((id) => id === 'none' || RISK_IDS.includes(id)), '有不存在的風險');
+        need(!(risks.includes('none') && risks.length > 1), '「都不相關」不能跟其他風險一起選');
+        tr.risks = uniq(risks);
+        tr.checks.step1 = C.check.step1(g.companyId, g.tileId, tr.risks);
+        s.feedback = feedbackOf(1, tr.checks.step1, g);
+        g.stepIndex = 1;
+        return;
+      }
+      case 'step2': {
+        atStep(s, 1);
+        const fams = p.families;
+        need(Array.isArray(fams) && fams.length > 0, '至少要選一類');
+        need(fams.every((id) => FAMILY_IDS.includes(id)), '有不存在的資料類別');
+        need(!(fams.includes('none') && fams.length > 1), '「查無相關主題」不能跟其他資料一起選');
+        tr.families = uniq(fams);
+        tr.checks.step2 = C.check.step2(g.companyId, g.tileId, tr.families);
+        tr.apPenalty = tr.checks.step2.apPenalty;
+        s.feedback = feedbackOf(2, tr.checks.step2, g);
+        g.stepIndex = 2;
+        return;
+      }
+      case 'step3': {
+        atStep(s, 2);
+        const sc = p.scenarios || [];
+        need(Array.isArray(sc) && sc.every((id) => SCEN_IDS.includes(id)), '有不存在的情境');
+        const c = C.check.step3(uniq(sc), tr.families);
+        if (c.reason !== 'notNeeded') need(uniq(sc).length >= 1 && uniq(sc).length <= 3, '情境要選 1 到 3 個');
+        tr.scenarios = uniq(sc);
+        tr.checks.step3 = c;
+        s.feedback = feedbackOf(3, c, g);
+        g.stepIndex = 3;
+        return;
+      }
+      case 'step4': {
+        atStep(s, 3);
+        const dep = D.rules.depths[p.depth];
+        need(dep, '沒有這種分析深度');
+        const ap = C.apAvailable(g, t);
+        need(dep.cost <= ap, '分析點不夠：「' + dep.name + '」要 ' + dep.cost + ' 點，本回合只有 ' + ap + ' 點');
+        const c = C.check.step4(g.companyId, p.depth, ap);
+        tr.depth = p.depth;
+        tr.overCost = c.overCost;
+        tr.checks.step4 = c;
+        g.budget = C.round(Math.max(0, g.budget - c.overCost), 2);
+        g.spent = C.round(g.spent + c.overCost, 2);
+        s.feedback = feedbackOf(4, c, g);
+        g.stepIndex = 4;
+        return;
+      }
+      case 'step5': {
+        atStep(s, 4);
+        const routes = routesToAnswer(g, t);
+        const preds = p.predictions || {};
+        routes.forEach((r) => need(preds[r] && typeof preds[r].q1 === 'boolean' && typeof preds[r].q2 === 'boolean',
+          '要回答「' + D.routes[r].name + '」的兩個問題'));
+        tr.predictions = {};
+        routes.forEach((r) => { tr.predictions[r] = { q1: preds[r].q1, q2: preds[r].q2 }; });
+        tr.truths = truthsFor(g, t, routes);
+        tr.checks.step5 = C.check.step5(tr.predictions, tr.truths);
+        s.feedback = feedbackOf(5, tr.checks.step5, g);
+        g.stepIndex = 5;
+        return;
+      }
+      case 'step6': {
+        atStep(s, 5);
+        const bought = uniq(p.bought || []);
+        const avail = C.measuresFor(g.companyId).map((m) => m.id);
+        const prior = g.turns.slice(0, t).flatMap((x) => x.bought || []);
+        bought.forEach((id) => {
+          need(avail.includes(id), '這家公司不能買「' + id + '」');
+          need(!prior.includes(id), '「' + C.measure(id).name + '」之前已經買過了');
+        });
+        const cost = C.round(bought.reduce((sum, id) => sum + C.measureCost(id, g.companyId), 0), 2);
+        need(cost <= g.budget + 1e-9, '預算不夠：需要 ' + C.fmtYi(cost) + '，只剩 ' + C.fmtYi(g.budget));
+        const erm = p.erm || {};
+        const owner = erm.owner || null;
+        need(owner === null || D.erm.owners.includes(owner), '沒有這個負責單位');
+        const kris = uniq(erm.kris || []);
+        need(kris.every((id) => KRI_IDS.includes(id)), '有不存在的監控指標');
+        g.budget = C.round(g.budget - cost, 2);
+        g.spent = C.round(g.spent + cost, 2);
+        tr.bought = bought;
+        tr.erm = { owner: owner, kris: kris };
+        tr.checks.step6 = C.check.step6(g.companyId, g.tileId, tr.erm);
+        tr.outcome = C.settleTurn(g);
+        s.feedback = feedbackOf(6, tr.checks.step6, g);
+        s.screen = 'settle';
+        return;
+      }
+      case 'turn/next':
+        need(s.screen === 'settle', '還沒結算');
+        s.feedback = [];
+        if (t < LAST_TURN) {
+          g.turnIndex = t + 1;
+          g.budget = C.round(g.budget + C.company(g.companyId).budget, 2);
+          g.stepIndex = 0;
+          s.screen = 'turnIntro';
+        } else {
+          s.screen = 'ending';
+        }
+        return;
+      case 'replay':
+        need(s.screen === 'ending', '還沒到結局');
+        if (p.mode === 'otherRoute') {
+          s.game = C.newGame({ companyId: g.companyId, tileId: g.tileId, routeId: C.otherRoute(g.routeId) });
+          s.draft = { companyId: g.companyId, tileId: g.tileId };
+          s.feedback = [];
+          s.screen = 'turnIntro';
+        } else if (p.mode === 'changeCompany') {
+          s.game = null;
+          s.draft = { companyId: null, tileId: null };
+          s.feedback = [];
+          s.screen = 'company';
+        } else if (p.mode === 'restart') {
+          Object.assign(s, initState());
+        } else fail('沒有這種重玩方式');
+        return;
+      default:
+        fail('不認得的動作：' + type);
+    }
+  }
+
+  function act(type, payload) {
+    const next = clone(S);
+    reduce(next, type, payload || {});
+    S = next;
+    if (root) render();
+    return clone(S);
+  }
+
+  /* ---------- 畫面 ---------- */
+  function h(tagName, cls, html) {
+    const el = document.createElement(tagName);
+    if (cls) el.className = cls;
+    if (html != null) el.innerHTML = html;
+    return el;
+  }
+  function btn(label, cls, onClick, attrs) {
+    const b = h('button', 'cg-btn' + (cls ? ' ' + cls : ''), label);
+    b.type = 'button';
+    Object.entries(attrs || {}).forEach(([k, v]) => b.setAttribute(k, v));
+    b.addEventListener('click', onClick);
+    return b;
+  }
+  function safeAct(type, payload) {
+    try { act(type, payload); } catch (e) { showError(e.message); }
+  }
+  function showError(msg) {
+    const box = root && root.querySelector('.cg-error');
+    if (box) { box.textContent = msg; box.hidden = false; box.focus(); }
+  }
+  function errorBox() { const e = h('p', 'cg-error'); e.hidden = true; e.setAttribute('role', 'alert'); e.tabIndex = -1; return e; }
+  function advisorSay(el, line) { CG.ui.renderAdvisor(el, line); }
+  function feedbackBlock(el) { (S.feedback || []).forEach((line) => advisorSay(el, line)); }
+  function terrainSummary(tileId) {
+    const terr = C.terrainOf(tileId);
+    const lv = (v) => (v >= 1.2 ? '高' : v >= 0.8 ? '中' : v >= 0.4 ? '低' : '');
+    const parts = Object.entries(D.hazardBadges).map(([k, ch]) => (lv(terr.hazards[k]) ? ch + lv(terr.hazards[k]) : '')).filter(Boolean);
+    return terr.name + (parts.length ? '（' + parts.join('、') + '）' : '');
+  }
+  function turnTitle(t) { const x = D.turns[t]; return x.label + '｜' + x.name + ' ' + x.years; }
+
+  function hud() {
+    const g = S.game;
+    const co = C.company(g.companyId);
+    const last = g.turns.slice().reverse().find((x) => x.outcome);
+    const ap = S.screen === 'step' ? C.apAvailable(g, g.turnIndex) : null;
+    const el = h('header', 'cg-hud');
+    el.innerHTML =
+      '<div class="cg-hud-row"><strong>' + esc(co.name) + '</strong><span>' + esc(turnTitle(g.turnIndex)) + '</span></div>' +
+      '<div class="cg-hud-row cg-hud-stats">' +
+      '<span>預算 <b>' + esc(C.fmtYi(g.budget)) + '</b></span>' +
+      (ap != null ? '<span>分析點 <b>' + ap + '</b></span>' : '') +
+      '<span>產能 <b>' + (last ? esc(C.fmtPct(last.outcome.capacity)) : '—') + '</b></span>' +
+      '<span>年現金流 <b>' + (last ? esc(C.fmtYi(last.outcome.cf)) : '—') + '</b></span></div>';
+    return el;
+  }
+
+  function render() {
+    if (!root) return;
+    const g = S.game;
+    const key = S.screen + ':' + (g ? g.turnIndex + ':' + g.stepIndex : '') + ':' + (S.screen === 'prologue' ? S.prologue.pick + ':' + S.prologue.round2 : '');
+    const sameScreen = key === localKey;
+    if (!sameScreen) { local = {}; localKey = key; }
+    const focusSel = sameScreen ? focusSelector(document.activeElement) : null;
+    root.innerHTML = '';
+    if (g && ['turnIntro', 'step', 'settle', 'ending'].includes(S.screen)) root.appendChild(hud());
+    const wrap = h('main', 'cg-wrap');
+    root.appendChild(wrap);
+    SCREENS[S.screen](wrap);
+    if (focusSel) {
+      const el = root.querySelector(focusSel);
+      if (el) el.focus();
+    } else {
+      window.scrollTo(0, 0);
+      const head = wrap.querySelector('h1, h2');
+      if (head) { head.tabIndex = -1; head.focus({ preventScroll: true }); }
+    }
+  }
+  function focusSelector(el) {
+    if (!el || !root || !root.contains(el)) return null;
+    for (const a of ['data-tile', 'data-family', 'data-scen', 'data-key', 'data-id']) {
+      if (el.hasAttribute(a)) return '[' + a + '="' + el.getAttribute(a) + '"]';
+    }
+    return null;
+  }
+
+  const SCREENS = {
+    title(w) {
+      w.appendChild(h('section', 'cg-hero',
+        '<p class="cg-eyebrow">' + esc(D.meta.subtitle) + '</p><h1>' + esc(D.meta.title) + '</h1>' +
+        '<p>' + esc(D.text.notPrediction) + '</p>'));
+      const card = h('section', 'cg-card',
+        '<h2>整局只問兩件事</h2><ol class="cg-q">' + D.text.twoQuestions.map((q) => '<li>' + esc(q) + '</li>').join('') + '</ol>' +
+        '<p>你經營一家虛構公司，走過短期、中期、長期三個回合。每回合照懶人包的六步驟做一次情境分析，再快轉二十年看事件。</p>' +
+        '<p class="cg-muted">先玩 1 分鐘的代購序章，再選公司。一局約 10 到 15 分鐘。</p>');
+      const acts = h('div', 'cg-actions');
+      acts.appendChild(btn('開始（從序章）', 'primary', () => safeAct('title/start')));
+      acts.appendChild(btn('跳過序章', '', () => safeAct('prologue/skip')));
+      card.appendChild(acts);
+      card.appendChild(errorBox());
+      w.appendChild(card);
+      w.appendChild(h('p', 'cg-fine', esc(D.text.disclaimer) + ' ' + esc(D.text.fictional) + '<br>示範數字來源：' + esc(D.meta.source) + '。'));
+    },
+
+    prologue(w) {
+      const P = D.prologue;
+      const pr = S.prologue;
+      const agent = (id) => P.agents.find((a) => a.id === id);
+      w.appendChild(h('h1', 'cg-title', esc(P.title)));
+      if (!pr.pick) {
+        w.appendChild(h('p', 'cg-lead', esc(P.intro) + tag(P.src)));
+        const list = h('div', 'cg-agents');
+        P.agents.forEach((a) => {
+          const b = btn('<span class="cg-agent-name">' + esc(a.name) + '</span><span class="cg-agent-plan">' + esc(a.plan) + '</span>' +
+            '<span class="cg-agent-fee">代購費 ' + a.fee.toLocaleString() + ' 元・規劃費 ' + a.planFee.toLocaleString() + ' 元</span>',
+            'cg-agent', () => safeAct('prologue/pick', { agentId: a.id }), { 'data-id': a.id });
+          list.appendChild(b);
+        });
+        w.appendChild(list);
+        w.appendChild(h('p', 'cg-muted', '金額都是' + tag('assumed') + '。'));
+        w.appendChild(errorBox());
+        return;
+      }
+      const sit = P.situations.find((x) => x.id === pr.situation);
+      w.appendChild(h('p', 'cg-banner', '你把錢交給「' + esc(agent(pr.pick).name) + '」。實際狀況是：<strong>' + esc(sit.name) + '</strong>'));
+      const grid = h('div', 'cg-sits');
+      P.situations.forEach((x) => {
+        const box = h('section', 'cg-sit' + (x.id === sit.id ? ' is-drawn' : ''));
+        box.innerHTML = '<h2>' + esc(x.name) + (x.id === sit.id ? '<span class="cg-pill">這次抽到</span>' : '') + '</h2>' +
+          '<ul>' + P.agents.map((a) => {
+            const r = x.results[a.id];
+            const verdict = !r.ok ? '空手而回' : r.over ? '買到，但超支' : '買到';
+            return '<li class="' + (a.id === pr.pick ? 'is-mine ' : '') + (!r.ok ? 'is-bad' : r.over ? 'is-warn' : 'is-ok') + '">' +
+              '<b>' + esc(a.name) + (a.id === pr.pick ? '（你選的）' : '') + '</b>：' + esc(verdict) + '，共花 ' + r.total.toLocaleString() + ' 元。' +
+              '<span class="cg-muted">' + esc(r.note) + '</span></li>';
+          }).join('') + '</ul>';
+        grid.appendChild(box);
+      });
+      w.appendChild(grid);
+      w.appendChild(h('p', 'cg-lesson', esc(P.lesson)));
+      w.appendChild(h('p', 'cg-muted', '每位代購對應的公司做法：' + P.agents.map((a) => esc(a.name) + '＝' + esc(a.maps)).join('；') + '。'));
+      const q = h('section', 'cg-card');
+      q.appendChild(h('h2', '', '第二輪'));
+      q.appendChild(h('p', '', esc(P.round2.question)));
+      if (pr.round2 == null) {
+        const opts = h('div', 'cg-actions cg-stack');
+        P.round2.options.forEach((o, i) => opts.appendChild(btn(esc(o), '', () => safeAct('prologue/round2', { option: i }), { 'data-id': 'r2-' + i })));
+        q.appendChild(opts);
+        q.appendChild(errorBox());
+      } else {
+        const right = pr.round2 === P.round2.answer;
+        q.appendChild(h('p', right ? 'cg-ok' : 'cg-bad', (right ? '答對了。' : '這次不用。') + esc(P.round2.explain)));
+        q.appendChild(h('p', 'cg-lesson', esc(P.disclosure)));
+        const acts = h('div', 'cg-actions');
+        acts.appendChild(btn('下一步：選公司', 'primary', () => safeAct('prologue/done')));
+        q.appendChild(acts);
+      }
+      w.appendChild(q);
+    },
+
+    company(w) {
+      w.appendChild(h('h1', 'cg-title', '選一家公司'));
+      w.appendChild(h('p', 'cg-lead', '光看卡片上的線索，猜猜這家公司會遇到什麼氣候風險。'));
+      const box = h('div');
+      w.appendChild(box);
+      CG.ui.renderCompanyPicker(box, { selectedId: S.draft.companyId }, (id) => safeAct('company/pick', { companyId: id }));
+      w.appendChild(errorBox());
+    },
+
+    site(w) {
+      const co = C.company(S.draft.companyId);
+      w.appendChild(h('h1', 'cg-title', '選據點：' + esc(co.name)));
+      w.appendChild(h('p', 'cg-lead', '據點會決定你遇到哪些實體風險。便宜、方便的地方，風險通常比較高。'));
+      const box = h('div');
+      w.appendChild(box);
+      CG.ui.renderMap(box, { companyId: co.id, selectedTileId: S.draft.tileId }, (id) => safeAct('site/pick', { tileId: id }));
+      w.appendChild(h('p', 'cg-muted', '世界會走哪一條路線，開局時已經暗中抽好，結局才揭曉。'));
+      const acts = h('div', 'cg-actions');
+      acts.appendChild(btn('上一步', '', () => safeAct('site/back')));
+      const go = btn('就選這裡，開始', 'primary', () => safeAct('game/start'));
+      go.disabled = !S.draft.tileId;
+      acts.appendChild(go);
+      w.appendChild(acts);
+      w.appendChild(errorBox());
+    },
+
+    turnIntro(w) {
+      const g = S.game;
+      const t = g.turnIndex;
+      w.appendChild(h('h1', 'cg-title', esc(turnTitle(t))));
+      if (t === LAST_TURN) w.appendChild(h('p', 'cg-note', esc(D.text.gapNote)));
+      const talk = h('div', 'cg-talk');
+      if (t === 0) advisorSay(talk, { text: D.advisor.intro });
+      advisorSay(talk, CG.ui.advisorTurnStart(g));
+      w.appendChild(talk);
+      w.appendChild(h('p', 'cg-muted', '這二十年世界會怎麼走，結算時才知道。' + (t > 0 ? '本回合預算已加入 ' + esc(C.fmtYi(C.company(g.companyId).budget)) + tag('assumed') + '。' : '')));
+      const acts = h('div', 'cg-actions');
+      acts.appendChild(btn('開始分析', 'primary', () => safeAct('turn/begin')));
+      w.appendChild(acts);
+      w.appendChild(errorBox());
+    },
+
+    step(w) {
+      const g = S.game;
+      const n = g.stepIndex;
+      const prog = h('ol', 'cg-progress');
+      prog.setAttribute('aria-label', '六步驟進度');
+      D.text.sixSteps.forEach((name, i) => {
+        const li = h('li', i < n ? 'is-done' : i === n ? 'is-now' : '', '<span>' + (i + 1) + '</span><em>' + esc(name) + '</em>');
+        if (i === n) li.setAttribute('aria-current', 'step');
+        prog.appendChild(li);
+      });
+      w.appendChild(prog);
+      w.appendChild(h('h1', 'cg-title', '第 ' + (n + 1) + ' 步：' + esc(D.text.sixSteps[n])));
+      if (S.feedback.length) { const fb = h('div', 'cg-talk'); feedbackBlock(fb); w.appendChild(fb); }
+      STEPS[n](w, g, g.turns[g.turnIndex]);
+    },
+
+    settle(w) {
+      const g = S.game;
+      const t = g.turnIndex;
+      const out = g.turns[t].outcome;
+      const route = C.route(g.routeId);
+      w.appendChild(h('h1', 'cg-title', '結算：' + esc(D.turns[t].name + ' ' + D.turns[t].years)));
+      if (S.feedback.length) { const fb = h('div', 'cg-talk'); feedbackBlock(fb); w.appendChild(fb); }
+      w.appendChild(h('h2', 'cg-sub', '這二十年發生的事'));
+      const cards = h('div');
+      w.appendChild(cards);
+      CG.ui.renderEventCards(cards, out.events, { companyId: g.companyId, turnIndex: t });
+      const m = h('section', 'cg-card cg-meters');
+      const th = D.rules.capacityThreshold;
+      const capOk = out.capacity >= th;
+      const cfOk = out.cf >= 0;
+      m.innerHTML = '<h2>兩個儀表</h2>' +
+        '<div class="cg-meter"><div class="cg-meter-head"><span>產能</span><b class="' + (capOk ? 'cg-ok' : 'cg-bad') + '">' + esc(C.fmtPct(out.capacity)) + (capOk ? '' : '（低於 ' + th + '%，營運中斷）') + '</b></div>' +
+        '<div class="cg-bar" role="img" aria-label="產能 ' + esc(C.fmtPct(out.capacity)) + '，門檻 ' + th + '%"><i style="width:' + out.capacity + '%"></i><s style="left:' + th + '%"></s></div></div>' +
+        '<div class="cg-meter"><div class="cg-meter-head"><span>年現金流</span><b class="' + (cfOk ? 'cg-ok' : 'cg-bad') + '">' + esc(C.fmtYi(out.cf)) + (cfOk ? '' : '（轉負）') + '</b></div></div>' +
+        '<p class="cg-muted">年現金流＝營收 × 產能 − 固定成本 ± 據點差異 − 措施的每年成本 ± 事件影響。公司數字都是' + tag('assumed') + '。</p>';
+      w.appendChild(m);
+      const world = h('section', 'cg-card cg-world');
+      const pips = (v) => '<span class="cg-pips" aria-label="' + v + '／5">' + [1, 2, 3, 4, 5].map((i) => '<i class="' + (i <= v ? 'on' : '') + '"></i>').join('') + '</span>';
+      world.innerHTML = '<h2>世界進度條</h2>' +
+        '<p><span>氣候階段</span>' + pips(route.climatePhase[t]) + '</p>' +
+        '<p><span>政策壓力</span>' + pips(route.policyPressure[t]) + '</p>' +
+        '<p class="cg-muted">' + esc(D.text.worldNote) + tag('assumed') + '</p>';
+      w.appendChild(world);
+      const acts = h('div', 'cg-actions');
+      acts.appendChild(btn(t < LAST_TURN ? '下一回合' : '看結局', 'primary', () => safeAct('turn/next')));
+      w.appendChild(acts);
+      w.appendChild(errorBox());
+    },
+
+    ending(w) {
+      const g = S.game;
+      const bought = C.boughtByTurn(g);
+      const actual = C.evaluate({ companyId: g.companyId, tileId: g.tileId, routeId: g.routeId, boughtByTurn: bought });
+      const other = C.evaluate({ companyId: g.companyId, tileId: g.tileId, routeId: C.otherRoute(g.routeId), boughtByTurn: bought });
+      const box = h('div');
+      w.appendChild(box);
+      CG.ui.renderEnding(box, { game: g, actual: actual, other: other, rows: C.summaryRows(g, actual), learning: C.learningRecord(g) },
+        { onReplay: (mode) => safeAct('replay', { mode: mode }) });
+      w.appendChild(errorBox());
+    }
+  };
+
+  /* ---------- 六步驟的表單 ---------- */
+  function checkbox(name, value, label, checked, extraCls) {
+    return '<label class="cg-check' + (extraCls ? ' ' + extraCls : '') + '"><input type="checkbox" name="' + name + '" value="' + esc(value) + '"' +
+      (checked ? ' checked' : '') + ' data-key="' + esc(name + ':' + value) + '"><span>' + label + '</span></label>';
+  }
+  function submitRow(w, label, onClick, disabled) {
+    const acts = h('div', 'cg-actions');
+    const b = btn(label, 'primary', onClick);
+    b.disabled = !!disabled;
+    acts.appendChild(b);
+    w.appendChild(acts);
+    w.appendChild(errorBox());
+    return b;
+  }
+
+  const STEPS = [
+    /* 第 1 步：辨識攸關領域 */
+    function (w, g) {
+      const co = C.company(g.companyId);
+      const card = h('section', 'cg-card');
+      card.innerHTML = '<h2>' + esc(co.name) + '的線索</h2><ul class="cg-clues">' +
+        co.clues.map((c, i) => '<li>' + esc(c) + tag((co.clueSrc || {})[i]) + '</li>').join('') + '</ul>' +
+        '<p><b>SASB 主題：</b>' + co.sasb.map(esc).join('、') + '</p>' +
+        '<p><b>據點：</b>' + esc(terrainSummary(g.tileId)) + '</p>';
+      w.appendChild(card);
+      w.appendChild(h('p', 'cg-lead', '勾選這家公司需要分析的氣候風險。'));
+      const form = h('div', 'cg-form');
+      const group = (kind, title, cls) => '<fieldset class="cg-group ' + cls + '"><legend>' + title + '</legend>' +
+        D.risks.filter((r) => r.kind === kind).map((r) => checkbox('risk', r.id, esc(r.name))).join('') + '</fieldset>';
+      form.innerHTML = group('physical', '實體風險', 'is-phys') + group('transition', '轉型風險', 'is-trans') +
+        '<fieldset class="cg-group"><legend>都不相關</legend>' + checkbox('risk', 'none', '找不到攸關的氣候風險') + '</fieldset>';
+      w.appendChild(form);
+      const go = submitRow(w, '送出這一步', () => {
+        safeAct('step1', { risks: [...form.querySelectorAll('input:checked')].map((x) => x.value) });
+      }, true);
+      form.addEventListener('change', (e) => {
+        const x = e.target;
+        if (x.checked && x.value === 'none') form.querySelectorAll('input').forEach((y) => { if (y !== x) y.checked = false; });
+        if (x.checked && x.value !== 'none') form.querySelector('input[value="none"]').checked = false;
+        go.disabled = !form.querySelector('input:checked');
+      });
+    },
+
+    /* 第 2 步：下載情境資料 */
+    function (w, g) {
+      const t = g.turnIndex;
+      const co = C.company(g.companyId);
+      if (!local.families) local.families = [];
+      const bonus = C.ermCountBefore(g, t);
+      w.appendChild(h('p', 'cg-lead', '依公司的 SASB 主題與營運型態，選要下載哪幾類情境資料。可以複選。'));
+      w.appendChild(h('p', 'cg-muted', '本回合分析點：' + co.ap + (bonus ? ' ＋ ' + bonus + '（納入風險管理的加分）' : '') + '。選到不相關的資料，每類扣 ' + D.rules.irrelevantFamilyApCost + ' 點。'));
+      const box = h('div');
+      w.appendChild(box);
+      let go;
+      const draw = () => {
+        CG.ui.renderDatabaseCards(box, { selected: local.families.slice(), onToggle: (id) => {
+          const sel = new Set(local.families);
+          if (sel.has(id)) sel.delete(id);
+          else if (id === 'none') { sel.clear(); sel.add('none'); }
+          else { sel.delete('none'); sel.add(id); }
+          local.families = FAMILY_IDS.filter((f) => sel.has(f));
+          draw();
+          const again = box.querySelector('[data-family="' + id + '"]');
+          if (again) again.focus();
+          if (go) go.disabled = local.families.length === 0;
+        } });
+      };
+      draw();
+      go = submitRow(w, '送出這一步', () => safeAct('step2', { families: local.families.slice() }), local.families.length === 0);
+    },
+
+    /* 第 3 步：查參數 */
+    function (w, g, tr) {
+      const notNeeded = !(tr.families || []).some((f) => f !== 'none');
+      if (notNeeded) {
+        w.appendChild(h('p', 'cg-lead', '你在第 2 步判斷不需要下載資料，這一步沒有參數要查。'));
+        submitRow(w, '下一步', () => safeAct('step3', { scenarios: [] }));
+        return;
+      }
+      if (!local.scen) local.scen = [];
+      w.appendChild(h('p', 'cg-lead', '選要拿來壓力測試的情境（1 到 3 個）。情境分析不是押一個未來，而是兩頭都測。'));
+      const chips = h('div', 'cg-scens');
+      const params = h('div');
+      let go;
+      const drawParams = () => {
+        params.innerHTML = '';
+        if (local.scen.length) CG.ui.renderParameterCards(params, { families: tr.families.slice(), scenarios: local.scen.slice(), turnIndex: g.turnIndex });
+        else params.appendChild(h('p', 'cg-muted', '選了情境，這裡會出現參數卡。'));
+      };
+      D.scenarios.forEach((sc) => {
+        const b = btn('<b>' + esc(sc.name) + '</b><span>' + esc(sc.desc) + '</span>', 'cg-scen', () => {
+          const on = local.scen.includes(sc.id);
+          local.scen = on ? local.scen.filter((x) => x !== sc.id) : SCEN_IDS.filter((x) => x === sc.id || local.scen.includes(x));
+          b.setAttribute('aria-pressed', String(!on));
+          drawParams();
+          go.disabled = local.scen.length < 1 || local.scen.length > 3;
+        }, { 'aria-pressed': String(local.scen.includes(sc.id)), 'data-scen': sc.id });
+        chips.appendChild(b);
+      });
+      w.appendChild(chips);
+      w.appendChild(params);
+      drawParams();
+      go = submitRow(w, '送出這一步', () => safeAct('step3', { scenarios: local.scen.slice() }), local.scen.length < 1);
+    },
+
+    /* 第 4 步：結合內部資料估影響 */
+    function (w, g) {
+      const t = g.turnIndex;
+      const co = C.company(g.companyId);
+      const ap = C.apAvailable(g, t);
+      const tr = g.turns[t];
+      const bonus = C.ermCountBefore(g, t);
+      w.appendChild(h('p', 'cg-lead', esc(D.text.proportionality)));
+      w.appendChild(h('p', 'cg-muted', '本回合分析點 ' + ap + '（基本 ' + co.ap + (bonus ? '，納入風險管理加 ' + bonus : '') + (tr.apPenalty ? '，不相關資料扣 ' + tr.apPenalty : '') + '）。分析深度超過需要，會多花預算。'));
+      const form = h('div', 'cg-depths');
+      D.rules.depthOrder.forEach((id) => {
+        const d = D.rules.depths[id];
+        const can = d.cost <= ap;
+        form.insertAdjacentHTML('beforeend', '<label class="cg-radio' + (can ? '' : ' is-off') + '"><input type="radio" name="depth" value="' + id + '"' + (can ? '' : ' disabled') + ' data-key="depth:' + id + '">' +
+          '<span><b>' + esc(d.name) + '</b>（' + d.cost + ' 點）<br>' + esc(d.desc) + (can ? '' : '<br><em>分析點不夠</em>') + '</span></label>');
+      });
+      w.appendChild(form);
+      const go = submitRow(w, '送出這一步', () => {
+        const x = form.querySelector('input:checked');
+        if (x) safeAct('step4', { depth: x.value });
+      }, true);
+      form.addEventListener('change', () => { go.disabled = !form.querySelector('input:checked'); });
+    },
+
+    /* 第 5 步：評估韌性 */
+    function (w, g) {
+      const t = g.turnIndex;
+      const routes = routesToAnswer(g, t);
+      if (!local.pred) local.pred = {};
+      w.appendChild(h('p', 'cg-lead', '照目前的措施、之後不再加碼，看到長期。依你的分析回答兩個問題。'));
+      const fc = h('div');
+      w.appendChild(fc);
+      CG.ui.renderForecast(fc, { game: g, turnIndex: t, routeIds: routes.length ? routes : [], extraMeasureIds: [] });
+      if (!routes.length) {
+        w.appendChild(h('p', 'cg-note', '你沒有選到高排放或積極減碳的情境，這回合沒辦法做壓力測試。'));
+        submitRow(w, '下一步', () => safeAct('step5', { predictions: {} }));
+        return;
+      }
+      let go;
+      const ready = () => routes.every((r) => local.pred[r] && typeof local.pred[r].q1 === 'boolean' && typeof local.pred[r].q2 === 'boolean');
+      routes.forEach((r) => {
+        const sec = h('section', 'cg-card cg-ask');
+        sec.appendChild(h('h2', '', '若世界走「' + esc(D.routes[r].name) + '」'));
+        ['q1', 'q2'].forEach((q, qi) => {
+          const row = h('div', 'cg-ask-row');
+          row.appendChild(h('p', '', esc(D.text.twoQuestions[qi])));
+          const pair = h('div', 'cg-pair');
+          [[true, '會'], [false, '不會']].forEach(([val, lab]) => {
+            const cur = local.pred[r] && local.pred[r][q];
+            const b = btn(lab, 'cg-choice', () => {
+              local.pred[r] = Object.assign({}, local.pred[r], { [q]: val });
+              pair.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+              b.setAttribute('aria-pressed', 'true');
+              go.disabled = !ready();
+            }, { 'aria-pressed': String(cur === val), 'data-key': r + q + lab });
+            pair.appendChild(b);
+          });
+          row.appendChild(pair);
+          sec.appendChild(row);
+        });
+        w.appendChild(sec);
+      });
+      go = submitRow(w, '送出這一步', () => safeAct('step5', { predictions: clone(local.pred) }), !ready());
+    },
+
+    /* 第 6 步：納入既有風險管理 */
+    function (w, g) {
+      const t = g.turnIndex;
+      const co = C.company(g.companyId);
+      const prior = g.turns.slice(0, t).flatMap((x) => x.bought || []);
+      const routes = routesToAnswer(g, t);
+      w.appendChild(h('p', 'cg-lead', '決定調適措施，並把風險交給負責單位、設好監控指標。做到後者，之後每回合分析點 +' + D.rules.ermBonus + '。'));
+      const ms = h('fieldset', 'cg-group cg-measures');
+      ms.innerHTML = '<legend>調適措施（金額為' + tag('assumed') + '）</legend>' + C.measuresFor(co.id).map((m) => {
+        const owned = prior.includes(m.id);
+        const opex = C.measureOpex(m.id, co.id);
+        return '<label class="cg-check cg-measure' + (owned ? ' is-off' : '') + '"><input type="checkbox" name="measure" value="' + m.id + '"' + (owned ? ' disabled' : '') + ' data-key="m:' + m.id + '">' +
+          '<span><b>' + esc(m.name) + '</b>' + (owned ? '（已採用）' : '') + '<br>一次 ' + esc(C.fmtYi(C.measureCost(m.id, co.id))) +
+          (opex ? '，每年 ' + esc(C.fmtYi(opex)) : '') + '<br><small>' + esc(m.desc) + '</small></span></label>';
+      }).join('');
+      w.appendChild(ms);
+      const money = h('p', 'cg-money');
+      w.appendChild(money);
+      const erm = h('fieldset', 'cg-group');
+      erm.innerHTML = '<legend>納入既有風險管理</legend>' +
+        '<label class="cg-select"><span>負責單位</span><select name="owner" data-key="owner"><option value="">（還沒指派）</option>' +
+        D.erm.owners.map((o) => '<option>' + esc(o) + '</option>').join('') + '</select></label>' +
+        '<p class="cg-muted">監控指標（可複選）</p>' + D.erm.kris.map((k) => checkbox('kri', k.id, esc(k.name))).join('');
+      w.appendChild(erm);
+      const fc = h('div');
+      w.appendChild(h('h2', 'cg-sub', '買了之後的預估'));
+      w.appendChild(fc);
+      let go;
+      const picked = () => [...ms.querySelectorAll('input:checked')].map((x) => x.value);
+      const update = () => {
+        const sel = picked();
+        const cost = C.round(sel.reduce((s, id) => s + C.measureCost(id, co.id), 0), 2);
+        const left = C.round(g.budget - cost, 2);
+        money.innerHTML = '可用預算 ' + esc(C.fmtYi(g.budget)) + '，已選 ' + esc(C.fmtYi(cost)) + '，剩 <b class="' + (left < 0 ? 'cg-bad' : '') + '">' + esc(C.fmtYi(left)) + '</b>' + (left < 0 ? '（超出預算）' : '');
+        fc.innerHTML = '';
+        if (routes.length) CG.ui.renderForecast(fc, { game: g, turnIndex: t, routeIds: routes, extraMeasureIds: sel });
+        else fc.appendChild(h('p', 'cg-muted', '你沒有選到極端情境，看不到預估。'));
+        if (go) go.disabled = left < 0;
+      };
+      ms.addEventListener('change', update);
+      go = submitRow(w, '決定，快轉二十年', () => {
+        safeAct('step6', { bought: picked(), erm: { owner: erm.querySelector('select').value || null, kris: [...erm.querySelectorAll('input:checked')].map((x) => x.value) } });
+      }, false);
+      update();
+    }
+  ];
+
+  /* ---------- 對外介面 ---------- */
+  CG.app = {
+    start(el) { root = el; local = {}; localKey = ''; render(); },
+    reset() { S = initState(); local = {}; localKey = ''; if (root) render(); return clone(S); },
+    getState() { return clone(S); },
+    act: act
+  };
+
+  CG.debug = {
+    autoplay(companyId, tileId, routeId, plan) {
+      plan = plan || {};
+      const pick = (key, t, fallback) => (plan[key] && plan[key][t] !== undefined ? plan[key][t] : fallback);
+      CG.app.reset();
+      act('title/start');
+      act('prologue/skip');
+      act('company/pick', { companyId: companyId });
+      act('site/pick', { tileId: tileId });
+      act('game/start', { routeId: routeId });
+      const rel = C.relevantRisks(companyId, tileId);
+      for (let t = 0; t <= LAST_TURN; t++) {
+        act('turn/begin');
+        act('step1', { risks: pick('risks', t, rel.length ? rel : ['none']) });
+        const fams = pick('families', t, C.requiredFamilies(companyId, tileId));
+        act('step2', { families: fams });
+        const notNeeded = !fams.some((f) => f !== 'none');
+        act('step3', { scenarios: pick('scenarios', t, notNeeded ? [] : ['SSP5-8.5', 'SSP1-1.9']) });
+        const ap = C.apAvailable(S.game, t);
+        act('step4', { depth: pick('depth', t, C.correctDepth(companyId, ap)) });
+        act('step5', { predictions: truthsFor(S.game, t, routesToAnswer(S.game, t)) });
+        const kri = rel.length ? D.erm.kris.find((k) => k.risks.some((r) => rel.includes(r))) : D.erm.kris.find((k) => k.id === 'kriReview');
+        act('step6', { bought: pick('bought', t, []), erm: pick('erm', t, { owner: D.erm.owners[0], kris: [kri.id] }) });
+        act('turn/next');
+      }
+      const g = S.game;
+      const bought = C.boughtByTurn(g);
+      return {
+        app: clone(S),
+        actual: C.evaluate({ companyId: companyId, tileId: tileId, routeId: g.routeId, boughtByTurn: bought }),
+        other: C.evaluate({ companyId: companyId, tileId: tileId, routeId: C.otherRoute(g.routeId), boughtByTurn: bought })
+      };
+    }
+  };
+})();
+/* ==== END:ENGINE ==== */
+</script>
+
+<script>
+/* ==== REGION:MAP ==== 擁有者：T2（公司卡選擇、虛構地圖、格子資訊、選廠址） */
+(function () {
+  'use strict';
+  const D = GAME_DATA;
+  const C = CG.core;
+  const ui = CG.ui;
+  const esc = (s) => ui.esc(s);
+  const HAZARD_NAMES = { flood: '淹水', sealevel: '海平面上升', heat: '高溫', slope: '強降雨坡地災害' };
+  const level = (v) => (v >= 1.2 ? '高' : v >= 0.8 ? '中' : v >= 0.4 ? '低' : '');
+  const LEVEL_CLS = { '高': 'is-hi', '中': 'is-mid', '低': 'is-lo' };
+
+  ui.renderCompanyPicker = function (el, ctx, onPick) {
+    const selected = ctx && ctx.selectedId;
+    el.innerHTML = '';
+    const grid = document.createElement('div');
+    grid.className = 'mp-companies';
+    D.companies.forEach((co) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'mp-co';
+      b.dataset.id = co.id;
+      b.setAttribute('aria-pressed', String(co.id === selected));
+      b.innerHTML =
+        '<span class="mp-co-head"><span class="mp-co-name">' + esc(co.name) + '</span>' +
+        '<span class="mp-case' + (co.caseRef ? '' : ' is-extra') + '">' + esc(co.caseRef || '補充案例') + '</span></span>' +
+        '<span class="mp-co-meta">' + esc(co.industry) + '・' + esc(co.size) + '</span>' +
+        '<span class="mp-tags">' + co.sasb.map((t) => '<span class="mp-tag">' + esc(t) + '</span>').join('') + '</span>' +
+        '<span class="mp-clues">' + co.clues.map((c, i) => '<span class="mp-clue">' + esc(c) + ui.srcTag((co.clueSrc || {})[i]) + '</span>').join('') + '</span>' +
+        '<span class="mp-co-foot">每回合預算 ' + esc(C.fmtYi(co.budget)) + '・分析點 ' + co.ap + ui.srcTag(D.companyNumbersSrc) + '</span>';
+      b.addEventListener('click', () => onPick(co.id));
+      grid.appendChild(b);
+    });
+    el.appendChild(grid);
+    const note = document.createElement('p');
+    note.className = 'mp-note';
+    note.textContent = D.text.sasbNote;
+    el.appendChild(note);
+  };
+
+  ui.renderMap = function (el, ctx, onPick) {
+    const co = C.company(ctx && ctx.companyId);
+    const selected = ctx && ctx.selectedTileId;
+    const tiles = C.tiles();
+    const cols = D.map.rows[0].length;
+    el.innerHTML = '';
+
+    const head = document.createElement('div');
+    head.className = 'mp-head';
+    head.innerHTML = '<h2>' + esc(D.map.name) + '</h2><p>' + esc(D.map.note) + '</p>';
+    el.appendChild(head);
+
+    const legend = document.createElement('p');
+    legend.className = 'mp-legend';
+    legend.innerHTML = Object.entries(D.hazardBadges).map(([k, ch]) => '<span><b>' + esc(ch) + '</b>＝' + esc(HAZARD_NAMES[k]) + '</span>').join('') +
+      '<span>高／中／低＝風險係數' + ui.srcTag(D.terrainSrc) + '</span>' +
+      '<span><i class="mp-case-dot is-legend" aria-hidden="true"></i>' + esc(D.map.caseHint.text) + '</span>';
+    el.appendChild(legend);
+
+    const grid = document.createElement('div');
+    grid.className = 'mp-grid';
+    grid.setAttribute('role', 'group');
+    grid.setAttribute('aria-label', D.map.name + '地圖，' + D.map.rows.length + ' 列 ' + cols + ' 欄');
+    grid.style.gridTemplateColumns = 'repeat(' + cols + ', minmax(0, 1fr))';
+    tiles.forEach((t) => {
+      const terr = C.terrainOf(t.id);
+      const badges = Object.entries(D.hazardBadges).map(([k, ch]) => ({ ch: ch, k: k, lv: level(terr.hazards[k]) })).filter((x) => x.lv);
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'mp-tile t-' + t.terrain + (t.id === selected ? ' is-on' : '');
+      b.dataset.tile = t.id;
+      b.setAttribute('aria-pressed', String(t.id === selected));
+      b.setAttribute('aria-label', '第 ' + (t.row + 1) + ' 列第 ' + (t.col + 1) + ' 欄，' + terr.name +
+        (badges.length ? '，' + badges.map((x) => HAZARD_NAMES[x.k] + x.lv).join('、') : ''));
+      b.innerHTML = '<span class="mp-tname">' + esc(terr.name) + '</span><span class="mp-badges">' +
+        badges.map((x) => '<i class="' + LEVEL_CLS[x.lv] + '">' + esc(x.ch + x.lv) + '</i>').join('') + '</span>' +
+        (t.terrain === D.map.caseHint.terrain ? '<span class="mp-case-dot" aria-hidden="true"></span>' : '');
+      b.addEventListener('click', () => onPick(t.id));
+      grid.appendChild(b);
+    });
+    grid.addEventListener('keydown', (e) => {
+      const moves = { ArrowRight: [0, 1], ArrowLeft: [0, -1], ArrowDown: [1, 0], ArrowUp: [-1, 0] };
+      const mv = moves[e.key];
+      const cur = e.target.closest && e.target.closest('[data-tile]');
+      if (!mv || !cur) return;
+      const t = C.tile(cur.dataset.tile);
+      const r = Math.min(D.map.rows.length - 1, Math.max(0, t.row + mv[0]));
+      const c = Math.min(cols - 1, Math.max(0, t.col + mv[1]));
+      const next = grid.querySelector('[data-tile="r' + r + 'c' + c + '"]');
+      if (next) { e.preventDefault(); next.focus(); }
+    });
+    el.appendChild(grid);
+
+    const info = document.createElement('div');
+    info.className = 'mp-info';
+    info.setAttribute('aria-live', 'polite');
+    if (selected && C.tile(selected)) {
+      const t = C.tile(selected);
+      const terr = C.terrainOf(selected);
+      info.innerHTML = '<h3>第 ' + (t.row + 1) + ' 列第 ' + (t.col + 1) + ' 欄｜' + esc(terr.name) + '</h3>' +
+        '<p><b>優點：</b>' + esc(terr.pros) + '</p><p><b>缺點：</b>' + esc(terr.cons) + '</p>' +
+        '<ul class="mp-haz">' + Object.keys(HAZARD_NAMES).map((k) => {
+          const lv = level(terr.hazards[k]);
+          return '<li><span>' + esc(HAZARD_NAMES[k]) + '</span><i class="' + (LEVEL_CLS[lv] || 'is-none') + '">' + esc(lv || '很低') + '</i></li>';
+        }).join('') + '</ul>' +
+        (t.terrain === D.map.caseHint.terrain ? '<p class="mp-case-note">' + esc(D.map.caseHint.text) + '</p>' : '') +
+        (co && !co.siteSensitive ? '<p class="mp-case-note">' + esc(co.name) + '以線上課程為主，據點影響很小。</p>' : '');
+    } else {
+      info.innerHTML = '<p class="mp-empty">點一格，看看那裡的優點、缺點和風險。</p>';
+    }
+    el.appendChild(info);
+  };
+})();
+/* ==== END:MAP ==== */
+</script>
+
+<script>
+/* ==== REGION:EVENTS ==== 擁有者：T3（顧問台詞、步驟回饋、資料庫卡、參數卡、預估顯示、事件卡） */
+(function () {
+  'use strict';
+  const D = GAME_DATA;
+  const C = CG.core;
+  const ui = CG.ui;
+  const esc = (s) => ui.esc(s);
+  const tag = (src) => ui.srcTag(src);
+  const F = D.advisor.feedback;
+  const KIND = { physical: '實體風險', transition: '轉型風險', opportunity: '機會' };
+  const LAST_TURN = D.turns.length - 1;
+  const uniq = (a) => Array.from(new Set(a));
+  const fill = (tpl, vars) => String(tpl).replace(/\{(\w+)\}/g, (m, k) => (vars[k] != null ? vars[k] : m));
+  const riskNames = (ids) => ids.map((id) => (C.risk(id) || {}).name || id).join('、');
+  const famNames = (ids) => ids.map((id) => (C.family(id) || {}).name || id).join('、');
+  const measureNames = (ids) => ids.map((id) => (C.measure(id) || {}).name || id);
+  const yi = (n) => C.fmtYi(Math.abs(n));
+  const signYi = (n) => (n < 0 ? '−' : '+') + yi(n);
+  const pts = (n) => C.round(Math.abs(n), 1) + ' 個百分點';
+
+  /* ---------- 顧問台詞 ---------- */
+  ui.advisorTurnStart = function (game) {
+    const lines = D.advisor.turnStart[game.companyId] || [];
+    const line = lines[game.turnIndex] || { text: '' };
+    const terr = C.terrainOf(game.tileId);
+    return { text: line.text.replace(/\{site\}/g, terr ? terr.name : '據點'), src: line.src || null };
+  };
+
+  ui.feedbackLines = function (n, c, game) {
+    const out = [];
+    const say = (text, src) => out.push({ text: text, src: src || null });
+    if (!c) return out;
+    const tr = game && game.turns ? game.turns[game.turnIndex] : null;
+    switch (n) {
+      case 1:
+        if (c.noneCase) {
+          if (c.ok) say(F.step1NoneOk);
+          else say('這家公司找不到攸關的氣候風險。' + (c.extra.length ? fill(F.step1Extra, { list: riskNames(c.extra) }) : '選「都不相關」就好。'));
+          break;
+        }
+        if (c.ok) { say(F.step1Ok); break; }
+        if (c.missing.length) say(fill(F.step1Missing, { list: riskNames(c.missing) }));
+        if (c.extra.length) say(fill(F.step1Extra, { list: riskNames(c.extra) }));
+        break;
+      case 2: {
+        const noneCompany = c.required.length === 1 && c.required[0] === 'none';
+        if (noneCompany) {
+          if (c.ok) say(F.step2NoneOk);
+          else say('這家公司查無相關主題，可以直接選「' + C.family('none').name + '」。');
+        } else if (c.noneWrong) {
+          say(F.step2NoneWrong);
+          if (c.missing.length) say(fill(F.step2Missing, { list: famNames(c.missing) }));
+        } else {
+          if (c.ok) say(F.step2Ok);
+          if (c.missing.length) say(fill(F.step2Missing, { list: famNames(c.missing) }));
+        }
+        if (c.irrelevant.length) say(fill(F.step2Irrelevant, { list: famNames(c.irrelevant), n: c.apPenalty }));
+        if (c.showDbLimits) say(F.dbLimits);
+        break;
+      }
+      case 3:
+        say(F[{ ok: 'step3Ok', sameSide: 'step3SameSide', reference: 'step3Reference', notNeeded: 'step3NotNeeded' }[c.reason]]);
+        break;
+      case 4: {
+        const order = D.rules.depthOrder;
+        const chosen = (tr && tr.depth) || order[order.indexOf(c.correct) + c.diff];
+        if (c.ok) say(F[c.reasonKey]);
+        else if (c.diff > 0) { say(fill(F.step4Over, { cost: C.fmtYi(c.overCost) })); say(F[c.reasonKey]); }
+        else { say(fill(F.step4Under, { depth: (D.rules.depths[chosen] || {}).name || '' })); say(F[c.reasonKey]); }
+        break;
+      }
+      case 5:
+        if (!c.total) { say('這回合沒有做壓力測試，兩個問題都答不了。'); break; }
+        say(fill(F.step5Score, { n: c.correct, m: c.total }));
+        if (tr && tr.truths) {
+          Object.keys(tr.truths).forEach((rid) => {
+            const x = tr.truths[rid];
+            say('完整試算（之後不再加碼）：若走「' + D.routes[rid].name + '」，產能' + (x.q1 ? '會' : '不會') + '中斷，長期現金流' + (x.q2 ? '會' : '不會') + '轉負。', 'assumed');
+          });
+        }
+        break;
+      case 6:
+        say(c.ok ? F.step6Ok : F.step6Missing);
+        break;
+      default:
+        break;
+    }
+    return out;
+  };
+
+  ui.renderAdvisor = function (el, line) {
+    if (!line || !line.text) return;
+    const box = document.createElement('div');
+    box.className = 'ev-say';
+    box.innerHTML = '<div class="ev-avatar" aria-hidden="true"><span>嵐</span></div>' +
+      '<div class="ev-bubble"><p class="ev-who">' + esc(D.advisor.name) + '｜' + esc(D.advisor.title) + '</p>' +
+      '<p>' + esc(line.text) + (line.src ? tag(line.src) : '') + '</p></div>';
+    el.appendChild(box);
+  };
+
+  /* ---------- 第 2 步：資料庫卡 ---------- */
+  ui.renderDatabaseCards = function (el, ctx) {
+    const selected = (ctx && ctx.selected) || [];
+    el.innerHTML = '';
+    const grid = document.createElement('div');
+    grid.className = 'ev-dbs';
+    D.dataFamilies.forEach((f) => {
+      const on = selected.includes(f.id);
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'ev-db' + (f.id === 'none' ? ' is-none' : '');
+      b.dataset.family = f.id;
+      b.setAttribute('aria-pressed', String(on));
+      b.innerHTML = '<span class="ev-db-top"><span class="ev-db-name">' + esc(f.name) + '</span><span class="ev-db-mark">' + (on ? '已選' : '點一下選取') + '</span></span>' +
+        '<span class="ev-db-when"><b>適用：</b>' + esc(f.when) + '</span>' +
+        '<span class="ev-db-ex"><b>' + (f.id === 'none' ? '結論：' : '參數例子：') + '</b>' + esc(f.examples) + '</span>' +
+        (f.sources.length ? '<span class="ev-db-src">' + f.sources.map((s) => '<span><b>' + esc(s.name) + '</b>' + (s.note ? '：' + esc(s.note) : '') + '</span>').join('') + '</span>' : '');
+      b.addEventListener('click', () => ctx.onToggle(f.id));
+      grid.appendChild(b);
+    });
+    el.appendChild(grid);
+    const note = document.createElement('p');
+    note.className = 'ev-fine';
+    note.textContent = D.siteChangeNote;
+    el.appendChild(note);
+  };
+
+  /* ---------- 第 3 步：參數卡 ---------- */
+  ui.renderParameterCards = function (el, ctx) {
+    const fams = (ctx.families || []).filter((f) => f !== 'none');
+    const t = ctx.turnIndex || 0;
+    el.innerHTML = '';
+    fams.forEach((fid) => {
+      const params = D.parameters.filter((p) => p.family === fid);
+      if (!params.length) return;
+      const sec = document.createElement('section');
+      sec.className = 'ev-params';
+      sec.innerHTML = '<h3>' + esc(C.family(fid).name) + '｜' + esc(D.turns[t].name + ' ' + D.turns[t].years) + '</h3>' + params.map((p) => {
+        const hasValues = Object.keys(p.values || {}).length > 0;
+        return '<div class="ev-param"><p class="ev-param-name">' + esc(p.name) + '</p>' +
+          (p.base ? '<p class="ev-param-base">' + esc(p.base) + tag(p.baseSrc) + '</p>' : '') +
+          (hasValues ? '<ul>' + ctx.scenarios.map((sid) => {
+            const v = p.values[sid] && p.values[sid][t];
+            return '<li><span>' + esc(sid) + '</span><span>' + (v ? esc(v.text) + tag(v.src) : '<em>此情境不適用這個參數</em>') + '</span></li>';
+          }).join('') + '</ul>' : '') + '</div>';
+      }).join('');
+      el.appendChild(sec);
+    });
+    if (!el.children.length) {
+      const p = document.createElement('p');
+      p.className = 'ev-fine';
+      p.textContent = '你選的資料類別沒有對應的參數卡。';
+      el.appendChild(p);
+    }
+  };
+
+  /* ---------- 第 4–6 步：預估（只算看得到的風險） ---------- */
+  function levelOf(tr, ev, depth) { return ev.risk ? C.forecastLevel(tr, ev.risk) : depth; }
+  const SEEN = ['qualitative', 'simplified', 'full'];
+
+  ui.renderForecast = function (el, ctx) {
+    const g = ctx.game;
+    const t = ctx.turnIndex;
+    const tr = g.turns[t];
+    const depth = tr.depth || 'qualitative';
+    const co = C.company(g.companyId);
+    const prior = g.turns.slice(0, t).flatMap((x) => x.bought || []);
+    const ids = uniq(prior.concat(ctx.extraMeasureIds || []));
+    const wrap = document.createElement('div');
+    wrap.className = 'ev-fc';
+    (ctx.routeIds || []).forEach((rid) => {
+      const route = D.routes[rid];
+      const now = C.project({ companyId: g.companyId, tileId: g.tileId, routeId: rid, turnIndex: t, measureIds: ids });
+      const long = C.project({ companyId: g.companyId, tileId: g.tileId, routeId: rid, turnIndex: LAST_TURN, measureIds: ids });
+      const visible = (ev) => SEEN.includes(levelOf(tr, ev, depth));
+      const lines = [];
+      const risksHere = uniq(now.events.filter((e) => e.kind !== 'opportunity' && e.risk).map((e) => e.risk));
+      risksHere.forEach((rid2) => {
+        const lv = C.forecastLevel(tr, rid2);
+        if (!SEEN.includes(lv)) return;
+        const evs = now.events.filter((e) => e.risk === rid2 && e.kind !== 'opportunity');
+        const cap = evs.filter((e) => e.metric === 'capacity').reduce((s, e) => s + e.value, 0);
+        const cf = evs.filter((e) => e.metric === 'cf').reduce((s, e) => s + e.value, 0);
+        const parts = [];
+        if (lv === 'full') {
+          if (cap) parts.push('產能 −' + pts(cap));
+          if (cf) parts.push('每年 ' + signYi(cf));
+        } else if (lv === 'simplified') {
+          if (cap) parts.push('產能影響「' + C.band('capacity', cap, co.id) + '」');
+          if (cf) parts.push('現金流影響「' + C.band('cf', cf, co.id) + '」');
+        } else {
+          if (cap) parts.push('產能會下降');
+          if (cf) parts.push(cf < 0 ? '現金流會變差' : '現金流會變好');
+        }
+        lines.push('<li><b>' + esc(C.risk(rid2).name) + '</b>：' + esc(parts.join('；') || '影響很小') + '</li>');
+      });
+      const noData = (tr.risks || []).filter((r) => r !== 'none' && C.forecastLevel(tr, r) === 'noData');
+      if (noData.length) lines.push('<li class="ev-miss"><b>' + esc(riskNames(noData)) + '</b>：缺資料，估不出來</li>');
+      const quiet = (tr.risks || []).filter((r) => r !== 'none' && SEEN.includes(C.forecastLevel(tr, r)) && !risksHere.includes(r));
+      if (quiet.length) lines.push('<li class="ev-quiet"><b>' + esc(riskNames(quiet)) + '</b>：這回合在這條路線上影響很小</li>');
+      now.events.filter((e) => e.kind === 'opportunity' && visible(e)).forEach((e) => {
+        if (e.missed) lines.push('<li class="ev-opp">機會：' + esc(e.title) + '（要先有「' + esc(measureNames(e.extra.requires).join('」或「')) + '」）</li>');
+        else lines.push('<li class="ev-opp">機會：' + esc(e.title) + (depth === 'full' ? '，每年 ' + esc(signYi(e.value)) : '') + '</li>');
+      });
+      const hidden = uniq(now.events.concat(long.events).filter((e) => e.kind !== 'opportunity' && e.risk && e.raw && C.forecastLevel(tr, e.risk) === 'hidden').map((e) => e.risk));
+      const vNow = C.meters({ companyId: g.companyId, tileId: g.tileId, measureIds: ids, events: now.events.filter(visible) });
+      const vLong = C.meters({ companyId: g.companyId, tileId: g.tileId, measureIds: ids, events: long.events.filter(visible) });
+      /* 第一題看的是「從本回合到長期」任一回合，所以列出這段期間的最低產能 */
+      let vLow = { capacity: vNow.capacity, turnIndex: t };
+      for (let k = t + 1; k <= LAST_TURN; k++) {
+        const pk = C.project({ companyId: g.companyId, tileId: g.tileId, routeId: rid, turnIndex: k, measureIds: ids });
+        const mk = C.meters({ companyId: g.companyId, tileId: g.tileId, measureIds: ids, events: pk.events.filter(visible) });
+        if (mk.capacity < vLow.capacity) vLow = { capacity: mk.capacity, turnIndex: k };
+      }
+      const lowTxt = vLow.turnIndex === t ? '' : '，到長期最低約 <b>' + esc(C.fmtPct(vLow.capacity)) + '</b>（' + esc(D.turns[vLow.turnIndex].name) + '）';
+      let meters;
+      if (depth === 'full') {
+        meters = '產能：本回合約 <b>' + esc(C.fmtPct(vNow.capacity)) + '</b>' + lowTxt + '（門檻 ' + D.rules.capacityThreshold + '%）。長期年現金流約 <b>' + esc(C.fmtYi(vLong.cf)) + '</b>。';
+      } else if (depth === 'simplified') {
+        const r = vLong.cf / co.revenue;
+        meters = '產能損失：本回合「<b>' + esc(C.band('capacity', 100 - vNow.capacity, co.id)) + '</b>」' +
+          (vLow.turnIndex === t ? '' : '，到長期最嚴重時「<b>' + esc(C.band('capacity', 100 - vLow.capacity, co.id)) + '</b>」') +
+          '。長期現金流「<b>' + (r >= 0.15 ? '寬裕' : r >= 0.05 ? '普通' : '吃緊') + '</b>」。';
+      } else {
+        const anyCap = now.events.some((e) => visible(e) && e.metric === 'capacity' && e.value);
+        const anyBad = long.events.some((e) => visible(e) && e.value < 0) || anyCap;
+        meters = '產能：' + (anyCap ? '可能下降' : '看不出影響') + '；長期現金流：' + (anyBad ? '可能變差' : '看不出影響');
+      }
+      const sec = document.createElement('section');
+      sec.className = 'ev-fc-route';
+      sec.innerHTML = '<h3>若世界走「' + esc(route.name) + '」<small>' + esc(route.scenarioNote) + '</small></h3>' +
+        '<p class="ev-fc-meters">' + meters + '</p>' +
+        (lines.length ? '<ul>' + lines.join('') + '</ul>' : '<p class="ev-fine">你辨識的風險，這回合在這條路線上看不出影響。</p>') +
+        (hidden.length ? '<p class="ev-hidden">還有 ' + hidden.length + ' 項風險沒有辨識，看不到。</p>' : '');
+      wrap.appendChild(sec);
+    });
+    const foot = document.createElement('p');
+    foot.className = 'ev-fine';
+    foot.innerHTML = '精細度依你的分析深度「' + esc(D.rules.depths[depth].name) + '」。只算到你辨識、也下載了資料的風險。' + tag('assumed');
+    wrap.appendChild(foot);
+    el.appendChild(wrap);
+  };
+
+  /* ---------- 結算：事件卡 ---------- */
+  ui.renderEventCards = function (el, events, ctx) {
+    el.innerHTML = '';
+    const list = document.createElement('div');
+    list.className = 'ev-cards';
+    if (!events || !events.length) {
+      const card = document.createElement('article');
+      card.className = 'ev-card is-calm';
+      card.innerHTML = '<p class="ev-kind">沒有事件</p><p>' + esc(D.noEventText) + '</p>';
+      list.appendChild(card);
+      el.appendChild(list);
+      return;
+    }
+    const order = { physical: 0, transition: 1, opportunity: 2 };
+    events.slice().sort((a, b) => order[a.kind] - order[b.kind]).forEach((e) => {
+      const card = document.createElement('article');
+      card.className = 'ev-card is-' + e.kind + (e.missed ? ' is-missed' : '');
+      card.dataset.kind = e.kind;
+      const assumed = e.src === 'assumed' ? tag('assumed') : '';
+      let effect = '';
+      if (e.missed) {
+        effect = '錯過：要先有「' + esc(measureNames(e.extra.requires).join('」或「')) + '」。有的話每年最多 +' + esc(yi(e.raw)) + assumed;
+      } else if (e.metric === 'capacity') {
+        effect = '產能 −' + esc(pts(e.value)) + assumed;
+        if (e.raw !== e.value) effect += '<br><small>調適前 −' + esc(pts(e.raw)) + ' → 調適後 −' + esc(pts(e.value)) + '</small>';
+      } else {
+        effect = '每年 ' + esc(signYi(e.value)) + (e.id === 'carbonFee' ? '' : assumed);
+        if (e.raw !== e.value) effect += '<br><small>調適前 ' + esc(signYi(e.raw)) + ' → 調適後 ' + esc(signYi(e.value)) + '</small>';
+      }
+      let formula = '';
+      if (e.id === 'carbonFee' && e.extra && e.extra.price) {
+        const p = e.extra.price;
+        const rate = p.usd != null
+          ? 'US$' + p.usd + tag(p.src) + ' × 匯率 ' + D.rules.usdToTwd.value + tag(p.fxSrc) + ' ＝ NT$' + p.twd.toLocaleString()
+          : 'NT$' + p.twd.toLocaleString() + tag(p.src);
+        formula = '<p class="ev-formula">應繳排放 ' + e.extra.emissions + ' 萬噸' +
+          (e.extra.emissionsAfter !== e.extra.emissions ? '（減碳後 ' + e.extra.emissionsAfter + ' 萬噸）' : '') + tag(e.extra.emissionsSrc) +
+          ' × 費率 ' + rate + '／噸 ＝ <b>' + C.round(Math.abs(e.value), 2) + ' 億元</b></p><p class="ev-fine">' + esc(p.note) + '</p>';
+      }
+      const by = e.mitigatedBy && e.mitigatedBy.length && !e.missed ? '<p class="ev-by">靠：' + esc(measureNames(e.mitigatedBy).join('、')) + '</p>' : '';
+      const longNote = e.extra && e.extra.longNote ? '<p class="ev-long">' + esc(e.extra.longNote.text) + tag(e.extra.longNote.src) + '</p>' : '';
+      card.innerHTML = '<p class="ev-kind">' + esc(KIND[e.kind]) + (e.risk ? '・' + esc(C.risk(e.risk).name) : '') + '</p>' +
+        '<h3>' + esc(e.title) + '</h3>' +
+        '<p>' + esc(e.text) + (e.src === 'demo' && e.id !== 'carbonFee' ? tag('demo') : '') + '</p>' + longNote + formula +
+        '<p class="ev-effect">' + effect + '</p>' + by;
+      list.appendChild(card);
+    });
+    el.appendChild(list);
+  };
+})();
+/* ==== END:EVENTS ==== */
+</script>
+
+<script>
+/* ==== REGION:ENDING ==== 擁有者：T4（兩個韌性問題的評語、另一路線對照、整理表、學習紀錄、重玩） */
+(function () {
+  'use strict';
+  const D = GAME_DATA;
+  const C = CG.core;
+  const ui = CG.ui;
+  const esc = (s) => ui.esc(s);
+  const E = D.ending;
+  const LAST_TURN = D.turns.length - 1;
+  const TH = D.rules.capacityThreshold;
+  const fill = (tpl, vars) => String(tpl).replace(/\{(\w+)\}/g, (m, k) => (vars[k] != null ? vars[k] : m));
+  const KIND_CLS = { '實體': 'is-phys', '轉型': 'is-trans', '機會': 'is-opp' };
+  const NO_RISK = '無可合理預期的氣候風險';
+
+  function el(tag, cls, html) {
+    const x = document.createElement(tag);
+    if (cls) x.className = cls;
+    if (html != null) x.innerHTML = html;
+    return x;
+  }
+
+  ui.renderEnding = function (root, ctx, handlers) {
+    const g = ctx.game;
+    const A = ctx.actual;
+    const O = ctx.other;
+    const rows = ctx.rows || [];
+    const co = C.company(g.companyId);
+    const routeName = (id) => D.routes[id].name;
+    const noRisk = rows.length === 1 && rows[0].risk === NO_RISK;
+    root.innerHTML = '';
+    const page = el('div', 'ed-page');
+    root.appendChild(page);
+
+    page.appendChild(el('h1', 'ed-title', '結局：' + esc(co.name)));
+    const talk = el('div', 'ed-talk');
+    const reveal = fill(D.advisor.endingReveal, { route: routeName(A.routeId) });
+    if (ui.renderAdvisor) ui.renderAdvisor(talk, { text: reveal });
+    else talk.appendChild(el('p', '', esc(reveal)));
+    page.appendChild(talk);
+
+    /* 兩個韌性問題 */
+    const low = A.turns.reduce((m, t) => (t.capacity < m.capacity ? t : m), A.turns[0]);
+    const longCf = A.turns[LAST_TURN].cf;
+    const v = E.verdicts[A.verdict];
+    const verdict = el('section', 'ed-verdict is-' + A.verdict);
+    verdict.setAttribute('data-verdict', A.verdict);
+    verdict.innerHTML = '<p class="ed-route">實際路線：' + esc(routeName(A.routeId)) + '（' + esc(D.routes[A.routeId].scenarioNote) + '）</p>' +
+      '<p class="ed-badge">' + esc(v.name) + '</p>' +
+      '<p class="ed-verdict-text">' + esc(noRisk && A.verdict === 'resilient' ? E.noRiskConclusion : v.text) + '</p>' +
+      '<ol class="ed-qs">' +
+      '<li><span>' + esc(D.text.twoQuestions[0]) + '</span><b class="' + (A.q1 ? 'ed-bad' : 'ed-ok') + '">' + (A.q1 ? '會' : '不會') + '</b>' +
+      '<small>三回合最低產能 ' + esc(C.fmtPct(low.capacity)) + '（' + esc(D.turns[low.turnIndex].name) + '），門檻 ' + TH + '%</small></li>' +
+      '<li><span>' + esc(D.text.twoQuestions[1]) + '</span><b class="' + (A.q2 ? 'ed-bad' : 'ed-ok') + '">' + (A.q2 ? '會' : '不會') + '</b>' +
+      '<small>長期（' + esc(D.turns[LAST_TURN].years) + '）年現金流 ' + esc(C.fmtYi(longCf)) + '</small></li></ol>';
+    page.appendChild(verdict);
+
+    /* 另一條路線對照 */
+    const cross = el('section', 'ed-card');
+    cross.innerHTML = '<h2>同一套決策，放到另一種未來</h2>' +
+      '<p>' + esc(fill(E.crossRoute, { route: routeName(O.routeId), verdict: E.verdicts[O.verdict].name })) + '</p>' +
+      (A.verdict === 'resilient' && O.verdict === 'resilient' ? '<p class="ed-ok"><b>' + esc(E.bothOk) + '</b></p>' :
+        '<p class="ed-muted">' + esc(D.text.notPrediction) + '</p>');
+    const tbl = el('table', 'ed-mini');
+    const cell = (x, kind) => {
+      const bad = kind === 'cap' ? x.capacity < TH : x.cf < 0;
+      const txt = kind === 'cap' ? C.fmtPct(x.capacity) : C.fmtYi(x.cf).replace(' 億元', ' 億');
+      return '<td class="' + (bad ? 'ed-cell-bad' : '') + '">' + esc(txt) + (bad ? '<small>' + (kind === 'cap' ? '中斷' : '轉負') + '</small>' : '') + '</td>';
+    };
+    tbl.innerHTML = '<caption>兩條路線 × 三個回合（產能低於 ' + TH + '% 或現金流小於 0 的格子會標出）</caption>' +
+      '<thead><tr><th scope="col">路線・儀表</th>' + D.turns.map((t) => '<th scope="col">' + esc(t.name) + '</th>').join('') + '</tr></thead><tbody>' +
+      [A, O].map((R) => {
+        const name = esc(routeName(R.routeId)) + (R === A ? '（實際）' : '');
+        return '<tr><th scope="row">' + name + '・產能</th>' + R.turns.map((x) => cell(x, 'cap')).join('') + '</tr>' +
+          '<tr><th scope="row">' + name + '・年現金流</th>' + R.turns.map((x) => cell(x, 'cf')).join('') + '</tr>';
+      }).join('') + '</tbody>';
+    const scroller = el('div', 'ed-mini-wrap');
+    scroller.appendChild(tbl);
+    cross.appendChild(scroller);
+    page.appendChild(cross);
+
+    /* 案例整理表 */
+    const sum = el('section', 'ed-card');
+    sum.innerHTML = '<h2>你的案例整理表</h2><p class="ed-muted">格式比照懶人包的示範案例：風險、影響、調適措施、韌性結論。影響欄的精細度，取決於你當時分析得多深。</p>';
+    const table = el('table', 'ed-table');
+    const heads = E.tableHeaders;
+    table.innerHTML = '<thead><tr>' + heads.map((x) => '<th scope="col">' + esc(x) + '</th>').join('') + '</tr></thead>';
+    const body = el('tbody');
+    rows.forEach((r) => {
+      const tr = el('tr');
+      tr.setAttribute('data-row', '');
+      const flags = (r.flags || []).map((f) => ui.srcTag(f)).join('');
+      const cells = [esc(r.risk), '<span class="ed-kind ' + (KIND_CLS[r.kind] || '') + '">' + esc(r.kind) + '</span>', esc(r.data), esc(r.impact) + flags, esc(r.measures),
+        '<b class="' + (/補強|錯過/.test(r.conclusion) ? 'ed-bad' : /中等/.test(r.conclusion) ? 'ed-warn' : 'ed-ok') + '">' + esc(r.conclusion) + '</b>'];
+      tr.innerHTML = cells.map((c, i) => (i === 0 ? '<th scope="row" data-label="' + esc(heads[i]) + '">' : '<td data-label="' + esc(heads[i]) + '">') + c + (i === 0 ? '</th>' : '</td>')).join('');
+      body.appendChild(tr);
+    });
+    table.appendChild(body);
+    sum.appendChild(table);
+    page.appendChild(sum);
+
+    /* 學習紀錄 */
+    const learn = el('section', 'ed-card');
+    learn.innerHTML = '<h2>六步驟學習紀錄</h2><ol class="ed-learn">' + (ctx.learning || []).map((x) =>
+      '<li><span>' + esc(x.step) + '</span><b>' + (x.total ? '答對 ' + x.ok + '／' + x.total : '沒有作答') + '</b></li>').join('') + '</ol>';
+    page.appendChild(learn);
+
+    /* 說明與最後一問 */
+    const foot = el('section', 'ed-foot');
+    foot.innerHTML = '<p>' + esc(D.text.disclaimer) + '</p><p>' + esc(D.text.fictional) + '</p>' +
+      '<p>' + esc(D.text.demoLabel) + '的來源：' + esc(D.meta.source) + '。其他數字都是遊戲假設。</p>' +
+      '<p class="ed-final">' + esc(E.finalQuestion) + '</p>';
+    page.appendChild(foot);
+
+    /* 重玩 */
+    const acts = el('div', 'ed-actions');
+    [['otherRoute', '同公司，換另一條路線', 'is-primary'], ['changeCompany', '換一家公司', ''], ['restart', '從頭開始', '']].forEach(([mode, label, cls]) => {
+      const b = el('button', 'ed-btn ' + cls, esc(label));
+      b.type = 'button';
+      b.setAttribute('data-replay', mode);
+      b.addEventListener('click', () => handlers && handlers.onReplay && handlers.onReplay(mode));
+      acts.appendChild(b);
+    });
+    const pr = el('button', 'ed-btn ed-print', '列印這張表');
+    pr.type = 'button';
+    pr.addEventListener('click', () => window.print());
+    acts.appendChild(pr);
+    page.appendChild(acts);
+  };
+})();
+/* ==== END:ENDING ==== */
+</script>
+
+<script>
+/* ==== REGION:BOOT ==== 擁有者：總指揮 */
+document.addEventListener('DOMContentLoaded', function () { CG.app.start(document.getElementById('app')); });
+/* ==== END:BOOT ==== */
+</script>
+</body>
+</html>
