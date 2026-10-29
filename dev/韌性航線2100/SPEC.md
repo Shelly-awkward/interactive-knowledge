@@ -182,5 +182,6 @@ T1 只能透過下面這些函式畫 T2–T4 的內容。函式在被呼叫時�
 node dev/韌性航線2100/tests/core.test.mjs
 node dev/韌性航線2100/tests/flow.test.mjs        # T1 完成後
 node dev/韌性航線2100/tests/accept.mjs           # 瀏覽器驗收
+node dev/韌性航線2100/tests/click.mjs            # 真的點完五局
 node dev/韌性航線2100/tests/regions.mjs <原檔> <新檔> <允許的區塊...>
 ```

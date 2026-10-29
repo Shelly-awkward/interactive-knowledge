@@ -2,6 +2,8 @@
 
 成品：`lessons/會計準則/韌性航線2100_氣候情境分析策略遊戲.html`（單一檔，雙擊就能玩）。這個資料夾只放開發用的規格、派工單和測試，不會出現在目錄頁。
 
+T1–T4 原本規劃派給 Codex。雲端環境的 OpenAI 金鑰過期，最後改由 Claude 照同一份規格與驗收標準寫完；派工單與 `dispatch.sh` 留著，之後要用 Codex 改版時可以直接派。
+
 | 檔案 | 用途 |
 | --- | --- |
 | `SPEC.md` | 介面規格：區塊分工、`CG.core` 函式、狀態、動作、畫面函式 |
@@ -11,6 +13,7 @@
 | `tests/core.test.mjs` | 規則核心的數字與判定（Node） |
 | `tests/flow.test.mjs` | 回合流程（Node，T1 完成後） |
 | `tests/accept.mjs` | 瀏覽器驗收：主控台錯誤、375px 版面、各任務專屬檢查（Playwright） |
+| `tests/click.mjs` | 用滑鼠真的點完五家公司各一局（375px），確認表單都接好 |
 | `tests/regions.mjs`、`tests/merge.mjs` | 檢查改動範圍、把任務的區塊合回正本 |
 
 要改遊戲內容（公司、事件、數字、台詞），只改成品檔開頭的 `GAME_DATA`，再跑 `node dev/韌性航線2100/tests/core.test.mjs` 確認判定沒壞。
