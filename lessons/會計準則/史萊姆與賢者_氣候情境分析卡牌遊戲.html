@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>史萊姆與賢者</title>
+<style>
+:root{
+  --bg:#EEF2F0;
+  --card:#FFFFFF;
+  --ink:#1D2623;
+  --ink-soft:#5B6863;
+  --line:#D5DDD9;
+  --accent:#1F7A63;
+  --accent-ink:#FFFFFF;
+  --sage:#6B4FA0;
+  --good:#1F7A4D;
+  --bad:#B3392F;
+  --meter-bg:#E2E8E5;
+  --meter:#2F6B5A;
+  --event-bg:#1F2B3A;
+  --event-ink:#E8EEF6;
+  --note-bg:#F3EFFA;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#111715;
+    --card:#1A2320;
+    --ink:#E6EEEA;
+    --ink-soft:#9AAAA3;
+    --line:#2C3934;
+    --accent:#3FAE8D;
+    --accent-ink:#0E1513;
+    --sage:#B59CE6;
+    --good:#4CC28A;
+    --bad:#E0705F;
+    --meter-bg:#26322E;
+    --meter:#5FBF9E;
+    --event-bg:#0D1622;
+    --event-ink:#DCE6F2;
+    --note-bg:#221E2C;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.65;
+  padding:16px;min-height:100vh;
+}
+.wrap{max-width:460px;margin:0 auto;}
+.screen[hidden]{display:none;}
+h1{font-size:1.6rem;line-height:1.3;margin:4px 0 6px;}
+h2{font-size:1.2rem;margin:20px 0 8px;}
+p{margin:6px 0;}
+.soft{color:var(--ink-soft);font-size:.92rem;}
+.back{display:inline-block;color:var(--ink-soft);font-size:.9rem;text-decoration:none;margin-bottom:8px;}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0;}
+.btn{
+  font:inherit;font-weight:700;font-size:1rem;
+  border:0;border-radius:12px;padding:12px 16px;cursor:pointer;
+  background:var(--accent);color:var(--accent-ink);width:100%;
+}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);}
+.btn:focus-visible,.co:focus-visible,.opt:focus-visible,.choice:focus-visible{outline:3px solid var(--sage);outline-offset:2px;}
+ol.how{padding-left:1.3em;}
+ol.how li{margin:4px 0;}
+
+/* 選公司 */
+.cos{display:grid;gap:10px;}
+.co{
+  display:flex;gap:12px;align-items:center;text-align:left;
+  font:inherit;color:inherit;background:var(--card);
+  border:1px solid var(--line);border-radius:16px;padding:12px;cursor:pointer;width:100%;
+}
+.co svg{flex:0 0 72px;height:60px;}
+.co b{display:block;font-size:1.05rem;}
+.co .tag{font-size:.8rem;color:var(--accent);font-weight:700;margin-left:6px;}
+
+/* 猜風險 */
+.profile li{margin:4px 0 4px 1.2em;}
+.opts{display:grid;gap:8px;margin-top:10px;}
+.opt{
+  font:inherit;color:inherit;text-align:left;background:var(--card);
+  border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;
+}
+.opt.right{border-color:var(--good);box-shadow:inset 4px 0 0 var(--good);}
+.opt.wrong{border-color:var(--bad);box-shadow:inset 4px 0 0 var(--bad);}
+.opt:disabled{cursor:default;}
+.sage-say{background:var(--note-bg);border-radius:14px;padding:14px;margin-top:12px;display:flex;gap:10px;}
+.sage-say svg{flex:0 0 40px;height:40px;}
+.dbl{margin:6px 0 0 1.2em;}
+.dbl li{margin:3px 0;}
+
+/* 量表 */
+.meters{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px;}
+.meter{text-align:center;font-size:.75rem;color:var(--ink-soft);}
+.mbox{
+  position:relative;height:52px;border-radius:12px;background:var(--meter-bg);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.mfill{position:absolute;left:0;right:0;bottom:0;background:var(--meter);opacity:.35;transition:height .4s ease;}
+.meter.low .mfill{background:var(--bad);opacity:.5;}
+.mbox svg{position:relative;width:28px;height:28px;color:var(--ink);}
+.meter.up .mbox{animation:up .7s;}
+.meter.down .mbox{animation:down .7s;}
+@keyframes up{30%{box-shadow:0 0 0 3px var(--good);}}
+@keyframes down{30%{box-shadow:0 0 0 3px var(--bad);}}
+.dot{height:10px;display:flex;justify-content:center;align-items:center;}
+.dot i{display:block;border-radius:50%;background:var(--ink-soft);width:0;height:0;transition:all .15s;}
+.dot i.s{width:6px;height:6px;}
+.dot i.b{width:10px;height:10px;}
+
+.stage{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:6px 0 8px;font-size:.85rem;}
+.stage b{color:var(--accent);}
+.stage span{color:var(--ink-soft);}
+
+/* 卡片 */
+.deck{position:relative;min-height:330px;touch-action:pan-y;}
+.card{
+  position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;
+  padding:18px 16px 16px;min-height:330px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  user-select:none;cursor:grab;touch-action:pan-y;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+.card.dragging{cursor:grabbing;}
+.card.anim{transition:transform .3s ease, opacity .3s ease;}
+.card.event{background:var(--event-bg);color:var(--event-ink);border-color:transparent;}
+.card .who{font-weight:800;margin-top:6px;}
+.card .when{font-size:.78rem;opacity:.75;}
+.card .txt{margin-top:10px;font-size:1.05rem;line-height:1.7;}
+.card .portrait{width:84px;height:84px;}
+.ovl{
+  position:absolute;top:0;left:0;right:0;padding:12px 14px;border-radius:20px 20px 0 0;
+  font-weight:800;font-size:1rem;line-height:1.45;opacity:0;pointer-events:none;
+  background:var(--ink);color:var(--card);z-index:2;
+}
+.ovl.l{text-align:left;}
+.ovl.r{text-align:right;}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+.choice{
+  font:inherit;font-size:.92rem;font-weight:700;line-height:1.45;color:var(--ink);
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:10px;cursor:pointer;min-height:64px;
+}
+.choice .arr{display:block;font-size:.75rem;color:var(--ink-soft);font-weight:400;}
+.note{background:var(--note-bg);border-radius:14px;padding:12px 14px;margin-top:12px;display:flex;gap:10px;min-height:64px;}
+.note svg{flex:0 0 32px;height:32px;}
+.note .res{font-weight:800;margin-right:4px;}
+.note .res.g{color:var(--good);}
+.note .res.b{color:var(--bad);}
+.prog{text-align:center;font-size:.8rem;color:var(--ink-soft);margin-top:8px;}
+
+/* 結局 */
+.endhead{text-align:center;}
+.endhead svg{width:140px;height:110px;}
+.q2{display:grid;gap:8px;}
+.q2 div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;}
+.q2 b{display:block;}
+.ok{color:var(--good);font-weight:800;}
+.ng{color:var(--bad);font-weight:800;}
+.rev{list-style:none;}
+.rev li{border-bottom:1px solid var(--line);padding:8px 0;font-size:.92rem;}
+.rev li:last-child{border-bottom:0;}
+.rev .m{font-size:.78rem;font-weight:800;margin-right:6px;}
+.dbcard{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;}
+.dbcard b{display:block;}
+.dbcard .path{font-size:.88rem;margin-top:4px;}
+.dbcard a{color:var(--accent);font-size:.85rem;word-break:break-all;}
+.btns{display:grid;gap:8px;margin-top:14px;}
+.fine{font-size:.8rem;color:var(--ink-soft);margin-top:16px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- 開場：選公司 -->
+<section class="screen" id="sTitle">
+  <a class="back" href="../../index.html">← 回目錄</a>
+  <h1>史萊姆與賢者</h1>
+  <p class="soft">氣候情境分析卡牌遊戲。左右滑卡片做決定，看你的公司撐不撐得過 2100 年。</p>
+  <div class="panel">
+    <b>怎麼玩</b>
+    <ol class="how">
+      <li>選一家公司。史萊姆會變成那家公司的樣子。</li>
+      <li>先猜：這家公司最可能遇到什麼氣候風險？</li>
+      <li>每張卡片是一個決定。把卡片往左或往右拖，或按下面的按鈕。</li>
+      <li>上方四個量表任何一個掉到 0，遊戲就結束。</li>
+      <li>後半段是「未來事件」，會考驗你前面做的決定。</li>
+    </ol>
+  </div>
+  <div class="cos" id="cos"></div>
+  <p class="fine">公司全部虛構。遊戲內容依臺灣證券交易所《氣候情境分析應用與案例懶人包》（2026 年 10 月）改編，數字是懶人包的示範值，不能當作實際風險評估或 IFRS S2 揭露數字。</p>
+</section>
+
+<!-- 猜風險 -->
+<section class="screen" id="sGuess" hidden>
+  <button class="btn ghost" id="guessBack" style="width:auto;padding:6px 12px;font-size:.9rem">← 換一家</button>
+  <div class="panel">
+    <div style="display:flex;gap:12px;align-items:center">
+      <svg id="guessSlime" viewBox="0 0 120 100" style="width:84px;height:70px;flex:0 0 84px"></svg>
+      <div><h1 id="guessName" style="font-size:1.3rem"></h1><span class="soft" id="guessShort"></span></div>
+    </div>
+    <ul class="profile" id="guessProfile"></ul>
+  </div>
+  <b>你猜：這家公司最可能遇到哪一種氣候風險？</b>
+  <div class="opts" id="guessOpts"></div>
+  <div id="guessReveal" hidden>
+    <div class="sage-say">
+      <svg viewBox="0 0 40 40" data-sage></svg>
+      <div>
+        <b>賢者：</b><span id="guessText"></span>
+        <p style="margin-top:8px"><b>該去的資料庫</b></p>
+        <ul class="dbl" id="guessDbs"></ul>
+      </div>
+    </div>
+    <button class="btn" id="startBtn" style="margin-top:14px">開始經營</button>
+  </div>
+</section>
+
+<!-- 遊戲 -->
+<section class="screen" id="sPlay" hidden>
+  <div class="meters" id="meters"></div>
+  <div class="stage"><b id="stepLbl"></b><span id="coLbl"></span></div>
+  <div class="deck" id="deck"></div>
+  <div class="choices">
+    <button class="choice" id="btnL"><span class="arr">← 往左</span><span id="lblL"></span></button>
+    <button class="choice" id="btnR"><span class="arr">往右 →</span><span id="lblR"></span></button>
+  </div>
+  <div class="note" id="note">
+    <svg viewBox="0 0 40 40" data-sage></svg>
+    <div id="noteText" class="soft">賢者會在這裡說明你上一個決定。</div>
+  </div>
+  <div class="prog" id="prog"></div>
+</section>
+
+<!-- 結局 -->
+<section class="screen" id="sEnd" hidden>
+  <div class="endhead">
+    <svg id="endSlime" viewBox="0 0 120 100"></svg>
+    <h1 id="endTitle"></h1>
+    <p id="endReason" class="soft"></p>
+  </div>
+  <h2>韌性兩問</h2>
+  <div class="q2" id="endQ2"></div>
+  <h2>你的決定回顧</h2>
+  <div class="panel" style="padding:4px 14px"><ul class="rev" id="endRev"></ul></div>
+  <h2>賢者的資料庫清單</h2>
+  <p class="soft">真的要做這家公司的分析，就照這個順序去查。網站可能改版，按鈕位置以實際畫面為準。</p>
+  <div id="endDbs"></div>
+  <div class="btns">
+    <button class="btn" id="againBtn">同一家再玩一次</button>
+    <button class="btn ghost" id="otherBtn">換一家公司</button>
+  </div>
+  <p class="fine">公司全部虛構，數字是懶人包的示範值（2026 年 10 月），不代表當下最佳估計。碳費請依環境部當下公告。遊戲只用來理解觀念，不能當作實際風險評估或 IFRS S2 揭露數字。</p>
+</section>
+
+</div>
+
+<script>
+// ===== 遊戲內容：要改題目、數字，改這一段就好 =====
+// fx 的四個量表：op 營運（產能）、cash 現金流、cap 能力資源（技能、能力與資源）、trust 信任（董事會、投資人）
+// 一般卡：L / R 兩個選項，best 標出較佳的一邊（結局回顧用）
+// 事件卡：event.check 是前面某個選項設下的旗標；有就走 pass，沒有就走 fail；沒有 check 就固定走 pass
+const STEPS = {
+  1: "步驟一　辨識攸關領域",
+  2: "步驟二　選情境資料",
+  3: "步驟三　查參數",
+  4: "步驟四　估影響",
+  5: "步驟五　韌性測試",
+  6: "步驟六　納入風險管理"
+};
+
+const ROLES = {
+  sage:  {name: "賢者"},
+  esg:   {name: "永續長", ch: "永", color: "#2F8F5B"},
+  cfo:   {name: "財務長", ch: "財", color: "#C48A1A"},
+  plant: {name: "廠長", ch: "廠", color: "#2C6FB0"},
+  site:  {name: "工地主任", ch: "工", color: "#2C6FB0"},
+  buy:   {name: "採購", ch: "採", color: "#228C8C"},
+  admin: {name: "總務", ch: "務", color: "#7A6A55"},
+  chair: {name: "董事長", ch: "董", color: "#26365E"},
+  board: {name: "董事會", ch: "董", color: "#26365E"},
+  risk:  {name: "風控主管", ch: "風", color: "#A8443A"},
+  cons:  {name: "外部顧問", ch: "顧", color: "#6E7378"},
+  owner: {name: "業主", ch: "業", color: "#8A5A9E"},
+  world: {name: "未來事件", ch: "天", color: "#3B5875"}
+};
+
+// 三家公司共用的兩張收尾卡
+const CARD_RESILIENCE = {
+  who: "chair", step: 5, when: "報導年度",
+  text: "所以，我們到底有沒有氣候韌性？",
+  L: {t: "有，完全沒問題", fx: {trust: -10},
+      note: "要講依據。用兩個問題回答：會不會營運中斷？現金流會不會轉負？"},
+  R: {t: "用兩個問題回答，再列出還要關注的地方", fx: {trust: 10},
+      note: "這就是步驟五：營運撐不撐得住、現金流會不會轉負，並誠實寫出持續關注事項。"},
+  best: "R"
+};
+const CARD_INTEGRATE = {
+  who: "risk", step: 6, when: "報導年度",
+  text: "分析報告寫完了。之後呢？",
+  L: {t: "納入年度風險管理，每年檢視", fx: {cap: -5, trust: 10},
+      note: "步驟六：把結果放進既有風險管理，講清楚誰負責，各部門一起更新。"},
+  R: {t: "放進抽屜，明年再說", fx: {trust: -15},
+      note: "情境分析要循環迭代。放抽屜的話，下次又要從零開始。"},
+  best: "L"
+};
+
+const COMPANIES = {
+  X: {
+    name: "史萊姆營造", short: "工程建設", color: "#5A9E6F", gear: "hat",
+    profile: [
+      "行業：工程與建築",
+      "第二總部：自有大樓，在河邊的低窪地區",
+      "工地：4 處，施工都在戶外",
+      "供應商：351 家，分布全臺"
+    ],
+    answer: "physical",
+    reveal: "工地天天在戶外，總部又在低窪區，最怕強降雨和淹水，這是實體風險。SASB 工程業的能源、排放主題沒標粗體，但依步驟 1-3 延伸評估，要選「氣候系統」參數群集。",
+    dbs: [
+      {name: "NCDR Dr.A 氣候變遷災害風險調適平臺", url: "https://dra.ncdr.nat.gov.tw/",
+       path: "風險圖臺展示系統 → 點位查詢，輸入地址 → 選「危害脆弱度」 → 情境 SSP5-8.5 → 空間尺度「網格 40m」",
+       get: "據點的淹水危害脆弱度等級（懶人包第 14–15、65 頁）"},
+      {name: "TCCIP 氣候圖集", url: "https://tccip.ncdr.nat.gov.tw/",
+       path: "資料服務 → 互動圖表 → 氣候圖集 → 進入 AR6 統計降尺度版 → 地圖點選據點 → 降雨指標 → 年最大一日降雨量 → SSP5-8.5",
+       get: "降雨的基期值與短、中、長期變化率（懶人包第 16–17、60–61 頁）"}
+    ],
+    deck: [
+      {who: "esg", step: 1, when: "報導年度",
+       text: "SASB 工程與建築業的主題裡，能源和排放都沒標粗體。那我們是不是不用做情境分析？",
+       L: {t: "不用，跳過", fx: {trust: -15, cap: 5},
+           note: "步驟 1-1、1-2 沒找到，不代表沒事。工地天天在戶外，步驟 1-3 要延伸評估。"},
+       R: {t: "看步驟 1-3：工地都在戶外", fx: {cap: -5, trust: 5}, set: "climate",
+           note: "懶人包的 X 企業就是這樣，選了「氣候系統」參數群集。"},
+       best: "R"},
+      {who: "sage", step: 2, when: "報導年度",
+       text: "想知道總部未來會不會淹水，要去哪個資料庫？",
+       L: {t: "NCDR Dr.A 和 TCCIP", fx: {cap: -3}, set: "rightDB",
+           note: "對。這兩個是臺灣尺度的資料。IPCC 是全球尺度，比較粗；IEA 管的是能源和碳價。"},
+       R: {t: "IEA 世界能源展望", fx: {cap: -10},
+           note: "IEA 查的是能源供需和碳價，屬於轉型風險。淹水要找 Dr.A 和 TCCIP。"},
+       best: "L"},
+      {who: "sage", step: 2, when: "報導年度",
+       text: "測試淹水風險，要用哪一個情境？",
+       L: {t: "SSP1-1.9：最樂觀的世界", fx: {trust: -5},
+           note: "實體風險要看極端的情況。常用 SSP5-8.5，只看最樂觀的會低估。"},
+       R: {t: "SSP5-8.5：高排放的世界", fx: {trust: 5}, set: "worst",
+           note: "對。高排放、升溫最多，是實體風險最嚴重的情境。"},
+       best: "R"},
+      {who: "sage", step: 3, when: "報導年度",
+       text: "TCCIP 顯示，總部的年最大一日降雨：基期 162.9 毫米，長期增加 34.8%。未來大約多少？",
+       L: {t: "約 219.6 毫米", fx: {cap: 5}, set: "param",
+           note: "162.9 ×（1 + 34.8%）≈ 219.6。34.8% 是變化率，要用乘的。"},
+       R: {t: "約 197.7 毫米", fx: {cap: -5},
+           note: "這是把 34.8 直接加上去。變化率要用乘的：162.9 × 1.348 ≈ 219.6。"},
+       best: "L"},
+      {who: "buy", step: 3, when: "報導年度",
+       text: "351 家供應商，要一家一家上 Dr.A 查嗎？",
+       L: {t: "全部查，一家都不漏", fx: {cap: -20, trust: 5},
+           note: "做得到，但很耗人力。可以先篩出第一階、交易金額大的關鍵供應商。"},
+       R: {t: "先篩出第一階關鍵供應商", fx: {cap: -5}, set: "tier",
+           note: "X 企業的結果：90 家有淹水潛勢，但第一階關注供應商沒有中、高風險。"},
+       best: "R"},
+      {who: "cfo", step: 4, when: "報導年度",
+       text: "淹水會讓我們損失多少？精確金額算不出來，怎麼辦？",
+       L: {t: "先用文字說清楚：收入延後、抽水成本、設備受損、履約責任", fx: {cap: -3, trust: 5}, set: "qual",
+           note: "資源不夠時，可以用質性描述。X 企業也是這樣做（懶人包第 19 頁）。"},
+       R: {t: "算不出來就不要寫", fx: {trust: -15},
+           note: "算不出金額，不等於不揭露。可以用文字說明影響的方向和範圍。"},
+       best: "L"},
+      {who: "site", step: 4, when: "報導年度",
+       text: "汛期要不要加抽水機、做清淤，再搭配氣象預警調整工期？",
+       L: {t: "太花錢，不做", fx: {cash: 10},
+           note: "錢省下來了。但工地淹水時就沒有防線。"},
+       R: {t: "做", fx: {cash: -10}, set: "site",
+           note: "這是調適措施。後面的未來事件會考驗它。"},
+       best: "R"},
+      {who: "admin", step: 4, when: "報導年度",
+       text: "第二總部要不要加裝防水閘門、把基地墊高？",
+       L: {t: "裝", fx: {cash: -15}, set: "hq",
+           note: "工程上的調適措施，可以降低淹水對營運的衝擊。"},
+       R: {t: "先不要", fx: {cash: 10},
+           note: "省了錢。但總部就在高淹水風險區。"},
+       best: "L"},
+      {who: "world", step: 5, when: "短期 2021–2040",
+       text: "梅雨鋒面加上午後雷雨，4 處工地有 3 處積水。",
+       event: {check: "site",
+         pass: {fx: {op: -5}, note: "抽水機和預警排程派上用場，隔天就復工。"},
+         fail: {fx: {op: -20, cash: -10}, note: "停工兩週，機具泡水。工期延誤，還要付復工成本。"}}},
+      {who: "owner", step: 5, when: "短期 2021–2040",
+       text: "業主在檢討：今年哪家廠商的工期最穩？",
+       event: {check: "site",
+         pass: {fx: {cash: 15, trust: 5}, note: "汛期幾乎沒停工，業主把下一個案子也交給你。調適做得好，也能變成機會。"},
+         fail: {fx: {cash: -5, trust: -5}, note: "業主擔心你們的工期，下一案改找別家。"}}},
+      {who: "world", step: 5, when: "中期 2041–2060",
+       text: "颱風造成中部大淹水，部分供應商停工。",
+       event: {check: "tier",
+         pass: {fx: {op: -3}, note: "你早就知道哪些關鍵供應商有風險，馬上切換備援廠商。"},
+         fail: {fx: {op: -12}, note: "沒有事先分級，一時找不到替代廠商，材料斷貨。"}}},
+      {who: "world", step: 5, when: "長期 2081–2100｜SSP5-8.5",
+       text: "一日降雨超過 219 毫米，總部周邊淹水 0.5 到 1 公尺。",
+       event: {check: "hq",
+         pass: {fx: {op: -5}, note: "防水閘門守住了，總部照常運作。"},
+         fail: {fx: {op: -25, cash: -15}, note: "一樓機房泡水，總部停擺一個月。"}}},
+      {who: "board", step: 5, when: "報導年度",
+       text: "董事問：你們的淹水分析，是用哪個情境測的？",
+       event: {check: "worst",
+         pass: {fx: {trust: 5}, note: "你用了 SSP5-8.5，董事接受這個壓力測試。"},
+         fail: {fx: {trust: -15}, note: "只測最樂觀的情境，董事覺得你低估了風險。"}}},
+      CARD_RESILIENCE,
+      CARD_INTEGRATE
+    ]
+  },
+
+  Y: {
+    name: "史萊姆晶圓", short: "半導體製造", color: "#4F7FC4", gear: "chip",
+    profile: [
+      "行業：半導體",
+      "工廠：都在臺灣",
+      "用電量：一年用掉的電，跟一座小城市差不多",
+      "範疇一加範疇二排放：每年約 60 萬噸（示範）"
+    ],
+    answer: "transition",
+    reveal: "用電多、排放高，又在臺灣受碳費制度規範，最直接的是碳費這類轉型風險。SASB 半導體業有「溫室氣體排放」和「能源管理」主題，所以選「能源系統」參數群集。",
+    alsoOk: "both",
+    alsoNote: "說兩者都有也不算錯，半導體也可能有缺水、淹水的問題。不過懶人包的案例聚焦在碳費。",
+    dbs: [
+      {name: "IIASA SSP Public Database", url: "",
+       path: "註冊並登入 → IAM Scenarios → Region 勾 Asia、Model/Scenarios 勾 SSP1-1.9、Variable 勾 Price|Carbon",
+       get: "亞洲碳價路徑：2030 年 US$303、2050 年 US$651 每噸（懶人包第 27–30 頁，示範值）"},
+      {name: "IEA《World Energy Outlook》", url: "https://www.iea.org/",
+       path: "REPORTS → 搜尋 World Energy Outlook → 點最新年度 → Download PDF → 附錄 B 表 B.6（碳價）、附錄 A 表 A.3c（再生能源）",
+       get: "各情境的碳價與再生能源參數；要用最新一版（懶人包第 51–52 頁）"},
+      {name: "環境部《碳費徵收辦法》", url: "",
+       path: "查最新公告的一般費率、優惠費率與免徵額度",
+       get: "國內碳費費率。懶人包示範用 NT$300／噸，實際以當下公告為準"}
+    ],
+    deck: [
+      {who: "esg", step: 1, when: "報導年度",
+       text: "SASB 半導體業的主題有「溫室氣體排放」和「能源管理」。要選哪個參數群集？",
+       L: {t: "能源系統", fx: {cap: -3}, set: "energy",
+           note: "對。這兩個主題對應能源系統參數群集，像碳價、能源價格。"},
+       R: {t: "氣候系統", fx: {cap: -10},
+           note: "氣候系統是淹水、高溫那一類。排放和能源主題要看能源系統。"},
+       best: "L"},
+      {who: "sage", step: 2, when: "報導年度",
+       text: "要查未來的碳價，該去哪裡？",
+       L: {t: "TCCIP 氣候圖集", fx: {cap: -10},
+           note: "TCCIP 是臺灣的降雨、溫度推估。碳價要去 SSP Public Database 或 IEA。"},
+       R: {t: "SSP Public Database", fx: {cap: -3}, set: "ssp",
+           note: "對。地區選 Asia、情境選 SSP1-1.9、變數選 Price|Carbon。"},
+       best: "R"},
+      {who: "sage", step: 3, when: "報導年度",
+       text: "SSP1-1.9 的亞洲碳價，2030 年每噸 US$303。拿 60 萬噸排放粗算，大約 NT$58 億（匯率用 32 示範）。董事長嚇到了。",
+       L: {t: "就用這個數字報告", fx: {trust: -10},
+           note: "這只是粗略的整體風險。公司在臺灣受碳費制度規範，要再找符合自身情況的情境。"},
+       R: {t: "再加一個情境：IEA STEPS 配合臺灣淨零路徑，用國內碳費試算", fx: {cap: -5}, set: "two",
+           note: "Y 企業就是這樣做：先看國際最嚴格的情境，再用國內碳費評估近期影響。"},
+       best: "R"},
+      {who: "cfo", step: 4, when: "報導年度",
+       text: "碳費 =（排放量 − 免徵額度）× 費率。排放 60 萬噸、免徵額度 0、費率 NT$300，是多少？",
+       L: {t: "18 億", fx: {cap: -5},
+           note: "多了一個零。60 萬 × 300 = 1.8 億。"},
+       R: {t: "1.8 億", fx: {cap: 5}, set: "calc",
+           note: "對。60 萬 × 300 = 1.8 億元。"},
+       best: "R"},
+      {who: "cfo", step: 4, when: "報導年度",
+       text: "1.8 億占營收不到 0.1%（示範）。結論怎麼寫？",
+       L: {t: "影響有限，但長期碳價可能大漲，要持續減碳", fx: {trust: 10}, set: "balanced",
+           note: "兩個情境都要講。SSP1-1.9 顯示，全球積極淨零時碳價會大幅上升。"},
+       R: {t: "影響有限，以後不用管", fx: {trust: -10},
+           note: "只看近期會漏掉趨勢。SSP1-1.9 的 2050 年碳價是每噸 US$651。"},
+       best: "L"},
+      {who: "plant", step: 4, when: "報導年度",
+       text: "要不要投資節能和製程減排？還能爭取自主減量計畫的優惠費率。",
+       L: {t: "投資", fx: {cash: -10}, set: "reduce",
+           note: "範疇一、二排放減少，未來碳費就少繳。"},
+       R: {t: "先不要", fx: {cash: 10},
+           note: "現金留住了，但排放沒有降。"},
+       best: "L"},
+      {who: "buy", step: 4, when: "報導年度",
+       text: "要不要簽再生電力合約？比一般電價貴一點。",
+       L: {t: "不要，太貴", fx: {cash: 5},
+           note: "省下電價差，但用電的排放沒有降。"},
+       R: {t: "簽", fx: {cash: -8}, set: "green",
+           note: "降低範疇二排放，也先替客戶的要求做準備。"},
+       best: "R"},
+      {who: "world", step: 5, when: "2030｜政府淨零路徑",
+       text: "碳費正式收費，一般費率每噸 NT$300。",
+       event: {check: "reduce",
+         pass: {fx: {cash: -5}, note: "減排加上優惠費率，負擔減輕很多。"},
+         fail: {fx: {cash: -12}, note: "全額照繳。還好占營收不大。"}}},
+      {who: "world", step: 5, when: "中期 2041–2060",
+       text: "國際品牌客戶要求：供應鏈要用再生電力。",
+       event: {check: "green",
+         pass: {fx: {cash: 20, trust: 5, op: 5}, note: "你早就簽了合約，訂單反而增加。這是氣候相關機會。"},
+         fail: {fx: {op: -15, cash: -15}, note: "來不及轉換，部分訂單轉給別家。"}}},
+      {who: "world", step: 5, when: "2050｜SSP1-1.9",
+       text: "世界走向積極淨零，亞洲碳價升到每噸 US$651。",
+       event: {check: "reduce",
+         pass: {fx: {cash: -10}, note: "排放早就降下來，成本壓力撐得住。"},
+         fail: {fx: {cash: -30, op: -10}, note: "高排放製程成本暴增，產線被迫減產。"}}},
+      {who: "board", step: 5, when: "報導年度",
+       text: "董事問：碳價為什麼這樣選？有沒有看別的情境？",
+       event: {check: "two",
+         pass: {fx: {trust: 5}, note: "你同時看了 SSP1-1.9 和國內路徑，回答得出來。"},
+         fail: {fx: {trust: -15}, note: "你只有一個數字，說不清楚為什麼選它。"}}},
+      CARD_RESILIENCE,
+      CARD_INTEGRATE
+    ]
+  },
+
+  Z: {
+    name: "史萊姆學苑", short: "教育服務", color: "#D08A3C", gear: "book",
+    profile: [
+      "行業：教育",
+      "據點：教室、總部辦公室、各地服務櫃台",
+      "客戶：學生與家長，沒有特別暴露在氣候災害中",
+      "資源：人手少，沒有專職永續團隊"
+    ],
+    answer: "none",
+    reveal: "SASB 教育業沒有跟氣候相關的主題，據點和客戶也沒有明顯暴露。可以在合理查證後，依 IFRS S2 第 4 段做出「沒有可合理預期的氣候相關風險或機會」的結論。重點是把判斷過程寫下來。",
+    dbs: [
+      {name: "TCCIP、NCDR Dr.A（瀏覽確認即可）", url: "https://dra.ncdr.nat.gov.tw/",
+       path: "用 Dr.A 點位查詢看主要據點，確認沒有落在高風險區",
+       get: "確認沒有明顯的實體風險。不需要做到量化模型"},
+      {name: "公司內部紀錄", url: "",
+       path: "寫下判斷依據：SASB 行業主題、據點位置、服務對象、查了哪些資料",
+       get: "讓結論有依據（懶人包第 34–37 頁）"}
+    ],
+    deck: [
+      {who: "esg", step: 1, when: "報導年度",
+       text: "我們是教育業。SASB 教育業的主題，沒有一個跟氣候有關。",
+       L: {t: "那就硬套 SSP5-8.5，做一份完整量化報告", fx: {cash: -15, cap: -15, trust: -5},
+           note: "沒有依據硬套，可能違反 IFRS S2 BC39：不得用無法佐證的資訊高估風險。"},
+       R: {t: "記錄判斷：找不到相關的參數群集", fx: {cap: -3}, set: "doc",
+           note: "Z 企業的做法。重點是把判斷過程寫下來。"},
+       best: "R"},
+      {who: "cons", step: 2, when: "報導年度",
+       text: "我們有一套 200 萬的氣候模型，保證專業！",
+       L: {t: "不用，我們先自己瀏覽常用情境資料", fx: {cap: -5}, set: "browse",
+           note: "比例原則：暴險低、資源少，用定性分析就可以。"},
+       R: {t: "買！", fx: {cash: -20},
+           note: "暴險低卻花大錢，就是過度成本。IFRS S2 不要求竭盡所能地搜尋。"},
+       best: "L"},
+      {who: "sage", step: 3, when: "報導年度",
+       text: "你瀏覽了 TCCIP 和 Dr.A。教室都不在高風險區，學生也沒有特別暴露。結論是？",
+       L: {t: "什麼都不寫", fx: {trust: -15},
+           note: "結論要寫出來，還要說明依據。沒寫，別人不知道你有沒有做。"},
+       R: {t: "依 IFRS S2 第 4 段：沒有可合理預期的氣候相關風險或機會", fx: {trust: 10}, set: "conclude",
+           note: "對。這是有依據的結論，不是逃避。"},
+       best: "R"},
+      {who: "board", step: 5, when: "報導年度",
+       text: "沒有風險，是不是就不用做韌性評估？",
+       L: {t: "還是回答兩問：營運不會中斷、現金流不受影響，所以具韌性", fx: {trust: 10},
+           note: "Z 企業就是這樣寫：營運、財務、策略三方面都具韌性。"},
+       R: {t: "對，跳過", fx: {trust: -10},
+           note: "就算沒有風險，也要用兩個問題說明為什麼具韌性。"},
+       best: "L"},
+      {who: "world", step: 5, when: "短期 2021–2040",
+       text: "颱風來襲，停課兩天。",
+       event: {pass: {fx: {op: -5}, note: "補課就好，影響很小。這種程度不會改變結論。"}}},
+      {who: "cfo", step: 6, when: "報導年度",
+       text: "以後每年都要請顧問全部重做嗎？",
+       L: {t: "每年請顧問全部重做", fx: {cash: -15},
+           note: "太花錢。經營模式沒變，就不用每次從零開始。"},
+       R: {t: "每年檢視一次；經營模式或假設變了才重做", fx: {cap: -3}, set: "review",
+           note: "懶人包第 48 頁：經營模式大變、結果和現況不符、假設不再成立，就要重做。"},
+       best: "R"},
+      {who: "chair", step: 5, when: "中期 2041–2060",
+       text: "公司開了新事業：山區戶外自然營隊。",
+       event: {check: "review",
+         pass: {fx: {trust: 5, op: 5}, note: "你照規則重新評估，發現營區要注意坡地災害，提早做好應變。"},
+         fail: {fx: {op: -15, trust: -10}, note: "沒人重新評估。豪雨時營隊被迫撤離，家長很不滿。"}}},
+      CARD_INTEGRATE
+    ]
+  }
+};
+
+const GUESS_OPTS = [
+  {k: "physical", t: "實體風險：淹水、強降雨、高溫"},
+  {k: "transition", t: "轉型風險：碳費、法規、技術轉變"},
+  {k: "both", t: "兩種都很明顯"},
+  {k: "none", t: "看不出明顯的氣候風險"}
+];
+
+const METERS = [
+  {k: "op", name: "營運", icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 21V10l5 3V10l5 3V6h3v-3h3v18z"/><path d="M3 21h18"/></svg>'},
+  {k: "cash", name: "現金流", icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 7v10M9 9.5c0-1 1.3-1.7 3-1.7s3 .7 3 1.7-1.3 1.6-3 2-3 1-3 2 1.3 1.8 3 1.8 3-.8 3-1.8"/></svg>'},
+  {k: "cap", name: "能力資源", icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.5a3 3 0 0 1 0 5M18 14c2 .8 3 3 3 6"/></svg>'},
+  {k: "trust", name: "信任", icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>'}
+];
+
+const DEATH = {
+  op: {title: "營運中斷", text: "產能撐不住了。韌性第一問「會不會營運中斷？」的答案是：會。"},
+  cash: {title: "現金流轉負", text: "錢燒光了。韌性第二問「長期現金流會不會轉負？」的答案是：會。花太多在不必要的分析上，也會走到這一步。"},
+  cap: {title: "團隊累垮了", text: "技能、能力與資源用完了。比例原則提醒：投入要和暴險程度、可用資源相稱。"},
+  trust: {title: "失去信任", text: "董事會和投資人不再相信你的分析。結論要有依據，也要誠實寫出不確定的地方。"}
+};
+
+// ===== 畫圖 =====
+function slimeSVG(color, gear, mood) {
+  const mouth = mood === "sad"
+    ? '<path d="M50 74 Q60 66 70 74" fill="none" stroke="#1D2623" stroke-width="3" stroke-linecap="round"/>'
+    : '<path d="M50 68 Q60 78 70 68" fill="none" stroke="#1D2623" stroke-width="3" stroke-linecap="round"/>';
+  let acc = "";
+  if (gear === "hat") acc = '<path d="M38 30 Q60 6 82 30 Z" fill="#F2C230"/><rect x="32" y="28" width="56" height="6" rx="3" fill="#E0AE1A"/>';
+  if (gear === "chip") acc = '<rect x="48" y="10" width="24" height="18" rx="3" fill="#3A4656"/><rect x="54" y="15" width="12" height="8" fill="#8FB8E8"/><path d="M52 10V6M60 10V6M68 10V6M52 28v4M68 28v4" stroke="#3A4656" stroke-width="2"/>';
+  if (gear === "book") acc = '<path d="M42 26 L60 20 L78 26 L78 32 L60 26 L42 32 Z" fill="#B5462F"/><path d="M60 20 V26" stroke="#7A2A1B" stroke-width="2"/>';
+  return '<ellipse cx="60" cy="93" rx="44" ry="5" fill="#000" opacity=".12"/>' +
+    '<path d="M12 90 C10 58 32 26 60 26 C88 26 110 58 108 90 Z" fill="' + color + '"/>' +
+    '<ellipse cx="42" cy="44" rx="9" ry="5" fill="#fff" opacity=".35"/>' +
+    '<circle cx="48" cy="56" r="5" fill="#1D2623"/><circle cx="72" cy="56" r="5" fill="#1D2623"/>' +
+    '<circle cx="49.5" cy="54.5" r="1.6" fill="#fff"/><circle cx="73.5" cy="54.5" r="1.6" fill="#fff"/>' +
+    mouth + acc;
+}
+let sageId = 0;
+function sageSVG() {
+  const id = "sg" + (sageId++);
+  return '<defs><radialGradient id="' + id + '" cx="50%" cy="45%" r="55%"><stop offset="0" stop-color="#F4EEFF"/><stop offset=".55" stop-color="#9C7FD6"/><stop offset="1" stop-color="#4B3384"/></radialGradient></defs>' +
+    '<circle cx="20" cy="20" r="17" fill="url(#' + id + ')"/>' +
+    '<path d="M20 9l2.6 7.4L30 19l-7.4 2.6L20 29l-2.6-7.4L10 19l7.4-2.6z" fill="#fff" opacity=".9"/>';
+}
+function portraitSVG(who) {
+  if (who === "sage") return '<svg class="portrait" viewBox="0 0 40 40">' + sageSVG() + '</svg>';
+  const r = ROLES[who];
+  return '<svg class="portrait" viewBox="0 0 84 84"><circle cx="42" cy="42" r="40" fill="' + r.color + '"/>' +
+    '<text x="42" y="54" text-anchor="middle" font-size="34" font-weight="800" fill="#fff" font-family="PingFang TC,Noto Sans TC,Microsoft JhengHei,sans-serif">' + r.ch + '</text></svg>';
+}
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+}
+document.querySelectorAll("svg[data-sage]").forEach(s => s.innerHTML = sageSVG());
+
+// ===== 本機紀錄（只存通關標記，讀寫失敗也不影響遊戲）=====
+const STORE = "slime-sage-climate-v1";
+function loadDone() {
+  try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { return {}; }
+}
+function saveDone(k) {
+  try { const d = loadDone(); d[k] = true; localStorage.setItem(STORE, JSON.stringify(d)); } catch (e) {}
+}
+
+// ===== 畫面切換 =====
+const $ = id => document.getElementById(id);
+function show(id) {
+  ["sTitle", "sGuess", "sPlay", "sEnd"].forEach(s => $(s).hidden = s !== id);
+  window.scrollTo(0, 0);
+}
+
+function renderTitle() {
+  const done = loadDone();
+  $("cos").innerHTML = Object.keys(COMPANIES).map(k => {
+    const c = COMPANIES[k];
+    return '<button class="co" data-k="' + k + '"><svg viewBox="0 0 120 100">' + slimeSVG(c.color, c.gear) + '</svg>' +
+      '<span><b>' + esc(c.name) + (done[k] ? '<span class="tag">已通關</span>' : '') + '</b>' +
+      '<span class="soft">' + esc(c.short) + '｜' + esc(c.profile[1]) + '</span></span></button>';
+  }).join("");
+  $("cos").querySelectorAll(".co").forEach(b => b.onclick = () => openGuess(b.dataset.k));
+  show("sTitle");
+}
+
+// ===== 猜風險 =====
+let coKey = null;
+function openGuess(k) {
+  coKey = k;
+  const c = COMPANIES[k];
+  $("guessSlime").innerHTML = slimeSVG(c.color, c.gear);
+  $("guessName").textContent = c.name;
+  $("guessShort").textContent = c.short;
+  $("guessProfile").innerHTML = c.profile.map(p => "<li>" + esc(p) + "</li>").join("");
+  $("guessOpts").innerHTML = GUESS_OPTS.map(o => '<button class="opt" data-k="' + o.k + '">' + esc(o.t) + '</button>').join("");
+  $("guessReveal").hidden = true;
+  $("guessOpts").querySelectorAll(".opt").forEach(b => b.onclick = () => answerGuess(b.dataset.k));
+  show("sGuess");
+}
+function answerGuess(pick) {
+  const c = COMPANIES[coKey];
+  const ok = pick === c.answer;
+  const half = c.alsoOk && pick === c.alsoOk;
+  $("guessOpts").querySelectorAll(".opt").forEach(b => {
+    b.disabled = true;
+    if (b.dataset.k === c.answer) b.classList.add("right");
+    else if (b.dataset.k === pick) b.classList.add(half ? "right" : "wrong");
+  });
+  let lead = ok ? "猜對了。" : half ? "說得通。" : "再想想。";
+  let text = lead + c.reveal;
+  if (half) text += c.alsoNote;
+  $("guessText").textContent = text;
+  $("guessDbs").innerHTML = c.dbs.map(d => "<li>" + esc(d.name) + "</li>").join("");
+  $("guessReveal").hidden = false;
+  $("startBtn").focus({preventScroll: true});
+  $("guessReveal").scrollIntoView({behavior: "smooth", block: "nearest"});
+}
+$("guessBack").onclick = renderTitle;
+$("startBtn").onclick = () => startGame(coKey);
+
+// ===== 遊戲本體 =====
+let S = null;
+function startGame(k) {
+  S = {k, i: 0, m: {op: 50, cash: 50, cap: 50, trust: 50}, flags: new Set(), log: [], busy: false};
+  $("meters").innerHTML = METERS.map(m =>
+    '<div class="meter" id="m_' + m.k + '"><div class="dot"><i></i></div><div class="mbox"><div class="mfill"></div>' + m.icon + '</div>' + m.name + '</div>').join("");
+  $("noteText").className = "soft";
+  $("noteText").textContent = "賢者會在這裡說明你上一個決定。";
+  $("coLbl").textContent = COMPANIES[k].name;
+  drawMeters();
+  show("sPlay");
+  drawCard();
+}
+function deck() { return COMPANIES[S.k].deck; }
+function drawMeters() {
+  METERS.forEach(m => {
+    const el = $("m_" + m.k);
+    el.querySelector(".mfill").style.height = S.m[m.k] + "%";
+    el.classList.toggle("low", S.m[m.k] <= 20);
+  });
+}
+function preview(fx) {
+  METERS.forEach(m => {
+    const i = $("m_" + m.k).querySelector(".dot i");
+    const v = fx ? (fx[m.k] || 0) : 0;
+    i.className = v === 0 ? "" : Math.abs(v) >= 15 ? "b" : "s";
+  });
+}
+function drawCard() {
+  const c = deck()[S.i];
+  const isEv = !!c.event;
+  const role = ROLES[c.who];
+  $("stepLbl").textContent = STEPS[c.step];
+  $("prog").textContent = "第 " + (S.i + 1) + " / " + deck().length + " 張";
+  const lt = isEv ? "接受考驗" : c.L.t;
+  const rt = isEv ? "接受考驗" : c.R.t;
+  $("lblL").textContent = lt;
+  $("lblR").textContent = rt;
+  $("deck").innerHTML =
+    '<div class="ovl" id="ovl"></div>' +
+    '<div class="card' + (isEv ? ' event' : '') + '" id="card" tabindex="-1">' +
+      portraitSVG(c.who) +
+      '<div class="who">' + esc(role.name) + '</div>' +
+      '<div class="when">' + esc(isEv ? "未來事件｜" + c.when : c.when) + '</div>' +
+      '<div class="txt">' + esc(c.text) + '</div>' +
+    '</div>';
+  bindDrag($("card"), lt, rt);
+  preview(null);
+}
+
+function resolve(side) {
+  if (S.busy) return;
+  S.busy = true;
+  const c = deck()[S.i];
+  let fx, note, res, label;
+  if (c.event) {
+    const pass = !c.event.check || S.flags.has(c.event.check);
+    const o = pass ? c.event.pass : c.event.fail;
+    fx = o.fx; note = o.note;
+    res = c.event.check ? (pass ? "g" : "b") : "";
+    label = c.event.check ? (pass ? "撐住了" : "沒撐住") : "";
+  } else {
+    const o = c[side];
+    fx = o.fx; note = o.note;
+    if (o.set) S.flags.add(o.set);
+    res = c.best ? (c.best === side ? "g" : "b") : "";
+    label = c.best ? (c.best === side ? "好選擇" : "可再想想") : "";
+  }
+  S.log.push({text: c.text, when: c.when, ev: !!c.event, pick: c.event ? "" : c[side].t, res, label, note});
+
+  METERS.forEach(m => {
+    const v = fx[m.k] || 0;
+    if (!v) return;
+    S.m[m.k] = Math.max(0, Math.min(100, S.m[m.k] + v));
+    const el = $("m_" + m.k);
+    el.classList.remove("up", "down");
+    void el.offsetWidth;
+    el.classList.add(v > 0 ? "up" : "down");
+  });
+  drawMeters();
+  preview(null);
+  $("noteText").className = "";
+  $("noteText").innerHTML = (label ? '<span class="res ' + res + '">' + label + '</span>' : '') + esc(note);
+
+  const card = $("card");
+  card.classList.add("anim");
+  const dir = side === "L" ? -1 : 1;
+  card.style.transform = "translateX(" + (dir * 420) + "px) rotate(" + (dir * 18) + "deg)";
+  card.style.opacity = "0";
+
+  setTimeout(() => {
+    S.busy = false;
+    const dead = METERS.find(m => S.m[m.k] <= 0);
+    if (dead) return endGame(dead.k);
+    S.i++;
+    if (S.i >= deck().length) return endGame(null);
+    drawCard();
+  }, 320);
+}
+
+function bindDrag(card, lt, rt) {
+  const ovl = $("ovl");
+  const c = deck()[S.i];
+  let x0 = null, dx = 0, id = null;
+  card.addEventListener("pointerdown", e => {
+    if (S.busy) return;
+    x0 = e.clientX; dx = 0; id = e.pointerId;
+    card.setPointerCapture(id);
+    card.classList.remove("anim");
+    card.classList.add("dragging");
+  });
+  card.addEventListener("pointermove", e => {
+    if (x0 === null || e.pointerId !== id) return;
+    dx = e.clientX - x0;
+    const vx = Math.max(-140, Math.min(140, dx));
+    card.style.transform = "translateX(" + vx + "px) rotate(" + (vx / 22) + "deg)";
+    const side = dx < 0 ? "L" : "R";
+    const strength = Math.min(1, Math.abs(dx) / 90);
+    ovl.textContent = side === "L" ? lt : rt;
+    ovl.className = "ovl " + side.toLowerCase();
+    ovl.style.opacity = strength;
+    preview(Math.abs(dx) > 20 && !c.event ? c[side].fx : null);
+  });
+  const end = e => {
+    if (x0 === null || e.pointerId !== id) return;
+    x0 = null;
+    card.classList.remove("dragging");
+    if (Math.abs(dx) > 90) return resolve(dx < 0 ? "L" : "R");
+    card.classList.add("anim");
+    card.style.transform = "";
+    ovl.style.opacity = 0;
+    preview(null);
+  };
+  card.addEventListener("pointerup", end);
+  card.addEventListener("pointercancel", end);
+}
+
+["L", "R"].forEach(side => {
+  const b = $("btn" + side);
+  b.onclick = () => resolve(side);
+  const pv = () => { const c = deck()[S.i]; preview(c && !c.event ? c[side].fx : null); };
+  b.addEventListener("mouseenter", pv);
+  b.addEventListener("focus", pv);
+  b.addEventListener("mouseleave", () => preview(null));
+  b.addEventListener("blur", () => preview(null));
+});
+document.addEventListener("keydown", e => {
+  if ($("sPlay").hidden || !S) return;
+  if (e.key === "ArrowLeft") resolve("L");
+  if (e.key === "ArrowRight") resolve("R");
+});
+
+// ===== 結局 =====
+function endGame(deadKey) {
+  const c = COMPANIES[S.k];
+  const win = !deadKey;
+  if (win) saveDone(S.k);
+  $("endSlime").innerHTML = slimeSVG(c.color, c.gear, win ? "happy" : "sad");
+  $("endTitle").textContent = win ? c.name + " 撐過了 2100 年" : c.name + "：" + DEATH[deadKey].title;
+  $("endReason").textContent = win
+    ? "你走完了六個步驟，也撐過了各種未來事件。"
+    : DEATH[deadKey].text;
+
+  const opOk = S.m.op >= 30, cashOk = S.m.cash >= 30;
+  $("endQ2").innerHTML =
+    '<div><b>一、會不會營運中斷、影響產能？</b>' +
+      (opOk ? '<span class="ok">撐得住</span>' : '<span class="ng">撐不太住</span>') +
+      '<span class="soft">　營運量表 ' + S.m.op + '</span></div>' +
+    '<div><b>二、長期現金流會不會轉負？</b>' +
+      (cashOk ? '<span class="ok">不會轉負</span>' : '<span class="ng">有轉負的危險</span>') +
+      '<span class="soft">　現金流量表 ' + S.m.cash + '</span></div>';
+
+  $("endRev").innerHTML = S.log.map(l =>
+    '<li>' + (l.label ? '<span class="m ' + (l.res === "g" ? "ok" : "ng") + '">' + l.label + '</span>' : '') +
+    (l.ev ? '<span class="soft">' + esc(l.when) + '｜</span>' : '') + esc(l.text) +
+    (l.pick ? '<br><span class="soft">你選：' + esc(l.pick) + '</span>' : '') +
+    '<br><span class="soft">' + esc(l.note) + '</span></li>').join("");
+
+  $("endDbs").innerHTML = c.dbs.map(d =>
+    '<div class="dbcard"><b>' + esc(d.name) + '</b>' +
+    '<div class="path">' + esc(d.path) + '</div>' +
+    '<div class="soft">' + esc(d.get) + '</div>' +
+    (d.url ? '<a href="' + d.url + '" target="_blank" rel="noopener">' + d.url + '</a>' : '') + '</div>').join("");
+  show("sEnd");
+}
+$("againBtn").onclick = () => openGuess(S.k);
+$("otherBtn").onclick = renderTitle;
+
+renderTitle();
+</script>
+</body>
+</html>
