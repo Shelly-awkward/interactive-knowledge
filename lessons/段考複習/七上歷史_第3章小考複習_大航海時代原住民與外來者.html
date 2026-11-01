@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>歷史小考複習｜原住民與外來者</title>
+<style>
+:root{
+  --bg:#F5F6F8; --card:#FFFFFF; --ink:#1D2330; --soft:#5B6475; --line:#DFE3EA;
+  --accent:#B4531C; --accent-soft:#FBEDE3; --blue:#2F6FDB; --blue-soft:#E6EEFB;
+  --ok:#15803D; --ok-soft:#E3F4E8; --no:#B91C1C; --no-soft:#FBE4E4;
+  --mask:#E2E6EC; --nl:#E67E22; --es:#2563EB; --zh:#15803D;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151C; --card:#1A202A; --ink:#E7EAF0; --soft:#9AA3B3; --line:#2B3340;
+    --accent:#F0A06B; --accent-soft:#3A2618; --blue:#7FA8F0; --blue-soft:#1F2C44;
+    --ok:#6FD39A; --ok-soft:#173222; --no:#F38B8B; --no-soft:#3A1A1A;
+    --mask:#2A313D; --nl:#F0A06B; --es:#7FA8F0; --zh:#6FD39A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151C; --card:#1A202A; --ink:#E7EAF0; --soft:#9AA3B3; --line:#2B3340;
+  --accent:#F0A06B; --accent-soft:#3A2618; --blue:#7FA8F0; --blue-soft:#1F2C44;
+  --ok:#6FD39A; --ok-soft:#173222; --no:#F38B8B; --no-soft:#3A1A1A;
+  --mask:#2A313D; --nl:#F0A06B; --es:#7FA8F0; --zh:#6FD39A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.75;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px 80px}
+header.hero{max-width:860px;margin:0 auto;padding:22px 16px 10px}
+header.hero .badge{display:inline-block;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.78rem;border-radius:99px;padding:2px 12px;margin-bottom:6px}
+header.hero h1{font-size:1.4rem;font-weight:800}
+header.hero p{color:var(--soft);font-size:.9rem;margin-top:4px}
+nav.tabs{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:16px}
+nav.tabs .in{max-width:860px;margin:0 auto;padding:8px 16px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+nav.tabs button{flex:0 0 auto;font:inherit;font-size:.86rem;font-weight:700;padding:6px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--soft);cursor:pointer}
+nav.tabs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+section.panel{display:none}
+section.panel.show{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px;margin-bottom:14px}
+.card h2{font-size:1.1rem;color:var(--accent);margin-bottom:8px}
+.card h3{font-size:1rem;margin:12px 0 4px}
+.card ul,.card ol{margin-left:1.3em}
+.card li{margin:3px 0}
+.hint{font-size:.85rem;color:var(--soft)}
+.plus{background:var(--blue-soft);border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.93rem}
+.plus b.tag{display:inline-block;background:var(--blue);color:#fff;font-size:.72rem;border-radius:6px;padding:0 7px;margin-right:6px;vertical-align:1px}
+.trap{background:var(--no-soft);border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.93rem}
+.trap b.tag{display:inline-block;background:var(--no);color:#fff;font-size:.72rem;border-radius:6px;padding:0 7px;margin-right:6px;vertical-align:1px}
+/* 遮字：點一下才看 */
+.m{background:var(--mask);color:transparent;border-radius:5px;padding:0 4px;cursor:pointer;user-select:none;transition:.15s}
+.m.open{background:var(--accent-soft);color:var(--accent);font-weight:700}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.btn{font:inherit;font-size:.88rem;font-weight:700;border:none;border-radius:9px;padding:8px 16px;background:var(--accent);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.tblbox{overflow-x:auto;margin:10px 0}
+table.cmp{border-collapse:collapse;width:100%;font-size:.9rem}
+table.cmp th,table.cmp td{border:1px solid var(--line);padding:7px 8px;vertical-align:top;text-align:left}
+table.cmp th{background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.who{display:inline-block;font-size:.75rem;font-weight:700;color:#fff;border-radius:6px;padding:0 7px}
+.who.nl{background:var(--nl)} .who.es{background:var(--es)} .who.zh{background:var(--zh)}
+/* 地圖 */
+.mapbox{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start}
+.mapbox svg{flex:0 0 auto;width:220px;max-width:100%;height:auto}
+.mapbox .info{flex:1 1 220px;min-height:6em;background:var(--bg);border-radius:10px;padding:10px 14px;font-size:.93rem}
+.spot{cursor:pointer}
+.spot circle{transition:.15s}
+.spot.on circle{r:9}
+/* 選擇題 */
+.q{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0}
+.q .stem{font-weight:700;margin-bottom:6px}
+.q .src{font-weight:400;background:var(--bg);border-left:3px solid var(--soft);padding:6px 10px;margin:6px 0;font-size:.92rem}
+.q .opts{display:grid;gap:6px}
+.q .opt{font:inherit;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:8px 12px;cursor:pointer}
+.q .opt:hover{border-color:var(--accent)}
+.q .opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.q .opt.no{border-color:var(--no);background:var(--no-soft)}
+.q .why{display:none;margin-top:8px;font-size:.92rem;border-radius:9px;padding:8px 12px;background:var(--bg)}
+.q.done .why{display:block}
+.q .why b{color:var(--accent)}
+/* 點選配對／分類 */
+.pool{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chip{font:inherit;font-size:.92rem;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:6px 14px;cursor:pointer;text-align:left}
+.chip.sel{border-color:var(--accent);background:var(--accent-soft)}
+.chip.ok{border-color:var(--ok);background:var(--ok-soft)}
+.chip.no{border-color:var(--no);background:var(--no-soft);animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.zones{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:8px 0}
+.zone{border:2px dashed var(--line);border-radius:12px;padding:8px 10px;min-height:70px;cursor:pointer}
+.zone .zt{font-weight:800;margin-bottom:4px}
+.zone .chip{display:block;width:100%;margin:4px 0;font-size:.85rem;cursor:default}
+.msg{font-weight:700;min-height:1.6em;margin-top:6px}
+.msg.ok{color:var(--ok)} .msg.no{color:var(--no)}
+/* 排序 */
+.ord{display:grid;gap:6px;margin:8px 0}
+.ord .it{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:7px 10px;background:var(--card)}
+.ord .it .t{flex:1}
+.ord .it .y{font-weight:800;color:var(--accent);min-width:4.5em;display:none}
+.ord.checked .it .y{display:inline}
+.ord .it.ok{border-color:var(--ok);background:var(--ok-soft)}
+.ord .it.no{border-color:var(--no);background:var(--no-soft)}
+.ord .it button{font:inherit;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:7px;width:34px;height:30px;cursor:pointer}
+/* 翻翻卡 */
+.flips{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.flip{border:2px solid var(--accent);border-radius:12px;min-height:96px;padding:10px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;font-weight:800;color:var(--accent);background:var(--card)}
+.flip.on{background:var(--accent);color:#fff;font-weight:500;font-size:.88rem;line-height:1.55}
+#score{display:none;text-align:center;font-size:1.1rem;font-weight:800;border-radius:12px;padding:16px;margin-top:12px}
+#score.show{display:block}
+footer{text-align:center;color:var(--soft);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <span class="badge">明天小考 · 課本 p.120～123</span>
+  <h1>大航海時代：原住民與外來者</h1>
+  <p>3-1 歐洲人與原住民、3-2 鄭氏政權與原住民。由上而下做一遍，大約 20 分鐘。</p>
+</header>
+<nav class="tabs"><div class="in">
+  <button class="on" data-t="p1">1 一頁重點</button>
+  <button data-t="p2">2 荷蘭四招</button>
+  <button data-t="p3">3 西班牙與鄭氏</button>
+  <button data-t="p4">4 課本實作題</button>
+  <button data-t="p5">5 練習區</button>
+  <button data-t="p6">🏁 模擬小考</button>
+</div></nav>
+
+<div class="wrap">
+
+<!-- ===================== 1 一頁重點 ===================== -->
+<section id="p1" class="panel show">
+  <div class="card">
+    <h2>一句話抓住整章</h2>
+    <p>16 世紀後期<span class="m">東亞貿易</span>興盛，原住民開始和外來者頻繁接觸，原本以<span class="m">狩獵</span>和<span class="m">游耕</span>為主的生活方式，慢慢被改變。</p>
+    <div class="bar"><button class="btn" id="openAll">全部打開</button><button class="btn ghost" id="closeAll">全部遮起來</button></div>
+    <p class="hint">灰色格子是考試常考的字。先自己想，再點一下看答案。</p>
+  </div>
+
+  <div class="card">
+    <h2>3-1 ㊀ 荷蘭與原住民（四個重點）</h2>
+    <ol>
+      <li><b>族群關係</b>：先用<span class="m">武力征服</span>，再和歸順的「社」<span class="m">結盟</span>；哪個社反抗，就找<span class="m">其他社</span>一起去鎮壓。
+        <br>例：<span class="m">新港社</span>（今臺南新市）一直是盟友，<span class="m">1635</span> 年配合荷軍攻打<span class="m">麻豆社</span>，稱為<span class="m">麻豆社之役</span>。這一仗是荷蘭人奠定<span class="m">南臺灣</span>統治權的關鍵。
+        <br><span class="m">1652</span> 年<span class="m">郭懷一事件</span>（漢人抗荷），新港社也幫荷蘭人對付漢人。</li>
+      <li><b>經濟活動</b>：<span class="m">鹿皮</span>是重要貿易商品。荷蘭人透過<span class="m">漢人</span>和原住民交易取得鹿皮，<span class="m">梅花鹿</span>被大量捕捉而變少，原住民的傳統生活也跟著改變。</li>
+      <li><b>治理方式</b>：<span class="m">間接統治</span>，透過各部落選出的<span class="m">長老</span>來管。長老每年參加一次<span class="m">地方會議</span>：宣誓效忠、聽荷蘭施政、報告部落情況。荷蘭長官會發給長老<span class="m">權杖</span>，象徵權威與榮耀。</li>
+      <li><b>傳教活動</b>：設立<span class="m">教堂與學校</span>，傳播<span class="m">基督教</span>。傳教士教<span class="m">西拉雅族</span>用<span class="m">羅馬字母</span>拼寫自己的語言；因為<span class="m">新港社</span>留下的文獻最多，後人稱為<span class="m">新港文書</span>。
+        <br>直到 <span class="m">19 世紀前期</span>，南部西拉雅族還在用新港文和漢人簽<span class="m">土地契約</span>，所以又叫<span class="m">番仔契</span>。</li>
+    </ol>
+    <div class="trap"><b class="tag">易錯</b>荷蘭對<b>漢人</b>是「嚴苛管制」，對<b>原住民</b>是「間接統治＋宗教傳播」。課本圖 2-3-3 就是這樣分兩邊畫的。</div>
+  </div>
+
+  <div class="card">
+    <h2>3-1 ㊁ 西班牙與原住民</h2>
+    <ul>
+      <li>用武力降服<span class="m">雞籠</span>、<span class="m">淡水</span>一帶的原住民，對投降的加以安撫。</li>
+      <li>傳播<span class="m">天主教</span>（荷蘭傳的是<span class="m">基督教</span>新教）。不少原住民會說<span class="m">西班牙語</span>。</li>
+      <li>留下的地名：<span class="m">三貂角</span>。基隆<span class="m">和平島</span>有西班牙教堂遺址。</li>
+      <li>後來西班牙對臺灣北部越來越不重視，減少支援，所以傳教成果<span class="m">不如荷蘭</span>。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>3-2 鄭氏政權與原住民</h2>
+    <ul>
+      <li><b>族群衝突</b>：來臺<span class="m">漢人</span>變多、積極開墾，壓縮原住民生活空間。最激烈的是中部的<span class="m">大肚王</span>，在鄭氏鎮壓下<span class="m">衰微</span>。</li>
+      <li><b>大肚王</b>：以臺灣中部<span class="m">大肚</span>地區為中心，範圍包括今<span class="m">臺中、彰化、南投</span>的一部分，統治約 <span class="m">20</span> 個部落；荷蘭和鄭氏時期都曾帶頭反抗。</li>
+      <li><b>生活型態變遷</b>：原住民學<span class="m">漢人的農耕技術</span>，逐漸以<span class="m">耕種</span>為主；鄭氏推行<span class="m">文教</span>，在部落設學校，原住民開始接觸<span class="m">漢人文化</span>。</li>
+      <li>在荷蘭、西班牙、鄭氏統治範圍<span class="m">之外</span>，還有許多原住民大致維持原本的生活方式。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>三方比較表（考前看這張就好）</h2>
+    <div class="tblbox"><table class="cmp">
+      <tr><th></th><th><span class="who nl">荷蘭</span></th><th><span class="who es">西班牙</span></th><th><span class="who zh">鄭氏</span></th></tr>
+      <tr><th>在哪裡</th><td>南部（大員、今臺南）</td><td>北部（雞籠、淡水）</td><td>西南部為主，向南北拓墾</td></tr>
+      <tr><th>怎麼管原住民</th><td>武力＋結盟、間接統治、地方會議</td><td>武力降服、安撫投降者</td><td>武力鎮壓（大肚王）</td></tr>
+      <tr><th>宗教／文化</th><td>基督教、羅馬字、新港文書</td><td>天主教、西班牙語</td><td>漢人文教、設學校</td></tr>
+      <tr><th>經濟</th><td>鹿皮貿易（透過漢人）</td><td>貿易與傳教並重</td><td>漢人開墾，原住民學農耕</td></tr>
+      <tr><th>留下什麼</th><td>新港文書（番仔契）</td><td>三貂角、和平島遺址</td><td>原住民生活轉向耕種</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<!-- ===================== 2 荷蘭四招 ===================== -->
+<section id="p2" class="panel">
+  <div class="card">
+    <h2>配對：荷蘭的四招，各是哪一招？</h2>
+    <p class="hint">先點下面一句話，再點它屬於的框框。對了會變綠色。</p>
+    <div class="pool" id="mPool"></div>
+    <div class="zones" id="mZones"></div>
+    <div class="msg" id="mMsg"></div>
+    <div class="bar"><button class="btn ghost" id="mReset">重來</button></div>
+  </div>
+
+  <div class="card">
+    <h2>地圖：17 世紀臺南（點點看）</h2>
+    <div class="mapbox">
+      <svg viewBox="0 0 220 240" role="img" aria-label="17世紀臺南地區示意圖">
+        <rect x="0" y="0" width="220" height="240" fill="var(--blue-soft)"/>
+        <path d="M70 0 L220 0 L220 240 L95 240 Q80 200 88 170 Q72 140 82 110 Q70 70 76 40 Z" fill="var(--accent-soft)" stroke="var(--soft)" stroke-width="1.5"/>
+        <path d="M60 120 Q48 150 56 185" stroke="var(--soft)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <text x="110" y="232" font-size="10" fill="var(--soft)">示意圖，不按比例</text>
+        <g class="spot" data-k="麻豆社"><circle cx="150" cy="60" r="7" fill="var(--no)"/><text x="162" y="64" font-size="13" fill="var(--ink)">麻豆社</text></g>
+        <g class="spot" data-k="新港社"><circle cx="160" cy="125" r="7" fill="var(--ok)"/><text x="138" y="148" font-size="13" fill="var(--ink)">新港社</text></g>
+        <g class="spot" data-k="熱蘭遮城"><circle cx="56" cy="160" r="7" fill="var(--nl)"/><text x="6" y="182" font-size="12" fill="var(--ink)">熱蘭遮城</text></g>
+        <g class="spot" data-k="普羅民遮城"><circle cx="100" cy="158" r="7" fill="var(--nl)"/><text x="96" y="204" font-size="12" fill="var(--ink)">普羅民遮城</text></g>
+      </svg>
+      <div class="info" id="mapInfo">點地圖上的圓點。</div>
+    </div>
+    <div class="plus"><b class="tag">補充</b>熱蘭遮城在海邊的沙洲上（今安平古堡一帶），是荷蘭的行政中心；普羅民遮城在對岸的赤崁（今赤崁樓一帶），旁邊是漢人做生意的市街。</div>
+  </div>
+
+  <div class="card">
+    <h2>補充知識：幫你更懂這幾招</h2>
+    <div class="plus"><b class="tag">為什麼</b><b>為什麼要「間接統治」？</b> 荷蘭東印度公司是一家公司，在臺灣的人力很少。直接派人管每個部落太花錢，所以讓部落自己選長老、再用地方會議控制長老，比較省力。</div>
+    <div class="plus"><b class="tag">為什麼</b><b>為什麼「以社制社」有用？</b> 原住民各社之間本來就有競爭甚至敵對。荷蘭人拉一個社打另一個社，自己出的兵就少很多。新港社離熱蘭遮城近，跟荷蘭合作最久。</div>
+    <div class="plus"><b class="tag">為什麼</b><b>鹿皮要賣去哪？</b> 當時臺灣的鹿皮大量賣到<b>日本</b>，日本人拿來做武士的衣甲和用品。需求大，梅花鹿就被抓得越來越少。</div>
+    <div class="plus"><b class="tag">為什麼</b><b>為什麼要教羅馬字？</b> 西拉雅語原本沒有文字。傳教士為了翻譯聖經、教讀經，就用羅馬字母幫它拼出來。課本圖 2-3-5 是荷蘭文與新港文對照的《馬太福音》。</div>
+    <div class="plus"><b class="tag">連結</b><b>新港文書和漢人有什麼關係？</b> 荷蘭人走了一百多年後，西拉雅族還在用這套文字。他們和漢人簽土地契約時，常常一邊寫新港文、一邊寫漢字（課本圖 2-3-6 是 1777 年的契約）。這也說明當時原住民的土地慢慢轉到漢人手上。</div>
+  </div>
+</section>
+
+<!-- ===================== 3 西班牙與鄭氏 ===================== -->
+<section id="p3" class="panel">
+  <div class="card">
+    <h2>西班牙在北臺灣</h2>
+    <ul>
+      <li>1626 年來到<b>雞籠</b>（今基隆），在<b>和平島</b>築城；之後也到<b>淡水</b>築城。</li>
+      <li>1642 年被荷蘭人打敗，離開臺灣。</li>
+    </ul>
+    <div class="plus"><b class="tag">補充</b><b>三貂角</b>名稱的來源，一般認為是西班牙人取的名字 Santiago（聖地牙哥），被音譯成「三貂」。</div>
+    <div class="plus"><b class="tag">補充</b>課本圖 2-3-7 的<b>馬賽人</b>屬於凱達格蘭族，住在北部海邊，擅長划船、學語言、做買賣，常在外來者和其他部落之間當中間人。</div>
+    <div class="trap"><b class="tag">易錯</b>荷蘭＝<b>基督教</b>（新教）；西班牙＝<b>天主教</b>。兩個都是「基督宗教」，但考試會分開問。</div>
+  </div>
+
+  <div class="card">
+    <h2>鄭氏時期：大肚王</h2>
+    <p class="hint">西部平原由北到南（照課本圖 2-3-10 簡化）：</p>
+    <div class="tblbox"><table class="cmp">
+      <tr><th>位置</th><th>地名（今地名）</th><th>當時的狀況</th></tr>
+      <tr><td>北部</td><td>雞籠（基隆）、淡水</td><td><span class="who zh">鄭氏</span> 只有零星據點</td></tr>
+      <tr><td>中北部</td><td>竹塹（新竹）、新港仔（後龍）</td><td>原住民各族為主</td></tr>
+      <tr><td>中部</td><td>大甲～半線（彰化）一帶</td><td><b>大肚王</b>的範圍，約 20 個部落，反抗鄭氏</td></tr>
+      <tr><td>西南部</td><td>北港、新營、承天府（臺南）</td><td><span class="who zh">鄭氏</span> 已開墾的主要區域</td></tr>
+      <tr><td>東部、山區</td><td>—</td><td>不受外來者統治，維持原本生活</td></tr>
+    </table></div>
+    <div class="plus"><b class="tag">補充</b>「大肚王」是一個稱號，不是某一個人的名字。他領導的是好幾個不同族群部落組成的聯盟，以拍瀑拉族為主。</div>
+    <div class="plus"><b class="tag">為什麼</b><b>為什麼鄭氏時期衝突變多？</b> 鄭氏帶來大批軍隊和移民，要種田養兵（屯田）。田要從哪來？就是原住民的獵場和土地。土地被拿走，衝突就跟著來。</div>
+  </div>
+
+  <div class="card">
+    <h2>原住民生活的三個變化</h2>
+    <div class="tblbox"><table class="cmp">
+      <tr><th>活動</th><th>變多還是變少</th><th>原因</th></tr>
+      <tr><td>狩獵（獵鹿）</td><td>變少 ↓</td><td>鹿皮貿易讓鹿被大量捕捉；土地被開墾成田</td></tr>
+      <tr><td>採集</td><td>變少 ↓</td><td>森林、草地被開墾，能採的東西變少</td></tr>
+      <tr><td>耕種（定耕）</td><td>變多 ↑</td><td>學習漢人的農耕技術，改成固定耕地</td></tr>
+    </table></div>
+    <div class="trap"><b class="tag">易錯</b><b>游耕</b>和<b>耕種</b>不一樣。游耕是砍樹、燒林、用灰燼當肥料，地力用完就換地方；漢人教的是在固定的田裡長期耕作。</div>
+  </div>
+</section>
+
+<!-- ===================== 4 課本實作題 ===================== -->
+<section id="p4" class="panel">
+  <div class="card">
+    <h2>課本 p.122「實作與練習」</h2>
+    <p class="hint">先選，再看解析。這兩題很像考題的樣子。</p>
+    <div id="bookQ"></div>
+  </div>
+  <div class="card">
+    <h2>課本 p.123「實作與練習」：三張圖</h2>
+    <p>18 世紀清朝官員畫的原住民生活：<b>獵鹿、採集、耕種</b>。哪一種是受外來者影響才出現的？哪些變少了？</p>
+    <div class="bar"><button class="btn" id="showP123">看答案</button></div>
+    <div id="p123" hidden>
+      <p><b>受影響而出現：耕種</b>（圖中有牛、犁，是向漢人學的農耕技術）。</p>
+      <p><b>相對減少：獵鹿、採集</b>。鹿被大量捕捉，土地也被開墾。</p>
+      <p class="hint">答題關鍵字：「學習漢人農耕技術，逐漸以耕種為務」。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5 練習區 ===================== -->
+<section id="p5" class="panel">
+  <div class="card">
+    <h2>分類：這件事是誰做的？</h2>
+    <p class="hint">先點一句話，再點「荷蘭／西班牙／鄭氏」。</p>
+    <div class="pool" id="cPool"></div>
+    <div class="zones" id="cZones"></div>
+    <div class="msg" id="cMsg"></div>
+    <div class="bar"><button class="btn ghost" id="cReset">重來</button></div>
+  </div>
+
+  <div class="card">
+    <h2>排序：把事件排出先後</h2>
+    <p class="hint">用 ▲▼ 調整順序，排好按「檢查」。</p>
+    <div class="ord" id="ord"></div>
+    <div class="bar"><button class="btn" id="oCheck">檢查</button><button class="btn ghost" id="oShuffle">重新打亂</button></div>
+    <div class="msg" id="oMsg"></div>
+  </div>
+
+  <div class="card">
+    <h2>翻翻卡：名詞解釋</h2>
+    <p class="hint">點卡片翻面。</p>
+    <div class="flips" id="flips"></div>
+  </div>
+</section>
+
+<!-- ===================== 6 模擬小考 ===================== -->
+<section id="p6" class="panel">
+  <div class="card">
+    <h2>🏁 模擬小考（15 題）</h2>
+    <p class="hint">每題選完會馬上告訴你對錯和原因。全部做完會出現分數。</p>
+    <div id="quiz"></div>
+    <div id="score"></div>
+    <div class="bar"><button class="btn ghost" id="qRedo">打亂重做</button></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 臺灣的歷史（上）· 第 3 章 大航海時代臺灣原住民與外來者 · 小考複習<br>依課本 p.120～123 重點整理，補充內容為原創改寫。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "歷史小考 第3章 原住民與外來者";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的）。家長在「學習紀錄」頁設定一次，存於 localStorage；未設定則只記本機。
+let CLOUD_URL = "";
+try{ CLOUD_URL = localStorage.getItem("cloud_url_v1") || ""; }catch(e){}
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+const $ = s => document.querySelector(s);
+const shuffle = a => { a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// 分頁
+document.querySelectorAll('nav.tabs button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('nav.tabs button').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('section.panel').forEach(p => p.classList.toggle('show', p.id === b.dataset.t));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}));
+
+// 遮字
+document.querySelectorAll('.m').forEach(m => m.addEventListener('click', () => m.classList.toggle('open')));
+$('#openAll').onclick = () => document.querySelectorAll('.m').forEach(m => m.classList.add('open'));
+$('#closeAll').onclick = () => document.querySelectorAll('.m').forEach(m => m.classList.remove('open'));
+
+// ===== 點選分類（通用）=====
+function sorter(poolId, zonesId, msgId, resetId, zones, items, name){
+  const pool = $(poolId), zEl = $(zonesId), msg = $(msgId);
+  let sel = null, done = 0, miss = 0;
+  function build(){
+    sel = null; done = 0; miss = 0; msg.textContent = ''; msg.className = 'msg';
+    pool.innerHTML = ''; zEl.innerHTML = '';
+    shuffle(items).forEach(it => {
+      const c = document.createElement('button'); c.className = 'chip'; c.textContent = it.t; c.dataset.z = it.z;
+      c.onclick = () => { if(c.classList.contains('ok')) return; pool.querySelectorAll('.chip').forEach(x => x.classList.remove('sel')); sel = (sel === c) ? null : c; if(sel) c.classList.add('sel'); };
+      pool.appendChild(c);
+    });
+    zones.forEach(z => {
+      const d = document.createElement('div'); d.className = 'zone'; d.innerHTML = `<div class="zt">${z.label}</div>`;
+      d.onclick = () => {
+        if(!sel) { msg.className = 'msg no'; msg.textContent = '先點上面的一句話。'; return; }
+        const c = sel;
+        if(c.dataset.z === z.id){
+          c.classList.remove('sel', 'no'); c.classList.add('ok'); d.appendChild(c); done++;
+          msg.className = 'msg ok'; msg.textContent = done === items.length ? `✔ 全部完成！錯了 ${miss} 次。` : '✔ 對了';
+          if(done === items.length) toolLog(name, miss === 0);
+        }else{
+          miss++; c.classList.remove('no'); void c.offsetWidth; c.classList.add('no');
+          msg.className = 'msg no'; msg.textContent = '✘ 不是這裡，再想想。';
+        }
+        sel = null; pool.querySelectorAll('.chip').forEach(x => x.classList.remove('sel'));
+      };
+      zEl.appendChild(d);
+    });
+  }
+  $(resetId).onclick = build; build();
+}
+
+sorter('#mPool', '#mZones', '#mMsg', '#mReset',
+  [{id:'a',label:'1 族群關係'},{id:'b',label:'2 經濟活動'},{id:'c',label:'3 治理方式'},{id:'d',label:'4 傳教活動'}],
+  [
+    {t:'和歸順的社結盟', z:'a'}, {t:'聯合新港社攻打麻豆社', z:'a'}, {t:'新港社協助鎮壓郭懷一事件', z:'a'},
+    {t:'透過漢人向原住民取得鹿皮', z:'b'}, {t:'梅花鹿被大量捕捉', z:'b'},
+    {t:'部落選出長老', z:'c'}, {t:'每年舉行地方會議', z:'c'}, {t:'發給長老權杖', z:'c'},
+    {t:'設立教堂與學校', z:'d'}, {t:'教西拉雅族用羅馬字母', z:'d'}, {t:'留下新港文書', z:'d'}
+  ], '荷蘭四招配對');
+
+sorter('#cPool', '#cZones', '#cMsg', '#cReset',
+  [{id:'nl',label:'荷蘭'},{id:'es',label:'西班牙'},{id:'zh',label:'鄭氏'}],
+  [
+    {t:'麻豆社之役', z:'nl'}, {t:'地方會議與權杖', z:'nl'}, {t:'新港文書', z:'nl'}, {t:'鹿皮貿易透過漢人', z:'nl'}, {t:'郭懷一事件', z:'nl'},
+    {t:'傳播天主教', z:'es'}, {t:'原住民會說西班牙語', z:'es'}, {t:'三貂角地名', z:'es'}, {t:'基隆和平島教堂遺址', z:'es'},
+    {t:'鎮壓大肚王', z:'zh'}, {t:'原住民學漢人農耕', z:'zh'}, {t:'在部落設學校推行漢人文教', z:'zh'}
+  ], '誰做的分類');
+
+// ===== 地圖 =====
+const MAP = {
+  '麻豆社':'<b>麻豆社</b>：當時臺南西拉雅族規模最大的部落，一直不服從荷蘭。<b>1635 年</b>荷蘭聯合新港社出兵，稱為<b>麻豆社之役</b>，之後荷蘭才穩住南臺灣。',
+  '新港社':'<b>新港社</b>（今臺南新市）：離熱蘭遮城近，是荷蘭的長期<b>盟友</b>。攻麻豆社、鎮壓郭懷一事件時都幫荷蘭。留下最多羅馬字文獻，所以叫「新港文書」。',
+  '熱蘭遮城':'<b>熱蘭遮城</b>：荷蘭在臺灣的<b>行政中心</b>，位置在今臺南安平。',
+  '普羅民遮城':'<b>普羅民遮城</b>：在赤崁（今臺南赤崁樓一帶），旁邊是漢人的<b>商業市街</b>。'
+};
+document.querySelectorAll('.spot').forEach(g => g.addEventListener('click', () => {
+  document.querySelectorAll('.spot').forEach(x => x.classList.toggle('on', x === g));
+  $('#mapInfo').innerHTML = MAP[g.dataset.k];
+}));
+
+// ===== 選擇題（通用）=====
+function renderQs(box, list, onAnswer){
+  box.innerHTML = '';
+  list.forEach((q, i) => {
+    const d = document.createElement('div'); d.className = 'q';
+    const order = shuffle(q.o.map((t, k) => ({ t, k })));
+    d.innerHTML = `<div class="stem">${i + 1}. ${q.s}</div>${q.src ? `<div class="src">${q.src}</div>` : ''}<div class="opts"></div><div class="why"></div>`;
+    const opts = d.querySelector('.opts');
+    order.forEach((o, n) => {
+      const b = document.createElement('button'); b.className = 'opt'; b.innerHTML = `(${'ABCD'[n]}) ${esc(o.t)}`;
+      b.onclick = () => {
+        if(d.classList.contains('done')) return;
+        d.classList.add('done');
+        const ok = o.k === q.a;
+        b.classList.add(ok ? 'ok' : 'no');
+        if(!ok) opts.children[order.findIndex(x => x.k === q.a)].classList.add('ok');
+        d.querySelector('.why').innerHTML = (ok ? '<b>✔ 答對了。</b>' : '<b>✘ 答錯了。</b>') + q.w;
+        toolLog(q.s.slice(0, 30), ok);
+        if(onAnswer) onAnswer(ok);
+      };
+      opts.appendChild(b);
+    });
+    box.appendChild(d);
+  });
+}
+
+const BOOK = [
+  { s:'小透找到一段記載，最可能出自哪本書？',
+    src:'「自我們從澎湖移往福爾摩沙後，先建立了安全的堡壘，再用 15 匹布向新港社人購得土地，並決定將商館搬遷至新購的土地，建立市街……」',
+    o:['熱蘭遮城日誌','馬尼拉手稿','鄭氏政權的盛衰','長崎荷蘭商館日記'], a:0,
+    w:'關鍵字是「從澎湖移往福爾摩沙」「向新港社買地」。這是<b>荷蘭人</b>在臺灣（臺南）的紀錄，所以是《熱蘭遮城日誌》。荷蘭先占澎湖，1624 年才轉到大員。長崎在日本，馬尼拉是西班牙在菲律賓的據點，都不對。' },
+  { s:'17 世紀某地有些原住民能讀西班牙文；荷蘭人在此地活動時，還要透過會說西班牙語的人溝通。這個地方最可能在今天哪裡？',
+    o:['基隆','臺南','嘉義','澎湖'], a:0,
+    w:'西班牙人占領的是北部的<b>雞籠（基隆）</b>和淡水。1642 年荷蘭趕走西班牙後接管北部，當地原住民原本學的是西班牙語，所以荷蘭人要找會說西班牙語的人翻譯。' }
+];
+renderQs($('#bookQ'), BOOK);
+$('#showP123').onclick = () => { $('#p123').hidden = false; };
+
+// ===== 排序 =====
+const EV = [
+  { y:'1624', t:'荷蘭人來到大員（今臺南）' },
+  { y:'1626', t:'西班牙人來到雞籠（今基隆）' },
+  { y:'1635', t:'麻豆社之役' },
+  { y:'1642', t:'荷蘭趕走北部的西班牙人' },
+  { y:'1652', t:'郭懷一事件' },
+  { y:'1662', t:'鄭成功趕走荷蘭，鄭氏統治開始' },
+  { y:'1777', t:'課本上那張新港文＋漢字的土地契約' }
+];
+let cur = [];
+function drawOrd(){
+  const box = $('#ord'); box.classList.remove('checked'); box.innerHTML = '';
+  cur.forEach((e, i) => {
+    const d = document.createElement('div'); d.className = 'it';
+    d.innerHTML = `<span class="y">${e.y}</span><span class="t">${e.t}</span>`;
+    const up = document.createElement('button'); up.textContent = '▲'; up.disabled = i === 0;
+    const dn = document.createElement('button'); dn.textContent = '▼'; dn.disabled = i === cur.length - 1;
+    up.onclick = () => { [cur[i - 1], cur[i]] = [cur[i], cur[i - 1]]; drawOrd(); };
+    dn.onclick = () => { [cur[i + 1], cur[i]] = [cur[i], cur[i + 1]]; drawOrd(); };
+    d.append(up, dn); box.appendChild(d);
+  });
+  $('#oMsg').textContent = '';
+}
+$('#oShuffle').onclick = () => { do{ cur = shuffle(EV); }while(cur.every((e, i) => e === EV[i])); drawOrd(); };
+$('#oCheck').onclick = () => {
+  const box = $('#ord'); box.classList.add('checked');
+  let ok = 0;
+  [...box.children].forEach((d, i) => { const r = cur[i] === EV[i]; if(r) ok++; d.classList.toggle('ok', r); d.classList.toggle('no', !r); });
+  const m = $('#oMsg');
+  m.className = 'msg ' + (ok === EV.length ? 'ok' : 'no');
+  m.textContent = ok === EV.length ? '✔ 全對！記法：荷蘭先來（1624）、西班牙晚兩年（1626）、荷蘭先後解決麻豆社、西班牙、郭懷一，最後被鄭成功趕走（1662）。' : `對了 ${ok} / ${EV.length}，紅色的位置不對（年份已顯示，可以照著再排一次）。`;
+  toolLog('事件排序', ok === EV.length);
+};
+$('#oShuffle').click();
+
+// ===== 翻翻卡 =====
+const FL = [
+  ['游耕','沒有固定耕地。砍樹、燒林，用灰燼當肥料再播種；地力用完就換地方。'],
+  ['社','早期漢人移民稱原住民的部落為「社」。'],
+  ['麻豆社之役','1635 年荷蘭聯合新港社攻打麻豆社，是荷蘭奠定南臺灣統治的關鍵一仗。'],
+  ['郭懷一事件','1652 年，漢人不滿荷蘭嚴苛管制，由郭懷一帶頭抗荷，結果失敗。'],
+  ['間接統治','不直接派官管，而是透過部落選出的長老來管。'],
+  ['地方會議','長老每年參加一次：宣誓效忠、聽荷蘭施政、報告部落情況。'],
+  ['權杖','荷蘭長官發給長老，象徵權威與榮耀。'],
+  ['新港文書','西拉雅族用羅馬字母拼寫自己的語言；新港社留下最多，故名。'],
+  ['番仔契','用新港文和漢人簽的土地契約，一直用到 19 世紀前期。'],
+  ['三貂角','西班牙人命名、留存到今天的地名。'],
+  ['大肚王','以中部大肚為中心，統治約 20 個部落；荷蘭、鄭氏時期都曾反抗，被鄭氏鎮壓後衰微。'],
+  ['生活型態變遷','鄭氏時期原住民學漢人農耕、逐漸以耕種為主，並在學校接觸漢人文化。']
+];
+const fb = $('#flips');
+FL.forEach(([a, b]) => { const d = document.createElement('div'); d.className = 'flip'; d.textContent = a; d.onclick = () => { const on = d.classList.toggle('on'); d.textContent = on ? b : a; }; fb.appendChild(d); });
+
+// ===== 模擬小考 =====
+const QS = [
+  { s:'16 世紀後期，臺灣原住民開始與外來者頻繁接觸，主要原因是什麼？', o:['東亞貿易興盛','清朝開放移民','日本派兵來臺','原住民主動出海'], a:0, w:'課本第一句：由於<b>東亞貿易的興盛</b>，原住民開始和外來者頻繁接觸。' },
+  { s:'荷蘭人一開始面對原住民，用的方法順序是？', o:['先武力征服，再與歸順的社結盟','先結盟，再武力征服','只傳教不用武力','直接派官員管理每個部落'], a:0, w:'先用<b>武力征服</b>，再和<b>歸順的社結盟</b>，有社反抗就找其他社一起鎮壓。' },
+  { s:'1635 年荷蘭人聯合哪一社，出兵攻打麻豆社？', o:['新港社','大肚社','雞籠社','淡水社'], a:0, w:'<b>新港社</b>（今臺南新市）一直是荷蘭盟友。' },
+  { s:'麻豆社之役的重要性是？', o:['荷蘭奠定南臺灣統治權的關鍵','西班牙退出臺灣的原因','鄭成功來臺的導火線','漢人開始大量移民的原因'], a:0, w:'課本小幫手：此戰是荷蘭人<b>奠定南臺灣統治權</b>的關鍵性軍事行動。' },
+  { s:'郭懷一事件中，新港社扮演什麼角色？', o:['協助荷蘭人對付漢人','和漢人一起抗荷','保持中立','逃到山區'], a:0, w:'荷蘭「結盟壓制」的對象不只原住民，也用在<b>漢人</b>身上；新港社協助荷蘭對付漢人。' },
+  { s:'荷蘭人透過什麼人和原住民交易，取得鹿皮？', o:['漢人','日本人','西班牙人','葡萄牙人'], a:0, w:'荷蘭人<b>透過漢人</b>與原住民交易取得鹿皮。' },
+  { s:'鹿皮貿易對原住民最直接的影響是？', o:['梅花鹿變少，傳統生活方式改變','原住民開始用羅馬字','原住民改信天主教','原住民搬到澎湖'], a:0, w:'梅花鹿被大肆捕捉、數量減少，影響原住民以狩獵為主的傳統生活。' },
+  { s:'荷蘭人對原住民的治理方式稱為？', o:['間接統治','直接統治','嚴苛管制','武力鎮壓為主'], a:0, w:'透過部落選出的<b>長老</b>進行<b>間接統治</b>。「嚴苛管制」是對漢人。' },
+  { s:'下列哪一項不是地方會議中長老要做的事？', o:['學習荷蘭語考試','宣誓效忠','聽取荷蘭人的施政措施','報告各部落情況'], a:0, w:'長老在地方會議要<b>宣誓效忠、聽取施政、報告部落情況</b>。課本沒有提到考荷蘭語。' },
+  { s:'課本圖中，荷蘭長官高坐亭中、原住民長老坐在低矮座椅上，這表示什麼？', o:['雙方是上下從屬關係','雙方地位平等','原住民是主人','荷蘭人向原住民效忠'], a:0, w:'座位高低顯示<b>上下從屬</b>關係；長官發給長老<b>權杖</b>，象徵權威與榮耀。' },
+  { s:'「新港文書」是什麼？', o:['西拉雅族用羅馬字母拼寫自己語言的文獻','荷蘭人寫的漢字公文','鄭氏的戶口名冊','西班牙文聖經'], a:0, w:'荷蘭傳教士教<b>西拉雅族</b>用<b>羅馬字母</b>拼寫母語；新港社留下最多，故稱新港文書。' },
+  { s:'新港文書又被稱為「番仔契」，是因為？', o:['西拉雅族用新港文和漢人簽土地契約','荷蘭人用來和日本簽約','鄭氏用來收稅','西班牙人用來傳教'], a:0, w:'直到 <b>19 世紀前期</b>，南部西拉雅族仍用新港文和漢人簽訂<b>土地契約</b>。' },
+  { s:'西班牙人在臺灣北部傳播的宗教是？', o:['天主教','基督教新教','佛教','伊斯蘭教'], a:0, w:'西班牙＝<b>天主教</b>；荷蘭＝<b>基督教</b>。' },
+  { s:'為什麼西班牙的傳教成果不如荷蘭？', o:['西班牙對臺灣北部重視降低，減少政治與軍事支援','原住民不會說西班牙語','西班牙沒有蓋教堂','北部沒有原住民'], a:0, w:'課本：西班牙對北部<b>重視逐漸降低</b>，減少支援，所以成果不如荷蘭。' },
+  { s:'鄭氏時期，與鄭氏勢力衝突最激烈的原住民勢力是？', o:['中部的大肚王','南部的麻豆社','北部的馬賽人','東部的卑南族'], a:0, w:'漢人增加、積極拓墾，壓縮原住民空間；其中以中部<b>大肚王</b>衝突最激烈，在鄭氏鎮壓下衰微。' },
+  { s:'鄭氏時期，原住民生活型態最主要的變化是？', o:['學漢人農耕，逐漸以耕種為主','開始用羅馬字','開始說西班牙語','改以捕鹿為主'], a:0, w:'原住民學<b>漢人的農耕技術</b>，逐漸以耕種為務；鄭氏也在部落設學校推行文教。' },
+  { s:'關於荷蘭、西班牙、鄭氏時期的原住民，下列敘述何者正確？', o:['統治範圍之外仍有許多原住民維持原有生活','全臺原住民都受到外來者統治','原住民全部改信基督教','原住民全部改以耕種為主'], a:0, w:'課本：在三方統治範圍<b>之外</b>，仍有許多原住民大致維持原本的生活方式。考題常用「全部」「都」設陷阱。' }
+];
+let qOk = 0, qN = 0, qList = [];
+function startQuiz(){
+  qOk = 0; qN = 0; qList = shuffle(QS).slice(0, 15);
+  const sc = $('#score'); sc.className = ''; sc.textContent = '';
+  renderQs($('#quiz'), qList, ok => {
+    qN++; if(ok) qOk++;
+    if(qN === qList.length){
+      sc.className = 'show';
+      sc.style.background = qOk >= 13 ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      sc.textContent = qOk >= 13 ? `🎉 ${qOk} / ${qList.length}，明天穩了！` : `${qOk} / ${qList.length}。回去看答錯題的解析，再按「打亂重做」一次。`;
+      cloudSend({ type: "章末測驗", detail: `模擬小考 ${qOk}/${qList.length}`, score: qOk });
+      sc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+}
+$('#qRedo').onclick = () => { startQuiz(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+startQuiz();
+</script>
+</body>
+</html>
