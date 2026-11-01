@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>清帝國時期的社會與文化｜臺灣的歷史（上）第4章</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#7f1d1d; --accent-soft:#fef3c7;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#7f1d1d,#b45309); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+  .saying{display:inline-block; background:#ede9fe; color:#5b21b6; border-radius:6px; padding:0 6px; font-size:.82rem; margin-left:4px;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv .hi{background:#fef3c7;}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} .card{padding:16px 14px;} header.hero{padding:22px 18px;} }
+
+  .dnd-pool,.dnd-zone{border:2px dashed var(--border); border-radius:12px; padding:10px 12px; min-height:64px; margin:8px 0; background:#fff; transition:.15s;}
+  .dnd-pool{background:#f9fafb;}
+  .dnd-zone.over,.dnd-pool.over{border-color:var(--blue); background:#eff6ff;}
+  .dnd-zones{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px;}
+  .dnd-zone-title{font-weight:bold; margin-bottom:6px; color:var(--accent);}
+  .dnd-card{display:inline-block; background:#fff; border:1.5px solid var(--border); border-radius:99px; padding:6px 14px; margin:4px 6px 4px 0;
+    cursor:grab; user-select:none; touch-action:none; font-size:.95rem; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .1s;}
+  .dnd-card:hover{border-color:var(--blue);}
+  .dnd-card.sel{border-color:var(--blue); background:#dbeafe; transform:scale(1.04);}
+  .dnd-card.drag{position:fixed; z-index:99; pointer-events:none; opacity:.9; transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.2);}
+  .dnd-card.ok{border-color:var(--green); background:var(--green-soft);}
+  .dnd-card.no{border-color:var(--red); background:var(--red-soft);}
+  .dnd-bar{margin-top:8px;}
+  .dnd-bar button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem; margin-right:6px;}
+  .dnd-bar button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .dnd-msg{font-weight:bold; margin-left:8px;}
+  .dnd-msg.ok{color:#166534;} .dnd-msg.no{color:#991b1b;}
+  .dnd-hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; min-height:2.4em;}
+
+  .flip-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px;}
+  .flip{perspective:800px; cursor:pointer; height:124px;}
+  .flip .inner{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+  .flip.on .inner{transform:rotateY(180deg);}
+  .flip .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:12px; padding:10px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:.92rem; line-height:1.5;}
+  .flip .front{background:#fff; border:2px solid var(--accent); color:var(--accent); font-weight:bold;}
+  .flip .back{background:var(--accent); color:#fff; transform:rotateY(180deg);}
+
+  .mapwrap{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;}
+  .mapwrap .svgbox{margin:0; flex:1 1 260px; max-width:340px;}
+  .mapwrap .side{flex:1 1 220px; min-width:0;}
+  .spot{cursor:pointer;} .spot:hover circle,.spot:hover rect{stroke-width:4;}
+  .spot.hit circle{animation:pulse .6s ease 2;}
+  @keyframes pulse{0%{r:7} 50%{r:12} 100%{r:7}}
+  .tag{display:inline-block; border-radius:99px; padding:1px 10px; font-size:.82rem; color:#fff; margin-right:4px;}
+  .t-q{background:#b45309;} .t-z{background:#15803d;} .t-h{background:#7e22ce;} .t-all{background:#0369a1;}
+
+  /* 情境故事 */
+  .story{background:#fff; border:2px solid var(--accent); border-radius:12px; padding:14px 16px;}
+  .story .lv{font-size:.82rem; color:var(--sub);}
+  .story h3{color:var(--accent); margin:2px 0 6px;}
+  .story .opts button{display:block; width:100%; text-align:left; background:#fff; color:var(--ink); border:1.5px solid var(--border); border-radius:10px; padding:10px 14px; margin:7px 0; cursor:pointer; font-family:inherit; font-size:.95rem;}
+  .story .opts button:hover:not(:disabled){border-color:var(--blue); background:#f0f6ff;}
+  .story .opts button.pick{border-color:var(--blue); background:var(--blue-soft); font-weight:bold;}
+  .story .opts button:disabled{cursor:default; opacity:.75;}
+  .story .res{display:none; margin-top:8px;}
+  .story .res .you{background:#f9fafb; border-radius:8px; padding:8px 12px;}
+  .story .res .fact{background:var(--green-soft); color:#14532d; border-radius:8px; padding:8px 12px; margin-top:6px; font-size:.93rem;}
+  .story .next{margin-top:10px;}
+  .bag{font-size:.85rem; color:var(--sub); margin-top:8px;}
+
+  /* 排序 */
+  .ord-pool button{background:#fff; color:var(--ink); border:1.5px solid var(--border); border-radius:99px; padding:7px 14px; margin:4px 6px 4px 0; cursor:pointer; font-family:inherit; font-size:.92rem;}
+  .ord-pool button:hover{border-color:var(--blue);}
+  .ord-pool button.shake{animation:shake .35s; border-color:var(--red); background:var(--red-soft);}
+  @keyframes shake{25%{transform:translateX(-4px)} 75%{transform:translateX(4px)}}
+  .ord-seq{counter-reset:o; margin:8px 0 0; padding:0; list-style:none;}
+  .ord-seq li{counter-increment:o; background:#fff; border-left:4px solid var(--green); border-radius:8px; padding:7px 12px; margin:6px 0; font-size:.93rem;}
+  .ord-seq li::before{content:counter(o) ". "; font-weight:bold; color:var(--green);}
+  .ord-seq li small{color:var(--sub); display:block;}
+
+  /* 關係圖 */
+  .rel-node{cursor:pointer;} .rel-node:hover rect{stroke-width:4;}
+  .rel-node.on rect{stroke:#2563eb; stroke-width:4;}
+  .summary li{margin:4px 0;}
+  .kou{background:#fff7ed; border:2px dashed #c2410c; border-radius:12px; padding:12px 16px; font-size:1.02rem; line-height:2;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 臺灣的歷史（上） · 第4章</span>
+  <h1>清帝國時期的社會與文化</h1>
+  <p>1684 年起，臺灣成為清帝國的領土，二百多年間大批閩、粵移民渡海而來。他們怎麼冒險過海、怎麼開墾土地？為什麼常常發生民變和械鬥？平埔族的土地與生活起了什麼變化？移民又帶來哪些神明與文化？這份教材讓你當一回「渡臺移民」，再用地圖、配對、排序把重點記起來。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">4-1 移民社會</button>
+  <button data-t="s2">4-2 社會衝突</button>
+  <button data-t="s3">4-3 原漢關係</button>
+  <button data-t="s4">4-4 文化與宗教</button>
+  <button data-t="s5">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 4-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出清代來臺移民主要是泉州人、漳州人和客家人</li>
+      <li>知道渡臺限制、偷渡和「黑水溝」的風險，認識「羅漢腳」</li>
+      <li>看懂「墾首 → 墾戶 → 佃戶」的開墾關係，認識八堡圳、瑠公圳</li>
+      <li>說明移民怎麼從「祖籍認同」慢慢變成「本土認同」</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：誰渡海來臺灣？</h2>
+    <p>1683 年清軍攻下明鄭，隔年（<b>1684 年</b>）清廷把臺灣納入版圖，設<b>一府三縣</b>（臺灣府，下轄臺灣縣、鳳山縣、諸羅縣），歸福建省管。</p>
+    <p>當時福建、廣東沿海<b>山多田少、人口太多</b>，生活困難（把人往外推的「推力」）；臺灣土地肥沃、還有很多地可以開墾（把人吸過來的「拉力」）。於是很多人冒險渡海。</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>移民群體</th><th>來自哪裡</th><th>說的話</th><th>常見的分布（簡化說法）</th></tr>
+        <tr><td class="name"><span class="tag t-q">泉州人</span></td><td>福建泉州</td><td>閩南語</td><td>沿海平原、港口城市（如鹿港、艋舺）</td></tr>
+        <tr><td class="name"><span class="tag t-z">漳州人</span></td><td>福建漳州</td><td>閩南語</td><td>較內陸的平原</td></tr>
+        <tr><td class="name"><span class="tag t-h">客家人</span></td><td>廣東東部（如潮州、嘉應州一帶），也有來自福建汀州</td><td>客家話</td><td>丘陵、臺地、靠山的地區</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 泉州、漳州都在福建，合稱「閩」；廣東簡稱「粵」。所以課本常說「閩粵移民」。表格裡的分布只是大概的趨勢，實際上各地混居的情形很多。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：「唐山過臺灣」——渡海有多危險？</h2>
+    <p>清廷擔心臺灣再變成反清的基地，前期<b>限制人民渡臺</b>：要向官府申請許可，而且常常<b>不准攜帶家眷</b>。這些規定時鬆時緊，直到 <b>1875 年</b>才全面解除。</p>
+    <p>合法渡臺很難，所以很多人找專門安排偷渡的「<b>客頭</b>」偷渡。風險有：</p>
+    <ul>
+      <li><b>黑水溝</b>：臺灣海峽中（澎湖和臺灣之間）海流湍急、海水顏色很深的海域，帆船很容易出事。</li>
+      <li><b>壞客頭</b>：有的客頭在離岸很遠的沙洲就叫人下船，叫「放生」；人陷進爛泥裡出不來，叫「種芋」。</li>
+    </ul>
+    <div class="formula">「六死三留一回頭」<span class="saying">俗諺</span>：誇張地說十個人渡臺，六個死在路上、三個留下、一個回去。這是民間說法，不是真實統計，用來形容渡海的危險。</div>
+    <h3>羅漢腳：沒家沒業的單身漢</h3>
+    <p>因為不准帶家眷，來臺的多半是單身男子，造成<b>男多女少</b>。有些人沒有土地、沒有家、沒有固定工作，到處打零工，被稱為「<b>羅漢腳</b>」。他們容易聚眾鬧事，是下一節「民變」常見的背景。</p>
+  </div>
+
+  <div class="card">
+    <h2>🎮 換你當移民：唐山過臺灣生存記</h2>
+    <p>你是 18 世紀福建漳州的年輕農夫。每一關選一個做法，看看會發生什麼，以及歷史上大多數人怎麼做。</p>
+    <div id="story"></div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：土地怎麼開墾？墾首、墾戶、佃戶</h2>
+    <p>荒地不是誰想種就能種。清代常見的做法是：有錢有勢的人先向官府申請「<b>墾照</b>」（開墾許可證），拿到一大片土地，再招人來開墾。點一點下面的方塊，看看每個角色在做什麼。</p>
+    <div class="tool">
+      <div class="svgbox" id="svgRel"></div>
+      <div class="infobox" id="relInfo">👆 點圖上的方塊，看看他是誰、要繳什麼、收什麼。</div>
+      <div class="hint">各版本課本用詞略有不同：有的把中間那層叫「佃戶」，把真正下田的人叫「現耕佃人」。重點是同一塊田上有兩層收租的人。</div>
+    </div>
+    <div class="formula">一塊田上有兩個「主人」：收<b>大租</b>的墾首（大租戶）和收<b>小租</b>的墾戶（小租戶）→ 叫做「<b>一田二主</b>」</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：水圳——種稻要有水</h2>
+    <p>移民把旱地改成<b>水田</b>種稻，就需要挖水圳引河水灌溉。水圳要花很多錢和人力，常常由地方有力人士出資、眾人合作完成。</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>水圳</th><th>地點</th><th>興建者</th><th>水源</th></tr>
+        <tr><td class="name">八堡圳</td><td>彰化平原</td><td>施世榜（18 世紀初）</td><td>濁水溪</td></tr>
+        <tr><td class="name">瑠公圳</td><td>臺北盆地</td><td>郭錫瑠（18 世紀中）</td><td>新店溪</td></tr>
+      </table>
+    </div>
+    <p>水圳完成後稻米產量大增，臺灣米還大量運往中國大陸。米和糖的貿易讓港口熱鬧起來，有句俗諺說「<b>一府二鹿三艋舺</b>」<span class="saying">俗諺</span>，說的就是清代臺灣三大城市：臺灣府城（今臺南）、鹿港、艋舺（今臺北萬華）。</p>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 地圖：移民上岸以後</h2>
+    <div class="tool">
+      <div class="mapwrap">
+        <div class="svgbox" id="svgMap1"></div>
+        <div class="side">
+          <div class="infobox" id="map1Info">👆 點地圖上的圓點或方塊，看看那裡有什麼。</div>
+          <div class="hint">圓點＝港口城市；藍色方塊＝水圳；紅色虛線一帶＝黑水溝。位置是示意，不是精確地圖。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 5：從「我是泉州人」到「我是臺灣人」</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th></th><th>早期（祖籍認同）</th><th>後期（本土認同，約 19 世紀以後）</th></tr>
+        <tr><td class="name">怎麼分「自己人」</td><td>看祖籍：泉州、漳州、客家</td><td>看住在哪裡：同一個地方的人</td></tr>
+        <tr><td class="name">拜什麼神</td><td>從家鄉帶來的<b>祖籍神</b></td><td>在地廟宇成為跨祖籍的地方信仰中心</td></tr>
+        <tr><td class="name">宗族祭拜誰</td><td>「<b>唐山祖</b>」：大陸老家的祖先（同姓的人一起出錢組成）</td><td>「<b>開臺祖</b>」：第一位來臺灣的祖先（真正有血緣的家族）</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 <b>宗族</b>：同一個祖先傳下來的家族組織，會一起祭祖、管理共同財產、互相幫忙。在臺灣出生、長大的人越來越多，大家漸漸把臺灣當成自己的家鄉，學者稱這個過程為「本土化」（也有人稱「土著化」）。</div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜清代來臺的單身男子為什麼特別多？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 清廷前期規定渡臺不准攜帶家眷。</p>
+        <p class="step"><b>②</b> 偷渡危險，通常是年輕男子先冒險。</p>
+        <p class="step"><b>③</b> 結果造成男多女少，出現很多「羅漢腳」。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜一個家族從祭拜「唐山祖」改成祭拜「開臺祖」，代表什麼？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 唐山祖是大陸老家的祖先，開臺祖是第一位來臺的祖先。</p>
+        <p class="step"><b>②</b> 改拜開臺祖，表示他們把臺灣當成真正的家，認同從「祖籍」轉向「本土」。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">1. 清代來臺的漢人移民，主要來自哪裡？</div>
+      <label><input type="radio" name="p1q1" value="A">浙江、江蘇</label>
+      <label><input type="radio" name="p1q1" value="B">北京、天津</label>
+      <label><input type="radio" name="p1q1" value="C">福建、廣東</label>
+      <label><input type="radio" name="p1q1" value="D">日本、琉球</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　閩（泉州、漳州）、粵（客家），合稱閩粵移民。">　</div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">2. 「羅漢腳」指的是：</div>
+      <label><input type="radio" name="p1q2" value="A">替官府管理土地的人</label>
+      <label><input type="radio" name="p1q2" value="B">沒有家室、沒有固定工作的單身男子</label>
+      <label><input type="radio" name="p1q2" value="C">寺廟裡的和尚</label>
+      <label><input type="radio" name="p1q2" value="D">專門安排偷渡的人</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　安排偷渡的是「客頭」；羅漢腳是男多女少社會下的遊民。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">3. 向官府申請墾照、招人來開墾，並收取「大租」的是：</div>
+      <label><input type="radio" name="p1q3" value="A">現耕佃人</label>
+      <label><input type="radio" name="p1q3" value="B">羅漢腳</label>
+      <label><input type="radio" name="p1q3" value="C">客頭</label>
+      <label><input type="radio" name="p1q3" value="D">墾首</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　墾首（大租戶）申請墾照，收大租。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出清代三大民變：朱一貴、林爽文、戴潮春事件的時間與重點</li>
+      <li>分析民變為什麼常發生，以及官府怎麼看、怎麼處理</li>
+      <li>知道分類械鬥的種類（閩粵、漳泉、頂下郊拚）、原因和影響</li>
+      <li>分辨「民變」和「械鬥」的不同</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：民變和械鬥差在哪？</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th></th><th>民變</th><th>分類械鬥</th></tr>
+        <tr><td class="name">誰對誰</td><td>人民 ⚔️ <b>官府</b></td><td>人民 ⚔️ <b>人民</b>（不同群體）</td></tr>
+        <tr><td class="name">常見原因</td><td>官員貪污、欺壓百姓、會黨被打壓</td><td>爭土地、爭水源、爭生意，祖籍不同</td></tr>
+        <tr><td class="name">例子</td><td>朱一貴、林爽文、戴潮春事件</td><td>閩粵械鬥、漳泉械鬥、頂下郊拚</td></tr>
+      </table>
+    </div>
+    <div class="formula">民變＝「反官府」；械鬥＝「人群打人群」</div>
+  </div>
+
+  <div class="card">
+    <h2>⏳ 可點的時間軸：清代臺灣的衝突事件</h2>
+    <div class="tool">
+      <div class="svgbox" id="svgTL"></div>
+      <div class="infobox" id="tlInfo">👆 點時間軸上的事件，看詳細內容。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：三大民變</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>事件</th><th>時間</th><th>地點</th><th>重點</th></tr>
+        <tr><td class="name">朱一貴事件</td><td>1721 年</td><td>鳳山縣（今高雄一帶）</td><td>養鴨出身，人稱「鴨母王」；一度攻下府城，後來內部閩粵分裂，很快被清軍平定。事後清廷增設<b>彰化縣、淡水廳</b>。</td></tr>
+        <tr class="hi"><td class="name">林爽文事件</td><td>1786～1788 年</td><td>彰化大里杙（今臺中大里）</td><td><b>天地會</b>領袖，清代臺灣<b>規模最大</b>的民變；乾隆皇帝派福康安率軍平定。諸羅縣城軍民堅守，被改名為「<b>嘉義</b>」。</td></tr>
+        <tr><td class="name">戴潮春事件</td><td>1862～1864 年</td><td>彰化一帶</td><td>以八卦會（天地會系統）為基礎；清廷借助地方士紳（如霧峰林家）的武力才平定。</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 <b>天地會</b>：民間的秘密結社，成員互相結拜、互相幫忙。官府怕它聚眾造反，常常查禁，反而更容易引發衝突。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：為什麼民變這麼多？官府怎麼看？</h2>
+    <div class="formula">「三年一小反，五年一大亂」<span class="saying">俗諺</span>：民間流傳的說法，形容清代臺灣動亂頻繁，不是精確的統計。</div>
+    <h3>常見原因</h3>
+    <ul>
+      <li><b>移民社會</b>：男多女少、羅漢腳多，人容易聚集起來鬧事。</li>
+      <li><b>官府統治力量薄弱</b>：官員任期短、有人貪污；駐臺士兵（班兵）從福建輪調，人數有限。</li>
+      <li><b>秘密會社</b>：天地會等結社讓人容易被動員。</li>
+    </ul>
+    <h3>官府的看法與處理</h3>
+    <p>清代官方文書把民變稱為「亂」、把起事的人稱為「賊」，主要態度是<b>派兵鎮壓</b>；事後也會檢討、調整治理，例如增設行政區、表揚協助官府的「<b>義民</b>」。今天的歷史學者多稱它們為「事件」，並且分析背後的社會原因，而不只是當成「作亂」。</p>
+    <div class="note">💡 民變也會變成族群衝突：林爽文事件中，有些客家人和泉州人組成「義民」幫官府作戰。這和下面的分類械鬥是連在一起的。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：分類械鬥</h2>
+    <p><b>械鬥</b>就是拿著武器集體打鬥。<b>分類</b>指依照祖籍、姓氏等把人分成不同群體。</p>
+    <ul>
+      <li><b>閩粵械鬥</b>：閩南人和客家人之間。</li>
+      <li><b>漳泉械鬥</b>：同樣說閩南語的漳州人和泉州人之間。</li>
+      <li><b>頂下郊拚</b>（1853 年，艋舺）：泉州的「三邑人」（頂郊）和「同安人」（下郊）為了碼頭貿易利益打起來，同安人戰敗，退到<b>大稻埕</b>，大稻埕因此發展起來。（「郊」是清代的商人同業組織。）</li>
+      <li>還有不同姓氏之間的械鬥等。</li>
+    </ul>
+    <h3>原因 → 影響</h3>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>原因</th><th>影響</th></tr>
+        <tr><td>爭奪土地、水源、商業利益</td><td>死傷、財產損失，農田和村莊被燒毀</td></tr>
+        <tr><td>祖籍、語言、習俗不同，互相猜疑</td><td>同祖籍的人集中住在一起，形成聚落</td></tr>
+        <tr><td>官府力量不足，人民靠自己武裝</td><td>人群遷移、新市街興起（如大稻埕）；村莊外種刺竹防禦</td></tr>
+      </table>
+    </div>
+    <p>19 世紀後期，本土認同增強、開港後經濟改變，大規模的分類械鬥漸漸減少。</p>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：民變還是械鬥？</h2>
+    <p>把事件卡和描述拖到正確的類別（也可以先點卡片、再點區域）。</p>
+    <div id="dndConflict"></div>
+  </div>
+
+  <div class="card">
+    <h2>🔢 排序挑戰：依時間先後點出事件</h2>
+    <p>從最早的開始，依序點下去。點錯會晃一下。</p>
+    <div class="tool" id="ordConflict"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">1. 清代臺灣規模最大的民變是：</div>
+      <label><input type="radio" name="p2q1" value="A">朱一貴事件</label>
+      <label><input type="radio" name="p2q1" value="B">林爽文事件</label>
+      <label><input type="radio" name="p2q1" value="C">戴潮春事件</label>
+      <label><input type="radio" name="p2q1" value="D">頂下郊拚</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　林爽文事件（1786～1788），乾隆派福康安來臺平定。頂下郊拚是械鬥，不是民變。">　</div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">2. 「諸羅」改名為「嘉義」，和哪個事件有關？</div>
+      <label><input type="radio" name="p2q2" value="A">林爽文事件中，諸羅縣城軍民堅守</label>
+      <label><input type="radio" name="p2q2" value="B">朱一貴自稱鴨母王</label>
+      <label><input type="radio" name="p2q2" value="C">頂下郊拚</label>
+      <label><input type="radio" name="p2q2" value="D">開港通商</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　清廷為了表揚守城的「忠義」，改名嘉義。">　</div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">3. 1853 年頂下郊拚之後，戰敗的同安人遷到哪裡，使當地發展起來？</div>
+      <label><input type="radio" name="p2q3" value="A">鹿港</label>
+      <label><input type="radio" name="p2q3" value="B">府城</label>
+      <label><input type="radio" name="p2q3" value="C">大稻埕</label>
+      <label><input type="radio" name="p2q3" value="D">宜蘭</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　同安人退到大稻埕，後來大稻埕成為重要的商業區。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說明漢人開墾如何讓平埔族失去土地（番大租、買賣、通婚）</li>
+      <li>知道平埔族群的漢化與遷徙（如遷往埔里、宜蘭）</li>
+      <li>認識「隘墾」和清末的隘勇與防線</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：清廷怎麼稱呼原住民？</h2>
+    <p>清廷依照「有沒有歸順、繳稅」來分：歸順並繳稅的稱為「<b>熟番</b>」（多是平地的<b>平埔族</b>），沒有歸順的稱為「<b>生番</b>」（多住在山區）。這些是當時官方的稱呼，今天統稱為「<b>原住民族</b>」。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：平埔族的土地怎麼流失？</h2>
+    <p>漢人移民越來越多，需要土地；平埔族原本住在西部平原，正好是漢人想開墾的地方。漢人取得土地的方式有：</p>
+    <ul>
+      <li><b>租地</b>：平埔族把土地交給漢人開墾，漢人每年繳租給番社，這種租叫「<b>番大租</b>」。</li>
+      <li><b>買賣、典押</b>：平埔族把地賣掉或抵押給漢人。</li>
+      <li><b>通婚</b>：漢人娶平埔族女子，取得土地或資源。</li>
+      <li>也有<b>欺騙、強占</b>的情形。</li>
+    </ul>
+    <div class="warn">⚠️ 番大租看起來平埔族還是「地主」，但租金常是固定的，又常被拖欠；漢人實際耕作、轉租，久而久之，土地實際上被漢人掌握。</div>
+    <p>清廷也曾想保護番地：禁止漢人私買番地、在山邊劃出<b>番界</b>（用土堆、溝渠做界線，俗稱「土牛溝」「土牛紅線」），不准漢人越界。但實際上越界開墾的人很多，禁令很難真正執行。</p>
+  </div>
+
+  <div class="card">
+    <h2>🔢 因果排序：平埔族為什麼搬家？</h2>
+    <p>把下面的事件依「原因 → 結果」的順序點出來。</p>
+    <div class="tool" id="ordPingpu"></div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：漢化與遷徙</h2>
+    <p>平埔族和漢人長期相處、通婚，漸漸學漢語、穿漢服、取漢姓（例如很多平埔族人姓「潘」）、拜漢人的神明，這個過程叫<b>漢化</b>。不過許多族群仍保留自己的祭典和信仰（例如西拉雅族的阿立祖信仰）。</p>
+    <div class="formula">「有唐山公，無唐山嬤」<span class="saying">俗諺</span>：常被解釋成「來臺的男性多，很多人娶了本地（包括平埔族）女子」。這句話的解釋學界有不同看法，不能直接當成證據。</div>
+    <p>失去土地的平埔族，有些人選擇搬到漢人還沒大量開墾的地方：</p>
+    <ul>
+      <li>19 世紀初（1804 年），中部的平埔族群（如岸裡社等）遷往<b>宜蘭</b>。</li>
+      <li>19 世紀前期起，中部平埔族群陸續遷入<b>埔里盆地</b>。</li>
+      <li>南部的平埔族群（如西拉雅族）也有人往東遷到<b>花東縱谷</b>。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 地圖：遷徙路線、番界與隘墾</h2>
+    <div class="tool">
+      <div class="mapwrap">
+        <div class="svgbox" id="svgMap3"></div>
+        <div class="side">
+          <div class="row"><button id="m3Explore" class="ghost">探索模式</button><button id="m3Quiz">考考你</button></div>
+          <div class="infobox" id="map3Info">👆 點箭頭旁的圓點、虛線或方塊，看看是什麼。</div>
+          <div class="hint">橘色箭頭＝平埔族遷徙；紅色虛線＝番界（示意）；紫色方塊＝隘墾。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：隘墾與隘勇</h2>
+    <p>漢人越往山邊開墾，就越容易和山區的原住民發生衝突。為了防守，墾民在山邊設「<b>隘</b>」：蓋瞭望用的<b>隘寮</b>，雇用<b>隘丁</b>守衛，一邊防守、一邊開墾，叫「<b>隘墾</b>」。</p>
+    <p>例子：1830 年代，新竹<b>北埔</b>的「<b>金廣福</b>」墾號，由客家人（粵籍）姜秀鑾和閩籍的周邦正合作，「廣」代表粵、「福」代表閩，是閩粵合作開墾的例子。</p>
+    <p><b>清末</b>，清廷推動「開山撫番」，劉銘傳把守隘的人改編成官方的「<b>隘勇</b>」，沿著山區設防線，以便開採<b>樟腦</b>、種茶等山區資源，和山區原住民的衝突也增加。到日治時期，這種「隘勇線」又擴大了（之後的章節會再學）。</p>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="A">
+      <div class="stem">1. 平埔族把土地交給漢人開墾，漢人每年繳給平埔族的租，叫：</div>
+      <label><input type="radio" name="p3q1" value="A">番大租</label>
+      <label><input type="radio" name="p3q1" value="B">小租</label>
+      <label><input type="radio" name="p3q1" value="C">田賦</label>
+      <label><input type="radio" name="p3q1" value="D">王田</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　番大租；但租金固定又常被拖欠，平埔族漸漸失去土地。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">2. 清代中部平埔族群失去土地後，有些人遷往哪裡？</div>
+      <label><input type="radio" name="p3q2" value="A">澎湖、金門</label>
+      <label><input type="radio" name="p3q2" value="B">福建、廣東</label>
+      <label><input type="radio" name="p3q2" value="C">臺南、高雄</label>
+      <label><input type="radio" name="p3q2" value="D">埔里盆地、宜蘭</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　往漢人還沒大量開墾的埔里、宜蘭遷移。">　</div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">3. 新竹北埔「金廣福」的名稱，「廣」和「福」各代表：</div>
+      <label><input type="radio" name="p3q3" value="A">廣場和福氣</label>
+      <label><input type="radio" name="p3q3" value="B">粵籍（廣東）和閩籍（福建）</label>
+      <label><input type="radio" name="p3q3" value="C">廣州和福州兩座城市的官員</label>
+      <label><input type="radio" name="p3q3" value="D">平埔族和高山原住民</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　閩粵合作的隘墾組織。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4-4 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出常見民間信仰的神明各和哪群人有關</li>
+      <li>說明廟宇在移民社會中的功能</li>
+      <li>認識科舉、儒學與書院，以及士紳階層的出現</li>
+      <li>知道開港後西方傳教士（馬雅各、馬偕、甘為霖、巴克禮）的貢獻與白話字</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：移民把神明帶過海</h2>
+    <p>渡海危險、開墾辛苦、瘟疫可怕，移民常帶著家鄉的神像或香火來臺，祈求平安。不同祖籍的人拜的神明不太一樣：</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>神明</th><th>保佑什麼</th><th>主要和哪群人有關</th></tr>
+        <tr><td class="name">媽祖</td><td>海神，保佑渡海平安</td><td><span class="tag t-all">各群體普遍</span>沿海移民都拜</td></tr>
+        <tr><td class="name">王爺</td><td>驅除瘟疫（有「送王船」習俗）</td><td><span class="tag t-all">各群體普遍</span>沿海地區多</td></tr>
+        <tr><td class="name">保生大帝</td><td>醫神</td><td><span class="tag t-q">泉州人</span>同安人</td></tr>
+        <tr><td class="name">清水祖師</td><td>保佑家鄉人</td><td><span class="tag t-q">泉州人</span>安溪人</td></tr>
+        <tr><td class="name">觀音（龍山寺）</td><td>慈悲救苦</td><td><span class="tag t-q">泉州人</span>三邑人（如艋舺龍山寺）</td></tr>
+        <tr><td class="name">開漳聖王</td><td>開發漳州的人物，被奉為神</td><td><span class="tag t-z">漳州人</span></td></tr>
+        <tr><td class="name">三山國王</td><td>廣東潮州一帶的山神</td><td><span class="tag t-h">客家人</span></td></tr>
+        <tr><td class="name">義民爺</td><td>紀念林爽文事件等協助官府戰死的義民</td><td><span class="tag t-h">客家人</span>（如新竹新埔義民廟）</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：神明 ↔ 守護的人群</h2>
+    <p>把神明拖到和祂最有關係的人群。</p>
+    <div id="dndGod"></div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：廟宇不只是拜拜的地方</h2>
+    <ul>
+      <li><b>信仰中心</b>：凝聚同鄉、同村的人。</li>
+      <li><b>議事、調解</b>：村民在廟裡開會、解決糾紛。</li>
+      <li><b>教育</b>：有些廟附設私塾，教小孩讀書。</li>
+      <li><b>娛樂、社交</b>：廟會、迎神、演戲，是大家最熱鬧的活動。</li>
+      <li><b>商業</b>：商人組織「郊」常以廟宇作為聚會和辦事的地方。</li>
+      <li><b>防衛</b>：發生械鬥時，廟宇也是召集同群人的中心。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：科舉、儒學與書院</h2>
+    <p>清廷在臺灣設立官方學校（府、縣的<b>儒學</b>），民間有啟蒙的<b>私塾</b>，還有比較高級的<b>書院</b>（如臺南的海東書院、新北泰山的明志書院）。讀書人學儒家經典，參加<b>科舉</b>考試，考上可以當官。</p>
+    <p>1823 年，新竹的<b>鄭用錫</b>考上進士，被稱為「開臺進士」（第一位臺灣籍的進士）。有功名的讀書人成為「<b>士紳</b>」，在地方上很有影響力，臺灣社會也漸漸由「拚勇力」的開墾社會，轉變成重視讀書的「文治社會」。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：開港後，西方傳教士來了</h2>
+    <p>1858 年清廷簽訂《天津條約》，臺灣陸續開放<b>安平、淡水、打狗、基隆</b>等港口（1860 年代）。西方傳教士可以來臺傳教，他們用<b>醫療</b>和<b>教育</b>接近民眾。</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>傳教士</th><th>來自</th><th>地區</th><th>主要貢獻</th></tr>
+        <tr><td class="name">馬雅各</td><td>英國長老教會</td><td>南部（府城、打狗）</td><td>1865 年來臺，醫生，以<b>醫療</b>傳教（今新樓醫院的源頭）</td></tr>
+        <tr><td class="name">甘為霖</td><td>英國長老教會</td><td>南部（臺南）</td><td>1871 年來臺，關心盲人，創辦盲人學校（訓瞽堂）</td></tr>
+        <tr><td class="name">巴克禮</td><td>英國長老教會</td><td>南部（臺南）</td><td>推廣<b>白話字</b>，1885 年創辦《臺灣府城教會報》</td></tr>
+        <tr class="hi"><td class="name">馬偕</td><td>加拿大長老教會</td><td>北部（淡水）</td><td>1872 年到淡水，以<b>拔牙</b>行醫出名；創辦偕醫館、<b>理學堂大書院（牛津學堂）</b>、淡水女學堂</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 <b>白話字</b>：用羅馬字母拼寫臺語（閩南語）。不認識漢字的人，學會拼音就能讀聖經、看教會報紙。也有天主教道明會神父在 1859 年就到打狗傳教。傳教初期常被民眾誤解，也發生過衝突（稱為「教案」）。</div>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 傳教士地圖：南部還是北部？</h2>
+    <div class="tool">
+      <div class="mapwrap">
+        <div class="svgbox" id="svgMap4"></div>
+        <div class="side">
+          <div class="infobox" id="map4Info">👆 點地圖上的地點，看看誰在那裡傳教。</div>
+          <div class="hint">紅色＝英國長老教會（南部）；綠色＝加拿大長老教會（北部）；紫色＝天主教。</div>
+        </div>
+      </div>
+    </div>
+    <div id="dndMission"></div>
+  </div>
+
+  <div class="card">
+    <h2>📝 一頁重點整理＋口訣</h2>
+    <div class="kou">
+      🚢 <b>泉漳客，渡黑水</b>（偷渡怕放生、種芋，男多女少羅漢腳）<br>
+      🌾 <b>墾首申墾照，大租小租一田二主</b>；<b>八堡（彰化）瑠公（臺北）</b>水圳灌稻田<br>
+      ⚔️ <b>朱、林、戴</b>三大民變（1721、1786、1862）；<b>漳泉閩粵頂下郊</b>是械鬥<br>
+      🏞️ <b>番大租</b>地流失，平埔遷<b>埔里、宜蘭</b>；山邊設<b>隘</b>防衝突<br>
+      🛕 <b>媽祖王爺</b>大家拜，<b>保生清水</b>泉州來，<b>開漳</b>漳州，<b>三山義民</b>客家<br>
+      ✝️ <b>南馬雅各（醫療）、北馬偕（拔牙、牛津學堂）</b>，白話字拼臺語
+    </div>
+    <ul class="summary" style="margin-top:12px">
+      <li>移民認同：<b>祖籍認同 → 本土認同</b>（唐山祖 → 開臺祖）</li>
+      <li>民變＝反官府；械鬥＝人群對人群；「三年一小反，五年一大亂」是俗諺</li>
+      <li>文教：儒學、書院、科舉 → 士紳；1823 鄭用錫「開臺進士」</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🃏 翻翻卡：考前 3 分鐘複習</h2>
+    <p>先想答案，再點卡片翻過來對。</p>
+    <div class="flip-grid" id="flipGrid"></div>
+    <div class="row" style="margin-top:10px"><button id="flipReset" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:inherit">全部蓋回去</button></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">1. 客家移民最常供奉的神明是：</div>
+      <label><input type="radio" name="p4q1" value="A">開漳聖王</label>
+      <label><input type="radio" name="p4q1" value="B">清水祖師</label>
+      <label><input type="radio" name="p4q1" value="C">三山國王</label>
+      <label><input type="radio" name="p4q1" value="D">保生大帝</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　三山國王、義民爺和客家人關係最密切。">　</div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">2. 在淡水以拔牙行醫、創辦理學堂大書院（牛津學堂）的傳教士是：</div>
+      <label><input type="radio" name="p4q2" value="A">馬偕</label>
+      <label><input type="radio" name="p4q2" value="B">馬雅各</label>
+      <label><input type="radio" name="p4q2" value="C">甘為霖</label>
+      <label><input type="radio" name="p4q2" value="D">巴克禮</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　馬偕，加拿大長老教會，在北部淡水。馬雅各在南部。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">3. 「白話字」是指：</div>
+      <label><input type="radio" name="p4q3" value="A">科舉考試用的文章格式</label>
+      <label><input type="radio" name="p4q3" value="B">清廷公文的寫法</label>
+      <label><input type="radio" name="p4q3" value="C">平埔族的象形文字</label>
+      <label><input type="radio" name="p4q3" value="D">用羅馬字母拼寫臺語</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　傳教士推廣，讓不識漢字的人也能讀寫。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（12 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 清廷前期限制人民渡臺，常常不准攜帶家眷，造成臺灣社會出現什麼現象？</div>
+      <label><input type="radio" name="qz1" value="A">女多男少</label>
+      <label><input type="radio" name="qz1" value="B">男多女少，羅漢腳很多</label>
+      <label><input type="radio" name="qz1" value="C">人口快速減少</label>
+      <label><input type="radio" name="qz1" value="D">移民都是全家一起來</label>
+      <div class="fb" data-exp="　單身男子多，沒家沒業的人被稱為羅漢腳。">　</div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">2. 「黑水溝」指的是：</div>
+      <label><input type="radio" name="qz2" value="A">臺北盆地的排水溝</label>
+      <label><input type="radio" name="qz2" value="B">漢人和原住民的界線</label>
+      <label><input type="radio" name="qz2" value="C">臺灣海峽中海流湍急的危險海域</label>
+      <label><input type="radio" name="qz2" value="D">八堡圳的別名</label>
+      <div class="fb" data-exp="　澎湖與臺灣之間的海域，渡海最危險的一段。番界俗稱土牛溝，別搞混。">　</div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 在「一田二主」的制度中，收「大租」和收「小租」的分別是：</div>
+      <label><input type="radio" name="qz3" value="A">墾首、墾戶</label>
+      <label><input type="radio" name="qz3" value="B">官府、墾首</label>
+      <label><input type="radio" name="qz3" value="C">佃戶、墾首</label>
+      <label><input type="radio" name="qz3" value="D">客頭、羅漢腳</label>
+      <div class="fb" data-exp="　墾首（大租戶）收大租；墾戶（小租戶）把田租給佃戶，收小租。">　</div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. 下列水圳與地區的配對，何者正確？</div>
+      <label><input type="radio" name="qz4" value="A">八堡圳—臺北盆地</label>
+      <label><input type="radio" name="qz4" value="B">瑠公圳—彰化平原</label>
+      <label><input type="radio" name="qz4" value="C">八堡圳—宜蘭平原</label>
+      <label><input type="radio" name="qz4" value="D">瑠公圳—臺北盆地</label>
+      <div class="fb" data-exp="　八堡圳在彰化（施世榜），瑠公圳在臺北（郭錫瑠）。">　</div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 某家族祠堂原本祭拜大陸老家的「唐山祖」，後來改祭「開臺祖」。這反映：</div>
+      <label><input type="radio" name="qz5" value="A">家族準備搬回大陸</label>
+      <label><input type="radio" name="qz5" value="B">認同從祖籍轉向本土</label>
+      <label><input type="radio" name="qz5" value="C">清廷規定只能拜開臺祖</label>
+      <label><input type="radio" name="qz5" value="D">分類械鬥越來越嚴重</label>
+      <div class="fb" data-exp="　把臺灣當成自己的家鄉，是本土化的表現。">　</div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">6. 清代三大民變依時間先後排列，正確的是：</div>
+      <label><input type="radio" name="qz6" value="A">林爽文 → 朱一貴 → 戴潮春</label>
+      <label><input type="radio" name="qz6" value="B">戴潮春 → 林爽文 → 朱一貴</label>
+      <label><input type="radio" name="qz6" value="C">朱一貴 → 林爽文 → 戴潮春</label>
+      <label><input type="radio" name="qz6" value="D">朱一貴 → 戴潮春 → 林爽文</label>
+      <div class="fb" data-exp="　1721 朱一貴 → 1786 林爽文 → 1862 戴潮春。">　</div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">7. 「三年一小反，五年一大亂」這句話，最適合怎麼理解？</div>
+      <label><input type="radio" name="qz7" value="A">民間俗諺，形容清代臺灣動亂頻繁，不是精確統計</label>
+      <label><input type="radio" name="qz7" value="B">清廷正式統計的民變次數</label>
+      <label><input type="radio" name="qz7" value="C">規定每三年要舉行一次科舉</label>
+      <label><input type="radio" name="qz7" value="D">描述平埔族遷徙的頻率</label>
+      <div class="fb" data-exp="　俗諺是誇張的形容，讀歷史時要分清楚俗諺和史實。">　</div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">8. 下列哪一個屬於「分類械鬥」，而不是「民變」？</div>
+      <label><input type="radio" name="qz8" value="A">朱一貴事件</label>
+      <label><input type="radio" name="qz8" value="B">林爽文事件</label>
+      <label><input type="radio" name="qz8" value="C">戴潮春事件</label>
+      <label><input type="radio" name="qz8" value="D">頂下郊拚</label>
+      <div class="fb" data-exp="　頂下郊拚是泉州三邑人和同安人之間的械鬥。">　</div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">9. 清代平埔族土地大量流失的原因，<b>不包括</b>：</div>
+      <label><input type="radio" name="qz9" value="A">把土地租給漢人收番大租，租金卻常被拖欠</label>
+      <label><input type="radio" name="qz9" value="B">日本政府強制徵收</label>
+      <label><input type="radio" name="qz9" value="C">與漢人通婚、買賣土地</label>
+      <label><input type="radio" name="qz9" value="D">漢人移民人數越來越多</label>
+      <div class="fb" data-exp="　清代還沒有日本統治，B 的時代不對。">　</div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">10. 漢人在山邊開墾時設隘寮、雇隘丁防守，一邊防守一邊開墾，叫做：</div>
+      <label><input type="radio" name="qz10" value="A">番大租</label>
+      <label><input type="radio" name="qz10" value="B">一田二主</label>
+      <label><input type="radio" name="qz10" value="C">隘墾</label>
+      <label><input type="radio" name="qz10" value="D">分類械鬥</label>
+      <div class="fb" data-exp="　例如新竹北埔的金廣福。">　</div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">11. 下列神明與人群的配對，何者正確？</div>
+      <label><input type="radio" name="qz11" value="A">開漳聖王—漳州人</label>
+      <label><input type="radio" name="qz11" value="B">三山國王—泉州人</label>
+      <label><input type="radio" name="qz11" value="C">清水祖師—客家人</label>
+      <label><input type="radio" name="qz11" value="D">義民爺—漳州人</label>
+      <div class="fb" data-exp="　三山國王、義民爺—客家；清水祖師—泉州安溪人。">　</div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">12. 開港後在南部以醫療傳教、被視為新樓醫院源頭的英國傳教士是：</div>
+      <label><input type="radio" name="qz12" value="A">馬偕</label>
+      <label><input type="radio" name="qz12" value="B">馬雅各</label>
+      <label><input type="radio" name="qz12" value="C">鄭用錫</label>
+      <label><input type="radio" name="qz12" value="D">施世榜</label>
+      <div class="fb" data-exp="　馬雅各在南部；馬偕在北部淡水。鄭用錫是開臺進士，施世榜修八堡圳。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 臺灣的歷史（上）· 第 4 章「清帝國時期的社會與文化」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "歷史4 清帝國時期的社會與文化";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw,rx){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx||0}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+const ARROW = c => `<marker id="ar${c.slice(1)}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="${c}"/></marker>`;
+function shuffle(a){ const b = a.slice(); for(let i = b.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 10){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 6){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面四節重看觀念，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 拖曳配對（滑鼠、觸控都可以；也可以先點卡片、再點要放的區域）=====
+function dndGame(opts){
+  const box = document.getElementById(opts.box);
+  const placed = {};
+  let selected = null;
+  const el = (tag, cls) => { const e = document.createElement(tag); if(cls) e.className = cls; return e; };
+  const items = shuffle(opts.items);
+  function render(){
+    box.innerHTML = '';
+    const pool = el('div', 'dnd-pool'); pool.dataset.zone = '__pool__';
+    pool.innerHTML = `<div class="dnd-zone-title" style="color:#6b7280">${opts.poolLabel || '卡片區（拖到下面正確的位置）'}</div>`;
+    const zonesWrap = el('div', 'dnd-zones');
+    const zoneEls = {};
+    opts.zones.forEach(z => {
+      const ze = el('div', 'dnd-zone'); ze.dataset.zone = z.id;
+      ze.innerHTML = `<div class="dnd-zone-title">${z.label}</div>`;
+      zonesWrap.appendChild(ze); zoneEls[z.id] = ze;
+    });
+    items.forEach(it => {
+      const c = el('div', 'dnd-card'); c.dataset.item = it.id; c.textContent = it.label;
+      (placed[it.id] && zoneEls[placed[it.id]] ? zoneEls[placed[it.id]] : pool).appendChild(c);
+      attach(c);
+    });
+    const bar = el('div', 'row dnd-bar');
+    bar.innerHTML = `<button class="dnd-check">檢查</button><button class="ghost dnd-reset">重來</button><span class="dnd-msg"></span>`;
+    box.append(pool, zonesWrap, bar);
+    if(opts.hint){ const h = el('div', 'dnd-hint'); h.textContent = opts.hint; box.appendChild(h); }
+    bar.querySelector('.dnd-check').addEventListener('click', check);
+    bar.querySelector('.dnd-reset').addEventListener('click', () => { Object.keys(placed).forEach(k => delete placed[k]); selected = null; render(); });
+    [pool, ...Object.values(zoneEls)].forEach(z => z.addEventListener('click', () => {
+      if(!selected) return;
+      if(z.dataset.zone === '__pool__') delete placed[selected]; else placed[selected] = z.dataset.zone;
+      selected = null; render();
+    }));
+  }
+  function zoneAt(x, y){
+    const t = document.elementFromPoint(x, y);
+    return t ? t.closest('.dnd-zone, .dnd-pool') : null;
+  }
+  function attach(card){
+    let sx = 0, sy = 0, moved = false, ghost = null;
+    card.addEventListener('pointerdown', e => {
+      sx = e.clientX; sy = e.clientY; moved = false; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e => {
+      if(!(e.buttons & 1)) return;
+      if(!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 6) return;
+      if(!moved){
+        moved = true; ghost = card.cloneNode(true); ghost.classList.add('drag');
+        document.body.appendChild(ghost); card.style.opacity = '.35';
+      }
+      ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + 'px'; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + 'px';
+      box.querySelectorAll('.over').forEach(z => z.classList.remove('over'));
+      const z = zoneAt(e.clientX, e.clientY); if(z && box.contains(z)) z.classList.add('over');
+    });
+    card.addEventListener('pointerup', e => {
+      if(moved){
+        const z = zoneAt(e.clientX, e.clientY);
+        if(ghost) ghost.remove(); card.style.opacity = '';
+        if(z && box.contains(z)){ if(z.dataset.zone === '__pool__') delete placed[card.dataset.item]; else placed[card.dataset.item] = z.dataset.zone; }
+        selected = null; render();
+      }else{
+        selected = (selected === card.dataset.item) ? null : card.dataset.item;
+        box.querySelectorAll('.dnd-card').forEach(c => c.classList.toggle('sel', c.dataset.item === selected));
+      }
+    });
+    card.addEventListener('pointercancel', () => { if(ghost) ghost.remove(); card.style.opacity = ''; moved = false; });
+    card.addEventListener('click', e => e.stopPropagation());   // 點卡片只做選取，不要冒泡到外層區域
+  }
+  function check(){
+    let ok = 0, total = opts.items.length, unplaced = 0;
+    box.querySelectorAll('.dnd-card').forEach(c => {
+      const id = c.dataset.item, z = placed[id];
+      const zone = opts.zones.find(zz => zz.id === z);
+      c.classList.remove('ok', 'no');
+      if(!zone){ unplaced++; c.classList.add('no'); return; }
+      if(zone.accepts.includes(id)){ ok++; c.classList.add('ok'); } else c.classList.add('no');
+    });
+    const msg = box.querySelector('.dnd-msg');
+    if(ok === total){ msg.className = 'dnd-msg ok'; msg.textContent = '✔ 全部正確！'; }
+    else { msg.className = 'dnd-msg no'; msg.textContent = `✘ 對了 ${ok} / ${total}${unplaced ? '（還有 ' + unplaced + ' 張沒放）' : ''}，紅色的再想想。`; }
+    toolLog(opts.name || opts.box, ok === total);
+  }
+  render();
+  return { placed };
+}
+
+// ===== 排序（依序點選）=====
+function orderGame(opts){
+  const box = document.getElementById(opts.box);
+  let next = 0, miss = 0, order = [];
+  function render(){
+    next = 0; miss = 0; order = shuffle(opts.items.map((_, i) => i));
+    box.innerHTML = `<div class="ord-pool"></div><ol class="ord-seq"></ol>
+      <div class="row"><button class="ghost ord-reset">重來</button><span class="dnd-msg ord-msg"></span></div>`;
+    const pool = box.querySelector('.ord-pool');
+    order.forEach(i => {
+      const b = document.createElement('button'); b.textContent = opts.items[i].label;
+      b.addEventListener('click', () => pick(i, b)); pool.appendChild(b);
+    });
+    box.querySelector('.ord-reset').addEventListener('click', render);
+  }
+  function pick(i, b){
+    const msg = box.querySelector('.ord-msg');
+    if(i !== next){
+      miss++; b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake');
+      msg.className = 'dnd-msg ord-msg no'; msg.textContent = '✘ 還不是它，再想想。';
+      return;
+    }
+    const it = opts.items[i];
+    const li = document.createElement('li'); li.innerHTML = it.label + (it.note ? `<small>${it.note}</small>` : '');
+    box.querySelector('.ord-seq').appendChild(li); b.remove(); next++;
+    msg.className = 'dnd-msg ord-msg ok'; msg.textContent = '✔ 對！';
+    if(next === opts.items.length){
+      msg.textContent = miss ? `完成！點錯 ${miss} 次，按「重來」再挑戰零失誤。` : '🎉 完成，零失誤！';
+      toolLog(opts.name, miss === 0);
+    }
+  }
+  render();
+}
+
+// ===== 4-1 情境故事：唐山過臺灣生存記 =====
+const STORY = [
+  { title: '第 1 關：要不要去臺灣？', text: '家鄉山多田少，人口越來越多，你家那一小塊田養不活全家。聽說海對面的臺灣土地肥沃，可以種稻、種甘蔗……',
+    opts: [
+      { t: '向官府申請許可，合法渡臺', r: '你跑了好幾趟衙門，要文件、要花錢，還被告知不能帶家人同行。等了很久……', bag: '📜 渡臺許可（得來不易）' },
+      { t: '付錢給「客頭」，偷偷渡海', r: '你把積蓄交給專門安排偷渡的客頭，半夜和一群人擠進小船的船艙出發。', bag: '💰 積蓄花掉一大半' },
+      { t: '先留在家鄉再說', r: '你留下來了，但田不夠分，日子越來越苦。最後你還是決定出發。', bag: '😓 拖了好幾年才出發' },
+    ],
+    fact: '清廷怕臺灣再成為反清基地，前期限制渡臺：要申請許可，而且常常不准帶家眷。合法渡臺很難，所以偷渡的人非常多。這些限制直到 1875 年才全面解除。家鄉「人多地少」是推力，臺灣「可以開墾」是拉力。' },
+  { title: '第 2 關：橫渡黑水溝', text: '船開到一片海水特別黑、浪特別大的海域，船身搖得厲害。過了黑水溝，客頭突然說：「前面查得嚴，大家在這片沙洲下船，自己走上岸！」',
+    opts: [
+      { t: '照做，跳下船往岸邊走', r: '沙洲離岸還很遠，腳一直陷進爛泥……幸好附近有漁民划船把你救起來。很多人沒這麼幸運。', bag: '🩹 差點回不來' },
+      { t: '和大家一起堅持要客頭把船開近岸邊', r: '大家一起抗議，船勉強又往岸邊靠近一些，你們才平安上岸。', bag: '🙏 平安上岸，心裡感謝媽祖' },
+    ],
+    fact: '「黑水溝」指臺灣海峽中（澎湖和臺灣之間）海流湍急的海域。有些壞客頭把人丟在沙洲上，叫「放生」；陷進泥裡出不來，叫「種芋」。俗諺「六死三留一回頭」就是誇張地形容渡海的危險（是俗諺，不是統計）。也因為渡海危險，海神媽祖成為移民最普遍的信仰之一。' },
+  { title: '第 3 關：上岸了，怎麼活下去？', text: '你身上沒什麼錢，也沒有家人在身邊。',
+    opts: [
+      { t: '到處打零工，有工作就做', r: '你今天在港口扛貨，明天去幫人收割，晚上睡在廟口。身邊有很多跟你一樣的單身漢。', bag: '🧺 成了「羅漢腳」' },
+      { t: '投靠同鄉人，向墾首承租土地開墾', r: '同鄉人介紹你去找一位拿到墾照的墾首，你租了一塊地開墾，每年要繳「大租」。', bag: '🌱 有了一塊地（要繳租）' },
+      { t: '自己跑到山邊「番界」外開墾', r: '那裡沒有人管，但這是違反禁令的越界開墾，而且很可能和山區原住民發生衝突，非常危險。', bag: '⚠️ 危險的山邊土地' },
+    ],
+    fact: '沒有土地、沒有家室的單身男子叫「羅漢腳」，容易捲入民變或械鬥。大多數人靠同鄉、同宗的關係，向墾首或墾戶承租土地，形成「墾首 → 墾戶 → 佃戶」的層層租佃關係。往山區越界開墾的人也不少，後來發展出設隘防守的「隘墾」。' },
+  { title: '第 4 關：要不要加入「自己人」？', text: '幾年後，村裡的同鄉說：「大家一起出錢出力修水圳、蓋廟拜家鄉的神，有事也互相照應！」',
+    opts: [
+      { t: '出錢出力，加入同鄉的組織', r: '水圳修好了，你的田變成水田，稻子收成大增。廟蓋好後，大家在廟裡開會、過節、看戲。', bag: '🛕 有了靠山與收成' },
+      { t: '不參加，自己顧自己就好', r: '沒有水圳，你的田只能看老天爺下雨；鄰村為了水源打起來時，也沒人幫你。你開始覺得一個人在這裡很難生存。', bag: '😟 孤立無援' },
+    ],
+    fact: '清代移民社會常靠祖籍、宗族、神明信仰把人凝聚在一起：一起修水圳（如八堡圳、瑠公圳）、一起蓋廟。這讓人互相幫助，但不同群體之間也可能因爭土地、爭水源而發生「分類械鬥」。' },
+  { title: '第 5 關：你的孫子在臺灣出生了', text: '你在臺灣娶妻生子，孫子都在這裡長大。家族要蓋祠堂祭祖，大家討論：要拜誰？',
+    opts: [
+      { t: '繼續拜大陸老家的「唐山祖」', r: '這是你從小拜的祖先，但孫子們從沒去過唐山，對那裡很陌生。', bag: '🏯 唐山祖' },
+      { t: '以你——第一位來臺的祖先——為「開臺祖」', r: '孫子們說：「阿公就是我們家在臺灣的根！」家族把臺灣當成真正的家。', bag: '🏡 開臺祖' },
+    ],
+    fact: '早期移民常祭拜「唐山祖」（大陸老家的祖先），後來越來越多家族改以第一位來臺的「開臺祖」為祭祀對象，代表認同從「祖籍」轉向「本土」。' },
+];
+(function(){
+  const box = document.getElementById('story');
+  let lv = 0; const bag = [];
+  function draw(){
+    if(lv >= STORY.length){
+      box.innerHTML = `<div class="story"><h3>🏁 你成為臺灣的開臺祖了！</h3>
+        <p>你的旅程：${bag.join(' → ')}</p>
+        <p class="fact" style="background:var(--green-soft);border-radius:8px;padding:8px 12px">回顧：推力與拉力 → 冒險渡海 → 租地開墾 → 靠同鄉、宗族、廟宇互助 → 在地生根，祖籍認同變成本土認同。</p>
+        <div class="row"><button id="storyAgain" class="ghost" style="background:#fff;color:var(--blue);border:1px solid var(--blue);border-radius:8px;padding:9px 18px;cursor:pointer;font-family:inherit">換個選擇再玩一次</button></div></div>`;
+      document.getElementById('storyAgain').addEventListener('click', () => { lv = 0; bag.length = 0; draw(); });
+      toolLog('移民生存選擇', true);
+      return;
+    }
+    const S = STORY[lv];
+    box.innerHTML = `<div class="story"><div class="lv">關卡 ${lv + 1} / ${STORY.length}</div><h3>${S.title}</h3><p>${S.text}</p>
+      <div class="opts">${S.opts.map((o, i) => `<button data-i="${i}">${String.fromCharCode(65 + i)}. ${o.t}</button>`).join('')}</div>
+      <div class="res"><div class="you"></div><div class="fact"><b>📚 歷史上：</b>${S.fact}</div>
+      <button class="next" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:inherit">${lv === STORY.length - 1 ? '看結局' : '下一關 →'}</button></div>
+      ${bag.length ? `<div class="bag">🎒 目前的遭遇：${bag.join('、')}</div>` : ''}</div>`;
+    box.querySelectorAll('.opts button').forEach(b => b.addEventListener('click', () => {
+      const o = S.opts[+b.dataset.i];
+      box.querySelectorAll('.opts button').forEach(x => x.disabled = true);
+      b.classList.add('pick');
+      box.querySelector('.you').innerHTML = '👉 ' + o.r;
+      box.querySelector('.res').style.display = 'block';
+      bag.push(o.bag);
+    }));
+    box.querySelector('.next').addEventListener('click', () => { lv++; draw(); });
+  }
+  draw();
+})();
+
+// ===== 4-1 墾首關係圖 =====
+const REL = [
+  { id: 'gov', x: 150, y: 10, w: 180, label: '🏛️ 官府', color: '#e0e7ff', info: '<b>官府</b>：發給墾首「墾照」（開墾許可證），土地開墾完成後向業主收<b>田賦</b>（稅）。' },
+  { id: 'head', x: 150, y: 100, w: 180, label: '👑 墾首（大租戶）', color: '#fde68a', info: '<b>墾首</b>：通常是有錢有勢的人。向官府申請墾照，拿到一大片荒地，再招募墾戶來開墾。每年向墾戶收「<b>大租</b>」，所以又叫<b>大租戶</b>。' },
+  { id: 'hu', x: 150, y: 190, w: 180, label: '🧑‍🌾 墾戶（小租戶）', color: '#bbf7d0', info: '<b>墾戶</b>：向墾首承租一塊地，出錢出力開墾。要繳大租給墾首；開墾好之後，常把田再租給佃戶耕種，收「<b>小租</b>」，所以又叫<b>小租戶</b>。' },
+  { id: 'dian', x: 150, y: 280, w: 180, label: '👨‍🌾 佃戶（現耕佃人）', color: '#fecaca', info: '<b>佃戶</b>：真正下田耕作的人，沒有土地，要把收成的一部分當「<b>小租</b>」繳給墾戶。很多新來的移民從佃戶做起。' },
+];
+function drawRel(on){
+  let s = `<defs>${ARROW('#7f1d1d')}${ARROW('#2563eb')}</defs>`;
+  // 往下：給土地；往上：繳租
+  const links = [
+    ['gov', 'head', '發墾照', '繳田賦'],
+    ['head', 'hu', '租出土地', '繳大租'],
+    ['hu', 'dian', '轉租田地', '繳小租'],
+  ];
+  links.forEach(([a, b, down, up]) => {
+    const A = REL.find(r => r.id === a), B = REL.find(r => r.id === b);
+    s += `<line x1="200" y1="${A.y + 44}" x2="200" y2="${B.y - 4}" stroke="#7f1d1d" stroke-width="3" marker-end="url(#ar7f1d1d)"/>`;
+    s += txt(194, (A.y + 44 + B.y) / 2 + 5, down, '#7f1d1d', 12, 'end');
+    s += `<line x1="280" y1="${B.y - 4}" x2="280" y2="${A.y + 44}" stroke="#2563eb" stroke-width="3" marker-end="url(#ar2563eb)"/>`;
+    s += txt(286, (A.y + 44 + B.y) / 2 + 5, up, '#2563eb', 12, 'start');
+  });
+  REL.forEach(r => {
+    s += `<g class="rel-node${on === r.id ? ' on' : ''}" data-id="${r.id}">${rect(r.x, r.y, r.w, 40, r.color, '#1f2937', 2, 10)}${txt(r.x + r.w / 2, r.y + 26, r.label, '#1f2937', 15, 'middle', 'font-weight="bold"')}</g>`;
+  });
+  s += txt(14, 345, '紅箭頭＝土地往下租', '#7f1d1d', 12, 'start') + txt(466, 345, '藍箭頭＝租稅往上繳', '#2563eb', 12, 'end');
+  document.getElementById('svgRel').innerHTML = svg(480, 355, s);
+  document.querySelectorAll('#svgRel .rel-node').forEach(g => g.addEventListener('click', () => {
+    const r = REL.find(x => x.id === g.dataset.id);
+    document.getElementById('relInfo').innerHTML = r.info; drawRel(r.id);
+    relSeen.add(r.id); if(relSeen.size === REL.length && !relDone){ relDone = true; toolLog('墾首關係圖', true); }
+  }));
+}
+const relSeen = new Set(); let relDone = false;
+drawRel();
+
+// ===== 臺灣輪廓（示意）=====
+const TW = 'M 150,28 L 186,24 L 206,46 L 216,82 L 226,122 L 231,170 L 224,232 L 212,290 L 196,340 L 182,384 L 170,420 L 152,406 L 132,372 L 118,338 L 106,300 L 95,252 L 100,200 L 110,140 L 124,90 L 138,50 Z';
+function baseMap(){
+  let s = rect(0, 0, 300, 440, '#e0f2fe');
+  s += `<path d="${TW}" fill="#fef3c7" stroke="#a16207" stroke-width="2"/>`;
+  s += `<circle cx="52" cy="300" r="5" fill="#fef3c7" stroke="#a16207"/>` + txt(52, 320, '澎湖', '#6b7280', 10);
+  return s;
+}
+function clickMap(boxId, infoId, spots, extra){
+  function draw(){
+    let s = baseMap() + (extra ? extra() : '');
+    spots.forEach(p => {
+      s += `<g class="spot" data-id="${p.id}">`;
+      if(p.shape === 'rect') s += rect(p.x - 7, p.y - 7, 14, 14, p.color, '#fff', 2, 2);
+      else if(p.shape === 'line') s += `<path d="${p.d}" fill="none" stroke="${p.color}" stroke-width="10" stroke-opacity="0" />` + `<circle cx="${p.x}" cy="${p.y}" r="7" fill="${p.color}" stroke="#fff" stroke-width="2"/>`;
+      else s += `<circle cx="${p.x}" cy="${p.y}" r="7" fill="${p.color}" stroke="#fff" stroke-width="2"/>`;
+      if(p.label) s += txt(p.x + (p.lr === 'l' ? -11 : 11), p.y + 4, p.label, '#1f2937', 11, p.lr === 'l' ? 'end' : 'start');
+      s += '</g>';
+    });
+    document.getElementById(boxId).innerHTML = svg(300, 440, s);
+    document.querySelectorAll('#' + boxId + ' .spot').forEach(g => g.addEventListener('click', () => {
+      const p = spots.find(x => x.id === g.dataset.id);
+      g.classList.add('hit'); setTimeout(() => g.classList.remove('hit'), 1300);
+      document.getElementById(infoId).innerHTML = `<b>${p.name}</b><br>${p.text}`;
+    }));
+  }
+  draw();
+  return draw;
+}
+
+// ---- 4-1 地圖 ----
+clickMap('svgMap1', 'map1Info', [
+  { id: 'fu', x: 108, y: 298, color: '#b91c1c', label: '府城（一府）', name: '臺灣府城（今臺南）——「一府」', text: '清代臺灣的政治中心，開發最早，也是重要的港口城市。' },
+  { id: 'lu', x: 110, y: 180, color: '#b91c1c', label: '鹿港（二鹿）', lr: 'l', name: '鹿港——「二鹿」', text: '中部最重要的港口，1784 年開放和福建泉州的蚶江直接往來，米、糖從這裡運出，泉州移民很多。' },
+  { id: 'meng', x: 164, y: 64, color: '#b91c1c', label: '艋舺（三艋舺）', name: '艋舺（今臺北萬華）——「三艋舺」', text: '淡水河邊的河港，北臺灣的商業中心。1853 年在這裡發生「頂下郊拚」（見 4-2）。' },
+  { id: 'babao', x: 126, y: 196, color: '#0369a1', shape: 'rect', label: '八堡圳', name: '八堡圳（彰化平原）', text: '18 世紀初施世榜興建，引濁水溪水灌溉彰化平原，是清代臺灣規模最大的水圳之一。' },
+  { id: 'liugong', x: 176, y: 80, color: '#0369a1', shape: 'rect', label: '瑠公圳', name: '瑠公圳（臺北盆地）', text: '18 世紀中郭錫瑠興建，引新店溪水灌溉臺北盆地，讓臺北盆地的稻作大幅發展。' },
+  { id: 'black', x: 76, y: 262, color: '#dc2626', label: '黑水溝', lr: 'l', name: '黑水溝（臺灣海峽）', text: '澎湖與臺灣之間海流湍急、海水顏色很深的海域，帆船渡海最危險的一段。' },
+], () => `<path d="M 60 120 Q 72 240 84 360" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="7 5"/>` + txt(28, 60, '← 福建、廣東', '#1f2937', 12, 'start'));
+
+// ===== 4-2 時間軸 =====
+const TL = [
+  { y: 1684, label: '納入版圖', color: '#6b7280', text: '<b>1684 年</b>　清廷把臺灣納入版圖，設一府三縣，並限制人民渡臺。' },
+  { y: 1721, label: '朱一貴', color: '#b91c1c', kind: '民變', text: '<b>1721 年　朱一貴事件</b>（民變）：養鴨出身、人稱「鴨母王」，在鳳山縣起事，一度攻下府城；後來閩粵兩方內鬨，很快被清軍平定。事後清廷在 1723 年增設彰化縣、淡水廳，加強對中北部的管理。' },
+  { y: 1786, label: '林爽文', color: '#b91c1c', kind: '民變', text: '<b>1786～1788 年　林爽文事件</b>（民變）：天地會領袖林爽文在彰化大里杙起事，南部莊大田響應，是清代臺灣規模最大的民變。乾隆皇帝派福康安率大軍來臺才平定。諸羅縣城被圍很久仍守住，清廷改名為「嘉義」；協助官府的客家人、泉州人等「義民」受到表揚。' },
+  { y: 1853, label: '頂下郊拚', color: '#7e22ce', kind: '械鬥', text: '<b>1853 年　頂下郊拚</b>（分類械鬥）：艋舺的泉州三邑人（頂郊）與同安人（下郊）爭奪碼頭貿易利益，同安人戰敗，退到大稻埕，大稻埕因此興起。' },
+  { y: 1862, label: '戴潮春', color: '#b91c1c', kind: '民變', text: '<b>1862～1864 年　戴潮春事件</b>（民變）：以八卦會（天地會系統）為基礎，在彰化一帶起事。清廷借助霧峰林家等地方士紳的武力才平定，是清代三大民變中的最後一個。' },
+  { y: 1875, label: '渡臺限制解除', color: '#6b7280', text: '<b>1875 年</b>　清廷全面解除渡臺的限制，人民可以自由來臺。' },
+];
+let tlOn = null;
+function drawTL(){
+  const X = y => 30 + (y - 1680) * 420 / 200;
+  const LV = [-1, 1, -1, 1, -1, 2];          // 標籤位置：-1 上方、1 下方、2 下方第二層（避免重疊）
+  let s = rect(0, 0, 480, 190, '#fff');
+  s += `<line x1="20" y1="80" x2="465" y2="80" stroke="#1f2937" stroke-width="3"/>`;
+  [1700, 1750, 1800, 1850].forEach(y => s += `<line x1="${X(y)}" y1="74" x2="${X(y)}" y2="86" stroke="#6b7280" stroke-width="2"/>` + txt(X(y), 100, y, '#6b7280', 11));
+  TL.forEach((e, i) => {
+    const x = X(e.y), lv = LV[i], by = lv === -1 ? 18 : lv === 1 ? 112 : 150;
+    const bx = Math.min(Math.max(x - 38, 2), 402);
+    s += `<g class="spot" data-i="${i}"><line x1="${x}" y1="80" x2="${x}" y2="${lv === -1 ? 44 : by}" stroke="${e.color}" stroke-width="2"/>`;
+    s += `<circle cx="${x}" cy="80" r="${tlOn === i ? 10 : 7}" fill="${e.color}" stroke="#fff" stroke-width="2"/>`;
+    s += rect(bx, by, 76, 26, tlOn === i ? '#fef3c7' : '#f9fafb', e.color, 1.5, 6);
+    s += txt(bx + 38, by + 18, e.label, e.color, 12, 'middle', 'font-weight="bold"') + '</g>';
+  });
+  document.getElementById('svgTL').innerHTML = svg(480, 190, s);
+  document.querySelectorAll('#svgTL .spot').forEach(g => g.addEventListener('click', () => {
+    tlOn = +g.dataset.i; document.getElementById('tlInfo').innerHTML = TL[tlOn].text; drawTL();
+  }));
+}
+drawTL();
+
+dndGame({ box: 'dndConflict', name: '民變或械鬥', poolLabel: '事件卡',
+  items: [
+    { id: 'a1', label: '朱一貴事件' }, { id: 'a2', label: '林爽文事件' }, { id: 'a3', label: '戴潮春事件' },
+    { id: 'a4', label: '攻打縣城、對抗官兵' }, { id: 'a5', label: '天地會結盟起事' }, { id: 'a6', label: '不滿官員貪污欺壓' },
+    { id: 'b1', label: '頂下郊拚' }, { id: 'b2', label: '漳泉械鬥' }, { id: 'b3', label: '閩粵械鬥' },
+    { id: 'b4', label: '兩個庄為了爭水源打起來' }, { id: 'b5', label: '同安人退到大稻埕' },
+  ],
+  zones: [
+    { id: 'rev', label: '⚔️ 民變（人民對官府）', accepts: ['a1', 'a2', 'a3', 'a4', 'a5', 'a6'] },
+    { id: 'fight', label: '🔥 分類械鬥（人群對人群）', accepts: ['b1', 'b2', 'b3', 'b4', 'b5'] },
+  ],
+  hint: '提示：問自己「對手是官府，還是另一群老百姓？」' });
+
+orderGame({ box: 'ordConflict', name: '衝突事件排序', items: [
+  { label: '清廷將臺灣納入版圖', note: '1684 年' },
+  { label: '朱一貴事件', note: '1721 年' },
+  { label: '林爽文事件', note: '1786～1788 年' },
+  { label: '頂下郊拚', note: '1853 年' },
+  { label: '戴潮春事件', note: '1862～1864 年' },
+  { label: '渡臺限制全面解除', note: '1875 年' },
+] });
+
+// ===== 4-3 因果排序 =====
+orderGame({ box: 'ordPingpu', name: '平埔族因果排序', items: [
+  { label: '漢人移民越來越多', note: '原因：需要更多土地' },
+  { label: '漢人向平埔族租地、買地、通婚', note: '例如繳「番大租」' },
+  { label: '租金固定又被拖欠，土地實際落入漢人手中', note: '平埔族失去土地' },
+  { label: '部分平埔族群遷往埔里、宜蘭等地', note: '結果：族群遷徙' },
+] });
+
+// ---- 4-3 地圖 ----
+const M3 = [
+  { id: 'mid', x: 118, y: 160, color: '#c2410c', label: '中部平原', lr: 'l', name: '中部平埔族原居地（今臺中、彰化一帶）', text: '原本住著許多平埔族群。漢人大量開墾後，很多族人失去土地，往外遷移。' },
+  { id: 'yilan', x: 206, y: 92, color: '#c2410c', label: '宜蘭', name: '宜蘭（噶瑪蘭）', text: '1804 年前後，中部平埔族群（如岸裡社等）翻山越嶺遷到宜蘭。宜蘭原本是噶瑪蘭族的家園，後來漢人也大量進入。' },
+  { id: 'puli', x: 160, y: 200, color: '#c2410c', label: '埔里', name: '埔里盆地', text: '19 世紀前期起，中部的平埔族群陸續遷入埔里盆地，今天埔里仍有許多平埔族後代。' },
+  { id: 'east', x: 210, y: 262, color: '#c2410c', label: '花東縱谷', lr: 'l', name: '花東縱谷', text: '南部的平埔族群（如西拉雅族）也有人向東遷到花東縱谷一帶。' },
+  { id: 'line', x: 140, y: 250, color: '#dc2626', label: '番界', name: '番界（土牛溝、土牛紅線）', text: '清廷在山邊劃界，用土堆和溝渠當界線，禁止漢人越界開墾、和山區原住民隔開。實際上越界的人很多。' },
+  { id: 'beipu', x: 142, y: 112, color: '#7e22ce', shape: 'rect', label: '北埔金廣福', lr: 'l', name: '新竹北埔「金廣福」', text: '1830 年代閩粵合作的隘墾組織：設隘寮、雇隘丁，一邊防守一邊開墾山邊土地。' },
+];
+let m3Mode = 'explore', m3Order = [], m3Idx = 0, m3Score = 0;
+function m3Extra(){
+  let s = `<defs>${ARROW('#c2410c')}</defs>`;
+  s += `<path d="M 154 72 L 150 108 L 144 160 L 138 220 L 134 290 L 142 350" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6 5"/>`;
+  s += `<path d="M 122 150 Q 150 80 196 88" fill="none" stroke="#c2410c" stroke-width="3" marker-end="url(#arc2410c)"/>`;
+  s += `<path d="M 124 168 Q 140 190 152 198" fill="none" stroke="#c2410c" stroke-width="3" marker-end="url(#arc2410c)"/>`;
+  s += `<path d="M 112 296 Q 170 330 204 272" fill="none" stroke="#c2410c" stroke-width="3" marker-end="url(#arc2410c)"/>`;
+  s += `<circle cx="110" cy="298" r="4" fill="#c2410c"/>` + txt(100, 316, '南部', '#c2410c', 10, 'end');
+  return s;
+}
+function drawM3(){
+  const spots = M3.map(p => Object.assign({}, p, { label: m3Mode === 'explore' ? p.label : '' }));
+  let s = baseMap() + m3Extra();
+  spots.forEach(p => {
+    s += `<g class="spot" data-id="${p.id}">`;
+    s += p.shape === 'rect' ? rect(p.x - 7, p.y - 7, 14, 14, p.color, '#fff', 2, 2) : `<circle cx="${p.x}" cy="${p.y}" r="7" fill="${p.color}" stroke="#fff" stroke-width="2"/>`;
+    if(p.label) s += txt(p.x + (p.lr === 'l' ? -11 : 11), p.y + 4, p.label, '#1f2937', 11, p.lr === 'l' ? 'end' : 'start');
+    s += '</g>';
+  });
+  document.getElementById('svgMap3').innerHTML = svg(300, 440, s);
+  document.querySelectorAll('#svgMap3 .spot').forEach(g => g.addEventListener('click', () => onM3(g)));
+}
+function onM3(g){
+  const p = M3.find(x => x.id === g.dataset.id), info = document.getElementById('map3Info');
+  g.classList.add('hit'); setTimeout(() => g.classList.remove('hit'), 1300);
+  if(m3Mode === 'explore'){ info.style.color = ''; info.innerHTML = `<b>${p.name}</b><br>${p.text}`; return; }
+  const want = M3[m3Order[m3Idx]], ok = p.id === want.id;
+  if(ok) m3Score++;
+  toolLog('原漢地圖', ok); m3Idx++;
+  const fb = ok ? `✔ 答對！這就是${want.name}。` : `✘ 那是${p.name}。`;
+  if(m3Idx >= m3Order.length){
+    info.style.color = ''; info.innerHTML = fb + `<br><b>全部完成：答對 ${m3Score} / ${m3Order.length}</b>。按「考考你」再來一次。`;
+    m3Mode = 'explore'; drawM3(); return;
+  }
+  info.style.color = ok ? '#166534' : '#991b1b';
+  info.innerHTML = fb + `<br><br>下一題：請點出 <b>${M3[m3Order[m3Idx]].name}</b>`;
+}
+document.getElementById('m3Explore').addEventListener('click', () => { m3Mode = 'explore'; drawM3(); const i = document.getElementById('map3Info'); i.style.color = ''; i.textContent = '👆 點箭頭旁的圓點、虛線或方塊，看看是什麼。'; });
+document.getElementById('m3Quiz').addEventListener('click', () => {
+  m3Mode = 'quiz'; m3Order = shuffle(M3.map((_, i) => i)); m3Idx = 0; m3Score = 0; drawM3();
+  const i = document.getElementById('map3Info'); i.style.color = ''; i.innerHTML = `名字被藏起來了。請點出 <b>${M3[m3Order[0]].name}</b>`;
+});
+drawM3();
+
+// ===== 4-4 神明配對 =====
+dndGame({ box: 'dndGod', name: '神明配對', poolLabel: '神明',
+  items: [
+    { id: 'g1', label: '🌊 媽祖' }, { id: 'g2', label: '⛵ 王爺' }, { id: 'g3', label: '💊 保生大帝' }, { id: 'g4', label: '⛰️ 清水祖師' },
+    { id: 'g5', label: '🪷 觀音（艋舺龍山寺）' }, { id: 'g6', label: '🛡️ 開漳聖王' }, { id: 'g7', label: '🏔️ 三山國王' }, { id: 'g8', label: '🎖️ 義民爺' },
+  ],
+  zones: [
+    { id: 'all', label: '各群體普遍（渡海、驅瘟）', accepts: ['g1', 'g2'] },
+    { id: 'q', label: '泉州人（同安、安溪、三邑）', accepts: ['g3', 'g4', 'g5'] },
+    { id: 'z', label: '漳州人', accepts: ['g6'] },
+    { id: 'h', label: '客家人', accepts: ['g7', 'g8'] },
+  ],
+  hint: '提示：開「漳」聖王看名字；三山國王來自廣東潮州一帶；義民爺和林爽文事件有關。' });
+
+// ---- 4-4 傳教士地圖 ----
+clickMap('svgMap4', 'map4Info', [
+  { id: 'tamsui', x: 146, y: 50, color: '#15803d', label: '淡水：馬偕', lr: 'l', name: '淡水——馬偕（加拿大長老教會）', text: '1872 年到淡水。以拔牙聞名，到各地行醫傳教；創辦偕醫館、理學堂大書院（牛津學堂，1882 年）、淡水女學堂，是北部基督長老教會的開創者。' },
+  { id: 'tainan', x: 108, y: 298, color: '#b91c1c', label: '府城：馬雅各、甘為霖、巴克禮', name: '臺灣府城（今臺南）——英國長老教會', text: '馬雅各 1865 年來府城行醫傳教（今新樓醫院的源頭）；甘為霖關心盲人教育，創辦訓瞽堂；巴克禮推廣白話字，1885 年創辦《臺灣府城教會報》。' },
+  { id: 'takao', x: 124, y: 346, color: '#b91c1c', label: '打狗：馬雅各', name: '打狗（今高雄）', text: '馬雅各在府城傳教初期受到民眾反對，曾轉到打狗旗後一帶行醫，之後再回府城。' },
+  { id: 'cath', x: 136, y: 362, color: '#7e22ce', label: '天主教（1859）', name: '打狗一帶——天主教道明會', text: '1859 年天主教道明會神父來到打狗一帶傳教，是開港前後最早來臺的天主教傳教士之一。' },
+], () => txt(150, 425, '南部（紅）　北部（綠）', '#1f2937', 12));
+
+dndGame({ box: 'dndMission', name: '傳教士南北', poolLabel: '把人物和事蹟放到南部或北部',
+  items: [
+    { id: 'm1', label: '馬雅各' }, { id: 'm2', label: '甘為霖' }, { id: 'm3', label: '巴克禮' }, { id: 'm4', label: '《臺灣府城教會報》' }, { id: 'm5', label: '新樓醫院的源頭' },
+    { id: 'n1', label: '馬偕' }, { id: 'n2', label: '拔牙行醫' }, { id: 'n3', label: '理學堂大書院（牛津學堂）' }, { id: 'n4', label: '淡水女學堂' },
+  ],
+  zones: [
+    { id: 'south', label: '南部（英國長老教會）', accepts: ['m1', 'm2', 'm3', 'm4', 'm5'] },
+    { id: 'north', label: '北部（加拿大長老教會）', accepts: ['n1', 'n2', 'n3', 'n4'] },
+  ] });
+
+// ---- 翻翻卡 ----
+const FLIP = [
+  ['清代移民三大群', '泉州人、漳州人、客家人'], ['羅漢腳是誰？', '沒有家室、沒有固定工作的單身男子'], ['黑水溝在哪？', '臺灣海峽（澎湖與臺灣之間）的危險海域'],
+  ['「放生」「種芋」', '壞客頭把偷渡客丟在沙洲上、陷進爛泥'], ['一田二主', '墾首收大租、墾戶收小租'], ['八堡圳／瑠公圳', '彰化施世榜／臺北郭錫瑠'],
+  ['唐山祖 → 開臺祖', '祖籍認同轉向本土認同'], ['三大民變', '朱一貴 1721、林爽文 1786、戴潮春 1862'], ['諸羅為何改名嘉義？', '林爽文事件中軍民堅守，清廷嘉其忠義'],
+  ['頂下郊拚', '1853 艋舺，三邑人勝、同安人退到大稻埕'], ['番大租', '漢人向平埔族租地繳的租'], ['平埔族遷往哪？', '埔里盆地、宜蘭，也有往花東縱谷'],
+  ['隘墾', '設隘寮、雇隘丁，邊防守邊開墾（如金廣福）'], ['三山國王、義民爺', '客家人'], ['開漳聖王', '漳州人'], ['保生大帝、清水祖師', '泉州同安人、安溪人'],
+  ['開臺進士', '鄭用錫（1823 年）'], ['馬偕', '北部淡水，拔牙、牛津學堂'], ['馬雅各', '南部，醫療傳教'], ['白話字', '用羅馬字母拼寫臺語'],
+];
+const grid = document.getElementById('flipGrid');
+grid.innerHTML = FLIP.map(([q, a]) => `<div class="flip"><div class="inner"><div class="face front">${q}</div><div class="face back">${a}</div></div></div>`).join('');
+grid.querySelectorAll('.flip').forEach(f => f.addEventListener('click', () => f.classList.toggle('on')));
+document.getElementById('flipReset').addEventListener('click', () => grid.querySelectorAll('.flip').forEach(f => f.classList.remove('on')));
+</script>
+</body>
+</html>
