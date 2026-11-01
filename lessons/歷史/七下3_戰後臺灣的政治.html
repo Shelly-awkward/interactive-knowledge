@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>戰後臺灣的政治｜從接收到政黨輪替</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#0f4c5c; --accent-soft:#e0f2f1;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#1e3a5f,#0f766e); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv .hi{background:#fef3c7;}
+
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  .dnd-pool,.dnd-zone{border:2px dashed var(--border); border-radius:12px; padding:10px 12px; min-height:64px; margin:8px 0; background:#fff; transition:.15s;}
+  .dnd-pool{background:#f9fafb;}
+  .dnd-zone.over,.dnd-pool.over{border-color:var(--blue); background:#eff6ff;}
+  .dnd-zones{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px;}
+  .dnd-zone-title{font-weight:bold; margin-bottom:6px; color:var(--accent);}
+  .dnd-card{display:inline-block; background:#fff; border:1.5px solid var(--border); border-radius:99px; padding:6px 14px; margin:4px 6px 4px 0;
+    cursor:grab; user-select:none; touch-action:none; font-size:.95rem; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .1s;}
+  .dnd-card:hover{border-color:var(--blue);}
+  .dnd-card.sel{border-color:var(--blue); background:#dbeafe; transform:scale(1.04);}
+  .dnd-card.drag{position:fixed; z-index:99; pointer-events:none; opacity:.9; transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.2);}
+  .dnd-card.ok{border-color:var(--green); background:var(--green-soft);}
+  .dnd-card.no{border-color:var(--red); background:var(--red-soft);}
+  .dnd-bar{margin-top:8px;}
+  .dnd-bar button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem; margin-right:6px;}
+  .dnd-bar button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .dnd-msg{font-weight:bold; margin-left:8px;}
+  .dnd-msg.ok{color:#166534;} .dnd-msg.no{color:#991b1b;}
+  .dnd-hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .spot{cursor:pointer;} .spot:hover{filter:brightness(1.08);}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; min-height:2.4em;}
+
+  .flip-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px;}
+  .flip{perspective:800px; cursor:pointer; height:120px;}
+  .flip .inner{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+  .flip.on .inner{transform:rotateY(180deg);}
+  .flip .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:12px; padding:12px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:.95rem; line-height:1.5;}
+  .flip .front{background:#fff; border:2px solid var(--accent); color:var(--accent); font-weight:bold;}
+  .flip .back{background:var(--accent); color:#fff; transform:rotateY(180deg);}
+  .era-tag{display:inline-block; border-radius:99px; padding:2px 10px; font-size:.85rem; color:#fff; margin-right:4px;}
+  .era-old{background:#7e22ce;} .era-new{background:#15803d;} .era-metal{background:#c2410c;}
+  .mapwrap{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;}
+  .mapwrap .svgbox{margin:0; flex:0 0 auto;}
+  .mapwrap .side{flex:1 1 220px;}
+
+  /* ===== 本單元專屬 ===== */
+  table.pv{min-width:0;} table.pv td{line-height:1.6;}
+  .tag{display:inline-block; border-radius:99px; padding:1px 10px; font-size:.8rem; color:#fff; margin-right:4px; vertical-align:middle;}
+  .t-early{background:#b45309;} .t-auth{background:#b91c1c;} .t-intl{background:#1d4ed8;} .t-demo{background:#15803d;}
+  .tl-filter{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0;}
+  .tl-filter button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 12px; font-family:inherit; font-size:.85rem; cursor:pointer;}
+  .tl-filter button.on{background:var(--ink); color:#fff; border-color:var(--ink);}
+  ol.tl{list-style:none; margin:10px 0 0 0 !important; padding:0; border-left:3px solid var(--border);}
+  ol.tl li{position:relative; margin:0 0 8px 0; padding:0 0 0 16px;}
+  ol.tl li::before{content:""; position:absolute; left:-9px; top:12px; width:14px; height:14px; border-radius:50%; background:var(--c,#999); border:2px solid #fff; box-shadow:0 0 0 1px var(--c,#999);}
+  ol.tl li button{display:block; width:100%; text-align:left; background:#fff; border:1px solid var(--border); border-radius:10px; padding:8px 12px; font-family:inherit; font-size:.95rem; cursor:pointer; color:var(--ink);}
+  ol.tl li button:hover{border-color:var(--c,#999);}
+  ol.tl li button .yr{font-weight:bold; color:var(--c,#999); margin-right:6px; font-family:"Courier New",monospace;}
+  ol.tl li .det{display:none; margin:6px 0 2px; padding:8px 12px; background:#f9fafb; border-left:4px solid var(--c,#999); border-radius:8px; font-size:.92rem;}
+  ol.tl li.open .det{display:block;}
+  ol.tl li.hide{display:none;}
+
+  .sort-list{display:flex; flex-direction:column; gap:6px; margin:8px 0;}
+  .sort-item{display:flex; align-items:center; gap:8px; background:#fff; border:1.5px solid var(--border); border-radius:10px; padding:7px 10px; font-size:.95rem;}
+  .sort-item .n{flex:0 0 26px; height:26px; border-radius:50%; background:var(--blue-soft); color:var(--blue); font-weight:bold; display:flex; align-items:center; justify-content:center; font-size:.85rem;}
+  .sort-item .lb{flex:1 1 auto;}
+  .sort-item .mv{display:flex; gap:4px;}
+  .sort-item .mv button{width:34px; height:34px; border:1px solid var(--border); background:#f9fafb; border-radius:8px; cursor:pointer; font-size:1rem;}
+  .sort-item.ok{border-color:var(--green); background:var(--green-soft);}
+  .sort-item.no{border-color:var(--red); background:var(--red-soft);}
+  .sort-item .ans{font-size:.8rem; color:var(--sub); display:block;}
+
+  .switch{display:flex; border:1px solid var(--border); border-radius:99px; overflow:hidden; margin:10px 0;}
+  .switch button{flex:1; border:none; background:#fff; padding:10px 6px; font-family:inherit; font-size:.95rem; cursor:pointer; color:var(--ink);}
+  .switch button.on{background:#b91c1c; color:#fff; font-weight:bold;}
+  .switch button.on.after{background:#15803d;}
+  .life-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px;}
+  .life{border:2px solid var(--border); border-radius:12px; padding:10px 12px; background:#fff; transition:.2s;}
+  .life h4{font-size:1rem; margin-bottom:4px;}
+  .life .st{font-weight:bold; margin-bottom:2px;}
+  .life .tx{font-size:.9rem; color:#374151;}
+  .life.before{border-color:#fca5a5; background:#fff7f7;}
+  .life.before .st{color:#b91c1c;}
+  .life.after{border-color:#86efac; background:#f6fef8;}
+  .life.after .st{color:#15803d;}
+  .soft{background:#f9fafb; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin:10px 0; font-size:.93rem;}
+  .mem{background:#fff; border:2px solid var(--accent); border-radius:12px; padding:12px 16px; margin:10px 0;}
+  .mem p{margin:4px 0;}
+  .mem b{color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 臺灣的歷史（下） · 第3章</span>
+  <h1>戰後臺灣的政治</h1>
+  <p>從 1945 年日本投降、中華民國政府接收臺灣，到 2000 年第一次政黨輪替，臺灣經歷了二二八事件、長期戒嚴的威權統治，也經歷國際局勢的大起大落，最後一步步走向民主。這份教材有可點的時間軸、事件排序、配對遊戲和「解嚴前／解嚴後」對照卡，最後有總測驗。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1 戰後接收</button>
+  <button data-t="s2">2 二二八事件</button>
+  <button data-t="s3">3 威權統治</button>
+  <button data-t="s4">4 國際局勢</button>
+  <button data-t="s5">5 民主化</button>
+  <button data-t="s6">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 3-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道 1945 年日本投降後，臺灣改由中華民國政府接收</li>
+      <li>說得出「臺灣省行政長官公署」是什麼、為什麼說它權力很集中</li>
+      <li>說得出戰後初期在政治、經濟、社會上出現的問題，以及民怨怎麼累積起來</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🕰️ 先看全貌：1945～2000 可點時間軸</h2>
+    <p>這一章大約五十多年。先用時間軸抓住大方向，點任何一個事件看說明，也可以用上面的按鈕只看某一類。</p>
+    <div class="svgbox" id="svgEra"></div>
+    <div class="tl-filter" id="tlFilter">
+      <button class="on" data-k="all">全部</button>
+      <button data-k="early"><span class="tag t-early">戰後初期</span></button>
+      <button data-k="auth"><span class="tag t-auth">威權統治</span></button>
+      <button data-k="intl"><span class="tag t-intl">國際局勢</span></button>
+      <button data-k="demo"><span class="tag t-demo">民主化</span></button>
+    </div>
+    <ol class="tl" id="timeline"></ol>
+    <div class="note">💡 上面的色帶顯示：臺灣的<b>戒嚴</b>從 1949 年到 1987 年，長達約 <b>38 年</b>。民主運動在解嚴之前就已經開始了，解嚴之後改革才加速。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：日本投降，臺灣由中華民國政府接收</h2>
+    <p>1945 年 8 月，日本宣布投降，第二次世界大戰結束。依照盟軍的安排，臺灣由<b>中華民國政府</b>派人來<b>接收</b>（接手管理）。同年 10 月 25 日，在臺北舉行受降典禮。</p>
+    <p>很多臺灣人一開始很歡迎，覺得終於脫離日本殖民統治。可是沒過多久，失望的聲音越來越多。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：臺灣省行政長官公署——權力很集中</h2>
+    <p>政府在臺灣設立<b>臺灣省行政長官公署</b>（簡稱長官公署），由<b>陳儀</b>擔任行政長官。</p>
+    <div class="formula">行政長官同時掌握<b>行政、立法</b>等權力，還兼任<b>警備總司令</b>，握有<b>軍權</b> → 權力集中在一個人手上</div>
+    <p>這種制度和中國大陸其他省分不一樣，反而有點像日治時期的臺灣總督，所以有人批評它是「新總督府」。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：戰後初期的問題</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>方面</th><th>發生了什麼</th></tr>
+        <tr><td class="name">政治</td><td style="text-align:left">高階官員多由大陸來的人擔任，臺灣人很少有機會；部分官員<b>貪污</b>、紀律不好</td></tr>
+        <tr><td class="name">經濟</td><td style="text-align:left">戰後物資缺乏，米價和物價飛漲（<b>通貨膨脹</b>：錢越來越不值錢）；政府用<b>專賣</b>（只准政府賣）和<b>統制</b>（由政府控管）管理菸、酒等重要物資和貿易，民間做生意困難；許多人失業</td></tr>
+        <tr><td class="name">社會文化</td><td style="text-align:left"><b>語言隔閡</b>：政府推行「國語」，但許多臺灣人只會說臺語、客語或日語；1946 年廢止報紙、雜誌的日文版；雙方生活習慣也不同，容易誤會</td></tr>
+      </table>
+    </div>
+    <div class="warn">⚠️ 這些問題讓民眾的不滿一天天累積，成為 1947 年二二八事件爆發的背景。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：把問題分到正確的類別</h2>
+    <p>拖曳（或先點卡片、再點區域）把戰後初期的問題放進「政治、經濟、社會文化」。</p>
+    <div id="dndProb"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">1. 1945 年日本投降後，臺灣由誰接收？</div>
+      <label><input type="radio" name="p1q1" value="A">美國政府</label>
+      <label><input type="radio" name="p1q1" value="B">荷蘭東印度公司</label>
+      <label><input type="radio" name="p1q1" value="C">中華民國政府</label>
+      <label><input type="radio" name="p1q1" value="D">英國政府</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　依照盟軍安排，由中華民國政府派人接收。">　</div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">2. 為什麼有人把臺灣省行政長官公署批評為「新總督府」？</div>
+      <label><input type="radio" name="p1q2" value="A">因為長官是日本人</label>
+      <label><input type="radio" name="p1q2" value="B">因為行政長官同時握有行政、立法和軍事大權，權力很集中</label>
+      <label><input type="radio" name="p1q2" value="C">因為它蓋在總督府舊址上</label>
+      <label><input type="radio" name="p1q2" value="D">因為它由人民選出</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　權力集中在陳儀一人，和日治時期總督的情況很像。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">3. 「錢越來越不值錢，同樣的米要花更多錢才買得到」，這叫做：</div>
+      <label><input type="radio" name="p1q3" value="A">專賣</label>
+      <label><input type="radio" name="p1q3" value="B">語言隔閡</label>
+      <label><input type="radio" name="p1q3" value="C">接收</label>
+      <label><input type="radio" name="p1q3" value="D">通貨膨脹</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　物價飛漲就是通貨膨脹，是戰後初期最直接影響生活的問題。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出二二八事件的導火線、經過和政府的處理方式</li>
+      <li>了解事件造成的傷亡和長期影響</li>
+      <li>知道後來政府如何道歉、平反，以及 2 月 28 日成為和平紀念日</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：導火線——查緝私菸</h2>
+    <p><b>1947 年 2 月 27 日</b>傍晚，臺北的專賣局人員在街上查緝私菸（沒經過政府專賣的香菸），和一位賣菸的婦人發生拉扯，婦人被打傷。圍觀的民眾很憤怒，混亂中查緝人員開槍，打中一名旁觀民眾，他後來死亡。</p>
+    <p><b>2 月 28 日</b>，民眾到專賣局和長官公署抗議請願，卻遭到衛兵開槍。衝突很快擴大，從臺北蔓延到<b>全臺各地</b>。</p>
+    <div class="note">💡 查緝私菸只是「導火線」。真正的原因是戰後一年多累積的不滿：貪污、物價飛漲、失業、差別待遇和語言隔閡。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：處理委員會與派兵鎮壓</h2>
+    <ul>
+      <li>各地的民意代表和地方人士組成「<b>二二八事件處理委員會</b>」，想維持秩序，並向政府提出政治改革的要求（例如讓臺灣人更有機會參與政治）。</li>
+      <li>行政長官陳儀一面和處理委員會協商，一面向中央請求派兵。</li>
+      <li>3 月上旬，中央派來的軍隊在基隆登陸，各地展開<b>鎮壓</b>；之後又進行「<b>清鄉</b>」（逐戶搜查、逮捕被認為參與事件的人）。</li>
+    </ul>
+    <p>許多無辜的民眾、地方菁英（像律師、醫師、教師、民意代表）在這段期間死亡或失蹤，很多家庭從此破碎。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：死傷有多少？</h2>
+    <p>死傷人數<b>非常多</b>，但因為當時資料不完整、很多家屬不敢說，<b>到現在仍有不同的說法</b>。</p>
+    <div class="soft">其中一種說法：1992 年行政院公布的《二二八事件研究報告》，用人口統計推估，死亡人數<b>約一萬八千至兩萬八千人</b>。這是推估的範圍，不是精確的統計；也有其他研究提出不同的數字。</div>
+    <div class="note">💡 讀歷史時，遇到「說法不同」的數字，要注意是<b>誰</b>、用<b>什麼方法</b>算出來的。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：影響與平反</h2>
+    <h3>長期影響</h3>
+    <ul>
+      <li><b>省籍隔閡</b>：本省人（戰前就住在臺灣的人）和外省人（戰後從大陸來的人）之間產生不信任，影響很久。</li>
+      <li><b>政治冷感</b>：很多人從此不敢談政治、不敢批評政府，「莫談國事」成為許多家庭的習慣。</li>
+      <li>這件事在戒嚴時期長期是<b>禁忌</b>，不能公開討論。</li>
+    </ul>
+    <h3>走向平反</h3>
+    <ul>
+      <li>解嚴後，民間開始要求公開真相；1992 年行政院公布研究報告。</li>
+      <li>1995 年，臺北的<b>二二八紀念碑</b>落成，李登輝總統代表政府向受難者家屬道歉；同年訂定法律，補償受難者與家屬。</li>
+      <li>1997 年起，<b>2 月 28 日</b>成為國定紀念日（和平紀念日）。</li>
+    </ul>
+    <div class="note">💡 平反的意義是：承認錯誤、還受難者公道，讓社會記住傷痛，避免同樣的事再發生。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手排：二二八事件的前因後果</h2>
+    <p>用 ▲▼ 把事件排成發生的先後順序（最早的在最上面），再按「檢查」。</p>
+    <div id="sort228"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="A">
+      <div class="stem">1. 二二八事件的導火線是：</div>
+      <label><input type="radio" name="p2q1" value="A">臺北查緝私菸引發衝突</label>
+      <label><input type="radio" name="p2q1" value="B">美國與中華民國斷交</label>
+      <label><input type="radio" name="p2q1" value="C">高雄的人權日遊行</label>
+      <label><input type="radio" name="p2q1" value="D">退出聯合國</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1947 年 2 月 27 日查緝私菸，2 月 28 日衝突擴大。C 是 1979 年的美麗島事件。">　</div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">2. 關於二二八事件的死亡人數，下列哪個說法最恰當？</div>
+      <label><input type="radio" name="p2q2" value="A">確定是 28 人</label>
+      <label><input type="radio" name="p2q2" value="B">沒有人死亡</label>
+      <label><input type="radio" name="p2q2" value="C">死傷眾多，人數有不同說法；行政院報告推估約一萬八千至兩萬八千人</label>
+      <label><input type="radio" name="p2q2" value="D">政府留有完整名單，數字非常精確</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　資料不完整，只能推估，所以會有不同說法。">　</div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">3. 下列哪一項<b>不是</b>二二八事件之後的平反作為？</div>
+      <label><input type="radio" name="p2q3" value="A">興建二二八紀念碑</label>
+      <label><input type="radio" name="p2q3" value="B">發布戒嚴令</label>
+      <label><input type="radio" name="p2q3" value="C">總統代表政府道歉</label>
+      <label><input type="radio" name="p2q3" value="D">將 2 月 28 日定為國定紀念日</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　戒嚴令是 1949 年發布的，和平反無關，反而讓這件事更不能談。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道 1949 年戒嚴令、政府遷臺，以及「動員戡亂時期臨時條款」的作用</li>
+      <li>說得出「萬年國會」、白色恐怖、黨禁、報禁是什麼</li>
+      <li>知道戒嚴時期仍有地方自治選舉，比較中央和地方的差別</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：戒嚴與政府遷臺</h2>
+    <p>二次大戰後，中國大陸爆發<b>國共內戰</b>（國民黨政府和共產黨的戰爭），國民黨政府逐漸失利。</p>
+    <ul>
+      <li><b>1949 年 5 月</b>：臺灣省政府主席兼警備總司令陳誠發布<b>戒嚴令</b>，5 月 20 日起全臺戒嚴。</li>
+      <li><b>1949 年底</b>：中華民國政府<b>遷到臺灣</b>，以臺北為政府所在地。同年中華人民共和國在北京成立，兩岸從此分治。</li>
+    </ul>
+    <div class="formula"><b>戒嚴</b>：國家在戰爭或緊急狀態下，由軍方掌握更多權力，並限制人民的自由（例如集會、言論、出版）</div>
+    <p>政府當時的說法是：為了對抗中共、防止滲透、維持社會安定，必須戒嚴。批評的人則認為，戒嚴實施太久，嚴重限制了人民的基本人權。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：臨時條款與「萬年國會」</h2>
+    <ul>
+      <li><b>動員戡亂時期臨時條款</b>：1948 年在大陸制定，附加在憲法上。「戡亂」是平定叛亂的意思（指對付共產黨）。它<b>擴大總統的權力</b>，後來也修改成總統<b>連任不受次數限制</b>。</li>
+      <li><b>萬年國會</b>：國民大會代表、立法委員、監察委員（中央民意代表）大多是 1947～1948 年在大陸選出來的。政府來臺後，以「大陸淪陷、無法辦理改選」為理由，讓他們<b>長期不必改選</b>，一做就是四十多年，所以被稱為「萬年國會」。後來雖然有增加少數臺灣地區的名額，但直到 1991～1992 年才全面改選。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：白色恐怖、黨禁與報禁</h2>
+    <p><b>白色恐怖</b>：戒嚴時期，政府以防止「共產黨間諜」和「叛亂」為理由，逮捕、審判許多人。很多案件由<b>軍事法庭</b>審判，有人被判很長的刑期，甚至死刑；其中有不少是證據不足或被冤枉的案子。因為害怕被檢舉，人們說話、寫文章都很小心。</p>
+    <div class="soft">📌 例子：1960 年，主編《自由中國》雜誌的<b>雷震</b>，因為在雜誌上批評政府、又和臺灣本地人士一起籌組新政黨，被以叛亂相關罪名逮捕，判刑十年，新黨也沒能成立。</div>
+    <ul>
+      <li><b>黨禁</b>：不准成立新的政黨。</li>
+      <li><b>報禁</b>：不准申請辦新的報紙，每份報紙的張數也受到限制。</li>
+    </ul>
+    <div class="note">💡 「白色恐怖」的「白色」不是指顏色本身，而是一種說法，用來指政府以政治理由造成的恐怖氣氛。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：地方選舉照常舉行</h2>
+    <p>戒嚴時期並不是完全沒有選舉。1950 年起，政府推行<b>地方自治</b>，<b>縣市長</b>、<b>縣市議員</b>、<b>省議員</b>等都由人民選出，定期舉行。</p>
+    <div class="formula">中央：民意代表長期不改選、總統由國民大會選出　｜　地方：縣市長、議員定期選舉</div>
+    <p>地方選舉讓人民有參與政治的經驗，也讓一些反對國民黨的人士（後來稱為「黨外」）有機會出來參選。</p>
+  </div>
+
+  <div class="card">
+    <h2>🔁 對照切換：解嚴前 vs. 解嚴後的生活</h2>
+    <p>按上面的切換鈕，看看同一件事在「戒嚴時期」和「解嚴後」有什麼不同。有幾張卡藏著陷阱：<b>有些改變不是剛好在解嚴那天發生的</b>，仔細看年份！</p>
+    <div class="switch" id="lifeSwitch"><button class="on" data-m="before">🔒 解嚴前（戒嚴時期）</button><button class="after" data-m="after">🔓 解嚴後</button></div>
+    <div class="life-grid" id="lifeGrid"></div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：戒嚴時期，這些職位怎麼產生？</h2>
+    <p>把職位放到正確的欄位。</p>
+    <div id="dndVote"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">1. 「萬年國會」指的是什麼？</div>
+      <label><input type="radio" name="p3q1" value="A">國會大樓蓋了一萬年</label>
+      <label><input type="radio" name="p3q1" value="B">在大陸選出的中央民意代表長期不改選</label>
+      <label><input type="radio" name="p3q1" value="C">縣市長可以一直連任</label>
+      <label><input type="radio" name="p3q1" value="D">每年都要改選國會</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　直到 1991 年國大代表、1992 年立法委員才全面改選。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">2. 戒嚴時期「不能成立新政黨、不能辦新報紙」，分別叫做：</div>
+      <label><input type="radio" name="p3q2" value="A">報禁、黨禁</label>
+      <label><input type="radio" name="p3q2" value="B">海禁、報禁</label>
+      <label><input type="radio" name="p3q2" value="C">黨禁、海禁</label>
+      <label><input type="radio" name="p3q2" value="D">黨禁、報禁</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　黨禁＝禁止組新黨；報禁＝禁止辦新報紙、限制張數。">　</div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">3. 戒嚴時期，下列哪一項選舉仍然定期舉行？</div>
+      <label><input type="radio" name="p3q3" value="A">縣市長選舉</label>
+      <label><input type="radio" name="p3q3" value="B">總統直接選舉</label>
+      <label><input type="radio" name="p3q3" value="C">立法委員全面改選</label>
+      <label><input type="radio" name="p3q3" value="D">以上都沒有</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　地方自治選舉從 1950 年起持續舉行；總統直選要到 1996 年。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-4 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出韓戰、中美共同防禦條約、退出聯合國、美國斷交的年代</li>
+      <li>理解每個國際事件對臺灣的影響</li>
+      <li>知道《臺灣關係法》的作用</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：韓戰與美國協防（1950 年代）</h2>
+    <p>政府剛遷臺時，局勢很不穩定，美國一度不打算繼續支持。<b>1950 年韓戰爆發</b>，美國擔心共產勢力在亞洲擴張，於是：</p>
+    <ul>
+      <li>派<b>第七艦隊</b>巡防臺灣海峽，協助防衛臺灣。</li>
+      <li>從 1951 年起提供<b>美援</b>（經濟和軍事援助），一直到 1965 年左右，幫助臺灣穩定經濟、發展建設。</li>
+      <li><b>1954 年</b>雙方簽訂<b>中美共同防禦條約</b>，美國承諾協防臺灣和澎湖。</li>
+    </ul>
+    <div class="note">💡 這時是「冷戰」：以美國為首的民主陣營和以蘇聯為首的共產陣營對立，但沒有直接開打。臺灣成為美國在亞洲防堵共產勢力的一環。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：外交挫折（1970 年代）</h2>
+    <ul>
+      <li><b>1971 年</b>：聯合國大會通過<b>第 2758 號決議</b>，由中華人民共和國取得聯合國的「中國」代表權。中華民國政府在表決前宣布<b>退出聯合國</b>。</li>
+      <li>之後許多國家陸續和中華民國斷交，例如 <b>1972 年日本</b>。</li>
+      <li><b>1979 年 1 月 1 日</b>：<b>美國與中華民國斷交</b>，改和中華人民共和國建交，共同防禦條約也隨後終止。</li>
+      <li>同年美國國會通過<b>《臺灣關係法》</b>：雙方維持<b>非官方</b>的往來（經濟、文化等），美國也繼續提供臺灣<b>防禦性武器</b>。</li>
+    </ul>
+    <div class="warn">⚠️ 外交挫折讓臺灣人更關心「臺灣的前途要怎麼決定」，也間接推動了要求政治改革的聲音。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手配：國際事件 → 對臺灣的影響</h2>
+    <p>每個事件有兩個影響，把它們拖到正確的事件下面。</p>
+    <div id="dndIntl"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">1. 美國派第七艦隊巡防臺灣海峽，是因為哪一場戰爭爆發？</div>
+      <label><input type="radio" name="p4q1" value="A">第二次世界大戰</label>
+      <label><input type="radio" name="p4q1" value="B">越戰</label>
+      <label><input type="radio" name="p4q1" value="C">韓戰</label>
+      <label><input type="radio" name="p4q1" value="D">甲午戰爭</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1950 年韓戰爆發，美國改變態度，協防臺灣。">　</div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">2. 1971 年中華民國退出聯合國，和哪一項決議有關？</div>
+      <label><input type="radio" name="p4q2" value="A">臺灣關係法</label>
+      <label><input type="radio" name="p4q2" value="B">聯合國大會第 2758 號決議</label>
+      <label><input type="radio" name="p4q2" value="C">中美共同防禦條約</label>
+      <label><input type="radio" name="p4q2" value="D">動員戡亂時期臨時條款</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　2758 號決議讓中華人民共和國取得聯合國的中國代表權。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">3. 美國與中華民國斷交後，用什麼法律維持和臺灣的關係？</div>
+      <label><input type="radio" name="p4q3" value="A">中美共同防禦條約</label>
+      <label><input type="radio" name="p4q3" value="B">馬關條約</label>
+      <label><input type="radio" name="p4q3" value="C">集會遊行法</label>
+      <label><input type="radio" name="p4q3" value="D">臺灣關係法</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1979 年美國國會通過，維持非官方往來並提供防禦性武器。共同防禦條約在斷交後終止。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-5 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出美麗島事件、民進黨成立、解嚴、解除報禁的年代與意義</li>
+      <li>知道國會全面改選、總統直選、政黨輪替代表什麼</li>
+      <li>能把民主化的里程碑依先後排列</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：黨外運動與美麗島事件</h2>
+    <p>1970 年代，國民黨以外的反對人士被稱為「<b>黨外</b>」（因為不能組黨，只能用「黨外」這個名稱）。他們透過選舉和辦雜誌，要求解除戒嚴、國會全面改選。</p>
+    <p><b>1979 年 12 月 10 日</b>（世界人權日），《美麗島》雜誌社的成員在<b>高雄</b>舉辦遊行，和軍警發生衝突，這就是<b>美麗島事件</b>（也叫高雄事件）。事後許多黨外人士被逮捕，部分人被送軍事法庭審判。</p>
+    <div class="note">💡 審判的過程經過報導，反而讓更多人認識黨外人士的主張；一些受刑人的家屬和辯護律師，後來也投入政治。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：從組黨到解嚴</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>年份</th><th>事件</th><th>意義</th></tr>
+        <tr><td>1986</td><td class="name">民主進步黨成立</td><td style="text-align:left">黨外人士在戒嚴下宣布成立新政黨，突破黨禁；政府沒有取締</td></tr>
+        <tr><td>1987</td><td class="name">解除戒嚴</td><td style="text-align:left">7 月 15 日解嚴，結束約 38 年的戒嚴；同年底開放民眾到大陸探親</td></tr>
+        <tr><td>1988</td><td class="name">解除報禁</td><td style="text-align:left">可以申請辦新報紙，張數也不再限制</td></tr>
+        <tr><td>1990</td><td class="name">野百合學運</td><td style="text-align:left">大學生在臺北靜坐，要求國會改革等，推動了後來的改革</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：國會改選、總統直選、政黨輪替</h2>
+    <ul>
+      <li><b>1991 年</b>：宣告<b>終止動員戡亂時期</b>，廢止臨時條款；年底<b>國民大會代表全面改選</b>。</li>
+      <li><b>1992 年</b>：<b>立法委員全面改選</b>，「萬年國會」正式走入歷史。</li>
+      <li><b>1996 年</b>：<b>第一次總統直選</b>，由人民直接投票選出總統。</li>
+      <li><b>2000 年</b>：民進黨候選人陳水扁當選總統，國民黨交出執政權，這是臺灣<b>第一次政黨輪替</b>，而且是和平轉移政權。</li>
+    </ul>
+    <div class="formula"><b>政黨輪替</b>：透過選舉，由原本的在野黨取代執政黨上台執政。能和平輪替，是民主政治成熟的重要指標。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手排：民主化里程碑</h2>
+    <p>用 ▲▼ 把八個里程碑由早到晚排好，按「檢查」。排對的會顯示年份。</p>
+    <div id="sortDemo"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">1. 1979 年在高雄發生、和《美麗島》雜誌有關的事件是：</div>
+      <label><input type="radio" name="p5q1" value="A">二二八事件</label>
+      <label><input type="radio" name="p5q1" value="B">雷震案</label>
+      <label><input type="radio" name="p5q1" value="C">美麗島事件</label>
+      <label><input type="radio" name="p5q1" value="D">野百合學運</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1979 年 12 月 10 日世界人權日，在高雄。">　</div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">2. 民主進步黨成立時，臺灣的狀況是：</div>
+      <label><input type="radio" name="p5q2" value="A">還在戒嚴，黨禁尚未正式解除</label>
+      <label><input type="radio" name="p5q2" value="B">已經舉行過總統直選</label>
+      <label><input type="radio" name="p5q2" value="C">已經解除報禁</label>
+      <label><input type="radio" name="p5q2" value="D">國會已經全面改選</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　民進黨 1986 年成立，解嚴是 1987 年，所以是在戒嚴中突破黨禁。">　</div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">3. 臺灣第一次政黨輪替發生在哪一年？</div>
+      <label><input type="radio" name="p5q3" value="A">1987 年</label>
+      <label><input type="radio" name="p5q3" value="B">2000 年</label>
+      <label><input type="radio" name="p5q3" value="C">1996 年</label>
+      <label><input type="radio" name="p5q3" value="D">1992 年</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1996 年是第一次總統直選，2000 年才第一次換黨執政。">　</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📝 一頁重點整理＋口訣</h2>
+    <div class="mem">
+      <p>🔑 <b>口訣：「接收民怨二二八，戒嚴遷臺萬年會；韓戰協防退聯合，斷交還有關係法；美麗島、組新黨，解嚴報禁國會換，直選總統再輪替。」</b></p>
+    </div>
+    <div class="mem">
+      <p>🔢 <b>民主化數字串：79 → 86 → 87 → 88 → 91 → 92 → 96 → 00</b></p>
+      <p>79 美麗島｜86 民進黨｜87 解嚴｜88 報禁解除｜91 終止戡亂、國代改選｜92 立委改選｜96 總統直選｜00 政黨輪替</p>
+    </div>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>小節</th><th>一句話重點</th></tr>
+        <tr><td class="name">戰後接收</td><td style="text-align:left">1945 接收；長官公署（陳儀）權力集中；貪污、通膨、失業、語言隔閡 → 民怨</td></tr>
+        <tr><td class="name">二二八</td><td style="text-align:left">1947 查緝私菸引爆；處理委員會；派兵鎮壓、清鄉；死傷眾多；1995 立碑道歉，1997 起國定紀念日</td></tr>
+        <tr><td class="name">威權統治</td><td style="text-align:left">1949 戒嚴、遷臺；臨時條款；萬年國會；白色恐怖；黨禁、報禁；地方選舉照常</td></tr>
+        <tr><td class="name">國際局勢</td><td style="text-align:left">1950 韓戰協防＋美援；1954 共同防禦條約；1971 退出聯合國（2758）；1979 美國斷交＋臺灣關係法</td></tr>
+        <tr><td class="name">民主化</td><td style="text-align:left">美麗島 → 民進黨 → 解嚴 → 報禁 → 國會全面改選 → 總統直選 → 政黨輪替</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🃏 翻翻卡：考前 3 分鐘複習</h2>
+    <p>先想答案，再點卡片翻過來對。全部翻完再按「全部蓋回去」重來一次。</p>
+    <div class="flip-grid" id="flipGrid"></div>
+    <div class="row" style="margin-top:10px"><button class="dnd-check" id="flipReset" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:inherit">全部蓋回去</button></div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s6" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（12 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 戰後臺灣省行政長官公署的行政長官是：</div>
+      <label><input type="radio" name="qz1" value="A">陳誠</label>
+      <label><input type="radio" name="qz1" value="B">陳儀</label>
+      <label><input type="radio" name="qz1" value="C">雷震</label>
+      <label><input type="radio" name="qz1" value="D">李登輝</label>
+      <div class="fb" data-exp="　陳儀掌握行政、立法和軍事大權。陳誠是 1949 年發布戒嚴令的省主席。">　</div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">2. 下列哪一項<b>不是</b>戰後初期引起民怨的原因？</div>
+      <label><input type="radio" name="qz2" value="A">官員貪污</label>
+      <label><input type="radio" name="qz2" value="B">物價飛漲</label>
+      <label><input type="radio" name="qz2" value="C">語言隔閡</label>
+      <label><input type="radio" name="qz2" value="D">美國與中華民國斷交</label>
+      <div class="fb" data-exp="　美國斷交是 1979 年的事。">　</div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 二二八事件發生在哪一年？</div>
+      <label><input type="radio" name="qz3" value="A">1947 年</label>
+      <label><input type="radio" name="qz3" value="B">1945 年</label>
+      <label><input type="radio" name="qz3" value="C">1949 年</label>
+      <label><input type="radio" name="qz3" value="D">1979 年</label>
+      <div class="fb" data-exp="　1947 年 2 月 27 日查緝私菸，2 月 28 日擴大。">　</div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">4. 二二八事件對臺灣社會的長期影響，下列何者正確？</div>
+      <label><input type="radio" name="qz4" value="A">大家更熱衷討論政治</label>
+      <label><input type="radio" name="qz4" value="B">立刻解除戒嚴</label>
+      <label><input type="radio" name="qz4" value="C">造成省籍隔閡，許多人對政治冷感、不敢談政治</label>
+      <label><input type="radio" name="qz4" value="D">臺灣退出聯合國</label>
+      <div class="fb" data-exp="　「莫談國事」成為很多家庭的習慣，省籍之間也產生不信任。">　</div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 臺灣實施戒嚴的期間是：</div>
+      <label><input type="radio" name="qz5" value="A">1945～1949 年</label>
+      <label><input type="radio" name="qz5" value="B">1949～1987 年</label>
+      <label><input type="radio" name="qz5" value="C">1979～1996 年</label>
+      <label><input type="radio" name="qz5" value="D">1987～2000 年</label>
+      <div class="fb" data-exp="　1949 年 5 月 20 日起戒嚴，1987 年 7 月 15 日解嚴，約 38 年。">　</div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">6. 中央民意代表在大陸選出後，來臺長期不改選，被稱為：</div>
+      <label><input type="radio" name="qz6" value="A">萬年國會</label>
+      <label><input type="radio" name="qz6" value="B">白色恐怖</label>
+      <label><input type="radio" name="qz6" value="C">黨外</label>
+      <label><input type="radio" name="qz6" value="D">地方自治</label>
+      <div class="fb" data-exp="　直到 1991～1992 年才全面改選。">　</div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">7. 戒嚴時期，政府以防止叛亂、共產黨間諜為由，逮捕審判許多人，造成人人自危的氣氛，稱為：</div>
+      <label><input type="radio" name="qz7" value="A">清鄉</label>
+      <label><input type="radio" name="qz7" value="B">報禁</label>
+      <label><input type="radio" name="qz7" value="C">政黨輪替</label>
+      <label><input type="radio" name="qz7" value="D">白色恐怖</label>
+      <div class="fb" data-exp="　許多案件由軍事法庭審判，其中有不少冤案、錯案。">　</div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">8. 1950 年韓戰爆發後，美國對臺灣的做法是：</div>
+      <label><input type="radio" name="qz8" value="A">與中華民國斷交</label>
+      <label><input type="radio" name="qz8" value="B">通過臺灣關係法</label>
+      <label><input type="radio" name="qz8" value="C">派第七艦隊協防臺灣海峽，並提供美援</label>
+      <label><input type="radio" name="qz8" value="D">讓中華民國退出聯合國</label>
+      <div class="fb" data-exp="　冷戰下，臺灣成為美國防堵共產勢力的一環。">　</div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">9. 依時間先後，下列排列何者正確？</div>
+      <label><input type="radio" name="qz9" value="A">退出聯合國 → 中美共同防禦條約 → 美國斷交</label>
+      <label><input type="radio" name="qz9" value="B">中美共同防禦條約 → 退出聯合國 → 美國斷交</label>
+      <label><input type="radio" name="qz9" value="C">美國斷交 → 退出聯合國 → 中美共同防禦條約</label>
+      <label><input type="radio" name="qz9" value="D">中美共同防禦條約 → 美國斷交 → 退出聯合國</label>
+      <div class="fb" data-exp="　1954 → 1971 → 1979。">　</div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">10. 下列哪件事發生在<b>解嚴之前</b>？</div>
+      <label><input type="radio" name="qz10" value="A">開放出國觀光</label>
+      <label><input type="radio" name="qz10" value="B">解除報禁</label>
+      <label><input type="radio" name="qz10" value="C">第一次總統直選</label>
+      <label><input type="radio" name="qz10" value="D">立法委員全面改選</label>
+      <div class="fb" data-exp="　1979 年就開放出國觀光，當時還在戒嚴中。報禁 1988、立委改選 1992、總統直選 1996 都在解嚴後。">　</div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">11. 民主化的里程碑，由早到晚排列何者正確？</div>
+      <label><input type="radio" name="qz11" value="A">解嚴 → 美麗島事件 → 民進黨成立 → 總統直選</label>
+      <label><input type="radio" name="qz11" value="B">民進黨成立 → 美麗島事件 → 總統直選 → 解嚴</label>
+      <label><input type="radio" name="qz11" value="C">美麗島事件 → 民進黨成立 → 解嚴 → 總統直選</label>
+      <label><input type="radio" name="qz11" value="D">總統直選 → 解嚴 → 民進黨成立 → 美麗島事件</label>
+      <div class="fb" data-exp="　1979 → 1986 → 1987 → 1996。">　</div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">12. 2000 年總統大選後，臺灣首次由原本的在野黨上台執政，這叫做：</div>
+      <label><input type="radio" name="qz12" value="A">戒嚴</label>
+      <label><input type="radio" name="qz12" value="B">國會全面改選</label>
+      <label><input type="radio" name="qz12" value="C">終止動員戡亂時期</label>
+      <label><input type="radio" name="qz12" value="D">政黨輪替</label>
+      <div class="fb" data-exp="　透過選舉和平轉移政權，是民主成熟的重要指標。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 臺灣的歷史（下）· 第 3 章「戰後臺灣的政治」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "歷史七下3 戰後臺灣的政治";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 10){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 7){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面五節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 拖曳配對（滑鼠、觸控都可以；也可以先點卡片、再點要放的區域）=====
+function dndGame(opts){
+  const box = document.getElementById(opts.box);
+  const placed = {};                       // 卡片 id → 放在哪一區
+  let selected = null, dragging = null;
+  const el = (tag, cls) => { const e = document.createElement(tag); if(cls) e.className = cls; return e; };
+  function render(){
+    box.innerHTML = '';
+    const pool = el('div', 'dnd-pool'); pool.dataset.zone = '__pool__';
+    pool.innerHTML = `<div class="dnd-zone-title" style="color:#6b7280">${opts.poolLabel || '卡片區（拖到下面正確的位置）'}</div>`;
+    const zonesWrap = el('div', 'dnd-zones');
+    const zoneEls = {};
+    opts.zones.forEach(z => {
+      const ze = el('div', 'dnd-zone'); ze.dataset.zone = z.id;
+      ze.innerHTML = `<div class="dnd-zone-title">${z.label}</div>`;
+      zonesWrap.appendChild(ze); zoneEls[z.id] = ze;
+    });
+    opts.items.forEach(it => {
+      const c = el('div', 'dnd-card'); c.dataset.item = it.id; c.textContent = it.label;
+      (placed[it.id] && zoneEls[placed[it.id]] ? zoneEls[placed[it.id]] : pool).appendChild(c);
+      attach(c);
+    });
+    const bar = el('div', 'row dnd-bar');
+    bar.innerHTML = `<button class="dnd-check">檢查</button><button class="ghost dnd-reset">重來</button><span class="dnd-msg"></span>`;
+    box.append(pool, zonesWrap, bar);
+    if(opts.hint){ const h = el('div', 'dnd-hint'); h.textContent = opts.hint; box.appendChild(h); }
+    bar.querySelector('.dnd-check').addEventListener('click', check);
+    bar.querySelector('.dnd-reset').addEventListener('click', () => { Object.keys(placed).forEach(k => delete placed[k]); selected = null; render(); });
+    [pool, ...Object.values(zoneEls)].forEach(z => z.addEventListener('click', () => {
+      if(!selected) return;
+      if(z.dataset.zone === '__pool__') delete placed[selected]; else placed[selected] = z.dataset.zone;
+      selected = null; render();
+    }));
+  }
+  function zoneAt(x, y){
+    const t = document.elementFromPoint(x, y);
+    return t ? t.closest('.dnd-zone, .dnd-pool') : null;
+  }
+  function attach(card){
+    let sx = 0, sy = 0, moved = false, ghost = null;
+    card.addEventListener('pointerdown', e => {
+      sx = e.clientX; sy = e.clientY; moved = false; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e => {
+      if(!(e.buttons & 1)) return;
+      if(!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 6) return;
+      if(!moved){
+        moved = true; ghost = card.cloneNode(true); ghost.classList.add('drag');
+        document.body.appendChild(ghost); card.style.opacity = '.35';
+      }
+      ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + 'px'; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + 'px';
+      box.querySelectorAll('.over').forEach(z => z.classList.remove('over'));
+      const z = zoneAt(e.clientX, e.clientY); if(z && box.contains(z)) z.classList.add('over');
+    });
+    card.addEventListener('pointerup', e => {
+      if(moved){
+        const z = zoneAt(e.clientX, e.clientY);
+        if(ghost) ghost.remove(); card.style.opacity = '';
+        if(z && box.contains(z)){ if(z.dataset.zone === '__pool__') delete placed[card.dataset.item]; else placed[card.dataset.item] = z.dataset.zone; }
+        selected = null; render();
+      }else{
+        selected = (selected === card.dataset.item) ? null : card.dataset.item;
+        box.querySelectorAll('.dnd-card').forEach(c => c.classList.toggle('sel', c.dataset.item === selected));
+      }
+    });
+    card.addEventListener('pointercancel', () => { if(ghost) ghost.remove(); card.style.opacity = ''; moved = false; });
+    card.addEventListener('click', e => e.stopPropagation());   // 點選卡片時不要冒泡到卡片區（否則剛選取就被取消）
+  }
+  function check(){
+    let ok = 0, total = opts.items.length, unplaced = 0;
+    box.querySelectorAll('.dnd-card').forEach(c => {
+      const id = c.dataset.item, z = placed[id];
+      const zone = opts.zones.find(zz => zz.id === z);
+      c.classList.remove('ok', 'no');
+      if(!zone){ unplaced++; c.classList.add('no'); return; }
+      if(zone.accepts.includes(id)){ ok++; c.classList.add('ok'); } else c.classList.add('no');
+    });
+    const msg = box.querySelector('.dnd-msg');
+    if(ok === total){ msg.className = 'dnd-msg ok'; msg.textContent = '✔ 全部正確！'; }
+    else { msg.className = 'dnd-msg no'; msg.textContent = `✘ 對了 ${ok} / ${total}${unplaced ? '（還有 ' + unplaced + ' 張沒放）' : ''}，紅色的再想想。`; }
+    toolLog(opts.name || opts.box, ok === total);
+    if(opts.onResult) opts.onResult(ok, total, placed);
+  }
+  render();
+  return { placed };
+}
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+const KC = { early: '#b45309', auth: '#b91c1c', intl: '#1d4ed8', demo: '#15803d' };
+const KN = { early: '戰後初期', auth: '威權統治', intl: '國際局勢', demo: '民主化' };
+
+// ---- 時期色帶（1945～2000）----
+(function(){
+  const W = 480, x0 = 20, x1 = 460, yr = y => x0 + (y - 1945) / 55 * (x1 - x0);
+  let s = rect(0, 0, W, 114, '#ffffff');
+  const seg = [[1945, 1949, KC.early, '戰後初期'], [1949, 1987, KC.auth, '戒嚴時期（約 38 年）'], [1987, 2000, KC.demo, '解嚴後']];
+  seg.forEach(([a, b, c, l]) => {
+    s += `<rect x="${yr(a)}" y="30" width="${yr(b) - yr(a)}" height="30" fill="${c}" opacity=".85"/>`;
+    if(b - a > 8) s += txt((yr(a) + yr(b)) / 2, 50, l, '#fff', 15, 'middle', 'font-weight="bold"');
+  });
+  [1945, 1949, 1960, 1971, 1979, 1987, 1996, 2000].forEach(y => {
+    s += line(yr(y), 60, yr(y), 68, '#1f2937', 1.5) + txt(yr(y), 84, y, '#1f2937', 13);
+  });
+  s += txt(yr(1947), 22, '二二八', KC.early, 14) + txt(yr(1971), 22, '退出聯合國', KC.intl, 14) + txt(yr(1996), 22, '總統直選', KC.demo, 14);
+  s += txt(W / 2, 106, '紅色段＝戒嚴；綠色段＝解嚴之後', '#6b7280', 14);
+  document.getElementById('svgEra').innerHTML = svg(W, 114, s);
+})();
+
+// ---- 可點時間軸 ----
+const TL = [
+  { y: '1945', k: 'early', t: '日本投降，中華民國政府接收臺灣', d: '8 月日本宣布投降；10 月 25 日在臺北舉行受降典禮，設立臺灣省行政長官公署，陳儀任行政長官。' },
+  { y: '1947', k: 'early', t: '二二八事件', d: '2 月 27 日臺北查緝私菸引發衝突，2 月 28 日擴大到全臺。政府派兵鎮壓、清鄉，死傷眾多。' },
+  { y: '1949', k: 'auth', t: '發布戒嚴令、政府遷臺', d: '5 月 20 日起全臺戒嚴；年底中華民國政府遷到臺灣。戒嚴一直到 1987 年才解除。' },
+  { y: '1950', k: 'intl', t: '韓戰爆發，美國協防臺灣', d: '美國派第七艦隊巡防臺灣海峽；1951 年起提供美援。同一年，臺灣開始舉辦縣市長等地方選舉。' },
+  { y: '1954', k: 'intl', t: '中美共同防禦條約', d: '美國承諾協防臺灣、澎湖。條約在 1979 年斷交後終止。' },
+  { y: '1960', k: 'auth', t: '雷震案', d: '《自由中國》雜誌主編雷震因批評政府、籌組新政黨被捕，判刑十年，是白色恐怖時期著名的政治案件。' },
+  { y: '1971', k: 'intl', t: '退出聯合國', d: '聯合國大會通過第 2758 號決議，由中華人民共和國取得中國代表權，中華民國政府宣布退出。' },
+  { y: '1979', k: 'intl', t: '美國與中華民國斷交；《臺灣關係法》', d: '1 月 1 日美國改與中華人民共和國建交；美國國會通過臺灣關係法，維持非官方關係。同年也開放民眾出國觀光。' },
+  { y: '1979', k: 'demo', t: '美麗島事件', d: '12 月 10 日世界人權日，《美麗島》雜誌社在高雄遊行，與軍警衝突，多位黨外人士被捕受審。' },
+  { y: '1986', k: 'demo', t: '民主進步黨成立', d: '黨外人士在戒嚴中宣布組黨，突破黨禁。' },
+  { y: '1987', k: 'demo', t: '解除戒嚴', d: '7 月 15 日解嚴，結束約 38 年的戒嚴；年底開放赴大陸探親。' },
+  { y: '1988', k: 'demo', t: '解除報禁', d: '開放申請新報紙，報紙張數也不再限制。' },
+  { y: '1991', k: 'demo', t: '終止動員戡亂時期；國大代表全面改選', d: '5 月 1 日終止動員戡亂時期、廢止臨時條款；年底國民大會代表全面改選。' },
+  { y: '1992', k: 'demo', t: '立法委員全面改選', d: '「萬年國會」正式結束。' },
+  { y: '1995', k: 'demo', t: '二二八紀念碑落成、政府道歉', d: '李登輝總統代表政府向受難者家屬道歉，並立法補償。1997 年起 2 月 28 日成為國定紀念日。' },
+  { y: '1996', k: 'demo', t: '第一次總統直選', d: '人民第一次直接投票選出總統。' },
+  { y: '2000', k: 'demo', t: '第一次政黨輪替', d: '民進黨的陳水扁當選總統，國民黨和平交出政權。' },
+];
+(function(){
+  const ol = document.getElementById('timeline');
+  ol.innerHTML = TL.map((e, i) => `<li data-k="${e.k}" style="--c:${KC[e.k]}"><button><span class="yr">${e.y}</span>${e.t} <span class="tag t-${e.k}">${KN[e.k]}</span></button><div class="det">${e.d}</div></li>`).join('');
+  let seen = new Set();
+  ol.querySelectorAll('li').forEach((li, i) => li.querySelector('button').addEventListener('click', () => {
+    li.classList.toggle('open'); seen.add(i);
+    if(seen.size === TL.length) { toolLog('時間軸全部點過', true); seen = new Set([-1]); }
+  }));
+  document.querySelectorAll('#tlFilter button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('#tlFilter button').forEach(x => x.classList.toggle('on', x === b));
+    ol.querySelectorAll('li').forEach(li => li.classList.toggle('hide', b.dataset.k !== 'all' && li.dataset.k !== b.dataset.k));
+  }));
+})();
+
+// ---- 戰後初期問題分類 ----
+dndGame({ box: 'dndProb', name: '戰後初期問題分類', poolLabel: '戰後初期的問題',
+  items: [
+    { id: 'a1', label: '長官公署權力集中' }, { id: 'a2', label: '高階官員多由大陸來的人擔任' }, { id: 'a3', label: '官員貪污' },
+    { id: 'b1', label: '物價飛漲（通貨膨脹）' }, { id: 'b2', label: '米糧缺乏' }, { id: 'b3', label: '菸酒等由政府專賣' }, { id: 'b4', label: '許多人失業' },
+    { id: 'c1', label: '語言隔閡' }, { id: 'c2', label: '廢止報紙日文版' }, { id: 'c3', label: '生活習慣不同，容易誤會' },
+  ],
+  zones: [
+    { id: 'pol', label: '🏛️ 政治', accepts: ['a1', 'a2', 'a3'] },
+    { id: 'eco', label: '💰 經濟', accepts: ['b1', 'b2', 'b3', 'b4'] },
+    { id: 'soc', label: '🗣️ 社會文化', accepts: ['c1', 'c2', 'c3'] },
+  ] });
+
+// ---- 排序遊戲（▲▼ 移動，手機也好按）----
+function sortGame(opts){
+  const box = document.getElementById(opts.box);
+  let order = opts.items.map((_, i) => i);
+  do { order.sort(() => Math.random() - .5); } while(order.every((v, i) => v === i));
+  let checked = false;
+  function render(){
+    box.innerHTML = '';
+    const list = document.createElement('div'); list.className = 'sort-list';
+    order.forEach((idx, pos) => {
+      const it = opts.items[idx];
+      const row = document.createElement('div'); row.className = 'sort-item';
+      if(checked) row.classList.add(idx === pos ? 'ok' : 'no');
+      row.innerHTML = `<span class="n">${pos + 1}</span><span class="lb">${it.label}${checked && idx === pos ? `<span class="ans">${it.year}</span>` : ''}</span><span class="mv"><button aria-label="上移">▲</button><button aria-label="下移">▼</button></span>`;
+      const [up, dn] = row.querySelectorAll('.mv button');
+      up.addEventListener('click', () => move(pos, -1)); dn.addEventListener('click', () => move(pos, 1));
+      list.appendChild(row);
+    });
+    const bar = document.createElement('div'); bar.className = 'row dnd-bar';
+    bar.innerHTML = `<button class="s-check">檢查</button><button class="ghost s-show">看答案</button><button class="ghost s-reset">打亂重來</button><span class="dnd-msg"></span>`;
+    box.append(list, bar);
+    bar.querySelector('.s-check').addEventListener('click', check);
+    bar.querySelector('.s-show').addEventListener('click', () => { order = opts.items.map((_, i) => i); checked = true; render(); msg('這是正確順序，記一下年份，再打亂重來一次！', true); });
+    bar.querySelector('.s-reset').addEventListener('click', () => { do { order.sort(() => Math.random() - .5); } while(order.every((v, i) => v === i)); checked = false; render(); });
+  }
+  function msg(t, ok){ const m = box.querySelector('.dnd-msg'); m.className = 'dnd-msg ' + (ok ? 'ok' : 'no'); m.textContent = t; }
+  function move(pos, d){
+    const np = pos + d; if(np < 0 || np >= order.length) return;
+    [order[pos], order[np]] = [order[np], order[pos]]; checked = false; render();
+  }
+  function check(){
+    checked = true; render();
+    const ok = order.filter((v, i) => v === i).length;
+    if(ok === order.length) msg('✔ 全部排對了！', true);
+    else msg(`✘ 位置正確 ${ok} / ${order.length}，紅色的再調整。`, false);
+    toolLog(opts.name, ok === order.length);
+  }
+  render();
+}
+
+sortGame({ box: 'sort228', name: '二二八排序', items: [
+  { label: '戰後接收，貪污、通膨、失業等民怨累積', year: '1945～1946' },
+  { label: '臺北查緝私菸，查緝員打傷菸販、開槍打死旁觀民眾', year: '1947 年 2 月 27 日' },
+  { label: '民眾抗議請願遭開槍，衝突擴大到全臺', year: '1947 年 2 月 28 日起' },
+  { label: '各地成立二二八事件處理委員會，提出改革要求', year: '1947 年 3 月初' },
+  { label: '中央派來的軍隊登陸鎮壓，接著清鄉', year: '1947 年 3 月' },
+  { label: '二二八紀念碑落成，總統代表政府道歉', year: '1995 年' },
+  { label: '2 月 28 日成為國定紀念日', year: '1997 年起' },
+] });
+
+sortGame({ box: 'sortDemo', name: '民主化排序', items: [
+  { label: '美麗島事件', year: '1979' },
+  { label: '民主進步黨成立', year: '1986' },
+  { label: '解除戒嚴', year: '1987' },
+  { label: '解除報禁', year: '1988' },
+  { label: '終止動員戡亂時期、國大代表全面改選', year: '1991' },
+  { label: '立法委員全面改選', year: '1992' },
+  { label: '第一次總統直選', year: '1996' },
+  { label: '第一次政黨輪替', year: '2000' },
+] });
+
+// ---- 解嚴前／解嚴後 切換卡 ----
+const LIFE = [
+  { h: '🚩 組政黨', b: ['不行（黨禁）', '不准成立新政黨。1986 年民進黨在戒嚴中宣布成立，政府沒有取締，是一大突破。'], a: ['可以', '政黨可以依法登記成立，選舉時有多個政黨競爭。'] },
+  { h: '📰 辦報紙', b: ['不行（報禁）', '不准申請新報紙，每份報紙的張數也被限制。'], a: ['可以（1988 年起）', '解嚴後隔年（1988 年）解除報禁，報紙變多、版面變厚。'] },
+  { h: '📢 集會遊行', b: ['受嚴格限制', '戒嚴下集會遊行受到嚴格管制，違反規定可能被處罰。'], a: ['依法申請就能舉行', '依照《集會遊行法》的規定申請，就能合法集會遊行。'] },
+  { h: '💬 批評政府', b: ['很危險', '言論受到限制，批評政府可能被扣上「叛亂」罪名（白色恐怖）。'], a: ['逐漸開放', '言論空間慢慢放寬；1992 年修改刑法，單純發表言論不再被當成叛亂。'] },
+  { h: '⚖️ 一般人民被審判', b: ['可能送軍事法庭', '戒嚴時期，一般人民犯某些罪也可能由軍事法庭審判。'], a: ['回到一般法院', '解嚴後，一般人民不再受軍事審判。'] },
+  { h: '✈️ 出國觀光', b: ['1979 年起已開放！', '陷阱題：開放出國觀光是 1979 年的事，那時還在戒嚴中。在那之前，一般人不能單純為了觀光出國。'], a: ['可以', '繼續開放；1987 年底還開放民眾到中國大陸探親。'] },
+  { h: '🏛️ 中央民意代表', b: ['長期不改選', '「萬年國會」：大陸選出的代表一直沒有全面改選。'], a: ['1991～1992 全面改選', '陷阱題：解嚴不等於馬上改選，要等 1991 年終止動員戡亂時期後，國代、立委才全面改選。'] },
+  { h: '🗳️ 總統怎麼選', b: ['由國民大會選出', '人民不能直接投票選總統。'], a: ['1996 年起人民直選', '1996 年第一次總統直選。'] },
+  { h: '🏙️ 縣市長、議員', b: ['有選舉！', '陷阱題：戒嚴時期，縣市長、縣市議員、省議員等地方選舉仍定期舉行。'], a: ['繼續選舉', '地方選舉照常舉行。'] },
+];
+(function(){
+  const grid = document.getElementById('lifeGrid');
+  let mode = 'before', both = new Set(['before']);
+  function render(){
+    grid.innerHTML = LIFE.map(c => { const [st, tx] = c[mode === 'before' ? 'b' : 'a']; return `<div class="life ${mode}"><h4>${c.h}</h4><div class="st">${st}</div><div class="tx">${tx}</div></div>`; }).join('');
+  }
+  document.querySelectorAll('#lifeSwitch button').forEach(b => b.addEventListener('click', () => {
+    mode = b.dataset.m;
+    document.querySelectorAll('#lifeSwitch button').forEach(x => x.classList.toggle('on', x === b));
+    render();
+    if(!both.has(mode)){ both.add(mode); if(both.size === 2) toolLog('解嚴前後對照', true); }
+  }));
+  render();
+})();
+
+// ---- 戒嚴時期職位怎麼產生 ----
+dndGame({ box: 'dndVote', name: '職位產生方式', poolLabel: '職位',
+  items: [
+    { id: 'v1', label: '縣市長' }, { id: 'v2', label: '縣市議員' }, { id: 'v3', label: '省議員' },
+    { id: 'v4', label: '國民大會代表' }, { id: 'v5', label: '立法委員' }, { id: 'v6', label: '監察委員' },
+    { id: 'v7', label: '總統' },
+  ],
+  zones: [
+    { id: 'local', label: '✅ 人民定期選舉', accepts: ['v1', 'v2', 'v3'] },
+    { id: 'old', label: '⏸️ 大陸選出，長期未全面改選', accepts: ['v4', 'v5', 'v6'] },
+    { id: 'na', label: '🏛️ 由國民大會選出', accepts: ['v7'] },
+  ],
+  hint: '提示：地方有選舉、中央民代萬年不改、總統由國代選。' });
+
+// ---- 國際事件 → 影響 ----
+dndGame({ box: 'dndIntl', name: '國際事件配對', poolLabel: '對臺灣的影響',
+  items: [
+    { id: 'k1', label: '第七艦隊巡防臺灣海峽' }, { id: 'k2', label: '美援開始進入臺灣' },
+    { id: 'm1', label: '美國承諾協防臺灣、澎湖' }, { id: 'm2', label: '臺美正式結為軍事同盟' },
+    { id: 'u1', label: '失去聯合國的中國代表權' }, { id: 'u2', label: '之後許多國家陸續斷交（如日本）' },
+    { id: 'd1', label: '共同防禦條約隨後終止' }, { id: 'd2', label: '美國訂臺灣關係法，維持非官方往來' },
+  ],
+  zones: [
+    { id: 'korea', label: '1950 韓戰爆發', accepts: ['k1', 'k2'] },
+    { id: 'mutual', label: '1954 中美共同防禦條約', accepts: ['m1', 'm2'] },
+    { id: 'un', label: '1971 聯大第 2758 號決議', accepts: ['u1', 'u2'] },
+    { id: 'us79', label: '1979 美國與中華民國斷交', accepts: ['d1', 'd2'] },
+  ],
+  hint: '提示：50 年代是「美國幫忙」，70 年代是「外交挫折」。' });
+
+// ---- 翻翻卡 ----
+const FLIP = [
+  ['戰後接收臺灣的機關？', '臺灣省行政長官公署（行政長官陳儀）'], ['戰後初期民怨來源', '貪污、通貨膨脹、失業、語言隔閡'], ['二二八事件導火線', '1947 年 2 月 27 日臺北查緝私菸'],
+  ['二二八事件的長期影響', '省籍隔閡、政治冷感'], ['二二八的平反', '1995 紀念碑、總統道歉；1997 起國定紀念日'], ['臺灣戒嚴期間', '1949～1987 年，約 38 年'],
+  ['萬年國會', '大陸選出的中央民代長期不改選，1991～1992 才全面改選'], ['黨禁、報禁', '不准組新政黨、不准辦新報紙'], ['戒嚴時期仍有的選舉', '縣市長、縣市議員、省議員等地方選舉'],
+  ['1950 韓戰的影響', '第七艦隊協防、美援'], ['1971 年', '聯大 2758 號決議，退出聯合國'], ['1979 年三件大事', '美國斷交＋臺灣關係法、開放出國觀光、美麗島事件'],
+  ['1986 年', '民主進步黨成立'], ['1996 年', '第一次總統直選'], ['2000 年', '第一次政黨輪替'],
+];
+const grid = document.getElementById('flipGrid');
+grid.innerHTML = FLIP.map(([q, a]) => `<div class="flip"><div class="inner"><div class="face front">${q}</div><div class="face back">${a}</div></div></div>`).join('');
+grid.querySelectorAll('.flip').forEach(f => f.addEventListener('click', () => f.classList.toggle('on')));
+document.getElementById('flipReset').addEventListener('click', () => grid.querySelectorAll('.flip').forEach(f => f.classList.remove('on')));
+
+</script>
+</body>
+</html>
