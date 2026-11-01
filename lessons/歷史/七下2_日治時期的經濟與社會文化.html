@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日治時期｜經濟與社會文化</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#155e75; --accent-soft:#e0f2fe;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#155e75,#0e7490 55%,#a16207); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv .hi{background:#fef3c7;}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.02rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} .card{padding:16px 14px;} }
+
+  .dnd-pool,.dnd-zone{border:2px dashed var(--border); border-radius:12px; padding:10px 12px; min-height:64px; margin:8px 0; background:#fff; transition:.15s;}
+  .dnd-pool{background:#f9fafb;}
+  .dnd-zone.over,.dnd-pool.over{border-color:var(--blue); background:#eff6ff;}
+  .dnd-zones{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px;}
+  .dnd-zone-title{font-weight:bold; margin-bottom:6px; color:var(--accent);}
+  .dnd-card{display:inline-block; background:#fff; border:1.5px solid var(--border); border-radius:99px; padding:6px 14px; margin:4px 6px 4px 0;
+    cursor:grab; user-select:none; touch-action:none; font-size:.95rem; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .1s; max-width:100%;}
+  .dnd-card:hover{border-color:var(--blue);}
+  .dnd-card.sel{border-color:var(--blue); background:#dbeafe; transform:scale(1.04);}
+  .dnd-card.drag{position:fixed; z-index:99; pointer-events:none; opacity:.9; transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.2);}
+  .dnd-card.ok{border-color:var(--green); background:var(--green-soft);}
+  .dnd-card.no{border-color:var(--red); background:var(--red-soft);}
+  .dnd-bar{margin-top:8px;}
+  .dnd-bar button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem; margin-right:6px;}
+  .dnd-bar button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .dnd-msg{font-weight:bold; margin-left:8px;}
+  .dnd-msg.ok{color:#166534;} .dnd-msg.no{color:#991b1b;}
+  .dnd-hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; min-height:2.4em;}
+
+  .flip-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:12px;}
+  .flip{perspective:800px; cursor:pointer; height:130px;}
+  .flip .inner{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+  .flip.on .inner{transform:rotateY(180deg);}
+  .flip .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:12px; padding:10px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:.92rem; line-height:1.5;}
+  .flip .front{background:#fff; border:2px solid var(--accent); color:var(--accent); font-weight:bold;}
+  .flip .back{background:var(--accent); color:#fff; transform:rotateY(180deg);}
+  .flip.person{height:150px;}
+  .flip.person .front{flex-direction:column; gap:4px;}
+  .flip.person .front .ico{font-size:1.8rem;}
+  .flip.person .front small{font-weight:normal; color:var(--sub);}
+  .flipbtn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:inherit;margin-top:10px;}
+
+  .mapwrap{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;}
+  .mapwrap .svgbox{margin:0; flex:0 1 300px;}
+  .mapwrap .side{flex:1 1 220px; min-width:0;}
+  .stn{cursor:pointer;} .stn:hover circle{stroke-width:4;}
+
+  /* 時光機 */
+  .tm-switch{display:flex; border:2px solid var(--accent); border-radius:99px; overflow:hidden; margin:8px 0 12px;}
+  .tm-switch button{flex:1; border:none; background:#fff; color:var(--accent); padding:10px 6px; font-family:inherit; font-size:.95rem; cursor:pointer; border-radius:0 !important;}
+  .tm-switch button.on{background:var(--accent); color:#fff; font-weight:bold;}
+  .tm-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px;}
+  .tm-card{background:#fff; border:1px solid var(--border); border-radius:12px; padding:10px 12px; transition:.2s;}
+  .tm-card .h{font-weight:bold; color:var(--accent);}
+  .tm-card .ico{font-size:1.5rem; float:right; margin-left:6px;}
+  .tm-card.after{border-color:#0e7490; background:#f0fdfa;}
+  .tm-card .why{font-size:.85rem; color:var(--sub); margin-top:4px;}
+
+  /* 排序 */
+  .ord-pool button,.ord-seq button{margin:4px 6px 4px 0;}
+  .ord-seq{min-height:46px; background:#fff; border:2px dashed var(--border); border-radius:10px; padding:6px 8px; margin:8px 0;}
+  .ord-seq .tag{display:inline-block; background:#fff; border:1.5px solid var(--accent); color:var(--accent); border-radius:99px; padding:4px 12px; margin:4px 6px 4px 0; font-size:.9rem;}
+  .ord-seq .tag.ok{border-color:var(--green); background:var(--green-soft); color:#166534;}
+  .ord-seq .tag.no{border-color:var(--red); background:var(--red-soft); color:#991b1b;}
+  .meter{height:16px; border-radius:99px; background:#e5e7eb; overflow:hidden; display:flex; margin:6px 0;}
+  .meter span{display:block; height:100%; transition:width .3s;}
+  .kou{font-size:1.05rem; line-height:2;}
+  .kou b{color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 臺灣的歷史（下） · 第2章</span>
+  <h1>日治時期的經濟與社會文化</h1>
+  <p>日本統治臺灣（1895～1945）的五十年間，臺灣的土地、交通、農業、生活習慣和文化都起了很大的變化。這份教材讓你配對「日本為什麼要這樣做」、調整米和甘蔗的收入看「米糖相剋」、轉動嘉南大圳的三年輪作、坐時光機比較清代和日治的生活，最後用人物翻翻卡複習。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">2-1 經濟基礎建設</button>
+  <button data-t="s2">2-2 農業臺灣、工業日本</button>
+  <button data-t="s3">2-3 社會變遷</button>
+  <button data-t="s4">2-4 新文化與藝術</button>
+  <button data-t="s5">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 2-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出土地調查、林野調查、戶口調查各自的目的</li>
+      <li>知道統一度量衡和貨幣、成立臺灣銀行，讓臺灣和日本的經濟連在一起</li>
+      <li>知道縱貫鐵路在 1908 年全線通車，以及基隆港、高雄港的功用</li>
+      <li>知道專賣制度是什麼，為什麼能幫總督府賺錢</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：先「摸清家底」——三大調查</h2>
+    <p>日本統治臺灣初期，臺灣總督府（日本在臺灣的最高統治機關）由<b>總督兒玉源太郎</b>、<b>民政長官後藤新平</b>主導，先把臺灣的土地、山林、人口調查清楚。就像搬進一間新房子，要先知道裡面有什麼，才好管理、才好收錢。</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>調查</th><th>做什麼</th><th>結果與目的</th></tr>
+        <tr><td class="name">土地調查<br><small>（1898 年起）</small></td><td>丈量田地、確認每塊地的主人</td><td>①確認地權（誰是地主）②查出沒報稅的「<b>隱田</b>」，<b>稅收大增</b>③<b>廢除大租權</b>，讓土地權利變單純</td></tr>
+        <tr><td class="name">林野調查<br><small>（1910 年代）</small></td><td>調查山林、原野</td><td>拿不出證明文件的山林多被收為<b>官有地</b>，方便日本企業開發木材、樟腦等資源</td></tr>
+        <tr><td class="name">戶口調查<br><small>（1905 年）</small></td><td>全臺第一次近代人口普查</td><td>掌握人口數量、分布和職業，方便<b>治安管理</b>和施政</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 <b>大租權</b>是什麼？清代有些土地一塊地有兩層主人：「大租戶」向官府取得開墾權，再把地交給「小租戶」去開墾、出租，小租戶每年要繳「大租」給大租戶。權利疊在一起，很難弄清楚誰該繳稅。總督府在 1905 年發公債補償大租戶、<b>廢除大租權</b>，從此<b>小租戶成為業主（地主）</b>，也由他負責繳稅。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：統一度量衡與貨幣、成立臺灣銀行</h2>
+    <ul>
+      <li><b>度量衡</b>就是量長度、容量、重量的標準。清代各地的斗、尺大小不一，買賣很容易吵架。日本改用統一標準，交易變方便。</li>
+      <li>清代臺灣流通的錢幣種類很多。總督府在 <b>1899 年成立臺灣銀行</b>，發行<b>臺灣銀行券</b>（紙鈔），逐步統一貨幣。</li>
+    </ul>
+    <div class="formula">統一度量衡＋統一貨幣 → 交易方便 → 臺灣和日本的市場<b>連成一體</b>，日本資本也更容易來臺投資</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：交通建設——鐵路與港口</h2>
+    <p><b>縱貫鐵路</b>北起<b>基隆</b>、南到<b>高雄（打狗）</b>，在 <b>1908 年全線通車</b>。總督府也整建<b>基隆港</b>和<b>高雄港</b>，成為臺灣北、南兩大港口。</p>
+    <div class="formula">農產品從各地 → 鐵路 → 基隆港／高雄港 → 運到日本</div>
+    <p>點地圖上的站名，看看每個地方在日治時期的角色。</p>
+    <div class="tool">
+      <div class="mapwrap">
+        <div class="svgbox" id="svgRail"></div>
+        <div class="side">
+          <div class="infobox" id="railInfo">👆 點地圖上的圓點。紅線是縱貫鐵路（簡化示意，位置大致正確即可）。</div>
+          <div class="hint">⚓ 是港口；● 是鐵路沿線城市。</div>
+        </div>
+      </div>
+    </div>
+    <div class="note">💡 鐵路讓南北往來的時間大幅縮短，原本要走好幾天的路，坐火車一天之內就能到。這對人民的生活和觀念也有很大影響（2-3 會再講）。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：專賣制度——政府獨家賣</h2>
+    <p><b>專賣</b>就是某些商品只准政府（或政府指定的人）製造、販賣，別人不能賣。日治時期專賣的商品有<b>鴉片、樟腦、食鹽、菸、酒</b>等。</p>
+    <ul>
+      <li>這些都是大家常買、或利潤很高的東西，由政府獨家經營，<b>收入非常可觀</b>。</li>
+      <li>專賣收入加上土地調查後增加的稅收，讓臺灣總督府在 <b>1905 年前後</b>就不再需要日本中央政府補助，稱為「<b>財政獨立</b>」。</li>
+      <li><b>鴉片</b>採「漸禁」政策：已經上癮、登記有案的人才能購買，不再發新的許可，讓吸食人數慢慢減少；同時政府也從中獲得收入。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：日本為什麼要做這件事？</h2>
+    <p>把右邊的「目的／結果」拖到它對應的政策下面。（手機可以先點卡片，再點要放的格子。）</p>
+    <div id="dndPolicy"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 日治初期進行土地調查，<b>不包括</b>下列哪一項結果？</div>
+      <label><input type="radio" name="p1q1" value="A">查出隱田，增加稅收</label>
+      <label><input type="radio" name="p1q1" value="B">確認土地所有權</label>
+      <label><input type="radio" name="p1q1" value="C">掌握全臺人口數量</label>
+      <label><input type="radio" name="p1q1" value="D">廢除大租權</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　掌握人口是「戶口調查」的目的，不是土地調查。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 縱貫鐵路在哪一年全線通車？連接哪兩個港口城市？</div>
+      <label><input type="radio" name="p1q2" value="A">1908 年，基隆到高雄</label>
+      <label><input type="radio" name="p1q2" value="B">1895 年，淡水到安平</label>
+      <label><input type="radio" name="p1q2" value="C">1930 年，臺北到臺南</label>
+      <label><input type="radio" name="p1q2" value="D">1908 年，臺北到屏東</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1908 年全線通車，北起基隆、南到高雄（打狗），兩端都是重要港口。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">3. 總督府把鴉片、樟腦、食鹽、菸、酒列為專賣，最主要的目的是：</div>
+      <label><input type="radio" name="p1q3" value="A">讓人民買得更便宜</label>
+      <label><input type="radio" name="p1q3" value="B">鼓勵臺灣人自己開工廠</label>
+      <label><input type="radio" name="p1q3" value="C">減少日本商人的利潤</label>
+      <label><input type="radio" name="p1q3" value="D">增加總督府的財政收入</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　專賣＝政府獨家經營，收入成為總督府重要財源，幫助財政獨立。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出「農業臺灣、工業日本」的意思，以及米、糖為什麼是主角</li>
+      <li>知道新式製糖會社怎麼收購甘蔗，以及俗諺「第一憨，種甘蔗給會社磅」的意思</li>
+      <li>能解釋「米糖相剋」：蓬萊米推廣後，米和甘蔗為什麼搶土地</li>
+      <li>知道嘉南大圳（八田與一）的三年輪作、日月潭水力發電，以及 1930 年代後期的工業化</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：農業臺灣、工業日本</h2>
+    <p>日治前期，日本給臺灣的角色很清楚：</p>
+    <div class="formula"><b>臺灣</b>：生產農產品（米、糖）供應日本 ⇄ <b>日本</b>：發展工業，把工業產品賣到臺灣</div>
+    <p>這就叫「<b>農業臺灣、工業日本</b>」。臺灣最重要的兩樣出口品是<b>米</b>和<b>糖</b>，所以這個時期常被稱為「<b>米糖經濟</b>」。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：糖——新式製糖會社</h2>
+    <ul>
+      <li>清代臺灣用牛拉石磨的「<b>糖廍</b>」（廍音同「部」）製糖，規模小。</li>
+      <li>1900 年日本資本成立<b>臺灣製糖株式會社</b>（會社＝公司），在今高雄橋頭設立新式製糖工廠，用機器大量製糖。之後新式糖廠遍布中南部。</li>
+      <li>總督府劃分「<b>原料採取區域</b>」：一個區域內的甘蔗只能賣給該區的會社，<b>價格和過磅都由會社決定</b>，蔗農沒得選。</li>
+    </ul>
+    <div class="formula">俗諺：「<b>第一憨，種甘蔗給會社磅</b>」——意思是：最傻的事，就是種甘蔗讓會社秤重收購（因為價錢、斤兩都是會社說了算，蔗農常覺得吃虧）。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：米——蓬萊米</h2>
+    <ul>
+      <li>臺灣原本種的米叫<b>在來米</b>（「本來就有的米」），口感比較不黏，日本人不太愛吃。</li>
+      <li>農業技師<b>磯永吉</b>和<b>末永仁</b>改良出適合臺灣種植、口感像日本米的新品種，1926 年命名為「<b>蓬萊米</b>」。</li>
+      <li>蓬萊米在日本很受歡迎，大量輸出到日本，種稻的農民收入提高。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：米糖相剋</h2>
+    <p>「<b>相剋</b>」就是互相打架、互相妨礙。米和甘蔗都需要田地，而臺灣的農田有限：</p>
+    <div class="formula">蓬萊米賣得好 → 農民改種稻 → 甘蔗變少 → 會社只好<b>提高甘蔗收購價</b>搶回農民 → 米和糖互相競爭土地與人力</div>
+    <p>下面的小工具用「示意數字」模擬這個拉鋸。先切換「蓬萊米推廣前／後」，再拖動會社出的甘蔗價，看看農民會怎麼選。</p>
+    <div class="tool">
+      <div class="row"><b>年代：</b><button id="rsBefore" class="ghost">蓬萊米推廣前</button><button id="rsAfter">蓬萊米推廣後</button></div>
+      <div><b>會社給的甘蔗收購價（示意）：</b><span id="rsCaneVal" class="num">50</span></div>
+      <input type="range" id="rsCane" min="30" max="120" value="50">
+      <div class="svgbox" id="svgRiceSugar"></div>
+      <div class="out" id="rsOut"></div>
+      <div class="hint">⚠️ 本工具的收入都是<b>示意數字</b>（假設值），只用來說明「哪邊賺得多，農民就種哪邊」的道理，不是歷史上的真實價格。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 5：嘉南大圳——八田與一</h2>
+    <p>嘉南平原面積很大，卻常常缺水、有些土地含鹽分高，收成不好。日本技師<b>八田與一</b>設計<b>嘉南大圳</b>（圳音同「鎮」，就是灌溉用的水道），<b>1920 年動工、1930 年完工</b>，並興建<b>烏山頭水庫</b>蓄水。</p>
+    <p>可是水還是不夠讓所有田同時種稻，於是採用「<b>三年輪作</b>」（也叫給水輪作）：把田分成三區，每年輪流種<b>水稻</b>、<b>甘蔗</b>、<b>雜作</b>（番薯、豆類等旱作），每區三年內都輪到一次用水最多的水稻。</p>
+    <div class="tool">
+      <div class="row"><button id="rotNext">▶ 下一年</button><button id="rotReset" class="ghost">回到第 1 年</button><span id="rotYear" class="num" style="font-size:1.1rem;color:var(--accent)">第 1 年</span></div>
+      <div class="svgbox" id="svgRot"></div>
+      <div class="infobox" id="rotInfo"></div>
+    </div>
+    <div class="note">💡 嘉南大圳完工後，嘉南平原的稻米、甘蔗產量大增，成為臺灣重要的糧倉。八田與一至今仍受當地人紀念。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 6：日月潭水力發電與「工業化」</h2>
+    <ul>
+      <li>總督府興建<b>日月潭水力發電</b>工程（1930 年代完工），提供大量又便宜的電力，為工業發展打下基礎。</li>
+      <li><b>1930 年代後期</b>，日本對外戰爭擴大（1937 年中日戰爭爆發），把臺灣當作「<b>南進基地</b>」（日本往東南亞擴張的跳板），稱為<b>南進政策</b>。</li>
+      <li>這時總督府開始在臺灣推動「<b>工業化</b>」，重點是支援戰爭的<b>軍需工業</b>，例如金屬（如鋁）、化學、機械、造船等。</li>
+    </ul>
+    <div class="formula">日治前期：農業臺灣、工業日本 → 1930 年代後期：配合戰爭與南進，發展軍需工業</div>
+    <div class="note">💡 這時的工業化主要是為了日本的戰爭需要，不是以臺灣人的生活需要為目標。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 排序題：把事件排出先後</h2>
+    <p>依照年代先後，從最早的開始點。點錯了可以按「重來」。</p>
+    <div class="tool">
+      <div class="ord-pool" id="ordPool"></div>
+      <div class="ord-seq" id="ordSeq"></div>
+      <div class="row"><button id="ordCheck">檢查</button><button id="ordReset" class="ghost">重來</button></div>
+      <div class="out" id="ordOut"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 「第一憨，種甘蔗給會社磅」這句俗諺，反映了什麼情形？</div>
+      <label><input type="radio" name="p2q1" value="A">種甘蔗收入最高</label>
+      <label><input type="radio" name="p2q1" value="B">蔗農只能把甘蔗賣給會社，價格、過磅都由會社決定</label>
+      <label><input type="radio" name="p2q1" value="C">會社鼓勵農民改種稻米</label>
+      <label><input type="radio" name="p2q1" value="D">甘蔗都賣到中國大陸</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　原料採取區域制度下，蔗農沒有議價能力，常覺得吃虧。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 「米糖相剋」是指：</div>
+      <label><input type="radio" name="p2q2" value="A">蓬萊米推廣後，種稻和種甘蔗互相爭奪土地</label>
+      <label><input type="radio" name="p2q2" value="B">米和糖不能一起吃</label>
+      <label><input type="radio" name="p2q2" value="C">糖廠和米店合併</label>
+      <label><input type="radio" name="p2q2" value="D">臺灣只准種甘蔗</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　蓬萊米獲利高，農民改種稻，會社得提高甘蔗收購價才能拿到原料。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">3. 嘉南大圳採用「三年輪作」，主要原因是：</div>
+      <label><input type="radio" name="p2q3" value="A">日本規定一年只能種一種作物</label>
+      <label><input type="radio" name="p2q3" value="B">為了讓土地休息不耕種</label>
+      <label><input type="radio" name="p2q3" value="C">水量不夠所有田同時種稻，只好分區輪流用水</label>
+      <label><input type="radio" name="p2q3" value="D">甘蔗需要的水最多</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　水稻、甘蔗、雜作輪流種，讓有限的水平均分給各區。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道放足、斷髮運動改變了傳統習俗</li>
+      <li>說得出日治時期公共衛生的建設，以及它們如何減少傳染病</li>
+      <li>知道公學校、小學校的差別，了解臺灣學生和日本學生受教育的不平等</li>
+      <li>知道守時觀念、一週七天的作息，以及女性走出家庭成為職業婦女</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：放足、斷髮</h2>
+    <ul>
+      <li><b>纏足</b>：清代許多漢人女孩從小把腳緊緊綁住，讓腳變小，走路很不方便。</li>
+      <li><b>辮髮</b>：清代漢人男子要留長辮子。</li>
+    </ul>
+    <p>日治初期總督府怕引起反抗，先不強迫改變。後來臺灣士紳也組織團體鼓勵改變，到了 <b>1915 年</b>，總督府透過保甲規約正式<b>禁止纏足</b>，同時推動剪辮子（<b>斷髮</b>）。</p>
+    <div class="note">💡 放足之後，女性行動方便了，才有機會上學、出外工作，這和後面講的「女性走出家庭」息息相關。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：公共衛生</h2>
+    <p>日本剛來時，臺灣<b>鼠疫、霍亂、瘧疾</b>等傳染病很嚴重，連日本軍人也大量病倒。總督府於是大力改善衛生：</p>
+    <ul>
+      <li>興建<b>自來水</b>（乾淨的飲用水）和<b>下水道</b>（排掉髒水）</li>
+      <li><b>防疫</b>：預防注射、捕鼠滅鼠、隔離病人、定期大掃除檢查</li>
+      <li>設立醫院、培養醫師，推行公醫制度</li>
+    </ul>
+    <div class="formula">乾淨的水＋排水＋防疫 → 傳染病減少 → 死亡率下降、人口增加</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：近代教育——不平等的學校</h2>
+    <p>日治時期出現了像現在一樣按年級上課、有固定課表的<b>近代學校</b>，重視<b>日語</b>教育。但臺灣人和日本人孩子讀的學校不一樣：</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>學校</th><th>給誰讀</th><th>特色</th></tr>
+        <tr><td class="name">公學校</td><td>臺灣（漢人）兒童</td><td>經費、設備、師資通常較差</td></tr>
+        <tr><td class="name">小學校</td><td>日本兒童</td><td>條件較好，升學較有利</td></tr>
+        <tr><td class="name">蕃童教育所等</td><td>原住民兒童</td><td>多由警察擔任教師</td></tr>
+      </table>
+    </div>
+    <ul>
+      <li>1922 年起名義上可以「<b>臺日共學</b>」，但實際上仍以「常不常用日語」來區分，多數臺灣孩子還是讀公學校。</li>
+      <li>中學、大學的名額大多被日本學生占去，臺灣學生升學很難，很多人選擇去日本留學，或讀<b>醫學</b>、<b>師範</b>學校。</li>
+      <li>1941 年公學校、小學校都改稱<b>國民學校</b>，1943 年實施<b>義務教育</b>，臺灣兒童的就學率大幅提高。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：守時觀念與新作息</h2>
+    <ul>
+      <li>清代多數人跟著太陽、農曆和節慶過日子，「大概早上」就好。</li>
+      <li>日治時期實施<b>標準時間</b>，火車照<b>時刻表</b>開、學校和工廠按時上下課上下班，人們漸漸養成<b>守時</b>觀念。</li>
+      <li>引進<b>一週七天</b>的制度，<b>星期日休息</b>，學校、機關照這個作息。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 5：女性走出家庭</h2>
+    <p>放足加上女子教育，女性開始走出家庭工作，成為「<b>職業婦女</b>」，例如<b>教師、護士、產婆（助產士）、電話接線生、車掌、店員</b>等。女性有了自己的收入，社會地位也慢慢提高。</p>
+  </div>
+
+  <div class="card">
+    <h2>🕰️ 時光機：清代 vs 日治</h2>
+    <p>按下面的開關，看同一個人的生活怎麼變。每張卡片下面有「為什麼會變」。</p>
+    <div class="tool">
+      <div class="tm-switch"><button id="tmBefore" class="on">⏪ 清代的臺灣</button><button id="tmAfter">⏩ 日治的臺灣</button></div>
+      <div class="tm-grid" id="tmGrid"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：這是清代，還是日治？</h2>
+    <p>把生活情景拖到正確的時代。</p>
+    <div id="dndLife"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 日治時期臺灣兒童主要就讀的初等學校是：</div>
+      <label><input type="radio" name="p3q1" value="A">小學校</label>
+      <label><input type="radio" name="p3q1" value="B">公學校</label>
+      <label><input type="radio" name="p3q1" value="C">書院</label>
+      <label><input type="radio" name="p3q1" value="D">大學</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　公學校給臺灣兒童讀，小學校主要給日本兒童讀。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 日治時期興建自來水和下水道，最直接的影響是：</div>
+      <label><input type="radio" name="p3q2" value="A">糖價上漲</label>
+      <label><input type="radio" name="p3q2" value="B">纏足變多</label>
+      <label><input type="radio" name="p3q2" value="C">火車變快</label>
+      <label><input type="radio" name="p3q2" value="D">傳染病減少</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　乾淨的水、排掉髒水，傳染病就不容易散播。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 下列哪一項和日治時期「守時觀念」的養成<b>最有關</b>？</div>
+      <label><input type="radio" name="p3q3" value="A">火車照時刻表行駛、學校按時上課</label>
+      <label><input type="radio" name="p3q3" value="B">廢除大租權</label>
+      <label><input type="radio" name="p3q3" value="C">樟腦專賣</label>
+      <label><input type="radio" name="p3q3" value="D">興建烏山頭水庫</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　標準時間、時刻表和固定作息，讓人們習慣準時。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-4 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道新文學運動提倡用白話文寫作，賴和被稱為「臺灣新文學之父」</li>
+      <li>認得黃土水、陳澄波等藝術家，以及鄧雨賢的流行歌〈望春風〉</li>
+      <li>說得出電影、唱片等大眾娛樂如何改變人們的休閒生活</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：新文學運動</h2>
+    <ul>
+      <li>1920 年代，受到世界與中國新思潮影響，臺灣知識分子提倡用<b>白話文</b>（接近說話的文字）寫作，取代艱深的<b>文言文</b>，讓更多人看得懂，這就是<b>新文學運動</b>。</li>
+      <li><b>賴和</b>是彰化的醫師，也是作家，他的小說描寫臺灣人民受到壓迫的生活，例如〈一桿「稱仔」〉。他帶領、提攜許多年輕作家，被稱為「<b>臺灣新文學之父</b>」。</li>
+      <li>1930 年代，文化界還爭論應該用中國白話文，還是用臺灣話寫成的文字（<b>臺灣話文</b>）來寫作，稱為「臺灣話文論爭」。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：美術與音樂</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>人物</th><th>領域</th><th>重點</th></tr>
+        <tr><td class="name">黃土水</td><td>雕塑</td><td>第一位作品入選日本「<b>帝展</b>」（日本最重要的官辦美展）的臺灣人；代表作〈甘露水〉、〈水牛群像〉</td></tr>
+        <tr><td class="name">陳澄波</td><td>油畫（西畫）</td><td>嘉義人，以〈嘉義街外〉入選帝展，是第一位以油畫入選帝展的臺灣畫家；常畫臺灣街景</td></tr>
+        <tr><td class="name">鄧雨賢</td><td>流行歌作曲</td><td>作曲〈望春風〉（李臨秋作詞）、〈雨夜花〉等臺語流行歌</td></tr>
+        <tr><td class="name">江文也</td><td>作曲</td><td>以管弦樂曲〈臺灣舞曲〉在國際比賽中得到肯定</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 1927 年起總督府舉辦「<b>臺灣美術展覽會</b>」（臺展），讓許多年輕畫家有了發表作品的舞臺。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：大眾娛樂</h2>
+    <ul>
+      <li><b>電影</b>：早期是沒有聲音的默片，戲院裡有「<b>辯士</b>」站在旁邊，用臺語或日語現場解說劇情。</li>
+      <li><b>流行歌</b>：唱片公司錄製、發行臺語流行歌，透過留聲機、收音機傳遍大街小巷，〈望春風〉就是代表。</li>
+      <li>除了傳統的廟會、野臺戲，城市居民多了看電影、聽唱片、逛百貨公司等新休閒。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🃏 人物翻翻卡：他是誰？做了什麼？</h2>
+    <p>先看名字想一想，再點卡片翻面。</p>
+    <div class="flip-grid" id="personGrid"></div>
+    <button class="flipbtn" id="personReset">全部蓋回去</button>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：作品是誰的？</h2>
+    <p>把作品或貢獻拖到對的人名下面。</p>
+    <div id="dndWork"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 被稱為「臺灣新文學之父」的是：</div>
+      <label><input type="radio" name="p4q1" value="A">黃土水</label>
+      <label><input type="radio" name="p4q1" value="B">八田與一</label>
+      <label><input type="radio" name="p4q1" value="C">賴和</label>
+      <label><input type="radio" name="p4q1" value="D">鄧雨賢</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　賴和是醫師也是作家，用白話文寫小說，提攜後進。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 新文學運動提倡用什麼文字寫作？</div>
+      <label><input type="radio" name="p4q2" value="A">白話文</label>
+      <label><input type="radio" name="p4q2" value="B">文言文</label>
+      <label><input type="radio" name="p4q2" value="C">拉丁字母</label>
+      <label><input type="radio" name="p4q2" value="D">只能用日文</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　白話文接近說話，更多人看得懂。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 日治時期默片電影放映時，在旁邊現場解說劇情的人叫：</div>
+      <label><input type="radio" name="p4q3" value="A">保正</label>
+      <label><input type="radio" name="p4q3" value="B">辯士</label>
+      <label><input type="radio" name="p4q3" value="C">車掌</label>
+      <label><input type="radio" name="p4q3" value="D">產婆</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　默片沒有聲音，靠辯士解說，有的辯士很受歡迎。">　</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📝 口訣／一頁重點整理</h2>
+    <div class="kou">
+      <p>🏗️ <b>2-1 打底子</b>：「<b>三調查</b>（土地、林野、戶口），<b>統一錢和秤</b>（度量衡、臺灣銀行），<b>一條鐵路兩港口</b>（1908 縱貫、基隆高雄），<b>專賣</b>菸酒鹽樟鴉。」</p>
+      <p>🌾 <b>2-2 米與糖</b>：「農業臺灣、工業日本；甘蔗給會社磅，<b>蓬萊</b>（磯永吉、末永仁）一來<b>米糖相剋</b>；八田<b>嘉南大圳</b> 1930，三年輪作稻蔗雜；日月潭發電，戰時<b>南進</b>軍需工業。」</p>
+      <p>🏙️ <b>2-3 新生活</b>：「<b>放足斷髮</b>、<b>自來水防疫</b>、<b>公學校 vs 小學校</b>、<b>守時</b>星期日、<b>職業婦女</b>。」</p>
+      <p>🎨 <b>2-4 新文化</b>：「<b>賴和</b>白話新文學，<b>黃土水</b>雕、<b>陳澄波</b>畫，<b>鄧雨賢</b>〈望春風〉，看電影聽辯士。」</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🃏 翻翻卡：考前 3 分鐘複習</h2>
+    <p>先想答案，再點卡片翻過來對。</p>
+    <div class="flip-grid" id="flipGrid"></div>
+    <button class="flipbtn" id="flipReset">全部蓋回去</button>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（12 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 日治初期，總督府廢除大租權後，誰成為土地的業主並負責繳稅？</div>
+      <label><input type="radio" name="qz1" value="A">大租戶</label>
+      <label><input type="radio" name="qz1" value="B">小租戶</label>
+      <label><input type="radio" name="qz1" value="C">佃農</label>
+      <label><input type="radio" name="qz1" value="D">日本商人</label>
+      <div class="fb" data-exp="　大租戶領公債補償後退場，小租戶成為業主，土地權利單純化。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">2. 1905 年進行的全臺戶口調查，主要目的是：</div>
+      <label><input type="radio" name="qz2" value="A">確認土地主人</label>
+      <label><input type="radio" name="qz2" value="B">開發山林樟腦</label>
+      <label><input type="radio" name="qz2" value="C">統一貨幣</label>
+      <label><input type="radio" name="qz2" value="D">掌握人口狀況，方便治安與施政</label>
+      <div class="fb" data-exp="　戶口調查＝人口普查。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 1899 年成立、發行紙鈔來統一貨幣的機構是：</div>
+      <label><input type="radio" name="qz3" value="A">臺灣銀行</label>
+      <label><input type="radio" name="qz3" value="B">臺灣製糖株式會社</label>
+      <label><input type="radio" name="qz3" value="C">專賣局</label>
+      <label><input type="radio" name="qz3" value="D">臺灣美術展覽會</label>
+      <div class="fb" data-exp="　臺灣銀行發行臺灣銀行券。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">4. 縱貫鐵路全線通車與基隆、高雄築港，對經濟最大的幫助是：</div>
+      <label><input type="radio" name="qz4" value="A">讓清朝軍隊更快來臺</label>
+      <label><input type="radio" name="qz4" value="B">讓原住民遷往平地</label>
+      <label><input type="radio" name="qz4" value="C">農產品能快速運到港口、輸往日本</label>
+      <label><input type="radio" name="qz4" value="D">取代所有船運</label>
+      <div class="fb" data-exp="　鐵路連港口，米糖能快速出口到日本。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 下列哪一項<b>不是</b>日治時期的專賣品？</div>
+      <label><input type="radio" name="qz5" value="A">樟腦</label>
+      <label><input type="radio" name="qz5" value="B">稻米</label>
+      <label><input type="radio" name="qz5" value="C">食鹽</label>
+      <label><input type="radio" name="qz5" value="D">鴉片</label>
+      <div class="fb" data-exp="　稻米是重要出口農產品，但不是專賣品。專賣品有鴉片、樟腦、食鹽、菸、酒等。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">6. 「農業臺灣、工業日本」是指：</div>
+      <label><input type="radio" name="qz6" value="A">臺灣生產米糖供應日本，日本發展工業並把工業品賣到臺灣</label>
+      <label><input type="radio" name="qz6" value="B">臺灣和日本都只發展農業</label>
+      <label><input type="radio" name="qz6" value="C">臺灣發展重工業</label>
+      <label><input type="radio" name="qz6" value="D">日本把工廠全部搬到臺灣</label>
+      <div class="fb" data-exp="　臺日分工：臺灣出農產、日本出工業品。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">7. 培育出「蓬萊米」的農業技師是：</div>
+      <label><input type="radio" name="qz7" value="A">八田與一、後藤新平</label>
+      <label><input type="radio" name="qz7" value="B">賴和、黃土水</label>
+      <label><input type="radio" name="qz7" value="C">兒玉源太郎、陳澄波</label>
+      <label><input type="radio" name="qz7" value="D">磯永吉、末永仁</label>
+      <div class="fb" data-exp="　磯永吉、末永仁改良稻種，1926 年命名為蓬萊米。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">8. 蓬萊米推廣後，製糖會社提高甘蔗收購價格，原因是：</div>
+      <label><input type="radio" name="qz8" value="A">糖在日本賣不出去</label>
+      <label><input type="radio" name="qz8" value="B">總督府禁止種稻</label>
+      <label><input type="radio" name="qz8" value="C">農民改種稻米，會社收不到足夠甘蔗</label>
+      <label><input type="radio" name="qz8" value="D">甘蔗產量太多</label>
+      <div class="fb" data-exp="　這就是「米糖相剋」：米和糖搶土地。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">9. 關於嘉南大圳，下列敘述何者正確？</div>
+      <label><input type="radio" name="qz9" value="A">由賴和設計，1908 年完工</label>
+      <label><input type="radio" name="qz9" value="B">由八田與一設計，1930 年完工，興建烏山頭水庫</label>
+      <label><input type="radio" name="qz9" value="C">位於臺北盆地</label>
+      <label><input type="radio" name="qz9" value="D">完工後全區每年都能種稻</label>
+      <div class="fb" data-exp="　水量有限，所以採三年輪作，不是每年都能種稻。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">10. 1930 年代後期，總督府推動「工業化」，主要是為了：</div>
+      <label><input type="radio" name="qz10" value="A">配合戰爭與南進政策，發展軍需工業</label>
+      <label><input type="radio" name="qz10" value="B">讓臺灣脫離日本</label>
+      <label><input type="radio" name="qz10" value="C">發展觀光業</label>
+      <label><input type="radio" name="qz10" value="D">取代所有農業</label>
+      <div class="fb" data-exp="　1937 年中日戰爭後，臺灣成為南進基地。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">11. 日治時期，下列哪一個情景最可能出現？</div>
+      <label><input type="radio" name="qz11" value="A">女孩從小都要纏足</label>
+      <label><input type="radio" name="qz11" value="B">男子都留長辮</label>
+      <label><input type="radio" name="qz11" value="C">女性在電話局擔任接線生</label>
+      <label><input type="radio" name="qz11" value="D">完全沒有星期日的概念</label>
+      <div class="fb" data-exp="　職業婦女出現；纏足、辮髮在放足斷髮運動後逐漸消失。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">12. 下列人物與成就的配對，何者正確？</div>
+      <label><input type="radio" name="qz12" value="A">陳澄波——作曲〈望春風〉</label>
+      <label><input type="radio" name="qz12" value="B">鄧雨賢——雕塑〈甘露水〉</label>
+      <label><input type="radio" name="qz12" value="C">黃土水——臺灣新文學之父</label>
+      <label><input type="radio" name="qz12" value="D">賴和——臺灣新文學之父</label>
+      <div class="fb" data-exp="　〈望春風〉是鄧雨賢作曲；〈甘露水〉是黃土水；陳澄波是油畫家。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 臺灣的歷史（下）· 第 2 章「日治時期的經濟與社會文化」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "歷史七下2 日治時期的經濟與社會文化";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw,rx){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx||0}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 10){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 6){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面四節重看觀念，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 拖曳配對（滑鼠、觸控都可以；也可以先點卡片、再點要放的區域）=====
+function dndGame(opts){
+  const box = document.getElementById(opts.box);
+  const placed = {};                       // 卡片 id → 放在哪一區
+  let selected = null;
+  const el = (tag, cls) => { const e = document.createElement(tag); if(cls) e.className = cls; return e; };
+  // 卡片順序打亂一次（避免答案照順序排）
+  const items = opts.items.slice().sort(() => Math.random() - .5);
+  function render(){
+    box.innerHTML = '';
+    const pool = el('div', 'dnd-pool'); pool.dataset.zone = '__pool__';
+    pool.innerHTML = `<div class="dnd-zone-title" style="color:#6b7280">${opts.poolLabel || '卡片區（拖到下面正確的位置）'}</div>`;
+    const zonesWrap = el('div', 'dnd-zones');
+    const zoneEls = {};
+    opts.zones.forEach(z => {
+      const ze = el('div', 'dnd-zone'); ze.dataset.zone = z.id;
+      ze.innerHTML = `<div class="dnd-zone-title">${z.label}</div>`;
+      zonesWrap.appendChild(ze); zoneEls[z.id] = ze;
+    });
+    items.forEach(it => {
+      const c = el('div', 'dnd-card'); c.dataset.item = it.id; c.textContent = it.label;
+      (placed[it.id] && zoneEls[placed[it.id]] ? zoneEls[placed[it.id]] : pool).appendChild(c);
+      attach(c);
+    });
+    const bar = el('div', 'row dnd-bar');
+    bar.innerHTML = `<button class="dnd-check">檢查</button><button class="ghost dnd-reset">重來</button><span class="dnd-msg"></span>`;
+    box.append(pool, zonesWrap, bar);
+    if(opts.hint){ const h = el('div', 'dnd-hint'); h.textContent = opts.hint; box.appendChild(h); }
+    bar.querySelector('.dnd-check').addEventListener('click', check);
+    bar.querySelector('.dnd-reset').addEventListener('click', () => { Object.keys(placed).forEach(k => delete placed[k]); selected = null; render(); });
+    [pool, ...Object.values(zoneEls)].forEach(z => z.addEventListener('click', () => {
+      if(!selected) return;
+      if(z.dataset.zone === '__pool__') delete placed[selected]; else placed[selected] = z.dataset.zone;
+      selected = null; render();
+    }));
+  }
+  function zoneAt(x, y){
+    const t = document.elementFromPoint(x, y);
+    return t ? t.closest('.dnd-zone, .dnd-pool') : null;
+  }
+  function attach(card){
+    let sx = 0, sy = 0, moved = false, ghost = null;
+    card.addEventListener('pointerdown', e => {
+      sx = e.clientX; sy = e.clientY; moved = false; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e => {
+      if(!(e.buttons & 1)) return;
+      if(!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 6) return;
+      if(!moved){
+        moved = true; ghost = card.cloneNode(true); ghost.classList.add('drag');
+        document.body.appendChild(ghost); card.style.opacity = '.35';
+      }
+      ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + 'px'; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + 'px';
+      box.querySelectorAll('.over').forEach(z => z.classList.remove('over'));
+      const z = zoneAt(e.clientX, e.clientY); if(z && box.contains(z)) z.classList.add('over');
+    });
+    card.addEventListener('pointerup', e => {
+      if(moved){
+        const z = zoneAt(e.clientX, e.clientY);
+        if(ghost) ghost.remove(); card.style.opacity = '';
+        if(z && box.contains(z)){ if(z.dataset.zone === '__pool__') delete placed[card.dataset.item]; else placed[card.dataset.item] = z.dataset.zone; }
+        selected = null; render();
+      }else{
+        selected = (selected === card.dataset.item) ? null : card.dataset.item;
+        box.querySelectorAll('.dnd-card').forEach(c => c.classList.toggle('sel', c.dataset.item === selected));
+      }
+    });
+    card.addEventListener('pointercancel', () => { if(ghost) ghost.remove(); card.style.opacity = ''; moved = false; });
+    // 點卡片不要觸發外層區域的 click（避免選取後立刻被放下）
+    card.addEventListener('click', e => e.stopPropagation());
+  }
+  function check(){
+    let ok = 0, total = opts.items.length, unplaced = 0;
+    box.querySelectorAll('.dnd-card').forEach(c => {
+      const id = c.dataset.item, z = placed[id];
+      const zone = opts.zones.find(zz => zz.id === z);
+      c.classList.remove('ok', 'no');
+      if(!zone){ unplaced++; c.classList.add('no'); return; }
+      if(zone.accepts.includes(id)){ ok++; c.classList.add('ok'); } else c.classList.add('no');
+    });
+    const msg = box.querySelector('.dnd-msg');
+    if(ok === total){ msg.className = 'dnd-msg ok'; msg.textContent = '✔ 全部正確！'; }
+    else { msg.className = 'dnd-msg no'; msg.textContent = `✘ 對了 ${ok} / ${total}${unplaced ? '（還有 ' + unplaced + ' 張沒放）' : ''}，紅色的再想想。`; }
+    toolLog(opts.name || opts.box, ok === total);
+    if(opts.onResult) opts.onResult(ok, total, placed);
+  }
+  render();
+  return { placed };
+}
+
+// ===== 本單元專屬：圖示與小工具 =====
+
+// ---- 2-1 政策→目的配對 ----
+dndGame({ box: 'dndPolicy', name: '政策目的配對', poolLabel: '目的／結果',
+  items: [
+    { id: 'a1', label: '確認誰是地主' }, { id: 'a2', label: '查出隱田、增加田賦' }, { id: 'a3', label: '廢除大租權' },
+    { id: 'b1', label: '無證明的山林收為官有' }, { id: 'b2', label: '方便開發木材、樟腦' },
+    { id: 'c1', label: '掌握人口數量與分布' }, { id: 'c2', label: '方便治安管理' },
+    { id: 'd1', label: '買賣標準一致、交易方便' }, { id: 'd2', label: '發行臺灣銀行券' },
+    { id: 'e1', label: '米糖快速運到港口' }, { id: 'e2', label: '大船進出、輸往日本' },
+    { id: 'f1', label: '政府獨家經營、收入大增' }, { id: 'f2', label: '幫助總督府財政獨立' },
+  ],
+  zones: [
+    { id: 'land', label: '🗺️ 土地調查', accepts: ['a1', 'a2', 'a3'] },
+    { id: 'forest', label: '🌲 林野調查', accepts: ['b1', 'b2'] },
+    { id: 'pop', label: '👪 戶口調查', accepts: ['c1', 'c2'] },
+    { id: 'money', label: '⚖️ 統一度量衡與貨幣', accepts: ['d1', 'd2'] },
+    { id: 'rail', label: '🚂 縱貫鐵路與築港', accepts: ['e1', 'e2'] },
+    { id: 'mono', label: '🧂 專賣制度', accepts: ['f1', 'f2'] },
+  ],
+  hint: '提示：「地」看土地調查、「山」看林野調查、「人」看戶口調查、「錢」看專賣。' });
+
+// ---- 2-1 縱貫鐵路地圖 ----
+const TW = 'M 150,28 L 186,24 L 206,46 L 216,82 L 226,122 L 231,170 L 224,232 L 212,290 L 196,340 L 182,384 L 170,420 L 152,406 L 132,372 L 118,338 L 106,300 L 95,252 L 100,200 L 110,140 L 124,90 L 138,50 Z';
+const STNS = [
+  { id: 'kl', name: '基隆', x: 186, y: 38, port: true, text: '⚓ <b>基隆港</b>：縱貫鐵路的北端，日治時期擴建成北部最大的港口，和日本之間的船班大多從這裡出入。' },
+  { id: 'tp', name: '臺北', x: 160, y: 60, text: '<b>臺北</b>：臺灣總督府所在地，全臺的政治中心。' },
+  { id: 'hc', name: '新竹', x: 124, y: 108, text: '<b>新竹</b>：鐵路沿線城市，北部的物產可沿鐵路北送基隆港。' },
+  { id: 'tc', name: '臺中', x: 118, y: 176, text: '<b>臺中</b>：中部的米、香蕉等物產集散地，靠鐵路南北運送。' },
+  { id: 'cy', name: '嘉義', x: 112, y: 244, text: '<b>嘉義</b>：嘉南平原北邊的城市，附近也有通往阿里山的森林鐵路，運送木材。' },
+  { id: 'tn', name: '臺南', x: 110, y: 290, text: '<b>臺南</b>：清代的府城。嘉南平原的稻米和甘蔗，經鐵路運到港口。' },
+  { id: 'kh', name: '高雄', x: 126, y: 334, port: true, text: '⚓ <b>高雄港（打狗港）</b>：縱貫鐵路的南端，南部的砂糖、稻米從這裡大量輸出。日治後期也是「南進」的重要港口。' },
+];
+function drawRail(){
+  let s = rect(0,0,300,440,'#e0f2fe');
+  s += `<path d="${TW}" fill="#fef3c7" stroke="#a16207" stroke-width="2"/>`;
+  s += `<polyline points="${STNS.map(p => p.x + ',' + p.y).join(' ')}" fill="none" stroke="#dc2626" stroke-width="4" stroke-dasharray="10 4" stroke-linecap="round"/>`;
+  s += txt(250, 420, '1908 全線通車', '#dc2626', 12);
+  STNS.forEach(st => {
+    s += `<g class="stn" data-id="${st.id}"><circle cx="${st.x}" cy="${st.y}" r="${st.port ? 9 : 7}" fill="${st.port ? '#0369a1' : '#dc2626'}" stroke="#fff" stroke-width="2"/>`;
+    if(st.port) s += txt(st.x, st.y + 4, '⚓', '#fff', 10);
+    s += txt(st.x - 14, st.y + 5, st.name, '#1f2937', 12, 'end', 'font-weight="bold"') + '</g>';
+  });
+  document.getElementById('svgRail').innerHTML = svg(300, 440, s);
+  document.querySelectorAll('#svgRail .stn').forEach(g => g.addEventListener('click', () => {
+    const st = STNS.find(x => x.id === g.dataset.id);
+    document.getElementById('railInfo').innerHTML = st.text;
+    if(st.port) toolLog('鐵路地圖-' + st.name, true);
+  }));
+}
+drawRail();
+
+// ---- 2-2 米 vs 糖 收入比較（示意）----
+let rsEra = 'after';
+function drawRS(){
+  const cane = +document.getElementById('rsCane').value;
+  document.getElementById('rsCaneVal').textContent = cane;
+  const rice = rsEra === 'after' ? 90 : 55;    // 示意：種稻一甲地的收入
+  // 農民種甘蔗的比例：收入差越大越偏向一邊（示意）
+  const share = Math.round(100 / (1 + Math.exp((rice - cane) / 12)));
+  const W = 440, maxV = 130;
+  let s = rect(0,0,W,210,'#f8fafc');
+  s += txt(10, 22, '每甲地收入（示意）', '#6b7280', 12, 'start');
+  const bar = (y, v, color, label) => rect(90, y, Math.round(v / maxV * 320), 26, color, 'none', 1, 6) + txt(84, y + 18, label, '#1f2937', 13, 'end') + txt(96 + Math.round(v / maxV * 320), y + 18, v, '#1f2937', 13, 'start', 'font-weight="bold"');
+  s += bar(34, rice, '#65a30d', rsEra === 'after' ? '🌾 蓬萊米' : '🌾 在來米');
+  s += bar(70, cane, '#a16207', '🎋 甘蔗');
+  // 田地示意：20 格
+  s += txt(10, 128, '農民的田（示意，20 塊）', '#6b7280', 12, 'start');
+  const n = Math.round(share / 5);
+  for(let i = 0; i < 20; i++){
+    const x = 10 + (i % 10) * 42, y = 138 + Math.floor(i / 10) * 34;
+    const isCane = i < n;
+    s += rect(x, y, 38, 30, isCane ? '#fde68a' : '#bbf7d0', isCane ? '#a16207' : '#15803d', 1.5, 4) + txt(x + 19, y + 21, isCane ? '🎋' : '🌾', '#000', 15);
+  }
+  document.getElementById('svgRiceSugar').innerHTML = svg(W, 210, s);
+  const out = document.getElementById('rsOut');
+  if(cane < rice - 8){
+    out.innerHTML = `大部分農民改種<b>稻米</b>（甘蔗田約 ${n} / 20 塊）。會社收不到足夠甘蔗 → 只好<b>提高收購價</b>。試著把價格往右拉！`;
+  }else if(cane > rice + 8){
+    out.innerHTML = `甘蔗價夠高，多數農民願意種<b>甘蔗</b>（約 ${n} / 20 塊）。但會社要付出更多成本——米和糖在「搶地」，這就是<b>米糖相剋</b>。`;
+  }else{
+    out.innerHTML = `米和甘蔗收入差不多，農民一半一半（甘蔗約 ${n} / 20 塊）。會社和稻農正在拉鋸。`;
+  }
+  if(rsEra === 'before') out.innerHTML += '<br><span style="color:#6b7280;font-weight:normal">推廣前：在來米在日本不好賣，收入較低，會社不必出高價就收得到甘蔗。</span>';
+}
+document.getElementById('rsCane').addEventListener('input', drawRS);
+document.getElementById('rsCane').addEventListener('change', () => toolLog('米糖相剋工具', true));
+function setEra(e){
+  rsEra = e;
+  document.getElementById('rsBefore').className = e === 'before' ? '' : 'ghost';
+  document.getElementById('rsAfter').className = e === 'after' ? '' : 'ghost';
+  drawRS();
+}
+document.getElementById('rsBefore').addEventListener('click', () => setEra('before'));
+document.getElementById('rsAfter').addEventListener('click', () => setEra('after'));
+setEra('before');
+
+// ---- 2-2 三年輪作輪轉圖 ----
+const CROPS = [
+  { name: '水稻', ico: '🌾', fill: '#bbf7d0', stroke: '#15803d', water: '夏季大量給水' },
+  { name: '甘蔗', ico: '🎋', fill: '#fde68a', stroke: '#a16207', water: '只在種植初期給水' },
+  { name: '雜作', ico: '🍠', fill: '#fed7aa', stroke: '#c2410c', water: '不給水（番薯、豆類等旱作）' },
+];
+let rotYear = 0;
+function drawRot(){
+  const W = 440, H = 230;
+  let s = rect(0,0,W,H,'#f8fafc');
+  // 水圳
+  s += rect(10, 20, 420, 16, '#7dd3fc', '#0284c7', 1, 6) + txt(220, 33, '💧 嘉南大圳水路（水量有限）', '#075985', 12);
+  const areas = ['甲區', '乙區', '丙區'];
+  areas.forEach((a, i) => {
+    const c = CROPS[(i + rotYear) % 3], x = 14 + i * 142;
+    const waterW = c.name === '水稻' ? 6 : c.name === '甘蔗' ? 3 : 0;
+    if(waterW) s += `<line x1="${x + 64}" y1="36" x2="${x + 64}" y2="62" stroke="#0284c7" stroke-width="${waterW}"/>`;
+    s += rect(x, 62, 128, 120, c.fill, c.stroke, 2.5, 10);
+    s += txt(x + 64, 86, a, '#1f2937', 14, 'middle', 'font-weight="bold"');
+    s += txt(x + 64, 128, c.ico, '#000', 34);
+    s += txt(x + 64, 166, c.name, c.stroke, 16, 'middle', 'font-weight="bold"');
+  });
+  s += txt(220, 210, '每過一年，三區的作物輪流換一次 → 三年內每區都輪到種一次水稻', '#1f2937', 12);
+  document.getElementById('svgRot').innerHTML = svg(W, H, s);
+  document.getElementById('rotYear').textContent = `第 ${rotYear + 1} 年`;
+  const rice = areas[[0,1,2].find(i => (i + rotYear) % 3 === 0)];
+  document.getElementById('rotInfo').innerHTML = `第 ${rotYear + 1} 年：<b>${rice}</b>輪到種水稻（${CROPS[0].water}）。甘蔗區${CROPS[1].water}；雜作區${CROPS[2].water}。` +
+    (rotYear === 2 ? '<br>✔ 三年轉完一輪了！每區都種過水稻、甘蔗、雜作各一次。' : '');
+}
+document.getElementById('rotNext').addEventListener('click', () => { rotYear = (rotYear + 1) % 3; drawRot(); if(rotYear === 2) toolLog('三年輪作', true); });
+document.getElementById('rotReset').addEventListener('click', () => { rotYear = 0; drawRot(); });
+drawRot();
+
+// ---- 2-2 排序題 ----
+const ORD = [
+  { y: 1899, t: '成立臺灣銀行' },
+  { y: 1900, t: '臺灣製糖株式會社成立' },
+  { y: 1908, t: '縱貫鐵路全線通車' },
+  { y: 1926, t: '「蓬萊米」命名' },
+  { y: 1930, t: '嘉南大圳完工' },
+  { y: 1937, t: '中日戰爭爆發，推動軍需工業' },
+];
+let ordPick = [];
+function drawOrd(result){
+  const pool = document.getElementById('ordPool'), seq = document.getElementById('ordSeq');
+  if(!drawOrd.shuf) drawOrd.shuf = ORD.map((_, i) => i).sort(() => Math.random() - .5);
+  pool.innerHTML = drawOrd.shuf.filter(i => !ordPick.includes(i)).map(i => `<button class="ghost" data-i="${i}">${ORD[i].t}</button>`).join('') || '<span class="hint">全部選完了，按「檢查」。</span>';
+  seq.innerHTML = ordPick.length ? ordPick.map((i, k) => {
+    const cls = result ? (i === k ? ' ok' : ' no') : '';
+    return `<span class="tag${cls}">${k + 1}. ${ORD[i].t}${result ? '（' + ORD[i].y + '）' : ''}</span>`;
+  }).join('') : '<span class="hint">依序點上面的事件，會排到這裡。</span>';
+  pool.querySelectorAll('button').forEach(b => b.addEventListener('click', () => { ordPick.push(+b.dataset.i); document.getElementById('ordOut').textContent = ''; drawOrd(); }));
+}
+document.getElementById('ordCheck').addEventListener('click', () => {
+  const out = document.getElementById('ordOut');
+  if(ordPick.length < ORD.length){ out.textContent = `還有 ${ORD.length - ordPick.length} 個事件沒排。`; return; }
+  const ok = ordPick.every((v, k) => v === k);
+  drawOrd(true);
+  out.innerHTML = ok ? '✔ 完全正確！先打基礎（銀行、糖廠、鐵路），再改良米、興水利，最後因戰爭發展軍需工業。' : '✘ 紅色的位置不對，括號裡是正確年份，按「重來」再試一次。';
+  toolLog('事件排序', ok);
+});
+document.getElementById('ordReset').addEventListener('click', () => { ordPick = []; drawOrd.shuf = null; document.getElementById('ordOut').textContent = ''; drawOrd(); });
+drawOrd();
+
+// ---- 2-3 時光機 ----
+const TM = [
+  { h: '腳和頭髮', ico: '👣', b: '許多漢人女孩纏足、走路不便；男子留長辮。', a: '1915 年起禁止纏足，推動斷髮。女孩可以放開腳走路、上學。', why: '放足斷髮運動＋總督府透過保甲推行。' },
+  { h: '喝的水', ico: '🚰', b: '喝井水、河水，水不乾淨，容易生病。', a: '城市有自來水，也開始挖下水道排掉髒水。', why: '總督府改善公共衛生。' },
+  { h: '傳染病', ico: '🦠', b: '鼠疫、霍亂、瘧疾常常流行，死亡率高。', a: '預防注射、捕鼠、隔離病人、大掃除，傳染病漸漸減少。', why: '防疫制度與近代醫療。' },
+  { h: '上學', ico: '🏫', b: '少數男孩到私塾、書院讀四書五經。', a: '進公學校讀日語、算術、理科等，有年級與課表；但和日本學生的學校不平等。', why: '近代教育制度（公學校、小學校）。' },
+  { h: '時間', ico: '⏰', b: '看太陽、農曆過日子，時間「大概」就好。', a: '照標準時間、時刻表行動；一週七天，星期日休息。', why: '火車、學校、工廠需要準時。' },
+  { h: '出遠門', ico: '🚂', b: '從臺北到臺南要走路、坐轎或坐船，好幾天。', a: '坐縱貫鐵路，一天之內就能南北往返。', why: '1908 年縱貫鐵路全線通車。' },
+  { h: '女性工作', ico: '👩‍🏫', b: '女性多半待在家中做家事。', a: '出現教師、護士、產婆、接線生、車掌等職業婦女。', why: '放足＋女子教育＋新行業出現。' },
+  { h: '休閒娛樂', ico: '🎬', b: '廟會、野臺戲、說書。', a: '看電影（有辯士解說）、聽唱片和流行歌，如〈望春風〉。', why: '電影、留聲機、唱片公司等新媒體傳入。' },
+];
+let tmAfter = false;
+function drawTM(){
+  document.getElementById('tmBefore').className = tmAfter ? '' : 'on';
+  document.getElementById('tmAfter').className = tmAfter ? 'on' : '';
+  document.getElementById('tmGrid').innerHTML = TM.map(c => `<div class="tm-card${tmAfter ? ' after' : ''}"><span class="ico">${c.ico}</span><div class="h">${c.h}</div><div>${tmAfter ? c.a : c.b}</div>${tmAfter ? `<div class="why">為什麼會變：${c.why}</div>` : ''}</div>`).join('');
+}
+document.getElementById('tmBefore').addEventListener('click', () => { tmAfter = false; drawTM(); });
+document.getElementById('tmAfter').addEventListener('click', () => { tmAfter = true; drawTM(); toolLog('時光機', true); });
+drawTM();
+
+// ---- 2-3 清代或日治 ----
+dndGame({ box: 'dndLife', name: '清代或日治', poolLabel: '生活情景',
+  items: [
+    { id: 'q1', label: '女孩從小纏足' }, { id: 'q2', label: '男子留長辮' }, { id: 'q3', label: '到私塾讀四書' }, { id: 'q4', label: '坐轎子走好幾天去府城' },
+    { id: 'j1', label: '在公學校學日語' }, { id: 'j2', label: '看時刻表趕火車' }, { id: 'j3', label: '星期日放假' }, { id: 'j4', label: '打預防針、大掃除檢查' },
+    { id: 'j5', label: '當電話接線生的職業婦女' }, { id: 'j6', label: '聽辯士解說電影' },
+  ],
+  zones: [
+    { id: 'qing', label: '⏪ 清代', accepts: ['q1', 'q2', 'q3', 'q4'] },
+    { id: 'japan', label: '⏩ 日治時期', accepts: ['j1', 'j2', 'j3', 'j4', 'j5', 'j6'] },
+  ] });
+
+// ---- 2-4 人物翻翻卡 ----
+const PEOPLE = [
+  ['🏛️', '後藤新平', '民政長官', '在總督兒玉源太郎任內主持民政，推動土地調查、戶口調查、專賣等制度。'],
+  ['💧', '八田與一', '水利技師', '設計嘉南大圳與烏山頭水庫（1930 完工），採三年輪作。'],
+  ['🌾', '磯永吉', '農業技師', '和末永仁一起改良稻種，培育出蓬萊米，人稱「蓬萊米之父」。'],
+  ['🌱', '末永仁', '農業技師', '在臺中試驗場改良種稻方法，協助蓬萊米育成，人稱「蓬萊米之母」。'],
+  ['✍️', '賴和', '醫師、作家', '用白話文寫作，作品如〈一桿「稱仔」〉，被稱為「臺灣新文學之父」。'],
+  ['🗿', '黃土水', '雕塑家', '第一位入選日本帝展的臺灣人，代表作〈甘露水〉、〈水牛群像〉。'],
+  ['🎨', '陳澄波', '油畫家', '嘉義人，以〈嘉義街外〉入選帝展，是第一位以油畫入選帝展的臺灣畫家。'],
+  ['🎵', '鄧雨賢', '作曲家', '作曲〈望春風〉、〈雨夜花〉等臺語流行歌。'],
+];
+const pg = document.getElementById('personGrid');
+pg.innerHTML = PEOPLE.map(([i, n, r, d]) => `<div class="flip person"><div class="inner"><div class="face front"><span class="ico">${i}</span>${n}<small>${r}</small></div><div class="face back">${d}</div></div></div>`).join('');
+pg.querySelectorAll('.flip').forEach(f => f.addEventListener('click', () => f.classList.toggle('on')));
+document.getElementById('personReset').addEventListener('click', () => pg.querySelectorAll('.flip').forEach(f => f.classList.remove('on')));
+
+// ---- 2-4 作品配對 ----
+dndGame({ box: 'dndWork', name: '作品配對', poolLabel: '作品或貢獻',
+  items: [
+    { id: 'w1', label: '〈一桿「稱仔」〉' }, { id: 'w2', label: '臺灣新文學之父' },
+    { id: 'w3', label: '〈甘露水〉' }, { id: 'w4', label: '〈水牛群像〉' },
+    { id: 'w5', label: '〈嘉義街外〉' }, { id: 'w6', label: '以油畫入選帝展' },
+    { id: 'w7', label: '〈望春風〉作曲' }, { id: 'w8', label: '〈雨夜花〉作曲' },
+    { id: 'w9', label: '嘉南大圳' }, { id: 'w10', label: '烏山頭水庫' },
+  ],
+  zones: [
+    { id: 'lai', label: '✍️ 賴和', accepts: ['w1', 'w2'] },
+    { id: 'huang', label: '🗿 黃土水', accepts: ['w3', 'w4'] },
+    { id: 'chen', label: '🎨 陳澄波', accepts: ['w5', 'w6'] },
+    { id: 'deng', label: '🎵 鄧雨賢', accepts: ['w7', 'w8'] },
+    { id: 'hatta', label: '💧 八田與一', accepts: ['w9', 'w10'] },
+  ] });
+
+// ---- 翻翻卡 ----
+const FLIP = [
+  ['土地調查三大結果', '確認地權、查出隱田增加稅收、廢除大租權'], ['廢大租權後誰當業主？', '小租戶'], ['1905 年的戶口調查', '全臺人口普查，方便治安與施政'],
+  ['1899 年成立、統一貨幣', '臺灣銀行（發行臺灣銀行券）'], ['縱貫鐵路全線通車', '1908 年，基隆到高雄'], ['專賣品有哪些？', '鴉片、樟腦、食鹽、菸、酒等'],
+  ['「第一憨」下一句？', '種甘蔗給會社磅'], ['米糖相剋', '蓬萊米獲利高，米與甘蔗搶土地'], ['嘉南大圳', '八田與一，1930 完工，烏山頭水庫'],
+  ['三年輪作輪什麼？', '水稻、甘蔗、雜作'], ['1930 年代後期工業化', '配合戰爭、南進政策，發展軍需工業'], ['公學校 vs 小學校', '臺灣兒童讀公學校，日本兒童讀小學校'],
+  ['1915 年禁止什麼？', '纏足（同時推動斷髮）'], ['臺灣新文學之父', '賴和'], ['〈望春風〉作曲', '鄧雨賢'],
+];
+const grid = document.getElementById('flipGrid');
+grid.innerHTML = FLIP.map(([q, a]) => `<div class="flip"><div class="inner"><div class="face front">${q}</div><div class="face back">${a}</div></div></div>`).join('');
+grid.querySelectorAll('.flip').forEach(f => f.addEventListener('click', () => f.classList.toggle('on')));
+document.getElementById('flipReset').addEventListener('click', () => grid.querySelectorAll('.flip').forEach(f => f.classList.remove('on')));
+</script>
+</body>
+</html>

@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大航海時代的臺灣｜荷西與鄭氏</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#7c2d12; --accent-soft:#fef3c7;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#7c2d12,#c2410c); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.dig{font-size:1.2rem; font-weight:bold; font-family:"Courier New",monospace;}
+  table.pv .hi{background:#fef3c7;}
+
+  pre.vert{font-family:"Courier New",monospace; font-size:1.15rem; line-height:1.5; background:#f9fafb; border:1px solid var(--border);
+    border-radius:10px; padding:12px 18px; display:inline-block; margin:8px 0; white-space:pre; min-width:180px; text-align:left;}
+  pre.vert .c{color:var(--accent); font-weight:bold;}
+  pre.vert .r{color:var(--red); font-weight:bold;}
+  pre.vert .g{color:var(--sub);}
+  pre.vert .dvd{border-left:2px solid var(--ink); border-top:2px solid var(--ink); padding-top:2px; margin-left:-2px;}   /* 邊框吃掉前面的空格，欄位才不會位移 */
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool input[type=range]{width:100%; margin:8px 0;}
+  .tool input[type=number],.tool input[type=text]{width:130px; padding:9px 12px; font-size:1.05rem; border:1px solid var(--border); border-radius:8px; font-family:"Courier New",monospace;}
+  .tool input.wide{width:100%;}
+  .tool select{padding:9px 10px; font-size:.95rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .out{margin-top:8px; font-size:1.05rem; font-weight:bold; color:var(--accent); min-height:1.8em;}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .tool label.opt{display:inline-block; margin-right:10px; font-size:.92rem;}
+  .num{font-family:"Courier New",monospace; letter-spacing:1px; font-weight:bold;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .steps{margin:6px 0 4px;}
+  .steps .stp{margin:6px 0; padding:8px 12px; border-radius:8px; background:#f9fafb; border-left:4px solid currentColor; font-size:.95rem; line-height:1.7;}
+  .frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 3px; line-height:1.15; font-family:"Courier New",monospace; font-weight:bold;}
+  .frac span:first-child{border-bottom:2px solid currentColor; padding:0 4px;}
+  .frac span:last-child{padding:0 4px;}
+  .mixed{display:inline-flex; align-items:center; gap:2px; font-family:"Courier New",monospace; font-weight:bold;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  .dnd-pool,.dnd-zone{border:2px dashed var(--border); border-radius:12px; padding:10px 12px; min-height:64px; margin:8px 0; background:#fff; transition:.15s;}
+  .dnd-pool{background:#f9fafb;}
+  .dnd-zone.over,.dnd-pool.over{border-color:var(--blue); background:#eff6ff;}
+  .dnd-zones{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px;}
+  .dnd-zone-title{font-weight:bold; margin-bottom:6px; color:var(--accent);}
+  .dnd-card{display:inline-block; background:#fff; border:1.5px solid var(--border); border-radius:99px; padding:6px 14px; margin:4px 6px 4px 0;
+    cursor:grab; user-select:none; touch-action:none; font-size:.95rem; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .1s;}
+  .dnd-card:hover{border-color:var(--blue);}
+  .dnd-card.sel{border-color:var(--blue); background:#dbeafe; transform:scale(1.04);}
+  .dnd-card.drag{position:fixed; z-index:99; pointer-events:none; opacity:.9; transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.2);}
+  .dnd-card.ok{border-color:var(--green); background:var(--green-soft);}
+  .dnd-card.no{border-color:var(--red); background:var(--red-soft);}
+  .dnd-bar{margin-top:8px;}
+  .dnd-bar button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem; margin-right:6px;}
+  .dnd-bar button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .dnd-msg{font-weight:bold; margin-left:8px;}
+  .dnd-msg.ok{color:#166534;} .dnd-msg.no{color:#991b1b;}
+  .dnd-hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .spot{cursor:pointer;} .spot:hover{filter:brightness(1.08);}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; min-height:2.4em;}
+
+  .flip-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px;}
+  .flip{perspective:800px; cursor:pointer; height:120px;}
+  .flip .inner{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+  .flip.on .inner{transform:rotateY(180deg);}
+  .flip .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:12px; padding:12px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:.95rem; line-height:1.5;}
+  .flip .front{background:#fff; border:2px solid var(--accent); color:var(--accent); font-weight:bold;}
+  .flip .back{background:var(--accent); color:#fff; transform:rotateY(180deg);}
+  .era-tag{display:inline-block; border-radius:99px; padding:2px 10px; font-size:.85rem; color:#fff; margin-right:4px;}
+  .era-old{background:#7e22ce;} .era-new{background:#15803d;} .era-metal{background:#c2410c;}
+  .mapwrap{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;}
+  .mapwrap .svgbox{margin:0; flex:0 0 auto;}
+  .mapwrap .side{flex:1 1 220px;}
+  .site{cursor:pointer;} .site:hover circle{stroke-width:4;}
+  .site.hit circle{animation:pulse .6s ease 2;}
+  @keyframes pulse{0%{r:7} 50%{r:13} 100%{r:7}}
+  .dig-btns button{margin-right:6px;}
+  /* ===== 第 2 章額外樣式 ===== */
+  header.hero{background:linear-gradient(135deg,#0c4a6e,#0e7490);}
+  .tag{display:inline-block; border-radius:99px; padding:1px 10px; font-size:.82rem; color:#fff; margin-right:4px; white-space:nowrap;}
+  .t-nl{background:#ea580c;} .t-es{background:#b91c1c;} .t-zh{background:#15803d;} .t-pt{background:#7e22ce;} .t-other{background:#475569;}
+  .seq-pool,.seq-ans{display:flex; flex-wrap:wrap; gap:8px; min-height:56px; border:2px dashed var(--border); border-radius:12px; padding:10px; margin:8px 0; background:#fff;}
+  .seq-pool{background:#f9fafb;}
+  .seq-item{background:#fff; border:1.5px solid var(--border); border-radius:10px; padding:6px 12px; cursor:pointer; font-size:.93rem; user-select:none;}
+  .seq-item:hover{border-color:var(--blue);}
+  .seq-ans .seq-item{border-color:var(--blue); background:#eff6ff;}
+  .seq-item .n{display:inline-block; min-width:1.5em; font-weight:bold; color:var(--blue);}
+  .seq-item.ok{border-color:var(--green); background:var(--green-soft);}
+  .seq-item.no{border-color:var(--red); background:var(--red-soft);}
+  .seq-item .yr{font-size:.8rem; color:var(--sub); margin-left:6px;}
+  .dec-box{background:#fff; border:1px solid var(--border); border-radius:12px; padding:14px 16px;}
+  .dec-step{font-size:.85rem; color:var(--sub);}
+  .dec-q{font-weight:bold; margin:6px 0 10px;}
+  .dec-opt{display:block; width:100%; text-align:left; background:#fff; color:var(--ink); border:1.5px solid var(--border); border-radius:10px; padding:10px 12px; margin:6px 0; cursor:pointer; font-family:inherit; font-size:.95rem; line-height:1.6;}
+  .dec-opt:hover:not(:disabled){border-color:var(--blue); background:#f0f6ff;}
+  .dec-opt.real{border-color:var(--green); background:var(--green-soft);}
+  .dec-opt.picked:not(.real){border-color:var(--amber); background:var(--amber-soft);}
+  .dec-opt:disabled{cursor:default;}
+  .dec-fb{margin-top:10px; padding:10px 14px; border-radius:10px; background:#f0f9ff; border-left:4px solid #0369a1; font-size:.93rem; display:none;}
+  .dec-fb.show{display:block;}
+  .koujue{background:linear-gradient(135deg,#ecfeff,#f0fdf4); border:2px solid #0e7490; border-radius:12px; padding:14px 18px; font-size:1.02rem; line-height:2;}
+  .koujue b{color:#0e7490;}
+  .flip{height:132px;}
+  .flip .front.nl{border-color:#ea580c; color:#9a3412;}
+  .flip .front.zh{border-color:#15803d; color:#14532d;}
+  .flip .back.nl{background:#c2410c;} .flip .back.zh{background:#15803d;}
+  .ext{display:inline-block; margin-top:6px; color:#0e7490; font-weight:bold; text-decoration:none; border-bottom:1px dashed #0e7490;}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 臺灣的歷史（上） · 第2章</span>
+  <h1>大航海時代的臺灣：荷西與鄭氏</h1>
+  <p>三個小節＋總測驗。16、17 世紀，歐洲人的大船開到東亞，臺灣第一次被捲進「全世界的生意」。這份教材讓你把貨物拖回產地、在地圖上找荷蘭和西班牙的城堡、當一次荷蘭東印度公司的老闆做決定、把荷蘭到鄭氏的事件排出先後，最後用翻翻卡比較兩個時期。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1 大航海與東亞海域</button>
+  <button data-t="s2">2 荷蘭與西班牙</button>
+  <button data-t="s3">3 鄭氏時期</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 2-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道 16～17 世紀歐洲人為什麼、從哪裡來到東亞</li>
+      <li>說得出東亞貿易網裡的重要商品和產地：中國生絲瓷器、日本白銀、東南亞香料</li>
+      <li>說明臺灣為什麼會變成各方搶著要的「轉運站」</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：什麼是「大航海時代」？</h2>
+    <p>15 世紀末開始，歐洲人找到繞過非洲、直接開船到亞洲的<b>新航路</b>。他們想要亞洲的<b>香料、絲綢、瓷器</b>，這些東西在歐洲非常值錢。從這時候起，歐洲各國的船隊一波波開到世界各地做生意、建立據點，歷史上稱為<b>大航海時代</b>。</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>國家</th><th>在東亞附近的重要據點</th><th>說明</th></tr>
+        <tr><td class="name"><span class="tag t-pt">葡萄牙</span></td><td>澳門（16 世紀中期取得居住權）</td><td>最早來到東亞的歐洲人之一，往來中國、日本做生意</td></tr>
+        <tr><td class="name"><span class="tag t-es">西班牙</span></td><td>馬尼拉（菲律賓，1571 年起）</td><td>用美洲運來的白銀，跟中國商人買絲綢瓷器</td></tr>
+        <tr><td class="name"><span class="tag t-nl">荷蘭</span></td><td>巴達維亞（今印尼雅加達）</td><td>由<b>荷蘭東印度公司</b>經營，是公司在亞洲的總部</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 <b>荷蘭東印度公司</b>：荷蘭商人合組的大公司，政府允許它在亞洲可以建城堡、養軍隊、跟別國簽約，有點像「會打仗的公司」。</div>
+    <p><b>福爾摩沙</b>：相傳 16 世紀葡萄牙人的船經過臺灣，遠遠看到綠油油的高山，讚嘆「Ilha Formosa」（美麗之島）。這個說法流傳很廣，但到底是哪一艘船、哪一年說的，<b>沒有確切的紀錄</b>，所以只能說是「相傳」。後來歐洲人的地圖常用 Formosa 稱呼臺灣。</p>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 動手點：17 世紀的東亞海域（示意圖）</h2>
+    <p>點地圖上的地名，看看那裡是誰的據點、賣什麼貨。</p>
+    <div class="tool">
+      <div class="svgbox" id="svgSea"></div>
+      <div class="infobox" id="seaInfo">👆 點一個地名看看。注意臺灣在哪裡：剛好在中國、日本、菲律賓的中間。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：東亞貿易網——誰有什麼、誰想要什麼</h2>
+    <ul>
+      <li><b>中國（明朝）</b>：盛產<b>生絲</b>（還沒織成布的蠶絲）、<b>瓷器</b>、茶，大家都想買。</li>
+      <li><b>日本</b>：盛產<b>白銀</b>，很想買中國的生絲。</li>
+      <li><b>東南亞</b>：盛產胡椒等<b>香料</b>，歐洲人最愛。</li>
+    </ul>
+    <p>問題是：明朝實施<b>海禁</b>（限制人民私自出海做生意），而且明朝和日本關係不好，不讓日本船直接來中國貿易。於是中國和日本的商人只好約在<b>第三個地方</b>交易——離兩邊都不遠、又沒有官府管的地方。</p>
+    <div class="formula">臺灣的條件：① 位在東亞航線正中間　② 明朝沒有在本島設官治理　→ 適合當<b>轉運站</b>（貨物在這裡集中、轉手、再運出去）</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：海商與海盜，有時是同一批人</h2>
+    <p>海禁時期，沿海很多人照樣偷偷出海做生意。他們帶著武器保護船隊，政府把他們叫做<b>海盜</b>；但從另一面看，他們也是做生意的<b>海商</b>。臺灣西南沿海就是這些武裝海商常停靠的地方。後來最有名的海商首領是<b>鄭芝龍</b>，他就是<b>鄭成功</b>的父親。</p>
+    <div class="note">💡 同一個人，在官府眼中是「盜」，在商人眼中是「商」。讀史料時要想想：<b>是誰這樣稱呼他的？</b></div>
+    <a class="ext" href="海商四百年_從元朝到鄭成功的海圖.html">🔗 延伸：海商四百年——從元朝到鄭成功的海圖</a>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：把貨物拖到產地</h2>
+    <p>這些是大航海時代東亞海上最熱門的貨物。把它拖到主要的產地（手機可以先點貨物、再點產地）。</p>
+    <div id="dndGoods"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 大航海時代，日本商人最想向中國買的商品是：</div>
+      <label><input type="radio" name="p1q1" value="A">白銀</label>
+      <label><input type="radio" name="p1q1" value="B">鹿皮</label>
+      <label><input type="radio" name="p1q1" value="C">生絲</label>
+      <label><input type="radio" name="p1q1" value="D">胡椒</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　日本出白銀、想買中國的生絲；白銀是日本自己產的。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">2. 中國和日本商人常約在臺灣附近交易，最主要的原因是：</div>
+      <label><input type="radio" name="p1q2" value="A">明朝海禁，中日不能直接往來，臺灣位置居中又沒有官府管</label>
+      <label><input type="radio" name="p1q2" value="B">臺灣有最大的港口城市</label>
+      <label><input type="radio" name="p1q2" value="C">臺灣盛產生絲</label>
+      <label><input type="radio" name="p1q2" value="D">歐洲人規定一定要在臺灣交易</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　位置居中＋明朝沒在本島設官，是臺灣成為轉運站的關鍵。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">3. 關於「福爾摩沙」的說法，下列何者最恰當？</div>
+      <label><input type="radio" name="p1q3" value="A">是荷蘭人在 1624 年取的名字</label>
+      <label><input type="radio" name="p1q3" value="B">是鄭成功取的名字</label>
+      <label><input type="radio" name="p1q3" value="C">有詳細的航海日誌記錄是哪天說的</label>
+      <label><input type="radio" name="p1q3" value="D">相傳是葡萄牙人航經臺灣時的讚嘆，意思是「美麗之島」</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　這是流傳很廣的說法，但沒有確切紀錄，所以用「相傳」。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出荷蘭（1624）和西班牙（1626）在臺灣的據點與城堡</li>
+      <li>說明荷蘭東印度公司怎麼靠臺灣賺錢：轉口貿易、鹿皮、蔗糖</li>
+      <li>認識王田、贌社、傳教與新港文書、郭懷一事件</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：荷蘭人來了（1624～1662）</h2>
+    <p>荷蘭人原本想佔領<b>澎湖</b>當跟中國貿易的基地，但明朝派兵把他們趕走。雙方談好後，荷蘭人在 <b>1624 年</b>轉往明朝沒有管的臺灣本島，佔領<b>大員</b>（今臺南安平一帶）。</p>
+    <ul>
+      <li><b>熱蘭遮城</b>：建在大員，是荷蘭人在臺灣的行政和貿易中心（今<b>安平古堡</b>一帶）。</li>
+      <li><b>普羅民遮城</b>：建在對岸的<b>赤崁</b>（今<b>赤崁樓</b>一帶），在郭懷一事件之後蓋的。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：西班牙人在北部（1626～1642）</h2>
+    <p>西班牙人在馬尼拉做生意，看到荷蘭人佔了大員，擔心往來中國、日本的航線被截斷，於是在 <b>1626 年</b>佔領北部的<b>雞籠</b>（今基隆），在社寮島（今和平島）建<b>聖薩爾瓦多城</b>；之後又到<b>淡水</b>建<b>聖多明哥城</b>。</p>
+    <p>可是北部的生意不如預期，西班牙又把兵力調回菲律賓。<b>1642 年</b>，荷蘭人北上攻擊，把西班牙人<b>趕出臺灣</b>。</p>
+    <div class="note">💡 今天淡水的「紅毛城」，就是在聖多明哥城的舊址上，後來荷蘭人重新蓋的城堡。</div>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 荷西據點地圖：先探索，再考考你</h2>
+    <div class="tool">
+      <div class="mapwrap">
+        <div class="svgbox" id="svgMap"></div>
+        <div class="side">
+          <div class="row"><button id="mapExplore" class="ghost">探索模式</button><button id="mapQuiz">考考你</button></div>
+          <div class="infobox" id="mapInfo">👆 點地圖上的圓點，看看是誰的據點。</div>
+          <div class="hint">顏色：<span class="tag t-nl">荷蘭</span><span class="tag t-es">西班牙</span><span class="tag t-zh">鄭氏</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：荷蘭東印度公司怎麼經營臺灣</h2>
+    <h3>① 轉口貿易：低買高賣</h3>
+    <p>把中國的生絲、瓷器在大員集中，再轉賣到日本、巴達維亞、歐洲。臺灣本地的出口品也很賺：</p>
+    <ul>
+      <li><b>鹿皮</b>：當時臺灣平原上有大量梅花鹿，鹿皮大多賣到<b>日本</b>（做武士盔甲、衣物等）。</li>
+      <li><b>蔗糖</b>：招募漢人種甘蔗、製糖，賣到日本、波斯等地。</li>
+    </ul>
+    <h3>② 招募漢人來開墾</h3>
+    <p>種田製糖需要很多人手，荷蘭人從福建沿海<b>招募漢人</b>來臺，提供耕牛、種子、修水利。土地屬於公司，叫做<b>王田</b>；漢人像佃農一樣耕種、繳租。漢人還要繳<b>人頭稅</b>。</p>
+    <h3>③ 贌社：把「跟部落做生意的權利」拿出來標售</h3>
+    <p><b>贌</b>（ㄆㄨˊ）是「承包」的意思。公司把和某個原住民部落（社）交易的權利公開<b>標售</b>，出價最高的漢人商人得標，就可以獨占跟那個社的買賣（例如收購鹿皮）。公司不用自己跑部落，又能收錢。</p>
+    <h3>④ 傳教與新港文書</h3>
+    <p>傳教士在西拉雅族的<b>新港社</b>等地傳基督教、設學校，用<b>羅馬拼音</b>寫原住民的語言。原住民學會後，用這種文字和漢人簽土地契約，留下的文件叫做<b>新港文書</b>（又叫番仔契）。荷蘭人離開後，這種文字還使用了一百多年。</p>
+    <h3>⑤ 郭懷一事件（1652）</h3>
+    <p>漢人不滿公司的重稅和管理，在 <b>1652 年</b>由<b>郭懷一</b>帶頭起事。公司聯合原住民壯丁鎮壓，很快就平定，死傷很多（人數有不同說法，一般說法是數千人）。事後荷蘭人在赤崁加蓋<b>普羅民遮城</b>加強防守。</p>
+  </div>
+
+  <div class="card">
+    <h2>🎯 換你當荷蘭東印度公司</h2>
+    <p>你是 1630 年代派駐大員的公司長官。遇到下面的問題，你會怎麼做？選完會告訴你歷史上實際怎麼做、為什麼。</p>
+    <div class="dec-box" id="decBox"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 荷蘭人在 1624 年佔領的是哪裡？</div>
+      <label><input type="radio" name="p2q1" value="A">雞籠</label>
+      <label><input type="radio" name="p2q1" value="B">大員（今臺南安平）</label>
+      <label><input type="radio" name="p2q1" value="C">淡水</label>
+      <label><input type="radio" name="p2q1" value="D">馬尼拉</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　先在澎湖被明朝趕走，才轉到大員，建熱蘭遮城。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 「公司把與原住民部落交易的權利標售給漢人商人」，這個制度叫做：</div>
+      <label><input type="radio" name="p2q2" value="A">王田</label>
+      <label><input type="radio" name="p2q2" value="B">屯田</label>
+      <label><input type="radio" name="p2q2" value="C">人頭稅</label>
+      <label><input type="radio" name="p2q2" value="D">贌社</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　贌＝承包，社＝原住民部落。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 新港文書是用什麼文字寫的？</div>
+      <label><input type="radio" name="p2q3" value="A">用羅馬拼音拼寫原住民語言</label>
+      <label><input type="radio" name="p2q3" value="B">漢字</label>
+      <label><input type="radio" name="p2q3" value="C">西班牙文</label>
+      <label><input type="radio" name="p2q3" value="D">日文</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　傳教士教西拉雅族用羅馬字母拼自己的語言。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出鄭成功怎麼打敗荷蘭人（1661 鹿耳門登陸、1662 荷蘭投降）</li>
+      <li>認識鄭氏的行政區（承天府、天興縣、萬年縣）和「寓兵於農」</li>
+      <li>知道陳永華推動孔廟與教育、鄭氏與英國的貿易、1683 年降清</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：鄭成功攻臺（1661～1662）</h2>
+    <p>明朝滅亡後，鄭成功以金門、廈門為基地反清。後來北伐失敗、清朝又封鎖沿海，他需要新的根據地，於是把目標放在荷蘭人的臺灣。</p>
+    <ul>
+      <li><b>1661 年</b>：鄭成功率軍經澎湖，從<b>鹿耳門</b>水道進入臺江內海登陸，先拿下普羅民遮城，再包圍熱蘭遮城。</li>
+      <li><b>1662 年</b>：熱蘭遮城的荷蘭長官<b>揆一</b>投降，荷蘭人離開臺灣，結束約 38 年的統治。</li>
+    </ul>
+    <p>同一年鄭成功就病逝了，由兒子<b>鄭經</b>繼續經營臺灣。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：建立政府與「寓兵於農」</h2>
+    <p>鄭成功把赤崁一帶改設<b>承天府</b>，下面分<b>天興縣</b>（北邊）、<b>萬年縣</b>（南邊），並把大員改名<b>安平</b>。這是臺灣第一次出現漢人政權的府縣制度。（後來鄭經把天興、萬年改為州，名稱有變動。）</p>
+    <p>幾萬名軍隊要吃飯，怎麼辦？鄭氏讓軍隊<b>平時種田、戰時打仗</b>，叫做<b>寓兵於農</b>（「寓」是寄託、包含在裡面的意思）。軍隊駐紮開墾，叫做<b>屯田</b>；他們開出來的田叫<b>營盤田</b>。</p>
+    <div class="note">💡 今天臺南、高雄還有很多地名帶「營」、「鎮」字，例如<b>新營、柳營、林鳳營、左營、前鎮</b>，很多就是當年軍隊屯墾留下的。</div>
+    <p>另外，荷蘭時期的王田被接收改稱<b>官田</b>；鄭氏官員和家族招人開墾的叫<b>私田</b>（文武官田）。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：陳永華與教育、對外貿易</h2>
+    <ul>
+      <li><b>陳永華</b>是鄭經的重要輔佐大臣，推動在臺南建<b>孔廟</b>（後來被稱為「全臺首學」），設學校、辦考試選拔人才，把中國的儒家教育帶進臺灣。</li>
+      <li>清朝實施<b>遷界令</b>，把沿海居民往內陸遷，想斷鄭氏的貨源。鄭氏就靠海上貿易突圍：跟日本、東南亞做生意，鄭經時期也和<b>英國東印度公司</b>往來、讓他們在臺灣設商館。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：鄭氏降清（1683）</h2>
+    <p>鄭經死後，鄭家內部爭權，由年幼的<b>鄭克塽</b>繼位。<b>1683 年</b>清朝派<b>施琅</b>率水師先攻下<b>澎湖</b>，鄭克塽投降。鄭氏在臺灣經營約 22 年就此結束，臺灣進入清朝統治時期（下一章）。</p>
+  </div>
+
+  <div class="card">
+    <h2>🔢 排序題：從荷西到鄭氏</h2>
+    <p>依照<b>發生的先後</b>，從最早的開始，一個一個點下去。點錯可以按「重來」。</p>
+    <div class="tool">
+      <div class="hint">還沒排的事件：</div>
+      <div class="seq-pool" id="seqPool"></div>
+      <div class="hint">你的排序（由早到晚）：</div>
+      <div class="seq-ans" id="seqAns"></div>
+      <div class="row dnd-bar"><button id="seqCheck">檢查</button><button class="ghost" id="seqReset">重來</button><span class="dnd-msg" id="seqMsg"></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：這是誰做的？</h2>
+    <p>把每一項拖到正確的統治者。</p>
+    <div id="dndWho"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 鄭成功攻臺時，船隊是從哪裡進入臺江內海的？</div>
+      <label><input type="radio" name="p3q1" value="A">雞籠</label>
+      <label><input type="radio" name="p3q1" value="B">淡水</label>
+      <label><input type="radio" name="p3q1" value="C">鹿耳門</label>
+      <label><input type="radio" name="p3q1" value="D">打狗</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1661 年鹿耳門登陸，1662 年荷蘭投降。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. 「平時耕田、戰時打仗」，讓軍隊自己生產糧食，這種做法叫：</div>
+      <label><input type="radio" name="p3q2" value="A">贌社</label>
+      <label><input type="radio" name="p3q2" value="B">寓兵於農</label>
+      <label><input type="radio" name="p3q2" value="C">海禁</label>
+      <label><input type="radio" name="p3q2" value="D">轉口貿易</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　軍隊屯田，開出來的田叫營盤田。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 1683 年率軍攻臺、使鄭克塽投降的清朝將領是：</div>
+      <label><input type="radio" name="p3q3" value="A">施琅</label>
+      <label><input type="radio" name="p3q3" value="B">陳永華</label>
+      <label><input type="radio" name="p3q3" value="C">郭懷一</label>
+      <label><input type="radio" name="p3q3" value="D">揆一</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　施琅先攻下澎湖，鄭克塽降清。陳永華是鄭氏大臣、郭懷一是起事的漢人、揆一是荷蘭長官。">　</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📝 一頁重點整理＋口訣</h2>
+    <div class="koujue">
+      <b>口訣：「二四荷、二六西，四二西被踢；五二郭懷一，六一鹿耳門，六二荷蘭去；八三施琅來，克塽把清歸。」</b><br>
+      ・<b>2-1</b>　歐洲人東來找香料絲綢；中國生絲瓷器、日本白銀、東南亞香料；明朝海禁 → 臺灣成轉運站。<br>
+      ・<b>2-2 荷蘭</b>　1624 大員、熱蘭遮城；轉口貿易＋鹿皮蔗糖；招漢人耕<b>王田</b>；<b>贌社</b>；傳教、<b>新港文書</b>；1652 郭懷一事件 → 蓋普羅民遮城。<br>
+      ・<b>2-2 西班牙</b>　1626 雞籠（聖薩爾瓦多城）、淡水（聖多明哥城）；1642 被荷蘭趕走。<br>
+      ・<b>2-3 鄭氏</b>　1661 鹿耳門登陸、1662 荷蘭投降；承天府＋天興縣、萬年縣；<b>寓兵於農</b>（屯田、營盤田）；陳永華建孔廟；與英國東印度公司貿易；1683 施琅攻臺、鄭克塽降清。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🃏 翻翻卡：荷蘭時期 vs 鄭氏時期</h2>
+    <p>橘色是荷蘭時期、綠色是鄭氏時期。同一個主題的兩張放在一起，先想答案再翻。</p>
+    <div class="flip-grid" id="flipGrid"></div>
+    <div class="row" style="margin-top:10px"><button id="flipReset" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:inherit">全部蓋回去</button></div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（12 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 16、17 世紀歐洲人來到東亞，最主要是為了：</div>
+      <label><input type="radio" name="qz1" value="A">躲避戰爭</label>
+      <label><input type="radio" name="qz1" value="B">做生意，取得香料、絲綢、瓷器等商品</label>
+      <label><input type="radio" name="qz1" value="C">尋找新的農地種稻</label>
+      <label><input type="radio" name="qz1" value="D">參加科舉考試</label>
+      <div class="fb" data-exp="　大航海時代的核心是貿易。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">2. 下列「商品—產地」的配對，何者<b>錯誤</b>？</div>
+      <label><input type="radio" name="qz2" value="A">生絲—中國</label>
+      <label><input type="radio" name="qz2" value="B">白銀—日本</label>
+      <label><input type="radio" name="qz2" value="C">香料—東南亞</label>
+      <label><input type="radio" name="qz2" value="D">瓷器—日本</label>
+      <div class="fb" data-exp="　瓷器的主要產地是中國。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 臺灣在 17 世紀能成為東亞貿易的轉運站，主要因為：</div>
+      <label><input type="radio" name="qz3" value="A">位於航線中間，且明朝沒有在本島設官治理</label>
+      <label><input type="radio" name="qz3" value="B">臺灣已經是很大的工業城</label>
+      <label><input type="radio" name="qz3" value="C">臺灣產白銀</label>
+      <label><input type="radio" name="qz3" value="D">日本規定只能在臺灣買絲</label>
+      <div class="fb" data-exp="　地理位置＋沒有官府管，加上明朝海禁、中日不能直接往來。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">4. 荷蘭人在大員建立、作為行政和貿易中心的城堡是：</div>
+      <label><input type="radio" name="qz4" value="A">聖薩爾瓦多城</label>
+      <label><input type="radio" name="qz4" value="B">聖多明哥城</label>
+      <label><input type="radio" name="qz4" value="C">熱蘭遮城</label>
+      <label><input type="radio" name="qz4" value="D">承天府</label>
+      <div class="fb" data-exp="　熱蘭遮城在今安平古堡一帶；前兩個是西班牙的。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 西班牙人在臺灣北部的據點是：</div>
+      <label><input type="radio" name="qz5" value="A">大員、赤崁</label>
+      <label><input type="radio" name="qz5" value="B">雞籠、淡水</label>
+      <label><input type="radio" name="qz5" value="C">澎湖、鹿耳門</label>
+      <label><input type="radio" name="qz5" value="D">安平、左營</label>
+      <div class="fb" data-exp="　1626 年佔雞籠，之後到淡水；1642 年被荷蘭人逐出。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">6. 荷蘭時期，臺灣出口到日本的重要本地產品是：</div>
+      <label><input type="radio" name="qz6" value="A">鹿皮</label>
+      <label><input type="radio" name="qz6" value="B">白銀</label>
+      <label><input type="radio" name="qz6" value="C">胡椒</label>
+      <label><input type="radio" name="qz6" value="D">茶葉</label>
+      <div class="fb" data-exp="　平原上梅花鹿很多，鹿皮大量賣到日本；另一項是蔗糖。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">7. 荷蘭時期「土地屬於公司，漢人耕種繳租」的田地叫做：</div>
+      <label><input type="radio" name="qz7" value="A">營盤田</label>
+      <label><input type="radio" name="qz7" value="B">私田</label>
+      <label><input type="radio" name="qz7" value="C">贌社</label>
+      <label><input type="radio" name="qz7" value="D">王田</label>
+      <div class="fb" data-exp="　王田；鄭氏接收後改稱官田。營盤田是鄭氏軍隊屯墾的。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">8. 1652 年漢人不滿荷蘭重稅而起事，事後荷蘭人在赤崁加蓋普羅民遮城。這是：</div>
+      <label><input type="radio" name="qz8" value="A">鹿耳門之役</label>
+      <label><input type="radio" name="qz8" value="B">施琅攻臺</label>
+      <label><input type="radio" name="qz8" value="C">郭懷一事件</label>
+      <label><input type="radio" name="qz8" value="D">西班牙北上</label>
+      <div class="fb" data-exp="　郭懷一事件，被公司聯合原住民鎮壓。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">9. 原住民用羅馬拼音寫成的土地契約，說明了荷蘭時期哪一項作為的影響？</div>
+      <label><input type="radio" name="qz9" value="A">贌社</label>
+      <label><input type="radio" name="qz9" value="B">傳教與教育</label>
+      <label><input type="radio" name="qz9" value="C">轉口貿易</label>
+      <label><input type="radio" name="qz9" value="D">寓兵於農</label>
+      <div class="fb" data-exp="　傳教士教原住民用羅馬字，留下新港文書。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">10. 下列事件依先後排列，何者正確？</div>
+      <label><input type="radio" name="qz10" value="A">荷蘭據大員 → 西班牙被逐 → 鄭成功登陸鹿耳門 → 鄭克塽降清</label>
+      <label><input type="radio" name="qz10" value="B">西班牙被逐 → 荷蘭據大員 → 鄭克塽降清 → 鄭成功登陸鹿耳門</label>
+      <label><input type="radio" name="qz10" value="C">鄭成功登陸鹿耳門 → 荷蘭據大員 → 西班牙被逐 → 鄭克塽降清</label>
+      <label><input type="radio" name="qz10" value="D">荷蘭據大員 → 鄭成功登陸鹿耳門 → 西班牙被逐 → 鄭克塽降清</label>
+      <div class="fb" data-exp="　1624 → 1642 → 1661 → 1683。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">11. 臺南、高雄的「新營、左營、林鳳營」等地名，和鄭氏時期哪一項政策有關？</div>
+      <label><input type="radio" name="qz11" value="A">建孔廟</label>
+      <label><input type="radio" name="qz11" value="B">與英國貿易</label>
+      <label><input type="radio" name="qz11" value="C">寓兵於農、軍隊屯田</label>
+      <label><input type="radio" name="qz11" value="D">設天興縣</label>
+      <div class="fb" data-exp="　軍隊駐紮開墾的地方留下「營」字地名。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">12. 鄭氏時期推動建孔廟、設學校，把儒家教育帶進臺灣的是：</div>
+      <label><input type="radio" name="qz12" value="A">施琅</label>
+      <label><input type="radio" name="qz12" value="B">鄭克塽</label>
+      <label><input type="radio" name="qz12" value="C">鄭芝龍</label>
+      <label><input type="radio" name="qz12" value="D">陳永華</label>
+      <div class="fb" data-exp="　陳永華輔佐鄭經，臺南孔廟被稱為「全臺首學」。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 臺灣的歷史（上）· 第 2 章「大航海時代的臺灣」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "歷史2 大航海時代的臺灣";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function P(cx, cy, deg, r){ const a = deg * Math.PI / 180; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function poly(pts,fill,stroke,w){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${fill}" stroke="${stroke||'#1f2937'}" stroke-width="${w||3}" stroke-linejoin="round"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 10){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 6){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 拖曳配對（滑鼠、觸控都可以；也可以先點卡片、再點要放的區域）=====
+function dndGame(opts){
+  const box = document.getElementById(opts.box);
+  const placed = {};                       // 卡片 id → 放在哪一區
+  let selected = null, dragging = null;
+  const el = (tag, cls) => { const e = document.createElement(tag); if(cls) e.className = cls; return e; };
+  function render(){
+    box.innerHTML = '';
+    const pool = el('div', 'dnd-pool'); pool.dataset.zone = '__pool__';
+    pool.innerHTML = `<div class="dnd-zone-title" style="color:#6b7280">${opts.poolLabel || '卡片區（拖到下面正確的位置）'}</div>`;
+    const zonesWrap = el('div', 'dnd-zones');
+    const zoneEls = {};
+    opts.zones.forEach(z => {
+      const ze = el('div', 'dnd-zone'); ze.dataset.zone = z.id;
+      ze.innerHTML = `<div class="dnd-zone-title">${z.label}</div>`;
+      zonesWrap.appendChild(ze); zoneEls[z.id] = ze;
+    });
+    opts.items.forEach(it => {
+      const c = el('div', 'dnd-card'); c.dataset.item = it.id; c.textContent = it.label;
+      (placed[it.id] && zoneEls[placed[it.id]] ? zoneEls[placed[it.id]] : pool).appendChild(c);
+      attach(c);
+    });
+    const bar = el('div', 'row dnd-bar');
+    bar.innerHTML = `<button class="dnd-check">檢查</button><button class="ghost dnd-reset">重來</button><span class="dnd-msg"></span>`;
+    box.append(pool, zonesWrap, bar);
+    if(opts.hint){ const h = el('div', 'dnd-hint'); h.textContent = opts.hint; box.appendChild(h); }
+    bar.querySelector('.dnd-check').addEventListener('click', check);
+    bar.querySelector('.dnd-reset').addEventListener('click', () => { Object.keys(placed).forEach(k => delete placed[k]); selected = null; render(); });
+    [pool, ...Object.values(zoneEls)].forEach(z => z.addEventListener('click', e => {
+      if(!selected || e.target.closest('.dnd-card')) return;   // 點卡片本身是「選取」，不要被外層區域當成放置
+      if(z.dataset.zone === '__pool__') delete placed[selected]; else placed[selected] = z.dataset.zone;
+      selected = null; render();
+    }));
+  }
+  function zoneAt(x, y){
+    const t = document.elementFromPoint(x, y);
+    return t ? t.closest('.dnd-zone, .dnd-pool') : null;
+  }
+  function attach(card){
+    let sx = 0, sy = 0, moved = false, ghost = null;
+    card.addEventListener('pointerdown', e => {
+      sx = e.clientX; sy = e.clientY; moved = false; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e => {
+      if(!(e.buttons & 1)) return;
+      if(!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 6) return;
+      if(!moved){
+        moved = true; ghost = card.cloneNode(true); ghost.classList.add('drag');
+        document.body.appendChild(ghost); card.style.opacity = '.35';
+      }
+      ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + 'px'; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + 'px';
+      box.querySelectorAll('.over').forEach(z => z.classList.remove('over'));
+      const z = zoneAt(e.clientX, e.clientY); if(z && box.contains(z)) z.classList.add('over');
+    });
+    card.addEventListener('pointerup', e => {
+      if(moved){
+        const z = zoneAt(e.clientX, e.clientY);
+        if(ghost) ghost.remove(); card.style.opacity = '';
+        if(z && box.contains(z)){ if(z.dataset.zone === '__pool__') delete placed[card.dataset.item]; else placed[card.dataset.item] = z.dataset.zone; }
+        selected = null; render();
+      }else{
+        selected = (selected === card.dataset.item) ? null : card.dataset.item;
+        box.querySelectorAll('.dnd-card').forEach(c => c.classList.toggle('sel', c.dataset.item === selected));
+      }
+    });
+    card.addEventListener('pointercancel', () => { if(ghost) ghost.remove(); card.style.opacity = ''; moved = false; });
+  }
+  function check(){
+    let ok = 0, total = opts.items.length, unplaced = 0;
+    box.querySelectorAll('.dnd-card').forEach(c => {
+      const id = c.dataset.item, z = placed[id];
+      const zone = opts.zones.find(zz => zz.id === z);
+      c.classList.remove('ok', 'no');
+      if(!zone){ unplaced++; c.classList.add('no'); return; }
+      if(zone.accepts.includes(id)){ ok++; c.classList.add('ok'); } else c.classList.add('no');
+    });
+    const msg = box.querySelector('.dnd-msg');
+    if(ok === total){ msg.className = 'dnd-msg ok'; msg.textContent = '✔ 全部正確！'; }
+    else { msg.className = 'dnd-msg no'; msg.textContent = `✘ 對了 ${ok} / ${total}${unplaced ? '（還有 ' + unplaced + ' 張沒放）' : ''}，紅色的再想想。`; }
+    toolLog(opts.name || opts.box, ok === total);
+    if(opts.onResult) opts.onResult(ok, total, placed);
+  }
+  render();
+  return { placed };
+}
+
+// ===== 本單元專屬：圖示與小工具 =====
+const CO = { nl: '#ea580c', es: '#b91c1c', zh: '#15803d', pt: '#7e22ce', other: '#475569' };
+const CO_NAME = { nl: '荷蘭', es: '西班牙', zh: '鄭氏', pt: '葡萄牙', other: '各方' };
+
+// ---- 2-1 東亞海域示意圖 ----
+const SEA = [
+  { id: 'fj', name: '福建沿海', who: 'other', x: 200, y: 132, dx: -10, anc: 'end', text: '中國（明朝）的貨物從這裡出海：<b>生絲、瓷器、茶</b>。明朝實施<b>海禁</b>，很多人只能偷偷出海，成了「海商」也被叫「海盜」。鄭芝龍、鄭成功父子的勢力就在這一帶。' },
+  { id: 'mo', name: '澳門', who: 'pt', x: 160, y: 214, dx: -10, anc: 'end', text: '<span class="tag t-pt">葡萄牙</span>16 世紀中期取得居住權，是葡萄牙人往來中國、日本做生意的據點。' },
+  { id: 'ng', name: '長崎', who: 'other', x: 398, y: 98, dx: 0, anc: 'middle', dy: 22, text: '日本的重要港口。日本盛產<b>白銀</b>，很想買中國生絲。但明朝不讓日本船直接來，所以中日商人要找第三地交易。' },
+  { id: 'ty', name: '臺灣（大員）', who: 'nl', x: 238, y: 188, dx: 12, anc: 'start', text: '位在中國、日本、菲律賓<b>正中間</b>，明朝又沒有在本島設官治理 → 成為<b>轉運站</b>。1624 年荷蘭人在大員建立據點。' },
+  { id: 'mn', name: '馬尼拉', who: 'es', x: 276, y: 278, dx: 12, anc: 'start', text: '<span class="tag t-es">西班牙</span>1571 年起的據點。西班牙人用從美洲運來的<b>白銀</b>，向中國商人買絲綢、瓷器。' },
+  { id: 'bt', name: '巴達維亞', who: 'nl', x: 92, y: 318, dx: 12, anc: 'start', text: '<span class="tag t-nl">荷蘭</span>今印尼雅加達，荷蘭東印度公司在亞洲的總部。附近的東南亞島嶼盛產<b>胡椒、丁香等香料</b>。（實際位置在更南方，地圖縮短了。）' },
+];
+function drawSea(sel){
+  let s = rect(0, 0, 480, 340, '#e0f2fe');
+  s += `<polygon points="0,0 205,0 214,40 196,92 206,140 176,190 154,232 104,262 40,272 0,282" fill="#fef3c7" stroke="#a16207" stroke-width="2"/>`;
+  s += txt(80, 120, '中國（明朝）', '#78350f', 16, 'middle', 'font-weight="bold"');
+  s += `<polygon points="372,96 408,70 440,44 466,26 476,40 446,72 410,100 384,112" fill="#fef3c7" stroke="#a16207" stroke-width="2"/>`;
+  s += txt(440, 22, '日本', '#78350f', 15, 'middle', 'font-weight="bold"');
+  s += `<polygon points="246,152 256,156 254,192 244,206 236,182" fill="#fde68a" stroke="#a16207" stroke-width="2"/>`;
+  s += `<polygon points="268,236 290,242 302,288 288,322 268,304 262,266" fill="#fef3c7" stroke="#a16207" stroke-width="2"/>`;
+  s += txt(330, 250, '菲律賓', '#78350f', 13);
+  s += `<polygon points="20,304 160,302 176,334 14,338" fill="#bbf7d0" stroke="#15803d" stroke-width="2"/>`;
+  s += txt(40, 296, '東南亞', '#14532d', 13);
+  s += `<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0369a1"/></marker></defs>`;
+  const arrow = (d) => `<path d="${d}" fill="none" stroke="#0369a1" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#ar)"/>`;
+  s += arrow('M 210 140 Q 225 160 232 178') + arrow('M 250 178 Q 320 130 390 104') + arrow('M 245 200 Q 262 240 270 268') + arrow('M 232 196 Q 160 270 100 310');
+  s += txt(330, 150, '生絲 ⇄ 白銀', '#0369a1', 12) + txt(160, 262, '香料', '#0369a1', 12);
+  SEA.forEach(p => {
+    const on = sel === p.id;
+    s += `<g class="site spot" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${on ? 10 : 8}" fill="${CO[p.who]}" stroke="#fff" stroke-width="2"/>`;
+    s += txt(p.x + p.dx, p.y + (p.dy || 5), p.name, '#1f2937', 13, p.anc, on ? 'font-weight="bold"' : '') + '</g>';
+  });
+  document.getElementById('svgSea').innerHTML = svg(480, 340, s);
+  document.querySelectorAll('#svgSea .site').forEach(g => g.addEventListener('click', () => {
+    const p = SEA.find(x => x.id === g.dataset.id);
+    document.getElementById('seaInfo').innerHTML = `<b>${p.name}</b>：${p.text}`;
+    drawSea(p.id);
+    if(p.id === 'ty') toolLog('東亞海域地圖', true);
+  }));
+}
+drawSea();
+
+// ---- 2-1 貨物拖到產地 ----
+dndGame({ box: 'dndGoods', name: '貨物產地', poolLabel: '海上的熱門貨物',
+  items: [
+    { id: 'g1', label: '🧵 生絲' }, { id: 'g2', label: '🏺 瓷器' }, { id: 'g3', label: '🍵 茶' },
+    { id: 'g4', label: '🪙 白銀' }, { id: 'g5', label: '🌶️ 胡椒' }, { id: 'g6', label: '🌿 丁香等香料' },
+    { id: 'g7', label: '🦌 鹿皮' }, { id: 'g8', label: '🍬 蔗糖' },
+  ],
+  zones: [
+    { id: 'cn', label: '中國（明朝）', accepts: ['g1', 'g2', 'g3'] },
+    { id: 'jp', label: '日本', accepts: ['g4'] },
+    { id: 'sea', label: '東南亞', accepts: ['g5', 'g6'] },
+    { id: 'tw', label: '臺灣（荷蘭時期出口）', accepts: ['g7', 'g8'] },
+  ],
+  hint: '提示：日本有銀礦；西班牙人也從美洲運白銀到馬尼拉，但這題問的是東亞本地的產地。臺灣的兩樣是荷蘭時期大量出口的本地產品。' });
+
+// ---- 2-2 荷西據點地圖 ----
+const SITES = [
+  { id: 'jl', name: '雞籠・聖薩爾瓦多城', short: '雞籠', who: 'es', x: 200, y: 38, anc: 'start', dx: 11, where: '今基隆和平島（當時叫社寮島）', text: '1626 年西班牙人佔領，建聖薩爾瓦多城。1642 年被荷蘭人攻下。' },
+  { id: 'ts', name: '淡水・聖多明哥城', short: '淡水', who: 'es', x: 140, y: 48, anc: 'end', dx: -11, where: '今新北市淡水', text: '西班牙人佔雞籠後再到淡水，建聖多明哥城。今天的紅毛城一帶就是舊址（後來荷蘭人重建）。' },
+  { id: 'ty', name: '大員・熱蘭遮城', short: '大員', who: 'nl', x: 96, y: 308, anc: 'end', dx: -11, where: '今臺南安平（安平古堡一帶）', text: '1624 年荷蘭人佔領，建熱蘭遮城，是荷蘭在臺灣的行政和貿易中心。1662 年荷蘭長官揆一在這裡投降。' },
+  { id: 'ck', name: '赤崁・普羅民遮城', short: '赤崁', who: 'nl', x: 118, y: 296, anc: 'start', dx: 11, where: '今臺南赤崁樓一帶', text: '1652 年郭懷一事件後，荷蘭人在這裡加蓋普羅民遮城。鄭成功登陸後先拿下這裡，後來改設承天府。' },
+  { id: 'lem', name: '鹿耳門', short: '鹿耳門', who: 'zh', x: 92, y: 284, anc: 'end', dx: -11, where: '今臺南安南區一帶（當時臺江內海的入口）', text: '1661 年鄭成功的船隊趁漲潮從鹿耳門水道進入臺江內海登陸，繞過熱蘭遮城的砲火。' },
+  { id: 'ph', name: '澎湖', short: '澎湖', who: 'other', x: 48, y: 262, anc: 'middle', dx: 0, dy: -12, where: '臺灣海峽中的群島', text: '荷蘭人 1624 年以前曾佔領澎湖，被明朝趕走後才轉往大員。1683 年清朝施琅也是先攻下澎湖，鄭克塽才投降。' },
+];
+const TW = 'M 150,28 L 186,24 L 206,46 L 216,82 L 226,122 L 231,170 L 224,232 L 212,290 L 196,340 L 182,384 L 170,420 L 152,406 L 132,372 L 118,338 L 106,300 L 95,252 L 100,200 L 110,140 L 124,90 L 138,50 Z';
+let mapMode = 'explore', quizOrder = [], quizIdx = 0, quizScore = 0;
+function drawMap(){
+  let s = rect(0, 0, 300, 440, '#e0f2fe');
+  s += `<path d="${TW}" fill="#fef3c7" stroke="#a16207" stroke-width="2"/>`;
+  s += `<path d="M 88 278 Q 104 292 100 312" fill="none" stroke="#7dd3fc" stroke-width="7" opacity=".8"/>`;
+  s += txt(64, 326, '臺江內海', '#0369a1', 10) + txt(64, 338, '（今已淤積）', '#0369a1', 9);
+  SITES.forEach(st => {
+    s += `<g class="site" data-id="${st.id}"><circle cx="${st.x}" cy="${st.y}" r="7" fill="${CO[st.who]}" stroke="#fff" stroke-width="2"/>`;
+    if(mapMode === 'explore') s += txt(st.x + st.dx, st.y + (st.dy || 4), st.short, '#1f2937', 11, st.anc, 'font-weight="bold"');
+    s += '</g>';
+  });
+  document.getElementById('svgMap').innerHTML = svg(300, 440, s);
+  document.querySelectorAll('#svgMap .site').forEach(g => g.addEventListener('click', () => onSite(g)));
+}
+function onSite(g){
+  const st = SITES.find(x => x.id === g.dataset.id), info = document.getElementById('mapInfo');
+  g.classList.add('hit'); setTimeout(() => g.classList.remove('hit'), 1300);
+  if(mapMode === 'explore'){
+    info.style.color = ''; info.innerHTML = `<span class="tag t-${st.who}">${CO_NAME[st.who]}</span><b>${st.name}</b>（${st.where}）<br>${st.text}`;
+    return;
+  }
+  const want = SITES[quizOrder[quizIdx]];
+  const ok = st.id === want.id;
+  if(ok) quizScore++;
+  toolLog('荷西據點地圖', ok);
+  quizIdx++;
+  const fb = ok ? `✔ 答對！${want.name}在${want.where}。` : `✘ 那是${st.name}。${want.name}在${want.where}。`;
+  if(quizIdx >= quizOrder.length){
+    info.style.color = ''; info.innerHTML = fb + `<br><b>全部完成：答對 ${quizScore} / ${quizOrder.length}</b>。按「考考你」再來一次。`;
+    mapMode = 'explore'; drawMap(); return;
+  }
+  info.style.color = ok ? '#166534' : '#991b1b';
+  info.innerHTML = fb + `<br><br>下一題：請點出 <b>${SITES[quizOrder[quizIdx]].name}</b>`;
+}
+document.getElementById('mapExplore').addEventListener('click', () => { mapMode = 'explore'; drawMap(); const i = document.getElementById('mapInfo'); i.style.color = ''; i.textContent = '👆 點地圖上的圓點，看看是誰的據點。'; });
+document.getElementById('mapQuiz').addEventListener('click', () => {
+  mapMode = 'quiz'; quizOrder = SITES.map((_, i) => i).sort(() => Math.random() - .5); quizIdx = 0; quizScore = 0; drawMap();
+  const i = document.getElementById('mapInfo'); i.style.color = ''; i.innerHTML = `名字被藏起來了。請點出 <b>${SITES[quizOrder[0]].name}</b>`;
+});
+drawMap();
+
+// ---- 2-2 換你當荷蘭東印度公司 ----
+const DEC = [
+  { q: '臺灣平原很大，你想種甘蔗製糖、種稻米來賺錢。可是公司員工很少，當地原住民多半以打獵、小規模種植為生。你會怎麼找人手？',
+    opts: [
+      { t: '從荷蘭本國運農民過來', real: false },
+      { t: '從對岸福建沿海招募漢人來臺開墾，公司提供耕牛、種子、修水利', real: true },
+      { t: '不種了，只做轉口貿易就好', real: false },
+    ],
+    why: '歷史上公司選擇<b>招募漢人</b>。福建沿海人多地少，很多人願意渡海謀生，距離又近。土地歸公司所有，叫<b>王田</b>，漢人耕種繳租，還要繳<b>人頭稅</b>。從荷蘭運人太遠太貴；只做轉口又浪費了臺灣本地能賺的蔗糖。' },
+  { q: '日本很愛臺灣的鹿皮，你想大量收購。可是原住民部落（社）很多、分散各地，公司人手跑不完。你會？',
+    opts: [
+      { t: '派軍隊到每個部落強制收購', real: false },
+      { t: '把「和某個社做買賣的權利」公開標售，讓出價最高的漢人商人去經營', real: true },
+      { t: '放棄鹿皮生意', real: false },
+    ],
+    why: '這就是<b>贌社</b>。公司坐著收標金，得標的漢商負責跑部落、收鹿皮。缺點是有些漢商獨占後壓低價格，原住民吃虧，加上捕鹿太多，鹿群後來越來越少。' },
+  { q: '你希望各地原住民部落穩定地接受公司統治，而不是一直衝突。除了必要時出兵，你還會做什麼？',
+    opts: [
+      { t: '派傳教士傳基督教、設學校，用羅馬拼音教原住民讀寫自己的語言', real: true },
+      { t: '完全不管，讓部落自己來', real: false },
+      { t: '禁止原住民說自己的語言', real: false },
+    ],
+    why: '公司確實派了<b>傳教士</b>，特別是在西拉雅族的<b>新港社</b>一帶。傳教加上教育，讓部落比較願意配合；公司也會召集各社長老開會、對不服的部落出兵。羅馬拼音後來被用來寫土地契約，留下<b>新港文書</b>。' },
+  { q: '1652 年，漢人不滿重稅，在郭懷一帶領下起事，被你聯合原住民平定了。接下來，你怎麼防止再發生？',
+    opts: [
+      { t: '在大員對岸的赤崁加蓋一座城堡，加強防守', real: true },
+      { t: '取消所有稅，讓漢人滿意', real: false },
+      { t: '把所有漢人送回中國', real: false },
+    ],
+    why: '公司在赤崁加蓋<b>普羅民遮城</b>（今赤崁樓一帶）。公司既需要漢人的勞力，也需要稅收，所以選擇<b>加強軍事控制</b>，而不是取消稅或趕走漢人。但不到十年，鄭成功就來了。' },
+];
+let decIdx = 0, decReal = 0;
+function drawDec(){
+  const box = document.getElementById('decBox');
+  if(decIdx >= DEC.length){
+    box.innerHTML = `<div class="dec-q">🎉 四個決定都做完了！你有 ${decReal} 次和歷史上的公司選得一樣。</div><p>重點：荷蘭東印度公司是一家<b>公司</b>，做決定的標準是「<b>怎樣最賺錢、成本最低</b>」。招募漢人、贌社、傳教、蓋城堡，都是從這個角度出發。</p><div class="row dnd-bar"><button id="decAgain">再玩一次</button></div>`;
+    document.getElementById('decAgain').addEventListener('click', () => { decIdx = 0; decReal = 0; drawDec(); });
+    return;
+  }
+  const d = DEC[decIdx];
+  box.innerHTML = `<div class="dec-step">情境 ${decIdx + 1} / ${DEC.length}</div><div class="dec-q">${d.q}</div>` +
+    d.opts.map((o, i) => `<button class="dec-opt" data-i="${i}">${String.fromCharCode(65 + i)}. ${o.t}</button>`).join('') +
+    `<div class="dec-fb" id="decFb"></div>`;
+  box.querySelectorAll('.dec-opt').forEach(b => b.addEventListener('click', () => {
+    const o = d.opts[+b.dataset.i];
+    box.querySelectorAll('.dec-opt').forEach((x, i) => { x.disabled = true; if(d.opts[i].real) x.classList.add('real'); });
+    b.classList.add('picked');
+    if(o.real) decReal++;
+    toolLog('換你當公司' + (decIdx + 1), o.real);
+    const fb = document.getElementById('decFb');
+    fb.innerHTML = (o.real ? '✔ 你和歷史上的公司想得一樣！' : '🤔 歷史上公司不是這樣做的。') + '<br>' + d.why +
+      `<div class="row dnd-bar" style="margin-top:8px"><button id="decNext">${decIdx + 1 < DEC.length ? '下一個情境 →' : '看結果'}</button></div>`;
+    fb.classList.add('show');
+    document.getElementById('decNext').addEventListener('click', () => { decIdx++; drawDec(); });
+  }));
+}
+drawDec();
+
+// ---- 2-3 排序題 ----
+const SEQ = [
+  { y: 1624, t: '荷蘭人佔領大員' },
+  { y: 1626, t: '西班牙人佔領雞籠' },
+  { y: 1642, t: '荷蘭人把西班牙人趕出北臺灣' },
+  { y: 1652, t: '郭懷一事件' },
+  { y: 1661, t: '鄭成功從鹿耳門登陸' },
+  { y: 1662, t: '荷蘭長官揆一投降' },
+  { y: 1683, t: '施琅攻臺，鄭克塽降清' },
+];
+let seqPick = [], seqShuffle = [], seqChecked = false;
+function seqInit(){ seqPick = []; seqChecked = false; seqShuffle = SEQ.map((_, i) => i).sort(() => Math.random() - .5); seqDraw(); document.getElementById('seqMsg').textContent = ''; }
+function seqDraw(){
+  const pool = document.getElementById('seqPool'), ans = document.getElementById('seqAns');
+  pool.innerHTML = seqShuffle.filter(i => !seqPick.includes(i)).map(i => `<span class="seq-item" data-i="${i}">${SEQ[i].t}</span>`).join('') || '<span class="hint">全部排好了，按「檢查」。</span>';
+  ans.innerHTML = seqPick.map((i, k) => {
+    const cls = seqChecked ? (SEQ[i].y === SEQ[k].y ? ' ok' : ' no') : '';
+    return `<span class="seq-item${cls}" data-i="${i}"><span class="n">${k + 1}</span>${SEQ[i].t}${seqChecked ? `<span class="yr">${SEQ[i].y}</span>` : ''}</span>`;
+  }).join('') || '<span class="hint">點上面的事件，會依序排到這裡。點這裡的事件可以退回去。</span>';
+  pool.querySelectorAll('.seq-item').forEach(e => e.addEventListener('click', () => { seqPick.push(+e.dataset.i); seqChecked = false; seqDraw(); }));
+  ans.querySelectorAll('.seq-item').forEach(e => e.addEventListener('click', () => { seqPick = seqPick.filter(x => x !== +e.dataset.i); seqChecked = false; seqDraw(); }));
+}
+document.getElementById('seqCheck').addEventListener('click', () => {
+  const msg = document.getElementById('seqMsg');
+  if(seqPick.length < SEQ.length){ msg.className = 'dnd-msg no'; msg.textContent = `還有 ${SEQ.length - seqPick.length} 個事件沒排。`; return; }
+  seqChecked = true; seqDraw();
+  const ok = seqPick.filter((i, k) => SEQ[i].y === SEQ[k].y).length;
+  if(ok === SEQ.length){ msg.className = 'dnd-msg ok'; msg.textContent = '✔ 全部正確！荷蘭 38 年、鄭氏 22 年左右。'; }
+  else { msg.className = 'dnd-msg no'; msg.textContent = `✘ 位置對了 ${ok} / ${SEQ.length}，看看紅色的年份再排一次。`; }
+  toolLog('荷鄭排序', ok === SEQ.length);
+});
+document.getElementById('seqReset').addEventListener('click', seqInit);
+seqInit();
+
+// ---- 2-3 這是誰做的 ----
+dndGame({ box: 'dndWho', name: '荷西鄭分類', poolLabel: '城堡、制度與作為',
+  items: [
+    { id: 'w1', label: '熱蘭遮城' }, { id: 'w2', label: '普羅民遮城' }, { id: 'w3', label: '王田' }, { id: 'w4', label: '贌社' }, { id: 'w5', label: '新港文書' },
+    { id: 'w6', label: '聖薩爾瓦多城' }, { id: 'w7', label: '聖多明哥城' },
+    { id: 'w8', label: '承天府' }, { id: 'w9', label: '天興縣、萬年縣' }, { id: 'w10', label: '營盤田' }, { id: 'w11', label: '建孔廟' }, { id: 'w12', label: '和英國東印度公司貿易' },
+  ],
+  zones: [
+    { id: 'nl', label: '荷蘭（1624–1662）', accepts: ['w1', 'w2', 'w3', 'w4', 'w5'] },
+    { id: 'es', label: '西班牙（1626–1642）', accepts: ['w6', 'w7'] },
+    { id: 'zh', label: '鄭氏（1662–1683）', accepts: ['w8', 'w9', 'w10', 'w11', 'w12'] },
+  ],
+  hint: '提示：「聖」字開頭的是西班牙的城；新港文書是荷蘭傳教留下的。' });
+
+// ---- 翻翻卡：荷蘭 vs 鄭氏 ----
+const FLIP = [
+  ['nl', '荷蘭：統治多久？', '1624–1662，約 38 年'], ['zh', '鄭氏：統治多久？', '1662–1683，約 22 年'],
+  ['nl', '荷蘭：統治中心？', '大員的熱蘭遮城（今安平）'], ['zh', '鄭氏：統治中心？', '承天府（赤崁一帶），下設天興縣、萬年縣'],
+  ['nl', '荷蘭：土地制度？', '王田：土地屬公司，漢人耕種繳租'], ['zh', '鄭氏：土地制度？', '官田（接收王田）、私田、營盤田'],
+  ['nl', '荷蘭：人力從哪來？', '招募福建漢人來臺開墾'], ['zh', '鄭氏：人力從哪來？', '軍隊和家眷來臺，寓兵於農、屯田'],
+  ['nl', '荷蘭：文化教育？', '傳教、羅馬拼音、新港文書'], ['zh', '鄭氏：文化教育？', '陳永華建孔廟、設學校，推廣儒學'],
+  ['nl', '荷蘭：怎麼賺錢？', '轉口貿易，出口鹿皮、蔗糖'], ['zh', '鄭氏：怎麼賺錢？', '海上貿易：日本、東南亞、英國東印度公司'],
+  ['nl', '荷蘭：怎麼結束？', '1662 揆一向鄭成功投降'], ['zh', '鄭氏：怎麼結束？', '1683 施琅攻臺，鄭克塽降清'],
+];
+const grid = document.getElementById('flipGrid');
+grid.innerHTML = FLIP.map(([k, q, a]) => `<div class="flip"><div class="inner"><div class="face front ${k}">${q}</div><div class="face back ${k}">${a}</div></div></div>`).join('');
+grid.querySelectorAll('.flip').forEach(f => f.addEventListener('click', () => f.classList.toggle('on')));
+document.getElementById('flipReset').addEventListener('click', () => grid.querySelectorAll('.flip').forEach(f => f.classList.remove('on')));
+</script>
+</body>
+</html>

@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>清帝國時期的臺灣｜政治與經濟</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#1e3a8a; --accent-soft:#e0e7ff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#1e3a8a,#0f766e); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+  .card p{margin:4px 0;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv .hi{background:#fef3c7;}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row,.row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 14px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} .card{padding:16px 14px;} }
+
+  .dnd-pool,.dnd-zone{border:2px dashed var(--border); border-radius:12px; padding:10px 12px; min-height:64px; margin:8px 0; background:#fff; transition:.15s;}
+  .dnd-pool{background:#f9fafb;}
+  .dnd-zone.over,.dnd-pool.over{border-color:var(--blue); background:#eff6ff;}
+  .dnd-zones{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px;}
+  .dnd-zone-title{font-weight:bold; margin-bottom:6px; color:var(--accent);}
+  .dnd-card{display:inline-block; background:#fff; border:1.5px solid var(--border); border-radius:99px; padding:6px 14px; margin:4px 6px 4px 0;
+    cursor:grab; user-select:none; touch-action:none; font-size:.95rem; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .1s;}
+  .dnd-card:hover{border-color:var(--blue);}
+  .dnd-card.sel{border-color:var(--blue); background:#dbeafe; transform:scale(1.04);}
+  .dnd-card.drag{position:fixed; z-index:99; pointer-events:none; opacity:.9; transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.2);}
+  .dnd-card.ok{border-color:var(--green); background:var(--green-soft);}
+  .dnd-card.no{border-color:var(--red); background:var(--red-soft);}
+  .dnd-bar{margin-top:8px;}
+  .dnd-bar button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem; margin-right:6px;}
+  .dnd-bar button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .dnd-msg{font-weight:bold; margin-left:8px;}
+  .dnd-msg.ok{color:#166534;} .dnd-msg.no{color:#991b1b;}
+  .dnd-hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; min-height:2.4em;}
+
+  .flip-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px;}
+  .flip{perspective:800px; cursor:pointer; height:120px;}
+  .flip .inner{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+  .flip.on .inner{transform:rotateY(180deg);}
+  .flip .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:12px; padding:10px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:.92rem; line-height:1.5;}
+  .flip .front{background:#fff; border:2px solid var(--accent); color:var(--accent); font-weight:bold;}
+  .flip .back{background:var(--accent); color:#fff; transform:rotateY(180deg);}
+
+  .mapwrap{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;}
+  .mapwrap .svgbox{margin:0; flex:0 1 300px; max-width:100%;}
+  .mapwrap .side{flex:1 1 220px; min-width:0;}
+  .yrbtns button{padding:7px 11px; font-size:.88rem;}
+  .yrbtns button.on{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .spot{cursor:pointer;} .spot:hover circle{stroke-width:4;}
+  .legend{display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; font-size:.82rem;}
+  .legend span{display:inline-flex; align-items:center; gap:4px;}
+  .legend i{display:inline-block; width:14px; height:14px; border-radius:3px; border:1px solid #9ca3af;}
+  .tag{display:inline-block; border-radius:99px; padding:1px 10px; font-size:.82rem; color:#fff; margin-right:4px;}
+  .tag-p{background:#6b7280;} .tag-a{background:#0f766e;}
+
+  /* 排序題 */
+  .ord-pool,.ord-list{border:2px dashed var(--border); border-radius:12px; padding:10px; min-height:56px; margin:8px 0; background:#fff;}
+  .ord-pool{background:#f9fafb;}
+  .ord-card{display:block; width:100%; text-align:left; background:#fff; border:1.5px solid var(--border); border-radius:10px; padding:8px 12px; margin:6px 0; cursor:pointer; font-family:inherit; font-size:.93rem; color:var(--ink);}
+  .ord-card:hover{border-color:var(--blue);}
+  .ord-list .ord-card{border-color:var(--accent);}
+  .ord-card .n{display:inline-block; min-width:1.6em; font-weight:bold; color:var(--accent);}
+  .ord-card.ok{border-color:var(--green); background:var(--green-soft);}
+  .ord-card.no{border-color:var(--red); background:var(--red-soft);}
+  .ord-exp{font-size:.9rem; margin-top:6px;}
+
+  /* 情境選擇 */
+  .scn{border:1px solid var(--border); border-radius:12px; padding:14px 16px; margin:12px 0; background:#fff;}
+  .scn .who{font-size:.85rem; color:var(--sub);}
+  .scn .ctx{margin:6px 0 8px;}
+  .scn .opt{display:block; width:100%; text-align:left; background:#f9fafb; border:1.5px solid var(--border); border-radius:10px; padding:9px 12px; margin:6px 0; cursor:pointer; font-family:inherit; font-size:.93rem; color:var(--ink);}
+  .scn .opt:hover{border-color:var(--blue);}
+  .scn .opt.picked{border-color:var(--blue); background:#dbeafe;}
+  .scn .res{display:none; margin-top:8px; padding:10px 13px; border-radius:8px; background:var(--accent-soft); font-size:.92rem;}
+  .scn .res.show{display:block;}
+  .scn .res b.real{color:var(--accent);}
+
+  .vs{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .vs > div{border-radius:10px; padding:10px 12px; font-size:.92rem;}
+  .vs .p{background:#f3f4f6; border-left:4px solid #6b7280;}
+  .vs .a{background:#ccfbf1; border-left:4px solid #0f766e;}
+  @media (max-width:420px){ .vs{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 臺灣的歷史（上） · 第3章</span>
+  <h1>清帝國時期的政治與經濟</h1>
+  <p>1683 年清軍攻下臺灣，到 1895 年把臺灣割給日本，清朝統治臺灣大約 212 年。前期「怕臺灣出事」而消極管理，後期「怕臺灣被搶」而積極建設。這份教材讓你切換年代看行政區怎麼變多、在地圖上找開港的四個港口、把事件排出因果順序，還要換你當沈葆楨和劉銘傳做決定。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1 清初治臺</button>
+  <button data-t="s2">2 經濟與開港</button>
+  <button data-t="s3">3 積極治臺</button>
+  <button data-t="s4">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 3-1 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道清朝在 1684 年把臺灣納入版圖，設一府三縣，隸屬福建省</li>
+      <li>說得出清初「渡臺限制、班兵制度、劃界封山」三項政策和它們的目的</li>
+      <li>看懂行政區為什麼會隨著「開發」和「民變」一步步增加</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：要不要留下臺灣？</h2>
+    <p>1683 年，清朝將領<b>施琅</b>率軍攻下澎湖，鄭氏政權投降。打完仗，清朝官員吵了起來：</p>
+    <ul>
+      <li><b>放棄派</b>：臺灣是海外小島，管理花錢又麻煩，把人遷回大陸就好。</li>
+      <li><b>保留派</b>（施琅）：臺灣位置重要，是東南沿海的屏障；如果放棄，可能又被外國或海盜占據。</li>
+    </ul>
+    <p>最後康熙皇帝接受保留的主張，<b>1684 年</b>把臺灣納入清朝版圖。</p>
+    <div class="formula">1684 年設<b>臺灣府</b>，隸屬<b>福建省</b>，下轄<b>一府三縣</b>：臺灣縣（今臺南）、鳳山縣（今高雄一帶）、諸羅縣（今嘉義一帶以北）</div>
+    <div class="note">💡 「府」和「縣」都是地方行政單位，府比縣大，一個府管好幾個縣。後來還出現「<b>廳</b>」，通常設在新開發、或需要特別管理的地方。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：清初的三項「防範」政策</h2>
+    <p>清朝留下臺灣，主要是為了<b>不讓臺灣再變成反清的基地</b>，所以初期的政策重點在「防範」，而不是建設。這種態度常被稱為<b>消極治臺</b>（被動、只求不出事）。</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>政策</th><th>內容</th><th>目的</th></tr>
+        <tr><td class="name">渡臺限制</td><td>想來臺灣要先申請許可；不准攜帶家眷。政策時鬆時緊，一直到 1875 年才完全解除。</td><td>怕來臺的漢人太多、難以控制</td></tr>
+        <tr><td class="name">班兵制度</td><td>不在臺灣本地招兵，而是從福建等地調派士兵來臺駐守，約三年輪換一次。</td><td>怕軍隊和地方勢力結合、造反</td></tr>
+        <tr><td class="name">劃界封山</td><td>在漢人和原住民的生活區域之間劃出界線（<b>番界</b>），有些地方挖土溝、堆土堆，像一頭臥著的牛，叫做<b>土牛溝</b>。禁止漢人越界開墾。</td><td>減少漢人與原住民衝突，也防止有人躲進山區作亂</td></tr>
+      </table>
+    </div>
+    <div class="note">💡 規定歸規定，很多人還是<b>偷渡</b>來臺。臺灣海峽水流湍急、危險，被稱為「<b>黑水溝</b>」。民間俗諺「六死三留一回頭」，形容渡海來臺的危險（這是誇張的說法，不是真實統計）。番界也常被越過，漢人開墾範圍持續往內山推進。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：政策與目的配對</h2>
+    <p>把每張卡片拖到它屬於的政策（也可以先點卡片、再點區域）。</p>
+    <div id="dndPolicy"></div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：民變多，行政區跟著變多</h2>
+    <p>清代臺灣常發生<b>民變</b>（民眾武裝反抗官府），有「三年一小反，五年一大亂」的說法。規模最大的三次是：<b>朱一貴事件</b>（1721）、<b>林爽文事件</b>（1786）、<b>戴潮春事件</b>（1862）。</p>
+    <p>每次大亂之後，清廷就發現「官府管不到的地方太大」，加上漢人越來越多、開發往北推進，於是<b>逐步增設行政區</b>：</p>
+    <ul>
+      <li><b>1723 年</b>：朱一貴事件後，增設<b>彰化縣</b>、<b>淡水廳</b>。</li>
+      <li><b>1787 年</b>：林爽文事件後，<b>諸羅縣改名嘉義縣</b>（嘉獎幫官府守城的「義民」）。</li>
+      <li><b>1812 年</b>：漢人進入蘭陽平原開墾（吳沙等人），設<b>噶瑪蘭廳</b>（今宜蘭）。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 年代切換地圖：行政區劃演變</h2>
+    <p>按下面的年代，看行政區怎麼一步一步變多。灰色是清朝官府還沒設治的地方，多半是原住民的生活領域。</p>
+    <div class="tool">
+      <div class="row yrbtns" id="yrBtns"></div>
+      <div class="mapwrap">
+        <div class="svgbox" id="svgAdmin"></div>
+        <div class="side">
+          <div class="infobox" id="adminInfo"></div>
+          <div class="legend" id="adminLegend"></div>
+          <div class="hint">地圖是示意圖，界線位置是大概的。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🤔 換你當清朝大臣</h2>
+    <div id="scnS1"></div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜為什麼說清初是「消極治臺」？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 清朝留下臺灣的主要理由是「防止臺灣變成反清基地或被外人占據」。</p>
+        <p class="step"><b>②</b> 所以政策重點是限制人民來臺、防止軍隊和人民作亂、劃界不准越界開墾，而不是修路、建設。</p>
+        <p class="step"><b>③</b> 這種「只求防範、不主動建設」的態度，就叫消極治臺。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜看地圖：1684 年諸羅縣的範圍好大，官府真的管得到嗎？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 名義上，臺灣中北部都劃給諸羅縣。</p>
+        <p class="step"><b>②</b> 但當時漢人主要住在今臺南附近，官府實際管得到的地方也集中在南部。</p>
+        <p class="step"><b>③</b> 等到北部開發、又發生朱一貴事件，清廷才在 1723 年增設彰化縣和淡水廳。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="C">
+      <div class="stem">1. 1684 年清朝在臺灣設立的行政區是：</div>
+      <label><input type="radio" name="p1q1" value="A">一府二縣，隸屬廣東省</label>
+      <label><input type="radio" name="p1q1" value="B">三府一州，單獨建省</label>
+      <label><input type="radio" name="p1q1" value="C">一府三縣，隸屬福建省</label>
+      <label><input type="radio" name="p1q1" value="D">一府四廳，隸屬浙江省</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　臺灣府＋臺灣縣、鳳山縣、諸羅縣，隸屬福建省。「三府一州」是建省以後的事。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">2. 清朝從福建調兵來臺、約三年輪換、不在臺灣招兵，這是哪一項政策？目的是什麼？</div>
+      <label><input type="radio" name="p1q2" value="A">劃界封山；保護原住民</label>
+      <label><input type="radio" name="p1q2" value="B">班兵制度；防止軍隊和地方勢力結合</label>
+      <label><input type="radio" name="p1q2" value="C">渡臺限制；減少移民</label>
+      <label><input type="radio" name="p1q2" value="D">開山撫番；開發東部</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　士兵定期換人、又不是本地人，就比較不會跟地方勢力勾結造反。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">3. 1723 年清廷增設彰化縣和淡水廳，最直接的背景是：</div>
+      <label><input type="radio" name="p1q3" value="A">牡丹社事件</label>
+      <label><input type="radio" name="p1q3" value="B">清法戰爭</label>
+      <label><input type="radio" name="p1q3" value="C">開港通商</label>
+      <label><input type="radio" name="p1q3" value="D">朱一貴事件後，清廷想加強管理中北部</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1721 年朱一貴事件，讓清廷發現北邊管不到的地方太大。牡丹社事件、清法戰爭、開港都在 1850 年代以後。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-2 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道清代前期臺灣以米、糖和中國大陸交換日用品，並認識「郊商」</li>
+      <li>說得出「一府二鹿三艋舺」指哪三個地方，以及它代表的開發方向</li>
+      <li>知道開港通商的條約、四個港口，以及茶、糖、樟腦三大出口品</li>
+      <li>理解開港以後經濟重心為什麼往北移</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：開港前——米、糖換日用品</h2>
+    <p>清代前期，臺灣土地肥沃，生產很多<b>米</b>和<b>糖</b>，大量運到中國大陸；再從大陸運回<b>布料、絲綢、日用品、建材</b>等臺灣比較缺的東西。兩岸就像分工合作：臺灣出農產品，大陸出手工業品。</p>
+    <p>清廷規定臺灣的港口只能和大陸指定的港口往來，叫做「<b>對渡</b>」。例如府城的鹿耳門對廈門、鹿港對蚶江、八里坌（在淡水河口）對福州的五虎門。</p>
+    <h3>🏪 郊商（行郊）</h3>
+    <p>做兩岸貿易的商人，組成同業團體，叫做「<b>郊</b>」，這些商人就叫<b>郊商</b>。例如府城有北郊、南郊、港郊，合稱「三郊」。郊商除了做生意，也常出錢修廟、造橋、辦地方公益，在地方很有影響力。</p>
+    <div class="formula">「<b>一府二鹿三艋舺</b>」＝清代臺灣最繁榮的三個港市：<br>一府＝<b>臺灣府城</b>（今臺南）、二鹿＝<b>鹿港</b>（今彰化）、三艋舺＝<b>艋舺</b>（今臺北萬華）</div>
+    <div class="note">💡 這三個地方由南到北排列，剛好反映臺灣的開發是<b>由南往北</b>推進的。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：開港通商</h2>
+    <p>19 世紀中，英國、法國用戰爭逼清朝開放更多通商口岸（英法聯軍之役）。</p>
+    <ul>
+      <li><b>1858 年</b>簽訂<b>天津條約</b>，規定臺灣要開港。</li>
+      <li><b>1860 年</b>簽訂<b>北京條約</b>後，臺灣陸續開港：先開<b>淡水</b>、<b>安平</b>（臺灣府），後來又加開<b>雞籠</b>（基隆）、<b>打狗</b>（高雄），共<b>四個港口</b>。</li>
+    </ul>
+    <p>從此臺灣不只跟中國大陸做生意，而是直接和<b>全世界</b>貿易。</p>
+    <h3>🏢 洋行和買辦</h3>
+    <ul>
+      <li><b>洋行</b>：外國商人在臺灣開的貿易公司，負責收購臺灣貨物、賣到國外。</li>
+      <li><b>買辦</b>：洋行雇用的本地人，幫忙翻譯、聯絡、收購貨物。例如<b>李春生</b>當過洋行買辦，和英國商人<b>陶德</b>一起推廣臺灣茶。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 港口地圖：開港前 vs 開港後</h2>
+    <div class="tool">
+      <div class="row yrbtns" id="portBtns">
+        <button class="ghost on" data-m="before">開港前：一府二鹿三艋舺</button>
+        <button class="ghost" data-m="after">開港後：四個通商港口</button>
+      </div>
+      <div class="mapwrap">
+        <div class="svgbox" id="svgPort"></div>
+        <div class="side">
+          <div class="infobox" id="portInfo">👆 點地圖上的圓點看介紹。</div>
+          <div class="hint">開港後的地圖上也標出三大出口品的主要產區：🍵 茶、🍬 糖、🌳 樟腦。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：三大出口品——北茶南糖，樟腦在山區</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>出口品</th><th>主要產地</th><th>重點</th></tr>
+        <tr><td class="name">🍵 茶</td><td>北部丘陵</td><td>陶德與李春生推廣，打出「福爾摩沙茶」名號，大量銷往<b>美國</b>；後來成為出口值最高的商品</td></tr>
+        <tr><td class="name">🍬 糖</td><td>南部平原</td><td>甘蔗製成，主要銷往中國大陸、日本等地</td></tr>
+        <tr><td class="name">🌳 樟腦</td><td>中北部山區</td><td>從樟樹提煉，可做藥品、防蟲，也是<b>賽璐珞</b>（早期塑膠）和<b>無煙火藥</b>的原料；臺灣曾是世界主要產地。到山區伐樟常和原住民發生衝突</td></tr>
+      </table>
+    </div>
+    <div class="formula">茶和樟腦集中在北部 → 北部越來越有錢，<b>臺北</b>（大稻埕一帶）興起 → <b>經濟重心北移</b></div>
+    <div class="note">💡 開港後，外國傳教士也來到臺灣，例如在北部淡水一帶傳教、行醫、辦學的<b>馬偕</b>。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：三大出口品配對</h2>
+    <p>把產地和特色拖到正確的出口品。</p>
+    <div id="dndGoods"></div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜「一府二鹿三艋舺」為什麼正好由南到北？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 漢人最早在南部（臺南）一帶開墾，府城最早繁榮。</p>
+        <p class="step"><b>②</b> 之後開發往中部推進，鹿港興起；再往北，艋舺興起。</p>
+        <p class="step"><b>③</b> 港市繁榮的順序，就是開發往北推進的痕跡。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜開港後，為什麼經濟重心會從南部移到北部？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 茶產在北部丘陵、樟腦多在中北部山區，兩樣都是熱門出口品。</p>
+        <p class="step"><b>②</b> 茶的出口值越來越高，錢和人都往北部集中，淡水港和臺北日益繁榮。</p>
+        <p class="step"><b>③</b> 這也成為後來臺北設府、成為政治中心的背景之一。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="A">
+      <div class="stem">1. 「一府二鹿三艋舺」中的「二鹿」指的是：</div>
+      <label><input type="radio" name="p2q1" value="A">鹿港</label>
+      <label><input type="radio" name="p2q1" value="B">鹿耳門</label>
+      <label><input type="radio" name="p2q1" value="C">鹿野</label>
+      <label><input type="radio" name="p2q1" value="D">打狗</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　鹿港在今彰化縣。鹿耳門是府城的出入港口，不是「二鹿」。">　</div>
+    </div>
+
+    <div class="q" data-ans="C">
+      <div class="stem">2. 開港通商以後，臺灣開放的四個港口是：</div>
+      <label><input type="radio" name="p2q2" value="A">鹿港、艋舺、淡水、安平</label>
+      <label><input type="radio" name="p2q2" value="B">基隆、宜蘭、花蓮、臺東</label>
+      <label><input type="radio" name="p2q2" value="C">淡水、雞籠、安平、打狗</label>
+      <label><input type="radio" name="p2q2" value="D">澎湖、安平、鹿港、淡水</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　北部兩個（淡水、雞籠），南部兩個（安平、打狗）。">　</div>
+    </div>
+
+    <div class="q" data-ans="B">
+      <div class="stem">3. 下列關於開港後出口品的敘述，何者正確？</div>
+      <label><input type="radio" name="p2q3" value="A">糖主要產在北部丘陵</label>
+      <label><input type="radio" name="p2q3" value="B">茶主要產在北部，大量銷往美國</label>
+      <label><input type="radio" name="p2q3" value="C">樟腦主要產在南部平原</label>
+      <label><input type="radio" name="p2q3" value="D">米是開港後最主要的出口品</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　北茶南糖、樟腦在山區。開港後的三大出口品是茶、糖、樟腦。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3-3 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>把「八瑤灣事件 → 牡丹社事件 → 沈葆楨來臺」的因果關係說清楚</li>
+      <li>說得出沈葆楨與劉銘傳各做了哪些建設</li>
+      <li>知道清法戰爭後臺灣建省，以及消極治臺與積極治臺的不同</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：牡丹社事件——清廷嚇醒了</h2>
+    <ul>
+      <li><b>1871 年 八瑤灣事件</b>：一艘琉球船遇到颱風，漂到臺灣南部（今屏東）的八瑤灣。上岸的船員誤入排灣族部落，雙方因誤會與衝突，五十多名船員遇害，少數人獲救送回。</li>
+      <li><b>1874 年 牡丹社事件</b>：日本以「琉球人被殺」為理由，派兵登陸臺灣南部，攻打牡丹社等排灣族部落。</li>
+      <li>清廷派<b>沈葆楨</b>來臺處理。最後清、日談判，清朝付錢給日本，日軍才撤退。</li>
+    </ul>
+    <div class="formula">牡丹社事件讓清廷發現：<b>臺灣如果不好好經營，外國隨時可能來搶</b> → 開始<b>積極治臺</b></div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：沈葆楨的建設</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>措施</th><th>內容</th><th>目的</th></tr>
+        <tr><td class="name">開山撫番</td><td>開闢北、中、南三條通往東部的道路；招撫原住民</td><td>讓官府管得到山區和東部，不讓外國有藉口</td></tr>
+        <tr><td class="name">解除渡臺禁令</td><td>1875 年取消渡臺限制，也解除入山的禁令</td><td>鼓勵大陸人民來臺開墾</td></tr>
+        <tr><td class="name">建億載金城</td><td>在安平興建西式砲臺</td><td>加強海防</td></tr>
+        <tr><td class="name">增設臺北府</td><td>1875 年奏請增設臺北府（另也增設恆春縣、卑南廳等）</td><td>北部開發快、地位越來越重要</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：清法戰爭與臺灣建省</h2>
+    <p><b>1884～1885 年 清法戰爭</b>：清朝和法國為了越南問題開戰，戰火延燒到臺灣。法軍攻打<b>基隆</b>、<b>淡水</b>，封鎖臺灣海面，並<b>占領澎湖</b>。當時負責臺灣防務的是<b>劉銘傳</b>。清軍在淡水擋下了法軍登陸，基隆則一度被法軍占領。</p>
+    <div class="formula"><b>1885 年臺灣建省</b>，<b>劉銘傳</b>成為首任<b>臺灣巡撫</b>（巡撫＝一省的最高長官）</div>
+    <h3>🚂 劉銘傳的新政</h3>
+    <ul>
+      <li><b>鐵路</b>：興建基隆到臺北的鐵路，後來延長到新竹。</li>
+      <li><b>電報</b>：架設電報線，並鋪設連接臺灣和福建的海底電纜，消息傳得快。</li>
+      <li><b>郵政</b>：開辦新式郵政。</li>
+      <li><b>清賦</b>：重新清查土地，整理田賦（土地稅），讓政府收入增加。</li>
+      <li><b>新式學堂</b>：設立西學堂、電報學堂，培養懂外語和新技術的人才。</li>
+    </ul>
+    <p>建省後，行政區調整為「<b>三府一直隸州</b>」（臺北府、臺灣府、臺南府、臺東直隸州）。可以回到第 1 頁的地圖切到 1887 年看看。</p>
+    <div class="note">💡 劉銘傳的新政讓臺灣成為當時清朝較進步的省份之一，但建設花費大、清賦也讓部分民眾不滿。他在 1891 年離職，有些計畫後來縮減或停擺。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 因果鏈排序：把事件排出先後</h2>
+    <p>依照發生的先後，一張一張點下去（點錯了，點上面「你的排序」裡的卡片就能拿回來）。</p>
+    <div id="ordChain"></div>
+  </div>
+
+  <div class="card">
+    <h2>🤔 換你當沈葆楨／劉銘傳</h2>
+    <p>每題選一個你覺得最好的做法，再看看歷史上實際怎麼做、為什麼。</p>
+    <div id="scnS3"></div>
+  </div>
+
+  <div class="card">
+    <h2>⚖️ 比一比：消極治臺 vs 積極治臺</h2>
+    <div class="vs">
+      <div class="p"><b><span class="tag tag-p">前期 消極</span>1684～1874</b><br>
+        目的：<b>防臺</b>，怕臺灣出亂子<br>
+        做法：渡臺限制、班兵制度、劃界封山<br>
+        行政區：出事了才增設<br>
+        東部、山區：封起來不准進</div>
+      <div class="a"><b><span class="tag tag-a">後期 積極</span>1874～1895</b><br>
+        目的：<b>保臺</b>，怕臺灣被外國搶<br>
+        做法：開山撫番、解除渡臺禁令、建砲臺、建省、新政<br>
+        行政區：主動規劃，增設臺北府、建省<br>
+        東部、山區：開路進去管理</div>
+    </div>
+    <div class="note">💡 轉捩點：<b>1874 年牡丹社事件</b>。外國的威脅讓清廷的態度從「防臺」變成「保臺」。</div>
+    <h3>🎮 動手分類</h3>
+    <div id="dndPolicyEra"></div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜八瑤灣事件發生在 1871 年，為什麼日本到 1874 年才出兵？出兵跟琉球有什麼關係？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 遇害的是琉球人。當時日本想把琉球納入自己的管轄。</p>
+        <p class="step"><b>②</b> 日本以「替琉球人討公道」為理由出兵，一方面也想試探清朝對臺灣東南部的態度。</p>
+        <p class="step"><b>③</b> 課本重點：記住「八瑤灣事件是起因，牡丹社事件是日本出兵」。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜沈葆楨為什麼要「開山撫番」？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 日本出兵時，曾主張臺灣東部、山區不是清朝真正管理的地方。</p>
+        <p class="step"><b>②</b> 開路進到東部、招撫原住民，表示清朝確實在管理這些地方，外國就比較沒有藉口。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+
+    <div class="q" data-ans="B">
+      <div class="stem">1. 下列事件依發生先後排列，何者正確？</div>
+      <label><input type="radio" name="p3q1" value="A">牡丹社事件 → 八瑤灣事件 → 臺灣建省</label>
+      <label><input type="radio" name="p3q1" value="B">八瑤灣事件 → 牡丹社事件 → 清法戰爭 → 臺灣建省</label>
+      <label><input type="radio" name="p3q1" value="C">清法戰爭 → 牡丹社事件 → 臺灣建省</label>
+      <label><input type="radio" name="p3q1" value="D">臺灣建省 → 八瑤灣事件 → 清法戰爭</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1871 八瑤灣 → 1874 牡丹社 → 1884～1885 清法戰爭 → 1885 建省。">　</div>
+    </div>
+
+    <div class="q" data-ans="D">
+      <div class="stem">2. 下列哪一項<b>不是</b>沈葆楨的措施？</div>
+      <label><input type="radio" name="p3q2" value="A">開山撫番</label>
+      <label><input type="radio" name="p3q2" value="B">解除渡臺禁令</label>
+      <label><input type="radio" name="p3q2" value="C">興建億載金城</label>
+      <label><input type="radio" name="p3q2" value="D">興建基隆到臺北的鐵路</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　鐵路是建省後劉銘傳的新政。">　</div>
+    </div>
+
+    <div class="q" data-ans="A">
+      <div class="stem">3. 清廷在 1885 年讓臺灣建省，最直接的原因是：</div>
+      <label><input type="radio" name="p3q3" value="A">清法戰爭中法軍進攻臺灣，清廷更看重臺灣的海防地位</label>
+      <label><input type="radio" name="p3q3" value="B">朱一貴事件</label>
+      <label><input type="radio" name="p3q3" value="C">臺灣開始出口茶葉</label>
+      <label><input type="radio" name="p3q3" value="D">日本占領澎湖</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　清法戰爭時占領澎湖的是法軍，不是日本。戰後清廷決定臺灣建省。">　</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📝 口訣與一頁重點整理</h2>
+    <div class="formula">
+      <b>前期防臺：</b>「一府三縣屬福建，渡臺班兵土牛線」<br>
+      <b>經濟：</b>「一府二鹿三艋舺，開港四港淡雞安打；北茶南糖山樟腦」<br>
+      <b>後期保臺：</b>「八瑤牡丹沈葆楨，開山撫番億載城；清法戰後建行省，銘傳鐵路電報郵」
+    </div>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>年代</th><th>大事</th><th>重點</th></tr>
+        <tr><td>1684</td><td>納入版圖</td><td>一府三縣，隸屬福建省</td></tr>
+        <tr><td>1721／1723</td><td>朱一貴事件／增設</td><td>彰化縣、淡水廳</td></tr>
+        <tr><td>1786／1787</td><td>林爽文事件</td><td>諸羅改名嘉義</td></tr>
+        <tr><td>1812</td><td>增設</td><td>噶瑪蘭廳（宜蘭）</td></tr>
+        <tr><td>1858／1860</td><td>天津條約、北京條約</td><td>開港：淡水、安平、雞籠、打狗</td></tr>
+        <tr><td>1871</td><td>八瑤灣事件</td><td>琉球船民遇害</td></tr>
+        <tr class="hi"><td>1874</td><td>牡丹社事件</td><td>日本出兵；沈葆楨來臺 → 積極治臺</td></tr>
+        <tr><td>1875</td><td>沈葆楨措施</td><td>解除渡臺禁令、增設臺北府</td></tr>
+        <tr><td>1884～1885</td><td>清法戰爭</td><td>法軍攻基隆、淡水，占澎湖</td></tr>
+        <tr class="hi"><td>1885</td><td>臺灣建省</td><td>劉銘傳首任巡撫：鐵路、電報、郵政、清賦、學堂</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🃏 翻翻卡：考前 3 分鐘複習</h2>
+    <p>先想答案，再點卡片翻過來對。</p>
+    <div class="flip-grid" id="flipGrid"></div>
+    <div class="row" style="margin-top:10px"><button id="flipReset" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:inherit">全部蓋回去</button></div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（12 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 1683 年清朝攻下臺灣後，主張保留臺灣的將領是：</div>
+      <label><input type="radio" name="qz1" value="A">劉銘傳</label>
+      <label><input type="radio" name="qz1" value="B">施琅</label>
+      <label><input type="radio" name="qz1" value="C">沈葆楨</label>
+      <label><input type="radio" name="qz1" value="D">鄭成功</label>
+      <div class="fb" data-exp="　施琅認為臺灣是東南沿海的屏障，不能放棄。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">2. 1684 年設立的「一府三縣」，三縣是：</div>
+      <label><input type="radio" name="qz2" value="A">彰化縣、淡水縣、宜蘭縣</label>
+      <label><input type="radio" name="qz2" value="B">臺北縣、臺中縣、臺南縣</label>
+      <label><input type="radio" name="qz2" value="C">臺灣縣、鳳山縣、諸羅縣</label>
+      <label><input type="radio" name="qz2" value="D">嘉義縣、恆春縣、新竹縣</label>
+      <div class="fb" data-exp="　臺灣縣（今臺南）、鳳山縣（今高雄一帶）、諸羅縣（今嘉義一帶以北）。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 清初在漢人和原住民的生活區域之間挖溝、堆土當界線，這條界線常被稱為：</div>
+      <label><input type="radio" name="qz3" value="A">土牛溝（番界）</label>
+      <label><input type="radio" name="qz3" value="B">黑水溝</label>
+      <label><input type="radio" name="qz3" value="C">八通關</label>
+      <label><input type="radio" name="qz3" value="D">濁水溪</label>
+      <div class="fb" data-exp="　黑水溝是臺灣海峽的別稱，不是番界。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. 清初實施渡臺限制、班兵制度、劃界封山，共同的出發點是：</div>
+      <label><input type="radio" name="qz4" value="A">發展臺灣經濟</label>
+      <label><input type="radio" name="qz4" value="B">抵抗日本入侵</label>
+      <label><input type="radio" name="qz4" value="C">推廣西式教育</label>
+      <label><input type="radio" name="qz4" value="D">防範臺灣成為反清基地、避免出亂子</label>
+      <div class="fb" data-exp="　清初是「為防臺而治臺」的消極態度。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 1812 年設立噶瑪蘭廳，位置在今天的：</div>
+      <label><input type="radio" name="qz5" value="A">臺東</label>
+      <label><input type="radio" name="qz5" value="B">宜蘭</label>
+      <label><input type="radio" name="qz5" value="C">新竹</label>
+      <label><input type="radio" name="qz5" value="D">屏東</label>
+      <div class="fb" data-exp="　漢人進入蘭陽平原開墾後設立。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">6. 清代前期，臺灣和中國大陸之間的貿易，主要是：</div>
+      <label><input type="radio" name="qz6" value="A">臺灣輸出茶葉、樟腦，換回鐵路器材</label>
+      <label><input type="radio" name="qz6" value="B">臺灣輸出鹿皮到歐洲</label>
+      <label><input type="radio" name="qz6" value="C">臺灣輸出米、糖，換回布料、日用品</label>
+      <label><input type="radio" name="qz6" value="D">兩岸禁止一切貿易</label>
+      <div class="fb" data-exp="　米、糖出去，日用品、手工業品進來；經營這種貿易的商人團體叫「郊」。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">7. 「一府二鹿三艋舺」反映清代臺灣的開發方向是：</div>
+      <label><input type="radio" name="qz7" value="A">由南往北</label>
+      <label><input type="radio" name="qz7" value="B">由北往南</label>
+      <label><input type="radio" name="qz7" value="C">由東往西</label>
+      <label><input type="radio" name="qz7" value="D">由山區往海邊</label>
+      <div class="fb" data-exp="　府城（臺南）→ 鹿港（彰化）→ 艋舺（臺北）。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">8. 臺灣開港通商，和下列哪些條約有關？</div>
+      <label><input type="radio" name="qz8" value="A">南京條約、馬關條約</label>
+      <label><input type="radio" name="qz8" value="B">馬關條約、北京條約</label>
+      <label><input type="radio" name="qz8" value="C">南京條約、天津條約</label>
+      <label><input type="radio" name="qz8" value="D">天津條約（1858）、北京條約（1860）</label>
+      <div class="fb" data-exp="　英法聯軍之役後的天津條約規定臺灣開港，北京條約後陸續開放四港。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="B">
+      <div class="stem">9. 開港後，在洋行工作、幫外國商人翻譯和收購貨物的本地人，叫做：</div>
+      <label><input type="radio" name="qz9" value="A">郊商</label>
+      <label><input type="radio" name="qz9" value="B">買辦</label>
+      <label><input type="radio" name="qz9" value="C">班兵</label>
+      <label><input type="radio" name="qz9" value="D">巡撫</label>
+      <div class="fb" data-exp="　例如李春生。郊商是開港前做兩岸貿易的商人團體。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="C">
+      <div class="stem">10. 開港後經濟重心逐漸北移，主要原因是：</div>
+      <label><input type="radio" name="qz10" value="A">糖業集中在北部</label>
+      <label><input type="radio" name="qz10" value="B">府城被法軍占領</label>
+      <label><input type="radio" name="qz10" value="C">茶和樟腦主要產在北部、出口量大</label>
+      <label><input type="radio" name="qz10" value="D">南部的港口全部關閉</label>
+      <div class="fb" data-exp="　北茶南糖，茶的出口值後來最高，臺北因此興起。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="A">
+      <div class="stem">11. 讓清廷從「消極治臺」轉向「積極治臺」的關鍵事件是：</div>
+      <label><input type="radio" name="qz11" value="A">1874 年牡丹社事件</label>
+      <label><input type="radio" name="qz11" value="B">1721 年朱一貴事件</label>
+      <label><input type="radio" name="qz11" value="C">1812 年設噶瑪蘭廳</label>
+      <label><input type="radio" name="qz11" value="D">1895 年馬關條約</label>
+      <div class="fb" data-exp="　日本出兵讓清廷警覺臺灣可能被外國搶走，派沈葆楨來臺積極經營。">　</div>
+    </div>
+
+    <div class="q quiz" data-ans="D">
+      <div class="stem">12. 臺灣首任巡撫劉銘傳推行的新政，<b>不包括</b>：</div>
+      <label><input type="radio" name="qz12" value="A">興建基隆到臺北的鐵路</label>
+      <label><input type="radio" name="qz12" value="B">架設電報、開辦新式郵政</label>
+      <label><input type="radio" name="qz12" value="C">清查土地、整理田賦（清賦）</label>
+      <label><input type="radio" name="qz12" value="D">實施班兵制度、不准攜眷來臺</label>
+      <div class="fb" data-exp="　班兵、渡臺限制是清初的消極政策。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 臺灣的歷史（上）· 第 3 章「清帝國時期的政治與經濟」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "歷史3 清帝國時期的政治與經濟";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 10){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 6){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面三節重看觀念和例題，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 拖曳配對（滑鼠、觸控都可以；也可以先點卡片、再點要放的區域）=====
+function dndGame(opts){
+  const box = document.getElementById(opts.box);
+  const placed = {};                       // 卡片 id → 放在哪一區
+  let selected = null;
+  const el = (tag, cls) => { const e = document.createElement(tag); if(cls) e.className = cls; return e; };
+  const order = opts.items.slice().sort(() => Math.random() - .5);
+  function render(){
+    box.innerHTML = '';
+    const pool = el('div', 'dnd-pool'); pool.dataset.zone = '__pool__';
+    pool.innerHTML = `<div class="dnd-zone-title" style="color:#6b7280">${opts.poolLabel || '卡片區（拖到下面正確的位置）'}</div>`;
+    const zonesWrap = el('div', 'dnd-zones');
+    const zoneEls = {};
+    opts.zones.forEach(z => {
+      const ze = el('div', 'dnd-zone'); ze.dataset.zone = z.id;
+      ze.innerHTML = `<div class="dnd-zone-title">${z.label}</div>`;
+      zonesWrap.appendChild(ze); zoneEls[z.id] = ze;
+    });
+    order.forEach(it => {
+      const c = el('div', 'dnd-card'); c.dataset.item = it.id; c.textContent = it.label;
+      (placed[it.id] && zoneEls[placed[it.id]] ? zoneEls[placed[it.id]] : pool).appendChild(c);
+      attach(c);
+    });
+    const bar = el('div', 'row dnd-bar');
+    bar.innerHTML = `<button class="dnd-check">檢查</button><button class="ghost dnd-reset">重來</button><span class="dnd-msg"></span>`;
+    box.append(pool, zonesWrap, bar);
+    if(opts.hint){ const h = el('div', 'dnd-hint'); h.textContent = opts.hint; box.appendChild(h); }
+    bar.querySelector('.dnd-check').addEventListener('click', check);
+    bar.querySelector('.dnd-reset').addEventListener('click', () => { Object.keys(placed).forEach(k => delete placed[k]); selected = null; render(); });
+    [pool, ...Object.values(zoneEls)].forEach(z => z.addEventListener('click', () => {
+      if(!selected) return;
+      if(z.dataset.zone === '__pool__') delete placed[selected]; else placed[selected] = z.dataset.zone;
+      selected = null; render();
+    }));
+  }
+  function zoneAt(x, y){
+    const t = document.elementFromPoint(x, y);
+    return t ? t.closest('.dnd-zone, .dnd-pool') : null;
+  }
+  function attach(card){
+    let sx = 0, sy = 0, moved = false, ghost = null;
+    card.addEventListener('pointerdown', e => {
+      sx = e.clientX; sy = e.clientY; moved = false; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e => {
+      if(!(e.buttons & 1)) return;
+      if(!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 6) return;
+      if(!moved){
+        moved = true; ghost = card.cloneNode(true); ghost.classList.add('drag');
+        document.body.appendChild(ghost); card.style.opacity = '.35';
+      }
+      ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + 'px'; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + 'px';
+      box.querySelectorAll('.over').forEach(z => z.classList.remove('over'));
+      const z = zoneAt(e.clientX, e.clientY); if(z && box.contains(z)) z.classList.add('over');
+    });
+    card.addEventListener('pointerup', e => {
+      if(moved){
+        const z = zoneAt(e.clientX, e.clientY);
+        if(ghost) ghost.remove(); card.style.opacity = '';
+        if(z && box.contains(z)){ if(z.dataset.zone === '__pool__') delete placed[card.dataset.item]; else placed[card.dataset.item] = z.dataset.zone; }
+        selected = null; render();
+      }else{
+        selected = (selected === card.dataset.item) ? null : card.dataset.item;
+        box.querySelectorAll('.dnd-card').forEach(c => c.classList.toggle('sel', c.dataset.item === selected));
+      }
+    });
+    card.addEventListener('click', e => e.stopPropagation());
+    card.addEventListener('pointercancel', () => { if(ghost) ghost.remove(); card.style.opacity = ''; moved = false; });
+  }
+  function check(){
+    let ok = 0, total = opts.items.length, unplaced = 0;
+    box.querySelectorAll('.dnd-card').forEach(c => {
+      const id = c.dataset.item, z = placed[id];
+      const zone = opts.zones.find(zz => zz.id === z);
+      c.classList.remove('ok', 'no');
+      if(!zone){ unplaced++; c.classList.add('no'); return; }
+      if(zone.accepts.includes(id)){ ok++; c.classList.add('ok'); } else c.classList.add('no');
+    });
+    const msg = box.querySelector('.dnd-msg');
+    if(ok === total){ msg.className = 'dnd-msg ok'; msg.textContent = '✔ 全部正確！'; }
+    else { msg.className = 'dnd-msg no'; msg.textContent = `✘ 對了 ${ok} / ${total}${unplaced ? '（還有 ' + unplaced + ' 張沒放）' : ''}，紅色的再想想。`; }
+    toolLog(opts.name || opts.box, ok === total);
+  }
+  render();
+  return { placed };
+}
+
+// ===== 情境選擇：換你當決策者 =====
+function scenario(boxId, list){
+  const box = document.getElementById(boxId);
+  box.innerHTML = list.map((s, i) => `<div class="scn" data-i="${i}">
+      <div class="who">${s.who}</div>
+      <div class="ctx">${s.ctx}</div>
+      ${s.opts.map((o, j) => `<button class="opt" data-j="${j}">${'ABCD'[j]}. ${o.t}</button>`).join('')}
+      <div class="res"></div>
+    </div>`).join('');
+  box.querySelectorAll('.scn').forEach(card => {
+    const s = list[+card.dataset.i];
+    card.querySelectorAll('.opt').forEach(b => b.addEventListener('click', () => {
+      const o = s.opts[+b.dataset.j];
+      card.querySelectorAll('.opt').forEach(x => x.classList.remove('picked'));
+      b.classList.add('picked');
+      const res = card.querySelector('.res');
+      res.innerHTML = `${o.best ? '✔ ' : '🤔 '}${o.fb}<br><b class="real">📜 歷史上實際：</b>${s.real}`;
+      res.classList.add('show');
+      toolLog(boxId + '-' + card.dataset.i, !!o.best);
+    }));
+  });
+}
+
+// ===== 排序題（點一下加入、再點拿回來）=====
+function orderGame(boxId, name, items, exp){
+  const box = document.getElementById(boxId);
+  let pool = items.map(it => it.id).sort(() => Math.random() - .5), seq = [];
+  const lab = id => items.find(it => it.id === id).label;
+  function render(marks){
+    box.innerHTML = `<div class="dnd-zone-title" style="color:#6b7280">事件卡（點一下放進排序）</div>
+      <div class="ord-pool">${pool.map(id => `<button class="ord-card" data-id="${id}" data-from="pool">${lab(id)}</button>`).join('') || '<span class="dnd-hint">全部放好了，按「檢查」！</span>'}</div>
+      <div class="dnd-zone-title">你的排序（由早到晚）</div>
+      <div class="ord-list">${seq.map((id, i) => `<button class="ord-card ${marks ? (marks[i] ? 'ok' : 'no') : ''}" data-id="${id}" data-from="seq"><span class="n">${i + 1}.</span>${lab(id)}</button>`).join('')}</div>
+      <div class="row dnd-bar"><button class="dnd-check">檢查</button><button class="ghost dnd-reset">重來</button><span class="dnd-msg"></span></div>
+      <div class="ord-exp"></div>`;
+    box.querySelectorAll('.ord-card').forEach(b => b.addEventListener('click', () => {
+      const id = b.dataset.id;
+      if(b.dataset.from === 'pool'){ pool = pool.filter(x => x !== id); seq.push(id); }
+      else { seq = seq.filter(x => x !== id); pool.push(id); }
+      render();
+    }));
+    box.querySelector('.dnd-reset').addEventListener('click', () => { pool = items.map(it => it.id).sort(() => Math.random() - .5); seq = []; render(); });
+    box.querySelector('.dnd-check').addEventListener('click', () => {
+      const msgTxt = (cls, t) => { const m = box.querySelector('.dnd-msg'); m.className = 'dnd-msg ' + cls; m.textContent = t; };
+      if(pool.length){ msgTxt('no', `還有 ${pool.length} 張沒放喔！`); return; }
+      const mk = seq.map((id, i) => id === items[i].id);
+      const ok = mk.filter(Boolean).length;
+      render(mk);
+      if(ok === items.length){ msgTxt('ok', '✔ 全部正確！'); box.querySelector('.ord-exp').innerHTML = exp; }
+      else msgTxt('no', `✘ 位置對了 ${ok} / ${items.length}，紅色的再調整。`);
+      toolLog(name, ok === items.length);
+    });
+  }
+  render();
+}
+
+// ===== 臺灣輪廓 =====
+const TW = 'M 150,28 L 186,24 L 206,46 L 216,82 L 226,122 L 231,170 L 224,232 L 212,290 L 196,340 L 182,384 L 170,420 L 152,406 L 132,372 L 118,338 L 106,300 L 95,252 L 100,200 L 110,140 L 124,90 L 138,50 Z';
+// 平原與山區的大概分界（番界示意）
+const LN = [[192,0],[178,90],[152,150],[142,220],[142,290],[150,350],[160,440]];
+function lx(y){
+  for(let i = 0; i < LN.length - 1; i++){
+    const [x1, y1] = LN[i], [x2, y2] = LN[i + 1];
+    if(y >= y1 && y <= y2) return x1 + (x2 - x1) * (y - y1) / (y2 - y1);
+  }
+  return LN[LN.length - 1][0];
+}
+function sidePts(y1, y2){ const p = [[lx(y1), y1]]; LN.forEach(q => { if(q[1] > y1 && q[1] < y2) p.push(q); }); p.push([lx(y2), y2]); return p; }
+function west(y1, y2){ return [[0, y1], ...sidePts(y1, y2), [0, y2]]; }
+function east(y1, y2){ return [[300, y1], ...sidePts(y1, y2), [300, y2]]; }
+function full(y1, y2){ return [[0, y1], [300, y1], [300, y2], [0, y2]]; }
+const ptsStr = p => p.map(q => q.map(v => v.toFixed(1)).join(',')).join(' ');
+
+// ===== 行政區劃演變地圖 =====
+const C = { a:'#fde68a', b:'#bbf7d0', c:'#bfdbfe', d:'#fbcfe8', e:'#fed7aa', f:'#ddd6fe', g:'#a5f3fc' };
+const ERAS = [
+  { y: '1684', title: '1684 年：一府三縣', units: [
+      { n: '諸羅縣', p: west(0, 250), c: C.a }, { n: '臺灣縣', p: west(250, 300), c: C.b }, { n: '鳳山縣', p: west(300, 440), c: C.c } ],
+    gray: [east(0, 440)], line: false,
+    seats: [ ['臺灣府城', 104, 284, 1], ['諸羅', 112, 240], ['鳳山', 118, 322] ],
+    info: '清朝把臺灣納入版圖，設<b>臺灣府</b>（府城在今臺南），隸屬<b>福建省</b>，下轄臺灣、鳳山、諸羅三縣。澎湖歸臺灣縣管。名義上北邊都屬諸羅縣，但官府實際管得到的主要在南部。' },
+  { y: '1723', title: '1723 年：一府四縣一廳', units: [
+      { n: '淡水廳', p: west(0, 140), c: C.d }, { n: '彰化縣', p: west(140, 205), c: C.e },
+      { n: '諸羅縣', p: west(205, 250), c: C.a }, { n: '臺灣縣', p: west(250, 300), c: C.b }, { n: '鳳山縣', p: west(300, 440), c: C.c } ],
+    gray: [east(0, 440)], line: true,
+    seats: [ ['臺灣府城', 104, 284, 1], ['淡水廳（竹塹）', 128, 108], ['彰化', 114, 180], ['諸羅', 112, 240], ['鳳山', 118, 322] ],
+    info: '<b>1721 年朱一貴事件</b>後，清廷覺得中北部太難管，<b>1723 年</b>增設<b>彰化縣</b>和<b>淡水廳</b>（澎湖也在 1727 年設廳）。同時沿山劃出<b>番界</b>（虛線），禁止漢人越界。' },
+  { y: '1812', title: '1812 年：增設噶瑪蘭廳', units: [
+      { n: '淡水廳', p: west(0, 140), c: C.d }, { n: '噶瑪蘭廳', p: east(48, 130), c: C.f }, { n: '彰化縣', p: west(140, 205), c: C.e },
+      { n: '嘉義縣', p: west(205, 250), c: C.a }, { n: '臺灣縣', p: west(250, 300), c: C.b }, { n: '鳳山縣', p: west(300, 440), c: C.c } ],
+    gray: [east(0, 48), east(130, 440)], line: true,
+    seats: [ ['臺灣府城', 104, 284, 1], ['淡水廳', 128, 108], ['噶瑪蘭', 204, 86], ['彰化', 114, 180], ['嘉義', 112, 240], ['鳳山', 118, 322] ],
+    info: '林爽文事件後，<b>1787 年諸羅縣改名嘉義縣</b>。吳沙等漢人進入蘭陽平原開墾，<b>1812 年</b>設<b>噶瑪蘭廳</b>（今宜蘭）。這時大致是「一府四縣三廳」（含澎湖廳）。' },
+  { y: '1875', title: '1875 年：二府（增設臺北府）', units: [
+      { n: '臺北府', p: full(0, 130), c: C.d }, { n: '臺灣府', p: west(130, 440), c: C.b }, { n: '臺灣府（山區、東部）', p: east(130, 440), c: '#dcfce7' } ],
+    gray: [], line: false,
+    seats: [ ['臺北府城', 162, 60, 1], ['臺灣府城', 104, 284, 1], ['新竹', 128, 108], ['宜蘭', 204, 86], ['彰化', 114, 180], ['嘉義', 112, 240], ['鳳山', 118, 322], ['恆春', 164, 400], ['卑南廳', 200, 298] ],
+    info: '<b>牡丹社事件</b>後，沈葆楨來臺，<b>1875 年</b>奏請增設<b>臺北府</b>，並增設恆春縣、卑南廳等。開山撫番以後，山區和東部也開始設治。全臺變成「二府八縣四廳」，仍隸屬福建省。' },
+  { y: '1887', title: '1885 建省 → 1887 年：三府一直隸州', units: [
+      { n: '臺北府', p: full(0, 120), c: C.d }, { n: '臺灣府', p: west(120, 230), c: C.e }, { n: '臺南府', p: west(230, 440), c: C.c },
+      { n: '臺南府', p: east(385, 440), c: C.c }, { n: '臺東直隸州', p: east(120, 385), c: C.g } ],
+    gray: [], line: false,
+    seats: [ ['臺北府', 162, 60, 1], ['臺灣府（今臺中）', 124, 166, 1], ['臺南府', 104, 284, 1], ['臺東州', 200, 298, 1] ],
+    info: '清法戰爭後，<b>1885 年臺灣建省</b>，<b>劉銘傳</b>任首任巡撫。行政區重新規劃為<b>臺北府、臺灣府（府城移到今臺中）、臺南府（原臺灣府）、臺東直隸州</b>。巡撫主要在臺北辦公。' },
+];
+let eraIdx = 0;
+function drawAdmin(){
+  const E = ERAS[eraIdx];
+  let s = rect(0, 0, 300, 440, '#e0f2fe');
+  s += `<defs><clipPath id="twcA"><path d="${TW}"/></clipPath><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#e5e7eb"/><line x1="0" y1="0" x2="0" y2="6" stroke="#cbd5e1" stroke-width="3"/></pattern></defs>`;
+  s += `<path d="${TW}" fill="#fff"/>`;
+  s += `<g clip-path="url(#twcA)">`;
+  E.gray.forEach(p => s += `<polygon points="${ptsStr(p)}" fill="url(#hatch)"/>`);
+  E.units.forEach(u => s += `<polygon points="${ptsStr(u.p)}" fill="${u.c}" stroke="#475569" stroke-width="1"/>`);
+  s += `</g>`;
+  s += `<path d="${TW}" fill="none" stroke="#334155" stroke-width="2"/>`;
+  if(E.line) s += `<polyline points="${ptsStr(LN.slice(0, 7))}" fill="none" stroke="#b91c1c" stroke-width="2.5" stroke-dasharray="6 4" clip-path="url(#twcA)"/>` + txt(147, 268, '番界', '#b91c1c', 12, 'start', 'font-weight="bold"');
+  // 澎湖
+  s += `<circle cx="56" cy="268" r="5" fill="#fff" stroke="#334155"/>` + txt(56, 288, '澎湖', '#475569', 11);
+  E.seats.forEach(([n, x, y, big]) => {
+    s += `<circle cx="${x}" cy="${y}" r="${big ? 6 : 4}" fill="${big ? '#b91c1c' : '#1f2937'}" stroke="#fff" stroke-width="1.5"/>`;
+    const right = x > 170;
+    s += txt(x + (right ? -9 : 9), y + 4, n, '#111827', big ? 12 : 11, right ? 'end' : 'start', big ? 'font-weight="bold"' : '');
+  });
+  if(E.gray.length) s += txt(190, 196, '未設治', '#475569', 11, 'middle', 'font-weight="bold"') + txt(190, 210, '原住民', '#475569', 10) + txt(190, 223, '生活領域', '#475569', 10);
+  s += txt(150, 434, E.title, '#1e3a8a', 13, 'middle', 'font-weight="bold"');
+  document.getElementById('svgAdmin').innerHTML = svg(300, 440, s);
+  document.getElementById('adminInfo').innerHTML = `<b>${E.title}</b><br>${E.info}`;
+  const seen = {};
+  document.getElementById('adminLegend').innerHTML = E.units.filter(u => !seen[u.n] && (seen[u.n] = 1)).map(u => `<span><i style="background:${u.c}"></i>${u.n}</span>`).join('') + (E.gray.length ? '<span><i style="background:#e5e7eb"></i>未設治</span>' : '');
+  document.querySelectorAll('#yrBtns button').forEach((b, i) => b.classList.toggle('on', i === eraIdx));
+}
+document.getElementById('yrBtns').innerHTML = ERAS.map((e, i) => `<button class="ghost" data-i="${i}">${e.y}</button>`).join('');
+document.querySelectorAll('#yrBtns button').forEach(b => b.addEventListener('click', () => { eraIdx = +b.dataset.i; drawAdmin(); if(eraIdx === ERAS.length - 1) toolLog('行政區劃演變', true); }));
+drawAdmin();
+
+// ---- 政策配對 ----
+dndGame({ box: 'dndPolicy', name: '清初政策配對', poolLabel: '內容與目的',
+  items: [
+    { id: 'a1', label: '要先申請許可才能來臺' }, { id: 'a2', label: '不准攜帶家眷' }, { id: 'a3', label: '怕來臺漢人太多、難控制' },
+    { id: 'b1', label: '從福建調兵來臺駐守' }, { id: 'b2', label: '約三年輪換一次' }, { id: 'b3', label: '怕軍隊和地方勢力結合' },
+    { id: 'c1', label: '挖溝堆土，形成土牛溝' }, { id: 'c2', label: '禁止漢人越界開墾' }, { id: 'c3', label: '減少漢人與原住民衝突' },
+  ],
+  zones: [
+    { id: 'du', label: '渡臺限制', accepts: ['a1', 'a2', 'a3'] },
+    { id: 'ban', label: '班兵制度', accepts: ['b1', 'b2', 'b3'] },
+    { id: 'jie', label: '劃界封山', accepts: ['c1', 'c2', 'c3'] },
+  ],
+  hint: '提示：每一區都有「做法」和「目的」。' });
+
+// ---- 情境（3-1）----
+scenario('scnS1', [
+  { who: '📜 1683 年，你是康熙皇帝身邊的大臣', ctx: '鄭氏政權剛投降。有人說臺灣是「海外孤島，留著浪費錢」，主張把人遷回大陸、放棄臺灣。你會建議皇帝怎麼做？',
+    opts: [
+      { t: '放棄臺灣，省錢省事', fb: '省錢是真的，但臺灣空出來，外國或海盜可能占據，反而威脅沿海。' },
+      { t: '保留臺灣，當作東南沿海的屏障，但嚴格管理、防止再有人反清', fb: '這和施琅的主張很接近，也最接近清朝後來的做法。', best: true },
+      { t: '保留臺灣，並馬上大力修路、建學校', fb: '當時清廷最在意的是「別再出事」，還沒有積極建設的打算，這要等到將近兩百年後。' },
+    ],
+    real: '施琅上奏說明臺灣的重要性，康熙接受，1684 年設一府三縣。但清廷對臺灣仍不放心，所以接著實施渡臺限制、班兵、劃界封山等防範政策。' },
+]);
+
+// ===== 港口地圖 =====
+const PORTS = {
+  before: [
+    { n: '一府：臺灣府城', x: 104, y: 284, c: '#b91c1c', t: '今<b>臺南</b>。清代臺灣的政治、經濟中心，最早繁榮。出入港口是<b>鹿耳門</b>，和廈門對渡。府城的郊商組成「三郊」。' },
+    { n: '二鹿：鹿港', x: 106, y: 192, c: '#b91c1c', t: '今<b>彰化縣鹿港鎮</b>。中部米、糖的集散地，和福建的蚶江對渡，曾經非常熱鬧。' },
+    { n: '三艋舺', x: 160, y: 62, c: '#b91c1c', t: '今<b>臺北萬華</b>。位在淡水河邊，船可以開進來，是北部的貨物集散地。' },
+  ],
+  after: [
+    { n: '淡水', x: 150, y: 44, c: '#1d4ed8', t: '北部最重要的通商港口，<b>茶</b>和<b>樟腦</b>大多從這裡出口。洋行聚集，馬偕也在淡水傳教、行醫。' },
+    { n: '雞籠（基隆）', x: 190, y: 36, c: '#1d4ed8', t: '淡水的附屬港口。附近產<b>煤</b>，可以補給輪船。清法戰爭時被法軍攻擊。' },
+    { n: '安平（臺灣府）', x: 102, y: 288, c: '#1d4ed8', t: '府城旁的港口。南部的<b>糖</b>從這裡出口。沈葆楨在這裡建<b>億載金城</b>。' },
+    { n: '打狗（高雄）', x: 117, y: 330, c: '#1d4ed8', t: '安平的附屬港口，港灣條件好，<b>糖</b>的重要出口港。' },
+  ],
+  goods: [ ['🍵 茶', 150, 92], ['🌳 樟腦', 168, 150], ['🍬 糖', 106, 258] ],
+};
+let portMode = 'before';
+function drawPort(){
+  let s = rect(0, 0, 300, 440, '#e0f2fe');
+  s += `<path d="${TW}" fill="#fef3c7" stroke="#a16207" stroke-width="2"/>`;
+  if(portMode === 'after'){
+    s += `<ellipse cx="148" cy="92" rx="34" ry="24" fill="#86efac" opacity=".6"/><ellipse cx="170" cy="155" rx="22" ry="40" fill="#a7f3d0" opacity=".6"/><ellipse cx="108" cy="290" rx="18" ry="50" fill="#fecaca" opacity=".6"/>`;
+    PORTS.goods.forEach(([n, x, y]) => s += txt(x, y + 4, n, '#065f46', 12, 'middle', 'font-weight="bold"'));
+  }
+  PORTS[portMode].forEach((p, i) => {
+    s += `<g class="spot" data-i="${i}"><circle cx="${p.x}" cy="${p.y}" r="7" fill="${p.c}" stroke="#fff" stroke-width="2"/>`;
+    const right = p.x > 150;
+    s += txt(p.x + (right ? 10 : -10), p.y + 4, p.n, '#111827', 11, right ? 'start' : 'end', 'font-weight="bold"') + '</g>';
+  });
+  s += txt(150, 434, portMode === 'before' ? '開港前：三大港市' : '開港後：四個通商港口', '#1e3a8a', 13, 'middle', 'font-weight="bold"');
+  document.getElementById('svgPort').innerHTML = svg(300, 440, s);
+  document.querySelectorAll('#svgPort .spot').forEach(g => g.addEventListener('click', () => {
+    const p = PORTS[portMode][+g.dataset.i];
+    document.getElementById('portInfo').innerHTML = `<b>${p.n}</b><br>${p.t}`;
+  }));
+}
+document.querySelectorAll('#portBtns button').forEach(b => b.addEventListener('click', () => {
+  portMode = b.dataset.m;
+  document.querySelectorAll('#portBtns button').forEach(x => x.classList.toggle('on', x === b));
+  document.getElementById('portInfo').innerHTML = portMode === 'before' ? '👆 開港前最熱鬧的三個港市，由南到北：府城、鹿港、艋舺。點點看。' : '👆 開港後的四個港口：北部淡水、雞籠，南部安平、打狗。點點看。';
+  drawPort(); toolLog('港口地圖', true);
+}));
+drawPort();
+
+// ---- 三大出口品配對 ----
+dndGame({ box: 'dndGoods', name: '三大出口品配對', poolLabel: '產地與特色',
+  items: [
+    { id: 'g1', label: '北部丘陵' }, { id: 'g2', label: '大量銷往美國' }, { id: 'g3', label: '陶德、李春生推廣' }, { id: 'g4', label: '後來出口值最高' },
+    { id: 's1', label: '南部平原' }, { id: 's2', label: '用甘蔗製成' }, { id: 's3', label: '多從安平、打狗出口' },
+    { id: 'z1', label: '中北部山區' }, { id: 'z2', label: '賽璐珞、無煙火藥的原料' }, { id: 'z3', label: '採集時常和原住民衝突' },
+  ],
+  zones: [
+    { id: 'tea', label: '🍵 茶', accepts: ['g1', 'g2', 'g3', 'g4'] },
+    { id: 'sugar', label: '🍬 糖', accepts: ['s1', 's2', 's3'] },
+    { id: 'cam', label: '🌳 樟腦', accepts: ['z1', 'z2', 'z3'] },
+  ],
+  hint: '口訣：北茶南糖，樟腦在山區。' });
+
+// ---- 因果鏈排序 ----
+orderGame('ordChain', '因果鏈排序', [
+  { id: 'e1', label: '琉球船漂到八瑤灣，船員遇害（八瑤灣事件）' },
+  { id: 'e2', label: '日本以此為藉口出兵臺灣南部（牡丹社事件）' },
+  { id: 'e3', label: '清廷派沈葆楨來臺處理' },
+  { id: 'e4', label: '沈葆楨開山撫番、解除渡臺禁令、增設臺北府' },
+  { id: 'e5', label: '清法戰爭，法軍攻基隆、淡水，占澎湖' },
+  { id: 'e6', label: '臺灣建省，劉銘傳任首任巡撫' },
+  { id: 'e7', label: '劉銘傳興建鐵路、架電報、辦郵政' },
+], '<b>因果說明：</b>1871 八瑤灣事件 → 給了日本出兵的藉口 → 1874 牡丹社事件 → 清廷驚覺臺灣可能被奪，派沈葆楨來臺 → 1875 前後推動積極治臺 → 1884～1885 清法戰爭再次證明臺灣地位重要 → 1885 建省 → 劉銘傳新政。');
+
+// ---- 情境（3-3）----
+scenario('scnS3', [
+  { who: '🧑‍💼 1874 年，你是沈葆楨', ctx: '日本出兵臺灣南部，還說臺灣東部和山區「不是清朝管的地方」。日軍退兵後，你要怎麼避免這種事再發生？',
+    opts: [
+      { t: '維持封山政策，山區和東部繼續不准漢人進入', fb: '這樣外國就更有理由說清朝根本沒有管理那些地方。' },
+      { t: '開路通往東部、招撫原住民，並解除渡臺和入山的禁令', fb: '這就是「開山撫番」，用實際的管理證明主權。', best: true },
+      { t: '把南部的漢人全部遷走，避免再起衝突', fb: '這會讓臺灣更空虛，也不符合當時需要加強經營的方向。' },
+    ],
+    real: '沈葆楨推動開山撫番，開闢北、中、南三條通往東部的道路；1875 年解除渡臺禁令；也在安平建億載金城加強海防。不過開山撫番對原住民來說，也常伴隨武力衝突和生活領域的流失。' },
+  { who: '🧑‍💼 1875 年，你是沈葆楨', ctx: '北部因為開港和茶、樟腦貿易越來越繁榮，可是全臺只有一個府，府城遠在南部的臺南。你會怎麼做？',
+    opts: [
+      { t: '在北部增設一個府，就近管理', fb: '北部人口和經濟都在成長，就近管理最有效率。', best: true },
+      { t: '維持原狀，北部的事都送到臺南處理', fb: '路途遙遠，公文和處理速度都會很慢。' },
+      { t: '把府城從臺南搬到澎湖', fb: '澎湖離北部更遠，也不是經濟重心。' },
+    ],
+    real: '沈葆楨奏請增設臺北府，全臺變成兩個府。這也反映了開港後「經濟重心北移」。' },
+  { who: '🧑‍💼 1885 年，你是首任臺灣巡撫劉銘傳', ctx: '清法戰爭剛結束，你發現臺灣消息傳遞很慢、交通不便、政府稅收也不夠。你最先想做哪一組建設？',
+    opts: [
+      { t: '鐵路、電報、郵政，並清查土地增加稅收', fb: '交通、通訊、財政一起改善，這正是劉銘傳的新政方向。', best: true },
+      { t: '恢復班兵制度和渡臺限制，避免人民作亂', fb: '這是清初的消極政策，跟建省後想加強臺灣的方向相反。' },
+      { t: '只蓋更多廟宇，安定民心', fb: '民心很重要，但無法解決交通、通訊、海防和財政的問題。' },
+    ],
+    real: '劉銘傳興建基隆到臺北的鐵路（後來延長到新竹）、架設電報與海底電纜、開辦新式郵政、推動清賦、設立西學堂等。不過清賦造成部分民眾不滿，建設經費也很龐大。' },
+]);
+
+// ---- 消極 vs 積極 ----
+dndGame({ box: 'dndPolicyEra', name: '消極積極分類', poolLabel: '清朝的政策',
+  items: [
+    { id: 'p1', label: '渡臺限制' }, { id: 'p2', label: '班兵制度' }, { id: 'p3', label: '劃界封山' }, { id: 'p4', label: '番界土牛溝' },
+    { id: 'q1', label: '開山撫番' }, { id: 'q2', label: '解除渡臺禁令' }, { id: 'q3', label: '建億載金城' }, { id: 'q4', label: '臺灣建省' },
+    { id: 'q5', label: '興建鐵路' }, { id: 'q6', label: '架設電報' }, { id: 'q7', label: '清賦' },
+  ],
+  zones: [
+    { id: 'pas', label: '前期・消極（防臺）', accepts: ['p1', 'p2', 'p3', 'p4'] },
+    { id: 'act', label: '後期・積極（保臺）', accepts: ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7'] },
+  ] });
+
+// ---- 翻翻卡 ----
+const FLIP = [
+  ['1684 年設了什麼？', '臺灣府＋臺灣、鳳山、諸羅三縣，隸屬福建省'], ['清初三項防範政策', '渡臺限制、班兵制度、劃界封山'], ['土牛溝是什麼？', '漢人與原住民區域之間的界線（番界）'],
+  ['1723 年增設？', '彰化縣、淡水廳（朱一貴事件後）'], ['1812 年增設？', '噶瑪蘭廳（今宜蘭）'], ['一府二鹿三艋舺', '臺南府城、鹿港、艋舺（萬華）'],
+  ['郊商是什麼？', '經營兩岸貿易的商人團體'], ['開港四港', '淡水、雞籠、安平、打狗'], ['三大出口品', '茶（北）、糖（南）、樟腦（山區）'],
+  ['買辦是什麼？', '洋行雇用的本地人，例：李春生'], ['積極治臺的轉捩點', '1874 年牡丹社事件'], ['沈葆楨四件事', '開山撫番、解除渡臺禁令、億載金城、增設臺北府'],
+  ['臺灣何時建省？', '1885 年，清法戰爭後'], ['首任臺灣巡撫', '劉銘傳'], ['劉銘傳新政', '鐵路、電報、郵政、清賦、新式學堂'],
+];
+const grid = document.getElementById('flipGrid');
+grid.innerHTML = FLIP.map(([q, a]) => `<div class="flip"><div class="inner"><div class="face front">${q}</div><div class="face back">${a}</div></div></div>`).join('');
+grid.querySelectorAll('.flip').forEach(f => f.addEventListener('click', () => f.classList.toggle('on')));
+document.getElementById('flipReset').addEventListener('click', () => grid.querySelectorAll('.flip').forEach(f => f.classList.remove('on')));
+</script>
+</body>
+</html>

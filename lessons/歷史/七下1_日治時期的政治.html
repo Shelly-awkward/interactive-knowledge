@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日治時期的政治｜臺灣的歷史（下）第1章</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#7f1d1d; --accent-soft:#fef3c7;
+    --st-a:#b91c1c; --st-b:#2563eb; --st-c:#7c3aed;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#7f1d1d,#b45309); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .card p{margin:6px 0;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.02rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .term{background:#f3f4f6; border-radius:6px; padding:0 5px; font-size:.88rem; color:#374151;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+  table.pv td.l{text-align:left;}
+
+  details.example{border:1px solid var(--border); border-radius:10px; margin:10px 0; overflow:hidden;}
+  details.example summary{cursor:pointer; padding:12px 16px; background:#f9fafb; font-weight:bold; list-style:none;}
+  details.example summary::-webkit-details-marker{display:none;}
+  details.example summary::before{content:"▸ "; color:var(--blue);}
+  details.example[open] summary::before{content:"▾ ";}
+  details.example .body{padding:12px 18px; border-top:1px solid var(--border);}
+  .step{margin:4px 0; padding-left:1.4em; text-indent:-1.4em;}
+  .step b{color:var(--blue);}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row,.row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool button,.btn{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost,.btn.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} .card{padding:16px 14px;} .tool{padding:12px 10px;} }
+
+  .dnd-pool,.dnd-zone{border:2px dashed var(--border); border-radius:12px; padding:10px 12px; min-height:64px; margin:8px 0; background:#fff; transition:.15s;}
+  .dnd-pool{background:#f9fafb;}
+  .dnd-zone.over,.dnd-pool.over{border-color:var(--blue); background:#eff6ff;}
+  .dnd-zones{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px;}
+  .dnd-zone-title{font-weight:bold; margin-bottom:6px; color:var(--accent);}
+  .dnd-card{display:inline-block; background:#fff; border:1.5px solid var(--border); border-radius:99px; padding:6px 14px; margin:4px 6px 4px 0;
+    cursor:grab; user-select:none; touch-action:none; font-size:.95rem; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .1s;}
+  .dnd-card:hover{border-color:var(--blue);}
+  .dnd-card.sel{border-color:var(--blue); background:#dbeafe; transform:scale(1.04);}
+  .dnd-card.drag{position:fixed; z-index:99; pointer-events:none; opacity:.9; transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.2);}
+  .dnd-card.ok{border-color:var(--green); background:var(--green-soft);}
+  .dnd-card.no{border-color:var(--red); background:var(--red-soft);}
+  .dnd-bar{margin-top:8px;}
+  .dnd-bar button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem; margin-right:6px;}
+  .dnd-bar button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .dnd-msg{font-weight:bold; margin-left:8px;}
+  .dnd-msg.ok{color:#166534;} .dnd-msg.no{color:#991b1b;}
+  .dnd-hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; min-height:2.4em;}
+
+  .flip-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px;}
+  .flip{perspective:800px; cursor:pointer; height:124px;}
+  .flip .inner{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+  .flip.on .inner{transform:rotateY(180deg);}
+  .flip .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:12px; padding:10px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:.92rem; line-height:1.5;}
+  .flip .front{background:#fff; border:2px solid var(--accent); color:var(--accent); font-weight:bold;}
+  .flip .back{background:var(--accent); color:#fff; transform:rotateY(180deg);}
+
+  /* 三階段時間軸 */
+  .st-tag{display:inline-block; border-radius:99px; padding:1px 10px; font-size:.82rem; color:#fff; margin-right:4px;}
+  .st-a{background:var(--st-a);} .st-b{background:var(--st-b);} .st-c{background:var(--st-c);}
+  .tl-bar{display:flex; border-radius:10px; overflow:hidden; margin:8px 0 2px; box-shadow:0 1px 3px rgba(0,0,0,.12);}
+  .tl-seg{color:#fff; border:none; font-family:inherit; cursor:pointer; padding:10px 4px; font-size:.85rem; line-height:1.35; text-align:center; transition:.15s;}
+  .tl-seg:hover,.tl-seg.on{filter:brightness(1.15);}
+  .tl-seg.on{box-shadow:inset 0 -4px 0 #fde68a;}
+  .tl-seg small{display:block; opacity:.9; font-size:.75rem;}
+  .tl-years{display:flex; justify-content:space-between; font-size:.75rem; color:var(--sub); margin-bottom:8px;}
+  .tl-list{display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;}
+  .tl-ev{background:#fff; border:1px solid var(--border); border-left:5px solid; border-radius:8px; padding:4px 10px; font-size:.86rem; cursor:pointer; font-family:inherit; color:var(--ink); text-align:left;}
+  .tl-ev:hover{background:#f9fafb;}
+  .tl-ev.on{background:#fef9c3;}
+  .tl-ev b{font-family:"Courier New",monospace;}
+
+  /* 排序題 */
+  .ord-pool,.ord-ans{border:2px dashed var(--border); border-radius:12px; padding:8px 10px; min-height:56px; margin:8px 0; background:#fff;}
+  .ord-pool{background:#f9fafb;}
+  .ord-item{display:block; width:100%; text-align:left; background:#fff; border:1.5px solid var(--border); border-radius:10px; padding:7px 12px; margin:5px 0; cursor:pointer; font-family:inherit; font-size:.93rem; color:var(--ink);}
+  .ord-item:hover{border-color:var(--blue);}
+  .ord-item .n{display:inline-block; min-width:1.6em; font-weight:bold; color:var(--blue);}
+  .ord-item.ok{border-color:var(--green); background:var(--green-soft);}
+  .ord-item.no{border-color:var(--red); background:var(--red-soft);}
+  .ord-label{font-weight:bold; font-size:.88rem; color:var(--sub);}
+
+  /* 地圖 */
+  .mapwrap{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;}
+  .mapwrap .svgbox{margin:0; flex:1 1 260px; max-width:320px;}
+  .mapwrap .side{flex:1 1 220px;}
+  .site{cursor:pointer;} .site:hover circle{stroke-width:4;}
+  .site.hit circle{animation:pulse .6s ease 2;}
+  @keyframes pulse{0%{r:7} 50%{r:13} 100%{r:7}}
+  .lg{display:inline-block; width:10px; height:10px; border-radius:50%; margin:0 3px 0 8px; vertical-align:middle;}
+
+  /* 情境選擇 */
+  .scn{border:1px solid var(--border); border-radius:12px; padding:14px 16px; margin:12px 0; background:#fff;}
+  .scn .who{font-size:.8rem; color:var(--sub);}
+  .scn .sit{font-weight:bold; margin:4px 0 8px;}
+  .scn .opt{display:block; width:100%; text-align:left; background:#f9fafb; border:1.5px solid var(--border); border-radius:10px; padding:8px 12px; margin:6px 0; cursor:pointer; font-family:inherit; font-size:.93rem; color:var(--ink);}
+  .scn .opt:hover{border-color:var(--blue);}
+  .scn .opt.pick{border-color:var(--blue); background:#dbeafe;}
+  .scn .opt[disabled]{cursor:default;}
+  .scn .res{display:none; margin-top:8px; padding:10px 13px; border-radius:8px; background:var(--amber-soft); font-size:.92rem;}
+  .scn .res.show{display:block;}
+  .scn-prog{font-size:.85rem; color:var(--sub);}
+  .pw-box{cursor:pointer;} .pw-box:hover rect{filter:brightness(1.08);}
+  .pw-box.on rect{stroke:#facc15; stroke-width:4;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 臺灣的歷史（下） · 第1章</span>
+  <h1>日治時期的政治</h1>
+  <p>1895 年到 1945 年，臺灣由日本統治了 50 年。這一章看五件事：臺灣怎麼換了統治者、日本怎麼管臺灣、有人拿起武器反抗、有人改用文字和請願爭取權利，以及戰爭時期的「皇民化」。用時間軸、地圖、排序、拖曳和情境選擇把它們串起來。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1 改朝換代</button>
+  <button data-t="s2">2 統治機制</button>
+  <button data-t="s3">3 武裝抗日</button>
+  <button data-t="s4">4 政治社會運動</button>
+  <button data-t="s5">5 皇民化運動</button>
+  <button data-t="s6">🏁 單元總測驗</button>
+</nav>
+
+<!-- ═══════════ 1-1 改朝換代 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>說得出甲午戰爭、馬關條約和臺灣割讓給日本的關係</li>
+      <li>知道臺灣民主國與乙未戰爭的經過</li>
+      <li>分得清日本統治的三個階段：前期武官總督、中期文官總督、後期再任武官總督</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：一場戰爭，換了統治者</h2>
+    <p><b>1894 年</b>，清朝和日本為了爭奪對朝鮮的影響力，爆發<b>甲午戰爭</b>。清朝戰敗。</p>
+    <p><b>1895 年</b>，雙方簽訂<b>馬關條約</b>，清朝把<b>臺灣、澎湖</b>割讓給日本。<span class="term">割讓</span>就是把土地讓給別的國家。</p>
+    <div class="formula">甲午戰爭（1894）清朝戰敗 → 馬關條約（1895）割讓臺灣、澎湖 → 日本統治臺灣 50 年（1895～1945）</div>
+    <div class="note">💡 馬關條約原本也割讓遼東半島，但俄、德、法三國出面干涉，日本後來把遼東半島還給清朝。臺灣、澎湖則沒有改變。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：臺灣民主國與乙未戰爭</h2>
+    <p>割讓的消息傳來，臺灣官民非常震驚。1895 年 5 月，部分官紳成立<b>臺灣民主國</b>，推舉當時的臺灣巡撫<b>唐景崧</b>當總統，想抵抗日本接收，並爭取外國幫忙。</p>
+    <ul>
+      <li>日軍從東北角的<b>澳底</b>登陸，很快往臺北推進；唐景崧離開臺灣回到中國大陸。</li>
+      <li>南部由<b>劉永福</b>在臺南繼續領導抵抗。各地也有民間組成的義軍（例如新竹、苗栗一帶的客家義軍），在新竹、彰化<b>八卦山</b>等地激烈作戰。</li>
+      <li>同年 10 月，劉永福離開臺灣，日軍進入臺南。</li>
+    </ul>
+    <p>1895 年（乙未年）日軍接收臺灣時與臺灣軍民的這一連串戰爭，稱為<b>乙未戰爭</b>。</p>
+    <div class="note">💡 臺灣民主國存在的時間很短，外國也沒有出兵幫忙。但它和各地義軍的抵抗，讓日本花了好幾個月、付出不小代價才控制全臺。雙方死傷人數，各種統計說法不一。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 排序題：1894～1895 發生了什麼？</h2>
+    <p>依照<b>發生先後</b>，從上面的卡片區一張一張點下去（點錯了，再點一下答案區的卡片可以退回）。</p>
+    <div id="ordWar"></div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：日本統治的三個階段</h2>
+    <p>日本派到臺灣的最高長官叫<b>臺灣總督</b>。依照總督的身分和政策，大致分成三期：</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>階段</th><th>總督身分</th><th>主要政策</th><th>重點</th></tr>
+        <tr><td class="name"><span class="st-tag st-a">前期</span><br>1895～1919</td><td>武官（軍人）</td><td class="l">綏撫與鎮壓並用</td><td class="l">六三法；兒玉源太郎與後藤新平</td></tr>
+        <tr><td class="name"><span class="st-tag st-b">中期</span><br>1919～1937</td><td>文官</td><td class="l">同化政策（內地延長主義）</td><td class="l">首任文官總督田健治郎；日臺共學</td></tr>
+        <tr><td class="name"><span class="st-tag st-c">後期</span><br>1937～1945</td><td>再任武官</td><td class="l">皇民化運動</td><td class="l">中日戰爭、太平洋戰爭的戰時體制</td></tr>
+      </table>
+    </div>
+    <h3><span class="st-tag st-a">前期</span> 武官總督：先求「控制住」</h3>
+    <ul>
+      <li><b>綏撫與鎮壓</b>：<span class="term">綏撫</span>是安撫、招降；<span class="term">鎮壓</span>是用武力和嚴刑對付反抗者。兩手並用。</li>
+      <li><b>六三法</b>（1896）：日本帝國議會通過的法律，讓臺灣總督可以發布和法律效力一樣的命令（叫「律令」），這叫<b>委任立法權</b>。總督因此權力很大。</li>
+      <li>第 4 任總督<b>兒玉源太郎</b>和他的民政長官<b>後藤新平</b>：一方面招降、一方面嚴厲鎮壓反抗者；同時做戶口調查、土地調查、舊慣調查，建立警察與保甲制度，打下統治基礎。</li>
+    </ul>
+    <h3><span class="st-tag st-b">中期</span> 文官總督：想把臺灣人「變成日本人」</h3>
+    <ul>
+      <li>第一次世界大戰後，世界流行民族自決、民主思潮。日本國內政黨政治興起，<b>1919 年</b>起改派文官當總督（第一位是<b>田健治郎</b>）。</li>
+      <li>推行<b>同化政策</b>，也叫<b>內地延長主義</b>：<span class="term">內地</span>指日本本土，意思是把日本本土的制度「延長」到臺灣，讓臺灣人逐漸同化成日本人。例如 1922 年起中等以上學校開放日本人、臺灣人一起就讀（日臺共學）。</li>
+    </ul>
+    <h3><span class="st-tag st-c">後期</span> 再任武官總督：戰爭需要人力物力</h3>
+    <ul>
+      <li>1930 年代日本對外擴張，1936 年起再度改派武官總督；<b>1937 年</b>中日戰爭爆發後，推動<b>皇民化運動</b>，要臺灣人成為效忠天皇的「皇國臣民」，並動員臺灣支援戰爭。</li>
+    </ul>
+    <div class="note">💡 分期的年代，各版本課本可能差一兩年（例如後期有的從 1936 年武官總督小林躋造上任算起，有的從 1937 年中日戰爭算起）。記住「武官 → 文官 → 武官」和三種政策最重要。</div>
+  </div>
+
+  <div class="card">
+    <h2>🕰️ 可點時間軸：日治 50 年</h2>
+    <p>點上面的色塊看每一期的特色，點下面的事件看說明。三種顏色＝三個階段。</p>
+    <div class="tool">
+      <div class="tl-bar" id="tlBar"></div>
+      <div class="tl-years"><span>1895</span><span>1919</span><span>1937</span><span>1945</span></div>
+      <div class="tl-list" id="tlList"></div>
+      <div class="infobox" id="tlInfo">👆 點一個色塊或事件。</div>
+      <div class="row" style="margin-top:10px"><button id="tlQuiz">考考你：這件事在哪一期？</button><button id="tlShow" class="ghost">回到探索</button></div>
+      <div class="hint">考考你模式會把年份藏起來，請點上面正確的色塊。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜為什麼 1919 年日本會改派文官當總督？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 臺灣大規模的武裝抗日到 1915 年西來庵事件後漸漸結束，比較不需要軍人掌權。</p>
+        <p class="step"><b>②</b> 一次大戰後世界流行民族自決、民主思潮，日本國內也出現政黨政治。</p>
+        <p class="step"><b>③</b> 所以改用文官，政策從「鎮壓」轉向「同化」。</p>
+      </div>
+    </details>
+    <details class="example"><summary>例 2｜「六三法」為什麼讓總督權力特別大？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 一般國家，法律要由議會制定。</p>
+        <p class="step"><b>②</b> 六三法讓總督自己發布的命令（律令）就有法律效力，不必經過議會，等於總督可以「自己訂法律」。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">1. 臺灣割讓給日本，是依據哪一個條約？</div>
+      <label><input type="radio" name="p1q1" value="A">南京條約</label>
+      <label><input type="radio" name="p1q1" value="B">天津條約</label>
+      <label><input type="radio" name="p1q1" value="C">馬關條約</label>
+      <label><input type="radio" name="p1q1" value="D">北京條約</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1894 甲午戰爭清朝戰敗，1895 年簽馬關條約，割讓臺灣、澎湖。">　</div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">2. 1895 年臺灣民主國成立時，被推為總統的是：</div>
+      <label><input type="radio" name="p1q2" value="A">唐景崧</label>
+      <label><input type="radio" name="p1q2" value="B">劉永福</label>
+      <label><input type="radio" name="p1q2" value="C">後藤新平</label>
+      <label><input type="radio" name="p1q2" value="D">林獻堂</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　唐景崧是當時的臺灣巡撫；劉永福則在臺南繼續抵抗。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">3. 日本統治中期（1919 年起）的總督身分與主要政策是：</div>
+      <label><input type="radio" name="p1q3" value="A">武官；皇民化運動</label>
+      <label><input type="radio" name="p1q3" value="B">武官；綏撫與鎮壓</label>
+      <label><input type="radio" name="p1q3" value="C">文官；皇民化運動</label>
+      <label><input type="radio" name="p1q3" value="D">文官；同化政策（內地延長主義）</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　武官（鎮壓）→ 文官（同化）→ 武官（皇民化）。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-2 統治機制 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道臺灣總督府掌握行政、立法、司法、軍事大權</li>
+      <li>說得出警察制度和保甲制度怎麼幫日本控制地方</li>
+      <li>舉得出日本人和臺灣人之間的差別待遇</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：臺灣總督府——「一人四權」</h2>
+    <p>日本在臺北設立<b>臺灣總督府</b>，是統治臺灣的最高機關。總督手上的權力集中，常被形容為「一人四權」。點圖上的四個方塊看看：</p>
+    <div class="tool">
+      <div class="svgbox" id="svgPower"></div>
+      <div class="infobox" id="pwInfo">👆 點「行政」「立法」「司法」「軍事」任一個方塊。</div>
+    </div>
+    <div class="note">💡 現代民主國家講「權力分立」：立法、行政、司法分給不同機關，互相監督。日治初期的總督剛好相反，權力集中在一個人身上，所以臺灣人很難對抗不公平的命令。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：警察——什麼都管</h2>
+    <p>日本在臺灣各地設立<b>警察派出所</b>，警察人數多、分布密。警察的工作不只抓壞人，還包括：</p>
+    <ul>
+      <li>調查戶口、監督衛生（例如防疫、清潔檢查）</li>
+      <li>協助收稅、推廣農業、督促孩子上學</li>
+      <li>在原住民地區，警察甚至兼任老師、管理交易</li>
+    </ul>
+    <p>因為權力很大，臺灣人常稱警察為「<b>大人</b>」。警察成了日本控制基層社會最重要的力量。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：保甲——大家互相看著</h2>
+    <p>日本沿用清代就有的<b>保甲</b>組織，1898 年訂定保甲條例，把它和警察結合：</p>
+    <div class="formula">10 戶為 1 甲，10 甲為 1 保。保甲要協助警察調查戶口、防盜、修路等。</div>
+    <p>最重要的特色是<b>連坐</b>：<span class="term">連坐</span>就是一個人犯罪，同甲的其他人家也要一起負責、受罰。這讓大家互相監視，日本就能用少數人力管住整個社會。</p>
+    <div class="note">💡 保甲制度只針對臺灣人，在臺的日本人不編入保甲。這本身也是一種差別待遇。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：差別待遇</h2>
+    <p>雖然臺灣人在法律上也是日本帝國的人民，但在很多方面待遇和日本人不同：</p>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>方面</th><th>在臺日本人</th><th>臺灣人</th></tr>
+        <tr><td class="name">初等教育</td><td>多讀「小學校」</td><td>多讀「公學校」</td></tr>
+        <tr><td class="name">升學</td><td>中高等學校名額多</td><td>名額少、競爭激烈</td></tr>
+        <tr><td class="name">做官與薪水</td><td>高級官員多是日本人，還有額外「加俸」</td><td>很少當上高級官員</td></tr>
+        <tr><td class="name">地方控制</td><td>不編入保甲</td><td>編入保甲、負連坐責任</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：這是誰的待遇？</h2>
+    <p>把卡片拖到「在臺日本人」或「臺灣人」。（手機上也可以先點卡片，再點要放的區域。）</p>
+    <div id="dndTreat"></div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 例題</h2>
+    <details class="example"><summary>例 1｜日本只派少數官員，為什麼管得住全臺灣？</summary>
+      <div class="body">
+        <p class="step"><b>①</b> 總督握有大權，可以自己發布律令。</p>
+        <p class="step"><b>②</b> 警察派出所遍布各地，從戶口到衛生什麼都管。</p>
+        <p class="step"><b>③</b> 保甲讓臺灣人互相監視、連坐負責，等於讓臺灣人協助管理自己。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">1. 保甲制度中，「一家犯罪，同甲其他人家也要負責」稱為：</div>
+      <label><input type="radio" name="p2q1" value="A">委任立法</label>
+      <label><input type="radio" name="p2q1" value="B">連坐</label>
+      <label><input type="radio" name="p2q1" value="C">同化</label>
+      <label><input type="radio" name="p2q1" value="D">綏撫</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　連坐讓大家互相監視。">　</div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">2. 下列哪一項<b>不是</b>日治時期警察的工作？</div>
+      <label><input type="radio" name="p2q2" value="A">調查戶口</label>
+      <label><input type="radio" name="p2q2" value="B">監督衛生</label>
+      <label><input type="radio" name="p2q2" value="C">由人民選舉產生、監督總督</label>
+      <label><input type="radio" name="p2q2" value="D">協助收稅</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　警察是總督府派的，替政府控制地方，不是人民選出來監督政府的。">　</div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">3. 日治初期臺灣總督被形容「一人四權」，四權是：</div>
+      <label><input type="radio" name="p2q3" value="A">行政、立法、司法、軍事</label>
+      <label><input type="radio" name="p2q3" value="B">教育、宗教、經濟、外交</label>
+      <label><input type="radio" name="p2q3" value="C">選舉、罷免、創制、複決</label>
+      <label><input type="radio" name="p2q3" value="D">農業、工業、商業、漁業</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　總督集行政、立法（律令）、司法、軍事大權於一身。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-3 武裝抗日 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道日治前期的游擊抗日，以及大約何時被平定</li>
+      <li>說得出北埔事件、西來庵事件的時間、地點和意義</li>
+      <li>說得出霧社事件的原因、經過與影響</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：前期的游擊抗日（約 1895～1902）</h2>
+    <p>乙未戰爭結束後，各地仍有人以山區為據點，用<span class="term">游擊</span>（打了就跑、不正面決戰）的方式對抗日本。有名的領袖有北部的<b>簡大獅</b>、中部的<b>柯鐵</b>、南部的<b>林少貓</b>。</p>
+    <p>總督府用「招降」和「鎮壓」兩手策略對付，到 <b>1902 年</b>林少貓被殺前後，這一波游擊抗日大致被平定。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：零星的武裝事件</h2>
+    <ul>
+      <li><b>北埔事件（1907）</b>：發生在新竹北埔，由蔡清琳號召，參加者有漢人，也有在當地擔任隘勇的賽夏族人。<span class="term">隘勇</span>是守衛山區邊界的人員。</li>
+      <li><b>苗栗事件（1913）</b>：以羅福星為代表，計畫起事前就被發現，許多人被捕。</li>
+      <li><b>西來庵事件（1915）</b>：由<b>余清芳</b>等人領導，以臺南的<b>西來庵</b>（一座王爺廟）為聯絡據點，用宗教號召群眾，在今臺南<b>玉井</b>一帶（舊稱<b>噍吧哖</b>）和日軍激戰，所以又叫<b>噍吧哖事件</b>。事後許多人被判處死刑。</li>
+    </ul>
+    <div class="formula">西來庵事件（1915）是<b>漢人最後一次大規模武裝抗日</b>。之後，臺灣人反抗的方式漸漸轉向非武裝的政治、社會運動。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：霧社事件（1930）</h2>
+    <p>地點在今南投縣仁愛鄉的<b>霧社</b>，當時被日本視為「理蕃」（管理原住民）的模範地區。</p>
+    <h3>為什麼會發生？</h3>
+    <ul>
+      <li>原住民長期被要求做沉重的勞役（例如搬運木材、修建房舍），工資又低。</li>
+      <li>日本警察和原住民女性的婚姻問題，以及對原住民文化、習俗的不尊重，累積許多不滿。</li>
+    </ul>
+    <h3>經過</h3>
+    <p>1930 年 10 月，賽德克族馬赫坡社頭目<b>莫那魯道</b>率領族人，趁霧社公學校舉行運動會時突襲，殺死許多日本人。日本出動大批軍警，用飛機、大砲強力鎮壓（也有使用毒氣的紀錄與研究）。莫那魯道最後自殺，參與的族人死傷慘重。</p>
+    <h3>影響</h3>
+    <ul>
+      <li>隔年又發生第二次霧社事件，倖存的族人再遭攻擊，剩下的人被強制遷到別的地方（今南投清流部落一帶）。</li>
+      <li>事件震驚日本國內外，總督府檢討並調整原住民政策，更強調教化與懷柔。</li>
+    </ul>
+    <div class="note">💡 霧社事件是日治中期、原住民的大規模武裝抗日。不要和西來庵事件（漢人、前期）搞混。</div>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 事件地圖：先探索，再考考你</h2>
+    <div class="tool">
+      <div class="mapwrap">
+        <div class="svgbox" id="svgMap"></div>
+        <div class="side">
+          <div class="row"><button id="mapExplore" class="ghost">探索模式</button><button id="mapQuiz">考考你</button></div>
+          <div class="infobox" id="mapInfo">👆 點地圖上的圓點，看看那裡發生了什麼。</div>
+          <div class="hint">顏色：<span class="lg" style="background:#6b7280"></span>乙未戰爭<span class="lg" style="background:#b91c1c"></span>前期游擊<span class="lg" style="background:#d97706"></span>漢人抗日事件<span class="lg" style="background:#7c3aed"></span>原住民抗日<br>（位置為大致示意）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 排序題：抗日事件的先後</h2>
+    <p>依發生先後點選，排出武裝抗日的時間順序。</p>
+    <div id="ordArm"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="B">
+      <div class="stem">1. 被視為「漢人最後一次大規模武裝抗日」的是：</div>
+      <label><input type="radio" name="p3q1" value="A">北埔事件</label>
+      <label><input type="radio" name="p3q1" value="B">西來庵事件</label>
+      <label><input type="radio" name="p3q1" value="C">霧社事件</label>
+      <label><input type="radio" name="p3q1" value="D">乙未戰爭</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1915 年西來庵（噍吧哖）事件，之後轉向非武裝抗日。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">2. 霧社事件的領導者是：</div>
+      <label><input type="radio" name="p3q2" value="A">余清芳</label>
+      <label><input type="radio" name="p3q2" value="B">簡大獅</label>
+      <label><input type="radio" name="p3q2" value="C">蔡清琳</label>
+      <label><input type="radio" name="p3q2" value="D">莫那魯道</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　賽德克族馬赫坡社頭目莫那魯道，1930 年。">　</div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">3. 下列何者<b>不是</b>霧社事件發生的原因？</div>
+      <label><input type="radio" name="p3q3" value="A">日本要求原住民改日本姓名</label>
+      <label><input type="radio" name="p3q3" value="B">勞役沉重、工資低</label>
+      <label><input type="radio" name="p3q3" value="C">日警與原住民女性的婚姻問題</label>
+      <label><input type="radio" name="p3q3" value="D">不尊重原住民的文化習俗</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　改姓名是 1940 年皇民化時期的政策，比霧社事件（1930）晚。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-4 政治社會運動 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道 1920 年代臺灣人改用非武裝的方式爭取權利，以及背景</li>
+      <li>說得出臺灣文化協會、臺灣議會設置請願運動、臺灣民眾黨、地方自治聯盟</li>
+      <li>知道 1935 年第一次地方選舉的內容與限制</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：為什麼改走「非武裝」路線？</h2>
+    <ul>
+      <li>西來庵事件後，武裝抗日付出的代價很大，也很難成功。</li>
+      <li>一次大戰後，<b>民族自決</b>（每個民族自己決定前途）和民主思潮傳到臺灣；在日本留學的臺灣青年接觸到這些想法。</li>
+      <li>受過新式教育的知識分子增加，他們選擇用<b>辦雜誌、演講、請願、組織團體</b>的方式爭取權利。</li>
+    </ul>
+    <div class="note">💡 1920 年，留日學生在東京成立新民會，發行《臺灣青年》雜誌，是這波運動的起點之一。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：臺灣議會設置請願運動（1921～1934）</h2>
+    <p>以<b>林獻堂</b>為首，向<b>日本帝國議會</b>請願，要求在臺灣設立一個由臺灣人選出代表的「臺灣議會」，讓臺灣人能參與制定臺灣的法律和預算。</p>
+    <div class="formula">前後請願 <b>15 次</b>，帝國議會都沒有通過。但它讓更多臺灣人認識了「議會」「參政權」這些觀念。</div>
+    <p>過程中，總督府曾在 1923 年以違反法令為由，逮捕蔣渭水等多位參與者（稱為<b>治警事件</b>）。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：臺灣文化協會（1921）</h2>
+    <p>由<b>蔣渭水</b>發起、<b>林獻堂</b>擔任總理，目標是提升臺灣人的文化水準，啟發民族意識。主要活動：</p>
+    <ul>
+      <li><b>文化講座</b>：到各地演講，介紹新知識、新觀念</li>
+      <li><b>讀報社</b>：在各地放報紙雜誌，讓民眾免費閱讀</li>
+      <li>舉辦夏季學校、放映電影、演出新劇等</li>
+    </ul>
+    <p>後來成員對運動方向看法不同（有人想走較激進的社會主義路線），1927 年文化協會分裂。</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 4：組政黨、爭取地方自治</h2>
+    <ul>
+      <li><b>臺灣民眾黨（1927）</b>：文協分裂後，蔣渭水等人成立，是<b>臺灣人組成的第一個政黨</b>。後來路線偏向工人、農民運動，1931 年被總督府禁止。</li>
+      <li><b>臺灣地方自治聯盟（1930）</b>：林獻堂、蔡培火等人成立，專注爭取地方自治與選舉權。</li>
+      <li><b>1935 年第一次地方選舉</b>：市會與街庄協議會（類似今天的市、鄉鎮議會）的議員<b>半數民選、半數官派</b>。投票資格有限制：要年滿 25 歲的男子、每年繳一定金額以上的稅等，所以能投票的人不多。</li>
+    </ul>
+    <div class="note">💡 對 1935 年的選舉，當時就有不同看法：有人認為這是臺灣人第一次能投票，是一大進步；也有人認為只有一半民選、資格限制多，距離真正的自治還很遠。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎭 換你當 1920 年代的臺灣知識分子</h2>
+    <p>你是一位剛從日本留學回來的年輕人。遇到下面的情況，你會怎麼做？每一題選完，會告訴你歷史上的人們實際怎麼做、為什麼。這裡沒有標準答案，重點是理解他們的考量。</p>
+    <div id="scnBox"></div>
+    <div class="row"><button class="btn ghost" id="scnReset">重新開始</button><span class="scn-prog" id="scnProg"></span></div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：武裝還是非武裝？</h2>
+    <p>把事件、人物、團體拖到正確的類別。</p>
+    <div id="dndArm"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">1. 臺灣議會設置請願運動，是向哪裡請願？</div>
+      <label><input type="radio" name="p4q1" value="A">臺灣總督府</label>
+      <label><input type="radio" name="p4q1" value="B">清朝政府</label>
+      <label><input type="radio" name="p4q1" value="C">日本帝國議會</label>
+      <label><input type="radio" name="p4q1" value="D">國際聯盟</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1921～1934 年向日本帝國議會請願 15 次，都沒通過。">　</div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">2. 臺灣文化協會在各地設「讀報社」，主要目的是：</div>
+      <label><input type="radio" name="p4q2" value="A">賣報紙賺錢</label>
+      <label><input type="radio" name="p4q2" value="B">讓民眾接觸新知、提升文化水準</label>
+      <label><input type="radio" name="p4q2" value="C">招募游擊隊</label>
+      <label><input type="radio" name="p4q2" value="D">推行日語</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　文協用文化講座、讀報社啟發民智。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">3. 關於 1935 年的地方選舉，何者正確？</div>
+      <label><input type="radio" name="p4q3" value="A">所有議員都由人民選出</label>
+      <label><input type="radio" name="p4q3" value="B">選出臺灣總督</label>
+      <label><input type="radio" name="p4q3" value="C">男女年滿 20 歲都能投票</label>
+      <label><input type="radio" name="p4q3" value="D">議員半數民選、半數官派，投票資格有限制</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　只有半數民選，而且要男子、年滿 25 歲、繳一定稅額等條件。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-5 皇民化運動 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>知道皇民化運動的背景與目的</li>
+      <li>說得出國語運動、改姓名、宗教改革、志願兵與徵兵等措施</li>
+      <li>了解戰時體制對臺灣人生活的影響</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 1：為什麼要「皇民化」？</h2>
+    <p><b>1937 年</b>中日戰爭爆發，1941 年又爆發太平洋戰爭。日本需要大量人力和物資，也擔心臺灣人在感情上偏向中國，於是推動<b>皇民化運動</b>（1937～1945）。</p>
+    <div class="formula">皇民化：要臺灣人在語言、姓名、信仰、生活各方面都變成日本式，成為效忠天皇的「皇國臣民」，並投入戰爭。</div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 2：四大措施</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>措施</th><th>內容</th></tr>
+        <tr><td class="name">國語運動</td><td class="l">這裡的「國語」指<b>日語</b>。推廣說日語；全家都說日語的可申請成為「<b>國語家庭</b>」，在升學、物資配給等方面享有優待。報紙的漢文版面也被廢除。</td></tr>
+        <tr><td class="name">改姓名</td><td class="l">1940 年起，鼓勵臺灣人把姓名改成日本式。採申請許可制，實際改名的人占人口比例不高。</td></tr>
+        <tr><td class="name">宗教與生活改革</td><td class="l">要求參拜<b>神社</b>；整理、合併傳統寺廟；推行「<b>正廳改善</b>」：把家中正廳（客廳）的祖先牌位、神像換成日本的神宮大麻（神符）。也限制傳統戲曲等活動。</td></tr>
+        <tr><td class="name">志願兵與徵兵</td><td class="l">1942 年起實施陸軍特別志願兵制度，之後也有海軍志願兵；<b>1945 年</b>正式實施徵兵。還有許多臺灣人被徵調為軍夫、軍屬，原住民則被組成「高砂義勇隊」，到南洋等地參戰。</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 觀念 3：戰時體制下的生活</h2>
+    <ul>
+      <li><b>皇民奉公會</b>（1941）：全臺性的動員組織，推動皇民化與支援戰爭。</li>
+      <li><b>物資管制與配給</b>：米、糖、布等民生物資由政府統一分配，生活越來越困苦。</li>
+      <li>臺灣被當作日本「南進」的基地，發展支援戰爭的工業。</li>
+      <li>戰爭末期，美軍空襲臺灣各地，造成傷亡與破壞。</li>
+    </ul>
+    <p>到戰爭結束時，臺灣有二十萬人以上被動員為軍人、軍屬或軍夫，其中不少人戰死或失蹤（各方統計數字不同）。1945 年 8 月日本宣布投降，日本統治臺灣的時期結束。</p>
+  </div>
+
+  <div class="card">
+    <h2>🎮 動手玩：皇民化措施配對</h2>
+    <p>把每一項做法，拖到它所屬的措施。</p>
+    <div id="dndKominka"></div>
+  </div>
+
+  <div class="card">
+    <h2>📝 一頁重點整理＋口訣</h2>
+    <div class="formula"><b>口訣：「甲午割臺、武文武；總督四權、警保管；武裝到西來、霧社原住民；文協請願十五次；皇民化改語名神兵。」</b></div>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>小節</th><th>一定要記的</th></tr>
+        <tr><td class="name">改朝換代</td><td class="l">1894 甲午戰爭 → 1895 馬關條約割臺澎；臺灣民主國（唐景崧、劉永福）；乙未戰爭；三期：武官（鎮壓、六三法、兒玉與後藤）→ 文官（1919 同化、內地延長）→ 武官（1937 皇民化）</td></tr>
+        <tr><td class="name">統治機制</td><td class="l">總督：行政、立法、司法、軍事；警察無所不管；保甲 10 戶 1 甲、10 甲 1 保、連坐；差別待遇</td></tr>
+        <tr><td class="name">武裝抗日</td><td class="l">簡大獅、柯鐵、林少貓（1902 大致平定）；北埔 1907；西來庵 1915（漢人最後一次大規模）；霧社 1930 莫那魯道</td></tr>
+        <tr><td class="name">政治社會運動</td><td class="l">1921 文化協會（蔣渭水、林獻堂）；議會請願 1921～1934 共 15 次；1927 民眾黨（第一個臺灣人政黨）；1930 地方自治聯盟；1935 半數民選</td></tr>
+        <tr><td class="name">皇民化</td><td class="l">1937～1945；國語家庭、改姓名、正廳改善與神社、志願兵（1942）與徵兵（1945）、皇民奉公會、配給</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🃏 翻翻卡：考前 3 分鐘複習</h2>
+    <p>先想答案，再點卡片翻過來對。</p>
+    <div class="flip-grid" id="flipGrid"></div>
+    <div class="row" style="margin-top:10px"><button class="btn" id="flipReset">全部蓋回去</button></div>
+  </div>
+
+  <div class="card">
+    <h2>🧩 練習題（做完按「對答案」）</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">1. 皇民化運動時期所說的「國語」是指：</div>
+      <label><input type="radio" name="p5q1" value="A">臺語</label>
+      <label><input type="radio" name="p5q1" value="B">客語</label>
+      <label><input type="radio" name="p5q1" value="C">日語</label>
+      <label><input type="radio" name="p5q1" value="D">英語</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　當時的國語是日語，全家說日語可成為「國語家庭」。">　</div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">2. 「把家中祖先牌位換成日本神宮大麻」屬於哪一項措施？</div>
+      <label><input type="radio" name="p5q2" value="A">宗教改革（正廳改善）</label>
+      <label><input type="radio" name="p5q2" value="B">改姓名</label>
+      <label><input type="radio" name="p5q2" value="C">志願兵</label>
+      <label><input type="radio" name="p5q2" value="D">保甲制度</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　正廳改善是皇民化的宗教改革措施。">　</div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">3. 皇民化運動推動的主要背景是：</div>
+      <label><input type="radio" name="p5q3" value="A">甲午戰爭</label>
+      <label><input type="radio" name="p5q3" value="B">中日戰爭與太平洋戰爭</label>
+      <label><input type="radio" name="p5q3" value="C">霧社事件</label>
+      <label><input type="radio" name="p5q3" value="D">第一次世界大戰</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1937 中日戰爭、1941 太平洋戰爭，日本需要臺灣的人力物力。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s6" class="panel">
+  <div class="card goal">
+    <h2>🏁 單元總測驗（12 題）</h2>
+    <p>全部作答完再按最下面的「交卷」。沒作答的題目會算錯，記得每題都選。</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="q quiz" data-ans="B">
+      <div class="stem">1. 1895 年清朝把臺灣、澎湖割讓給日本，是因為：</div>
+      <label><input type="radio" name="qz1" value="A">鴉片戰爭戰敗，簽南京條約</label>
+      <label><input type="radio" name="qz1" value="B">甲午戰爭戰敗，簽馬關條約</label>
+      <label><input type="radio" name="qz1" value="C">牡丹社事件後簽北京專約</label>
+      <label><input type="radio" name="qz1" value="D">中日戰爭戰敗</label>
+      <div class="fb" data-exp="　1894 甲午戰爭 → 1895 馬關條約。">　</div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">2. 臺灣民主國成立後，在臺南繼續領導抵抗日軍的是：</div>
+      <label><input type="radio" name="qz2" value="A">唐景崧</label>
+      <label><input type="radio" name="qz2" value="B">兒玉源太郎</label>
+      <label><input type="radio" name="qz2" value="C">劉永福</label>
+      <label><input type="radio" name="qz2" value="D">蔣渭水</label>
+      <div class="fb" data-exp="　唐景崧是總統但很快離臺；劉永福在臺南抵抗到 10 月。">　</div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">3. 「六三法」讓臺灣總督擁有：</div>
+      <label><input type="radio" name="qz3" value="A">發布具法律效力命令的委任立法權</label>
+      <label><input type="radio" name="qz3" value="B">選舉帝國議會議員的權利</label>
+      <label><input type="radio" name="qz3" value="C">與外國簽約的外交權</label>
+      <label><input type="radio" name="qz3" value="D">任命日本首相的權力</label>
+      <div class="fb" data-exp="　總督發布的「律令」等同法律。">　</div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">4. 1919 年起改派文官總督，推行的政策是：</div>
+      <label><input type="radio" name="qz4" value="A">皇民化運動</label>
+      <label><input type="radio" name="qz4" value="B">綏撫與鎮壓</label>
+      <label><input type="radio" name="qz4" value="C">開山撫番</label>
+      <label><input type="radio" name="qz4" value="D">同化政策（內地延長主義）</label>
+      <div class="fb" data-exp="　第一位文官總督田健治郎；開山撫番是清代沈葆楨的政策。">　</div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">5. 關於保甲制度，何者正確？</div>
+      <label><input type="radio" name="qz5" value="A">在臺日本人也要編入保甲</label>
+      <label><input type="radio" name="qz5" value="B">10 戶為甲、10 甲為保，採連坐責任</label>
+      <label><input type="radio" name="qz5" value="C">是 1935 年地方選舉的單位</label>
+      <label><input type="radio" name="qz5" value="D">由人民投票選出警察</label>
+      <div class="fb" data-exp="　保甲協助警察、互相監視，只針對臺灣人。">　</div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">6. 1915 年，以臺南一座王爺廟為據點、在噍吧哖一帶與日軍激戰的事件是：</div>
+      <label><input type="radio" name="qz6" value="A">北埔事件</label>
+      <label><input type="radio" name="qz6" value="B">霧社事件</label>
+      <label><input type="radio" name="qz6" value="C">西來庵事件</label>
+      <label><input type="radio" name="qz6" value="D">治警事件</label>
+      <div class="fb" data-exp="　西來庵（噍吧哖）事件，余清芳領導，漢人最後一次大規模武裝抗日。">　</div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">7. 1930 年霧社事件，領導的族群與人物是：</div>
+      <label><input type="radio" name="qz7" value="A">賽德克族，莫那魯道</label>
+      <label><input type="radio" name="qz7" value="B">賽夏族，蔡清琳</label>
+      <label><input type="radio" name="qz7" value="C">漢人，余清芳</label>
+      <label><input type="radio" name="qz7" value="D">漢人，簡大獅</label>
+      <div class="fb" data-exp="　賽德克族馬赫坡社頭目莫那魯道。">　</div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">8. 臺灣文化協會（1921）的主要活動是：</div>
+      <label><input type="radio" name="qz8" value="A">組織游擊隊</label>
+      <label><input type="radio" name="qz8" value="B">推動改日本姓名</label>
+      <label><input type="radio" name="qz8" value="C">參拜神社</label>
+      <label><input type="radio" name="qz8" value="D">舉辦文化講座、設讀報社</label>
+      <div class="fb" data-exp="　蔣渭水發起、林獻堂任總理，啟發民智。">　</div>
+    </div>
+    <div class="q quiz" data-ans="B">
+      <div class="stem">9. 臺灣議會設置請願運動的結果是：</div>
+      <label><input type="radio" name="qz9" value="A">第一次請願就成功設立臺灣議會</label>
+      <label><input type="radio" name="qz9" value="B">請願 15 次，都沒有被帝國議會接受</label>
+      <label><input type="radio" name="qz9" value="C">總督改由臺灣人選舉</label>
+      <label><input type="radio" name="qz9" value="D">引發西來庵事件</label>
+      <div class="fb" data-exp="　1921～1934 年，共 15 次，都沒通過，但傳播了參政觀念。">　</div>
+    </div>
+    <div class="q quiz" data-ans="A">
+      <div class="stem">10. 臺灣人組成的第一個政黨是：</div>
+      <label><input type="radio" name="qz10" value="A">臺灣民眾黨</label>
+      <label><input type="radio" name="qz10" value="B">皇民奉公會</label>
+      <label><input type="radio" name="qz10" value="C">新民會</label>
+      <label><input type="radio" name="qz10" value="D">臺灣民主國</label>
+      <div class="fb" data-exp="　1927 年蔣渭水等人成立，1931 年被禁止。">　</div>
+    </div>
+    <div class="q quiz" data-ans="C">
+      <div class="stem">11. 1935 年臺灣第一次地方選舉的特色是：</div>
+      <label><input type="radio" name="qz11" value="A">選出臺灣總督</label>
+      <label><input type="radio" name="qz11" value="B">所有成年人都能投票</label>
+      <label><input type="radio" name="qz11" value="C">議員半數民選、半數官派，投票資格有限制</label>
+      <label><input type="radio" name="qz11" value="D">選出帝國議會的臺灣議員</label>
+      <div class="fb" data-exp="　要年滿 25 歲男子、繳一定稅額等，能投票的人有限。">　</div>
+    </div>
+    <div class="q quiz" data-ans="D">
+      <div class="stem">12. 下列哪一項<b>不是</b>皇民化運動的措施？</div>
+      <label><input type="radio" name="qz12" value="A">國語家庭</label>
+      <label><input type="radio" name="qz12" value="B">改日本姓名</label>
+      <label><input type="radio" name="qz12" value="C">正廳改善</label>
+      <label><input type="radio" name="qz12" value="D">臺灣議會設置請願</label>
+      <div class="fb" data-exp="　議會請願是 1920 年代臺灣人自己發起的政治運動。">　</div>
+    </div>
+
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<footer>互動知識庫 · 臺灣的歷史（下）· 第 1 章「日治時期的政治」<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "歷史七下1 日治時期的政治";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== 畫圖用的小函式（inline SVG）=====
+function line(x1,y1,x2,y2,color,w,dash){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w||3}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;
+}
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function rect(x,y,w,h,fill,stroke,sw,rx){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx||0}" fill="${fill}" stroke="${stroke||'none'}" stroke-width="${sw||1}"/>`; }
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+function shuffle(a){ const b = a.slice(); for(let i = b.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; }
+
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// 單元總測驗交卷
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb');
+    q.classList.remove('correct','wrong');
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 10){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，這個單元過關！`;
+  } else if(score >= 6){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。回頭看看答錯題目的解析，再挑戰一次！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議回到前面五節重看觀念，再來挑戰。`;
+  }
+  r.scrollIntoView({behavior:'smooth'});
+});
+
+// ===== 拖曳配對（滑鼠、觸控都可以；也可以先點卡片、再點要放的區域）=====
+function dndGame(opts){
+  const box = document.getElementById(opts.box);
+  const placed = {};                       // 卡片 id → 放在哪一區
+  let selected = null;
+  const order = shuffle(opts.items);
+  const el = (tag, cls) => { const e = document.createElement(tag); if(cls) e.className = cls; return e; };
+  function render(){
+    box.innerHTML = '';
+    const pool = el('div', 'dnd-pool'); pool.dataset.zone = '__pool__';
+    pool.innerHTML = `<div class="dnd-zone-title" style="color:#6b7280">${opts.poolLabel || '卡片區（拖到下面正確的位置）'}</div>`;
+    const zonesWrap = el('div', 'dnd-zones');
+    const zoneEls = {};
+    opts.zones.forEach(z => {
+      const ze = el('div', 'dnd-zone'); ze.dataset.zone = z.id;
+      ze.innerHTML = `<div class="dnd-zone-title">${z.label}</div>`;
+      zonesWrap.appendChild(ze); zoneEls[z.id] = ze;
+    });
+    order.forEach(it => {
+      const c = el('div', 'dnd-card'); c.dataset.item = it.id; c.textContent = it.label;
+      (placed[it.id] && zoneEls[placed[it.id]] ? zoneEls[placed[it.id]] : pool).appendChild(c);
+      attach(c);
+    });
+    const bar = el('div', 'row dnd-bar');
+    bar.innerHTML = `<button class="dnd-check">檢查</button><button class="ghost dnd-reset">重來</button><span class="dnd-msg"></span>`;
+    box.append(pool, zonesWrap, bar);
+    if(opts.hint){ const h = el('div', 'dnd-hint'); h.textContent = opts.hint; box.appendChild(h); }
+    bar.querySelector('.dnd-check').addEventListener('click', check);
+    bar.querySelector('.dnd-reset').addEventListener('click', () => { Object.keys(placed).forEach(k => delete placed[k]); selected = null; render(); });
+    [pool, ...Object.values(zoneEls)].forEach(z => z.addEventListener('click', () => {
+      if(!selected) return;
+      if(z.dataset.zone === '__pool__') delete placed[selected]; else placed[selected] = z.dataset.zone;
+      selected = null; render();
+    }));
+  }
+  function zoneAt(x, y){
+    const t = document.elementFromPoint(x, y);
+    return t ? t.closest('.dnd-zone, .dnd-pool') : null;
+  }
+  function attach(card){
+    let sx = 0, sy = 0, moved = false, ghost = null, down = false;
+    card.addEventListener('pointerdown', e => {
+      sx = e.clientX; sy = e.clientY; moved = false; down = true; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e => {
+      if(!down || !(e.buttons & 1)) return;   // 只在這張卡上按下才算拖曳
+      if(!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 6) return;
+      if(!moved){
+        moved = true; ghost = card.cloneNode(true); ghost.classList.add('drag');
+        document.body.appendChild(ghost); card.style.opacity = '.35';
+      }
+      ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + 'px'; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + 'px';
+      box.querySelectorAll('.over').forEach(z => z.classList.remove('over'));
+      const z = zoneAt(e.clientX, e.clientY); if(z && box.contains(z)) z.classList.add('over');
+    });
+    card.addEventListener('pointerup', e => {
+      if(!down) return; down = false;
+      if(moved){
+        const z = zoneAt(e.clientX, e.clientY);
+        if(ghost) ghost.remove(); card.style.opacity = '';
+        if(z && box.contains(z)){ if(z.dataset.zone === '__pool__') delete placed[card.dataset.item]; else placed[card.dataset.item] = z.dataset.zone; }
+        selected = null; render();
+      }else{
+        selected = (selected === card.dataset.item) ? null : card.dataset.item;
+        box.querySelectorAll('.dnd-card').forEach(c => c.classList.toggle('sel', c.dataset.item === selected));
+      }
+    });
+    card.addEventListener('pointercancel', () => { down = false; if(ghost) ghost.remove(); card.style.opacity = ''; moved = false; });
+    card.addEventListener('click', e => e.stopPropagation());   // 點卡片只是選取，不要觸發所在區域的「放下」
+  }
+  function check(){
+    let ok = 0, total = opts.items.length, unplaced = 0;
+    box.querySelectorAll('.dnd-card').forEach(c => {
+      const id = c.dataset.item, z = placed[id];
+      const zone = opts.zones.find(zz => zz.id === z);
+      c.classList.remove('ok', 'no');
+      if(!zone){ unplaced++; c.classList.add('no'); return; }
+      if(zone.accepts.includes(id)){ ok++; c.classList.add('ok'); } else c.classList.add('no');
+    });
+    const msg = box.querySelector('.dnd-msg');
+    if(ok === total){ msg.className = 'dnd-msg ok'; msg.textContent = '✔ 全部正確！'; }
+    else { msg.className = 'dnd-msg no'; msg.textContent = `✘ 對了 ${ok} / ${total}${unplaced ? '（還有 ' + unplaced + ' 張沒放）' : ''}，紅色的再想想。`; }
+    toolLog(opts.name || opts.box, ok === total);
+  }
+  render();
+  return { placed };
+}
+
+// ===== 排序題（點選依序排列，觸控友善）=====
+function orderGame(opts){
+  const box = document.getElementById(opts.box);
+  let pool = shuffle(opts.items.map((_, i) => i)), ans = [], checked = false;
+  function render(){
+    const it = i => opts.items[i];
+    box.innerHTML = `<div class="ord-label">卡片區（點一下放到答案區）</div><div class="ord-pool"></div>
+      <div class="ord-label">你的順序（由早到晚）</div><div class="ord-ans"></div>
+      <div class="row dnd-bar"><button class="btn ord-check">檢查</button><button class="btn ghost ord-reset">重來</button><span class="dnd-msg"></span></div>`;
+    const pe = box.querySelector('.ord-pool'), ae = box.querySelector('.ord-ans');
+    pool.forEach(i => {
+      const b = document.createElement('button'); b.className = 'ord-item'; b.textContent = it(i).label;
+      b.addEventListener('click', () => { pool = pool.filter(x => x !== i); ans.push(i); checked = false; render(); });
+      pe.appendChild(b);
+    });
+    if(!pool.length) pe.innerHTML = '<span class="ord-label">（都放好了，按「檢查」）</span>';
+    ans.forEach((i, k) => {
+      const b = document.createElement('button'); b.className = 'ord-item';
+      b.innerHTML = `<span class="n">${k + 1}.</span>${it(i).label}` + (checked ? `　<small>（${it(i).year}）</small>` : '');
+      if(checked) b.classList.add(i === k ? 'ok' : 'no');
+      b.addEventListener('click', () => { ans = ans.filter(x => x !== i); pool.push(i); checked = false; render(); });
+      ae.appendChild(b);
+    });
+    box.querySelector('.ord-check').addEventListener('click', () => {
+      const msg = box.querySelector('.dnd-msg');
+      if(pool.length){ msg.className = 'dnd-msg no'; msg.textContent = `還有 ${pool.length} 張沒排。`; return; }
+      checked = true; render();
+      const ok = ans.every((i, k) => i === k), m2 = box.querySelector('.dnd-msg');
+      const n = ans.filter((i, k) => i === k).length;
+      m2.className = 'dnd-msg ' + (ok ? 'ok' : 'no');
+      m2.textContent = ok ? '✔ 順序完全正確！' : `✘ 位置對了 ${n} / ${ans.length}，紅色的再調整（點一下退回）。`;
+      toolLog(opts.name, ok);
+    });
+    box.querySelector('.ord-reset').addEventListener('click', () => { pool = shuffle(opts.items.map((_, i) => i)); ans = []; checked = false; render(); });
+  }
+  render();
+}
+
+// ---- 1-1 排序：1894～1895 ----
+orderGame({ box: 'ordWar', name: '排序：割臺經過', items: [
+  { label: '甲午戰爭爆發，清朝戰敗', year: '1894' },
+  { label: '清朝與日本簽訂馬關條約', year: '1895 年 4 月' },
+  { label: '臺灣民主國成立，唐景崧任總統', year: '1895 年 5 月' },
+  { label: '日軍在澳底登陸', year: '1895 年 5 月底' },
+  { label: '日軍進入臺北城', year: '1895 年 6 月' },
+  { label: '劉永福離臺，日軍進入臺南', year: '1895 年 10 月' },
+] });
+
+// ---- 1-1 三階段時間軸 ----
+const STAGES = {
+  a: { name: '前期：武官總督', yrs: '1895～1919', span: 24, color: '#b91c1c',
+       info: '總督由軍人擔任。政策是<b>綏撫與鎮壓</b>並用：招降反抗者，同時嚴厲鎮壓。<b>六三法</b>讓總督擁有委任立法權；兒玉源太郎與後藤新平建立警察、保甲，做戶口與土地調查，打下統治基礎。' },
+  b: { name: '中期：文官總督', yrs: '1919～1937', span: 18, color: '#2563eb',
+       info: '一次大戰後民族自決、民主思潮流行，日本改派文官總督（首任田健治郎）。推行<b>同化政策（內地延長主義）</b>：把日本本土制度延長到臺灣，例如日臺共學。臺灣人的非武裝政治社會運動也在這時期最活躍。' },
+  c: { name: '後期：再任武官總督', yrs: '1937～1945', span: 8, color: '#7c3aed',
+       info: '日本對外擴張，再度改派武官總督。中日戰爭（1937）、太平洋戰爭（1941）爆發，推動<b>皇民化運動</b>，並把臺灣納入戰時體制，動員人力物力支援戰爭。' },
+};
+const EVENTS = [
+  { y: '1895', s: 'a', t: '日本開始統治臺灣', d: '馬關條約後，日本接收臺灣，6 月在臺北舉行「始政」典禮。各地仍有乙未戰爭的抵抗。' },
+  { y: '1896', s: 'a', t: '六三法', d: '讓臺灣總督可發布具法律效力的「律令」，擁有委任立法權。' },
+  { y: '1898', s: 'a', t: '兒玉源太郎、後藤新平上任', d: '第 4 任總督與民政長官。招降與鎮壓並用；同年訂保甲條例，並展開土地調查等。' },
+  { y: '1902', s: 'a', t: '游擊抗日大致平定', d: '南部林少貓被殺前後，前期游擊抗日大致平定。' },
+  { y: '1915', s: 'a', t: '西來庵事件', d: '余清芳等人領導，漢人最後一次大規模武裝抗日。' },
+  { y: '1919', s: 'b', t: '首任文官總督田健治郎', d: '開始推行同化政策（內地延長主義）。' },
+  { y: '1921', s: 'b', t: '臺灣文化協會成立、議會請願開始', d: '蔣渭水、林獻堂等人展開非武裝的文化與政治運動。' },
+  { y: '1922', s: 'b', t: '日臺共學', d: '中等以上學校開放日本人與臺灣人一起就讀，是同化政策的一部分。' },
+  { y: '1927', s: 'b', t: '臺灣民眾黨成立', d: '臺灣人組成的第一個政黨。' },
+  { y: '1930', s: 'b', t: '霧社事件', d: '賽德克族莫那魯道率族人起事，遭日本強力鎮壓。' },
+  { y: '1935', s: 'b', t: '第一次地方選舉', d: '市會、街庄協議會議員半數民選，投票資格有限制。' },
+  { y: '1937', s: 'c', t: '中日戰爭爆發、皇民化運動', d: '再任武官總督時期（武官總督小林躋造 1936 年底已上任）。推動國語運動、宗教改革等。' },
+  { y: '1940', s: 'c', t: '改姓名', d: '鼓勵臺灣人改成日式姓名，採申請許可制。' },
+  { y: '1941', s: 'c', t: '皇民奉公會成立', d: '同年太平洋戰爭爆發，全臺動員支援戰爭。' },
+  { y: '1942', s: 'c', t: '陸軍特別志願兵', d: '開始招募臺灣人當志願兵。' },
+  { y: '1945', s: 'c', t: '實施徵兵、日本投降', d: '1945 年臺灣實施徵兵；8 月日本宣布投降，日治時期結束。' },
+];
+let tlMode = 'explore', tlQ = null, tlScore = 0, tlCount = 0;
+function stageTag(s){ return `<span class="st-tag st-${s}">${STAGES[s].name}</span>`; }
+function drawTL(){
+  const bar = document.getElementById('tlBar'), list = document.getElementById('tlList');
+  bar.innerHTML = Object.entries(STAGES).map(([k, s]) =>
+    `<button class="tl-seg" data-s="${k}" style="flex:${s.span};background:${s.color}">${s.name.split('：')[0]}<small>${s.name.split('：')[1]}</small></button>`).join('');
+  list.innerHTML = EVENTS.map((e, i) =>
+    `<button class="tl-ev" data-i="${i}" style="border-left-color:${tlMode === 'quiz' ? '#9ca3af' : STAGES[e.s].color}">${tlMode === 'quiz' ? '' : '<b>' + e.y + '</b> '}${e.t}</button>`).join('');
+  bar.querySelectorAll('.tl-seg').forEach(b => b.addEventListener('click', () => onSeg(b.dataset.s)));
+  list.querySelectorAll('.tl-ev').forEach(b => b.addEventListener('click', () => onEv(+b.dataset.i)));
+}
+function mark(sel){ document.querySelectorAll('.tl-seg,.tl-ev').forEach(x => x.classList.remove('on')); if(sel) sel.classList.add('on'); }
+function onSeg(k){
+  const info = document.getElementById('tlInfo');
+  if(tlMode === 'quiz' && tlQ !== null){
+    const e = EVENTS[tlQ], ok = e.s === k;
+    tlCount++; if(ok) tlScore++;
+    toolLog('時間軸分期', ok);
+    info.innerHTML = (ok ? '✔ 答對！' : '✘ 不對喔。') + `<b>${e.y} ${e.t}</b> 屬於 ${stageTag(e.s)}。${e.d}<br>目前答對 ${tlScore} / ${tlCount}。再點一個灰色事件繼續。`;
+    tlQ = null; mark(null); return;
+  }
+  const s = STAGES[k];
+  mark(document.querySelector(`.tl-seg[data-s="${k}"]`));
+  info.innerHTML = `${stageTag(k)}<b>${s.yrs}</b><br>${s.info}`;
+}
+function onEv(i){
+  const e = EVENTS[i], info = document.getElementById('tlInfo');
+  mark(document.querySelector(`.tl-ev[data-i="${i}"]`));
+  if(tlMode === 'quiz'){ tlQ = i; info.innerHTML = `「<b>${e.t}</b>」發生在哪一期？請點上面的色塊。`; return; }
+  info.innerHTML = `${stageTag(e.s)}<b>${e.y}｜${e.t}</b><br>${e.d}`;
+}
+document.getElementById('tlQuiz').addEventListener('click', () => { tlMode = 'quiz'; tlQ = null; tlScore = 0; tlCount = 0; drawTL(); document.getElementById('tlInfo').innerHTML = '年份和顏色藏起來了。先點下面一個事件，再點它屬於哪一期的色塊。'; });
+document.getElementById('tlShow').addEventListener('click', () => { tlMode = 'explore'; tlQ = null; drawTL(); document.getElementById('tlInfo').textContent = '👆 點一個色塊或事件。'; });
+drawTL();
+
+// ---- 1-2 一人四權圖 ----
+const POWERS = {
+  ex: { name: '行政', icon: '🏛️', x: 130, y: 12, info: '<b>行政權</b>：總督府統管全臺的官員、警察、稅收、交通與產業。地方官由總督府派任，不是人民選出來的。' },
+  le: { name: '立法', icon: '📜', x: 250, y: 125, info: '<b>立法權</b>：依「六三法」（1896），總督可以發布和法律效力相同的「律令」，叫<b>委任立法權</b>。後來法律陸續修改（如 1906 年三一法、1921 年法三號），日本本土法律漸漸延長施行到臺灣，總督的立法權受到一些限制，但仍然很大。' },
+  ju: { name: '司法', icon: '⚖️', x: 130, y: 238, info: '<b>司法權</b>：法院隸屬總督府，法官由總督府任用，司法無法獨立監督總督。日治初期還訂了「匪徒刑罰令」等嚴厲法令，用來懲治武裝反抗者。' },
+  mi: { name: '軍事', icon: '🎖️', x: 10, y: 125, info: '<b>軍事權</b>：前期總督由武官擔任，可以指揮在臺軍隊。1919 年改派文官總督後，軍隊改由另設的臺灣軍司令官指揮；後期又改回武官總督。' },
+};
+function drawPower(active){
+  let s = '';
+  s += line(180, 62, 180, 112, '#9ca3af', 3) + line(180, 208, 180, 238, '#9ca3af', 3) + line(110, 160, 132, 160, '#9ca3af', 3) + line(228, 160, 250, 160, '#9ca3af', 3);
+  s += `<circle cx="180" cy="160" r="48" fill="#7f1d1d"/>` + txt(180, 156, '臺灣', '#fff', 15, 'middle', 'font-weight="bold"') + txt(180, 176, '總督', '#fff', 15, 'middle', 'font-weight="bold"');
+  Object.entries(POWERS).forEach(([k, p]) => {
+    s += `<g class="pw-box${active === k ? ' on' : ''}" data-k="${k}">${rect(p.x, p.y, 100, 50, '#fde68a', '#b45309', 2, 10)}${txt(p.x + 50, p.y + 32, p.icon + ' ' + p.name, '#7c2d12', 16, 'middle', 'font-weight="bold"')}</g>`;
+  });
+  document.getElementById('svgPower').innerHTML = svg(360, 300, s);
+  document.querySelectorAll('#svgPower .pw-box').forEach(g => g.addEventListener('click', () => {
+    drawPower(g.dataset.k);
+    document.getElementById('pwInfo').innerHTML = POWERS[g.dataset.k].info;
+    seenPw.add(g.dataset.k); if(seenPw.size === 4 && !pwLogged){ pwLogged = true; toolLog('一人四權圖', true); }
+  }));
+}
+const seenPw = new Set(); let pwLogged = false;
+drawPower(null);
+
+// ---- 1-2 差別待遇 ----
+dndGame({ box: 'dndTreat', name: '差別待遇分類', poolLabel: '待遇卡片',
+  items: [
+    { id: 'j1', label: '孩子多讀「小學校」' }, { id: 'j2', label: '公務員另有「加俸」' }, { id: 'j3', label: '多數高級官員出身' }, { id: 'j4', label: '不編入保甲' },
+    { id: 't1', label: '孩子多讀「公學校」' }, { id: 't2', label: '要編入保甲、負連坐責任' }, { id: 't3', label: '升中等學校名額少' }, { id: 't4', label: '很少當上高級官員' },
+  ],
+  zones: [
+    { id: 'jp', label: '在臺日本人', accepts: ['j1', 'j2', 'j3', 'j4'] },
+    { id: 'tw', label: '臺灣人', accepts: ['t1', 't2', 't3', 't4'] },
+  ] });
+
+// ---- 1-3 事件地圖 ----
+const KIND = { yiwei: '#6b7280', guer: '#b91c1c', han: '#d97706', ind: '#7c3aed' };
+const KNAME = { yiwei: '乙未戰爭', guer: '前期游擊', han: '漢人抗日事件', ind: '原住民抗日' };
+const SITES = [
+  { id: 'aodi', name: '澳底登陸', kind: 'yiwei', x: 194, y: 44, where: '今新北市貢寮', text: '1895 年 5 月底，日軍從這裡登陸，往臺北推進。' },
+  { id: 'bagua', name: '八卦山之役', kind: 'yiwei', x: 116, y: 180, where: '彰化', text: '1895 年乙未戰爭中規模很大的一場戰役，臺灣義軍與日軍激戰。' },
+  { id: 'tainan', name: '臺南（劉永福）', kind: 'yiwei', x: 112, y: 306, where: '臺南', text: '劉永福在此領導抵抗，10 月離臺後日軍進入臺南。' },
+  { id: 'jian', name: '簡大獅', kind: 'guer', x: 160, y: 66, where: '北部（臺北一帶山區）', text: '日治初期北部的游擊抗日領袖。' },
+  { id: 'ke', name: '柯鐵', kind: 'guer', x: 120, y: 224, where: '中部（今雲林一帶）', text: '日治初期中部的游擊抗日領袖。' },
+  { id: 'lin', name: '林少貓', kind: 'guer', x: 136, y: 348, where: '南部（今高雄、屏東一帶）', text: '日治初期南部的游擊抗日領袖；1902 年前後被殺，游擊抗日大致平定。' },
+  { id: 'beipu', name: '北埔事件', kind: 'han', x: 150, y: 104, where: '新竹北埔', text: '1907 年，蔡清琳號召，漢人與賽夏族隘勇一起起事。' },
+  { id: 'miaoli', name: '苗栗事件', kind: 'han', x: 132, y: 128, where: '苗栗', text: '1913 年，以羅福星為代表，起事前被發現。' },
+  { id: 'xilai', name: '西來庵事件', kind: 'han', x: 134, y: 280, where: '臺南玉井（噍吧哖）', text: '1915 年，余清芳等人領導，漢人最後一次大規模武裝抗日。' },
+  { id: 'wushe', name: '霧社事件', kind: 'ind', x: 166, y: 184, where: '南投霧社', text: '1930 年，賽德克族莫那魯道率族人起事，遭日本強力鎮壓。' },
+];
+const TW = 'M 150,28 L 186,24 L 206,46 L 216,82 L 226,122 L 231,170 L 224,232 L 212,290 L 196,340 L 182,384 L 170,420 L 152,406 L 132,372 L 118,338 L 106,300 L 95,252 L 100,200 L 110,140 L 124,90 L 138,50 Z';
+let mapMode = 'explore', quizOrder = [], quizIdx = 0, quizScore = 0;
+function drawMap(){
+  let s = rect(0,0,300,440,'#e0f2fe');
+  s += `<path d="${TW}" fill="#fef3c7" stroke="#a16207" stroke-width="2"/>`;
+  s += txt(60, 380, '澎湖', '#6b7280', 10) + `<circle cx="52" cy="352" r="4" fill="#fef3c7" stroke="#a16207"/>`;
+  SITES.forEach(st => {
+    s += `<g class="site" data-id="${st.id}"><circle cx="${st.x}" cy="${st.y}" r="7" fill="${KIND[st.kind]}" stroke="#fff" stroke-width="2"/>`;
+    if(mapMode === 'explore'){
+      const right = st.x >= 150;
+      s += txt(st.x + (right ? 12 : -12), st.y + 4, st.name, '#1f2937', 11, right ? 'start' : 'end');
+    }
+    s += '</g>';
+  });
+  document.getElementById('svgMap').innerHTML = svg(300, 440, s);
+  document.querySelectorAll('#svgMap .site').forEach(g => g.addEventListener('click', () => onSite(g)));
+}
+function onSite(g){
+  const st = SITES.find(x => x.id === g.dataset.id), info = document.getElementById('mapInfo');
+  g.classList.add('hit'); setTimeout(() => g.classList.remove('hit'), 1300);
+  if(mapMode === 'explore'){
+    info.style.color = ''; info.innerHTML = `<span class="st-tag" style="background:${KIND[st.kind]}">${KNAME[st.kind]}</span><b>${st.name}</b>（${st.where}）<br>${st.text}`;
+    return;
+  }
+  const want = SITES[quizOrder[quizIdx]];
+  const ok = st.id === want.id;
+  if(ok) quizScore++;
+  toolLog('事件地圖', ok);
+  quizIdx++;
+  const fb = ok ? `✔ 答對！${want.name}在${want.where}。` : `✘ 那是${st.name}。${want.name}在${want.where}。`;
+  if(quizIdx >= quizOrder.length){
+    info.style.color = ''; info.innerHTML = fb + `<br><b>全部完成：答對 ${quizScore} / ${quizOrder.length}</b>。按「考考你」再來一次。`;
+    mapMode = 'explore'; drawMap(); return;
+  }
+  info.style.color = ok ? '#166534' : '#991b1b';
+  info.innerHTML = fb + `<br><br>下一題：請點出 <b>${SITES[quizOrder[quizIdx]].name}</b>`;
+}
+document.getElementById('mapExplore').addEventListener('click', () => { mapMode = 'explore'; drawMap(); const i = document.getElementById('mapInfo'); i.style.color = ''; i.textContent = '👆 點地圖上的圓點，看看那裡發生了什麼。'; });
+document.getElementById('mapQuiz').addEventListener('click', () => {
+  mapMode = 'quiz'; quizOrder = shuffle(SITES.map((_, i) => i)); quizIdx = 0; quizScore = 0; drawMap();
+  const i = document.getElementById('mapInfo'); i.style.color = ''; i.innerHTML = `名字被藏起來了（看顏色提示）。請點出 <b>${SITES[quizOrder[0]].name}</b>`;
+});
+drawMap();
+
+// ---- 1-3 排序：武裝抗日 ----
+orderGame({ box: 'ordArm', name: '排序：武裝抗日', items: [
+  { label: '乙未戰爭（臺灣民主國、各地義軍）', year: '1895' },
+  { label: '簡大獅、柯鐵、林少貓游擊抗日大致平定', year: '約 1902' },
+  { label: '北埔事件', year: '1907' },
+  { label: '苗栗事件（羅福星）', year: '1913' },
+  { label: '西來庵（噍吧哖）事件', year: '1915' },
+  { label: '霧社事件（莫那魯道）', year: '1930' },
+] });
+
+// ---- 1-4 情境選擇 ----
+const SCN = [
+  { sit: '1920 年，你在東京讀到「民族自決」的文章，覺得臺灣人應該能參與決定臺灣的法律。你會怎麼做？',
+    opts: ['回臺灣組織武裝隊伍', '聯合大家向日本帝國議會請願，要求設立臺灣議會', '什麼都不做，專心讀書'],
+    real: '歷史上，林獻堂等人選擇<b>請願</b>：1921～1934 年向帝國議會請願設立臺灣議會，前後 15 次。原因是武裝抗日（如西來庵事件）代價太大，而請願在法律允許的範圍內，比較能爭取支持。雖然都沒通過，但讓「議會」「參政」的觀念傳開。' },
+  { sit: '你回到家鄉，發現很多鄉親不識字、很少接觸新知識。你想讓大家了解世界的變化，你會：',
+    opts: ['到各地辦演講，介紹新觀念', '在鎮上設一個地方，放報紙雜誌讓大家免費看', '寫信給總督，請他辦學校'],
+    real: '1921 年成立的<b>臺灣文化協會</b>正是這樣做：舉辦<b>文化講座</b>到各地演講，設<b>讀報社</b>讓民眾閱讀報刊，還辦夏季學校、放映電影。他們認為先提升文化水準、啟發民族意識，政治運動才有基礎。' },
+  { sit: '1927 年，文化協會內部對路線意見不合，分裂了。你和蔣渭水想繼續推動政治改革，你會：',
+    opts: ['成立一個政黨，有組織地爭取權利', '放棄政治，回去做生意', '加入總督府當官，從內部改變'],
+    real: '蔣渭水等人在 1927 年成立<b>臺灣民眾黨</b>，是臺灣人第一個政黨。後來它越來越重視工人、農民運動，1931 年被總督府禁止。另一批較溫和的人（林獻堂、蔡培火等）則在 1930 年組成<b>臺灣地方自治聯盟</b>，專心爭取地方選舉。' },
+  { sit: '1935 年，總督府舉辦第一次地方選舉，但只有一半議員民選，而且只有繳一定稅額、年滿 25 歲的男子能投票。你怎麼看？',
+    opts: ['總比沒有好，先參加再說', '太不夠了，繼續爭取完全的自治', '兩種想法都有道理'],
+    real: '這題當時的人也看法不同。地方自治聯盟長期爭取地方選舉，1935 年終於有了<b>半數民選</b>的選舉，有人視為重要的一步；也有人認為一半官派、資格限制多，離真正的自治還很遠。兩年後中日戰爭爆發、進入皇民化時期，政治運動空間更小，地方自治聯盟也在 1937 年解散。' },
+];
+let scnIdx = 0; const scnPick = {};
+function drawScn(){
+  const box = document.getElementById('scnBox'), n = Math.min(scnIdx + 1, SCN.length);
+  box.innerHTML = SCN.slice(0, n).map((c, i) => `<div class="scn"><div class="who">情境 ${i + 1} / ${SCN.length}</div><div class="sit">${c.sit}</div>
+    ${c.opts.map((o, j) => `<button class="opt${scnPick[i] === j ? ' pick' : ''}" data-j="${j}"${i < scnIdx ? ' disabled' : ''}>${String.fromCharCode(65 + j)}. ${o}</button>`).join('')}
+    <div class="res${i < scnIdx ? ' show' : ''}">📜 歷史上：${c.real}</div></div>`).join('');
+  document.getElementById('scnProg').textContent = `進度：${scnIdx} / ${SCN.length}` + (scnIdx >= SCN.length ? '，完成！' : '');
+  if(scnIdx < SCN.length) box.lastElementChild.querySelectorAll('.opt').forEach(b => b.addEventListener('click', () => {
+    scnPick[scnIdx] = +b.dataset.j; toolLog('情境選擇' + (scnIdx + 1), true); scnIdx++; drawScn();
+  }));
+}
+document.getElementById('scnReset').addEventListener('click', () => { scnIdx = 0; Object.keys(scnPick).forEach(k => delete scnPick[k]); drawScn(); });
+drawScn();
+
+// ---- 1-4 武裝 vs 非武裝 ----
+dndGame({ box: 'dndArm', name: '武裝與非武裝分類', poolLabel: '事件、人物、團體',
+  items: [
+    { id: 'a1', label: '乙未戰爭' }, { id: 'a2', label: '簡大獅、柯鐵、林少貓' }, { id: 'a3', label: '北埔事件' },
+    { id: 'a4', label: '西來庵事件' }, { id: 'a5', label: '霧社事件' },
+    { id: 'n1', label: '臺灣文化協會' }, { id: 'n2', label: '臺灣議會設置請願運動' }, { id: 'n3', label: '讀報社、文化講座' },
+    { id: 'n4', label: '臺灣民眾黨' }, { id: 'n5', label: '臺灣地方自治聯盟' },
+  ],
+  zones: [
+    { id: 'arm', label: '⚔️ 武裝抗日', accepts: ['a1', 'a2', 'a3', 'a4', 'a5'] },
+    { id: 'non', label: '📢 非武裝抗日（政治社會運動）', accepts: ['n1', 'n2', 'n3', 'n4', 'n5'] },
+  ],
+  hint: '提示：拿武器作戰的是武裝；用演講、請願、組團體、組政黨的是非武裝。' });
+
+// ---- 1-5 皇民化措施配對 ----
+dndGame({ box: 'dndKominka', name: '皇民化措施配對', poolLabel: '各種做法',
+  items: [
+    { id: 'k1', label: '國語家庭' }, { id: 'k2', label: '廢除報紙漢文欄' }, { id: 'k3', label: '推廣說日語' },
+    { id: 'k4', label: '改成日式姓名' },
+    { id: 'k5', label: '正廳改善' }, { id: 'k6', label: '參拜神社' }, { id: 'k7', label: '整理、合併傳統寺廟' },
+    { id: 'k8', label: '陸軍特別志願兵' }, { id: 'k9', label: '1945 年實施徵兵' }, { id: 'k10', label: '高砂義勇隊' },
+  ],
+  zones: [
+    { id: 'lang', label: '🗣️ 國語運動', accepts: ['k1', 'k2', 'k3'] },
+    { id: 'name', label: '🪪 改姓名', accepts: ['k4'] },
+    { id: 'rel', label: '⛩️ 宗教與生活改革', accepts: ['k5', 'k6', 'k7'] },
+    { id: 'mil', label: '🎖️ 志願兵與徵兵', accepts: ['k8', 'k9', 'k10'] },
+  ] });
+
+// ---- 翻翻卡 ----
+const FLIP = [
+  ['臺灣割讓的條約？', '馬關條約（1895），甲午戰爭清朝戰敗'], ['臺灣民主國的總統？', '唐景崧；劉永福在臺南繼續抵抗'],
+  ['日治三階段？', '武官（鎮壓）→ 文官（同化）→ 武官（皇民化）'], ['六三法給總督什麼？', '委任立法權：發布「律令」'],
+  ['兒玉源太郎的民政長官？', '後藤新平'], ['首任文官總督？', '田健治郎（1919）'],
+  ['保甲怎麼編？', '10 戶 1 甲、10 甲 1 保，連坐'], ['總督「一人四權」？', '行政、立法、司法、軍事'],
+  ['漢人最後一次大規模武裝抗日？', '西來庵（噍吧哖）事件，1915'], ['霧社事件？', '1930，賽德克族莫那魯道'],
+  ['臺灣文化協會？', '1921，蔣渭水、林獻堂；講座、讀報社'], ['議會請願幾次？', '1921～1934，共 15 次，都沒通過'],
+  ['第一個臺灣人政黨？', '臺灣民眾黨（1927）'], ['1935 年選舉？', '半數民選、半數官派，資格有限制'],
+  ['國語家庭的「國語」？', '日語'], ['正廳改善？', '牌位、神像換成日本神宮大麻'],
+];
+const grid = document.getElementById('flipGrid');
+grid.innerHTML = FLIP.map(([q, a]) => `<div class="flip"><div class="inner"><div class="face front">${q}</div><div class="face back">${a}</div></div></div>`).join('');
+grid.querySelectorAll('.flip').forEach(f => f.addEventListener('click', () => f.classList.toggle('on')));
+document.getElementById('flipReset').addEventListener('click', () => grid.querySelectorAll('.flip').forEach(f => f.classList.remove('on')));
+</script>
+</body>
+</html>
