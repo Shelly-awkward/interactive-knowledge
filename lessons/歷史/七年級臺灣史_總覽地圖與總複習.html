@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>七年級臺灣史｜總覽地圖與總複習</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --border:#e5e7eb; --radius:14px; --accent:#7c2d12; --accent-soft:#fef3c7;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:24px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#7c2d12,#c2410c); color:#fff; border-radius:var(--radius); padding:28px 26px; margin-bottom:20px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.92; font-size:.92rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:120px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--blue);}
+  nav.tabs button.active{background:var(--blue); border-color:var(--blue); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;}
+  .card h2{font-size:1.15rem; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .goal{background:var(--blue-soft); border:none;}
+  .goal ul{margin-left:1.2em;}
+  .card ul,.card ol{margin-left:1.3em;}
+
+  .formula{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:10px 16px; margin:10px 0; font-size:1.05rem;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e40af;}
+  .warn{background:var(--red-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#991b1b;}
+
+  .tblbox{overflow-x:auto; margin:12px 0;}
+  table.pv{border-collapse:collapse; width:100%; min-width:480px; text-align:center; font-size:.92rem;}
+  table.pv th,table.pv td{border:1px solid var(--border); padding:7px 6px;}
+  table.pv th{background:var(--accent-soft); color:var(--accent); font-size:.85rem;}
+  table.pv td.name{font-weight:bold;}
+
+  .q{border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .q .stem{font-weight:bold; margin-bottom:8px;}
+  .q label{display:block; padding:7px 12px; border:1px solid var(--border); border-radius:8px; margin:6px 0; cursor:pointer; transition:.12s;}
+  .q label:hover{border-color:var(--blue); background:#f0f6ff;}
+  .q input{margin-right:8px;}
+  .q .check{margin-top:8px; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:7px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .q .fb{margin-top:8px; padding:9px 13px; border-radius:8px; font-size:.92rem; display:none;}
+  .q .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .q .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .q.correct{border-color:var(--green);}
+  .q.wrong{border-color:var(--red);}
+  .q .review{display:inline-block; margin-top:6px; font-size:.88rem; background:#fff; border:1px solid var(--red); color:var(--red); border-radius:99px; padding:2px 12px; text-decoration:none;}
+  .q .chtag{font-size:.75rem; color:var(--sub); font-weight:normal; margin-left:6px;}
+
+  .tool{background:var(--accent-soft); border:1px dashed var(--accent); border-radius:10px; padding:14px 16px; margin:12px 0;}
+  .tool .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0;}
+  .tool button{background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:.9rem;}
+  .tool button.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+  .tool .hint{font-size:.85rem; color:var(--sub); margin-top:4px;}
+  .svgbox{text-align:center; margin:14px 0; overflow-x:auto;}
+  .svgbox svg{max-width:100%; height:auto;}
+  .infobox{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; min-height:2.4em;}
+
+  #quizResult{display:none; text-align:center; padding:22px; border-radius:var(--radius); margin-top:14px; font-size:1.1rem; font-weight:bold;}
+  #quizResult.good{display:block; background:var(--green-soft); color:#166534;}
+  #quizResult.soso{display:block; background:var(--amber-soft); color:#92400e;}
+  #quizResult.bad{display:block; background:var(--red-soft); color:#991b1b;}
+  .bigbtn{display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:10px; padding:13px; font-size:1rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:6px;}
+  .bigbtn.ghost{background:#fff; color:var(--blue); border:1px solid var(--blue);}
+
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:30px;}
+  @media (max-width:520px){ nav.tabs button{min-width:44%;} }
+
+  .flip-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px;}
+  .flip{perspective:800px; cursor:pointer; height:120px;}
+  .flip .inner{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+  .flip.on .inner{transform:rotateY(180deg);}
+  .flip .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:12px; padding:12px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:.95rem; line-height:1.5;}
+  .flip .front{background:#fff; border:2px solid var(--accent); color:var(--accent); font-weight:bold;}
+  .flip .back{background:var(--accent); color:#fff; transform:rotateY(180deg);}
+
+  /* ── 本頁專屬 ── */
+  .era-tag{display:inline-block; border-radius:99px; padding:1px 10px; font-size:.8rem; color:#fff; margin-right:4px; white-space:nowrap;}
+  .tl{display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin:10px 0 4px; position:relative;}
+  .tl::before{content:""; position:absolute; left:0; right:0; top:22px; height:4px; background:#d1d5db; border-radius:2px; z-index:0;}
+  .tl button{position:relative; z-index:1; border:none; background:none; cursor:pointer; font-family:inherit; text-align:center; padding:0 2px; color:var(--ink);}
+  .tl .dot{display:block; width:40px; height:40px; margin:2px auto 4px; border-radius:50%; color:#fff; font-size:1.1rem; line-height:40px; border:3px solid #fff; box-shadow:0 0 0 2px #d1d5db; transition:.15s;}
+  .tl .nm{display:block; font-weight:bold; font-size:.88rem; line-height:1.3;}
+  .tl .yr{display:block; font-size:.72rem; color:var(--sub); line-height:1.3;}
+  .tl button.on .dot{transform:scale(1.15); box-shadow:0 0 0 3px var(--ink);}
+  @media (max-width:640px){
+    .tl{grid-template-columns:repeat(4,1fr); row-gap:10px;}
+    .tl::before{display:none;}
+  }
+  .eracard{border-radius:12px; padding:16px 18px; border:2px solid; background:#fff; margin-top:12px;}
+  .eracard h3{margin:0 0 6px; font-size:1.15rem;}
+  .eracard .kv{display:grid; grid-template-columns:auto 1fr; gap:4px 12px; font-size:.93rem; margin:8px 0;}
+  .eracard .kv b{white-space:nowrap;}
+  .kw{display:inline-block; border-radius:8px; padding:2px 10px; margin:2px 4px 2px 0; font-weight:bold; font-size:.9rem;}
+  .golink{display:inline-block; margin:6px 6px 0 0; padding:7px 14px; border-radius:99px; color:#fff; text-decoration:none; font-size:.88rem;}
+  .golink:hover{filter:brightness(1.1);}
+
+  .qbtns{display:flex; flex-wrap:wrap; gap:8px; margin:8px 0;}
+  .qbtns button{border:1.5px solid var(--accent); background:#fff; color:var(--accent); border-radius:99px; padding:7px 14px; cursor:pointer; font-family:inherit; font-size:.92rem;}
+  .qbtns button.on{background:var(--accent); color:#fff; font-weight:bold;}
+  .cmp{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:10px; margin-top:10px;}
+  .cmp .cell{background:#fff; border-radius:10px; border-left:6px solid; padding:10px 12px; font-size:.92rem; line-height:1.65; box-shadow:0 1px 2px rgba(0,0,0,.06); opacity:0; transform:translateY(8px);}
+  .cmp .cell.lit{opacity:1; transform:none; transition:opacity .35s, transform .35s;}
+  .cmp .cell .h{font-weight:bold; margin-bottom:2px;}
+  .eraopts{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0;}
+  .eraopts button{border:none; border-radius:99px; color:#fff; padding:6px 12px; cursor:pointer; font-family:inherit; font-size:.88rem;}
+  .eraopts button:disabled{opacity:.45; cursor:default;}
+
+  .sortlist{list-style:none; margin:10px 0 !important; padding:0;}
+  .sortlist li{display:flex; align-items:center; gap:8px; background:#fff; border:1.5px solid var(--border); border-radius:10px; padding:8px 10px; margin:6px 0; cursor:pointer; user-select:none; transition:.12s;}
+  .sortlist li .no{flex:0 0 28px; height:28px; border-radius:50%; background:var(--blue-soft); color:var(--blue); font-weight:bold; text-align:center; line-height:28px; font-size:.9rem;}
+  .sortlist li .ev{flex:1 1 auto; min-width:0; font-size:.95rem; line-height:1.5;}
+  .sortlist li .yr{font-family:"Courier New",monospace; font-weight:bold; color:var(--accent); display:none;}
+  .sortlist.checked li .yr{display:inline;}
+  .sortlist li .mv{flex:0 0 auto; display:flex; gap:4px;}
+  .sortlist li .mv button{width:34px; height:34px; border:1px solid var(--border); background:#f9fafb; border-radius:8px; cursor:pointer; font-size:.9rem;}
+  .sortlist li.sel{border-color:var(--blue); background:#eff6ff;}
+  .sortlist li.ok{border-color:var(--green); background:var(--green-soft);}
+  .sortlist li.no2{border-color:var(--red); background:var(--red-soft);}
+  .answer{background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-top:8px; display:none;}
+  .answer.show{display:block;}
+  .answer ol{margin-left:1.4em;}
+  .msg{font-weight:bold; margin-left:6px;}
+  .msg.ok{color:#166534;} .msg.no{color:#991b1b;}
+
+  .match{display:grid; grid-template-columns:minmax(0,2fr) minmax(0,3fr); gap:10px; margin-top:10px;}
+  .match .col{display:flex; flex-direction:column; gap:8px;}
+  .match .col .ttl{font-size:.82rem; color:var(--sub); font-weight:bold;}
+  .match button.it{text-align:left; border:1.5px solid var(--border); background:#fff; border-radius:10px; padding:9px 11px; cursor:pointer; font-family:inherit; font-size:.92rem; line-height:1.5; color:var(--ink); transition:.12s; min-height:44px; touch-action:manipulation;}
+  .match button.it.person{font-weight:bold; text-align:center;}
+  .match button.it.sel{border-color:var(--blue); background:#dbeafe;}
+  .match button.it.done{border-color:var(--green); background:var(--green-soft); cursor:default;}
+  .match button.it.bad{border-color:var(--red); background:var(--red-soft); animation:shake .35s;}
+  @keyframes shake{25%{transform:translateX(-4px);} 75%{transform:translateX(4px);}}
+  @media (max-width:420px){ .match button.it{font-size:.85rem; padding:8px;} }
+  .pairlog{font-size:.9rem; margin-top:8px;}
+  .pairlog div{padding:4px 0; border-bottom:1px dashed var(--border);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108課綱 · 臺灣的歷史（上下冊） · 總覽與總複習</span>
+  <h1>七年級臺灣史：總覽地圖與總複習</h1>
+  <p>國一一整年的臺灣史，從史前到民主化，濃縮成七個時代。先在總覽地圖上看清楚「誰在什麼時候統治臺灣」，再用同一個問題比較七個時代、把事件排先後、配對人物，最後挑戰隨機 15 題總測驗。答錯的題目可以直接點「去複習」回到那一章。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="s1">1 總覽地圖</button>
+  <button data-t="s2">2 一題問七代</button>
+  <button data-t="s3">3 年代排序</button>
+  <button data-t="s4">4 誰做了什麼</button>
+  <button data-t="s5">🏁 總測驗</button>
+</nav>
+
+<!-- ═══════════ 1 總覽地圖 ═══════════ -->
+<section id="s1" class="panel show">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>按照順序說出臺灣史的七個時代，以及每個時代大約的起訖年代</li>
+      <li>說得出每個時代的統治者和統治中心在哪裡</li>
+      <li>知道每個時代要回哪一章教材複習</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ 七個時代時間軸（點一下看卡片）</h2>
+    <p>臺灣的歷史常用「誰統治臺灣」來分時代。上冊從史前講到清帝國，下冊從日治講到今天。</p>
+    <div class="tl" id="tl"></div>
+    <div id="eraCard"></div>
+  </div>
+
+  <div class="card">
+    <h2>📏 每個時代有多長？</h2>
+    <p>把 1624 年以後畫成同一把尺，長條越長，代表那個時代越久。史前時代太長了（從距今約 5 萬年前開始），畫不下，只能用箭頭表示。長條也可以點。</p>
+    <div class="svgbox" id="svgBar"></div>
+    <div class="note">💡 清帝國統治約 212 年（1683～1895）最久；鄭氏只有約 21 年（1662～1683）最短；日治剛好約 50 年（1895～1945）。</div>
+  </div>
+
+  <div class="card">
+    <h2>📌 重點講解：分時代的「轉換點」</h2>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>年代</th><th>發生什麼事</th><th>從哪個時代 → 哪個時代</th></tr>
+        <tr><td>1624</td><td>荷蘭東印度公司占領大員（今臺南安平）</td><td>史前／原住民 → 荷西</td></tr>
+        <tr><td>1662</td><td>鄭成功打敗荷蘭人，荷蘭人投降離開</td><td>荷西 → 鄭氏</td></tr>
+        <tr><td>1683</td><td>清朝將領施琅攻下澎湖，鄭克塽投降</td><td>鄭氏 → 清領</td></tr>
+        <tr><td>1895</td><td>甲午戰爭後簽訂《馬關條約》，臺灣割讓給日本</td><td>清領 → 日治</td></tr>
+        <tr><td>1945</td><td>第二次世界大戰結束，中華民國政府接收臺灣</td><td>日治 → 戰後</td></tr>
+        <tr><td>1987</td><td>解除戒嚴（戒嚴：用軍事管制限制集會、言論等自由）</td><td>戰後威權 → 民主化</td></tr>
+      </table>
+    </div>
+    <div class="note">「威權」是指政府權力很集中、人民的言論與參政自由受到很多限制。民主化時期則逐步開放言論、組黨，並由人民直接選出總統。</div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 練習</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">1. 下列時代由早到晚排列，哪一個正確？</div>
+      <label><input type="radio" name="p1q1" value="A">鄭氏 → 荷西 → 清領 → 日治</label>
+      <label><input type="radio" name="p1q1" value="B">荷西 → 清領 → 鄭氏 → 日治</label>
+      <label><input type="radio" name="p1q1" value="C">荷西 → 鄭氏 → 清領 → 日治</label>
+      <label><input type="radio" name="p1q1" value="D">荷西 → 鄭氏 → 日治 → 清領</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1624 荷蘭來 → 1662 鄭氏 → 1683 清 → 1895 日本。">　</div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">2. 清帝國統治臺灣大約多少年？</div>
+      <label><input type="radio" name="p1q2" value="A">約 50 年</label>
+      <label><input type="radio" name="p1q2" value="B">約 212 年</label>
+      <label><input type="radio" name="p1q2" value="C">約 38 年</label>
+      <label><input type="radio" name="p1q2" value="D">約 21 年</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1683～1895 年，是七個時代中有紀錄以來最長的統治。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">3. 日治時期，日本在臺灣設立的最高統治機關是：</div>
+      <label><input type="radio" name="p1q3" value="A">臺灣府</label>
+      <label><input type="radio" name="p1q3" value="B">承天府</label>
+      <label><input type="radio" name="p1q3" value="C">臺灣省行政長官公署</label>
+      <label><input type="radio" name="p1q3" value="D">臺灣總督府</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　臺灣總督府設在臺北。臺灣府是清代、承天府是鄭氏、行政長官公署是戰後初期。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2 一題問七代 ═══════════ -->
+<section id="s2" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>用同一個問題（統治者、經濟、原住民政策、衝突、教育）比較七個時代</li>
+      <li>看出臺灣歷史的「變」與「不變」：統治者一直換，但土地、族群與貿易的問題一再出現</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🔍 同一個問題，問七個時代</h2>
+    <p>先選一個問題，七個時代的答案會依序亮出來。看完試著自己說出「哪裡不一樣」。</p>
+    <div class="qbtns" id="cmpQ"></div>
+    <div class="cmp" id="cmpBox"></div>
+  </div>
+
+  <div class="card">
+    <h2>🎲 這是哪個時代？</h2>
+    <div class="tool">
+      <div>從上面的比較表隨機抽一句描述，你來猜是哪個時代。</div>
+      <div class="infobox" id="guessText">按「抽一題」開始。</div>
+      <div class="eraopts" id="guessOpts"></div>
+      <div class="row"><button id="guessNew">抽一題</button><span class="msg" id="guessMsg"></span></div>
+      <div class="hint">連續答對幾題？目前：<b id="guessStreak">0</b> 題</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📌 重點講解：看出「一再出現」的主題</h2>
+    <ul>
+      <li><b>土地</b>：從鄭氏屯田、清代漢人移墾，到戰後土地改革，誰能使用土地一直是衝突的來源，也常牽動原住民的生活領域。</li>
+      <li><b>貿易</b>：臺灣四面環海，荷蘭的轉口貿易、清代的茶糖樟腦、戰後的加工出口，經濟大多跟對外貿易有關。</li>
+      <li><b>原住民政策</b>：大致從「各部落自主」→「被征服、被劃界或被同化」→ 民主化後「恢復正名、保障權利」。</li>
+      <li><b>反抗與爭取</b>：從武裝反抗（郭懷一、林爽文、霧社事件），到非武裝的請願、組黨與選舉。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 練習</h2>
+    <div class="q" data-ans="A">
+      <div class="stem">1. 「茶、糖、樟腦」成為主要出口商品，是在哪個時期？</div>
+      <label><input type="radio" name="p2q1" value="A">清領後期開港通商以後</label>
+      <label><input type="radio" name="p2q1" value="B">荷西時期</label>
+      <label><input type="radio" name="p2q1" value="C">鄭氏時期</label>
+      <label><input type="radio" name="p2q1" value="D">戰後威權時期</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1860 年代臺灣開港後，茶、糖、樟腦大量出口，北部因茶與樟腦更繁榮。">　</div>
+    </div>
+    <div class="q" data-ans="C">
+      <div class="stem">2. 「劃定番界、禁止漢人越界進入原住民生活區」是哪個時代的政策？</div>
+      <label><input type="radio" name="p2q2" value="A">荷西時期</label>
+      <label><input type="radio" name="p2q2" value="B">日治時期</label>
+      <label><input type="radio" name="p2q2" value="C">清領時期</label>
+      <label><input type="radio" name="p2q2" value="D">民主化時期</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　清代前期劃界封山；牡丹社事件後才改為「開山撫番」。">　</div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">3. 憲法把「山胞」改稱為「原住民」，是在哪個時期？</div>
+      <label><input type="radio" name="p2q3" value="A">日治時期</label>
+      <label><input type="radio" name="p2q3" value="B">民主化時期</label>
+      <label><input type="radio" name="p2q3" value="C">戰後威權時期</label>
+      <label><input type="radio" name="p2q3" value="D">清領時期</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1994 年修憲正名為「原住民」，這是原住民族正名運動的成果。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3 年代排序 ═══════════ -->
+<section id="s3" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>把重要事件排出先後順序，建立「時間感」</li>
+      <li>記住幾個關鍵年份當「錨點」：1624、1662、1683、1895、1945、1987</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>⏳ 年代排序大挑戰</h2>
+    <div class="tool">
+      <div class="row">
+        <span>抽卡範圍：</span>
+        <button class="ghost" data-range="all">全部</button>
+        <button class="ghost" data-range="up">只考上冊（1895 前）</button>
+        <button class="ghost" data-range="down">只考下冊（1895 起）</button>
+      </div>
+      <div class="hint">把 8 張事件卡由<b>早（上）到晚（下）</b>排好。可以按 ▲▼ 移動，也可以先點一張、再點另一張，兩張就會交換位置。</div>
+      <ol class="sortlist" id="sortList"></ol>
+      <div class="row"><button id="sortCheck">檢查順序</button><button class="ghost" id="sortNew">再抽 8 張</button><span class="msg" id="sortMsg"></span></div>
+      <div class="answer" id="sortAns"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📌 重點講解：用「錨點年」排序</h2>
+    <p>遇到不熟的事件，先判斷它屬於哪個時代，再和錨點年比一比：</p>
+    <div class="formula">1624 荷蘭來 ｜ 1662 鄭氏 ｜ 1683 清朝 ｜ 1895 日本 ｜ 1945 戰後 ｜ 1987 解嚴</div>
+    <ul>
+      <li>例如「霧社事件」：主角是日本警察和賽德克族 → 日治時期 → 一定在 1895 和 1945 之間（實際是 1930）。</li>
+      <li>例如「牡丹社事件」：清朝因此派沈葆楨來臺 → 清領後期 → 在 1895 前（實際是 1874）。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 練習</h2>
+    <div class="q" data-ans="A">
+      <div class="stem">1. 下列事件，哪一件最早發生？</div>
+      <label><input type="radio" name="p3q1" value="A">郭懷一事件</label>
+      <label><input type="radio" name="p3q1" value="B">林爽文事件</label>
+      <label><input type="radio" name="p3q1" value="C">牡丹社事件</label>
+      <label><input type="radio" name="p3q1" value="D">霧社事件</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　郭懷一 1652（荷蘭時期）→ 林爽文 1786 → 牡丹社 1874 → 霧社 1930。">　</div>
+    </div>
+    <div class="q" data-ans="D">
+      <div class="stem">2. 臺灣解除戒嚴是在哪一年？</div>
+      <label><input type="radio" name="p3q2" value="A">1947 年</label>
+      <label><input type="radio" name="p3q2" value="B">1949 年</label>
+      <label><input type="radio" name="p3q2" value="C">1979 年</label>
+      <label><input type="radio" name="p3q2" value="D">1987 年</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　1949 年開始戒嚴，1987 年解嚴，前後約 38 年。">　</div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">3. 「首次總統直選」和「首次政黨輪替」的順序是：</div>
+      <label><input type="radio" name="p3q3" value="A">政黨輪替 2000 → 總統直選 1996</label>
+      <label><input type="radio" name="p3q3" value="B">總統直選 1996 → 政黨輪替 2000</label>
+      <label><input type="radio" name="p3q3" value="C">兩件事發生在同一年</label>
+      <label><input type="radio" name="p3q3" value="D">總統直選 1987 → 政黨輪替 1996</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　先有人民直接選總統（1996），之後才有不同政黨贏得總統大選（2000）。">　</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4 誰做了什麼 ═══════════ -->
+<section id="s4" class="panel">
+  <div class="card goal">
+    <h2>🎯 學習目標</h2>
+    <ul>
+      <li>把 20 多位重要人物和他們的事蹟配對起來</li>
+      <li>知道每個人屬於哪個時代</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🤝 人物 ↔ 事蹟配對</h2>
+    <div class="tool">
+      <div class="hint">先點左邊的人物，再點右邊的事蹟（也可以反過來）。配對正確會變綠色；每輪 6 人，共 <span id="matchTotal"></span> 人。</div>
+      <div class="match">
+        <div class="col" id="colP"><div class="ttl">人物</div></div>
+        <div class="col" id="colD"><div class="ttl">事蹟</div></div>
+      </div>
+      <div class="row" style="margin-top:10px"><button id="matchNext">下一輪</button><button class="ghost" id="matchRe">整個重來</button><span class="msg" id="matchMsg"></span></div>
+      <div class="pairlog" id="pairLog"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✏️ 練習</h2>
+    <div class="q" data-ans="C">
+      <div class="stem">1. 設計嘉南大圳與烏山頭水庫的日本技師是：</div>
+      <label><input type="radio" name="p4q1" value="A">後藤新平</label>
+      <label><input type="radio" name="p4q1" value="B">兒玉源太郎</label>
+      <label><input type="radio" name="p4q1" value="C">八田與一</label>
+      <label><input type="radio" name="p4q1" value="D">佐久間左馬太</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　嘉南大圳 1930 年完工，讓嘉南平原能灌溉、增產稻米與甘蔗。">　</div>
+    </div>
+    <div class="q" data-ans="A">
+      <div class="stem">2. 在淡水傳教、行醫（常幫人拔牙），並創辦理學堂大書院的是：</div>
+      <label><input type="radio" name="p4q2" value="A">馬偕</label>
+      <label><input type="radio" name="p4q2" value="B">沈葆楨</label>
+      <label><input type="radio" name="p4q2" value="C">劉銘傳</label>
+      <label><input type="radio" name="p4q2" value="D">陳永華</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　馬偕是加拿大長老教會傳教士，1872 年抵達淡水。">　</div>
+    </div>
+    <div class="q" data-ans="B">
+      <div class="stem">3. 二二八事件發生時，臺灣最高的行政首長是：</div>
+      <label><input type="radio" name="p4q3" value="A">蔣經國</label>
+      <label><input type="radio" name="p4q3" value="B">陳儀</label>
+      <label><input type="radio" name="p4q3" value="C">李登輝</label>
+      <label><input type="radio" name="p4q3" value="D">林獻堂</label>
+      <button class="check">對答案</button>
+      <div class="fb" data-exp="　陳儀是臺灣省行政長官，兼任警備總司令，權力很集中。">　</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧠 口訣／一頁重點整理</h2>
+    <div class="formula">史前原住先當家，荷西來了做貿易；<br>鄭氏三代二十年，清領最久兩百一；<br>日治剛好五十年，戰後戒嚴到八七；<br>解嚴直選再輪替，民主臺灣靠自己。</div>
+    <div class="tblbox">
+      <table class="pv">
+        <tr><th>時代</th><th>年代</th><th>統治者</th><th>一句話記住</th></tr>
+        <tr><td class="name">史前／原住民</td><td>約 5 萬年前～1624</td><td>各部落自主</td><td>長濱→大坌坑→十三行；南島語族</td></tr>
+        <tr><td class="name">荷西</td><td>1624～1662</td><td>荷蘭、西班牙</td><td>轉口貿易、鹿皮、新港文書</td></tr>
+        <tr><td class="name">鄭氏</td><td>1662～1683</td><td>鄭成功、鄭經、鄭克塽</td><td>屯田、陳永華建孔廟</td></tr>
+        <tr><td class="name">清領</td><td>1683～1895</td><td>清帝國</td><td>渡臺禁令、開港、1885 建省</td></tr>
+        <tr><td class="name">日治</td><td>1895～1945</td><td>日本（臺灣總督府）</td><td>六三法、米糖經濟、皇民化</td></tr>
+        <tr><td class="name">戰後威權</td><td>1945～1987</td><td>中華民國政府</td><td>二二八、戒嚴、經濟起飛</td></tr>
+        <tr><td class="name">民主化</td><td>1987～今</td><td>中華民國政府（民選）</td><td>解嚴、直選、政黨輪替</td></tr>
+      </table>
+    </div>
+    <h3>🔄 翻翻卡（點卡片翻面）</h3>
+    <div class="flip-grid" id="flipGrid"></div>
+    <div class="row" style="margin-top:10px"><button id="flipReset" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:inherit">全部蓋回去</button></div>
+  </div>
+</section>
+
+<!-- ═══════════ 總測驗 ═══════════ -->
+<section id="s5" class="panel">
+  <div class="card goal">
+    <h2>🏁 七年級臺灣史總測驗</h2>
+    <p>題庫共 <b id="bankSize"></b> 題，涵蓋上冊與下冊，每次隨機抽 15 題。交卷後會顯示解析；答錯的題目旁邊有「去複習」按鈕，可以直接回到那一章。</p>
+  </div>
+  <div class="card" id="quizCard">
+    <div id="quizList"></div>
+    <button class="bigbtn" id="submitQuiz">交卷，看看得幾分</button>
+    <div id="quizResult"></div>
+    <div id="reviewBox"></div>
+    <button class="bigbtn ghost" id="newQuiz">換一份新考卷</button>
+  </div>
+</section>
+
+<footer>互動知識庫 · 臺灣的歷史（上下冊）· 總覽與總複習<br>依 108 課綱單元架構自行編寫，內容為原創。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "歷史七年級 總覽與總複習";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// ===== 雲端上傳（家長的 Google 試算表）=====
+// 上傳網址不寫在教材裡（repo 是公開的，寫死會被外人拿去塞假紀錄）。
+// 家長在「學習紀錄」頁設定一次，存於此瀏覽器的 localStorage；未設定則只記在本機。
+const CLOUD_URL = localStorage.getItem("cloud_url_v1") || "";
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+// 開頁足跡：記一筆 visit，之後每 30 秒（頁面在前景時）累計停留時間
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+// 分頁切換
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+function txt(x,y,s,color,size,anchor,extra){
+  return `<text x="${x}" y="${y}" fill="${color||'#1f2937'}" font-size="${size||14}" text-anchor="${anchor||'middle'}" font-family="inherit" ${extra||''}>${s}</text>`;
+}
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" role="img">${inner}</svg>`; }
+function toolLog(q, ok){ logEv({ type:"practice", q, ok }); pracCount++; if(ok) pracOk++; }
+function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+// 練習題逐題對答案
+document.querySelectorAll('.q:not(.quiz) .check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.closest('.q');
+    const fb = q.querySelector('.fb');
+    const sel = q.querySelector('input:checked');
+    q.classList.remove('correct','wrong');
+    if(!sel){ fb.className='fb no'; fb.textContent='請先選一個答案喔！'; return; }
+    const exp = fb.dataset.exp;
+    const ok = sel.value === q.dataset.ans;
+    if(ok){
+      fb.className='fb ok'; fb.textContent='✔ 答對了！'+exp; q.classList.add('correct');
+    }else{
+      fb.className='fb no'; fb.textContent='✘ 再想想。'+exp; q.classList.add('wrong');
+    }
+    logEv({ type:"practice", q: sel.name, ok });
+    pracCount++; if(ok) pracOk++;
+  });
+});
+
+// ===== 各章教材連結 =====
+const CHAP = {
+  p1:  { name: '1-1 考古發掘與史前文化', file: '史前臺灣_考古發掘與史前文化.html' },
+  p1x: { name: '1-1 延伸：五萬年時間地圖', file: '史前臺灣_五萬年時間地圖.html' },
+  p2:  { name: '1-2 原住民：遷徙傳說與構樹', file: '臺灣原住民_遷徙傳說與構樹的秘密.html' },
+  c2:  { name: '七上2 大航海時代：荷西與鄭氏', file: '七上2_大航海時代的臺灣_荷西與鄭氏.html' },
+  hai: { name: '延伸：海商四百年', file: '海商四百年_從元朝到鄭成功的海圖.html' },
+  c3:  { name: '七上3 清帝國的政治與經濟', file: '七上3_清帝國時期的政治與經濟.html' },
+  c4:  { name: '七上4 清帝國的社會與文化', file: '七上4_清帝國時期的社會與文化.html' },
+  d1:  { name: '七下1 日治時期的政治', file: '七下1_日治時期的政治.html' },
+  d2:  { name: '七下2 日治時期的經濟與社會文化', file: '七下2_日治時期的經濟與社會文化.html' },
+  d3:  { name: '七下3 戰後臺灣的政治', file: '七下3_戰後臺灣的政治.html' },
+  d4:  { name: '七下4 戰後臺灣的經濟與社會文化', file: '七下4_戰後臺灣的經濟與社會文化.html' },
+};
+function chLink(k, cls){ const c = CHAP[k]; return `<a class="${cls||'golink'}" href="${c.file}">${c.name} →</a>`; }
+
+// ===== 七個時代 =====
+const ERAS = [
+  { id: 'pre', name: '史前／原住民', short: '史前', icon: '🪨', color: '#92400e', soft: '#fef3c7', years: '約 5 萬年前～1624',
+    ruler: '沒有統一的國家，原住民各部落自主生活', seat: '無（各部落各自有領域）',
+    kw: ['長濱文化', '十三行文化', '南島語族'],
+    sum: '考古學家依出土器物把史前分成舊石器、新石器、金屬器三個時代。原住民族屬於南島語族，有學者認為臺灣可能是南島語族向外擴散的起點之一。',
+    ch: ['p1', 'p1x', 'p2'] },
+  { id: 'dutch', name: '荷西時期', short: '荷西', icon: '⛵', color: '#ea580c', soft: '#ffedd5', years: '1624～1662',
+    ruler: '荷蘭東印度公司（南部）；西班牙（北部，1626～1642）', seat: '荷蘭：大員（今臺南安平）熱蘭遮城；西班牙：雞籠（今基隆）',
+    kw: ['轉口貿易', '鹿皮', '新港文書'],
+    sum: '大航海時代，歐洲人來到東亞做生意。荷蘭以大員為據點發展轉口貿易，並在 1642 年趕走北部的西班牙人。',
+    ch: ['c2', 'hai'] },
+  { id: 'zheng', name: '鄭氏時期', short: '鄭氏', icon: '🏯', color: '#ca8a04', soft: '#fef9c3', years: '1662～1683',
+    ruler: '鄭成功、鄭經、鄭克塽三代', seat: '承天府（今臺南）',
+    kw: ['屯田', '陳永華', '孔廟'],
+    sum: '鄭成功打敗荷蘭人後以臺灣為反清基地。實施屯田開墾，陳永華建孔廟、辦學，把漢人的教育制度帶進臺灣。',
+    ch: ['c2', 'hai'] },
+  { id: 'qing', name: '清領時期', short: '清領', icon: '🐉', color: '#16a34a', soft: '#dcfce7', years: '1683～1895',
+    ruler: '清帝國（初期隸屬福建省，1885 年建省）', seat: '臺灣府（府城，今臺南）；建省後巡撫駐臺北',
+    kw: ['渡臺禁令', '開港通商', '建省'],
+    sum: '前期消極治臺、限制移民，但仍有大量漢人渡海開墾；民變與械鬥頻繁。後期開港通商、牡丹社事件後轉為積極治臺。',
+    ch: ['c3', 'c4'] },
+  { id: 'japan', name: '日治時期', short: '日治', icon: '🌸', color: '#dc2626', soft: '#fee2e2', years: '1895～1945',
+    ruler: '日本（派臺灣總督統治）', seat: '臺灣總督府（臺北）',
+    kw: ['六三法', '米糖經濟', '皇民化運動'],
+    sum: '臺灣成為日本的殖民地。總督權力很大，推動現代化建設與新式教育，經濟以「農業臺灣、工業日本」為方向；臺灣人有武裝與非武裝抗日。',
+    ch: ['d1', 'd2'] },
+  { id: 'post', name: '戰後威權時期', short: '戰後', icon: '🏭', color: '#2563eb', soft: '#dbeafe', years: '1945～1987',
+    ruler: '中華民國政府（中國國民黨長期執政）', seat: '臺北（1949 年中央政府遷臺）',
+    kw: ['二二八事件', '戒嚴', '經濟起飛'],
+    sum: '戰後中華民國政府接收臺灣，1947 年發生二二八事件，1949 年起長期戒嚴。經濟上靠土地改革、美援、加工出口快速成長。',
+    ch: ['d3', 'd4'] },
+  { id: 'demo', name: '民主化時期', short: '民主', icon: '🗳️', color: '#7c3aed', soft: '#ede9fe', years: '1987～今',
+    ruler: '中華民國政府（由人民選舉產生）', seat: '臺北',
+    kw: ['解除戒嚴', '總統直選', '政黨輪替'],
+    sum: '1987 年解嚴後，開放組黨與言論自由，國會全面改選，1996 年首次總統直選，2000 年首次政黨輪替。',
+    ch: ['d3', 'd4'] },
+];
+const ERA = Object.fromEntries(ERAS.map(e => [e.id, e]));
+function eraTag(id){ const e = ERA[id]; return `<span class="era-tag" style="background:${e.color}">${e.short}</span>`; }
+
+// ---- 時間軸 ----
+const tl = document.getElementById('tl');
+tl.innerHTML = ERAS.map((e, i) => `<button data-i="${i}"><span class="dot" style="background:${e.color}">${e.icon}</span><span class="nm">${e.name}</span><span class="yr">${e.years}</span></button>`).join('');
+let eraSeen = new Set();
+function showEra(i){
+  const e = ERAS[i];
+  tl.querySelectorAll('button').forEach((b, j) => b.classList.toggle('on', j === i));
+  document.getElementById('eraCard').innerHTML = `
+    <div class="eracard" style="border-color:${e.color}">
+      <h3 style="color:${e.color}">${e.icon} ${e.name}　<small style="color:#6b7280;font-weight:normal">${e.years}</small></h3>
+      <div class="kv"><b>👑 統治者</b><span>${e.ruler}</span><b>🏛️ 首都／治所</b><span>${e.seat}</span></div>
+      <div><b>🔑 關鍵字：</b>${e.kw.map(k => `<span class="kw" style="background:${e.soft};color:${e.color}">${k}</span>`).join('')}</div>
+      <p style="margin-top:8px;font-size:.93rem">${e.sum}</p>
+      <div>${e.ch.map(k => `<a class="golink" style="background:${e.color}" href="${CHAP[k].file}">📘 ${CHAP[k].name}</a>`).join('')}</div>
+      <div class="row" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        ${i > 0 ? `<button class="ghost era-prev" style="background:#fff;border:1px solid ${e.color};color:${e.color};border-radius:8px;padding:6px 14px;cursor:pointer;font-family:inherit">← 上一個時代</button>` : ''}
+        ${i < ERAS.length - 1 ? `<button class="era-next" style="background:${e.color};color:#fff;border:none;border-radius:8px;padding:6px 14px;cursor:pointer;font-family:inherit">下一個時代 →</button>` : ''}
+      </div>
+    </div>`;
+  const pv = document.querySelector('#eraCard .era-prev'), nx = document.querySelector('#eraCard .era-next');
+  if(pv) pv.addEventListener('click', () => showEra(i - 1));
+  if(nx) nx.addEventListener('click', () => showEra(i + 1));
+  eraSeen.add(i);
+  if(eraSeen.size === ERAS.length && !showEra.done){ showEra.done = true; toolLog('總覽時間軸看完七個時代', true); }
+}
+tl.querySelectorAll('button').forEach(b => b.addEventListener('click', () => showEra(+b.dataset.i)));
+showEra(0);
+
+// ---- 比例長條 ----
+(function(){
+  const X0 = 70, X1 = 470, Y0 = 1600, Y1 = 2026, sx = y => X0 + (y - Y0) / (Y1 - Y0) * (X1 - X0);
+  const spans = [['dutch', 1624, 1662], ['zheng', 1662, 1683], ['qing', 1683, 1895], ['japan', 1895, 1945], ['post', 1945, 1987], ['demo', 1987, 2026]];
+  let s = `<rect x="0" y="0" width="480" height="150" fill="#f9fafb" rx="10"/>`;
+  s += `<g class="bar" data-i="0" style="cursor:pointer"><path d="M 10 60 L 30 45 L 30 52 L ${sx(1624)} 52 L ${sx(1624)} 68 L 30 68 L 30 75 Z" fill="${ERA.pre.color}"/>` + txt(40, 40, '史前：約 5 萬年…', ERA.pre.color, 11, 'start') + '</g>';
+  spans.forEach(([id, a, b]) => {
+    const i = ERAS.findIndex(e => e.id === id), x = sx(a), w = sx(b) - sx(a);
+    s += `<g class="bar" data-i="${i}" style="cursor:pointer"><rect x="${x}" y="50" width="${w}" height="20" fill="${ERA[id].color}" stroke="#fff" stroke-width="1"/>`;
+    s += txt(x + w / 2, i % 2 ? 92 : 40, ERA[id].short + ' ' + (b - a) + '年', ERA[id].color, 11, 'middle', 'font-weight="bold"') + '</g>';
+  });
+  [1624, 1683, 1895, 1945, 1987].forEach(y => s += `<line x1="${sx(y)}" y1="70" x2="${sx(y)}" y2="108" stroke="#9ca3af" stroke-dasharray="3 3"/>` + txt(sx(y), 120, y, '#374151', 10));
+  s += txt(sx(2026), 120, '今', '#374151', 10);
+  s += txt(240, 142, '（1624 年以後按比例畫；民主化時期仍在持續）', '#6b7280', 10);
+  document.getElementById('svgBar').innerHTML = svg(480, 150, s);
+  document.querySelectorAll('#svgBar .bar').forEach(g => g.addEventListener('click', () => { showEra(+g.dataset.i); document.getElementById('tl').scrollIntoView({ behavior: 'smooth', block: 'center' }); }));
+})();
+
+// ===== 2 比較表 =====
+const CMP = [
+  { id: 'ruler', label: '👑 誰統治？', a: {
+    pre: '沒有統一政權，原住民各部落自主，由頭目、長老或部落會議處理公共事務。',
+    dutch: '荷蘭東印度公司（一間有軍隊、能代表國家簽約的貿易公司）統治南部；西班牙在 1626～1642 年占領北部。',
+    zheng: '鄭成功、鄭經、鄭克塽祖孫三代，以臺灣作為反清復明的基地。',
+    qing: '清帝國，先設臺灣府隸屬福建省；1885 年臺灣建省，劉銘傳任首任巡撫。',
+    japan: '日本派臺灣總督統治，總督擁有行政、立法（六三法授權）和軍事大權。',
+    post: '中華民國政府，中國國民黨長期執政；實施戒嚴，限制組黨與言論自由。',
+    demo: '中華民國政府，但總統、國會議員都由人民選出，出現政黨輪替。' } },
+  { id: 'eco', label: '💰 經濟靠什麼？', a: {
+    pre: '採集、狩獵、捕魚，新石器時代開始種植作物、飼養家畜；金屬器時代已有對外交易（如十三行文化的玻璃珠、銅錢）。',
+    dutch: '轉口貿易：把中國的生絲、瓷器轉運到日本、歐洲等地；也輸出鹿皮，並招募漢人來臺種稻米、甘蔗。',
+    zheng: '屯田開墾（軍隊平時耕田、戰時打仗），並與日本、東南亞等地進行海上貿易。',
+    qing: '前期以米、糖運往中國大陸為主（郊商經營）；開港通商後，茶、糖、樟腦成為三大出口品。',
+    japan: '「農業臺灣、工業日本」：發展米、糖（蓬萊米、新式製糖），興建嘉南大圳；1930 年代後配合戰爭發展工業。',
+    post: '土地改革、美援；1960 年代設加工出口區，發展出口導向的輕工業；1970 年代推動十大建設。',
+    demo: '產業升級，發展電子、半導體等高科技產業與服務業。' } },
+  { id: 'abo', label: '🌿 對原住民的政策？', a: {
+    pre: '原住民就是這片土地的主人，各族群有自己的語言、祭儀和生活領域。',
+    dutch: '用武力征服不服從的部落（如麻豆社），召開地方會議要部落歸順；傳教士用羅馬拼音書寫西拉雅語。',
+    zheng: '軍隊屯田進入原住民的生活領域，常引發衝突，也有部落起來反抗。',
+    qing: '前期劃定番界、禁止漢人越界；牡丹社事件（1874）後改採「開山撫番」，開路進入山區。',
+    japan: '「理蕃」政策，以軍警武力控制山區（如五年理蕃計畫）；霧社事件（1930）後更加強教化與同化。',
+    post: '推行「山地平地化」，稱原住民為「山胞」，推行國語，傳統文化與語言流失。',
+    demo: '1994 年修憲正名為「原住民」，1996 年設立中央的原住民族專責機關，推動語言復振與權利保障。' } },
+  { id: 'war', label: '⚔️ 主要衝突／抗爭？', a: {
+    pre: '部落之間為了獵場、領域而發生衝突（多半靠口傳與民族學紀錄得知）。',
+    dutch: '1652 年郭懷一事件（漢人反抗荷蘭）；荷蘭與西班牙爭奪北部，1642 年荷蘭獲勝。',
+    zheng: '鄭成功與荷蘭作戰（1661～1662）；鄭氏與清朝對抗，1683 年施琅攻下澎湖。',
+    qing: '民變多：朱一貴事件（1721）、林爽文事件（1786）等；不同祖籍移民的分類械鬥；外患有牡丹社事件、清法戰爭。',
+    japan: '武裝抗日（如 1915 年西來庵事件、1930 年霧社事件）；1920 年代起改為非武裝的議會設置請願、文化啟蒙。',
+    post: '1947 年二二八事件；戒嚴時期的白色恐怖（政府以叛亂等罪名逮捕、審判異議人士）；1979 年美麗島事件。',
+    demo: '透過選舉、集會遊行、社會運動表達意見，例如 1990 年野百合學運要求國會改革。' } },
+  { id: 'edu', label: '📚 教育與文化？', a: {
+    pre: '沒有文字，以口傳神話、歌謠和祭儀傳承知識。',
+    dutch: '傳教士設學校、傳基督教，用羅馬拼音書寫西拉雅語；後來留下「新港文書」。',
+    zheng: '陳永華建孔廟、設學校，開始推行漢人的儒學教育。',
+    qing: '設儒學、書院，讀書人參加科舉；民間信仰（如媽祖）興盛；開港後馬偕等傳教士設新式學校、醫院。',
+    japan: '設立公學校等新式教育，普及日語；1937 年後推行皇民化運動，要臺灣人說日語、改日本姓名。',
+    post: '推行國語運動，在學校限制說方言；1968 年實施九年國民義務教育。',
+    demo: '本土化與多元文化，學校加入母語教學與臺灣史地內容。' } },
+];
+const cmpQ = document.getElementById('cmpQ'), cmpBox = document.getElementById('cmpBox');
+cmpQ.innerHTML = CMP.map((c, i) => `<button data-i="${i}">${c.label}</button>`).join('');
+const cmpSeen = new Set();
+function showCmp(i){
+  const c = CMP[i];
+  cmpQ.querySelectorAll('button').forEach((b, j) => b.classList.toggle('on', j === i));
+  cmpBox.innerHTML = ERAS.map(e => `<div class="cell" style="border-color:${e.color}"><div class="h" style="color:${e.color}">${e.icon} ${e.name}<small style="color:#6b7280;font-weight:normal">（${e.years}）</small></div>${c.a[e.id]}</div>`).join('');
+  cmpBox.querySelectorAll('.cell').forEach((el, j) => setTimeout(() => el.classList.add('lit'), 90 * j));
+  cmpSeen.add(i);
+  if(cmpSeen.size === CMP.length && !showCmp.done){ showCmp.done = true; toolLog('比較表五題都看過', true); }
+}
+cmpQ.querySelectorAll('button').forEach(b => b.addEventListener('click', () => showCmp(+b.dataset.i)));
+showCmp(0);
+
+// ---- 這是哪個時代 ----
+let guessAns = null, guessStreak = 0;
+const guessOpts = document.getElementById('guessOpts'), guessMsg = document.getElementById('guessMsg');
+guessOpts.innerHTML = ERAS.map(e => `<button data-id="${e.id}" style="background:${e.color}" disabled>${e.short}</button>`).join('');
+document.getElementById('guessNew').addEventListener('click', () => {
+  const c = CMP[Math.floor(Math.random() * CMP.length)], e = ERAS[Math.floor(Math.random() * ERAS.length)];
+  guessAns = e.id;
+  document.getElementById('guessText').innerHTML = `<b>${c.label}</b><br>${c.a[e.id]}`;
+  guessOpts.querySelectorAll('button').forEach(b => b.disabled = false);
+  guessMsg.textContent = '';
+});
+guessOpts.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+  if(!guessAns) return;
+  const ok = b.dataset.id === guessAns;
+  guessStreak = ok ? guessStreak + 1 : 0;
+  document.getElementById('guessStreak').textContent = guessStreak;
+  guessMsg.className = 'msg ' + (ok ? 'ok' : 'no');
+  guessMsg.textContent = ok ? '✔ 答對了！' : `✘ 是「${ERA[guessAns].name}」喔。`;
+  toolLog('猜時代', ok);
+  guessOpts.querySelectorAll('button').forEach(x => x.disabled = true);
+  guessAns = null;
+}));
+
+// ===== 3 年代排序（題庫 40 個事件，年份皆不重複）=====
+const EVENTS = [
+  [1624, '荷蘭人占領大員（今臺南安平）', 'dutch'], [1626, '西班牙人占領雞籠（今基隆）', 'dutch'], [1642, '荷蘭人趕走臺灣北部的西班牙人', 'dutch'],
+  [1652, '郭懷一事件：漢人反抗荷蘭', 'dutch'], [1662, '荷蘭人投降，鄭成功取得臺灣', 'zheng'], [1683, '施琅攻下澎湖，鄭克塽降清', 'zheng'],
+  [1684, '清朝設臺灣府，隸屬福建省', 'qing'], [1721, '朱一貴事件', 'qing'], [1786, '林爽文事件爆發', 'qing'],
+  [1858, '天津條約簽訂，臺灣須開港通商', 'qing'], [1872, '馬偕抵達淡水傳教', 'qing'], [1874, '牡丹社事件', 'qing'],
+  [1875, '沈葆楨奏請增設臺北府', 'qing'], [1884, '清法戰爭爆發，法軍進攻基隆', 'qing'], [1885, '臺灣建省，劉銘傳任首任巡撫', 'qing'],
+  [1895, '馬關條約：臺灣割讓給日本', 'japan'], [1896, '日本公布六三法', 'japan'], [1898, '兒玉源太郎任總督、後藤新平主持民政', 'japan'],
+  [1908, '縱貫鐵路全線通車', 'japan'], [1915, '西來庵事件', 'japan'], [1921, '臺灣文化協會成立', 'japan'],
+  [1927, '臺灣民眾黨成立', 'japan'], [1930, '霧社事件', 'japan'], [1937, '中日戰爭爆發，皇民化運動展開', 'japan'],
+  [1945, '日本投降，中華民國政府接收臺灣', 'post'], [1947, '二二八事件', 'post'], [1949, '臺灣實施戒嚴，中央政府遷臺', 'post'],
+  [1950, '韓戰爆發，美國協防臺灣', 'post'], [1953, '實施耕者有其田', 'post'], [1966, '高雄設立加工出口區', 'post'],
+  [1971, '中華民國退出聯合國', 'post'], [1974, '十大建設陸續動工', 'post'], [1979, '美麗島事件', 'post'],
+  [1980, '新竹科學工業園區設立', 'post'], [1986, '民主進步黨成立', 'post'], [1987, '解除戒嚴', 'demo'],
+  [1990, '野百合學運', 'demo'], [1991, '廢止《動員戡亂時期臨時條款》', 'demo'], [1996, '首次總統直選', 'demo'],
+  [2000, '首次政黨輪替', 'demo'],
+].map(([y, t, e], i) => ({ y, t, e, i }));
+let sortRange = 'all', sortCur = [], sortSel = -1;
+const sortList = document.getElementById('sortList'), sortMsg = document.getElementById('sortMsg'), sortAns = document.getElementById('sortAns');
+function sortDeal(){
+  const pool = EVENTS.filter(ev => sortRange === 'all' || (sortRange === 'up' ? ev.y < 1895 : ev.y >= 1895));
+  sortCur = shuffle(pool).slice(0, 8);
+  sortSel = -1; sortList.classList.remove('checked'); sortMsg.textContent = ''; sortAns.className = 'answer';
+  document.querySelectorAll('[data-range]').forEach(b => { b.classList.toggle('ghost', b.dataset.range !== sortRange); });
+  sortRender();
+}
+function sortRender(marks){
+  sortList.innerHTML = sortCur.map((ev, k) => `<li data-k="${k}" class="${marks ? (marks[k] ? 'ok' : 'no2') : (k === sortSel ? 'sel' : '')}">
+    <span class="no">${k + 1}</span><span class="ev">${eraTag(ev.e)}${ev.t} <span class="yr">（${ev.y}）</span></span>
+    <span class="mv"><button data-mv="-1" aria-label="上移">▲</button><button data-mv="1" aria-label="下移">▼</button></span></li>`).join('');
+  sortList.querySelectorAll('li').forEach(li => {
+    const k = +li.dataset.k;
+    li.querySelectorAll('[data-mv]').forEach(b => b.addEventListener('click', e => {
+      e.stopPropagation(); const t = k + (+b.dataset.mv);
+      if(t < 0 || t >= sortCur.length) return;
+      [sortCur[k], sortCur[t]] = [sortCur[t], sortCur[k]]; sortSel = -1; sortUnchecked(); sortRender();
+    }));
+    li.addEventListener('click', () => {
+      if(sortSel < 0){ sortSel = k; }
+      else if(sortSel === k){ sortSel = -1; }
+      else { [sortCur[k], sortCur[sortSel]] = [sortCur[sortSel], sortCur[k]]; sortSel = -1; sortUnchecked(); }
+      sortRender();
+    });
+  });
+}
+function sortUnchecked(){ sortList.classList.remove('checked'); sortMsg.textContent = ''; sortAns.className = 'answer'; }
+document.getElementById('sortCheck').addEventListener('click', () => {
+  const right = sortCur.slice().sort((a, b) => a.y - b.y);
+  const marks = sortCur.map((ev, k) => ev === right[k]);
+  const n = marks.filter(Boolean).length, all = n === sortCur.length;
+  sortSel = -1; sortRender(marks); sortList.classList.add('checked');
+  sortMsg.className = 'msg ' + (all ? 'ok' : 'no');
+  sortMsg.textContent = all ? '✔ 全部排對了！' : `✘ 位置正確 ${n} / ${sortCur.length}，看看下面的正確順序。`;
+  sortAns.className = 'answer show';
+  sortAns.innerHTML = '<b>正確順序（由早到晚）：</b><ol>' + right.map(ev => `<li>${ev.y}　${eraTag(ev.e)}${ev.t}</li>`).join('') + '</ol>';
+  toolLog('年代排序', all);
+});
+document.getElementById('sortNew').addEventListener('click', sortDeal);
+document.querySelectorAll('[data-range]').forEach(b => b.addEventListener('click', () => { sortRange = b.dataset.range; sortDeal(); }));
+sortDeal();
+
+// ===== 4 人物配對 =====
+const PEOPLE = [
+  ['郭懷一', '1652 年領導漢人反抗荷蘭東印度公司', 'dutch'],
+  ['鄭成功', '1662 年打敗荷蘭人，以臺灣為反清基地', 'zheng'],
+  ['陳永華', '鄭經的重要謀臣，建孔廟、設學校推行教育', 'zheng'],
+  ['施琅', '1683 年率清軍攻下澎湖，並主張保留臺灣', 'qing'],
+  ['林爽文', '1786 年以天地會為核心發動清代大規模民變', 'qing'],
+  ['吳沙', '清代率領漢人到噶瑪蘭（今宜蘭）開墾', 'qing'],
+  ['沈葆楨', '牡丹社事件後來臺加強防務，推動開山撫番', 'qing'],
+  ['劉銘傳', '臺灣建省後首任巡撫，興建鐵路、推動新政', 'qing'],
+  ['馬偕', '加拿大傳教士，在淡水傳教、行醫，創辦理學堂大書院', 'qing'],
+  ['兒玉源太郎', '第 4 任臺灣總督，重用後藤新平，奠定殖民統治基礎', 'japan'],
+  ['後藤新平', '民政長官，主張依臺灣舊慣治理，推動土地與人口調查', 'japan'],
+  ['佐久間左馬太', '臺灣總督，推動「五年理蕃計畫」以武力控制山區', 'japan'],
+  ['莫那魯道', '賽德克族馬赫坡社頭目，1930 年領導霧社事件', 'japan'],
+  ['林獻堂', '領導臺灣議會設置請願運動，參與創立臺灣文化協會', 'japan'],
+  ['蔣渭水', '醫生，參與創立臺灣文化協會與臺灣民眾黨', 'japan'],
+  ['賴和', '用白話文寫小說，被稱為「臺灣新文學之父」', 'japan'],
+  ['八田與一', '日本技師，設計嘉南大圳與烏山頭水庫', 'japan'],
+  ['陳儀', '戰後首任臺灣省行政長官，二二八事件時主政', 'post'],
+  ['雷震', '創辦《自由中國》雜誌，因籌組反對黨在 1960 年被捕', 'post'],
+  ['蔣經國', '推動十大建設，1987 年宣布解除戒嚴', 'post'],
+  ['李登輝', '1996 年首次總統直選中當選總統', 'demo'],
+].map(([n, d, e], i) => ({ n, d, e, i }));
+document.getElementById('matchTotal').textContent = PEOPLE.length;
+let mOrder = [], mRound = 0, mDone = new Set(), mPick = null, mTries = 0, mFirstOk = 0;
+const colP = document.getElementById('colP'), colD = document.getElementById('colD'), matchMsg = document.getElementById('matchMsg'), pairLog = document.getElementById('pairLog');
+function matchStart(){ mOrder = shuffle(PEOPLE); mRound = 0; mFirstOk = 0; mTries = 0; pairLog.innerHTML = ''; matchRound(); }
+function matchRound(){
+  const set = mOrder.slice(mRound * 6, mRound * 6 + 6);
+  mDone = new Set(); mPick = null; matchMsg.textContent = `第 ${mRound + 1} 輪 / 共 ${Math.ceil(mOrder.length / 6)} 輪`; matchMsg.className = 'msg';
+  colP.innerHTML = '<div class="ttl">人物</div>' + set.map(p => `<button class="it person" data-k="P" data-i="${p.i}">${p.n}</button>`).join('');
+  colD.innerHTML = '<div class="ttl">事蹟</div>' + shuffle(set).map(p => `<button class="it" data-k="D" data-i="${p.i}">${p.d}</button>`).join('');
+  document.querySelectorAll('.match button.it').forEach(b => b.addEventListener('click', () => matchClick(b, set)));
+  document.getElementById('matchNext').textContent = (mRound + 1) * 6 >= mOrder.length ? '看總結果' : '下一輪';
+}
+function matchClick(b, set){
+  if(b.classList.contains('done')) return;
+  if(!mPick || mPick.dataset.k === b.dataset.k){
+    document.querySelectorAll('.match button.sel').forEach(x => x.classList.remove('sel'));
+    if(mPick === b){ mPick = null; return; }
+    mPick = b; b.classList.add('sel'); return;
+  }
+  const a = mPick; mPick = null; a.classList.remove('sel');
+  const ok = a.dataset.i === b.dataset.i; mTries++;
+  if(ok){
+    [a, b].forEach(x => x.classList.add('done'));
+    const p = PEOPLE[+a.dataset.i]; mDone.add(p.i);
+    if(!matchClick.missed || !matchClick.missed.has(p.i)) mFirstOk++;
+    pairLog.insertAdjacentHTML('afterbegin', `<div>${eraTag(p.e)}<b>${p.n}</b>：${p.d}</div>`);
+    if(mDone.size === set.length){ matchMsg.className = 'msg ok'; matchMsg.textContent = '✔ 這一輪全部配對完成！按「' + document.getElementById('matchNext').textContent + '」'; toolLog('人物配對第' + (mRound + 1) + '輪', true); }
+  }else{
+    matchClick.missed = matchClick.missed || new Set();
+    matchClick.missed.add(+a.dataset.i); matchClick.missed.add(+b.dataset.i);
+    [a, b].forEach(x => { x.classList.add('bad'); setTimeout(() => x.classList.remove('bad'), 450); });
+    matchMsg.className = 'msg no'; matchMsg.textContent = '✘ 不是這一對，再試試。';
+  }
+}
+document.getElementById('matchNext').addEventListener('click', () => {
+  if((mRound + 1) * 6 >= mOrder.length){
+    const miss = matchClick.missed ? matchClick.missed.size : 0;
+    matchMsg.className = 'msg ok';
+    matchMsg.textContent = `🎉 ${PEOPLE.length} 人都看過了！共嘗試 ${mTries} 次配對。按「整個重來」可以再挑戰。`;
+    return;
+  }
+  mRound++; matchRound();
+});
+document.getElementById('matchRe').addEventListener('click', () => { matchClick.missed = new Set(); matchStart(); });
+matchStart();
+
+// ---- 翻翻卡 ----
+const FLIP = [
+  ['1624 年發生什麼事？', '荷蘭東印度公司占領大員（今臺南安平）'], ['荷蘭的貿易方式', '轉口貿易：中國生絲、瓷器 → 日本、歐洲'],
+  ['鄭氏時期的開墾方式', '屯田：軍隊平時耕田、戰時作戰'], ['1683 年發生什麼事？', '施琅攻下澎湖，鄭克塽投降，臺灣歸清'],
+  ['開港後三大出口品', '茶、糖、樟腦'], ['臺灣哪一年建省？首任巡撫？', '1885 年；劉銘傳'],
+  ['1895 年發生什麼事？', '馬關條約，臺灣割讓給日本'], ['日治經濟口號', '農業臺灣、工業日本'],
+  ['1930 年霧社事件的領導者', '賽德克族頭目莫那魯道'], ['二二八事件發生在？', '1947 年'],
+  ['戒嚴從哪年到哪年？', '1949 年到 1987 年'], ['首次總統直選／政黨輪替', '1996 年／2000 年'],
+];
+const grid = document.getElementById('flipGrid');
+grid.innerHTML = FLIP.map(([q, a]) => `<div class="flip"><div class="inner"><div class="face front">${q}</div><div class="face back">${a}</div></div></div>`).join('');
+grid.querySelectorAll('.flip').forEach(f => f.addEventListener('click', () => f.classList.toggle('on')));
+document.getElementById('flipReset').addEventListener('click', () => grid.querySelectorAll('.flip').forEach(f => f.classList.remove('on')));
+
+// ===== 🏁 總測驗：題庫（每次隨機抽 15 題）=====
+// 格式：[章, 題目, [正解, 錯1, 錯2, 錯3], 解析]
+const BANK = [
+  ['p1', '臺灣目前已知最早的舊石器時代文化是：', ['長濱文化', '大坌坑文化', '卑南文化', '十三行文化'], '長濱文化在臺東縣長濱鄉，距今約 5 萬～5 千年前。'],
+  ['p1', '十三行遺址出土煉鐵爐和鐵渣，這個文化屬於：', ['金屬器時代', '舊石器時代', '新石器時代', '荷西時期'], '能煉鐵，代表已進入金屬器時代（距今約 2 千～4 百年前）。'],
+  ['p1', '和舊石器時代相比，新石器時代最大的新發展是：', ['出現農業、磨製石器與陶器', '開始使用打製石器', '開始煉鐵', '開始使用文字'], '新石器時代會磨製石器、種植作物、燒陶、養家畜。'],
+  ['p2', '臺灣原住民族在語言上屬於哪一個語族？', ['南島語族', '漢藏語族', '印歐語族', '阿爾泰語族'], '南島語族分布很廣，從臺灣到太平洋、印度洋的許多島嶼。'],
+  ['p2', '科學家比對太平洋島嶼構樹的基因，發現可以追溯到臺灣。這個研究支持哪個說法？', ['臺灣可能是南島語族向外擴散的起點之一', '原住民來自歐洲', '構樹是荷蘭人帶來臺灣的', '南島語族從美洲出發'], '人類遷徙時會帶著構樹（做樹皮布），所以構樹的足跡能提供人群遷移的線索。'],
+  ['c2', '荷蘭人在大員（今臺南安平）建立的城堡是：', ['熱蘭遮城', '聖薩爾瓦多城', '億載金城', '臺灣總督府'], '熱蘭遮城是荷蘭在臺灣的統治中心；聖薩爾瓦多城是西班牙在雞籠建的。'],
+  ['c2', '荷蘭統治時期所謂的「轉口貿易」是指：', ['把中國的生絲、瓷器等轉運到日本、歐洲賣', '只在臺灣島內做買賣', '把臺灣的茶葉賣到美國', '禁止和外國人做生意'], '臺灣位在東亞航線中間，荷蘭把它當作貨物轉運站。'],
+  ['c2', '荷蘭傳教士用羅馬拼音書寫西拉雅語，後來留下的契約文書稱為：', ['新港文書', '馬關條約', '六三法', '臺灣府志'], '荷蘭人離開後，西拉雅人仍用這種文字寫契約，稱為新港文書（番仔契）。'],
+  ['c2', '西班牙人在 1626～1642 年占領的是臺灣哪一區？', ['北部（雞籠、淡水一帶）', '南部（大員一帶）', '東部（花蓮一帶）', '澎湖'], '西班牙在北部，1642 年被荷蘭人趕走。'],
+  ['c2', '鄭氏時期讓軍隊在駐紮地開墾，平時耕作、戰時作戰，這叫做：', ['屯田', '保甲', '贌社', '三七五減租'], '屯田留下的地名如「新營」「左營」「林鳳營」。'],
+  ['c2', '鄭氏時期建孔廟、設學校推行教育的重要人物是：', ['陳永華', '施琅', '沈葆楨', '劉銘傳'], '陳永華是鄭經的重要謀臣，臺南孔廟號稱「全臺首學」。'],
+  ['c3', '1683 年率領清軍攻下澎湖、使鄭氏投降的將領是：', ['施琅', '鄭成功', '劉銘傳', '沈葆楨'], '施琅攻下澎湖後鄭克塽投降，他也主張清朝應保留臺灣。'],
+  ['c3', '清朝初期限制人民來臺，例如不准攜帶家眷，這些規定被稱為：', ['渡臺禁令', '六三法', '戒嚴令', '開山撫番'], '雖然有禁令，仍有許多人偷渡來臺開墾。'],
+  ['c3', '清代臺灣有「三年一小反，五年一大亂」的說法，主要在形容：', ['民變很頻繁', '颱風很多', '外國常來攻打', '稻米每三年豐收一次'], '朱一貴、林爽文、戴潮春事件被稱為清代臺灣三大民變。'],
+  ['c3', '臺灣開港通商後，三大出口商品是：', ['茶、糖、樟腦', '米、鹿皮、生絲', '香蕉、鳳梨、稻米', '電子、紡織、塑膠'], '茶和樟腦主要產在北部，使北部經濟快速發展。'],
+  ['c3', '牡丹社事件（1874）後，清廷派誰來臺加強防務、推動開山撫番？', ['沈葆楨', '劉銘傳', '施琅', '陳永華'], '沈葆楨在臺南興建億載金城，並奏請增設臺北府。'],
+  ['c3', '1885 年臺灣建省，首任臺灣巡撫是：', ['劉銘傳', '沈葆楨', '兒玉源太郎', '陳儀'], '劉銘傳推動新政，興建基隆到新竹的鐵路。'],
+  ['c4', '清代來自不同祖籍（如漳州、泉州、客家）的移民，為爭土地、水源而打鬥，稱為：', ['分類械鬥', '民變', '武裝抗日', '學運'], '移民常依祖籍或語言結成團體，彼此競爭資源。'],
+  ['c4', '清代漢人移民大多來自中國的哪兩個省？', ['福建、廣東', '浙江、江蘇', '山東、河北', '四川、雲南'], '主要是福建的漳州、泉州，以及廣東的客家人。'],
+  ['c4', '清代臺灣商人組成的同業組織「郊」，主要負責：', ['經營兩岸或島內的貿易', '收稅和打仗', '傳教和辦學', '開礦和煉鐵'], '例如臺南的「三郊」，經營與中國大陸之間的貿易。'],
+  ['c4', '在淡水傳教、行醫，並創辦理學堂大書院的加拿大傳教士是：', ['馬偕', '後藤新平', '八田與一', '郭懷一'], '馬偕在 1872 年抵達淡水。'],
+  ['d1', '1895 年清朝把臺灣割讓給日本的條約是：', ['馬關條約', '天津條約', '北京條約', '南京條約'], '甲午戰爭清朝戰敗後簽訂。'],
+  ['d1', '日本以哪一條法律，授權臺灣總督可以發布和法律效力相同的命令？', ['六三法', '治安維持法', '戒嚴令', '臨時條款'], '六三法讓總督同時擁有行政與立法大權。'],
+  ['d1', '日治時期利用保甲制度，配合人數眾多的警察來管理社會，常被稱為：', ['警察政治', '民主政治', '鄉紳自治', '政黨政治'], '警察管的事很多，從治安、衛生到徵稅都有。'],
+  ['d1', '1930 年由賽德克族頭目莫那魯道領導的抗日事件是：', ['霧社事件', '西來庵事件', '二二八事件', '牡丹社事件'], '霧社事件後，日本調整了理蕃政策。'],
+  ['d1', '林獻堂等人要求設立由臺灣人選出議員的議會，這項運動是：', ['臺灣議會設置請願運動', '皇民化運動', '野百合學運', '國語運動'], '從 1921 年到 1934 年前後請願十多次，屬於非武裝抗日。'],
+  ['d1', '1937 年中日戰爭後，日本要臺灣人說日語、改日本姓名，這是：', ['皇民化運動', '新文化運動', '國語運動', '開山撫番'], '目的是把臺灣人改造成效忠天皇的「皇民」。'],
+  ['d2', '日治時期臺灣經濟的發展方向常被形容為：', ['農業臺灣、工業日本', '工業臺灣、農業日本', '加工出口', '轉口貿易'], '臺灣主要生產米、糖供應日本。'],
+  ['d2', '日本技師八田與一設計的大型水利工程是：', ['嘉南大圳', '石門水庫', '曹公圳', '瑠公圳'], '包含烏山頭水庫，1930 年完工。'],
+  ['d2', '日治時期在臺灣培育成功、大量輸往日本的稻米品種是：', ['蓬萊米', '在來米', '黑米', '小米'], '蓬萊米口感接近日本人愛吃的米。'],
+  ['d2', '1921 年成立、透過演講與讀報推動文化啟蒙的團體是：', ['臺灣文化協會', '臺灣民眾黨', '民主進步黨', '天地會'], '林獻堂、蔣渭水等人參與創立。'],
+  ['d3', '1947 年因查緝私菸引起衝突，進而擴大到全臺的事件是：', ['二二八事件', '美麗島事件', '霧社事件', '西來庵事件'], '事件造成許多人傷亡，影響臺灣社會很深遠。'],
+  ['d3', '臺灣的戒嚴從 1949 年開始，到哪一年解除？', ['1987 年', '1947 年', '1971 年', '1996 年'], '前後約 38 年。'],
+  ['d3', '1979 年在高雄發生、以《美麗島》雜誌人士為主的事件是：', ['美麗島事件', '二二八事件', '野百合學運', '雷震案'], '許多參與者後來成為黨外與民進黨的重要人物。'],
+  ['d3', '1996 年臺灣首次舉行的是：', ['總統直選', '解除戒嚴', '政黨輪替', '國會全面改選'], '由人民直接投票選出總統。'],
+  ['d3', '2000 年臺灣首次發生的是：', ['政黨輪替', '總統直選', '解除戒嚴', '退出聯合國'], '總統由不同政黨的候選人當選，政權和平轉移。'],
+  ['d4', '戰後土地改革三個步驟的正確順序是：', ['三七五減租 → 公地放領 → 耕者有其田', '耕者有其田 → 公地放領 → 三七五減租', '公地放領 → 三七五減租 → 耕者有其田', '三七五減租 → 耕者有其田 → 公地放領'], '先降低佃租，再放領公有地，最後讓佃農取得自己耕作的田。'],
+  ['d4', '1950、60 年代美國提供臺灣的經濟與物資援助，稱為：', ['美援', '十大建設', '加工出口區', '專賣制度'], '美援幫助穩定物價、興建基礎建設。'],
+  ['d4', '1966 年在高雄設立，吸引外資、加工後出口的地方叫：', ['加工出口區', '科學園區', '嘉南大圳', '經濟特區'], '帶動了以出口為主的輕工業發展。'],
+  ['d4', '1970 年代政府推動、包括中山高速公路等重大公共工程的是：', ['十大建設', '五年理蕃計畫', '美援', '開山撫番'], '十大建設改善交通並發展重工業。'],
+  ['d4', '戰後政府推行國語運動，造成的影響之一是：', ['學校限制說臺語、客語、原住民族語等本土語言', '大家都改說日語', '原住民族語言更加普及', '科舉考試恢復'], '民主化後才逐漸推動母語教學。'],
+];
+document.getElementById('bankSize').textContent = BANK.length;
+const LET = 'ABCD';
+let paper = [];
+function newPaper(){
+  paper = shuffle(BANK).slice(0, 15).map(([ch, q, opts, exp]) => {
+    const o = shuffle(opts.map((t, j) => ({ t, ok: j === 0 })));
+    return { ch, q, o, exp, ans: LET[o.findIndex(x => x.ok)] };
+  });
+  document.getElementById('quizList').innerHTML = paper.map((p, i) => `
+    <div class="q quiz" data-ans="${p.ans}" data-ch="${p.ch}">
+      <div class="stem">${i + 1}. ${p.q}<span class="chtag">${CHAP[p.ch].name}</span></div>
+      ${p.o.map((x, j) => `<label><input type="radio" name="qz${i}" value="${LET[j]}">${x.t}</label>`).join('')}
+      <div class="fb" data-exp="　${p.exp}">　</div>
+      <div class="rv"></div>
+    </div>`).join('');
+  const r = document.getElementById('quizResult'); r.className = ''; r.style.display = ''; r.textContent = '';
+  document.getElementById('reviewBox').innerHTML = '';
+}
+document.getElementById('submitQuiz').addEventListener('click',()=>{
+  const qs = document.querySelectorAll('#quizCard .q.quiz');
+  let score = 0, answered = 0;
+  const wrongCh = {};
+  qs.forEach(q=>{
+    const sel = q.querySelector('input:checked');
+    const fb = q.querySelector('.fb'), rv = q.querySelector('.rv');
+    q.classList.remove('correct','wrong'); rv.innerHTML = '';
+    if(sel) answered++;
+    if(sel && sel.value === q.dataset.ans){
+      score++; q.classList.add('correct');
+      fb.className='fb ok'; fb.textContent='✔ 正確！'+fb.dataset.exp;
+    }else{
+      q.classList.add('wrong');
+      fb.className='fb no'; fb.textContent='✘ 正解：'+q.dataset.ans+'。'+fb.dataset.exp;
+      rv.innerHTML = `<a class="review" href="${CHAP[q.dataset.ch].file}">📖 去複習：${CHAP[q.dataset.ch].name}</a>`;
+      wrongCh[q.dataset.ch] = (wrongCh[q.dataset.ch] || 0) + 1;
+    }
+  });
+  const wrong = [];
+  qs.forEach((q,i)=>{ if(q.classList.contains('wrong')) wrong.push(i+1); });
+  logEv({ type:"quiz", score, total: qs.length, wrong });
+  cloudSend({ type: "單元測驗", detail: wrong.length ? "錯第 " + wrong.join("、") + " 題" : "全對", score: score + "/" + qs.length });
+  const r = document.getElementById('quizResult');
+  if(answered < qs.length){
+    r.className='bad'; r.style.display='block';
+    r.textContent=`還有 ${qs.length-answered} 題沒作答（已自動批改，未答視為錯誤）。得分：${score} / ${qs.length}`;
+  } else if(score >= 12){
+    r.className='good'; r.textContent=`🎉 太棒了！${score} / ${qs.length}，七年級臺灣史過關！`;
+  } else if(score >= 8){
+    r.className='soso'; r.textContent=`💪 ${score} / ${qs.length}，快過關了。看看答錯題目的解析，再換一份考卷挑戰！`;
+  } else {
+    r.className='bad'; r.textContent=`📖 ${score} / ${qs.length}，建議先點「去複習」回到那一章，再來挑戰。`;
+  }
+  const keys = Object.keys(wrongCh);
+  document.getElementById('reviewBox').innerHTML = keys.length ?
+    `<div class="note" style="margin-top:10px"><b>建議優先複習：</b><br>${keys.sort((a, b) => wrongCh[b] - wrongCh[a]).map(k => `<a href="${CHAP[k].file}">${CHAP[k].name}</a>（錯 ${wrongCh[k]} 題）`).join('<br>')}</div>` : '';
+  r.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('newQuiz').addEventListener('click', () => { newPaper(); document.getElementById('quizCard').scrollIntoView({ behavior: 'smooth' }); });
+newPaper();
+</script>
+</body>
+</html>
