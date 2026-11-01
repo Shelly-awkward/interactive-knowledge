@@ -1042,6 +1042,7 @@ function dndGame(opts){
         box.querySelectorAll('.dnd-card').forEach(c => c.classList.toggle('sel', c.dataset.item === selected));
       }
     });
+    card.addEventListener('click', e => e.stopPropagation());   // 點卡片不要冒泡到區域，否則「點選再點目標」會立刻被取消
     card.addEventListener('pointercancel', () => { if(ghost) ghost.remove(); card.style.opacity = ''; moved = false; });
   }
   function check(){
