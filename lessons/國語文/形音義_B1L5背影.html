@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>形音義好棒棒｜B1L5 背影</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f6f5f2; --card:#ffffff;
+    --blue:#2563eb; --blue-soft:#dbeafe; --green:#16a34a; --green-soft:#dcfce7;
+    --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7;
+    --main:#0f766e; --main-soft:#ccfbf1; --main-dark:#115e59;
+    --hl:#fef08a;
+    --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.8;}
+  .wrap{max-width:760px; margin:0 auto; padding:20px 16px 80px;}
+
+  header.hero{background:linear-gradient(135deg,#115e59,#0d9488); color:#fff; border-radius:var(--radius); padding:24px; margin-bottom:18px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.45rem; margin-bottom:6px;}
+  header.hero p{opacity:.93; font-size:.9rem;}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10;}
+  nav.tabs button{flex:1 1 auto; min-width:104px; border:1px solid var(--border); background:var(--card); color:var(--ink);
+    padding:10px 8px; border-radius:99px; font-size:.92rem; cursor:pointer; font-family:inherit; transition:.15s;}
+  nav.tabs button:hover{border-color:var(--main);}
+  nav.tabs button.active{background:var(--main); border-color:var(--main); color:#fff; font-weight:bold;}
+
+  section.panel{display:none;}
+  section.panel.show{display:block; animation:fade .22s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:14px;}
+  .card h2{font-size:1.08rem; color:var(--main); margin-bottom:10px;}
+  .card h3{font-size:.98rem; color:var(--main-dark); margin:14px 0 6px;}
+  .card p{font-size:.93rem;}
+
+  /* 訣竅卡 */
+  .tip .no{display:inline-block; background:var(--main); color:#fff; border-radius:8px; padding:0 9px; margin-right:8px; font-size:.85rem;}
+  .tip .kind{display:inline-block; font-size:.75rem; border:1px solid var(--main); color:var(--main); border-radius:99px; padding:0 9px; margin-left:6px; vertical-align:middle;}
+  .tip .one{background:var(--main-soft); border-radius:8px; padding:8px 12px; margin:6px 0 10px; font-size:.95rem; font-weight:bold; color:var(--main-dark);}
+  .tip ul{list-style:none; margin:4px 0;}
+  .tip li{padding:6px 0; border-bottom:1px dashed var(--border); font-size:.93rem;}
+  .tip li:last-child{border-bottom:none;}
+  .src{display:inline-block; font-size:.72rem; background:#fef3c7; color:#92400e; border-radius:99px; padding:0 8px; margin-left:4px; vertical-align:middle;}
+  .warn{background:var(--red-soft); color:#991b1b; border-radius:8px; padding:7px 12px; font-size:.86rem; margin-top:8px;}
+  .fl{display:inline-block; border:1px solid var(--main); background:#fff; color:var(--main-dark); border-radius:8px;
+    padding:0 8px; margin:2px 2px; cursor:pointer; font-weight:bold; font-size:1.05rem; user-select:none;}
+  .fl::after{content:" ？"; color:var(--sub); font-weight:normal; font-size:.8rem;}
+  .fl.open{background:var(--main-soft);}
+  .fl.open::after{content:" " attr(data-a); color:var(--ink); font-weight:normal; font-size:.88rem;}
+  .big3{font-size:1.9rem; letter-spacing:4px; font-weight:bold; color:var(--main-dark);}
+  table.cmp{width:100%; border-collapse:collapse; font-size:.92rem; margin:6px 0;}
+  table.cmp th, table.cmp td{border:1px solid var(--border); padding:6px 8px; text-align:center;}
+  table.cmp th{background:var(--main-soft); color:var(--main-dark);}
+  table.cmp td.c{font-size:1.5rem; font-weight:bold;}
+  table.cmp td.l{text-align:left;}
+  .steps{counter-reset:s; list-style:none;}
+  .steps li{counter-increment:s; padding-left:30px; position:relative;}
+  .steps li::before{content:counter(s); position:absolute; left:0; top:7px; width:22px; height:22px; border-radius:50%;
+    background:var(--main); color:#fff; font-size:.8rem; text-align:center; line-height:22px;}
+
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chips button{border:1px solid var(--border); background:#fff; color:var(--ink); padding:8px 15px;
+    border-radius:99px; font-size:.9rem; cursor:pointer; font-family:inherit; transition:.12s;}
+  .chips button:hover{border-color:var(--main);}
+  .chips button.on{background:var(--main-soft); border-color:var(--main); color:var(--main-dark); font-weight:bold;}
+
+  .rangerow{display:none; align-items:center; gap:8px; margin-top:10px; font-size:.95rem; flex-wrap:wrap;}
+  .rangerow.show{display:flex;}
+  .rangerow select{padding:8px 10px; font-size:1rem; border:1px solid var(--border); border-radius:8px; font-family:inherit; background:#fff;}
+
+  .bigbtn{display:block; width:100%; background:var(--main); color:#fff; border:none; border-radius:10px;
+    padding:14px; font-size:1.02rem; font-weight:bold; cursor:pointer; font-family:inherit; margin-top:14px;}
+  .bigbtn:disabled{background:#a7c9c4; cursor:not-allowed;}
+  .ghostbtn{display:block; width:100%; background:#fff; color:var(--main); border:1px solid var(--main);
+    border-radius:10px; padding:11px; font-size:.95rem; cursor:pointer; font-family:inherit; margin-top:10px;}
+  .tip .ghostbtn{margin-top:12px;}
+
+  .bar{height:8px; background:#cfeee9; border-radius:99px; overflow:hidden; margin-bottom:6px;}
+  .bar > i{display:block; height:100%; background:var(--main); width:0; transition:width .25s;}
+  .meta{display:flex; justify-content:space-between; font-size:.84rem; color:var(--sub); margin-bottom:12px;}
+  .tag{display:inline-block; background:var(--blue-soft); color:#1e40af; border-radius:99px;
+    padding:1px 11px; font-size:.78rem; margin-bottom:10px; margin-right:6px;}
+  .tag.num{background:var(--amber-soft); color:#92400e;}
+  .stem{font-size:1.1rem; line-height:2.1; margin-bottom:10px;}
+  .stem .words{font-size:1.45rem; letter-spacing:2px; font-weight:bold; color:var(--main-dark); line-height:2;}
+  .stem .hl{color:var(--red); border-bottom:3px solid var(--red); padding:0 2px;}
+  .blank{display:inline-block; color:var(--main); font-weight:bold;}
+  .clue{background:#fafaf9; border-left:4px solid var(--main); border-radius:6px; padding:8px 12px; margin:6px 0 14px; font-size:.92rem; color:#374151;}
+  .clue b{color:var(--main-dark);}
+
+  .opts{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .opts.one{grid-template-columns:1fr;}
+  .opts button{border:1px solid var(--border); background:#fff; color:var(--ink); border-radius:10px;
+    padding:12px; font-size:1.02rem; cursor:pointer; font-family:inherit; transition:.12s; text-align:center; line-height:1.6;}
+  .opts button.big{font-size:2rem; padding:10px;}
+  .opts button.zy{font-size:1.35rem; letter-spacing:2px;}
+  .opts button:hover:not(:disabled){border-color:var(--main); background:#f0fdfa;}
+  .opts button:disabled{cursor:default;}
+  .opts button.ok{background:var(--green-soft); border-color:var(--green); color:#166534; font-weight:bold;}
+  .opts button.no{background:var(--red-soft); border-color:var(--red); color:#991b1b;}
+
+  .typerow{display:flex; gap:8px;}
+  .typerow input{flex:1; min-width:0; padding:12px 14px; font-size:1.6rem; text-align:center;
+    border:1px solid var(--border); border-radius:10px; font-family:inherit;}
+  .typerow button{background:var(--main); color:#fff; border:none; border-radius:10px;
+    padding:0 20px; font-size:.95rem; cursor:pointer; font-family:inherit;}
+  .hintline{font-size:.85rem; color:var(--sub); margin-top:8px;}
+  .hintline a{color:var(--main); cursor:pointer; text-decoration:underline;}
+
+  /* 手寫格 */
+  .hw{display:flex; flex-direction:column; align-items:center; gap:10px;}
+  .hwbox{position:relative; width:min(260px,80vw); aspect-ratio:1; border:2px solid var(--main); border-radius:10px; background:#fff; overflow:hidden; touch-action:none;}
+  .hwbox canvas{position:absolute; inset:0; width:100%; height:100%;}
+  .hwbox .ans{position:absolute; inset:0; display:none; align-items:center; justify-content:center;
+    font-size:min(190px,58vw); line-height:1; color:rgba(220,38,38,.45); font-weight:bold; pointer-events:none; font-family:"標楷體","BiauKai","DFKai-SB","Kaiti TC","KaiTi",serif;}
+  .hwbox.show .ans{display:flex;}
+  .hwrow{display:flex; gap:8px; width:100%;}
+  .hwrow button{flex:1; border-radius:10px; padding:10px; font-size:.95rem; cursor:pointer; font-family:inherit; border:1px solid var(--main); background:#fff; color:var(--main);}
+  .hwrow button.main{background:var(--main); color:#fff;}
+  .hwrow button.ok{border-color:var(--green); background:var(--green-soft); color:#166534;}
+  .hwrow button.no{border-color:var(--red); background:var(--red-soft); color:#991b1b;}
+  .hwtip{font-size:.85rem; color:var(--sub); text-align:center;}
+
+  .fb{margin-top:14px; padding:12px 15px; border-radius:10px; font-size:.95rem; display:none;}
+  .fb.ok{display:block; background:var(--green-soft); color:#166534;}
+  .fb.no{display:block; background:var(--red-soft); color:#991b1b;}
+  .fb b{font-size:1.1rem; letter-spacing:1px;}
+  .fb .mean{display:block; margin-top:6px; color:var(--ink); font-size:.9rem; line-height:1.75;}
+  .fb .mean i{font-style:normal; color:var(--main-dark); font-weight:bold;}
+  .fb .trick{display:block; margin-top:8px; background:#fff; border-radius:8px; padding:6px 10px; color:var(--main-dark); font-size:.88rem;}
+
+  .score{text-align:center; padding:24px 16px;}
+  .score .big{font-size:2.6rem; font-weight:bold; color:var(--main); line-height:1.2;}
+  .score .say{font-size:1.05rem; margin-top:6px;}
+  ul.wronglist{list-style:none; margin-top:12px;}
+  ul.wronglist li{border:1px solid var(--border); border-left:4px solid var(--red);
+    border-radius:8px; padding:9px 13px; margin:7px 0; font-size:.9rem;}
+  ul.wronglist li b{color:var(--red); font-size:1.05rem;}
+  ul.wronglist li span{display:block; color:var(--sub); font-size:.85rem;}
+
+  .dictsearch{width:100%; padding:11px 14px; font-size:1rem; border:1px solid var(--border);
+    border-radius:10px; font-family:inherit; margin-bottom:12px;}
+  ul.dict{list-style:none;}
+  ul.dict li{border-bottom:1px solid var(--border); padding:12px 2px;}
+  ul.dict li:last-child{border-bottom:none;}
+  ul.dict .head{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px;}
+  ul.dict .n{font-size:.78rem; color:var(--sub); min-width:2em;}
+  ul.dict .c{font-size:1.6rem; font-weight:bold; color:var(--main-dark); line-height:1.2;}
+  ul.dict .r{font-size:.85rem; color:var(--main-dark); background:var(--main-soft); border-radius:99px; padding:0 10px;}
+  ul.dict .fam{font-size:.75rem; color:var(--sub); border:1px solid var(--border); border-radius:99px; padding:0 8px;}
+  ul.dict .w{font-size:.92rem; line-height:1.75;}
+  ul.dict .w b{letter-spacing:1px;}
+  ul.dict .w b em{font-style:normal; color:var(--red);}
+  ul.dict .w span{color:var(--sub);}
+  ul.dict .w mark{background:var(--hl); color:var(--ink); padding:0 2px;}
+  ul.dict .t{font-size:.84rem; color:var(--main-dark); margin-top:4px;}
+  .empty{text-align:center; color:var(--sub); padding:26px 10px; font-size:.92rem;}
+
+  .note{background:var(--blue-soft); border-radius:8px; padding:9px 14px; margin:10px 0; font-size:.87rem; color:#1e40af;}
+  footer{text-align:center; color:var(--sub); font-size:.78rem; margin-top:26px; line-height:1.7;}
+  @media (max-width:520px){ nav.tabs button{min-width:46%;} .stem{font-size:1rem;} .stem .words{font-size:1.3rem;} .opts{grid-template-columns:1fr;} .opts button.big,.opts button.zy{padding:8px;} }
+  /* 本課新增：進度、聰明複習 */
+  .seg{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:8px 0 4px;}
+  .seg div{border:1px solid var(--border); border-radius:10px; padding:7px 10px; font-size:.82rem; color:var(--sub); cursor:pointer;}
+  .seg div.on{border-color:var(--main); background:var(--main-soft); color:var(--main-dark);}
+  .seg div b{display:block; color:var(--ink); font-size:.9rem;}
+  .seg .bar{margin:5px 0 2px;}
+  .smart{border:2px solid var(--main);}
+  .smart .why{font-size:.86rem; color:var(--sub); margin-top:8px;}
+  details.own{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:14px 20px; margin-bottom:14px;}
+  details.own summary{cursor:pointer; font-weight:bold; color:var(--main); font-size:1rem;}
+  details.own h2{font-size:1rem; color:var(--main); margin:16px 0 8px;}
+  .retry{display:inline-block; background:var(--red-soft); color:#991b1b; border-radius:99px; padding:1px 11px; font-size:.78rem; margin-bottom:10px;}
+  @media (max-width:520px){ .seg{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">國語文 · 國一 · 第一冊第五課 背影</span>
+  <h1>形音義好棒棒｜背影 64 組</h1>
+  <p>浦埔圃鋪、弦玄眩炫、勾鉤釣鈞、囑矚屬、迂紆吁盱竽、榜滂謗膀、差的三種念法……會的快速跳過，不會的自動多練。</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-t="pStart">✏️ 開始練習</button>
+  <button data-t="pTips">💡 五個訣竅</button>
+  <button data-t="pDict">📖 形音義表</button>
+  <button data-t="pWrong">🔁 我的錯題</button>
+</nav>
+
+<!-- ══════ 設定 ══════ -->
+<section id="pStart" class="panel show">
+  <div class="card">
+    <h2>1. 要練哪一段？（點一格）</h2>
+    <div class="seg" id="segBox"></div>
+    <div class="chips" id="selRange" style="margin-top:8px">
+      <button class="on" data-v="1-64">全部 64 組</button>
+      <button data-v="custom">自己選範圍</button>
+    </div>
+    <div class="rangerow" id="rangeRow">從第 <select id="rFrom"></select> 組到第 <select id="rTo"></select> 組</div>
+    <div class="note" id="rangeNote"></div>
+  </div>
+
+  <div class="card smart">
+    <h2>2. 聰明複習（建議用這個）</h2>
+    <p id="smartStat"></p>
+    <button class="bigbtn" id="btnSmart">開始聰明複習（一回 12 題）</button>
+    <button class="ghostbtn" id="btnReview" style="display:none">這一段都熟了，隨機抽 12 題驗收</button>
+    <p class="why">一回大約 3 分鐘。上次答錯的先出，再出還沒做過的；第一次就答對的直接算「熟了」，不再浪費時間。答錯的題，隔幾題會再出一次，之後還要再答對一次才算熟。</p>
+  </div>
+
+  <details class="own">
+    <summary>想自己選題型、題數，或改成用手寫</summary>
+    <h2>練哪一種題型？</h2>
+    <div class="chips" id="selType">
+      <button class="on" data-v="z">選注音（音）</button>
+      <button data-v="c">看詞選字（形）</button>
+      <button data-v="s">一字多義（義）</button>
+      <button data-v="p">成語比喻（義）</button>
+      <button data-v="all">四種混合</button>
+    </div>
+    <div class="note" id="typeNote"></div>
+
+    <h2>看詞選字怎麼作答？（聰明複習也會照這個）</h2>
+    <div class="chips" id="selMode">
+      <button class="on" data-v="mc">四選一</button>
+      <button data-v="hw">用手寫</button>
+      <button data-v="tp">自己打字</button>
+    </div>
+    <div class="note">用手寫：不給選項，在格子裡用手指或滑鼠把字寫出來，再翻答案對照。對不對由自己判斷，最接近考試寫字的感覺。</div>
+
+    <h2>這次做幾題？</h2>
+    <div class="chips" id="selCount">
+      <button class="on" data-v="10">10 題</button>
+      <button data-v="20">20 題</button>
+      <button data-v="0">全部</button>
+    </div>
+
+    <button class="bigbtn" id="btnStart">照我選的開始（共 <span id="poolN">0</span> 題可出）</button>
+  </details>
+
+  <div class="card">
+    <h2>怎麼排最省力</h2>
+    <ol class="steps">
+      <li>一天練一段（16 組），每段做聰明複習，做到進度條變滿。</li>
+      <li>隔天先回上一段做一回，再開新的一段。隔一天再想起來，記得最久。</li>
+      <li>考前一天選「全部 64 組」做驗收，再到「我的錯題」把剩下的清掉。</li>
+      <li>老是錯同一組字，去「五個訣竅」看那一家的比較表。</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══════ 訣竅 ══════ -->
+<section id="pTips" class="panel">
+  <div class="card">
+    <h2>怎麼用這一頁</h2>
+    <p>這一課的字幾乎都是「一家人」：右半邊一樣，部首不同。每一招先看例子，<b>點有框的字</b>會翻出答案。看完按「用這招練幾題」。</p>
+    <p style="margin-top:6px">標著 <span class="src">講義筆記</span> 的，是講義上手寫的提醒。</p>
+  </div>
+
+  <div class="card tip">
+    <h2><span class="no">1</span>右邊一樣，看部首選字<span class="kind">形</span></h2>
+    <div class="one">部首告訴你「這個字跟什麼有關」。先想詞的意思，再挑部首。</div>
+    <ul>
+      <li><span class="fl" data-a="水：水邊">浦</span> <span class="fl" data-a="土：平坦的土地">埔</span> <span class="fl" data-a="囗：圍起來的園子">圃</span> <span class="fl" data-a="金：鋪設、店鋪">鋪</span></li>
+      <li><span class="fl" data-a="弓：弓上的線">弦</span> <span class="fl" data-a="目：眼睛昏花">眩</span> <span class="fl" data-a="火：火光照耀→誇耀">炫</span></li>
+      <li><span class="fl" data-a="口：用嘴巴交代">囑</span> <span class="fl" data-a="目：用眼睛注視">矚</span></li>
+      <li><span class="fl" data-a="辶：繞路→曲折、不切實際">迂</span> <span class="fl" data-a="糸：絲帶→繫戴、彎曲">紆</span> <span class="fl" data-a="口：嘆氣、喘氣">吁</span> <span class="fl" data-a="目：睜眼看">盱</span> <span class="fl" data-a="竹：竹管樂器">竽</span></li>
+      <li><span class="fl" data-a="足：腳步不穩">跚</span> <span class="fl" data-a="木：木頭圍欄">柵</span> <span class="fl" data-a="玉：珊瑚像寶玉">珊</span> <span class="fl" data-a="刀：用刀削掉">刪</span> <span class="fl" data-a="女：女子慢慢走">姍</span></li>
+      <li><span class="fl" data-a="手：用手扶">攙</span> <span class="fl" data-a="食：貪吃">饞</span> <span class="fl" data-a="言：說壞話">讒</span></li>
+      <li><span class="fl" data-a="木：木板公告">榜</span> <span class="fl" data-a="水：大水湧出">滂</span> <span class="fl" data-a="言：用話中傷">謗</span> <span class="fl" data-a="肉（月）：身體部位">膀</span></li>
+      <li><span class="fl" data-a="彳＋卸：帝王的、統治、駕車">御</span> vs <span class="fl" data-a="御＋示：抵擋">禦</span>　抵「禦」外侮、「禦」寒才有下面的「示」</li>
+      <li><span class="fl" data-a="金＋勺：釣魚">釣</span> vs <span class="fl" data-a="金＋勻：重量單位">鈞</span>　千「鈞」一髮右邊是「勻」，不是「均」</li>
+    </ul>
+    <button class="ghostbtn" data-tip="T1">用這招練幾題</button>
+  </div>
+
+  <div class="card tip">
+    <h2><span class="no">2</span>同一家，但有人念不一樣<span class="kind">音</span></h2>
+    <div class="one">一家人的音通常一樣。只要記「不一樣的那一個」。</div>
+    <table class="cmp">
+      <tr><th>家族</th><th>大家都念</th><th>例外（要背這個）</th></tr>
+      <tr><td class="c">甫</td><td>浦、埔、圃 ㄆㄨˇ</td><td class="l">鋪 ㄆㄨ／ㄆㄨˋ</td></tr>
+      <tr><td class="c">玄</td><td>眩、炫 ㄒㄩㄢˋ</td><td class="l">玄 ㄒㄩㄢˊ；弦 ㄒㄧㄢˊ（沒有ㄩ）</td></tr>
+      <tr><td class="c">卸</td><td>御、禦 ㄩˋ</td><td class="l">卸 ㄒㄧㄝˋ</td></tr>
+      <tr><td class="c">勾</td><td>勾、鉤 ㄍㄡ</td><td class="l">釣 ㄉㄧㄠˋ；鈞 ㄐㄩㄣ</td></tr>
+      <tr><td class="c">屬</td><td>囑、矚 ㄓㄨˇ</td><td class="l">屬 ㄕㄨˇ</td></tr>
+      <tr><td class="c">于</td><td>迂、紆 ㄩ</td><td class="l">吁、盱 ㄒㄩ；竽 ㄩˊ</td></tr>
+      <tr><td class="c">冊</td><td>跚、珊、刪、姍 ㄕㄢ</td><td class="l">柵 ㄓㄚˋ</td></tr>
+      <tr><td class="c">毚</td><td>饞、讒 ㄔㄢˊ</td><td class="l">攙 ㄔㄢ（一聲）</td></tr>
+      <tr><td class="c">旁</td><td>榜、膀 ㄅㄤˇ</td><td class="l">謗 ㄅㄤˋ；滂 ㄆㄤ；膀胱 ㄆㄤˊ</td></tr>
+    </table>
+    <div class="note">其他單獨要記的音：狼藉 ㄐㄧˊ（不是藉口的ㄐㄧㄝˋ）、簌 ㄙㄨˋ、澹 ㄉㄢˋ、躊躇 ㄔㄡˊ ㄔㄨˊ、褂 ㄍㄨㄚˋ、箸 ㄓㄨˋ、窘 ㄐㄩㄥˇ、撩 ㄌㄧㄠˊ、鶼鰈 ㄐㄧㄢ ㄉㄧㄝˊ。</div>
+    <button class="ghostbtn" data-tip="T2">用這招練幾題</button>
+  </div>
+
+  <div class="card tip">
+    <h2><span class="no">3</span>破音字：先看意思，音就出來<span class="kind">音</span></h2>
+    <div class="one">同一個字念不同音，是因為意思不同。這一課有七個。</div>
+    <table class="cmp">
+      <tr><th>字</th><th>念法</th><th>什麼時候</th><th>例子</th></tr>
+      <tr><td class="c" rowspan="2">鋪</td><td>ㄆㄨ</td><td class="l">動作：攤開、布置</td><td class="l">鋪棉被、鋪設鐵路、鋪張</td></tr>
+      <tr><td>ㄆㄨˋ</td><td class="l">地方：商店、床位</td><td class="l">雜貨鋪、臥鋪</td></tr>
+      <tr><td class="c" rowspan="2">質</td><td>ㄓˊ</td><td class="l">本性、詢問</td><td class="l">特質、質樸、資質、質詢</td></tr>
+      <tr><td>ㄓˋ</td><td class="l">抵押</td><td class="l">典質、人質</td></tr>
+      <tr><td class="c" rowspan="2">帖</td><td>ㄊㄧㄝ</td><td class="l">順從、妥當</td><td class="l">服帖、妥帖</td></tr>
+      <tr><td>ㄊㄧㄝˇ</td><td class="l">請柬、藥的單位</td><td class="l">喜帖、一帖藥</td></tr>
+      <tr><td class="c" rowspan="2">看</td><td>ㄎㄢ</td><td class="l">守著、照顧</td><td class="l">看守、看門、看護</td></tr>
+      <tr><td>ㄎㄢˋ</td><td class="l">用眼睛看</td><td class="l">看書（講義沒列）</td></tr>
+      <tr><td class="c" rowspan="3">差</td><td>ㄔㄚ</td><td class="l">錯誤、不同、稍微</td><td class="l">誤差、差異、差別、差強人意</td></tr>
+      <tr><td>ㄔㄞ</td><td class="l">派人去做事</td><td class="l">信差、欽差、差遣、差使</td></tr>
+      <tr><td>ㄘ</td><td class="l">不整齊、等級</td><td class="l">參差不齊、愛無等差</td></tr>
+      <tr><td class="c" rowspan="2">膀</td><td>ㄅㄤˇ</td><td class="l">手臂、翅膀</td><td class="l">臂膀、翅膀</td></tr>
+      <tr><td>ㄆㄤˊ</td><td class="l">只有這個詞</td><td class="l">膀胱</td></tr>
+      <tr><td class="c" rowspan="2">喪</td><td>ㄙㄤ</td><td class="l">跟死者有關的事</td><td class="l">奔喪</td></tr>
+      <tr><td>ㄙㄤˋ</td><td class="l">失去、丟掉</td><td class="l">喪家之犬</td></tr>
+    </table>
+    <div class="warn">最常錯：「喪家之犬」是「失去家的狗」，念四聲ㄙㄤˋ，不是辦喪事的ㄙㄤ。「參差」念 ㄘㄣ ㄘ。</div>
+    <button class="ghostbtn" data-tip="T3">用這招練幾題</button>
+  </div>
+
+  <div class="card tip">
+    <h2><span class="no">4</span>一字多義：把解釋放回去念念看<span class="kind">義</span></h2>
+    <div class="one">不要硬背。把選項的解釋換進詞裡念一次，最通順的就是答案。</div>
+    <h3>「望」有五個意思（講義 36 組）</h3>
+    <ul>
+      <li>望梅止渴、四處張望 → <span class="fl" data-a="看">望</span></li>
+      <li>眾望所歸 → <span class="fl" data-a="名譽、名聲">望</span></li>
+      <li>望車外看 → <span class="fl" data-a="向、朝">望</span></li>
+      <li>望子成龍 → <span class="fl" data-a="期盼、希冀">望</span></li>
+      <li>坐二望一 → <span class="fl" data-a="接近">望</span></li>
+    </ul>
+    <h3>其他多義字</h3>
+    <ul>
+      <li>勾留 <span class="fl" data-a="停滯、逗留">勾</span>　勾銷 <span class="fl" data-a="刪掉、取消">勾</span>　勾結 <span class="fl" data-a="暗地相通">勾</span>　勾勒 <span class="fl" data-a="描繪">勾</span></li>
+      <li>屬地 <span class="fl" data-a="歸某方所有或管轄">屬</span>　眷屬 <span class="fl" data-a="親眷">屬</span>　附屬 <span class="fl" data-a="附著">屬</span></li>
+      <li>戴帽子 <span class="fl" data-a="把東西加在頭、面等處">戴</span>　披星戴月 <span class="fl" data-a="用頭頂著">戴</span>　愛戴 <span class="fl" data-a="擁護、推崇">戴</span></li>
+      <li>賦歸 <span class="fl" data-a="吟詠、寫作">賦</span>　秉賦 <span class="fl" data-a="資質">賦</span>　田賦 <span class="fl" data-a="稅收">賦</span></li>
+    </ul>
+    <div class="note">講義第 18 組「賦閒」旁邊有手寫修改：看起來是把「給與、授與」另外拉出去寫成「賦與」，「賦閒」則圈到「吟詠、寫作」。照片看不太清楚，這一個詞的字義這裡不出題，請對照自己的講義。<span class="src">講義筆記</span></div>
+    <button class="ghostbtn" data-tip="T4">用這招練幾題</button>
+  </div>
+
+  <div class="card tip">
+    <h2><span class="no">5</span>成語先抓「比喻」那一句<span class="kind">義</span></h2>
+    <div class="one">先想字面的畫面，再問「這個畫面在比喻什麼」。</div>
+    <ul>
+      <li>合浦還珠：珍珠跑掉又回來 → <span class="fl" data-a="人去而復回，或物失而復得">比喻</span></li>
+      <li>望梅止渴：想到梅子流口水 → <span class="fl" data-a="用空想來安慰自己">比喻</span></li>
+      <li>箭在弦上，不得不發 → <span class="fl" data-a="事情被形勢所逼，不得不做">比喻</span></li>
+      <li>披星戴月：頭上頂著星星月亮 → <span class="fl" data-a="早出晚歸，旅途勞累">形容</span></li>
+      <li>喪家之犬：沒有家的狗 → <span class="fl" data-a="不得志、無所歸宿或驚慌失措的人">比喻</span></li>
+      <li>鶼鰈情深：比翼鳥和比目魚 → <span class="fl" data-a="夫婦愛情深厚，相處融洽">比喻</span></li>
+    </ul>
+    <div class="warn">「差強人意」的「差」是「還、稍微」：大體上還能讓人勉強滿意。它是「還可以」，不是「很差」。</div>
+    <button class="ghostbtn" data-tip="T5">用這招練幾題</button>
+  </div>
+</section>
+
+<!-- ══════ 出題 ══════ -->
+<section id="pQuiz" class="panel">
+  <div class="card">
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="meta"><span id="mProg"></span><span id="mScore"></span></div>
+    <div><span id="qNum" class="tag num"></span><span id="qTag" class="tag"></span><span id="qRetry" class="retry" style="display:none">剛剛錯過，再試一次</span></div>
+    <div class="stem" id="qStem"></div>
+    <div id="qClue" class="clue"></div>
+    <div class="opts" id="qOpts"></div>
+    <div id="qHw" class="hw" style="display:none">
+      <div class="hwbox" id="hwBox"><canvas id="hwCv"></canvas><div class="ans" id="hwAns"></div></div>
+      <div class="hwtip" id="hwTip">在格子裡把字寫出來</div>
+      <div class="hwrow" id="hwRow1"><button id="hwClear">擦掉重寫</button><button class="main" id="hwReveal">寫好了，看答案</button></div>
+      <div class="hwrow" id="hwRow2" style="display:none"><button class="ok" id="hwOk">我寫對了</button><button class="no" id="hwNo">寫錯了</button></div>
+    </div>
+    <div id="qType" style="display:none">
+      <div class="typerow">
+        <input type="text" id="typeIn" maxlength="2" placeholder="打一個字" autocomplete="off">
+        <button id="btnTypeGo">確定</button>
+      </div>
+      <div class="hintline">想不出來？<a id="btnHint">看注音提示</a><span id="hintTxt"></span></div>
+    </div>
+    <div class="fb" id="qFb"></div>
+    <button class="bigbtn" id="btnNext" style="display:none">下一題 →</button>
+  </div>
+  <button class="ghostbtn" id="btnQuit">結束這次練習</button>
+</section>
+
+<!-- ══════ 結算 ══════ -->
+<section id="pDone" class="panel">
+  <div class="card">
+    <div class="score">
+      <div class="big" id="dScore">0 / 0</div>
+      <div class="say" id="dSay"></div>
+    </div>
+    <div class="note" id="dProg"></div>
+    <div id="dWrongBox"></div>
+    <button class="bigbtn" id="btnSmartAgain">再來一回聰明複習</button>
+    <button class="ghostbtn" id="btnAgainWrong" style="display:none">只重做這次答錯的題</button>
+    <button class="ghostbtn" id="btnBackStart">回到設定，換一段再練</button>
+  </div>
+</section>
+
+<!-- ══════ 形音義表 ══════ -->
+<section id="pDict" class="panel">
+  <div class="card">
+    <h2>形音義表（講義 64 組）</h2>
+    <input type="text" class="dictsearch" id="dictQ" placeholder="輸入字、詞或解釋來找，例如「差」或「比喻」">
+    <ul class="dict" id="dictList"></ul>
+  </div>
+</section>
+
+<!-- ══════ 錯題本 ══════ -->
+<section id="pWrong" class="panel">
+  <div class="card">
+    <h2>我的錯題本</h2>
+    <div class="note">答錯的題目會自動存進來（只存在這台裝置的瀏覽器）。同一題答對兩次之後會自動移除。</div>
+    <div id="wrongBox"></div>
+    <button class="bigbtn" id="btnPracWrong" style="display:none">開始重練錯題</button>
+    <button class="ghostbtn" id="btnClearWrong" style="display:none">清空錯題本</button>
+    <button class="ghostbtn" id="btnClearProg">把「熟了」的進度全部歸零</button>
+  </div>
+</section>
+
+<footer>
+  互動知識庫 · 國語文形音義練習<br>
+  內容依「形音好棒棒加油站」「形音字義好棒棒補充卷」第一冊第五課背影紙本講義整理；解釋文字配合練習略作改寫。
+</footer>
+</div>
+
+<script>
+// ═══════════ 題庫：講義 64 組 ═══════════
+// n=講義組號 id=同一組拆兩個字時用（28a、28b） c=考的字 z=注音 zt=注音陷阱
+// o=看詞選字的干擾字（刻意排除「本身也對」的寫法，例如 狼籍、眼花繚亂、姍姍/珊珊、絃）
+// alt=講義括號裡的另一種寫法（打字時也算對） sc=字義題要標的字（疊字、連綿詞）
+// w=詞語 [{t:詞, m:完整解釋, g:這個字的字義, p:成語的比喻, nc:這個詞不出看詞選字}]
+const ITEMS = [
+  {n:1,c:"浦",z:"ㄆㄨˇ",zt:["ㄆㄨˊ","ㄈㄨˇ","ㄆㄨˋ"],o:["埔","圃","鋪"],tips:["T1"],w:[
+    {t:"江浦",m:"浦：河岸、水邊。"},
+    {t:"合浦還珠",m:"漢代合浦郡沿海盛產珍珠，因為太守貪心、濫採無度，珍珠漸漸移到交阯郡。後來孟嘗當合浦太守，改掉舊弊，珍珠才慢慢回來。比喻人去而復回，或物失而復得。",p:"人去而復回，或物失而復得"}],
+    note:"水字旁：水邊。"},
+  {n:2,c:"埔",z:"ㄆㄨˇ",zt:["ㄆㄨˊ","ㄈㄨˇ","ㄆㄨˋ"],o:["浦","圃","鋪"],tips:["T1"],w:[
+    {t:"海埔新生地",m:"埔：閩粵方言，泛指平坦的地方。海岸地帶新淤積出來的土地。"}],
+    note:"土字旁：平坦的土地。"},
+  {n:3,c:"圃",z:"ㄆㄨˇ",zt:["ㄆㄨˊ","ㄈㄨˇ","ㄆㄨˋ"],o:["浦","埔","鋪"],tips:["T1"],w:[
+    {t:"花圃",m:"圃：種植蔬菜、花卉或瓜果的園地。種植花草的園圃。"},
+    {t:"抱甕灌圃",m:"用甕裝水來灌溉菜圃。比喻愚笨拙劣的方法。",p:"愚笨拙劣的方法"}],
+    note:"外面的「囗」像圍起來的園子。"},
+  {n:4,c:"鋪",z:"ㄆㄨ",zt:["ㄆㄨˋ","ㄆㄨˇ","ㄈㄨ"],o:["浦","埔","圃"],tips:["T3"],w:[
+    {t:"鋪棉被",m:"鋪：攤開、展平。",g:"攤開、展平"},
+    {t:"鋪設鐵路",m:"鋪：陳設、布置。",g:"陳設、布置"},
+    {t:"鋪張",m:"張大其事，講究排場。"}],
+    note:"動作（攤開、布置）念一聲ㄆㄨ；地方（商店、床位）念四聲ㄆㄨˋ。"},
+  {n:5,c:"鋪",z:"ㄆㄨˋ",zt:["ㄆㄨ","ㄆㄨˇ","ㄈㄨˋ"],o:["浦","埔","圃"],tips:["T3"],w:[
+    {t:"雜貨鋪",m:"鋪：商店。",g:"商店"},
+    {t:"臥鋪",m:"鋪：床位。",g:"床位"}],
+    note:"地方（商店、床位）念四聲ㄆㄨˋ；動作（攤開、布置）念一聲ㄆㄨ。"},
+  {n:6,c:"弦",z:"ㄒㄧㄢˊ",zt:["ㄒㄩㄢˊ","ㄒㄩㄢˋ","ㄒㄧㄢˋ"],o:["玄","眩","炫"],tips:["T1","T2"],w:[
+    {t:"箭在弦上，不得不發",m:"弦：緊繫在弓上的索、線，有彈性，就是弓弦。比喻事情為形勢所逼，不得不做。",g:"弓上的線（弓弦）",p:"事情為形勢所逼，不得不做"},
+    {t:"弦歌不輟",m:"弦：弦樂或弦樂器的簡稱。比喻政治清明，禮樂教化普及。",g:"弦樂器",p:"政治清明，禮樂教化普及"},
+    {t:"續弦",m:"弦：比喻妻子。古時用琴瑟比喻夫妻，斷弦指妻子亡故，要續上新弦才能再彈，所以稱男子喪妻再娶為「續弦」。",g:"比喻妻子",p:"男子喪妻後再娶"}],
+    note:"弓字旁，念ㄒㄧㄢˊ，沒有ㄩ。"},
+  {n:7,c:"玄",z:"ㄒㄩㄢˊ",zt:["ㄒㄧㄢˊ","ㄒㄩㄢˋ","ㄒㄩㄢ"],o:["弦","眩","炫"],tips:["T2"],w:[
+    {t:"玄機妙算",m:"玄：深遠奧妙的。指神妙的籌謀推算。",p:"神妙的籌謀推算"}]},
+  {n:8,c:"眩",z:"ㄒㄩㄢˋ",zt:["ㄒㄩㄢˊ","ㄒㄧㄢˊ","ㄒㄩㄢˇ"],o:["弦","玄","炫"],tips:["T1","T2"],w:[
+    {t:"頭暈目眩",m:"眩：眼睛昏花，看東西晃動不定。"}],
+    note:"目字旁：眼睛昏花。"},
+  {n:9,c:"炫",z:"ㄒㄩㄢˋ",zt:["ㄒㄩㄢˊ","ㄒㄧㄢˊ","ㄒㄩㄢ"],o:["弦","玄","舷"],tips:["T1","T2"],w:[
+    {t:"炫耀",m:"炫：誇耀、顯示。",g:"誇耀、顯示"},
+    {t:"光彩炫目",m:"炫：照耀、照亮。光彩耀眼奪目。（講義註明也可寫「眩」）",g:"照耀、照亮",nc:1}],
+    note:"火字旁：火光照耀。講義註明「光彩炫目」也可寫成「光彩眩目」。"},
+  {n:10,c:"卸",z:"ㄒㄧㄝˋ",zt:["ㄩˋ","ㄒㄧㄝˇ","ㄑㄩㄝˋ"],o:["御","禦","卻"],tips:["T2"],w:[
+    {t:"港口卸貨",m:"卸：把東西拿下或去除。搬下所載的貨物。",g:"把東西拿下或去除"},
+    {t:"推卸責任",m:"卸：解除、推託。不肯承擔。",g:"解除、推託",p:"不肯承擔"}]},
+  {n:11,c:"御",z:"ㄩˋ",zt:["ㄒㄧㄝˋ","ㄩˊ","ㄩˇ"],o:["禦","卸","卻"],tips:["T1","T2"],w:[
+    {t:"御花園",m:"御：天子的、帝王的。供皇帝遊賞的花園。",g:"天子的、帝王的"},
+    {t:"統御",m:"御：統治、治理。統率駕御。",g:"統治、治理"},
+    {t:"駕御",m:"御：駕馭車馬。①控制車馬的前進。②指揮、驅使。",g:"駕馭車馬",nc:1}],
+    note:"帝王的、統治、駕車用「御」；抵擋才用下面有「示」的「禦」。"},
+  {n:12,c:"禦",z:"ㄩˋ",zt:["ㄒㄧㄝˋ","ㄩˊ","ㄩˇ"],o:["御","卸","卻"],tips:["T1","T2"],w:[
+    {t:"抵禦外侮",m:"禦：抵抗、抵擋。抵擋防禦外族的欺侮。"},
+    {t:"禦寒衣物",m:"抵禦寒氣的衣服。"}],
+    note:"抵擋的意思用「禦」（御＋示）。"},
+  {n:13,c:"藉",z:"ㄐㄧˊ",zt:["ㄐㄧㄝˋ","ㄐㄧˋ","ㄐㄧㄝˊ"],o:["借","跡","績"],w:[
+    {t:"杯盤狼藉",m:"狼藉：傳說狼群常在草地上臥息，離去時把草地弄得一片凌亂來滅跡，後來用來形容凌亂不堪。形容酒席完畢，杯盤散亂的情形。",p:"酒席完畢，杯盤散亂的情形"},
+    {t:"聲名狼藉",m:"狼藉：行為放縱，不守法紀。比喻名聲非常惡劣。",p:"名聲非常惡劣"}],
+    note:"狼藉念ㄐㄧˊ，不是「藉口」的ㄐㄧㄝˋ。"},
+  {n:14,c:"簌",z:"ㄙㄨˋ",zt:["ㄕㄨˋ","ㄙㄡˋ","ㄘㄨˋ"],o:["漱","嗽","速"],sc:"簌簌",w:[
+    {t:"簌簌淚下",m:"簌簌：紛紛墜下的樣子。",g:"紛紛墜下的樣子"},
+    {t:"簌簌地響",m:"簌簌：狀聲詞，形容細碎不斷的聲音。",g:"形容細碎不斷的聲音"}],
+    note:"竹字頭，念ㄙㄨˋ（不捲舌）。"},
+  {n:15,c:"質",z:"ㄓˋ",zt:["ㄓˊ","ㄓˇ","ㄓ"],tips:["T3"],w:[
+    {t:"典質",m:"質：用財物或人作保證以為抵押。用物品抵押，向人借貸金錢。",g:"用財物或人作抵押"},
+    {t:"人質",m:"為了取信於對方而作為抵押，或被對方拘留的人。"}],
+    note:"抵押的意思念四聲ㄓˋ。"},
+  {n:16,c:"質",z:"ㄓˊ",zt:["ㄓˋ","ㄓˇ","ㄓ"],tips:["T3"],w:[
+    {t:"特質",m:"質：事物的根本、特性。異於其他眾物的性質。",g:"事物的根本、特性"},
+    {t:"質樸",m:"質：樸實的本性。樸實無華。",g:"樸實的本性"},
+    {t:"文質彬彬",m:"質：樸實的本性。文采和實質都具備，配合諧調。形容人舉止文雅有禮。",p:"人舉止文雅有禮"},
+    {t:"資質",m:"質：人的天性稟賦。",g:"人的天性稟賦"},
+    {t:"質詢",m:"質：詰問。",g:"詰問"}],
+    note:"本性、詢問念二聲ㄓˊ；抵押（典質、人質）念四聲ㄓˋ。"},
+  {n:17,c:"澹",z:"ㄉㄢˋ",zt:["ㄓㄢ","ㄉㄢˇ","ㄊㄢˊ"],o:["膽","擔","瞻"],alt:["淡"],w:[
+    {t:"光景慘澹",m:"慘澹：暗淡無光。這裡指經濟困難。",g:"暗淡無光"},
+    {t:"慘澹經營",m:"慘澹：辛苦。盡心規劃。多用來形容開創事業時的艱苦。",g:"辛苦",p:"開創事業時盡心規劃、十分艱苦"}],
+    note:"講義寫「慘澹（淡）」，兩種寫法都可以。"},
+  {n:18,c:"賦",z:"ㄈㄨˋ",zt:["ㄈㄨˇ","ㄨˇ","ㄈㄨˊ"],o:["賊","貳","赴"],w:[
+    {t:"賦閒",m:"辭官或沒有職業，閒居在家。（這個詞的字義，講義上有手寫修改，請對照自己的講義）"},
+    {t:"賦歸",m:"賦：吟詠、寫作。歸鄉、還家。",g:"吟詠、寫作"},
+    {t:"秉賦",m:"賦：資質。人先天的性格、資質和體魄。",g:"資質"},
+    {t:"田賦",m:"賦：稅收。政府對農業用地所課徵的稅捐。",g:"稅收"}]},
+  {n:19,c:"勾",z:"ㄍㄡ",zt:["ㄍㄡˋ","ㄐㄩˋ","ㄍㄡˇ"],o:["句","勻","勺"],tips:["T2"],w:[
+    {t:"勾留",m:"勾：停滯、逗留。因事停留。",g:"停滯、逗留"},
+    {t:"勾銷",m:"勾：刪掉、取消。取消、抹煞。",g:"刪掉、取消"},
+    {t:"勾結",m:"勾：暗地相通。暗中結合、串通。",g:"暗地相通"},
+    {t:"勾勒",m:"勾：描繪。①描畫輪廓。②用筆作一些記號，或簡單描寫事物的大致情況。",g:"描繪"}]},
+  {n:20,c:"鉤",z:"ㄍㄡ",zt:["ㄐㄩㄣ","ㄉㄧㄠˋ","ㄍㄡˋ"],o:["鈞","釣","鈴"],alt:["鈎"],tips:["T2"],w:[
+    {t:"鉤邊",m:"鉤：編織、縫紉。古代婦女衣服後身的下襬。",g:"編織、縫紉"},
+    {t:"鉤鼻子",m:"鉤：彎曲的。",g:"彎曲的"}],
+    note:"講義寫「鉤（鈎）」，兩種寫法都可以。"},
+  {n:21,c:"釣",z:"ㄉㄧㄠˋ",zt:["ㄐㄩㄣ","ㄍㄡ","ㄉㄧㄠˇ"],o:["鈞","鉤","約"],tips:["T1","T2"],w:[
+    {t:"釣魚",m:"釣：用餌誘魚上鉤。",g:"用餌誘魚上鉤"},
+    {t:"沽名釣譽",m:"釣：騙取、誘取。故意做作，用手段謀取名聲和讚譽。",g:"騙取、誘取",p:"故意做作，用手段謀取名聲和讚譽"}],
+    note:"右邊是「勺」。"},
+  {n:22,c:"鈞",z:"ㄐㄩㄣ",zt:["ㄉㄧㄠˋ","ㄍㄡ","ㄩㄣˊ"],o:["釣","鉤","均"],tips:["T1","T2"],w:[
+    {t:"千鈞一髮",m:"鈞：量詞，古代計算重量的單位，三十斤為一鈞。比喻非常危險。",g:"古代的重量單位",p:"非常危險"},
+    {t:"鈞鑒",m:"鈞：尊稱有關長輩或上級的事物、行為的敬詞。書信、公文中對尊長的提稱語，有恭敬的請對方閱讀的意思。",g:"對長輩或上級的敬詞"},
+    {t:"筆力萬鈞",m:"①形容詩文等作品表現出的氣勢十分強大。②形容書法筆畫蒼勁有力。",p:"詩文氣勢強大，或書法筆畫蒼勁有力"}],
+    note:"右邊是「勻」，金字旁。千「鈞」一髮不是「均」。"},
+  {n:23,c:"囑",z:"ㄓㄨˇ",zt:["ㄕㄨˇ","ㄓㄨˊ","ㄓㄨˋ"],o:["矚","燭","觸"],tips:["T1","T2"],w:[
+    {t:"囑託",m:"囑：叮嚀、託付。吩咐、託付。"},
+    {t:"囑咐",m:"吩咐、囑託。"}],
+    note:"口字旁：用嘴巴交代。"},
+  {n:24,c:"矚",z:"ㄓㄨˇ",zt:["ㄕㄨˇ","ㄓㄨˊ","ㄓㄨˋ"],o:["囑","燭","觸"],tips:["T1","T2"],w:[
+    {t:"眾所矚目",m:"矚：注視。大家特別注意、關切。",p:"大家特別注意、關切"},
+    {t:"高瞻遠矚",m:"見識遠大。",p:"見識遠大"}],
+    note:"目字旁：用眼睛注視。"},
+  {n:25,c:"屬",z:"ㄕㄨˇ",zt:["ㄓㄨˇ","ㄕㄨˊ","ㄕㄨˋ"],o:["囑","矚","蜀"],tips:["T2"],w:[
+    {t:"屬地",m:"屬：歸某方所有或管轄的。帝國主義國家在本國以外占據的殖民地，或控制的附屬國。",g:"歸某方所有或管轄"},
+    {t:"眷屬",m:"屬：親眷。親人、夫婦、家屬。",g:"親眷"},
+    {t:"附屬",m:"屬：附著。",g:"附著"}],
+    note:"囑、矚念ㄓㄨˇ；屬念ㄕㄨˇ。"},
+  {n:26,c:"帖",z:"ㄊㄧㄝ",zt:["ㄊㄧㄝˇ","ㄊㄧㄝˋ","ㄓㄢˋ"],o:["站","粘","玷"],alt:["貼"],tips:["T3"],w:[
+    {t:"服帖",m:"帖：服從。",g:"服從"},
+    {t:"妥帖",m:"帖：穩當。",g:"穩當"}],
+    note:"順從、穩當念一聲ㄊㄧㄝ。講義寫「帖（貼）」，兩種寫法都可以。"},
+  {n:27,c:"帖",z:"ㄊㄧㄝˇ",zt:["ㄊㄧㄝ","ㄊㄧㄝˋ","ㄓㄢ"],o:["站","粘","玷"],tips:["T3"],w:[
+    {t:"喜帖",m:"帖：請柬。",g:"請柬"},
+    {t:"一帖藥",m:"帖：計算藥劑的單位。",g:"計算藥劑的單位"}],
+    note:"請柬、藥的單位念三聲ㄊㄧㄝˇ。"},
+  {n:28,id:"28a",c:"躊",z:"ㄔㄡˊ",zt:["ㄕㄡˋ","ㄔㄡ","ㄓㄡˋ"],o:["籌","疇","濤"],sc:"躊躇",w:[
+    {t:"躊躇不決",m:"躊躇：猶豫不決。猶豫而不能做下決定。",g:"猶豫不決"},
+    {t:"躊躇滿志",m:"躊躇：自得的樣子。",g:"自得的樣子",p:"自得的樣子"}],
+    note:"兩個字都是足字旁。躊躇念 ㄔㄡˊ ㄔㄨˊ。"},
+  {n:28,id:"28b",c:"躇",z:"ㄔㄨˊ",zt:["ㄓㄨˋ","ㄔㄨˇ","ㄓㄨˇ"],o:["著","儲","櫥"],w:[
+    {t:"躊躇不決",m:"躊躇：猶豫不決。猶豫而不能做下決定。"},
+    {t:"躊躇滿志",m:"躊躇：自得的樣子。"}],
+    note:"兩個字都是足字旁。躊躇念 ㄔㄡˊ ㄔㄨˊ。"},
+  {n:29,c:"看",z:"ㄎㄢ",zt:["ㄎㄢˋ","ㄎㄢˇ","ㄍㄢ"],tips:["T3"],w:[
+    {t:"看守",m:"①守護、照料。②監視管理。"},
+    {t:"看門",m:"看守門戶。"},
+    {t:"看護",m:"看顧、料理。"}],
+    note:"守著、照顧念一聲ㄎㄢ；用眼睛看念四聲ㄎㄢˋ。"},
+  {n:30,c:"迂",z:"ㄩ",zt:["ㄩˊ","ㄒㄩ","ㄩˋ"],o:["紆","吁","盱"],tips:["T1","T2"],w:[
+    {t:"迂腐",m:"迂：言行守舊、不切實際。拘泥陳舊思想，無法順應時代潮流。",g:"言行守舊、不切實際"},
+    {t:"迂迴",m:"迂：曲折迴旋。",g:"曲折迴旋",nc:1}],
+    note:"迂、紆念ㄩ；吁、盱念ㄒㄩ；竽念ㄩˊ。"},
+  {n:31,c:"紆",z:"ㄩ",zt:["ㄩˊ","ㄒㄩ","ㄩˇ"],o:["迂","吁","盱"],tips:["T1","T2"],w:[
+    {t:"降貴紆尊",m:"屈降尊貴的身分地位，謙遜待人。",p:"放下尊貴的身分地位，謙遜待人"},
+    {t:"紆青拖紫",m:"紆：繫戴、佩帶。身上佩帶青、紫色的印綬。比喻地位顯貴。",p:"地位顯貴"}],
+    note:"糸字旁：繫、戴（絲帶）。"},
+  {n:32,c:"吁",z:"ㄒㄩ",zt:["ㄩ","ㄩˊ","ㄒㄩˋ"],o:["迂","紆","盱"],tips:["T1","T2"],w:[
+    {t:"長吁短嘆",m:"吁：嘆息。長一聲、短一聲的嘆息不已。表示非常憂戚。",p:"嘆息不已，非常憂戚"},
+    {t:"氣喘吁吁",m:"大聲喘氣、呼吸急促的樣子。"}],
+    note:"口字旁：嘆氣、喘氣。"},
+  {n:33,c:"盱",z:"ㄒㄩ",zt:["ㄩ","ㄩˊ","ㄍㄢ"],o:["吁","迂","盯"],tips:["T1","T2"],w:[
+    {t:"盱衡全局",m:"盱：睜開眼睛凝視。觀察分析。",p:"觀察分析整個局勢"}],
+    note:"目字旁：睜眼看。"},
+  {n:34,c:"竽",z:"ㄩˊ",zt:["ㄩ","ㄩˋ","ㄍㄢ"],o:["芋","宇","竿"],tips:["T1","T2"],w:[
+    {t:"濫竽充數",m:"竽：古代一種吹奏樂器。比喻沒有真才實學的人，混在行家之間充數；或比喻假貨劣品混在真品中。",p:"沒有真才實學的人，混在行家之間充數"}],
+    note:"竹字頭：竹管做的樂器。"},
+  {n:35,c:"戴",z:"ㄉㄞˋ",zt:["ㄗㄞˋ","ㄉㄞˇ","ㄗㄞˇ"],o:["載","裁","栽"],w:[
+    {t:"戴帽子",m:"戴：把東西附加在頭、面、胸、臂等處。",g:"把東西加在頭、面、胸、臂等處"},
+    {t:"披星戴月",m:"戴：以頭頂著。形容早出晚歸，旅途勞累。",g:"用頭頂著",p:"早出晚歸，旅途勞累"},
+    {t:"愛戴",m:"戴：擁護、推崇。敬愛、擁戴。",g:"擁護、推崇"}]},
+  {n:36,c:"望",z:"ㄨㄤˋ",zt:["ㄨㄤˊ","ㄨㄤˇ","ㄇㄤˊ"],w:[
+    {t:"望梅止渴",m:"望：看。曹操帶兵行軍，士兵口渴難耐，曹操騙士兵前面有梅林，梅子又酸又甜，讓士兵流口水來解渴。後來比喻用空想來安慰自己。",g:"看",p:"用空想來安慰自己"},
+    {t:"眾望所歸",m:"望：名譽、名聲。深得眾人擁護、愛戴。",g:"名譽、名聲",p:"深得眾人擁護、愛戴"},
+    {t:"四處張望",m:"望：看。從隙縫中看，或四處遠望。"},
+    {t:"望車外看",m:"望：向、朝。",g:"向、朝"},
+    {t:"登高望遠",m:"望：向遠處或高處看。登上高處，視野可以廣遠。比喻境界越高，眼光就越遠大。",p:"境界越高，眼光就越遠大"},
+    {t:"望子成龍",m:"望：期盼、希冀。",g:"期盼、希冀"},
+    {t:"坐二望一",m:"望：接近。",g:"接近"}]},
+  {n:37,c:"攀",z:"ㄆㄢ",zt:["ㄆㄢˊ","ㄈㄢˊ","ㄅㄢ"],o:["樊","礬","潘"],w:[
+    {t:"攀爬",m:"攀：抓住物體往上爬。",g:"抓住物體往上爬"},
+    {t:"高攀",m:"攀：依附。",g:"依附"},
+    {t:"攀龍附鳳",m:"攀：依附。"},
+    {t:"攀扯",m:"攀：牽連、牽扯。",g:"牽連、牽扯"},
+    {t:"攀折",m:"攀：摘、折。",g:"摘、折"}],
+    note:"下面是「手」：用手抓。"},
+  {n:38,c:"褂",z:"ㄍㄨㄚˋ",zt:["ㄍㄨㄚ","ㄍㄨㄟˋ","ㄍㄨㄚˇ"],o:["掛","卦","桂"],w:[
+    {t:"黑布大馬褂",m:"馬褂：騎馬時穿在長袍外面的對襟短褂，原本是滿族的服裝，後來成為常服或禮服。黑布所做、穿在長袍外的短上衣。"}],
+    note:"衣字旁：衣服。"},
+  {n:39,c:"跚",z:"ㄕㄢ",zt:["ㄓㄚˋ","ㄕㄢˋ","ㄘㄜˋ"],o:["刪","柵","冊"],tips:["T1","T2"],w:[
+    {t:"步履蹣跚",m:"蹣跚：形容步伐不穩，歪歪斜斜的樣子。",p:"步伐不穩，歪歪斜斜"}],
+    note:"足字旁：腳步不穩。講義這一組只考「跚」的音。"},
+  {n:40,c:"柵",z:"ㄓㄚˋ",zt:["ㄕㄢ","ㄘㄜˋ","ㄓㄚˊ"],o:["珊","刪","跚"],tips:["T1","T2"],w:[
+    {t:"木柵",m:"柵：用竹子、鐵條、木條或其他物品做成，形狀像籬笆的圍欄。"},
+    {t:"柵欄",m:"用竹子、鐵條、木條或其他物品做成，形狀像籬笆的圍欄。"}],
+    note:"冊家族只有「柵」念ㄓㄚˋ，其他都念ㄕㄢ。"},
+  {n:41,c:"珊",z:"ㄕㄢ",zt:["ㄓㄚˋ","ㄕㄢˋ","ㄙㄢ"],o:["柵","刪","冊"],tips:["T1","T2"],w:[
+    {t:"意興闌珊",m:"闌珊：衰落、蕭瑟的樣子。形容興致極為低落。",p:"興致極為低落"},
+    {t:"珊瑚礁",m:"珊瑚蟲在暖海中聚在一起生活，牠們分泌的石灰質骨骼就是珊瑚。"}],
+    note:"玉字旁：珊瑚像寶玉。"},
+  {n:42,c:"刪",z:"ㄕㄢ",zt:["ㄓㄚˋ","ㄕㄢˋ","ㄙㄢ"],o:["珊","柵","姍"],tips:["T1","T2"],w:[
+    {t:"刪除",m:"刪：削除。去掉。"}],
+    note:"刀字旁：用刀削掉。"},
+  {n:43,c:"姍",z:"ㄕㄢ",zt:["ㄓㄚˋ","ㄕㄢˋ","ㄙㄢ"],o:["跚","柵","刪"],tips:["T1","T2"],w:[
+    {t:"姍姍來遲",m:"姍姍：形容走路緩慢從容的姿態。原本形容女子慢慢走來的樣子，後來用來形容人遲到，不依時赴會。",p:"人遲到，不依時赴會"}],
+    note:"女字旁：原本形容女子慢慢走來。"},
+  {n:44,c:"攙",z:"ㄔㄢ",zt:["ㄔㄢˊ","ㄘㄢ","ㄔㄢˇ"],o:["饞","讒","纔"],tips:["T1","T2"],w:[
+    {t:"攙扶老人",m:"攙：牽挽、扶持。扶著、挽著，指用手輕輕架著對方的胳膊。"}],
+    note:"手字旁：用手扶。只有「攙」念一聲。"},
+  {n:45,c:"饞",z:"ㄔㄢˊ",zt:["ㄔㄢ","ㄘㄢˊ","ㄔㄢˇ"],o:["攙","讒","纔"],tips:["T1","T2"],w:[
+    {t:"饞涎欲滴",m:"饞：貪吃。形容貪食的樣子。",p:"貪食的樣子"}],
+    note:"食字旁：貪吃。"},
+  {n:46,c:"讒",z:"ㄔㄢˊ",zt:["ㄔㄢ","ㄘㄢˊ","ㄔㄢˇ"],o:["攙","饞","纔"],tips:["T1","T2"],w:[
+    {t:"聽信讒言",m:"讒：說別人壞話，中傷他人。讒言：毀謗他人的言語。"},
+    {t:"讒害忠良",m:"用壞話陷害他人。"}],
+    note:"言字旁：說壞話。"},
+  {n:47,c:"呵",z:"ㄏㄜ",zt:["ㄎㄜ","ㄏㄜˊ","ㄚ"],o:["苛","坷","柯"],w:[
+    {t:"呵護",m:"呵：照顧。",g:"照顧"},
+    {t:"呵呵笑",m:"呵呵：形容笑聲。",g:"形容笑聲",nc:1},
+    {t:"呵壁問天",m:"呵：噓氣。屈原被放逐，悲憤鬱結，看到神廟上的壁畫，就著畫的內容對天質問各種現象，寫在牆壁上。後來用來形容文人失意時的無奈憤懣。",g:"噓氣",p:"文人失意時的無奈憤懣"}]},
+  {n:48,c:"差",z:"ㄔㄞ",zt:["ㄔㄚ","ㄘ","ㄔㄚˋ"],tips:["T3"],w:[
+    {t:"信差",m:"差：受派遣去做事的人。受雇或受託專門遞送信件的人。",g:"受派遣去做事的人"},
+    {t:"欽差",m:"由皇帝特別任命，出外辦理重大事務的官員。"},
+    {t:"差遣",m:"差：派遣、指使。",g:"派遣、指使"},
+    {t:"差使",m:"差：派遣、指使。原本是舊時官場中臨時委任的官職，後來也泛指事情、職務。"}],
+    note:"派人去做事念ㄔㄞ。"},
+  {n:49,c:"差",z:"ㄔㄚ",zt:["ㄔㄞ","ㄘ","ㄔㄚˋ"],tips:["T3"],w:[
+    {t:"誤差",m:"差：缺失、錯誤。一般用來說明事實和事實真象之間的差距。",g:"缺失、錯誤"},
+    {t:"出差錯",m:"發生錯誤、意外。"},
+    {t:"差強人意",m:"差：尚、略、還。指大體上還能令人勉強滿意。",g:"尚、略、還",p:"大體上還能令人勉強滿意"},
+    {t:"差異",m:"差：因比較而產生的區別。差別、不同。",g:"區別、不同"},
+    {t:"差別",m:"差：因比較而產生的區別。差別、不同。"}],
+    note:"錯誤、不同、稍微念ㄔㄚ。差強人意是「還可以」，不是「很差」。"},
+  {n:50,c:"差",z:"ㄘ",zt:["ㄔㄚ","ㄔㄞ","ㄔㄚˋ"],tips:["T3"],w:[
+    {t:"參差不齊",m:"參差：不整齊、不齊一。雜亂不整齊。",g:"不整齊",p:"雜亂不整齊"},
+    {t:"愛無等差",m:"差：等級。愛沒有次序等級。",g:"等級",p:"愛沒有次序等級"}],
+    note:"不整齊、等級念ㄘ。「參差」念 ㄘㄣ ㄘ。"},
+  {n:51,c:"拭",z:"ㄕˋ",zt:["ㄕˇ","ㄕˊ","ㄧˋ"],o:["試","弒","軾"],w:[
+    {t:"拭淚",m:"拭：擦。"},
+    {t:"拭目以待",m:"擦亮眼睛等待著。比喻期待事情的發展及結果。",p:"期待事情的發展及結果"}],
+    note:"手字旁：用手擦。"},
+  {n:52,c:"箸",z:"ㄓㄨˋ",zt:["ㄓㄨˇ","ㄓㄜˇ","ㄓㄨㄛˊ"],o:["著","署","暑"],alt:["筯"],w:[
+    {t:"舉箸提筆",m:"箸：筷子。"}],
+    note:"竹字頭：竹筷子。講義寫「箸（筯）」，兩種寫法都可以。"},
+  {n:53,c:"瑩",z:"ㄧㄥˊ",zt:["ㄧㄥˇ","ㄩㄥˊ","ㄧㄥ"],o:["螢","營","熒"],w:[
+    {t:"晶瑩剔透",m:"瑩：透明光潔。光亮透明的樣子。"}],
+    note:"下面是「玉」：像玉一樣透明光潔。下面是「虫」的是螢火蟲的螢。"},
+  {n:54,c:"榜",z:"ㄅㄤˇ",zt:["ㄆㄤˊ","ㄅㄤˋ","ㄆㄤ"],o:["膀","謗","滂"],tips:["T1","T2"],w:[
+    {t:"金榜題名",m:"榜：揭示錄取名單的公告。題：簽署、寫在上面。金榜是科舉時代殿試揭曉的榜單。指考試被錄取，名字登在金榜上。",p:"考試被錄取"}],
+    note:"木字旁：木板做的公告。"},
+  {n:55,c:"滂",z:"ㄆㄤ",zt:["ㄆㄤˊ","ㄅㄤˋ","ㄅㄤˇ"],o:["榜","膀","謗"],tips:["T1","T2"],w:[
+    {t:"大雨滂沱",m:"滂：水湧出的樣子。"}],
+    note:"水字旁：大水。念一聲ㄆㄤ。"},
+  {n:56,c:"謗",z:"ㄅㄤˋ",zt:["ㄅㄤˇ","ㄆㄤˊ","ㄆㄤ"],o:["榜","膀","滂"],tips:["T1","T2"],w:[
+    {t:"毀謗",m:"用不實的言詞中傷別人，破壞他的名譽。"}],
+    note:"言字旁：用話中傷。"},
+  {n:57,c:"膀",z:"ㄅㄤˇ",zt:["ㄆㄤˊ","ㄅㄤˋ","ㄆㄤˇ"],o:["榜","謗","滂"],tips:["T1","T3"],w:[
+    {t:"臂膀",m:"膀：肩部和肩以下、肘以上的部位。臂膀：兩臂。"},
+    {t:"翅膀",m:"鳥禽類的兩翼。"}],
+    note:"手臂、翅膀念ㄅㄤˇ；只有「膀胱」念ㄆㄤˊ。"},
+  {n:58,c:"膀",z:"ㄆㄤˊ",zt:["ㄅㄤˇ","ㄆㄤ","ㄅㄤˋ"],o:["榜","謗","滂"],tips:["T3"],w:[
+    {t:"膀胱",m:"泌尿系統中儲存尿液的器官。"}],
+    note:"只有「膀胱」念ㄆㄤˊ。"},
+  {n:59,c:"窘",z:"ㄐㄩㄥˇ",zt:["ㄐㄩㄣˇ","ㄐㄩㄣˋ","ㄑㄩㄥˊ"],o:["迥","炯","窖"],w:[
+    {t:"窘態畢露",m:"窘：困頓的、為難的。所有的短處、缺點全部暴露出來。常用來形容十分尷尬難堪的場合。",p:"十分尷尬難堪"},
+    {t:"窘困",m:"窘：困頓的、為難的。貧困拮据。"}],
+    note:"穴字頭下面是「君」。"},
+  {n:60,c:"撩",z:"ㄌㄧㄠˊ",zt:["ㄌㄧㄠˇ","ㄌㄧㄠˋ","ㄌㄧㄠ"],o:["瞭","潦","僚"],w:[
+    {t:"眼花撩亂",m:"撩：紛亂。形容眼睛昏花，心緒迷亂。",p:"眼睛昏花，心緒迷亂"}]},
+  {n:61,c:"膩",z:"ㄋㄧˋ",zt:["ㄦˋ","ㄋㄧˇ","ㄌㄧˋ"],o:["貳","賦","腴"],w:[
+    {t:"文筆細膩",m:"細膩：文章、文辭精細周密。"}]},
+  {n:62,c:"喪",z:"ㄙㄤ",zt:["ㄙㄤˋ","ㄙㄤˇ","ㄕㄤ"],tips:["T3"],w:[
+    {t:"奔喪",m:"喪：有關死者的事宜。",g:"有關死者的事"}],
+    note:"跟死者有關的事念一聲ㄙㄤ。"},
+  {n:63,c:"喪",z:"ㄙㄤˋ",zt:["ㄙㄤ","ㄙㄤˇ","ㄕㄤˋ"],tips:["T3"],w:[
+    {t:"喪家之犬",m:"喪：失去、丟掉。比喻不得志、無所歸宿，或驚慌失措的人。",g:"失去、丟掉",p:"不得志、無所歸宿，或驚慌失措的人"}],
+    note:"失去的意思念四聲ㄙㄤˋ：失去家的狗。"},
+  {n:64,id:"64a",c:"鶼",z:"ㄐㄧㄢ",zt:["ㄑㄧㄢ","ㄐㄧㄢˋ","ㄌㄧㄢˊ"],o:["謙","歉","鵜"],w:[
+    {t:"鶼鰈情深",m:"鶼：比翼鳥；鰈：比目魚。比喻夫婦愛情深厚，相處融洽。",p:"夫婦愛情深厚，相處融洽"}],
+    note:"鶼是鳥（比翼鳥），所以是鳥字旁。"},
+  {n:64,id:"64b",c:"鰈",z:"ㄉㄧㄝˊ",zt:["ㄧㄝˋ","ㄊㄧㄝˇ","ㄉㄧㄝ"],o:["蝶","碟","諜"],w:[
+    {t:"鶼鰈情深",m:"鶼：比翼鳥；鰈：比目魚。比喻夫婦愛情深厚，相處融洽。"}],
+    note:"鰈是魚（比目魚），所以是魚字旁。"}
+];
+const LAST_N = 64;
+const SEGS = [[1,16],[17,32],[33,48],[49,64]];
+
+// 一字多義、成語比喻兩種題目，直接從上面的 g、p 欄位整理出來
+ITEMS.forEach(it=>{ it.id = it.id || String(it.n); });
+let SENSES = [], IDIOMS = [];
+ITEMS.forEach(it=>it.w.forEach(w=>{
+  if(w.g) SENSES.push({c:it.sc||it.c, t:w.t, m:w.g, n:it.n});
+  if(w.p) IDIOMS.push({t:w.t, m:w.p, n:it.n, full:w.m});
+}));
+// 同一個字至少要有兩個不同意思，才出一字多義
+SENSES = SENSES.filter(s=>new Set(SENSES.filter(x=>x.c===s.c).map(x=>x.m)).size>=2);
+
+const TIP_NAME = {T1:"第 1 招：看部首選字",T2:"第 2 招：同一家不同音",T3:"第 3 招：破音字看意思",T4:"第 4 招：一字多義代入法",T5:"第 5 招：成語抓比喻"};
+
+// ═══════════ 工具 ═══════════
+const $ = s => document.querySelector(s);
+const shuffle = a => { for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const pick = (a,n) => shuffle(a.slice()).slice(0,n);
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const blankify = (t,c) => esc(t).split(c).join('<span class="blank">◯</span>');
+const highlight = (t,c) => esc(t).split(c).join('<span class="hl">'+c+'</span>');
+const BYID = {}; ITEMS.forEach(it=>{ BYID[it.id]=it; });
+const canC = it => !!it.o && it.w.some(w=>!w.nc);
+
+function charOptions(item){ return shuffle([item.c, ...item.o]); }
+function zyOptions(item){ return shuffle([item.z, ...item.zt.slice(0,3)]); }
+// 一字多義選項：同一個字的其他意思優先，不夠再從別的字補
+function senseOptions(s){
+  let same = [...new Set(SENSES.filter(x=>x.c===s.c && x.m!==s.m).map(x=>x.m))];
+  let opts = pick(same,3);
+  if(opts.length<3){
+    const other = [...new Set(SENSES.filter(x=>x.c!==s.c && x.m!==s.m && !opts.includes(x.m)).map(x=>x.m))];
+    opts = opts.concat(pick(other,3-opts.length));
+  }
+  return shuffle([s.m, ...opts]);
+}
+function idiomOptions(d){
+  return shuffle([d.m, ...pick([...new Set(IDIOMS.filter(x=>x.m!==d.m).map(x=>x.m))],3)]);
+}
+
+// ═══════════ 題目物件 ═══════════
+// {kind:"z"|"c", item, word}  {kind:"s", sense}  {kind:"p", idiom}
+function qKey(q){
+  if(q.kind==="s") return `s:${q.sense.t}:${q.sense.c}`;
+  if(q.kind==="p") return `p:${q.idiom.t}`;
+  return `${q.kind}:${q.item.id}`;
+}
+function keyToQ(k){
+  const p=k.split(":");
+  if(p[0]==="s"){ const s=SENSES.find(x=>x.t===p[1] && x.c===p[2]); return s?{kind:"s",sense:s}:null; }
+  if(p[0]==="p"){ const d=IDIOMS.find(x=>x.t===p[1]); return d?{kind:"p",idiom:d}:null; }
+  const it=BYID[p[1]]; if(!it) return null;
+  if(p[0]==="c" && !canC(it)) return null;
+  return {kind:p[0], item:it};
+}
+const qNo = q => q.kind==="s"?q.sense.n : q.kind==="p"?q.idiom.n : q.item.n;
+const ALLK = ["z","c","s","p"];
+function allQuestions(kinds, from, to){
+  const qs=[];
+  if(kinds.includes("z")) ITEMS.forEach(it=>qs.push({kind:"z",item:it}));
+  if(kinds.includes("c")) ITEMS.forEach(it=>{ if(canC(it)) qs.push({kind:"c",item:it}); });
+  if(kinds.includes("s")) SENSES.forEach(s=>qs.push({kind:"s",sense:s}));
+  if(kinds.includes("p")) IDIOMS.forEach(d=>qs.push({kind:"p",idiom:d}));
+  if(from===undefined) return qs;
+  return qs.filter(q=>{ const n=qNo(q); return n>=from && n<=to; });
+}
+function tipQuestions(tip){
+  if(tip==="T4") return pick(allQuestions(["s"]),8);
+  if(tip==="T5") return pick(allQuestions(["p"]),8);
+  const qs=[];
+  ITEMS.filter(it=>(it.tips||[]).includes(tip)).forEach(it=>{
+    if(tip==="T1" && canC(it)) qs.push({kind:"c",item:it}); else qs.push({kind:"z",item:it});
+  });
+  return pick(qs,8);
+}
+
+// ═══════════ 儲存（localStorage，讀寫失敗也不影響練習） ═══════════
+function loadJ(k){ try{ return JSON.parse(localStorage.getItem(k)||"{}"); }catch(e){ return {}; } }
+function saveJ(k,o){ try{ localStorage.setItem(k, JSON.stringify(o)); }catch(e){} }
+// 錯題本
+const WKEY = "b1l5_beiying_wrong_v1";
+const loadWrong = () => loadJ(WKEY), saveWrong = o => saveJ(WKEY,o);
+function markWrong(key){ const w=loadWrong(); w[key]={okStreak:0, t:Date.now()}; saveWrong(w); }
+function markRight(key){ const w=loadWrong(); if(!w[key]) return; w[key].okStreak=(w[key].okStreak||0)+1; if(w[key].okStreak>=2) delete w[key]; saveWrong(w); }
+// 熟練度：b=0 剛答錯、1 練習中、2 熟了。第一次就答對直接到 2；答錯歸 0，之後要連對兩次
+const PKEY = "b1l5_beiying_prog_v1";
+const loadProg = () => loadJ(PKEY);
+function grade(key, ok){
+  const p=loadProg(), e=p[key];
+  p[key] = {b: ok ? (e ? Math.min(2,e.b+1) : 2) : 0, t:Date.now()};
+  saveJ(PKEY,p);
+}
+function statsOf(from,to){
+  const p=loadProg(); const s={total:0, done:0, learn:0, fresh:0};
+  allQuestions(ALLK,from,to).forEach(q=>{ const e=p[qKey(q)]; s.total++; if(!e) s.fresh++; else if(e.b>=2) s.done++; else s.learn++; });
+  return s;
+}
+const SMART_N = 12;
+function smartList(){
+  const p=loadProg(); const wrong=[], learning=[], fresh=[];
+  allQuestions(ALLK,cfg.from,cfg.to).forEach(q=>{ const e=p[qKey(q)]; if(!e) fresh.push(q); else if(e.b===0) wrong.push({q,t:e.t}); else if(e.b===1) learning.push({q,t:e.t}); });
+  const byT=(a,b)=>a.t-b.t;
+  const list=[...wrong.sort(byT).map(x=>x.q), ...learning.sort(byT).map(x=>x.q), ...shuffle(fresh)].slice(0,SMART_N);
+  return shuffle(list);
+}
+
+// ═══════════ 分頁切換 ═══════════
+function showPanel(id){
+  document.querySelectorAll("section.panel").forEach(p=>p.classList.toggle("show", p.id===id));
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.classList.toggle("active", b.dataset.t===id));
+  if(id==="pWrong") renderWrongBook();
+  if(id==="pDict") renderDict($("#dictQ").value);
+  if(id==="pStart") updatePool();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>showPanel(b.dataset.t)));
+
+// 訣竅頁：點字翻答案、按鈕練習
+document.querySelectorAll(".fl").forEach(el=>el.addEventListener("click",()=>el.classList.toggle("open")));
+document.querySelectorAll("[data-tip]").forEach(b=>b.addEventListener("click",()=>{
+  quizSource = TIP_NAME[b.dataset.tip];
+  startQuiz(tipQuestions(b.dataset.tip), false);
+}));
+
+// ═══════════ 設定頁 ═══════════
+let cfg = {type:"z", mode:"mc", count:"10", range:"1-64", from:1, to:LAST_N};
+const TYPE_NOTE = {
+  z:"選注音：紅字在這個詞裡怎麼念。破音字（鋪、質、帖、看、差、膀、喪）要先看意思。",
+  c:"看詞選字：詞裡挖掉一個字，從長得很像的字裡挑出對的。",
+  s:"一字多義：同一個字在不同詞裡意思不同。把選項代回去念念看。",
+  p:"成語比喻：選出成語真正要比喻（形容）的意思。",
+  all:"四種題型混著出，最接近真正考試的感覺。"
+};
+function bindChips(id, key, cb){
+  $("#"+id).querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{
+    $("#"+id).querySelectorAll("button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on"); cfg[key]=b.dataset.v; if(cb) cb();
+  }));
+}
+function kindsOf(){ return cfg.type==="all" ? ALLK : [cfg.type]; }
+function renderSegs(){
+  $("#segBox").innerHTML = SEGS.map(([a,b])=>{
+    const s=statsOf(a,b); const chars=[...new Set(ITEMS.filter(it=>it.n>=a&&it.n<=b).map(it=>it.c))].slice(0,6).join("");
+    return `<div data-v="${a}-${b}" class="${cfg.range===a+"-"+b?"on":""}"><b>第 ${a}～${b} 組</b>${chars}…<div class="bar"><i style="width:${s.total?s.done/s.total*100:0}%"></i></div>熟了 ${s.done}／${s.total} 題</div>`;
+  }).join("");
+  $("#segBox").querySelectorAll("div[data-v]").forEach(d=>d.addEventListener("click",()=>setRange(d.dataset.v)));
+}
+function setRange(v){
+  cfg.range=v;
+  $("#selRange").querySelectorAll("button").forEach(x=>x.classList.toggle("on", x.dataset.v===v));
+  $("#rangeRow").classList.toggle("show", v==="custom");
+  if(v==="custom"){ cfg.from=+$("#rFrom").value; cfg.to=+$("#rTo").value; if(cfg.from>cfg.to){ [cfg.from,cfg.to]=[cfg.to,cfg.from]; } }
+  else { const [a,b]=v.split("-").map(Number); cfg.from=a; cfg.to=b; }
+  updatePool();
+}
+function updatePool(){
+  renderSegs();
+  const n = allQuestions(kindsOf(), cfg.from, cfg.to).length;
+  $("#poolN").textContent = n; $("#typeNote").textContent=TYPE_NOTE[cfg.type];
+  const its = ITEMS.filter(it=>it.n>=cfg.from && it.n<=cfg.to).map(it=>it.c);
+  $("#rangeNote").textContent = `現在選的是第 ${cfg.from}～${cfg.to} 組：${[...new Set(its)].join("、")}`;
+  $("#btnStart").disabled = !n;
+  const s=statsOf(cfg.from,cfg.to); const left=s.learn+s.fresh;
+  $("#smartStat").innerHTML = `這一段共 <b>${s.total}</b> 題：熟了 <b>${s.done}</b>、要再練 <b>${s.learn}</b>、還沒做過 <b>${s.fresh}</b>。` + (left ? `大約再 ${Math.ceil(left/SMART_N)} 回可以全部碰過一次。` : "全部熟了！");
+  $("#btnSmart").style.display = left ? "block" : "none";
+  $("#btnReview").style.display = left ? "none" : "block";
+}
+(function(){
+  let h=""; for(let i=1;i<=LAST_N;i++) h+=`<option value="${i}">${i}</option>`;
+  $("#rFrom").innerHTML=h; $("#rTo").innerHTML=h; $("#rFrom").value="1"; $("#rTo").value=String(LAST_N);
+  const onSel=()=>setRange("custom");
+  $("#rFrom").addEventListener("change",onSel); $("#rTo").addEventListener("change",onSel);
+})();
+$("#selRange").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>setRange(b.dataset.v)));
+bindChips("selType","type",updatePool);
+bindChips("selMode","mode");
+bindChips("selCount","count");
+updatePool();
+
+// ═══════════ 出題流程 ═══════════
+let quiz = {list:[], i:0, score:0, wrong:[], answered:false, smart:false};
+let quizSource = "";
+const KIND_NAME = {c:"看詞選字（形）", z:"選注音（音）", s:"一字多義（義）", p:"成語比喻（義）"};
+const rangeName = () => (cfg.from===1 && cfg.to===LAST_N) ? "" : `第 ${cfg.from}～${cfg.to} 組`;
+
+function startQuiz(list, smart){
+  if(!list.length) return;
+  quiz = {list, i:0, score:0, wrong:[], answered:false, smart:!!smart};
+  showPanel("pQuiz"); renderQ();
+}
+function startSmart(){ quizSource = "聰明複習" + (rangeName()?"・"+rangeName():""); startQuiz(smartList(), true); }
+$("#btnSmart").addEventListener("click", startSmart);
+$("#btnSmartAgain").addEventListener("click", ()=>{ if(smartList().length) startSmart(); else showPanel("pStart"); });
+$("#btnReview").addEventListener("click", ()=>{ quizSource="驗收"; startQuiz(pick(allQuestions(ALLK,cfg.from,cfg.to),SMART_N), false); });
+$("#btnStart").addEventListener("click",()=>{
+  quizSource = rangeName();
+  let pool = shuffle(allQuestions(kindsOf(), cfg.from, cfg.to));
+  const n = parseInt(cfg.count,10); if(n>0) pool = pool.slice(0,n);
+  startQuiz(pool, false);
+});
+
+function addOpt(text, correct, cls){
+  const b=document.createElement("button"); if(cls) b.className=cls; b.textContent=text;
+  b.addEventListener("click",()=>answer(text===correct, b, correct));
+  $("#qOpts").appendChild(b);
+}
+
+function renderQ(){
+  const q = quiz.list[quiz.i];
+  quiz.answered=false;
+  $("#barFill").style.width = (quiz.i/quiz.list.length*100)+"%";
+  $("#mProg").textContent = `第 ${quiz.i+1} / ${quiz.list.length} 題` + (quizSource?`　${quizSource}`:"");
+  $("#mScore").textContent = `答對 ${quiz.score} 題`;
+  $("#qTag").textContent = KIND_NAME[q.kind];
+  $("#qRetry").style.display = q.retry ? "inline-block" : "none";
+  $("#qFb").className="fb"; $("#qFb").innerHTML="";
+  $("#btnNext").style.display="none";
+  $("#qOpts").innerHTML=""; $("#qOpts").className="opts";
+  $("#qType").style.display="none"; $("#hintTxt").textContent=""; $("#qHw").style.display="none";
+  $("#qClue").style.display="block";
+
+  if(q.kind==="z"){
+    const it=q.item; q.word = q.word || pick(it.w,1)[0];
+    $("#qNum").textContent = `講義第 ${it.n} 組`;
+    $("#qStem").innerHTML = `<div>紅字在這個詞裡怎麼念？</div><div class="words">${highlight(q.word.t,it.c)}</div>`;
+    $("#qClue").innerHTML = `<b>意思</b>：${esc(q.word.m)}`;
+    zyOptions(it).forEach(z=>addOpt(z, it.z, "zy"));
+  }else if(q.kind==="c"){
+    const it=q.item; q.word = q.word || pick(it.w.filter(w=>!w.nc),1)[0];
+    $("#qNum").textContent = `講義第 ${it.n} 組`;
+    $("#qStem").innerHTML = `<div>◯ 要填哪一個字？</div><div class="words">${blankify(q.word.t,it.c)}</div>`;
+    $("#qClue").innerHTML = `<b>意思</b>：${esc(q.word.m)}`;
+    if(cfg.mode==="hw"){
+      $("#qHw").style.display="flex"; hwReset(it.c);
+    }else if(cfg.mode==="tp"){
+      $("#qType").style.display="block"; $("#typeIn").value=""; setTimeout(()=>$("#typeIn").focus(),50);
+    }else{
+      charOptions(it).forEach(ch=>addOpt(ch, it.c, "big"));
+    }
+  }else if(q.kind==="s"){
+    const s=q.sense;
+    $("#qNum").textContent = `「${s.c}」的意思`;
+    $("#qStem").innerHTML = `<div>紅字在這裡是什麼意思？</div><div class="words">${highlight(s.t,s.c)}</div>`;
+    $("#qClue").innerHTML = `<b>代入法</b>：把每個選項換進去念一次，最通順的就是答案。`;
+    $("#qOpts").className="opts one";
+    senseOptions(s).forEach(m=>addOpt(m, s.m));
+  }else{
+    const d=q.idiom;
+    $("#qNum").textContent = "成語・詞語";
+    $("#qStem").innerHTML = `<div>這個詞比喻（形容）什麼？</div><div class="words">${esc(d.t)}</div>`;
+    $("#qClue").style.display="none";
+    $("#qOpts").className="opts one";
+    idiomOptions(d).forEach(m=>addOpt(m, d.m));
+  }
+}
+
+function explainHTML(q){
+  if(q.kind==="z"||q.kind==="c"){
+    const it=q.item;
+    const words = it.w.map(w=>`<i>${esc(w.t)}</i> ${esc(w.m)}`).join("<br>");
+    const alt = it.alt ? `　也可寫「${esc(it.alt.join("、"))}」` : "";
+    return `<span class="mean">${esc(it.c)}（${esc(it.z)}）${alt}<br>${words}</span>` + (it.note?`<span class="trick">記法：${esc(it.note)}</span>`:"");
+  }
+  if(q.kind==="s"){
+    const s=q.sense;
+    const sibs = SENSES.filter(x=>x.c===s.c).map(x=>`<i>${esc(x.t)}</i> ${esc(x.m)}`).join("<br>");
+    return `<span class="mean">「${esc(s.c)}」在講義裡的意思：<br>${sibs}</span>`;
+  }
+  return `<span class="mean"><i>${esc(q.idiom.t)}</i> ${esc(q.idiom.full)}</span>`;
+}
+function answer(ok, btn, correct){
+  if(quiz.answered) return;
+  quiz.answered=true;
+  const q=quiz.list[quiz.i];
+  $("#qOpts").querySelectorAll("button").forEach(b=>{ b.disabled=true; if(b.textContent===correct) b.classList.add("ok"); });
+  if(btn && btn.id==="btnTypeGo") btn=null;
+  const fb=$("#qFb"); const key=qKey(q);
+  grade(key, ok);
+  if(ok){
+    quiz.score++; markRight(key);
+    fb.className="fb ok"; fb.innerHTML = `答對了！<b>${esc(correct)}</b>` + explainHTML(q);
+  }else{
+    if(btn) btn.classList.add("no");
+    if(!q.retry) quiz.wrong.push(q);
+    markWrong(key);
+    // 聰明複習：答錯的題隔三題再出一次（同一題最多補考一次）
+    if(quiz.smart && !q.retry) quiz.list.splice(Math.min(quiz.i+4, quiz.list.length), 0, {...q, word:undefined, retry:true});
+    fb.className="fb no"; fb.innerHTML = `正確答案是 <b>${esc(correct)}</b>` + explainHTML(q);
+  }
+  $("#mScore").textContent = `答對 ${quiz.score} 題`;
+  $("#btnNext").style.display="block";
+  $("#btnNext").textContent = quiz.i+1<quiz.list.length ? "下一題 →" : "看結果";
+}
+// ═══════════ 手寫格 ═══════════
+const hwCv=$("#hwCv"), hwCtx=hwCv.getContext("2d");
+let hwDrawing=false, hwHasInk=false;
+function hwGrid(){
+  const w=hwCv.width, h=hwCv.height;
+  hwCtx.clearRect(0,0,w,h);
+  hwCtx.save(); hwCtx.strokeStyle="#cfe3e0"; hwCtx.setLineDash([8,8]); hwCtx.lineWidth=2;
+  hwCtx.beginPath(); hwCtx.moveTo(w/2,0); hwCtx.lineTo(w/2,h); hwCtx.moveTo(0,h/2); hwCtx.lineTo(w,h/2);
+  hwCtx.moveTo(0,0); hwCtx.lineTo(w,h); hwCtx.moveTo(w,0); hwCtx.lineTo(0,h); hwCtx.stroke(); hwCtx.restore();
+}
+function hwSize(){
+  const r=$("#hwBox").getBoundingClientRect(); const dpr=window.devicePixelRatio||1;
+  hwCv.width=Math.round(r.width*dpr); hwCv.height=Math.round(r.height*dpr);
+  hwGrid();
+}
+function hwReset(ch){
+  $("#hwAns").textContent=ch; $("#hwBox").classList.remove("show");
+  $("#hwRow1").style.display="flex"; $("#hwRow2").style.display="none";
+  $("#hwTip").textContent="在格子裡把字寫出來";
+  hwHasInk=false; setTimeout(hwSize,0);
+}
+function hwPos(e){ const r=hwCv.getBoundingClientRect(); const sx=hwCv.width/r.width, sy=hwCv.height/r.height; return [(e.clientX-r.left)*sx,(e.clientY-r.top)*sy]; }
+hwCv.addEventListener("pointerdown",e=>{ if($("#hwBox").classList.contains("show")) return; hwDrawing=true; hwCv.setPointerCapture(e.pointerId); const [x,y]=hwPos(e);
+  hwCtx.strokeStyle="#1f2937"; hwCtx.lineWidth=Math.max(6, hwCv.width/36); hwCtx.lineCap="round"; hwCtx.lineJoin="round"; hwCtx.setLineDash([]);
+  hwCtx.beginPath(); hwCtx.moveTo(x,y); hwCtx.lineTo(x+0.1,y+0.1); hwCtx.stroke(); hwHasInk=true; });
+hwCv.addEventListener("pointermove",e=>{ if(!hwDrawing) return; const [x,y]=hwPos(e); hwCtx.lineTo(x,y); hwCtx.stroke(); });
+["pointerup","pointercancel","pointerleave"].forEach(ev=>hwCv.addEventListener(ev,()=>{ hwDrawing=false; }));
+window.addEventListener("resize",()=>{ if($("#qHw").style.display!=="none" && !hwHasInk) hwSize(); });
+$("#hwClear").addEventListener("click",()=>{ hwGrid(); hwHasInk=false; });
+$("#hwReveal").addEventListener("click",()=>{
+  if(quiz.answered) return;
+  if(!hwHasInk && !confirm("還沒寫字，直接看答案嗎？")) return;
+  $("#hwBox").classList.add("show"); $("#hwRow1").style.display="none"; $("#hwRow2").style.display="flex";
+  $("#hwTip").textContent="紅字是正確答案。對照一下，你寫對了嗎？";
+});
+$("#hwOk").addEventListener("click",()=>{ const q=quiz.list[quiz.i]; if(q.kind==="c"){ $("#hwRow2").style.display="none"; answer(true,null,q.item.c); } });
+$("#hwNo").addEventListener("click",()=>{ const q=quiz.list[quiz.i]; if(q.kind==="c"){ $("#hwRow2").style.display="none"; answer(false,null,q.item.c); } });
+
+function answerTyped(){
+  if(quiz.answered) return;
+  const q=quiz.list[quiz.i]; if(q.kind!=="c") return;
+  const v=$("#typeIn").value.trim(); if(!v) return;
+  answer(v===q.item.c || (q.item.alt||[]).includes(v), $("#btnTypeGo"), q.item.c);
+}
+$("#btnTypeGo").addEventListener("click", answerTyped);
+$("#typeIn").addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); if(quiz.answered) nextQ(); else answerTyped(); } });
+$("#btnHint").addEventListener("click", ()=>{ const q=quiz.list[quiz.i]; if(q.kind==="c") $("#hintTxt").textContent = `　注音：${q.item.z}`; });
+function nextQ(){
+  if(!quiz.answered) return;
+  quiz.i++;
+  if(quiz.i<quiz.list.length) renderQ(); else showDone();
+}
+$("#btnNext").addEventListener("click", nextQ);
+$("#btnQuit").addEventListener("click", ()=>{
+  if(quiz.i===0 && !quiz.answered){ showPanel("pStart"); return; }
+  quiz.list=quiz.list.slice(0, quiz.answered ? quiz.i+1 : quiz.i);
+  showDone();
+});
+
+function wrongLine(q){
+  if(q.kind==="s") return `<li><b>${esc(q.sense.t)}</b> <span style="display:inline">一字多義・「${esc(q.sense.c)}」</span><span>${esc(q.sense.m)}</span></li>`;
+  if(q.kind==="p") return `<li><b>${esc(q.idiom.t)}</b> <span style="display:inline">成語比喻</span><span>${esc(q.idiom.m)}</span></li>`;
+  const it=q.item;
+  return `<li><b>${esc(it.c)}（${esc(it.z)}）</b> <span style="display:inline">講義第 ${it.n} 組・${KIND_NAME[q.kind]}</span><span>${it.w.map(w=>esc(w.t)).join("、")}</span></li>`;
+}
+function showDone(){
+  const total=quiz.list.length;
+  $("#dScore").textContent = `${quiz.score} / ${total}`;
+  const r = total? quiz.score/total : 0;
+  $("#dSay").textContent = r===1 ? "全對！這組你已經很熟了。" : r>=.8 ? "很好，把錯的幾題再看一次就穩了。" : r>=.5 ? "過半了。錯的題目回「五個訣竅」找那一家的比較表再看一次。" : "沒關係，先去「五個訣竅」和「形音義表」看一遍再回來。";
+  const s=statsOf(cfg.from,cfg.to);
+  $("#dProg").textContent = `第 ${cfg.from}～${cfg.to} 組的進度：熟了 ${s.done}／${s.total} 題，要再練 ${s.learn} 題，還沒做過 ${s.fresh} 題。`;
+  const left = s.learn+s.fresh;
+  $("#btnSmartAgain").textContent = left ? "再來一回聰明複習" : "這一段全部熟了，回去換下一段";
+  const box=$("#dWrongBox");
+  if(quiz.wrong.length){
+    box.innerHTML = `<h2 style="font-size:1rem;color:var(--red);margin-top:6px">這次答錯的題目</h2><ul class="wronglist">${quiz.wrong.map(wrongLine).join("")}</ul>`;
+    $("#btnAgainWrong").style.display="block";
+  }else{ box.innerHTML=""; $("#btnAgainWrong").style.display="none"; }
+  showPanel("pDone");
+}
+$("#btnAgainWrong").addEventListener("click", ()=>startQuiz(shuffle(quiz.wrong.map(q=>({...q, word:undefined, retry:false}))), false));
+$("#btnBackStart").addEventListener("click", ()=>showPanel("pStart"));
+
+// ═══════════ 形音義表 ═══════════
+function renderDict(qs){
+  qs=(qs||"").trim();
+  const list = ITEMS.filter(it=>{
+    if(!qs) return true;
+    if(it.c.includes(qs) || it.z.includes(qs)) return true;
+    return it.w.some(w=>w.t.includes(qs) || w.m.includes(qs));
+  });
+  $("#dictList").innerHTML = list.length ? list.map(it=>`
+    <li>
+      <div class="head"><span class="n">${it.n}</span><span class="c">${esc(it.c)}</span><span class="r">${esc(it.z)}</span>${it.alt?`<span class="fam">也可寫：${esc(it.alt.join("、"))}</span>`:""}${it.o?`<span class="fam">別寫成：${esc(it.o.join("・"))}</span>`:""}</div>
+      <div class="w">${it.w.map(w=>`<b>${esc(w.t).split(it.c).join(`<em>${it.c}</em>`)}</b>　<span>${esc(w.m)}</span>`).join("<br>")}</div>
+      ${it.note?`<div class="t">記法：${esc(it.note)}</div>`:""}
+    </li>`).join("") : `<div class="empty">找不到「${esc(qs)}」，換個字試試。</div>`;
+}
+$("#dictQ").addEventListener("input", e=>renderDict(e.target.value));
+
+// ═══════════ 錯題本 ═══════════
+function wrongToQuestions(){ return Object.keys(loadWrong()).map(keyToQ).filter(Boolean); }
+function renderWrongBook(){
+  const qs=wrongToQuestions();
+  const box=$("#wrongBox");
+  if(!qs.length){ box.innerHTML=`<div class="empty">目前沒有錯題。去練幾題再回來看。</div>`; $("#btnPracWrong").style.display="none"; $("#btnClearWrong").style.display="none"; return; }
+  box.innerHTML = `<ul class="wronglist">${qs.map(wrongLine).join("")}</ul>`;
+  $("#btnPracWrong").style.display="block"; $("#btnClearWrong").style.display="block";
+}
+$("#btnPracWrong").addEventListener("click", ()=>{ quizSource="錯題重練"; startQuiz(shuffle(wrongToQuestions()), false); });
+$("#btnClearWrong").addEventListener("click", ()=>{ if(confirm("確定要清空錯題本嗎？清掉就找不回來。")){ saveWrong({}); renderWrongBook(); } });
+$("#btnClearProg").addEventListener("click", ()=>{ if(confirm("確定要把「熟了」的進度全部歸零嗎？歸零後找不回來，要從頭練。")){ saveJ(PKEY,{}); alert("進度已歸零。"); } });
+</script>
+</body>
+</html>
