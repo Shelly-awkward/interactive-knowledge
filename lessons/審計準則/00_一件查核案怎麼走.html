@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>審計準則｜一件查核案怎麼走：九站流程圖</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f7f5f2; --card:#ffffff;
+    --red:#dc2626; --red-soft:#fee2e2; --green:#15803d; --green-soft:#dcfce7;
+    --amber:#b45309; --amber-soft:#fef3c7; --blue:#1d4ed8; --blue-soft:#dbeafe;
+    --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:20px 16px 80px;}
+  a{color:var(--blue);}
+  header.hero{background:var(--hero); color:#fff; border-radius:var(--radius); padding:26px 24px; margin-bottom:16px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.95; font-size:.95rem;}
+  header.hero a{color:#fff;}
+  nav.toc{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;}
+  nav.toc a{background:#fff; border:1px solid var(--border); border-radius:99px; padding:3px 12px; font-size:.86rem; text-decoration:none; color:var(--ink);}
+  nav.toc a:hover{border-color:var(--main); color:var(--main);}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:16px;}
+  .card h2{font-size:1.18rem; color:var(--main); margin-bottom:8px;}
+  .card h3{font-size:1rem; margin:16px 0 6px;}
+  .card ul,.card ol{margin-left:1.3em;}
+  .lead{font-size:.98rem; margin-bottom:10px;}
+  .life{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.94rem;}
+  .life b{color:var(--amber);}
+  .key{background:var(--soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.95rem; color:var(--deep);}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e3a8a;}
+  .ctrl{display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:8px 0;}
+  .ctrl .lab{font-size:.86rem; color:var(--sub); margin-right:2px;}
+  .chip{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 13px; cursor:pointer; font-family:inherit; font-size:.88rem; color:var(--ink);}
+  .chip:hover{border-color:var(--main); color:var(--main);}
+  .chip.on{background:var(--main); border-color:var(--main); color:#fff;}
+  .chip.on:hover{color:#fff;}
+  .chip.big{padding:8px 18px; font-size:.95rem; font-weight:bold;}
+  .chip.off{background:#f3f4f6; color:#9ca3af; text-decoration:line-through;}
+  .stage{background:#fffaf3; border:1px solid #f1e4d3; border-radius:12px; padding:6px;}
+  .stage canvas,.stage svg{display:block; width:100%; max-width:640px; margin:0 auto; touch-action:pan-y;}
+  .legend{display:flex; gap:12px; flex-wrap:wrap; font-size:.84rem; color:var(--sub); margin:6px 2px;}
+  .legend i{display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:4px; vertical-align:-1px;}
+  .status{border:2px solid #facc15; background:#fefce8; border-radius:12px; padding:10px 14px; margin-top:10px; font-size:.95rem;}
+  .status b.big{font-size:1.05rem;}
+  .count{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:8px; margin-top:8px;}
+  .count div{background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:6px 10px; text-align:center;}
+  .count small{display:block; color:var(--sub); font-size:.78rem;}
+  .count b{font-size:1.25rem; color:var(--main);}
+  .sl{display:grid; grid-template-columns:5.5em 1fr 4.5em; gap:8px; align-items:center; font-size:.9rem; margin:4px 0;}
+  .sl input{width:100%;}
+  .sl output{font-weight:bold; text-align:right;}
+  table{border-collapse:collapse; width:100%; font-size:.92rem; margin-top:10px;}
+  th,td{border:1px solid var(--border); padding:6px 8px; text-align:center;}
+  th{background:#f8fafc;}
+  td.l{text-align:left;}
+  .tw{overflow-x:auto;}
+  .hide{background:#e5e7eb; color:transparent; border-radius:6px; cursor:pointer; user-select:none; padding:0 6px;}
+  .hide.show{background:var(--amber-soft); color:var(--ink);}
+  .cells{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin-top:10px;}
+  .cell{border:1px solid var(--border); border-radius:12px; padding:12px; background:#fff;}
+  .cell h3{margin:0 0 4px;}
+  .cell p{font-size:.9rem;}
+  .tag{display:inline-block; background:var(--amber-soft); border-radius:6px; padding:0 8px; font-weight:bold; font-size:.86rem;}
+  .tag.no{background:#e5e7eb;}
+  .two{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:12px; align-items:start;}
+  @media (max-width:640px){ .two{grid-template-columns:1fr;} }
+  .cl{border:1px solid var(--border); border-radius:10px; padding:8px 12px; margin-top:8px; display:flex; flex-wrap:wrap; gap:6px; align-items:center;}
+  .cl span.t{flex:1 1 180px; font-size:.94rem;}
+  .cl .why{flex:1 1 100%; font-size:.88rem; color:var(--sub); display:none;}
+  .cl.done .why{display:block;}
+  .cl button.ok,.q button.ok{background:var(--green-soft); border-color:var(--green); color:var(--ink);}
+  .cl button.no,.q button.no{background:var(--red-soft); border-color:var(--red); color:var(--ink);}
+  .q{border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-top:10px;}
+  .q p.t{font-weight:bold; margin-bottom:6px;}
+  .q .opts{display:grid; gap:6px;}
+  .q .opts button{border:1px solid var(--border); background:#fff; border-radius:8px; padding:9px 12px; font-family:inherit; font-size:.95rem; cursor:pointer; text-align:left; color:var(--ink);}
+  .q .opts button:hover{border-color:var(--main);}
+  .q .why{display:none; font-size:.9rem; margin-top:8px; background:#f8fafc; border-radius:8px; padding:6px 10px;}
+  .q.done .why{display:block;}
+  .qbar{display:flex; justify-content:space-between; font-size:.88rem; color:var(--sub);}
+  .prog{height:8px; background:#e5e7eb; border-radius:99px; overflow:hidden; margin:4px 0;}
+  .prog div{height:100%; background:var(--main);}
+  .res{text-align:center; padding:10px 0;}
+  .res .n{font-size:2rem; font-weight:bold; color:var(--main);}
+  .w{border:1px solid var(--border); border-left:4px solid var(--red); border-radius:10px; padding:10px 12px; margin-top:8px; cursor:pointer;}
+  .w .hd{display:flex; gap:8px; align-items:flex-start;}
+  .w .hd p{flex:1; font-weight:bold; font-size:.95rem;}
+  .w .bad{background:var(--red-soft); color:#991b1b; border-radius:99px; font-size:.76rem; padding:0 8px; white-space:nowrap;}
+  .w .ans{display:none; margin-top:6px; font-size:.92rem; background:var(--green-soft); border-radius:8px; padding:6px 10px;}
+  .w.open .ans{display:block;}
+  .w .tip{font-size:.8rem; color:var(--sub);}
+  .w.open .tip{display:none;}
+  .empty{text-align:center; color:var(--sub); padding:16px 0;}
+  .nextl{display:block; text-align:center; background:var(--main); color:#fff; border-radius:var(--radius); padding:14px; text-decoration:none; font-weight:bold; margin-bottom:16px;}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:24px;}
+  :root{ --main:#1e3a8a; --soft:#e0e7ff; --deep:#1e3a8a; --hero:linear-gradient(135deg,#1e3a8a,#312e81 55%,#0f766e); }
+  #flowSvg{display:block; width:100%;}
+  #flowSvg .nd{cursor:pointer;}
+  #flowSvg .nd circle{fill:#fff; stroke:#94a3b8; stroke-width:2.5;}
+  #flowSvg .nd.past circle{fill:#e0e7ff; stroke:#1e3a8a;}
+  #flowSvg .nd.now circle{fill:#1e3a8a; stroke:#facc15; stroke-width:4;}
+  #flowSvg .nd text.n{font-weight:bold; font-size:15px; fill:#475569; text-anchor:middle;}
+  #flowSvg .nd.now text.n{fill:#fff;}
+  #flowSvg .nd text.t{font-size:13px; font-weight:bold; fill:#1f2937; text-anchor:middle;}
+  #flowSvg .lp{fill:none; stroke:#d97706; stroke-width:2; stroke-dasharray:6 5;}
+  #flowSvg .lpt{font-size:12px; font-weight:bold; fill:#b45309; text-anchor:middle;}
+  #flowTok{transition:transform .7s ease;}
+  .std{display:inline-block; background:var(--soft); color:var(--deep); border-radius:6px; padding:0 7px; font-size:.8rem; font-weight:bold; margin:1px 2px 1px 0; white-space:nowrap;}
+  .pane h3{margin:10px 0 2px; font-size:.92rem; color:var(--main);}
+  .pane ul{margin-left:1.2em; font-size:.93rem;}
+  .case{background:#f0fdf4; border-left:4px solid #15803d; border-radius:8px; padding:8px 12px; margin-top:10px; font-size:.92rem;}
+  .gauge{display:flex; align-items:center; gap:8px; font-size:.82rem; color:var(--sub); margin:8px 0 0;}
+  .gauge .bar{flex:1; height:12px; background:#e5e7eb; border-radius:99px; overflow:hidden;}
+  .gauge .bar div{height:100%; background:#0f766e; width:0; transition:width .7s;}
+  .lv{display:grid; grid-template-columns:8.5em 1fr; gap:8px; align-items:center; font-size:.88rem; margin:5px 0;}
+  .lv .bar{height:20px; background:#e5e7eb; border-radius:6px; overflow:hidden;}
+  .lv .bar div{height:100%; transition:width .3s; color:#fff; font-size:.78rem; text-align:right; padding-right:6px; line-height:20px; white-space:nowrap;}
+  .mis{border:1px solid var(--border); border-radius:10px; padding:6px 10px; margin-top:6px; display:flex; flex-wrap:wrap; gap:6px; align-items:center; font-size:.9rem;}
+  .mis span{flex:1 1 200px;}
+  .mis.skip{color:#9ca3af;}
+  .rep{border:2px solid #94a3b8; border-radius:8px; padding:10px; background:#fff; font-size:.88rem;}
+  .rep div{border:1px dashed #cbd5e1; border-radius:6px; padding:3px 8px; margin:4px 0; color:#64748b;}
+  .rep div.hl{border:2px solid #d97706; background:var(--amber-soft); color:var(--ink); font-weight:bold;}
+  .rep div.off{display:none;}
+  .chk{font-size:.92rem; margin:3px 0;}
+  .chk.ok::before{content:"✔ "; color:#15803d; font-weight:bold;}
+  .chk.bad::before{content:"✘ "; color:#dc2626; font-weight:bold;}
+  .chk.bad{color:#991b1b;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <span class="badge">審計準則 · 個人複習用 · 整件查核案的流程</span>
+  <h1>一件查核案怎麼走：九站流程圖</h1>
+  <p>把財務報表查核從「接不接」到「歸檔」畫成一條路。每一站看得到：做什麼、留下什麼底稿、依據哪一號準則第幾條。全程跟著同一家虛構公司走。</p>
+</header>
+
+<nav class="toc">
+  <a href="#s1">① 九站流程</a><a href="#s2">② 一個風險的一生</a><a href="#s3">③ 風險和程序量</a><a href="#s4">④ 重大性和不實表達</a><a href="#s5">⑤ 出哪一種意見</a><a href="#s6">⑥ 日期怎麼排</a><a href="#sQ">⑦ 小測驗</a><a href="#sW">⑧ 錯題本</a>
+</nav>
+
+<div class="card">
+  <p class="lead"><b>先知道三件事：</b></p>
+  <ul>
+    <li>條號寫成「315§31」＝審計準則 315 號第 31 條。<b>只寫條號和白話重點，不是原文</b>。要引用請回準則庫查原文。</li>
+    <li>流程畫成一條線，但實際上會<b>回頭修正</b>。圖上橘色虛線就是回頭路。</li>
+    <li>案例「禾田精密」是<b>虛構</b>的。金額、百分比都是示範，不是準則規定的數字。</li>
+  </ul>
+</div>
+
+<div class="card" id="s1">
+  <h2>① 九站流程：跟著案子走</h2>
+  <p class="lead">按「下一站」，或直接點圖上的圓圈。</p>
+  <div class="ctrl"><button class="chip big" id="fPrev">上一站</button><button class="chip big on" id="fNext">下一站</button><button class="chip on" id="fLoop">回頭路：顯示中</button></div>
+  <div class="stage"><svg id="flowSvg"></svg></div>
+  <div class="gauge"><span>累積的查核證據（示意）</span><div class="bar"><div id="fGauge"></div></div><span id="fGaugeT"></span></div>
+  <div class="status pane" id="fPane"></div>
+  <div class="note" id="fLoops"></div>
+</div>
+
+<div class="card" id="s2">
+  <h2>② 一個顯著風險的一生：收入截止</h2>
+  <p class="lead">準則最核心的一條線：<b>風險 → 因應 → 證據 → 結論</b>。拿禾田精密的「收入截止」走一次。</p>
+  <div class="route" id="lifeSteps" style="display:flex; gap:4px; flex-wrap:wrap; margin:8px 0;"></div>
+  <div class="status pane" id="lifeMsg"></div>
+  <div class="ctrl" style="justify-content:center"><button class="chip big" id="lifePrev">上一步</button><button class="chip big on" id="lifeNext">下一步</button></div>
+</div>
+
+<div class="card" id="s3">
+  <h2>③ 風險高低，怎麼變成程序多寡</h2>
+  <p class="lead">查核風險 ＝ 重大不實表達風險 × 偵查風險（200§12）。前者是公司的，查核人員只能<b>評估</b>。後者才是查核人員靠程序<b>控制</b>的。</p>
+  <div class="sl"><span>固有風險</span><input type="range" id="rIR" min="1" max="5" value="3"><output id="rIRo"></output></div>
+  <div class="ctrl"><span class="lab">控制</span>
+    <button class="chip on" data-cr="none">不打算信賴控制</button><button class="chip" data-cr="ok">測試後有效</button><button class="chip" data-cr="bad">測試後無效</button>
+  </div>
+  <div class="ctrl"><button class="chip" id="rSig">這是顯著風險</button></div>
+  <div class="lv"><span>重大不實表達風險</span><div class="bar"><div id="rRMM" style="background:#dc2626"></div></div></div>
+  <div class="lv"><span>可接受的偵查風險</span><div class="bar"><div id="rDR" style="background:#0f766e"></div></div></div>
+  <div class="lv"><span>需要的證實程序</span><div class="bar"><div id="rSub" style="background:#1e3a8a"></div></div></div>
+  <div class="lv"><span>控制測試</span><div class="bar"><div id="rToC" style="background:#7c3aed"></div></div></div>
+  <div class="status" id="rMsg"></div>
+  <p class="note">長條是示意，準則沒有給公式。準則給的是方向：風險越高，證據要越有說服力（330§6）。</p>
+</div>
+
+<div class="card" id="s4">
+  <h2>④ 重大性三條線，和不實表達怎麼累計</h2>
+  <p class="lead">拉稅前淨利，看三條線怎麼動。再決定每一筆不實表達有沒有被更正。</p>
+  <div class="sl"><span>稅前淨利</span><input type="range" id="mPBT" min="2" max="8" step="0.5" value="4"><output id="mPBTo"></output></div>
+  <div class="count">
+    <div><small>整體重大性（320§9）</small><b id="mOM"></b></div>
+    <div><small>執行重大性（320§10）</small><b id="mPM"></b></div>
+    <div><small>顯然微小門檻（450§4）</small><b id="mCT"></b></div>
+  </div>
+  <div id="mList"></div>
+  <div class="stage" style="margin-top:10px"><svg id="mSvg" viewBox="0 0 600 110"></svg></div>
+  <div class="status" id="mMsg"></div>
+  <p class="note">示範比率：整體重大性＝稅前淨利 × 5%，執行重大性＝整體 × 75%，顯然微小＝整體 × 5%。這些比率是<b>專業判斷</b>，準則只說通常以某個基準的百分比當起點（320§15）。</p>
+</div>
+
+<div class="card" id="s5">
+  <h2>⑤ 出哪一種意見</h2>
+  <p class="lead">兩個問題決定意見類型（705§6–§8）。下面的報告骨架會跟著變。</p>
+  <div class="ctrl"><span class="lab">查核結果</span>
+    <button class="chip on" data-op="clean">沒有重大問題</button><button class="chip" data-op="mis">有重大不實表達</button><button class="chip" data-op="lim">拿不到足夠適切的證據</button>
+  </div>
+  <div class="ctrl"><span class="lab">影響</span>
+    <button class="chip on" data-pv="0">重大但不廣泛</button><button class="chip" data-pv="1">重大而且廣泛</button>
+  </div>
+  <div class="ctrl"><span class="lab">其他情況</span>
+    <button class="chip" id="oGC">繼續經營有重大不確定性（已適當揭露）</button><button class="chip" id="oEM">要提醒已揭露的重要事項</button><button class="chip on" id="oKAM">上市櫃公司</button>
+  </div>
+  <div class="two">
+    <div class="status" id="oMsg"></div>
+    <div class="rep" id="oRep"></div>
+  </div>
+  <div class="tw"><table>
+    <tr><th></th><th>重大但不廣泛</th><th>重大而且廣泛</th></tr>
+    <tr><th>有重大不實表達</th><td><span class="hide">保留意見（705§6）</span></td><td><span class="hide">否定意見（705§7）</span></td></tr>
+    <tr><th>拿不到足夠適切的證據</th><td><span class="hide">保留意見（705§6）</span></td><td><span class="hide">無法表示意見（705§8）</span></td></tr>
+  </table></div>
+  <div class="key"><b>「廣泛」怎麼判斷（705§4）：</b>不限於特定項目；或雖限於特定項目，但占財務報表比例重大；或是揭露問題，而那個揭露對使用者瞭解報表很重要。</div>
+</div>
+
+<div class="card" id="s6">
+  <h2>⑥ 報告日前後，日期怎麼排</h2>
+  <p class="lead">拉五個日期（期末日後第幾天），看有沒有違反準則的先後關係。</p>
+  <div class="sl"><span>證據完成</span><input type="range" id="dE" min="20" max="90" value="55"><output></output></div>
+  <div class="sl"><span>董事會通過</span><input type="range" id="dB" min="20" max="90" value="58"><output></output></div>
+  <div class="sl"><span>品質複核</span><input type="range" id="dQ" min="20" max="90" value="57"><output></output></div>
+  <div class="sl"><span>書面聲明</span><input type="range" id="dR" min="20" max="90" value="58"><output></output></div>
+  <div class="sl"><span>報告日</span><input type="range" id="dD" min="20" max="90" value="58"><output></output></div>
+  <div class="stage"><svg id="dSvg" viewBox="0 0 600 130"></svg></div>
+  <div class="status" id="dMsg"></div>
+</div>
+
+<div class="card" id="sQ">
+  <h2>⑦ 小測驗</h2>
+  <div id="quizBox"></div>
+</div>
+
+<div class="card" id="sW">
+  <h2>⑧ 我的錯題本</h2>
+  <div id="wrongBox"></div>
+</div>
+
+<footer>審計準則自學教材 · 一件查核案怎麼走<br>依審計準則 200～720 號與品質管理準則的架構整理。只列條號與白話重點，不含準則原文；引用請以準則原文為準。<br>案例公司與金額均為虛構。錯題和紀錄只存在這台裝置的瀏覽器裡。</footer>
+</div>
+
+<script>
+const CH = "審計 一件查核案怎麼走";
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// 上傳網址不寫在教材裡；家長在「學習紀錄」頁設定一次，存於此瀏覽器。
+let CLOUD_URL = "";
+try{ CLOUD_URL = localStorage.getItem("cloud_url_v1") || ""; }catch(e){}
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// ===== 共用工具 =====
+const $ = id => document.getElementById(id);
+const FONT = '"Microsoft JhengHei","PingFang TC",system-ui,sans-serif';
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+const rnd = (a,b) => a + Math.random()*(b-a);
+const lerp = (a,b,t) => a + (b-a)*t;
+function shuffle(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; }
+const scenes = [];
+function scene(id, W, H, draw){
+  const cv = $(id), ctx = cv.getContext("2d");
+  function fit(){
+    const w = cv.clientWidth || 600, dpr = window.devicePixelRatio || 1;
+    cv.style.height = (w*H/W) + "px";
+    cv.width = Math.round(w*dpr); cv.height = Math.round(w*H/W*dpr);
+    ctx.setTransform(cv.width/W, 0, 0, cv.width/W, 0, 0);
+    ctx.fs = clamp(W*0.8/w, 1, 1.4);
+  }
+  fit(); window.addEventListener("resize", fit);
+  const s = { cv, ctx, draw, vis:true };
+  if("IntersectionObserver" in window){
+    s.vis = false;
+    new IntersectionObserver(es => es.forEach(e => s.vis = e.isIntersecting), { rootMargin:"80px" }).observe(cv);
+  }
+  scenes.push(s); return ctx;
+}
+function runScenes(){
+  let last = performance.now();
+  function loop(now){
+    const dt = Math.min(.05, (now-last)/1000); last = now;
+    scenes.forEach(s => { if(s.vis) s.draw(dt, now/1000); });
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+}
+function rr(c,x,y,w,h,r){ c.beginPath(); c.moveTo(x+r,y); c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r); c.arcTo(x,y+h,x,y,r); c.arcTo(x,y,x+w,y,r); c.closePath(); }
+function label(c, txt, x, y, opt){
+  opt = opt || {};
+  c.font = (opt.bold===false?"":"bold ") + Math.round((opt.size||15)*(c.fs||1)) + "px " + FONT;
+  c.textAlign = opt.align || "center"; c.textBaseline = "middle";
+  if(opt.halo !== 0){ c.lineWidth = 4; c.strokeStyle = opt.halo || "rgba(255,250,243,.92)"; c.lineJoin = "round"; c.strokeText(txt, x, y); }
+  c.fillStyle = opt.color || "#1f2937"; c.fillText(txt, x, y);
+}
+function ball(c, x, y, r, col, txt, tc){
+  c.beginPath(); c.arc(x,y,r,0,7); c.fillStyle = col; c.fill(); c.lineWidth = 1; c.strokeStyle = "rgba(0,0,0,.25)"; c.stroke();
+  if(txt){ c.font = "bold " + Math.round(r*.95) + "px " + FONT; c.textAlign = "center"; c.textBaseline = "middle"; c.fillStyle = tc || "#fff"; c.fillText(txt, x, y+.5); }
+}
+function chips(sel, attr, fn){
+  const bs = [...document.querySelectorAll(sel)];
+  bs.forEach(b => b.addEventListener("click", ()=>{ bs.forEach(x=>x.classList.remove("on")); b.classList.add("on"); fn(b.getAttribute(attr)); }));
+}
+document.addEventListener("click", e => { if(e.target.classList && e.target.classList.contains("hide")) e.target.classList.toggle("show"); });
+
+// ===== 分類小練習：每列一句話，選左邊或右邊 =====
+function classify(boxId, cats, items){
+  const box = $(boxId);
+  items.forEach(it => {
+    const d = document.createElement("div"); d.className = "cl";
+    d.innerHTML = `<span class="t">${it[0]}</span><span class="why">${it[2]}</span>`;
+    cats.forEach((cname, k) => {
+      const b = document.createElement("button"); b.className = "chip"; b.textContent = cname;
+      b.addEventListener("click", ()=>{
+        if(d.classList.contains("done")) return;
+        d.classList.add("done"); pracCount++;
+        const right = k === it[1]; if(right) pracOk++;
+        b.classList.add(right ? "ok" : "no");
+        if(!right) d.querySelectorAll("button")[it[1]].classList.add("ok");
+        logEv({ type:"classify", box:boxId, ok:right });
+      });
+      d.insertBefore(b, d.querySelector(".why"));
+    });
+    box.appendChild(d);
+  });
+}
+
+// ===== 小測驗＋錯題本 =====
+// 錯題存在這台裝置的瀏覽器裡。
+const WKEY = "audit_flow_wrong_v1";
+function loadW(){ try{ return JSON.parse(localStorage.getItem(WKEY) || "{}"); }catch(e){ return {}; } }
+function saveW(w){ try{ localStorage.setItem(WKEY, JSON.stringify(w)); }catch(e){} }
+function setupQuiz(PRE, Q, SECS){
+  const box = $("quizBox"), wb = $("wrongBox");
+  const key = i => PRE + "-" + i;
+  let list = [], pos = 0, ok = 0, missed = [], mode = "";
+  const myWrong = () => { const w = loadW(); return Q.map((_,i)=>i).filter(i => w[key(i)]); };
+
+  function home(){
+    box.innerHTML = `<p class="lead">題庫共 ${Q.length} 題。每題點一個答案，馬上告訴你對不對、為什麼。答錯的題目會自動收進下面的錯題本。</p>
+      <div class="ctrl"><button class="chip big on" id="qGo10">抽 10 題</button><button class="chip big" id="qGoAll">全部 ${Q.length} 題</button></div>`;
+    $("qGo10").onclick = () => start(shuffle(Q.map((_,i)=>i)).slice(0,10), "小測驗");
+    $("qGoAll").onclick = () => start(shuffle(Q.map((_,i)=>i)), "小測驗");
+  }
+  function start(idx, m){ list = idx; mode = m; pos = 0; ok = 0; missed = []; show(); box.scrollIntoView({ block:"start", behavior:"smooth" }); }
+  function show(){
+    const i = list[pos], q = Q[i];
+    box.innerHTML = `<div class="qbar"><span>${mode}　第 ${pos+1} / ${list.length} 題</span><span>答對 ${ok} 題</span></div>
+      <div class="prog"><div style="width:${pos/list.length*100}%"></div></div>
+      <div class="q"><p class="t">${q.q}</p><div class="opts"></div><div class="why"></div></div>
+      <div class="ctrl"><button class="chip big on" id="qNext" style="display:none">${pos+1 < list.length ? "下一題" : "看結果"}</button></div>`;
+    const qd = box.querySelector(".q"), opts = qd.querySelector(".opts");
+    shuffle(q.o.map((_,k)=>k)).forEach(k => {
+      const b = document.createElement("button"); b.textContent = q.o[k]; b.dataset.k = k;
+      b.addEventListener("click", ()=>{
+        if(qd.classList.contains("done")) return;
+        qd.classList.add("done"); pracCount++;
+        const right = k === q.a, w = loadW(), id = key(i);
+        if(right){
+          ok++; pracOk++;
+          if(w[id]){ w[id].s = (w[id].s||0) + 1; if(w[id].s >= 2) delete w[id]; }
+        }else{
+          missed.push(i);
+          w[id] = { n: ((w[id] && w[id].n) || 0) + 1, s: 0 };
+        }
+        saveW(w);
+        b.classList.add(right ? "ok" : "no");
+        opts.querySelector(`[data-k="${q.a}"]`).classList.add("ok");
+        qd.querySelector(".why").innerHTML = (right ? "<b>答對了。</b>" : "<b>答錯了，已收進錯題本。</b>") + q.why;
+        $("qNext").style.display = "";
+        logEv({ type:"quiz", q:i+1, ok:right });
+        renderWrong();
+      });
+      opts.appendChild(b);
+    });
+    $("qNext").onclick = () => { pos++; pos < list.length ? show() : result(); };
+  }
+  function result(){
+    const n = list.length;
+    cloudSend({ type: mode, detail: `${CH} ${n} 題`, score: `${ok}/${n}` });
+    const miss = [...new Set(missed)];
+    box.innerHTML = `<div class="res"><div class="n">${ok} / ${n}</div>
+      <p>${ok === n ? "全對！這一課很熟了。" : `有 ${miss.length} 題答錯，已經放進錯題本。`}</p></div>
+      ${miss.map(i => `<div class="q done"><p class="t">${Q[i].q}</p><div class="why" style="display:block">正確答案：<b>${Q[i].o[Q[i].a]}</b>　<a href="#${Q[i].sec}">回去看 ${SECS[Q[i].sec]}</a></div></div>`).join("")}
+      <div class="ctrl" style="justify-content:center; margin-top:12px;"><button class="chip big on" id="qAgain">再來一回</button>${myWrong().length ? `<button class="chip big" id="qToW">去錯題本</button>` : ""}</div>`;
+    $("qAgain").onclick = home;
+    if($("qToW")) $("qToW").onclick = () => $("sW").scrollIntoView({ behavior:"smooth" });
+  }
+  function renderWrong(){
+    const w = loadW(), ids = myWrong();
+    if(!ids.length){ wb.innerHTML = `<div class="empty">目前沒有錯題。先去做小測驗，答錯的會自動出現在這裡。</div>`; return; }
+    ids.sort((a,b) => w[key(b)].n - w[key(a)].n);
+    wb.innerHTML = `<p class="lead">現在有 <b>${ids.length}</b> 題。先自己想答案，再點題目看解答。重練時<b>連續答對 2 次</b>，那一題就會自動移出。</p>
+      <div class="ctrl"><button class="chip big on" id="wGo">重練這 ${ids.length} 題</button><button class="chip" id="wClr">清空這一課的錯題</button></div>` +
+      ids.map(i => { const q = Q[i], e = w[key(i)];
+        return `<div class="w"><div class="hd"><p>${q.q}</p><span class="bad">錯 ${e.n} 次${e.s ? "・已對 1 次" : ""}</span></div>
+          <div class="tip">點一下看答案</div>
+          <div class="ans">答案：<b>${q.o[q.a]}</b><br>${q.why}<br><a href="#${q.sec}">回去看 ${SECS[q.sec]}</a></div></div>`; }).join("");
+    wb.querySelectorAll(".w").forEach(d => d.addEventListener("click", e => { if(e.target.tagName !== "A") d.classList.toggle("open"); }));
+    $("wGo").onclick = () => start(shuffle(myWrong()), "錯題重練");
+    $("wClr").onclick = () => {
+      if(!confirm("確定要清空這一課的錯題嗎？清掉就找不回來。")) return;
+      const w2 = loadW(); Q.forEach((_,i) => delete w2[key(i)]); saveW(w2); renderWrong();
+    };
+  }
+  home(); renderWrong();
+}
+
+const S = t => t.replace(/\[([^\]]+)\]/g, '<span class="std">$1</span>');   // [315§31] → 條號標籤
+const NS = "http://www.w3.org/2000/svg";
+function sv(tag, at, parent, txt){ const e = document.createElementNS(NS, tag); for(const k in at) e.setAttribute(k, at[k]); if(txt != null) e.textContent = txt; parent.appendChild(e); return e; }
+
+// ===================== ① 九站流程 =====================
+(function(){
+  const ST = [
+    { n:"承接", full:"承接與續任", ev:0,
+      doing:["確認事務所的承接與續任程序做完了，結論適當 [220§21]","評估職業道德和獨立性 [300§5] [200§13]","確認查核先決條件：財務報導架構可接受、管理階層同意自己的責任 [210§4]。不存在就不得承接 [210§5]","把條款寫進委任書 [210§8]。首次受託且換會計師，要聯繫前任 [300§11]"],
+      out:["承接／續任評估","獨立性確認","委任書"],
+      cs:"續任第三年。團隊確認獨立性，沒有新的威脅。今年新增一家海外子公司，所以重簽委任書，把範圍寫清楚。" },
+    { n:"規劃", full:"規劃與重大性", ev:0,
+      doing:["訂整體查核策略：範圍、時間、方向 [300§6–§7]","擬查核計畫：風險評估程序、進一步查核程序 [300§8]","決定整體重大性和執行重大性 [320§9–§10]","跟治理單位溝通規劃的範圍、時間和顯著風險 [260§14]","策略和計畫要隨查核過程更新 [300§9]"],
+      out:["整體查核策略","查核計畫","重大性底稿 [320§13]"],
+      cs:"稅前淨利約 4 億。整體重大性訂 2,000 萬，執行重大性 1,500 萬，顯然微小門檻 100 萬（示範比率）。" },
+    { n:"風險評估", full:"辨認並評估風險", ev:15,
+      doing:["風險評估程序三種：查詢、分析性程序、觀察及檢查 [315§13]","瞭解公司和環境、適用的財務報導架構、內部控制各組成要素 [315§18–§26]","團隊討論哪裡容易出錯 [315§16]","在兩個層級辨認風險：整體財務報表、個別項目聲明 [315§27]","評估固有風險（可能性×重大程度）[315§30]，決定是不是顯著風險 [315§31]","收入認列先假設有舞弊風險 [240§26]"],
+      out:["對公司與內控的瞭解","風險評估彙總（含顯著風險）[315§37]"],
+      cs:"發現業務獎金跟營收掛鉤，12 月出貨量暴增。「收入截止」列為顯著風險。存貨跌價的估計列為較高風險。" },
+    { n:"設計因應", full:"設計因應對策", ev:15,
+      doing:["整體財務報表層級的風險 → 整體查核對策 [330§4]","聲明層級的風險 → 進一步查核程序，風險越高證據要越有說服力 [330§6]","什麼時候要做控制測試：打算信賴控制，或只做證實程序不夠 [330§7]","不論風險多低，每個重大項目都要有證實程序 [330§17]","顯著風險要有專門的證實程序；只用證實程序時至少含細項測試 [330§20]","踰越控制的三項必做程序：測試分錄、複核估計偏頗、評估不尋常重大交易 [240§32]"],
+      out:["查核程式：每個程序的性質、時間、範圍"],
+      cs:"收入截止：當期測試出貨控制，加上期末前後的截止細項測試、應收帳款函證。另外不預告加抽一個外倉 [240§29]。" },
+    { n:"取得證據", full:"執行程序、取得證據", ev:75,
+      doing:["控制測試：越想信賴控制，證據要越有說服力 [330§8]","證實程序：細項測試、證實分析性程序 [520§5]","考量證據的攸關性和可靠性 [500§6]","存貨重大時，除非不可行，要參與盤點 [501§3]","函證沒回的，一律做替代程序 [505§11]","會計估計、關係人、專家等各有專門準則（540、550、620）"],
+      out:["各科目工作底稿","函證控制表","盤點觀察紀錄"],
+      cs:"截止測試發現 3 筆交易 12/30 開發票、隔年 1/3 才出貨，共 1,800 萬。函證回函率 92%，沒回的做了替代程序。" },
+    { n:"評估不實表達", full:"評估不實表達", ev:80,
+      doing:["除了顯然微小的，全部累計 [450§4]","看要不要回頭修正策略和計畫 [450§5]","及時跟管理階層溝通，要求更正 [450§7]。拒絕更正要瞭解理由 [450§8]","先重新確認重大性還適不適當 [450§9]，再判斷未更正的重不重大 [450§10]","未更正的要跟治理單位溝通 [450§11]，並列入書面聲明 [450§13]"],
+      out:["不實表達彙總表 [450§14]"],
+      cs:"累計：收入提前認列 1,800 萬、存貨跌價少提 500 萬。合計超過重大性。公司更正了 1,800 萬。剩下 500 萬評估後不重大。" },
+    { n:"收尾", full:"收尾程序", ev:95,
+      doing:["接近結束時做整體結論的分析性程序 [520§6]","期後事項：程序要涵蓋到查核報告日 [560§6]","繼續經營：評估期間至少到期末後 12 個月 [570§11]，並對有沒有重大不確定性作結論 [570§16]","取得書面聲明 [580§6–§8]","完成前重看風險評估還對不對 [330§24]，對證據夠不夠作結論 [330§25]","內控顯著缺失以書面跟治理單位溝通 [265§8]"],
+      out:["期後事項底稿","繼續經營評估","書面聲明","給治理單位的溝通"],
+      cs:"期後沒有需要調整的事項。沒有繼續經營的重大疑慮。出貨截止的控制缺失，以書面通知審計委員會。" },
+    { n:"意見與報告", full:"形成意見、出報告", ev:100,
+      doing:["對報表整體有沒有重大不實表達作結論，形成意見 [700§6–§7]","沒問題 → 無保留意見 [700§12]。有問題 → 修正式意見 [705§6–§8]","上市櫃公司要寫關鍵查核事項 [701§5]，從跟治理單位溝通的事項裡挑 [701§7–§9]","需要時加強調事項段或其他事項段 [706§5] [706§7]","閱讀其他資訊有沒有重大不一致 [720§8–§9]","品質複核完成前，不得確定報告日 [220§35]"],
+      out:["查核報告"],
+      cs:"出具無保留意見。關鍵查核事項寫兩項：收入截止、存貨評價。品質複核完成後才定報告日。" },
+    { n:"歸檔", full:"歸檔與保管", ev:100,
+      doing:["底稿要讓沒參與的有經驗查核人員也看得懂 [230§7]","報告日後及時彙整歸檔 [230§13]，通常 60 天內 [230§36]","歸檔後要改或加底稿，必須記錄原因、誰、何時 [230§14]","保管期限屆滿前不得刪除或銷毀 [230§15]"],
+      out:["最終查核檔案"],
+      cs:"報告日後第 45 天完成歸檔。" }
+  ];
+  const LOOPS = [
+    { a:4, b:2, k:"甲", t:"新資訊和原本的風險評估不一致 → 回去修正風險評估 [315§36]。風險評估本來就是反覆修正的過程 [315§7]。" },
+    { a:5, b:1, k:"乙", t:"累計的不實表達接近重大性，或顯示還有別的錯 → 回去修正策略和計畫 [450§5]。重大性本身也可能要修正 [320§11–§12]。" },
+    { a:6, b:4, k:"丙", t:"證據還不夠 → 回去再取得 [330§26]。真的拿不到，就是保留意見或無法表示意見。" }
+  ];
+  const svg = $("flowSvg"); let k = 0, showLoop = true, pos = [];
+  function build(){
+    const w = svg.clientWidth || 600, cols = w < 560 ? 3 : 5, rows = Math.ceil(ST.length/cols), padX = w < 560 ? 52 : 60, gapY = 112, H = 70 + (rows-1)*gapY + 62;
+    svg.setAttribute("viewBox", `0 0 ${w} ${H}`); svg.style.height = H + "px"; svg.innerHTML = "";
+    pos = ST.map((_, i) => { const r = Math.floor(i/cols); let c = i % cols; if(r % 2) c = cols-1-c; return [padX + c*(w-2*padX)/(cols-1), 66 + r*gapY]; });
+    sv("polyline", { points:pos.map(p => p.join(",")).join(" "), fill:"none", stroke:"#cbd5e1", "stroke-width":8, "stroke-linejoin":"round", "stroke-linecap":"round" }, svg);
+    const gl = sv("g", { id:"flowLoops" }, svg);
+    LOOPS.forEach(l => {
+      const A = pos[l.a], B = pos[l.b], mx = (A[0]+B[0])/2, my = (A[1]+B[1])/2, dx = B[0]-A[0], dy = B[1]-A[1], len = Math.hypot(dx,dy) || 1;
+      let nx = -dy/len, ny = dx/len; if(ny > 0){ nx = -nx; ny = -ny; }
+      const off = Math.abs(dy) < 5 ? 44 : 30, cx = mx + nx*off + (Math.abs(dx) < 5 ? 34 : 0), cy = my + ny*off;
+      sv("path", { class:"lp", d:`M${A[0]},${A[1]} Q${cx},${cy} ${B[0]},${B[1]}`, "marker-end":"url(#arr)" }, gl);
+      const lx = (A[0]+2*cx+B[0])/4, ly = (A[1]+2*cy+B[1])/4;
+      sv("circle", { cx:lx, cy:ly, r:11, fill:"#fff7ed", stroke:"#d97706", "stroke-width":1.5 }, gl);
+      sv("text", { class:"lpt", x:lx, y:ly+4 }, gl, l.k);
+    });
+    const defs = sv("defs", {}, svg), m = sv("marker", { id:"arr", viewBox:"0 0 10 10", refX:22, refY:5, markerWidth:7, markerHeight:7, orient:"auto" }, defs);
+    sv("path", { d:"M0,0 L10,5 L0,10 Z", fill:"#d97706" }, m);
+    ST.forEach((s, i) => {
+      const g = sv("g", { class:"nd", "data-i":i }, svg);
+      sv("circle", { cx:pos[i][0], cy:pos[i][1], r:20 }, g);
+      sv("text", { class:"n", x:pos[i][0], y:pos[i][1]+5 }, g, i+1);
+      sv("text", { class:"t", x:pos[i][0], y:pos[i][1]+40, "paint-order":"stroke", stroke:"#fffaf3", "stroke-width":4 }, g, s.n);
+      g.addEventListener("click", () => go(i));
+    });
+    const tok = sv("g", { id:"flowTok" }, svg);
+    sv("rect", { x:-13, y:-44, width:26, height:20, rx:4, fill:"#facc15", stroke:"#a16207", "stroke-width":1.5 }, tok);
+    sv("text", { x:0, y:-29, "text-anchor":"middle", "font-size":12, "font-weight":"bold", fill:"#713f12" }, tok, "案");
+    paint();
+  }
+  function paint(){
+    svg.querySelectorAll(".nd").forEach((g, i) => { g.classList.toggle("now", i === k); g.classList.toggle("past", i < k); });
+    $("flowTok").style.transform = `translate(${pos[k][0]}px,${pos[k][1]}px)`;
+    $("flowLoops").style.display = showLoop ? "" : "none";
+  }
+  function go(i){
+    k = clamp(i, 0, ST.length-1); const s = ST[k];
+    paint();
+    $("fGauge").style.width = s.ev + "%"; $("fGaugeT").textContent = s.ev + "%";
+    $("fPane").innerHTML = `<b class="big">第 ${k+1} 站：${s.full}</b>
+      <h3>做什麼</h3><ul>${s.doing.map(x => `<li>${S(x)}</li>`).join("")}</ul>
+      <h3>留下什麼底稿</h3><ul><li>${s.out.map(S).join("、")}</li></ul>
+      <div class="case"><b>禾田精密：</b>${S(s.cs)}</div>`;
+    $("fNext").textContent = k === ST.length-1 ? "回到第 1 站" : "下一站";
+    logEv({ type:"flow", st:s.n });
+  }
+  $("fPrev").onclick = () => go(k-1);
+  $("fNext").onclick = () => go(k === ST.length-1 ? 0 : k+1);
+  $("fLoop").onclick = () => { showLoop = !showLoop; $("fLoop").classList.toggle("on", showLoop); $("fLoop").textContent = "回頭路：" + (showLoop ? "顯示中" : "已隱藏"); paint(); };
+  $("fLoops").innerHTML = "<b>橘色虛線＝回頭路。</b>" + LOOPS.map(l => `<br><b>${l.k}</b>（第 ${l.a+1} 站 → 第 ${l.b+1} 站）：${S(l.t)}`).join("");
+  let rw = 0; window.addEventListener("resize", () => { const w = svg.clientWidth; if(w !== rw){ rw = w; build(); } });
+  build(); rw = svg.clientWidth; go(0);
+})();
+
+// ===================== ② 一個風險的一生 =====================
+(function(){
+  const L = [
+    ["辨認", "<b class='big'>1. 辨認：哪裡可能出錯</b><ul><li>風險評估程序看到：業務獎金跟營收掛鉤，12 月出貨量暴增。</li><li>收入認列要先假設有舞弊風險 [240§26]。若認為不適用，理由要寫進底稿。</li><li>評估固有風險：發生的可能性高，金額也大 [315§30]。</li></ul>"],
+    ["定性", "<b class='big'>2. 定性：是不是顯著風險</b><ul><li>判斷為顯著風險 [315§31]。</li><li>因應顯著風險的控制，要評估設計，並確認有沒有付諸實行 [315§25]。</li><li>跟治理單位溝通規劃時，要提到已辨認的顯著風險 [260§14]。</li></ul>"],
+    ["因應", "<b class='big'>3. 因應：設計程序</b><ul><li>一定要有針對這個風險的證實程序。只用證實程序時，至少包括細項測試 [330§20]。</li><li>想信賴相關控制，必須當期測試，不能沿用以前年度的結果 [330§14]。</li><li>加入公司預期不到的做法 [240§29]。</li><li>設計結果：期末前後的截止測試、應收帳款函證、不預告加抽外倉。</li></ul>"],
+    ["證據", "<b class='big'>4. 證據：執行程序</b><ul><li>截止測試發現 3 筆：12/30 開發票、1/3 才出貨，共 1,800 萬。</li><li>每份證據都要想攸關性和可靠性 [500§6]。</li><li>函證沒回的做替代程序 [505§11]。</li></ul>"],
+    ["評估", "<b class='big'>5. 評估：這個錯代表什麼</b><ul><li>1,800 萬高於顯然微小門檻，要累計 [450§4]。</li><li>這個錯顯示可能還有別的錯 → 決定要不要修正策略和計畫 [450§5]。團隊決定擴大截止測試的期間。</li><li>新資訊和原評估不一致時，要回頭修正風險評估 [315§36]。</li><li>要求管理階層更正 [450§7]。</li><li>出貨截止的控制有缺失。判斷是不是顯著缺失；是的話以書面跟治理單位溝通 [265§7–§8]。</li></ul>"],
+    ["結論", "<b class='big'>6. 結論和報告</b><ul><li>公司更正了 1,800 萬。擴大測試後沒有再發現。對證據夠不夠作結論 [330§25]。</li><li>這是顯著風險、查核時高度關注 → 列入關鍵查核事項的候選 [701§8–§9]。</li><li>底稿要寫到沒參與的人也看得懂：做了什麼、結果、重大判斷 [230§7]。</li></ul>"]
+  ];
+  let k = 0; const bar = $("lifeSteps");
+  L.forEach((s, i) => { const b = document.createElement("button"); b.className = "chip"; b.textContent = (i+1) + " " + s[0]; b.onclick = () => { k = i; show(); }; bar.appendChild(b); });
+  function show(){ $("lifeMsg").innerHTML = S(L[k][1]); [...bar.children].forEach((b, i) => b.classList.toggle("on", i === k)); }
+  $("lifePrev").onclick = () => { k = Math.max(0, k-1); show(); };
+  $("lifeNext").onclick = () => { k = Math.min(L.length-1, k+1); show(); };
+  show();
+})();
+
+// ===================== ③ 風險與程序量 =====================
+(function(){
+  let cr = "none", sig = false;
+  const W = ["","很低","偏低","中等","偏高","很高"];
+  function up(){
+    const ir = +$("rIR").value; $("rIRo").textContent = W[ir];
+    const rmm = cr === "ok" ? ir*0.6 : ir, dr = 6 - rmm, sub = Math.max(22, rmm/5*100);
+    const set = (id, pct, txt) => { $(id).style.width = pct + "%"; $(id).textContent = txt; };
+    set("rRMM", rmm/5*100, rmm >= 4 ? "高" : rmm >= 2.5 ? "中" : "低");
+    set("rDR", dr/5*100, dr >= 3.5 ? "可以高一點" : dr >= 2 ? "中" : "要壓很低");
+    set("rSub", sub, sub > 75 ? "多、要更有說服力" : sub > 40 ? "中等" : "較少，但不能是零");
+    set("rToC", cr === "none" ? 0 : 60, cr === "none" ? "" : "已執行");
+    let m = [];
+    if(cr === "none") m.push("不測試控制時，重大不實表達風險的評估就等於固有風險的評估 [315§33]。全部靠證實程序。");
+    if(cr === "ok") m.push("控制測試結果有效，可以信賴 → 重大不實表達風險降低，證實程序可以少一些。");
+    if(cr === "bad") m.push("控制測試發現偏差，要查原因，並決定還能不能信賴、要不要加做 [330§16]。這裡當作不能信賴，證實程序沒有減少。");
+    if(sig) m.push("<b>顯著風險：</b>一定要有針對它的證實程序；只靠證實程序時至少含細項測試 [330§20]。" + (cr !== "none" ? "要信賴的控制必須當期測試 [330§14]。" : ""));
+    if(ir <= 2) m.push("<b>注意底線：</b>風險再低，只要是重大的交易類別、科目餘額或揭露，還是要做證實程序 [330§17]。");
+    $("rMsg").innerHTML = S(m.join("<br>"));
+  }
+  $("rIR").addEventListener("input", up);
+  chips("[data-cr]", "data-cr", v => { cr = v; up(); });
+  $("rSig").onclick = () => { sig = !sig; $("rSig").classList.toggle("on", sig); up(); };
+  up();
+})();
+
+// ===================== ④ 重大性與不實表達 =====================
+(function(){
+  const IT = [
+    { n:"收入提前認列（截止錯誤）", a:1800, c:"#dc2626", fixed:false },
+    { n:"存貨跌價少提（估計判斷的差異）", a:500, c:"#d97706", fixed:false },
+    { n:"應收帳款高估（抽樣推估）", a:400, c:"#7c3aed", fixed:false },
+    { n:"雜項費用分類錯誤", a:60, c:"#64748b", fixed:false }
+  ];
+  const svg = $("mSvg"), fmt = v => Math.round(v).toLocaleString() + " 萬";
+  function up(){
+    const pbt = +$("mPBT").value, om = pbt*500, pm = om*.75, ct = om*.05;
+    $("mPBTo").textContent = pbt + " 億"; $("mOM").textContent = fmt(om); $("mPM").textContent = fmt(pm); $("mCT").textContent = fmt(ct);
+    const box = $("mList"); box.innerHTML = "";
+    let sum = 0; const segs = [];
+    IT.forEach(it => {
+      const tiny = it.a < ct, d = document.createElement("div"); d.className = "mis" + (tiny ? " skip" : "");
+      d.innerHTML = `<span><b style="color:${tiny ? "#9ca3af" : it.c}">■</b> ${it.n}　${fmt(it.a)}${tiny ? "　低於門檻，不累計" : ""}</span>`;
+      if(!tiny){
+        const b = document.createElement("button"); b.className = "chip" + (it.fixed ? " on" : ""); b.textContent = it.fixed ? "管理階層已更正" : "尚未更正";
+        b.onclick = () => { it.fixed = !it.fixed; up(); }; d.appendChild(b);
+        if(!it.fixed){ sum += it.a; segs.push(it); }
+      }
+      box.appendChild(d);
+    });
+    const MAX = Math.max(3200, om*1.25), X = v => 20 + v/MAX*560;
+    svg.innerHTML = "";
+    sv("rect", { x:20, y:44, width:560, height:26, rx:5, fill:"#e5e7eb" }, svg);
+    let x = 0; segs.forEach(it => { sv("rect", { x:X(x), y:44, width:X(x+it.a)-X(x), height:26, fill:it.c }, svg); x += it.a; });
+    [[ct,"顯然微小","#64748b",92],[pm,"執行重大性","#0f766e",104],[om,"整體重大性","#1e3a8a",92]].forEach(m => {
+      sv("line", { x1:X(m[0]), x2:X(m[0]), y1:34, y2:80, stroke:m[2], "stroke-width":2.5 }, svg);
+      sv("text", { x:clamp(X(m[0]), 40, 560), y:m[3], "font-size":12, "font-weight":"bold", fill:m[2], "text-anchor":"middle" }, svg, m[1]);
+    });
+    sv("text", { x:20, y:24, "font-size":14, "font-weight":"bold", fill:"#1f2937" }, svg, "未更正不實表達合計：" + fmt(sum));
+    let m;
+    if(sum > om) m = "<b class='big'>超過整體重大性。</b>財務報表有重大不實表達。要求管理階層更正 [450§7]。不更正，就要出修正式意見 [705§6–§7]。";
+    else if(sum > pm) m = "<b class='big'>還沒超過，但已經很接近。</b>加上沒查到的，超過重大性的風險變高。要決定是否修正策略和計畫 [450§5]。";
+    else if(sum > 0) m = "<b class='big'>低於重大性。</b>但不能只看金額，還要看性質和發生的情況 [450§10]。未更正的要跟治理單位溝通 [450§11]，並列入書面聲明 [450§13]。";
+    else m = "<b class='big'>目前沒有未更正的不實表達。</b>";
+    m += "<br>判斷之前，先用實際的財務結果，重新確認重大性還適不適當 [450§9]。把稅前淨利往下拉試試看。";
+    $("mMsg").innerHTML = S(m);
+  }
+  $("mPBT").addEventListener("input", up); up();
+})();
+
+// ===================== ⑤ 意見 =====================
+(function(){
+  const st = { op:"clean", pv:0, gc:false, em:false, kam:true };
+  function up(){
+    const mod = st.op !== "clean";
+    const type = !mod ? "無保留意見" : !st.pv ? "保留意見" : st.op === "mis" ? "否定意見" : "無法表示意見";
+    const disc = type === "無法表示意見";
+    document.querySelectorAll("[data-pv]").forEach(b => b.classList.toggle("off", !mod));
+    let m = `<b class="big">${type}</b><br>`;
+    if(!mod) m += "財務報表在所有重大方面依照適用的財務報導架構編製 [700§12]。";
+    else if(type === "保留意見") m += (st.op === "mis" ? "證據足夠，確定有不實表達。" : "拿不到足夠適切的證據。可能有沒查到的不實表達。") + "影響重大但不廣泛 [705§6]。";
+    else if(type === "否定意見") m += "證據足夠，確定有不實表達，而且影響重大又廣泛 [705§7]。";
+    else m += "拿不到足夠適切的證據，可能的影響重大又廣泛 [705§8]。";
+    if(mod) m += "<br>意見段和基礎段的標題都要跟著改 [705§15] [705§19]。";
+    if(st.gc) m += disc ? "<br>無法表示意見和繼續經營段的組合，這一頁沒有處理，請查 570 號原文。" : "<br>繼續經營：重大不確定性已適當揭露時，意見不因此修正，但要加專段 [570§20]。沒適當揭露，就是保留或否定意見 [570§21]。";
+    if(st.em) m += "<br>強調事項段：提醒使用者注意<b>已在報表揭露</b>的事項。它不影響意見，也不能拿來取代修正式意見或關鍵查核事項 [706§5] [706§15]。";
+    if(st.kam) m += disc ? "<br>無法表示意見時，除非法令另有規定，不應有關鍵查核事項段 [705§28]。" : "<br>上市櫃公司要有關鍵查核事項段 [701§5]。";
+    $("oMsg").innerHTML = S(m);
+    const base = type === "無保留意見" ? "查核意見" : type;
+    const rows = [
+      [base, mod], [base + "之基礎", mod],
+      ["繼續經營有關之重大不確定性", true, st.gc && !disc], ["強調事項", true, st.em], ["關鍵查核事項", false, st.kam && !disc],
+      ["管理階層與治理單位對財務報表之責任", false], ["會計師查核財務報表之責任", false], ["會計師簽名、事務所名稱及地址、查核報告日", false]
+    ];
+    $("oRep").innerHTML = "<b>查核報告骨架（示意排列）</b>" + rows.map(r => `<div class="${r[1] ? "hl" : ""} ${r.length > 2 && !r[2] ? "off" : ""}">${r[0]}</div>`).join("");
+  }
+  chips("[data-op]", "data-op", v => { st.op = v; up(); });
+  chips("[data-pv]", "data-pv", v => { st.pv = +v; up(); });
+  [["oGC","gc"],["oEM","em"],["oKAM","kam"]].forEach(a => $(a[0]).onclick = () => { st[a[1]] = !st[a[1]]; $(a[0]).classList.toggle("on", st[a[1]]); up(); });
+  up();
+})();
+
+// ===================== ⑥ 日期 =====================
+(function(){
+  const ids = ["dE","dB","dQ","dR","dD"], NM = { dE:"證據完成", dB:"董事會通過", dQ:"品質複核", dR:"書面聲明", dD:"報告日" }, svg = $("dSvg");
+  const X = d => 30 + (d-20)/70*540;
+  function up(){
+    const v = {}; ids.forEach(i => { v[i] = +$(i).value; $(i).nextElementSibling.textContent = "第 " + v[i] + " 天"; });
+    svg.innerHTML = "";
+    sv("line", { x1:30, x2:570, y1:60, y2:60, stroke:"#94a3b8", "stroke-width":3 }, svg);
+    [20,40,60,80].forEach(d => { sv("line", { x1:X(d), x2:X(d), y1:55, y2:65, stroke:"#94a3b8", "stroke-width":2 }, svg); sv("text", { x:X(d), y:124, "font-size":11, fill:"#6b7280", "text-anchor":"middle" }, svg, "第" + d + "天"); });
+    ids.forEach((i, n) => {
+      const y = [84, 98, 42, 28, 13][n], up2 = y < 60, main = i === "dD";
+      sv("line", { x1:X(v[i]), x2:X(v[i]), y1:60, y2:up2 ? y+5 : y-12, stroke:main ? "#1e3a8a" : "#d97706", "stroke-width":main ? 3 : 1.5 }, svg);
+      sv("circle", { cx:X(v[i]), cy:60, r:main ? 7 : 5, fill:main ? "#1e3a8a" : "#d97706" }, svg);
+      sv("text", { x:clamp(X(v[i]), 50, 550), y, "font-size":12, "font-weight":"bold", fill:main ? "#1e3a8a" : "#b45309", "text-anchor":"middle", "paint-order":"stroke", stroke:"#fffaf3", "stroke-width":4 }, svg, NM[i]);
+    });
+    const C = [
+      [v.dD >= v.dE, "報告日不早於取得足夠適切證據的日子 [700§37]", "報告日早於證據完成日。證據還沒拿齊就簽報告 [700§37]"],
+      [v.dD >= v.dB, "有權通過財報的人已確認並負責，才算證據齊了 [700§37]", "報告日早於董事會通過財報。還沒有人對這份報表負責 [700§37]"],
+      [v.dQ <= v.dD, "品質複核在報告日之前完成 [220§35]", "品質複核還沒完成，不得確定報告日 [220§35]"],
+      [v.dR <= v.dD, "書面聲明不晚於報告日 [580§10]" + (v.dD - v.dR > 5 ? "。但隔了 " + (v.dD-v.dR) + " 天，準則要求儘量接近報告日" : ""), "書面聲明日晚於報告日。書面聲明是必要證據，報告日不能比它早 [580§10]"]
+    ];
+    const bad = C.filter(c => !c[0]).length;
+    $("dMsg").innerHTML = S(`<b class="big">${bad ? "有 " + bad + " 項不符合。" : "先後關係都符合。"}</b>` + C.map(c => `<div class="chk ${c[0] ? "ok" : "bad"}">${c[0] ? c[1] : c[2]}</div>`).join("") +
+      `<div class="chk">期後事項的程序要涵蓋到第 ${v.dD} 天（報告日）[560§6]。</div><div class="chk">歸檔通常要在第 ${v.dD+60} 天以前完成（報告日後 60 天內）[230§36]。</div>`);
+  }
+  ids.forEach(i => $(i).addEventListener("input", up)); up();
+})();
+
+// ===================== ⑦ ⑧ 小測驗與錯題本 =====================
+setupQuiz("A0", [
+  { q:"查核案件開始前，下列哪一項「不是」準則要求的程序？", o:["執行承接與續任的程序","評估職業道德（含獨立性）的遵循","瞭解並溝通委任的內容","先把控制測試全部做完"], a:3, sec:"s1", why:"300§5 列的是前三項。控制測試是風險評估之後才設計的。" },
+  { q:"查核先決條件不存在，跟管理階層討論後仍然不存在。會計師應該怎麼做？", o:["照常承接，在報告裡加強調事項","不得承接該查核案件","承接後出保留意見","改成核閱案件"], a:1, sec:"s1", why:"210§5：先決條件不存在就不得承接。先決條件的內容見 210§4。" },
+  { q:"風險評估程序包括哪三類？", o:["查詢、分析性程序、觀察及檢查","函證、盤點、驗算","控制測試、細項測試、分析","查詢、函證、重新執行"], a:0, sec:"s1", why:"315§13。函證、盤點多半是後面因應風險時的證實程序。" },
+  { q:"重大不實表達風險要在哪兩個層級辨認？", o:["母公司、子公司","整體財務報表、個別項目聲明","資產負債表、損益表","管理階層、治理單位"], a:1, sec:"s1", why:"315§27。整體層級的風險用整體查核對策因應（330§4），聲明層級用進一步查核程序。" },
+  { q:"查核人員不打算測試控制的有效性。這時重大不實表達風險的評估會等於什麼？", o:["零","偵查風險","固有風險的評估","查核風險"], a:2, sec:"s3", why:"315§33：沒規劃測試控制，控制風險的評估就讓重大不實表達風險等同固有風險。" },
+  { q:"關於收入認列的舞弊風險，準則的要求是？", o:["只有上市櫃公司才需要考慮","預先假設存在；認為不適用時要把理由寫進底稿","一律列為關鍵查核事項","只要函證就可以排除"], a:1, sec:"s2", why:"240§26：預先假設收入認列有舞弊風險，並評估哪種收入、交易或聲明可能有問題。" },
+  { q:"不論對管理階層踰越控制的風險評估結果如何，都要做的程序「不包括」哪一項？", o:["測試會計分錄及其他調整","複核會計估計有沒有偏頗","評估不尋常重大交易的動機和合理性","對所有客戶寄發函證"], a:3, sec:"s1", why:"240§32 的三項是前三個。函證要不要做是 330§18 的考量，不是這一條。" },
+  { q:"某個重大科目的風險評估為很低。可以完全不做證實程序嗎？", o:["可以，風險低就不用","不可以，重大項目一律要有證實程序","可以，只要做了控制測試","看主辦會計師心情"], a:1, sec:"s3", why:"330§17：不論評估的風險為何，每一個重大交易類別、科目餘額及揭露都要設計並執行證實程序。" },
+  { q:"某個顯著風險，查核人員只用證實程序來因應。這些程序至少要包括什麼？", o:["證實分析性程序","細項測試","查詢","觀察"], a:1, sec:"s3", why:"330§20：對顯著風險只做證實程序時，至少應包括細項測試。" },
+  { q:"想信賴「因應顯著風險的控制」。這些控制的測試可以沿用前兩年的結果嗎？", o:["可以，三年測一次就好","不可以，要在當期測試","可以，只要控制沒變","由客戶決定"], a:1, sec:"s2", why:"330§14：欲信賴顯著風險的相關控制，應於當期測試。" },
+  { q:"函證寄出後沒有回函。查核人員應該怎麼做？", o:["當作對方同意","對所有未回函的都執行替代程序","直接出保留意見","把那筆金額列為不實表達"], a:1, sec:"s1", why:"505§11：所有未回函的情況都要做替代查核程序。" },
+  { q:"設定「執行重大性」的目的是什麼？", o:["讓查核人員少做一點","把未更正加未偵出不實表達合計超過整體重大性的可能性，降到適當水準","當作顯然微小的門檻","決定要不要承接案件"], a:1, sec:"s4", why:"320§8。只用整體重大性規劃，會忽略小錯加總和沒查到的錯。" },
+  { q:"查核中發現的不實表達，哪一種可以不累計？", o:["管理階層不同意的","顯然微小的","低於執行重大性的","屬於估計判斷的"], a:1, sec:"s4", why:"450§4：除顯然微小者外都要累計。低於執行重大性不代表可以不累計。" },
+  { q:"累計的不實表達合計已經接近重大性。準則要求查核人員做什麼？", o:["立刻出否定意見","決定是否須修正整體查核策略及查核計畫","什麼都不用做，因為還沒超過","把重大性調高"], a:1, sec:"s4", why:"450§5。接近重大性時，加上沒查到的可能就超過了。" },
+  { q:"評估未更正不實表達的影響之前，要先做哪一件事？", o:["重新評估原先決定的重大性是否仍然適當","取得書面聲明","寄發第二次函證","完成歸檔"], a:0, sec:"s4", why:"450§9：要用受查者的實際財務結果，確認重大性還適不適當。" },
+  { q:"有足夠證據確定財務報表有不實表達，影響重大而且廣泛。應出具？", o:["保留意見","否定意見","無法表示意見","無保留意見加強調事項段"], a:1, sec:"s5", why:"705§7。有證據、確定錯、又廣泛 → 否定意見。" },
+  { q:"無法取得足夠適切的證據，可能的影響重大但不廣泛。應出具？", o:["保留意見","否定意見","無法表示意見","無保留意見"], a:0, sec:"s5", why:"705§6。不廣泛都是保留意見。廣泛才是無法表示意見（705§8）。" },
+  { q:"繼續經營存在重大不確定性，財務報表已適當揭露。查核報告怎麼處理？", o:["否定意見","保留意見","無保留意見，並加「繼續經營有關之重大不確定性」段","無法表示意見"], a:2, sec:"s5", why:"570§20。沒適當揭露才是保留或否定意見（570§21）。" },
+  { q:"出具無法表示意見的查核報告時，關鍵查核事項段要怎麼處理？", o:["照常寫","除非法令另有規定，不應包括","改寫在強調事項段","寫得更詳細"], a:1, sec:"s5", why:"705§28。溝通關鍵查核事項可能讓人以為那部分可以信賴，和無法表示意見矛盾。" },
+  { q:"強調事項段的性質是？", o:["一種修正式意見","提醒使用者注意已在報表揭露的事項，不影響查核意見","用來取代關鍵查核事項","用來說明報表沒有揭露的事"], a:1, sec:"s5", why:"706§5、§15。沒在報表揭露的事項是放「其他事項段」（706§7）。" },
+  { q:"書面聲明的日期，準則怎麼規定？", o:["應早於期末日","儘量接近查核報告日，但不得晚於該日","歸檔前取得即可","要晚於查核報告日"], a:1, sec:"s6", why:"580§10。書面聲明是必要的查核證據，所以報告日不能比它早。" },
+  { q:"需要案件品質複核的案子，查核報告日何時可以確定？", o:["外勤結束當天","案件品質複核完成之後","歸檔之後","董事會開會之前"], a:1, sec:"s6", why:"220§35：案件品質複核完成前，不得確定查核報告日。" },
+  { q:"最終查核檔案的彙整歸檔，通常要在什麼時候完成？", o:["查核報告日當天","查核報告日後 60 天內","期末日後一年內","沒有期限"], a:1, sec:"s6", why:"230§13 要求及時完成；230§36 說明通常是報告日後 60 天內。" },
+  { q:"查核工作底稿要寫到什麼程度？", o:["主辦會計師自己看得懂就好","讓有經驗、沒參與這個案子的查核人員也能瞭解做了什麼、結果和重大判斷","把所有草稿都留下來","只要記錄有問題的地方"], a:1, sec:"s1", why:"230§7。這是判斷底稿夠不夠的標準。" },
+  { q:"查核過程取得的新資訊，和原本評估風險所依據的證據不一致。應該怎麼做？", o:["忽略，以規劃時為準","修正對重大不實表達風險的辨認或評估","直接出修正式意見","換一組查核團隊"], a:1, sec:"s1", why:"315§36。風險評估是動態、反覆修正的過程（315§7）。" }
+], { s1:"① 九站流程", s2:"② 一個風險的一生", s3:"③ 風險和程序量", s4:"④ 重大性和不實表達", s5:"⑤ 出哪一種意見", s6:"⑥ 日期怎麼排" });
+
+</script>
+</body>
+</html>
