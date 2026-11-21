@@ -106,7 +106,32 @@
   .q button.no{background:var(--red-soft); border-color:var(--red);}
   .q .why{display:none; font-size:.9rem; margin-top:6px; background:#f8fafc; border-radius:8px; padding:6px 10px;}
   .q.done .why{display:block;}
-  #score{font-weight:bold; margin-top:12px;}
+  .q .qhead{display:flex; justify-content:space-between; gap:8px; font-size:.84rem; color:var(--sub); margin-bottom:4px;}
+  .tag{display:inline-block; background:#f1f5f9; border-radius:99px; padding:0 9px; font-size:.78rem; color:#475569; white-space:nowrap;}
+  .guess{display:block; font-size:.88rem; color:var(--sub); margin:2px 0 8px; cursor:pointer;}
+  .fb{margin-top:10px; border-radius:10px; padding:10px 12px; font-size:.94rem;}
+  .fb.good{background:var(--green-soft);} .fb.bad{background:var(--red-soft);}
+  .fb p{margin-top:6px;}
+  .dx{display:inline-block; background:#fff; border:1px solid #fca5a5; color:#b91c1c; border-radius:6px; padding:0 7px; font-size:.8rem; font-weight:bold; margin-right:6px;}
+  .dx.k{border-color:#86efac; color:#15803d;}
+  .chip.jump{border-color:var(--blue); color:var(--blue);}
+  .ans{min-height:44px; border:2px dashed var(--border); border-radius:10px; padding:6px 8px; margin-bottom:8px; display:flex; flex-wrap:wrap; gap:4px; align-items:center;}
+  .ans .oc{background:var(--blue-soft); border-radius:8px; padding:1px 8px; font-size:.9rem;} .ans .oc.no{background:var(--red-soft); outline:2px solid var(--red);}
+  .ans i{color:var(--sub); font-style:normal;} .ans .ph{color:var(--sub); font-size:.88rem;}
+  .pool{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;} .pool .chip:disabled{opacity:.3; cursor:default;}
+  .miss{border-top:1px dashed var(--border); padding-top:8px; margin-top:8px;} .miss ul{font-size:.9rem; color:var(--sub);} .miss .chip{margin-left:6px;}
+  .bars{display:grid; gap:6px;}
+  .bar{display:grid; grid-template-columns:9.5em 1fr 6.5em; gap:8px; align-items:center; font-size:.88rem;}
+  .bar .tr{height:12px; background:#f1f5f9; border-radius:99px; overflow:hidden;} .bar .tr i{display:block; height:100%; border-radius:99px;}
+  .bar .pc{color:var(--sub); text-align:right;}
+  .wb{font-size:.92rem;} .wb li{margin-bottom:6px;} .wb .chip{padding:2px 10px; font-size:.8rem;}
+  .card.flash{animation:flash 2.6s;} @keyframes flash{0%,60%{box-shadow:0 0 0 4px #facc15;}100%{box-shadow:0 0 0 0 transparent;}}
+  #backBtn{position:fixed; right:14px; bottom:16px; z-index:20; background:var(--blue); color:#fff; border:none; border-radius:99px; padding:11px 18px; font-family:inherit; font-size:1rem; font-weight:bold; box-shadow:0 4px 14px rgba(0,0,0,.25); cursor:pointer;}
+  .predict{border:2px dashed #93c5fd; background:#f0f7ff; border-radius:12px; padding:10px 14px; margin:10px 0; font-size:.95rem;}
+  .predict .pb{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0;}
+  .predict .pb button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 14px; font-family:inherit; font-size:.9rem; cursor:pointer; color:var(--ink);}
+  .predict .pb button.on{border-color:var(--blue); background:var(--blue-soft);} .predict .pb button.ok{border-color:var(--green); background:var(--green-soft);}
+  [hidden]{display:none !important;}
   footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:24px;}
 </style>
 </head>
@@ -120,13 +145,20 @@
 </header>
 
 <nav class="toc">
-  <a href="#s1">① 血液繞一圈</a><a href="#s2">② 心臟怎麼擠</a><a href="#s3">③ 三種血管</a><a href="#s4">④ 微血管換東西</a><a href="#s5">⑤ 血液裡有什麼</a><a href="#s6">⑥ 淋巴怎麼流</a><a href="#s7">⑦ 小測驗</a>
+  <a href="#s1">① 血液繞一圈</a><a href="#s2">② 心臟怎麼擠</a><a href="#s3">③ 三種血管</a><a href="#s4">④ 微血管換東西</a><a href="#s5">⑤ 血液裡有什麼</a><a href="#s6">⑥ 淋巴怎麼流</a><a href="#s7">⑦ 考考你</a><a href="#s8">⑧ 錯題本</a>
 </nav>
 
 <!-- ============ ① ============ -->
 <div class="card" id="s1">
   <h2>① 跟著一顆紅血球，繞身體一圈</h2>
   <p class="lead">黃色圈起來的那顆是「小紅」。牠的顏色會變：<b>鮮紅＝帶著氧氣（充氧血）</b>，<b>暗紅＝氧氣給出去了（缺氧血）</b>。</p>
+  <div class="predict" data-id="p1" data-ans="1" data-exp="肺動脈裡是暗紅色的缺氧血。它叫動脈，只是因為方向是離開心臟。">
+    <p><b>先猜再看：</b>從心臟送往肺的那條血管叫「肺動脈」。你猜它裡面的血是什麼顏色？</p>
+    <div class="pb"><button>鮮紅色</button><button>暗紅色</button></div>
+    <p class="watch" hidden>先不告訴你對不對。按下面的「肺循環」，盯著從右心室往上走的那些點。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+
 
   <div class="ctrl">
     <span class="lab">只看</span>
@@ -208,6 +240,13 @@
 <div class="card" id="s3">
   <h2>③ 三種血管比一比</h2>
   <p class="lead">血的路線是：<b>動脈 → 微血管 → 靜脈</b>。下面三條管子同時在流，直接比速度、粗細、管壁。</p>
+  <div class="predict" data-id="p3" data-ans="1" data-exp="微血管最慢。慢，才來得及和細胞交換物質。">
+    <p><b>先猜再看：</b>你猜血在哪一種血管裡流得最慢？</p>
+    <div class="pb"><button>動脈</button><button>微血管</button><button>靜脈</button></div>
+    <p class="watch" hidden>先不告訴你對不對。看下面三條管子，比一比裡面的點誰跑得慢。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+
   <div class="stage"><canvas id="c3"></canvas></div>
   <div class="ctrl">
     <button class="chip big" id="rev3">按住我：讓靜脈的血倒流試試</button>
@@ -290,6 +329,13 @@
 <div class="card" id="s6">
   <h2 class="g">⑥ 淋巴怎麼流：把漏出去的水撿回來</h2>
   <p class="lead">血在微血管裡流的時候，有一些血漿會<b>滲出去</b>，泡在細胞周圍，叫<b>組織液</b>。大部分會回到微血管。<b>回不去的那些，由淋巴管收走</b>，這時候它就叫<b>淋巴</b>。</p>
+  <div class="predict" data-id="p6" data-ans="1" data-exp="主要靠旁邊的肌肉收縮來擠，再加上瓣膜擋住不讓它倒流。所以久坐不動，淋巴回流就慢。">
+    <p><b>先猜再看：</b>淋巴管沒有接在心臟上。你猜淋巴主要靠什麼往前走？</p>
+    <div class="pb"><button>淋巴自己會流</button><button>旁邊的肌肉擠它</button><button>重力把它往下拉</button></div>
+    <p class="watch" hidden>先不告訴你對不對。先看綠色的點有多慢。再按「動一動」，比較前後的速度。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+
   <div class="ctrl">
     <button class="chip g big" id="move6">動一動（走路）</button>
     <button class="chip g big" id="germ6">讓病菌從傷口跑進來</button>
@@ -334,11 +380,21 @@
 
 <!-- ============ ⑦ ============ -->
 <div class="card" id="s7">
-  <h2>⑦ 小測驗（12 題）</h2>
-  <p class="lead">每題點一個答案，馬上告訴你對不對、為什麼。</p>
+  <h2>⑦ 考考你：是真的懂，還是只是背起來？</h2>
+  <p class="lead">這些題目大多是<b>情境題</b>，課本上找不到一樣的句子，要用你剛剛看到的畫面去想。一回 10 題，一次一題。</p>
+  <ul style="font-size:.92rem">
+    <li>答錯時，會告訴你<b>可能是哪裡想錯</b>，還有一個按鈕直接跳回那一段動畫。</li>
+    <li>不確定就勾「用猜的」。猜對的題目也會進錯題本，之後再考一次。</li>
+    <li>下一回會先出<b>上次錯的</b>和<b>還沒做過的</b>。</li>
+  </ul>
   <div id="quiz"></div>
-  <div id="score"></div>
 </div>
+
+<div class="card" id="s8">
+  <h2>⑧ 我的弱點和錯題本</h2>
+  <div id="ana"></div>
+</div>
+<button id="backBtn" hidden>↩ 回到題目</button>
 
 <footer>國中生物自學教材 · 人體的循環<br>依七年級自然課本第 3 章 3-2 的單元架構與學校講義重點編寫，圖與文字為原創示意。</footer>
 </div>
@@ -947,42 +1003,245 @@ function beatOf(ph){ const sys = ph >= .12 && ph < .45; return { sys, p: sys ? M
 // 表格遮答案
 document.querySelectorAll(".hide").forEach(e => e.addEventListener("click", ()=> e.classList.toggle("show")));
 
-// ===================== ⑦ 小測驗 =====================
-(function(){
-  const Q = [
-    ["體循環的起點和終點是？",["右心室 → 左心房","左心室 → 右心房","左心房 → 右心室","右心房 → 左心室"],1,"體循環：左心室出發，繞全身，回到右心房。肺循環才是右心室 → 左心房。"],
-    ["肺動脈裡流的是哪一種血？",["充氧血，鮮紅色","缺氧血，暗紅色","沒有血，是空氣","藍色的血"],1,"肺動脈是「離開心臟往肺」的血管。血還沒到肺換氣，所以是缺氧血。"],
-    ["三種血管裡，血流速度最慢的是？",["動脈","靜脈","微血管","都一樣"],2,"微血管最慢、管壁最薄。這樣才來得及和細胞交換物質。"],
-    ["用聽診器聽到「噗、通」兩聲，算幾次心搏？",["1 次","2 次","半次","4 次"],0,"噗和通是一次心搏裡，兩組瓣膜先後關上的聲音。"],
-    ["在手腕摸到的脈搏，是哪一種血管在跳？",["靜脈","微血管","動脈","淋巴管"],2,"心室收縮把血擠進動脈，動脈被撐開又恢復。這個搏動就是脈搏。"],
-    ["心臟和靜脈裡的瓣膜，功能是什麼？",["讓血流得更快","防止血液倒流","製造紅血球","交換氧氣"],1,"瓣膜像單向門。血想倒流時它就關上。"],
-    ["哪一種血球沒有細胞核，而且數量最多？",["紅血球","白血球","血小板","三種都有細胞核"],0,"紅血球：雙凹圓盤狀、沒有細胞核、數量最多，負責攜帶氧氣。血小板也沒有細胞核，但數量比紅血球少。"],
-    ["運動後，心搏和脈搏的次數會怎樣？",["心搏變快，脈搏不變","兩個都變快，而且次數一樣","兩個都變慢","脈搏變快，心搏不變"],1,"心臟每跳一次，動脈就搏動一次。運動時肌肉需要更多氧氣和養分，所以兩個一起變快。"],
-    ["淋巴最後會流到哪裡？",["直接排出體外","匯入靜脈，回到血液","流回微血管的動脈端","留在淋巴結裡"],1,"淋巴經過淋巴管、淋巴結，最後匯入靠近心臟的靜脈，回到血液循環。"],
-    ["感冒時脖子的淋巴結腫起來，最可能是因為？",["血小板在凝血","紅血球變多","淋巴結裡的白血球正在對抗病原體","淋巴管破掉"],2,"淋巴結裡有很多白血球。淋巴把病原體帶進來，白血球在這裡處理它們。"],
-    ["淋巴的流動和血液最大的不同是？",["淋巴流得比動脈的血快","淋巴是單行道，而且沒有心臟專門推它","淋巴裡有很多紅血球","淋巴管沒有瓣膜"],1,"血液是繞圈圈，由心臟推動。淋巴是從組織單向流回靜脈，主要靠肌肉擠壓，所以流得慢。"],
-    ["手背上看起來青色的血管，裡面的血是什麼顏色？",["藍色","綠色","暗紅色","鮮紅色"],2,"那是靜脈，裡面是缺氧血，暗紅色。人的血不會是藍色的。"],
-  ];
-  const box = $("quiz"); let done = 0, ok = 0;
-  Q.forEach((q, i) => {
-    const d = document.createElement("div"); d.className = "q";
-    d.innerHTML = `<p class="t">${i+1}. ${q[0]}</p><div class="opts"></div><div class="why"></div>`;
-    q[1].forEach((o, k) => {
-      const b = document.createElement("button"); b.textContent = o;
-      b.addEventListener("click", ()=>{
-        if(d.classList.contains("done")) return;
-        d.classList.add("done"); done++; pracCount++;
-        const right = k === q[2]; if(right){ ok++; pracOk++; }
-        b.classList.add(right ? "ok" : "no"); d.querySelectorAll("button")[q[2]].classList.add("ok");
-        d.querySelector(".why").textContent = (right ? "答對了。" : "再想一下。") + q[3];
-        $("score").textContent = `已作答 ${done} / ${Q.length} 題，答對 ${ok} 題`;
-        logEv({ type:"quiz", q:i+1, ok:right });
-        if(done === Q.length) cloudSend({ type:"小測驗", detail:"人體的循環 12 題", score:`${ok}/${Q.length}` });
-      });
-      d.querySelector(".opts").appendChild(b);
-    });
-    box.appendChild(d);
+// ===================== 先猜再看 =====================
+document.querySelectorAll(".predict").forEach(box => {
+  const bs = [...box.querySelectorAll(".pb button")], watch = box.querySelector(".watch"), res = box.querySelector(".res");
+  let pick = -1;
+  bs.forEach((b, i) => b.addEventListener("click", ()=>{ if(!res.hidden) return; pick = i; bs.forEach(x => x.classList.remove("on")); b.classList.add("on"); watch.hidden = false; }));
+  box.querySelector(".rev").addEventListener("click", ()=>{
+    const ok = pick === +box.dataset.ans;
+    res.hidden = false; res.innerHTML = (ok ? "<b>你猜對了。</b>" : "<b>跟你猜的不一樣。</b>猜錯沒關係，先猜過再看，會記得比較久。") + box.dataset.exp;
+    bs[+box.dataset.ans].classList.add("ok"); logEv({ type:"predict", q:box.dataset.id, ok });
   });
+});
+
+// ===================== ⑦ 考考你 =====================
+(function(){
+  const SEC = { s1:"① 血液繞一圈", s2:"② 心臟怎麼擠", s3:"③ 三種血管", s4:"④ 微血管交換站", s5:"⑤ 血液裡有什麼", s6:"⑥ 淋巴怎麼流" };
+  // 選擇題：o 的第一個是正確答案（出題時會打亂）；其他每個選項後面是「你可能是這樣想的」
+  // 排序題：seq 是正確順序
+  const Q = [
+    // ---- ① 循環路徑
+    {id:"a1", s:"s1", q:"一顆紅血球剛在左手指尖把氧氣交給細胞。牠要再帶著氧氣去右腳趾，路上至少要經過心臟幾次？",
+      o:[["2 次",""],["0 次，從手直接流到腳","血管不是互通的捷徑。離開微血管後只能走靜脈回心臟。"],["1 次","回到心臟一次時，牠身上還沒有氧氣。要先被送去肺，再回心臟一次，才能出發去腳。"],["4 次","四個腔室不是四次。右心房→右心室算同一次經過，左心房→左心室是第二次。"]],
+      why:"手 → 靜脈 → 右心（第 1 次）→ 肺裝氧氣 → 左心（第 2 次）→ 主動脈 → 腳。"},
+    {id:"a2", s:"s1", q:"肺動脈裡流的是哪一種血？",
+      o:[["缺氧血，暗紅色",""],["充氧血，鮮紅色","你把「動脈」和「充氧血」綁在一起了。動脈只代表方向：離開心臟。"],["藍色的血","人的血沒有藍色。課本圖上畫藍色只是為了區分。"],["一半充氧、一半缺氧","心臟左右兩邊是隔開的，血不會混在一起。"]],
+      why:"肺動脈把血從右心室送去肺。還沒到肺換氣，所以是缺氧血。"},
+    {id:"a3", s:"s1", q:"如果有人說「紅色的是動脈，暗色的是靜脈」，用這個方法會把哪兩條血管分錯？",
+      o:[["肺動脈和肺靜脈",""],["主動脈和大靜脈","這兩條剛好符合：主動脈是充氧血，大靜脈是缺氧血。"],["小動脈和小靜脈","體循環裡動脈都是充氧血、靜脈都是缺氧血，不會分錯。"],["不會分錯","肺循環剛好相反：肺動脈是缺氧血，肺靜脈是充氧血。"]],
+      why:"動脈、靜脈看的是方向。離開心臟叫動脈，流回心臟叫靜脈。"},
+    {id:"a4", s:"s1", q:"護理師把藥打進手臂的靜脈。這個藥最先到達心臟的哪一個腔室？",
+      o:[["右心房",""],["左心房","左心房收的是從肺回來的血。全身回來的血進右心房。"],["左心室","左心室是出發點，不是回來的地方。"],["右心室","靜脈先接到心房。血是先進心房，再到心室。"]],
+      why:"手臂靜脈 → 大靜脈 → 右心房。這就是體循環的終點。"},
+    {id:"a5", s:"s1", q:"承上題，這個藥要到達腦部之前，一定會先經過哪裡？",
+      o:[["肺",""],["腳趾","血不會先繞去腳再去腦。離開左心室後，動脈就分支往各處。"],["淋巴結","藥已經在血液裡。淋巴是另一條路，而且是流回血液的方向。"],["不用經過別的地方，直接到腦","靜脈只能回心臟。回到右心後，下一站一定是肺。"]],
+      why:"右心房 → 右心室 → 肺 → 左心房 → 左心室 → 主動脈 → 腦。"},
+    {id:"a6", s:"s1", q:"把體循環的路線排出來：", seq:["左心室","主動脈","組織微血管","大靜脈","右心房"],
+      why:"體循環：左心室出發，把氧氣送到全身，再回到右心房。"},
+    {id:"a7", s:"s1", q:"把肺循環的路線排出來：", seq:["右心室","肺動脈","肺微血管","肺靜脈","左心房"],
+      why:"肺循環：右心室出發，到肺換氣，再回到左心房。"},
+    {id:"a8", s:"s1", q:"心臟的四個腔室裡，哪兩個裝的是充氧血？",
+      o:[["左心房和左心室",""],["右心房和右心室","右邊收的是全身回來的缺氧血。"],["左心房和右心房","不是分上下，是分左右。右邊缺氧，左邊充氧。"],["左心室和右心室","不是分上下，是分左右。右邊缺氧，左邊充氧。"]],
+      why:"從肺回來的充氧血進左心房，再到左心室，然後送去全身。"},
+    // ---- ② 心臟
+    {id:"b1", s:"s2", q:"小明用聽診器聽了 1 分鐘，數到 150 個聲音（噗和通都算）。他的心搏是每分鐘幾次？",
+      o:[["75 次",""],["150 次","噗、通兩聲合起來才是 1 次心搏。"],["300 次","方向反了。兩聲算一次，要除以 2。"],["沒辦法知道","可以算。噗、通兩聲是 1 次心搏。"]],
+      why:"一次心搏有兩個心音：噗（房室間瓣膜關）和通（動脈瓣膜關）。"},
+    {id:"b2", s:"s2", q:"左心室的肌肉壁比右心室厚很多。最合理的原因是什麼？",
+      o:[["左心室要把血送到全身，路比較遠，需要更大的力",""],["左心室裝的血比較多","兩邊每次送出去的血量差不多。差別在要用多大的力。"],["左心室的血含氧多，肌肉長得比較好","心肌的養分來自冠狀動脈，不是心室裡的血。"],["右心室不需要收縮","右心室也要收縮，才能把血送去肺。"]],
+      why:"右心室只要送到旁邊的肺。左心室要送到頭頂和腳趾，所以肌肉更厚。"},
+    {id:"b3", s:"s2", q:"如果心房和心室之間的瓣膜關不緊，心室收縮時會發生什麼事？",
+      o:[["一部分血倒流回心房，送去動脈的血變少",""],["血會流得更快","瓣膜不是加速器，它只是單向門。門關不緊，血會往回漏。"],["心臟會停止跳動","心臟還是會跳，只是每次送出去的血變少。"],["動脈的血會倒流回心室","那是心室和動脈之間的瓣膜的工作。題目問的是心房和心室之間的。"]],
+      why:"瓣膜的功能是防止血液倒流。關不緊，就有血往回走。"},
+    {id:"b4", s:"s2", q:"心室收縮的那一瞬間，兩組瓣膜是什麼狀態？",
+      o:[["房室之間的關上，心室和動脈之間的打開",""],["兩組都打開","兩組都開的話，血會往心房和動脈兩邊跑。"],["兩組都關上","都關上，血就出不去了。"],["房室之間的打開，心室和動脈之間的關上","這是心室舒張、血從心房流進來的時候。"]],
+      why:"血要往動脈去，所以通往動脈的門開著。往心房的門關上，免得倒流。"},
+    {id:"b5", s:"s2", q:"跑完 400 公尺後，心搏和脈搏會怎樣？這對身體有什麼好處？",
+      o:[["兩個都變快而且次數一樣，可以更快把氧氣和養分送到肌肉",""],["心搏變快，脈搏不變","脈搏就是動脈跟著心搏在跳。心臟跳一次，脈搏就一次。"],["兩個都變慢，讓身體休息","運動時肌肉需要更多氧氣，心臟會跳更快。"],["脈搏會比心搏多","脈搏不會自己多跳。每一次脈搏都是一次心搏造成的。"]],
+      why:"心室每收縮一次，動脈被撐開一次。所以脈搏次數等於心搏次數。"},
+    {id:"b6", s:"s2", q:"心臟裡面明明裝滿了血，為什麼還需要冠狀動脈？",
+      o:[["心肌的氧氣和養分是靠冠狀動脈送來的，不是從心室裡的血吸收",""],["冠狀動脈負責讓心臟跳動","它是送養分的血管，不是讓心臟跳的開關。"],["冠狀動脈負責把血送去肺","送血去肺的是肺動脈。"],["其實不需要","心肌很厚，裡面的血碰不到大部分的肌肉細胞。"]],
+      why:"心肌也是細胞，也需要微血管來交換物質。"},
+    // ---- ③ 血管
+    {id:"c1", s:"s3", q:"微血管裡的血流得最慢。這對身體有什麼好處？",
+      o:[["讓血液和細胞有足夠的時間交換物質",""],["讓心臟可以休息","心臟沒有因此休息。慢是因為微血管很細又分支很多。"],["避免血管破裂","重點不是保護血管，是交換物質需要時間。"],["沒有好處，只是因為離心臟遠","靜脈離心臟也遠，卻比微血管快。慢是有用處的。"]],
+      why:"微血管管壁薄、流得慢，氧氣和養分才來得及穿過去。"},
+    {id:"c2", s:"s3", q:"有人手被割傷，血是鮮紅色，而且一陣一陣地噴出來。最可能傷到哪一種血管？",
+      o:[["動脈",""],["靜脈","靜脈的血是暗紅色，壓力小，是緩緩流出來。"],["微血管","微血管破了是慢慢滲出來，不會噴。"],["淋巴管","淋巴不是紅色的。"]],
+      why:"一陣一陣是跟著心跳（脈搏）。壓力大、鮮紅色，都是動脈的特徵。"},
+    {id:"c3", s:"s3", q:"抽血為什麼選靜脈，不選動脈？",
+      o:[["靜脈靠近皮膚、壓力小，容易找也容易止血",""],["靜脈的血比較乾淨","靜脈血反而帶著比較多二氧化碳和廢物。"],["動脈裡沒有血","動脈裡當然有血，而且壓力最大。"],["靜脈的血流得最快","最快的是動脈。靜脈排中間。"]],
+      why:"動脈壓力大又比較深，扎了不容易止血。"},
+    {id:"c4", s:"s3", q:"腿部靜脈的血壓很小。血要怎麼逆著重力流回心臟？",
+      o:[["靜脈裡的瓣膜防止倒流，加上旁邊肌肉收縮幫忙擠",""],["靜脈管壁很厚，自己用力擠","管壁厚、彈性好的是動脈。靜脈管壁比較薄。"],["血會自己往上爬","液體不會自己往上。要有東西推，也要有東西擋住不讓它掉回去。"],["靠動脈的血在後面用力推","血經過微血管後壓力已經變很小，推不太動了。"]],
+      why:"瓣膜像單向門。肌肉一擠，血只能往心臟的方向走。"},
+    {id:"c5", s:"s3", q:"顯微鏡下看小魚尾鰭：血從一條較粗的血管流出來，分岔到好幾條更細的血管。這條較粗的血管是什麼？",
+      o:[["動脈",""],["靜脈","靜脈是匯流：細的匯成粗的。題目是粗的分成細的。"],["微血管","微血管是最細的，紅血球要排成一列。"],["淋巴管","淋巴管裡沒有紅血球在流。"]],
+      why:"動脈是分支，愈分愈細。靜脈是匯流，愈匯愈粗。"},
+    {id:"c6", s:"s3", q:"手背上看起來青色的血管，裡面的血是什麼顏色？",
+      o:[["暗紅色",""],["藍色","人的血不會是藍色。隔著皮膚看才顯得青。"],["鮮紅色","那是靜脈，裡面是缺氧血。鮮紅色是充氧血。"],["綠色","課本把淋巴畫成綠色只是為了區分，不是真的顏色。"]],
+      why:"手背的是靜脈，裡面是缺氧血，暗紅色。"},
+    {id:"c7", s:"s3", q:"三種血管裡，哪一種的管壁最厚、彈性最好？為什麼需要這樣？",
+      o:[["動脈，因為要承受心室擠出來的高壓",""],["靜脈，因為要裝很多血","靜脈內徑大，但管壁比動脈薄，因為壓力小。"],["微血管，因為要交換物質","交換物質需要的是薄。微血管只有一層細胞。"],["三種都一樣","差很多。看 ③ 的動畫比一次。"]],
+      why:"動脈直接接著心室，血壓最大，所以管壁最厚、彈性最好。"},
+    // ---- ④ 交換
+    {id:"d1", s:"s4", q:"血流過小腿肌肉的微血管之後，血液裡的東西有什麼變化？",
+      o:[["氧氣和養分變少，二氧化碳和廢物變多",""],["氧氣變多，二氧化碳變少","這是在肺發生的事。在肌肉是反過來。"],["全部都變多","細胞會用掉氧氣和養分，所以這兩樣是變少。"],["沒有變化","微血管就是交換站，一定有東西換手。"]],
+      why:"細胞拿走氧氣和養分，把二氧化碳和廢物交給血液。"},
+    {id:"d2", s:"s4", q:"在肺裡，氧氣是靠什麼從肺泡進到血液？",
+      o:[["擴散：肺泡的氧氣濃度高，血液的濃度低",""],["心臟把氧氣吸進血液","心臟推的是血，不是氧氣。"],["紅血球游出血管去拿","紅血球待在血管裡。是氧氣自己穿過薄薄的管壁進來。"],["瓣膜把氧氣推進去","瓣膜只管血的方向，跟氣體交換無關。"]],
+      why:"物質會從濃度高的地方往濃度低的地方擴散。二氧化碳也是這樣出去的。"},
+    {id:"d3", s:"s4", q:"如果微血管的管壁像動脈一樣厚，身體會出什麼問題？",
+      o:[["氧氣和養分很難穿過管壁，細胞得不到供應",""],["血會流得太快","問題不在速度，在東西穿不穿得過去。"],["血壓會消失","管壁厚不會讓血壓消失。"],["沒有影響","物質交換就是穿過管壁。壁厚就過不去。"]],
+      why:"微血管只有一層細胞，就是為了讓物質容易通過。"},
+    // ---- ⑤ 血液
+    {id:"e1", s:"s5", q:"抽血報告顯示，小華的白血球數量比平常高很多。最可能的原因是什麼？",
+      o:[["身體正受到病原體感染",""],["他剛運動完","運動影響的是心跳。白血球是跟防禦有關。"],["他貧血","貧血是紅血球或血紅素不夠。"],["他的血不容易凝固","凝血是血小板的工作。"]],
+      why:"受感染時白血球會急遽增加。所以醫師用它來幫忙診斷。"},
+    {id:"e2", s:"s5", q:"一氧化碳中毒為什麼危險？",
+      o:[["一氧化碳占住了血紅素，紅血球就沒辦法帶氧氣",""],["一氧化碳會殺死白血球","它影響的是紅血球帶氧氣的能力。"],["一氧化碳會讓血液凝固","凝固是血小板的事。"],["一氧化碳會把血管堵住","它是氣體，不會堵住血管。問題出在氧氣運不出去。"]],
+      why:"紅血球靠血紅素和氧氣結合。位置被占走，全身細胞就缺氧。"},
+    {id:"e3", s:"s5", q:"有個人只是小擦傷，血卻流了很久都不停。他最可能是哪一種血球太少？",
+      o:[["血小板",""],["紅血球","紅血球負責帶氧氣。太少會貧血、容易累。"],["白血球","白血球負責防禦疾病。"],["三種都不是，是血漿太少","讓傷口血液凝固的是血小板。"]],
+      why:"血管破裂時，血小板讓血液凝固，避免失血過多。"},
+    {id:"e4", s:"s5", q:"血液放著分層後，上層淡黃色的部分是什麼？它最主要的成分是什麼？",
+      o:[["血漿，主要是水",""],["血球，主要是紅血球","血球比較重，沉在下層。"],["白血球，主要是抗體","白血球只在中間薄薄一層。"],["淋巴，主要是組織液","這是在試管裡的血，上層是血漿。"]],
+      why:"血漿大部分是水，裡面溶著養分、廢物、抗體和激素。"},
+    {id:"e5", s:"s5", q:"三種血球裡，數量最多、而且沒有細胞核的是哪一種？",
+      o:[["紅血球",""],["白血球","白血球有細胞核，而且數量最少。"],["血小板","血小板沒有細胞核，但數量比紅血球少。"],["三種都有細胞核","只有白血球有細胞核。"]],
+      why:"紅血球：雙凹圓盤狀、沒有細胞核、數量最多，負責攜帶氧氣。"},
+    // ---- ⑥ 淋巴
+    {id:"f1", s:"s6", q:"淋巴管裡的淋巴，最原本是從哪裡來的？",
+      o:[["從微血管滲出來的血漿，變成組織液，再進入淋巴管",""],["淋巴結製造的","淋巴結是淋巴經過的地方，不是來源。"],["喝下去的水直接進淋巴管","水要先進血液。淋巴是從血漿滲出來的。"],["心臟送出來的","心臟送出來的是血。淋巴管沒有接在心臟的出口。"]],
+      why:"血漿滲出微血管 → 組織液 → 進淋巴管後叫淋巴。"},
+    {id:"f2", s:"s6", q:"把淋巴的路線排出來：", seq:["組織液","淋巴管","淋巴結","靜脈"],
+      why:"淋巴是單行道：從組織出發，經過淋巴結，最後匯入靜脈回到血液。"},
+    {id:"f3", s:"s6", q:"感冒時，下巴下面摸到腫腫的一顆。這最可能代表什麼？",
+      o:[["淋巴結裡的白血球正在對抗病原體",""],["血小板在那裡凝血","沒有傷口，不是凝血。"],["淋巴管破掉了","不是破掉。是淋巴結裡在打仗。"],["紅血球堆在那裡","淋巴裡沒有紅血球。"]],
+      why:"淋巴把病原體帶到淋巴結。裡面有很多白血球會處理它們。"},
+    {id:"f4", s:"s6", q:"坐了五小時的車，腳脹脹的。下車走一走就好多了。為什麼走路有用？",
+      o:[["腿部肌肉收縮，把淋巴和靜脈的血擠回去",""],["走路讓心臟把淋巴吸回去","心臟沒有接著淋巴管，吸不到。"],["走路讓組織液蒸發","組織液在身體裡面，不會蒸發掉。"],["走路讓動脈的血變少","走路時送到腿的血反而變多。重點是回流變順。"]],
+      why:"淋巴沒有專用的幫浦，主要靠旁邊肌肉擠壓。靜脈回流也靠它幫忙。"},
+    {id:"f5", s:"s6", q:"如果手臂的淋巴管被堵住了，那隻手臂會怎樣？",
+      o:[["組織液回不去，手臂會腫起來",""],["手臂會沒有血","血走的是血管，沒有被堵。"],["手臂會缺氧變白","氧氣是血液送的。淋巴堵住影響的是多出來的水。"],["沒有影響","淋巴管就是負責把多的組織液收走。堵住就積在那裡。"]],
+      why:"淋巴系統的工作之一，是把回不去微血管的組織液送回血液。"},
+    {id:"f6", s:"s6", q:"淋巴的流動和血液最大的不同是什麼？",
+      o:[["淋巴是單行道，而且沒有心臟專門推它",""],["淋巴流得比動脈的血快","淋巴流得很慢。"],["淋巴裡有很多紅血球","淋巴裡沒有紅血球。"],["淋巴管沒有瓣膜","淋巴管也有瓣膜，所以只能往前。"]],
+      why:"血液繞圈圈，由心臟推。淋巴從組織單向流回靜脈，主要靠肌肉擠。"},
+  ];
+  const KEY = "circ_quiz_v1"; let ST = {};
+  try{ ST = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(e){}
+  const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} };
+  const rec = id => ST[id] || (ST[id] = { n:0, ok:0, last:"" });
+  const isWrong = q => { const r = ST[q.id]; return r && (r.last === "no" || r.last === "guess"); };
+  const shuf = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+  const esc = s => s.replace(/[&<>]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[c]));
+  const box = $("quiz"), ana = $("ana"), back = $("backBtn");
+  let round = [], idx = 0, okN = 0, misses = [];
+
+  // 跳回去看那一段，再跳回題目
+  function goSec(s){
+    const el = $(s); el.scrollIntoView({ behavior:"smooth", block:"start" });
+    el.classList.add("flash"); setTimeout(()=> el.classList.remove("flash"), 2600); back.hidden = false;
+  }
+  back.addEventListener("click", ()=>{ $("s7").scrollIntoView({ behavior:"smooth", block:"start" }); back.hidden = true; });
+  const jumpBtn = s => `<button class="chip jump" data-go="${s}">回去看 ${SEC[s]}</button>`;
+  document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if(b) goSec(b.dataset.go); });
+
+  function build(onlyWrong){
+    const pri = q => isWrong(q) ? 0 : !ST[q.id] || !ST[q.id].n ? 1 : 2;
+    const pool = shuf(Q.filter(q => !onlyWrong || isWrong(q))).sort((a,b) => pri(a)-pri(b));
+    const out = [], cnt = {};
+    // 每一段先各出一題，再補到 10 題，確保六個概念都考到
+    for(const cap of (onlyWrong ? [99] : [1,2,99]))
+      for(const q of pool){ if(out.length >= 10) break; if(out.includes(q) || (cnt[q.s]||0) >= cap) continue; cnt[q.s] = (cnt[q.s]||0)+1; out.push(q); }
+    return shuf(out);
+  }
+  function start(onlyWrong){
+    round = build(onlyWrong); idx = 0; okN = 0; misses = [];
+    if(!round.length){ box.innerHTML = `<p class="lead">錯題本是空的。先練一回吧。</p>`; return; }
+    show();
+  }
+  function finish(q, right, diag, picked){
+    const guess = box.querySelector(".guess input").checked, r = rec(q.id);
+    r.n++; if(right) r.ok++; r.last = !right ? "no" : guess ? "guess" : "ok"; save();
+    pracCount++; if(right){ pracOk++; okN++; } if(r.last !== "ok") misses.push(q);
+    logEv({ type:"quiz", q:q.id, sec:q.s, ok:right, guess });
+    const fb = box.querySelector(".fb"); fb.hidden = false; fb.className = "fb " + (right ? "good" : "bad");
+    let h = right ? (guess ? "<b>答對了。</b>不過你說是用猜的，我先把它放進錯題本，之後再考你一次。" : "<b>答對了。</b>") : "<b>這題沒答對。</b>";
+    if(!right && diag) h += `<p><span class="dx">你可能是這樣想的</span>${esc(diag)}</p>`;
+    h += `<p><span class="dx k">關鍵</span>${esc(q.why)}</p>`;
+    h += `<div class="ctrl">${right && !guess ? "" : jumpBtn(q.s)}<button class="chip on" id="nextQ">${idx+1 < round.length ? "下一題" : "看這一回的結果"}</button></div>`;
+    fb.innerHTML = h; box.querySelector(".guess").style.display = "none";
+    $("nextQ").addEventListener("click", ()=>{ idx++; idx < round.length ? show() : summary(); });
+    renderAna();
+  }
+  function show(){
+    const q = round[idx];
+    let h = `<div class="q"><div class="qhead"><span>第 ${idx+1} / ${round.length} 題</span><span class="tag">${SEC[q.s]}</span></div><p class="t">${esc(q.q)}</p>`;
+    h += `<label class="guess"><input type="checkbox"> 這題我不太確定，是用猜的</label>`;
+    h += q.seq ? `<div class="ans"></div><div class="pool"></div><button class="chip" id="resetO">重排</button>` : `<div class="opts"></div>`;
+    h += `<div class="fb" hidden></div></div>`;
+    box.innerHTML = h;
+    if(q.seq){
+      const ans = box.querySelector(".ans"), pool = box.querySelector(".pool"); let pick = [], done = false;
+      const paint = () => {
+        ans.innerHTML = pick.length ? pick.map((t,i) => `<span class="oc">${i+1}. ${t}</span>`).join("<i>→</i>") : `<span class="ph">照順序點下面的站名</span>`;
+        [...pool.children].forEach(b => b.disabled = pick.includes(b.textContent));
+      };
+      shuf(q.seq).forEach(t => { const b = document.createElement("button"); b.className = "chip"; b.textContent = t;
+        b.addEventListener("click", ()=>{ if(done) return; pick.push(t); paint();
+          if(pick.length === q.seq.length){ done = true; $("resetO").style.display = "none";
+            const k = pick.findIndex((x,i) => x !== q.seq[i]), right = k < 0;
+            if(!right) ans.children[k*2].classList.add("no");
+            finish(q, right, right ? "" : (k === 0 ? `起點應該是「${q.seq[0]}」。` : `「${q.seq[k-1]}」的下一站應該是「${q.seq[k]}」，不是「${pick[k]}」。`)); } });
+        pool.appendChild(b); });
+      $("resetO").addEventListener("click", ()=>{ if(!done){ pick = []; paint(); } }); paint();
+    } else {
+      const opts = box.querySelector(".opts"), order = shuf(q.o.map((_,i) => i)); let done = false;
+      order.forEach(i => { const b = document.createElement("button"); b.textContent = q.o[i][0]; b.dataset.i = i;
+        b.addEventListener("click", ()=>{ if(done) return; done = true; const right = i === 0;
+          b.classList.add(right ? "ok" : "no"); opts.querySelector('[data-i="0"]').classList.add("ok"); finish(q, right, q.o[i][1]); });
+        opts.appendChild(b); });
+    }
+  }
+  function summary(){
+    const bySec = {}; misses.forEach(q => (bySec[q.s] = bySec[q.s] || []).push(q));
+    let h = `<div class="q"><p class="t">這一回：${round.length} 題答對 ${okN} 題</p>`;
+    if(!misses.length) h += `<p>全部答對，而且都不是用猜的。很紮實。</p>`;
+    else {
+      h += `<p>下面這幾段再看一次，然後按「只練錯題」。</p>`;
+      for(const s in bySec) h += `<div class="miss"><b>${SEC[s]}</b>（${bySec[s].length} 題）${jumpBtn(s)}<ul>${bySec[s].map(q => `<li>${esc(q.q)}</li>`).join("")}</ul></div>`;
+    }
+    h += `<div class="ctrl"><button class="chip on" id="again">再練一回（錯的和沒做過的先出）</button>${misses.length ? `<button class="chip" id="onlyW">只練錯題</button>` : ""}</div></div>`;
+    box.innerHTML = h;
+    $("again").addEventListener("click", ()=> start(false));
+    if($("onlyW")) $("onlyW").addEventListener("click", ()=> start(true));
+    cloudSend({ type:"小測驗", detail:`人體的循環 一回 ${round.length} 題；要再看：${Object.keys(bySec).map(s => SEC[s]).join("、") || "無"}`, score:`${okN}/${round.length}` });
+  }
+  function renderAna(){
+    const wrong = Q.filter(isWrong), seen = Q.filter(q => ST[q.id] && ST[q.id].n).length;
+    let h = `<p class="lead">題庫共 ${Q.length} 題，你做過 ${seen} 題。紀錄只存在這台裝置的瀏覽器。</p><div class="bars">`;
+    let weak = null, weakRate = 2;
+    for(const s in SEC){
+      let n = 0, ok = 0; Q.filter(q => q.s === s).forEach(q => { const r = ST[q.id]; if(r){ n += r.n; ok += r.ok; } });
+      const rate = n ? ok/n : 0; if(n >= 2 && rate < weakRate){ weakRate = rate; weak = s; }
+      h += `<div class="bar"><span class="nm">${SEC[s]}</span><span class="tr"><i style="width:${Math.round(rate*100)}%;background:${!n ? "#e5e7eb" : rate >= .8 ? "#16a34a" : rate >= .5 ? "#d97706" : "#dc2626"}"></i></span><span class="pc">${n ? `答對 ${ok}／${n}` : "還沒做"}</span></div>`;
+    }
+    h += `</div>`;
+    if(weak && weakRate < .8) h += `<div class="key">目前最需要再看的是 <b>${SEC[weak]}</b>。${jumpBtn(weak)}</div>`;
+    h += `<h3>錯題本（${wrong.length} 題）</h3>`;
+    if(!wrong.length) h += `<p style="color:var(--sub)">目前沒有錯題。答錯或用猜的題目會出現在這裡，之後答對就會移除。</p>`;
+    else h += `<ul class="wb">${wrong.map(q => `<li>${esc(q.q)} <span class="tag">${ST[q.id].last === "guess" ? "用猜的" : "答錯"}</span> ${jumpBtn(q.s)}</li>`).join("")}</ul><div class="ctrl"><button class="chip on" id="anaW">只練錯題（${Math.min(10, wrong.length)} 題）</button></div>`;
+    h += `<div class="ctrl"><button class="chip" id="clr">清除我的作答紀錄</button></div>`;
+    ana.innerHTML = h;
+    if($("anaW")) $("anaW").addEventListener("click", ()=>{ start(true); $("s7").scrollIntoView({ behavior:"smooth" }); });
+    $("clr").addEventListener("click", ()=>{ if(confirm("確定要清除這一課的作答紀錄和錯題本嗎？清掉就救不回來。")){ ST = {}; save(); renderAna(); } });
+  }
+  box.innerHTML = `<div class="ctrl"><button class="chip on big" id="go">開始練一回（10 題）</button></div>`;
+  $("go").addEventListener("click", ()=> start(false));
+  renderAna();
 })();
 </script>
 </body>
