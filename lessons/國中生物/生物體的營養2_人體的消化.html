@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國一生物｜生物體的營養②：人體的消化</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f7f5f2; --card:#ffffff;
+    --red:#dc2626; --red-soft:#fee2e2; --green:#15803d; --green-soft:#dcfce7;
+    --amber:#b45309; --amber-soft:#fef3c7; --blue:#1d4ed8; --blue-soft:#dbeafe;
+    --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:20px 16px 80px;}
+  a{color:var(--blue);}
+  header.hero{background:var(--hero); color:#fff; border-radius:var(--radius); padding:26px 24px; margin-bottom:16px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.95; font-size:.95rem;}
+  header.hero a{color:#fff;}
+  nav.toc{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;}
+  nav.toc a{background:#fff; border:1px solid var(--border); border-radius:99px; padding:3px 12px; font-size:.86rem; text-decoration:none; color:var(--ink);}
+  nav.toc a:hover{border-color:var(--main); color:var(--main);}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:16px;}
+  .card h2{font-size:1.18rem; color:var(--main); margin-bottom:8px;}
+  .card h3{font-size:1rem; margin:16px 0 6px;}
+  .card ul,.card ol{margin-left:1.3em;}
+  .lead{font-size:.98rem; margin-bottom:10px;}
+  .life{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.94rem;}
+  .life b{color:var(--amber);}
+  .key{background:var(--soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.95rem; color:var(--deep);}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e3a8a;}
+  .ctrl{display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:8px 0;}
+  .ctrl .lab{font-size:.86rem; color:var(--sub); margin-right:2px;}
+  .chip{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 13px; cursor:pointer; font-family:inherit; font-size:.88rem; color:var(--ink);}
+  .chip:hover{border-color:var(--main); color:var(--main);}
+  .chip.on{background:var(--main); border-color:var(--main); color:#fff;}
+  .chip.on:hover{color:#fff;}
+  .chip.big{padding:8px 18px; font-size:.95rem; font-weight:bold;}
+  .chip.off{background:#f3f4f6; color:#9ca3af; text-decoration:line-through;}
+  .stage{background:#fffaf3; border:1px solid #f1e4d3; border-radius:12px; padding:6px;}
+  .stage canvas,.stage svg{display:block; width:100%; max-width:640px; margin:0 auto; touch-action:pan-y;}
+  .legend{display:flex; gap:12px; flex-wrap:wrap; font-size:.84rem; color:var(--sub); margin:6px 2px;}
+  .legend i{display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:4px; vertical-align:-1px;}
+  .status{border:2px solid #facc15; background:#fefce8; border-radius:12px; padding:10px 14px; margin-top:10px; font-size:.95rem;}
+  .status b.big{font-size:1.05rem;}
+  .count{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:8px; margin-top:8px;}
+  .count div{background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:6px 10px; text-align:center;}
+  .count small{display:block; color:var(--sub); font-size:.78rem;}
+  .count b{font-size:1.25rem; color:var(--main);}
+  .sl{display:grid; grid-template-columns:5.5em 1fr 4.5em; gap:8px; align-items:center; font-size:.9rem; margin:4px 0;}
+  .sl input{width:100%;}
+  .sl output{font-weight:bold; text-align:right;}
+  table{border-collapse:collapse; width:100%; font-size:.92rem; margin-top:10px;}
+  th,td{border:1px solid var(--border); padding:6px 8px; text-align:center;}
+  th{background:#f8fafc;}
+  td.l{text-align:left;}
+  .tw{overflow-x:auto;}
+  .hide{background:#e5e7eb; color:transparent; border-radius:6px; cursor:pointer; user-select:none; padding:0 6px;}
+  .hide.show{background:var(--amber-soft); color:var(--ink);}
+  .cells{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin-top:10px;}
+  .cell{border:1px solid var(--border); border-radius:12px; padding:12px; background:#fff;}
+  .cell h3{margin:0 0 4px;}
+  .cell p{font-size:.9rem;}
+  .tag{display:inline-block; background:var(--amber-soft); border-radius:6px; padding:0 8px; font-weight:bold; font-size:.86rem;}
+  .tag.no{background:#e5e7eb;}
+  .two{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:12px; align-items:start;}
+  @media (max-width:640px){ .two{grid-template-columns:1fr;} }
+  .cl{border:1px solid var(--border); border-radius:10px; padding:8px 12px; margin-top:8px; display:flex; flex-wrap:wrap; gap:6px; align-items:center;}
+  .cl span.t{flex:1 1 180px; font-size:.94rem;}
+  .cl .why{flex:1 1 100%; font-size:.88rem; color:var(--sub); display:none;}
+  .cl.done .why{display:block;}
+  .cl button.ok,.q button.ok{background:var(--green-soft); border-color:var(--green); color:var(--ink);}
+  .cl button.no,.q button.no{background:var(--red-soft); border-color:var(--red); color:var(--ink);}
+  .q{border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-top:10px;}
+  .q p.t{font-weight:bold; margin-bottom:6px;}
+  .q .opts{display:grid; gap:6px;}
+  .q .opts button{border:1px solid var(--border); background:#fff; border-radius:8px; padding:9px 12px; font-family:inherit; font-size:.95rem; cursor:pointer; text-align:left; color:var(--ink);}
+  .q .opts button:hover{border-color:var(--main);}
+  .q .why{display:none; font-size:.9rem; margin-top:8px; background:#f8fafc; border-radius:8px; padding:6px 10px;}
+  .q.done .why{display:block;}
+  .qbar{display:flex; justify-content:space-between; font-size:.88rem; color:var(--sub);}
+  .prog{height:8px; background:#e5e7eb; border-radius:99px; overflow:hidden; margin:4px 0;}
+  .prog div{height:100%; background:var(--main);}
+  .res{text-align:center; padding:10px 0;}
+  .res .n{font-size:2rem; font-weight:bold; color:var(--main);}
+  .w{border:1px solid var(--border); border-left:4px solid var(--red); border-radius:10px; padding:10px 12px; margin-top:8px; cursor:pointer;}
+  .w .hd{display:flex; gap:8px; align-items:flex-start;}
+  .w .hd p{flex:1; font-weight:bold; font-size:.95rem;}
+  .w .bad{background:var(--red-soft); color:#991b1b; border-radius:99px; font-size:.76rem; padding:0 8px; white-space:nowrap;}
+  .w .ans{display:none; margin-top:6px; font-size:.92rem; background:var(--green-soft); border-radius:8px; padding:6px 10px;}
+  .w.open .ans{display:block;}
+  .w .tip{font-size:.8rem; color:var(--sub);}
+  .w.open .tip{display:none;}
+  .empty{text-align:center; color:var(--sub); padding:16px 0;}
+  .nextl{display:block; text-align:center; background:var(--main); color:#fff; border-radius:var(--radius); padding:14px; text-decoration:none; font-weight:bold; margin-bottom:16px;}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:24px;}
+  :root{ --main:#c2410c; --soft:#ffedd5; --deep:#7c2d12; --hero:linear-gradient(135deg,#ea580c,#c2410c 55%,#a16207); }
+  .route{display:flex; gap:4px; flex-wrap:wrap; margin:8px 0;}
+  .nut{border:1px solid var(--border); border-radius:10px; padding:6px 10px; margin-top:6px;}
+  .nut .nm{font-weight:bold; font-size:.9rem;}
+  .nut .st{font-size:.84rem; color:var(--sub);}
+  .beads{display:flex; flex-wrap:wrap; gap:5px; align-items:center; min-height:26px; margin:2px 0;}
+  .beads .grp{display:flex;}
+  .beads i{display:block; width:15px; height:15px; border-radius:50%; margin-left:-3px; border:1px solid rgba(0,0,0,.25);}
+  .beads .grp i:first-child{margin-left:0;}
+  .beads i.drop{border-radius:50% 50% 50% 50%; margin:0;}
+  .mx td button{width:100%; min-height:40px; border:1px solid var(--border); background:#fff; border-radius:8px; cursor:pointer; font-family:inherit; font-size:1rem;}
+  .mx td button.sel{background:var(--soft); border-color:var(--main); font-weight:bold;}
+  .mx td button.ok{background:var(--green-soft); border-color:var(--green);}
+  .mx td button.no{background:var(--red-soft); border-color:var(--red);}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <span class="badge">國中自然 · 七年級生物 · 第 2 章 生物體的營養（下）</span>
+  <h1>生物體的營養②：人體的消化</h1>
+  <p>吃下去的飯、肉、油，在身體裡走哪條路？在哪一站被切碎？這一頁跟著一口食物走一趟。上一課是 <a href="生物體的營養1_養分酵素與光合作用.html">① 養分、酵素與光合作用</a>。</p>
+</header>
+
+<nav class="toc">
+  <a href="#s1">① 為什麼要消化</a><a href="#s2">② 跟食物走一趟</a><a href="#s3">③ 消化腺和消化液</a><a href="#s4">④ 誰消化誰</a><a href="#s5">⑤ 小腸怎麼吸收</a><a href="#s6">⑥ 兩個分類練習</a><a href="#sQ">⑦ 小測驗</a><a href="#sW">⑧ 錯題本</a>
+</nav>
+
+<div class="card" id="s1">
+  <h2>① 為什麼要消化？</h2>
+  <p class="lead">澱粉、蛋白質、脂質的分子<b>太大</b>，進不了細胞。要先切成小分子才能吸收。這個「切小」的過程就是<b>消化</b>。</p>
+  <div class="tw"><table>
+    <tr><th>大分子</th><th>切成的小分子</th></tr>
+    <tr><td>澱粉（醣類）</td><td><span class="hide">葡萄糖</span></td></tr>
+    <tr><td>蛋白質</td><td><span class="hide">胺基酸</span></td></tr>
+    <tr><td>脂質</td><td><span class="hide">脂肪酸和甘油</span></td></tr>
+  </table></div>
+  <div class="key">維生素、礦物質、水本來就是小分子。<b>不用消化</b>，可以直接吸收。</div>
+  <div class="cells">
+    <div class="cell"><h3>物理性消化</h3><p>只是把食物<b>變小塊、拌均勻</b>。物質沒有變。例如：咀嚼、胃的攪拌。</p></div>
+    <div class="cell"><h3>化學性消化</h3><p>用<b>酵素</b>把大分子切成小分子。物質變了。例如：唾液分解澱粉。</p></div>
+  </div>
+</div>
+
+<div class="card" id="s2">
+  <h2>② 跟著一口食物走一趟</h2>
+  <p class="lead">這一口有飯（澱粉）、肉（蛋白質）、油（脂質）。按「下一站」，看右邊三種養分的變化。</p>
+  <div class="route" id="route"></div>
+  <div class="two">
+    <div>
+      <div class="ctrl" style="justify-content:center"><button class="chip big" id="gutPrev2">上一站</button><button class="chip big on" id="gutNext2">下一站</button></div>
+      <div class="stage"><canvas id="cvGut"></canvas></div>
+      <div class="legend"><span><i style="background:#f9a8b8"></i>消化管（食物會經過）</span><span><i style="background:#eab308"></i>消化腺（食物不經過）</span></div>
+    </div>
+    <div>
+      <div class="status" id="gutMsg"></div>
+      <div class="nut"><div class="nm">澱粉</div><div class="beads" id="bS"></div><div class="st" id="tS"></div></div>
+      <div class="nut"><div class="nm">蛋白質</div><div class="beads" id="bP"></div><div class="st" id="tP"></div></div>
+      <div class="nut"><div class="nm">脂質</div><div class="beads" id="bL"></div><div class="st" id="tL"></div></div>
+      <div class="ctrl" style="justify-content:center; margin-top:10px;"><button class="chip big" id="gutPrev">上一站</button><button class="chip big on" id="gutNext">下一站</button></div>
+    </div>
+  </div>
+  <div class="key"><b>消化管的順序：</b>口腔 → 咽 → 食道 → 胃 → 小腸 → 大腸 → 肛門</div>
+</div>
+
+<div class="card" id="s3">
+  <h2>③ 五個消化腺和它們的消化液</h2>
+  <p class="lead">消化腺負責<b>製造消化液</b>。灰色格子先猜再點。</p>
+  <div class="tw"><table>
+    <tr><th>消化腺</th><th>消化液</th><th>送到哪裡</th><th>分解什麼</th></tr>
+    <tr><td>唾腺</td><td>唾液</td><td><span class="hide">口腔</span></td><td class="l"><span class="hide">澱粉</span></td></tr>
+    <tr><td>胃腺</td><td>胃液（含鹽酸，很酸）</td><td><span class="hide">胃</span></td><td class="l"><span class="hide">蛋白質</span></td></tr>
+    <tr><td>肝臟</td><td>膽汁（存在膽囊）</td><td><span class="hide">小腸</span></td><td class="l"><span class="hide">沒有酵素。把脂質乳化成小油滴</span></td></tr>
+    <tr><td>胰臟</td><td>胰液</td><td><span class="hide">小腸</span></td><td class="l"><span class="hide">醣類、蛋白質、脂質 三種都可以</span></td></tr>
+    <tr><td>腸腺</td><td>腸液</td><td><span class="hide">小腸</span></td><td class="l"><span class="hide">醣類、蛋白質</span></td></tr>
+  </table></div>
+  <div class="life"><b>最常考的三件事：</b><br>1. <b>膽汁</b>是肝臟做的，膽囊只負責存。它<b>沒有酵素</b>。<br>2. <b>胰液</b>最厲害，三種養分都能分解。<br>3. 胃腺和腸腺藏在<b>管壁裡面</b>。唾腺、肝臟、胰臟在消化管外面，用小管子把消化液送進去。</div>
+</div>
+
+<div class="card" id="s4">
+  <h2>④ 誰消化誰：點出有「化學性消化」的格子</h2>
+  <p class="lead">哪個器官會用酵素分解哪種養分？把有的格子點起來，再按「對答案」。</p>
+  <div class="tw"><table class="mx" id="mx"></table></div>
+  <div class="ctrl" style="justify-content:center"><button class="chip big on" id="mxChk">對答案</button><button class="chip big" id="mxClr">重來</button></div>
+  <div class="status" id="mxMsg">提示：一共有 5 格。</div>
+</div>
+
+<div class="card" id="s5">
+  <h2>⑤ 小腸怎麼吸收：絨毛的用處</h2>
+  <p class="lead">兩邊的小分子一樣多、一樣快。左邊腸壁是平的，右邊有<b>絨毛</b>。比比看誰吸收得多。</p>
+  <div class="stage"><canvas id="cvVil"></canvas></div>
+  <div class="count"><div><small>平的腸壁 吸收了</small><b id="vA">0</b></div><div><small>有絨毛的腸壁 吸收了</small><b id="vB">0</b></div></div>
+  <div class="ctrl"><button class="chip" id="vReset">重新計數</button></div>
+  <div class="key">絨毛讓小腸內壁的<b>表面積變大</b>，碰到養分的機會變多。絨毛裡面有<b>微血管</b>，養分進去之後由血液送到全身。</div>
+  <div class="cells">
+    <div class="cell"><h3>小腸</h3><p>消化<b>最完整</b>，也是<b>吸收養分最主要</b>的地方。</p></div>
+    <div class="cell"><h3>大腸</h3><p>沒有消化作用。吸收<b>剩下的水分</b>，把殘渣變成糞便，從肛門排出。</p></div>
+  </div>
+</div>
+
+<div class="card" id="s6">
+  <h2>⑥ 兩個分類練習</h2>
+  <h3>物理性消化，還是化學性消化？</h3>
+  <div id="clA"></div>
+  <h3>食物會不會經過這個器官？</h3>
+  <div id="clB"></div>
+</div>
+
+<div class="card" id="sQ">
+  <h2>⑦ 小測驗</h2>
+  <div id="quizBox"></div>
+</div>
+
+<div class="card" id="sW">
+  <h2>⑧ 我的錯題本</h2>
+  <div id="wrongBox"></div>
+</div>
+
+<a class="nextl" href="生物體的營養1_養分酵素與光合作用.html">← 回上一課：① 養分、酵素與光合作用</a>
+
+<footer>國中生物自學教材 · 生物體的營養②<br>依七年級自然「生物體的營養」單元架構編寫，圖與文字為原創示意。<br>錯題和紀錄只存在這台裝置的瀏覽器裡。</footer>
+</div>
+
+<script>
+const CH = "生物 人體的消化";
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// 上傳網址不寫在教材裡；家長在「學習紀錄」頁設定一次，存於此瀏覽器。
+let CLOUD_URL = "";
+try{ CLOUD_URL = localStorage.getItem("cloud_url_v1") || ""; }catch(e){}
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// ===== 共用工具 =====
+const $ = id => document.getElementById(id);
+const FONT = '"Microsoft JhengHei","PingFang TC",system-ui,sans-serif';
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+const rnd = (a,b) => a + Math.random()*(b-a);
+const lerp = (a,b,t) => a + (b-a)*t;
+function shuffle(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; }
+const scenes = [];
+function scene(id, W, H, draw){
+  const cv = $(id), ctx = cv.getContext("2d");
+  function fit(){
+    const w = cv.clientWidth || 600, dpr = window.devicePixelRatio || 1;
+    cv.style.height = (w*H/W) + "px";
+    cv.width = Math.round(w*dpr); cv.height = Math.round(w*H/W*dpr);
+    ctx.setTransform(cv.width/W, 0, 0, cv.width/W, 0, 0);
+    ctx.fs = clamp(W*0.8/w, 1, 1.4);
+  }
+  fit(); window.addEventListener("resize", fit);
+  const s = { cv, ctx, draw, vis:true };
+  if("IntersectionObserver" in window){
+    s.vis = false;
+    new IntersectionObserver(es => es.forEach(e => s.vis = e.isIntersecting), { rootMargin:"80px" }).observe(cv);
+  }
+  scenes.push(s); return ctx;
+}
+function runScenes(){
+  let last = performance.now();
+  function loop(now){
+    const dt = Math.min(.05, (now-last)/1000); last = now;
+    scenes.forEach(s => { if(s.vis) s.draw(dt, now/1000); });
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+}
+function rr(c,x,y,w,h,r){ c.beginPath(); c.moveTo(x+r,y); c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r); c.arcTo(x,y+h,x,y,r); c.arcTo(x,y,x+w,y,r); c.closePath(); }
+function label(c, txt, x, y, opt){
+  opt = opt || {};
+  c.font = (opt.bold===false?"":"bold ") + Math.round((opt.size||15)*(c.fs||1)) + "px " + FONT;
+  c.textAlign = opt.align || "center"; c.textBaseline = "middle";
+  if(opt.halo !== 0){ c.lineWidth = 4; c.strokeStyle = opt.halo || "rgba(255,250,243,.92)"; c.lineJoin = "round"; c.strokeText(txt, x, y); }
+  c.fillStyle = opt.color || "#1f2937"; c.fillText(txt, x, y);
+}
+function ball(c, x, y, r, col, txt, tc){
+  c.beginPath(); c.arc(x,y,r,0,7); c.fillStyle = col; c.fill(); c.lineWidth = 1; c.strokeStyle = "rgba(0,0,0,.25)"; c.stroke();
+  if(txt){ c.font = "bold " + Math.round(r*.95) + "px " + FONT; c.textAlign = "center"; c.textBaseline = "middle"; c.fillStyle = tc || "#fff"; c.fillText(txt, x, y+.5); }
+}
+function chips(sel, attr, fn){
+  const bs = [...document.querySelectorAll(sel)];
+  bs.forEach(b => b.addEventListener("click", ()=>{ bs.forEach(x=>x.classList.remove("on")); b.classList.add("on"); fn(b.getAttribute(attr)); }));
+}
+document.addEventListener("click", e => { if(e.target.classList && e.target.classList.contains("hide")) e.target.classList.toggle("show"); });
+
+// ===== 分類小練習：每列一句話，選左邊或右邊 =====
+function classify(boxId, cats, items){
+  const box = $(boxId);
+  items.forEach(it => {
+    const d = document.createElement("div"); d.className = "cl";
+    d.innerHTML = `<span class="t">${it[0]}</span><span class="why">${it[2]}</span>`;
+    cats.forEach((cname, k) => {
+      const b = document.createElement("button"); b.className = "chip"; b.textContent = cname;
+      b.addEventListener("click", ()=>{
+        if(d.classList.contains("done")) return;
+        d.classList.add("done"); pracCount++;
+        const right = k === it[1]; if(right) pracOk++;
+        b.classList.add(right ? "ok" : "no");
+        if(!right) d.querySelectorAll("button")[it[1]].classList.add("ok");
+        logEv({ type:"classify", box:boxId, ok:right });
+      });
+      d.insertBefore(b, d.querySelector(".why"));
+    });
+    box.appendChild(d);
+  });
+}
+
+// ===== 小測驗＋錯題本 =====
+// 錯題存在這台裝置的瀏覽器裡。兩課共用一個存放處，各課只顯示自己的題目。
+const WKEY = "bio_ch2_wrong_v1";
+function loadW(){ try{ return JSON.parse(localStorage.getItem(WKEY) || "{}"); }catch(e){ return {}; } }
+function saveW(w){ try{ localStorage.setItem(WKEY, JSON.stringify(w)); }catch(e){} }
+function setupQuiz(PRE, Q, SECS){
+  const box = $("quizBox"), wb = $("wrongBox");
+  const key = i => PRE + "-" + i;
+  let list = [], pos = 0, ok = 0, missed = [], mode = "";
+  const myWrong = () => { const w = loadW(); return Q.map((_,i)=>i).filter(i => w[key(i)]); };
+
+  function home(){
+    box.innerHTML = `<p class="lead">題庫共 ${Q.length} 題。每題點一個答案，馬上告訴你對不對、為什麼。答錯的題目會自動收進下面的錯題本。</p>
+      <div class="ctrl"><button class="chip big on" id="qGo10">抽 10 題</button><button class="chip big" id="qGoAll">全部 ${Q.length} 題</button></div>`;
+    $("qGo10").onclick = () => start(shuffle(Q.map((_,i)=>i)).slice(0,10), "小測驗");
+    $("qGoAll").onclick = () => start(shuffle(Q.map((_,i)=>i)), "小測驗");
+  }
+  function start(idx, m){ list = idx; mode = m; pos = 0; ok = 0; missed = []; show(); box.scrollIntoView({ block:"start", behavior:"smooth" }); }
+  function show(){
+    const i = list[pos], q = Q[i];
+    box.innerHTML = `<div class="qbar"><span>${mode}　第 ${pos+1} / ${list.length} 題</span><span>答對 ${ok} 題</span></div>
+      <div class="prog"><div style="width:${pos/list.length*100}%"></div></div>
+      <div class="q"><p class="t">${q.q}</p><div class="opts"></div><div class="why"></div></div>
+      <div class="ctrl"><button class="chip big on" id="qNext" style="display:none">${pos+1 < list.length ? "下一題" : "看結果"}</button></div>`;
+    const qd = box.querySelector(".q"), opts = qd.querySelector(".opts");
+    shuffle(q.o.map((_,k)=>k)).forEach(k => {
+      const b = document.createElement("button"); b.textContent = q.o[k]; b.dataset.k = k;
+      b.addEventListener("click", ()=>{
+        if(qd.classList.contains("done")) return;
+        qd.classList.add("done"); pracCount++;
+        const right = k === q.a, w = loadW(), id = key(i);
+        if(right){
+          ok++; pracOk++;
+          if(w[id]){ w[id].s = (w[id].s||0) + 1; if(w[id].s >= 2) delete w[id]; }
+        }else{
+          missed.push(i);
+          w[id] = { n: ((w[id] && w[id].n) || 0) + 1, s: 0 };
+        }
+        saveW(w);
+        b.classList.add(right ? "ok" : "no");
+        opts.querySelector(`[data-k="${q.a}"]`).classList.add("ok");
+        qd.querySelector(".why").innerHTML = (right ? "<b>答對了。</b>" : "<b>答錯了，已收進錯題本。</b>") + q.why;
+        $("qNext").style.display = "";
+        logEv({ type:"quiz", q:i+1, ok:right });
+        renderWrong();
+      });
+      opts.appendChild(b);
+    });
+    $("qNext").onclick = () => { pos++; pos < list.length ? show() : result(); };
+  }
+  function result(){
+    const n = list.length;
+    cloudSend({ type: mode, detail: `${CH} ${n} 題`, score: `${ok}/${n}` });
+    const miss = [...new Set(missed)];
+    box.innerHTML = `<div class="res"><div class="n">${ok} / ${n}</div>
+      <p>${ok === n ? "全對！這一課很熟了。" : `有 ${miss.length} 題答錯，已經放進錯題本。`}</p></div>
+      ${miss.map(i => `<div class="q done"><p class="t">${Q[i].q}</p><div class="why" style="display:block">正確答案：<b>${Q[i].o[Q[i].a]}</b>　<a href="#${Q[i].sec}">回去看 ${SECS[Q[i].sec]}</a></div></div>`).join("")}
+      <div class="ctrl" style="justify-content:center; margin-top:12px;"><button class="chip big on" id="qAgain">再來一回</button>${myWrong().length ? `<button class="chip big" id="qToW">去錯題本</button>` : ""}</div>`;
+    $("qAgain").onclick = home;
+    if($("qToW")) $("qToW").onclick = () => $("sW").scrollIntoView({ behavior:"smooth" });
+  }
+  function renderWrong(){
+    const w = loadW(), ids = myWrong();
+    if(!ids.length){ wb.innerHTML = `<div class="empty">目前沒有錯題。先去做小測驗，答錯的會自動出現在這裡。</div>`; return; }
+    ids.sort((a,b) => w[key(b)].n - w[key(a)].n);
+    wb.innerHTML = `<p class="lead">現在有 <b>${ids.length}</b> 題。先自己想答案，再點題目看解答。重練時<b>連續答對 2 次</b>，那一題就會自動移出。</p>
+      <div class="ctrl"><button class="chip big on" id="wGo">重練這 ${ids.length} 題</button><button class="chip" id="wClr">清空這一課的錯題</button></div>` +
+      ids.map(i => { const q = Q[i], e = w[key(i)];
+        return `<div class="w"><div class="hd"><p>${q.q}</p><span class="bad">錯 ${e.n} 次${e.s ? "・已對 1 次" : ""}</span></div>
+          <div class="tip">點一下看答案</div>
+          <div class="ans">答案：<b>${q.o[q.a]}</b><br>${q.why}<br><a href="#${q.sec}">回去看 ${SECS[q.sec]}</a></div></div>`; }).join("");
+    wb.querySelectorAll(".w").forEach(d => d.addEventListener("click", e => { if(e.target.tagName !== "A") d.classList.toggle("open"); }));
+    $("wGo").onclick = () => start(shuffle(myWrong()), "錯題重練");
+    $("wClr").onclick = () => {
+      if(!confirm("確定要清空這一課的錯題嗎？清掉就找不回來。")) return;
+      const w2 = loadW(); Q.forEach((_,i) => delete w2[key(i)]); saveW(w2); renderWrong();
+    };
+  }
+  home(); renderWrong();
+}
+
+
+// ===================== ② 消化道之旅 =====================
+(function(){
+  const W = 420, H = 600;
+  const c = scene("cvGut", W, H, draw);
+  // 食物走的路線；第三格是站名
+  const PTS = [
+    [200,74,"口腔"],[200,104,"咽"],[200,160,"食道"],[202,212],
+    [236,224],[262,250,"胃"],[256,282],[226,298],[200,296],
+    [182,304],[175,326,"小腸前段"],[172,350],[160,372],[150,382],
+    [272,382],[272,409],[148,409],[148,436,"小腸"],[272,436],[272,463],[148,463],[132,486],[112,502],
+    [112,430,"大腸"],[112,352],[308,352],[308,490],[272,524],[214,532],[210,570,"肛門"]
+  ];
+  const cum = [0]; for(let i=1;i<PTS.length;i++) cum.push(cum[i-1] + Math.hypot(PTS[i][0]-PTS[i-1][0], PTS[i][1]-PTS[i-1][1]));
+  const at = s => { s = clamp(s, 0, cum[cum.length-1]-.01); let i = 0; while(cum[i+1] <= s) i++; const f = (s-cum[i])/(cum[i+1]-cum[i]); return [lerp(PTS[i][0],PTS[i+1][0],f), lerp(PTS[i][1],PTS[i+1][1],f)]; };
+  const sOf = name => cum[PTS.findIndex(p => p[2] === name)];
+  const ST = [
+    { n:"口腔", s:[1,0,0], t:"<b>物理：</b>牙齒咬碎、舌頭攪拌。<br><b>化學：</b>唾腺分泌<b>唾液</b>，裡面的酵素開始分解<b>澱粉</b>。" },
+    { n:"咽", s:[1,0,0], t:"食物和空氣共用的通道。<b>沒有消化。</b>" },
+    { n:"食道", s:[1,0,0], t:"管壁肌肉一縮一放（<b>蠕動</b>），把食物往下推。<b>沒有消化液。</b>" },
+    { n:"胃", s:[1,1,0], t:"<b>物理：</b>胃壁肌肉蠕動，把食物攪成糊狀。<br><b>化學：</b>胃腺分泌<b>胃液</b>，有鹽酸和酵素，開始分解<b>蛋白質</b>。" },
+    { n:"小腸前段", s:[1,1,1], t:"兩種消化液從外面送進來：肝臟做的<b>膽汁</b>（綠）和胰臟做的<b>胰液</b>（黃）。<br>膽汁<b>沒有酵素</b>，先把大油滴打散成小油滴（乳化）。這是物理性消化。" },
+    { n:"小腸", s:[2,2,2], t:"<b>胰液</b>和<b>腸液</b>的酵素把三種養分<b>完全分解</b>。<br>小分子由<b>絨毛</b>吸收，進入血液。" },
+    { n:"大腸", s:[3,3,3], t:"<b>沒有消化。</b>吸收剩下的<b>水分</b>。不能消化的殘渣慢慢變成糞便。" },
+    { n:"肛門", s:[3,3,3], t:"糞便從這裡排出體外。" }
+  ];
+  let k = 0, cur = sOf("口腔");
+  // ---- 右邊的養分小珠子 ----
+  const COL = ["#eab308","#ef4444","#3b82f6"];
+  const grp = (n, col) => `<span class="grp">${`<i style="background:${col}"></i>`.repeat(n)}</span>`;
+  const drop = (d, col) => `<i class="drop" style="background:${col}; width:${d}px; height:${d}px"></i>`;
+  const absorbed = `<span class="st">已經被小腸吸收，進到血液裡了。</span>`;
+  function beads(){
+    const s = ST[k].s;
+    $("bS").innerHTML = [grp(10,COL[0]), grp(4,COL[0])+grp(2,COL[0])+grp(2,COL[0])+grp(2,COL[0]), grp(1,COL[0]).repeat(10), absorbed][s[0]];
+    $("tS").textContent = ["","一部分被切短了（變成麥芽糖）。還沒切完。","全部切成葡萄糖。可以吸收了。",""][s[0]];
+    $("bP").innerHTML = [grp(10,COL[1]), grp(4,COL[1])+grp(3,COL[1])+grp(3,COL[1]), grp(1,COL[1]).repeat(10), absorbed][s[1]];
+    $("tP").textContent = ["還沒開始消化。","被胃液初步分解，切成幾段。還沒切完。","全部切成胺基酸。可以吸收了。",""][s[1]];
+    $("bL").innerHTML = [drop(26,COL[2]), drop(11,COL[2]).repeat(6), `<i style="background:#93c5fd"></i>`.repeat(6) + `<i style="background:#1d4ed8; border-radius:3px"></i>`.repeat(3), absorbed][s[2]];
+    $("tL").textContent = ["還沒開始消化。一大滴油。","被膽汁打散成小油滴。分子還沒變。","切成脂肪酸和甘油。可以吸收了。",""][s[2]];
+  }
+  const route = $("route");
+  ST.forEach((s,i) => { const b = document.createElement("button"); b.className = "chip"; b.textContent = s.n; b.onclick = () => go(i); route.appendChild(b); });
+  function go(i){
+    k = clamp(i, 0, ST.length-1);
+    [...route.children].forEach((b,j) => b.classList.toggle("on", j === k));
+    $("gutMsg").innerHTML = `<b class="big">現在在：${ST[k].n}</b><br>${ST[k].t}`;
+    beads();
+    $("gutNext").textContent = $("gutNext2").textContent = k === ST.length-1 ? "再走一次" : "下一站";
+    logEv({ type:"gut", st:ST[k].n });
+  }
+  $("gutPrev").onclick = $("gutPrev2").onclick = () => go(k-1);
+  $("gutNext").onclick = $("gutNext2").onclick = () => { if(k === ST.length-1){ cur = sOf("口腔"); go(0); } else go(k+1); };
+
+  // ---- 畫圖 ----
+  function smooth(pts){
+    c.beginPath(); c.moveTo(pts[0][0], pts[0][1]);
+    for(let i=1;i<pts.length-1;i++){ const mx = (pts[i][0]+pts[i+1][0])/2, my = (pts[i][1]+pts[i+1][1])/2; c.quadraticCurveTo(pts[i][0], pts[i][1], mx, my); }
+    c.lineTo(pts[pts.length-1][0], pts[pts.length-1][1]);
+  }
+  function tube(pts, w, edge, fill){ c.lineCap = "round"; c.lineJoin = "round"; smooth(pts); c.strokeStyle = edge; c.lineWidth = w; c.stroke(); smooth(pts); c.strokeStyle = fill; c.lineWidth = w-5; c.stroke(); }
+  const seg = (a, b) => PTS.slice(PTS.findIndex(p => p[2] === a), PTS.findIndex(p => p[2] === b)+1);
+  const PINK = "#f9a8b8", PE = "#be5a72", HOT = "#fb7185";
+  function drops(from, to, col, now, n){
+    for(let i=0;i<(n||3);i++){ const t = (now*.7 + i/(n||3)) % 1; ball(c, lerp(from[0],to[0],t), lerp(from[1],to[1],t), 4, col); }
+  }
+  function lead(txt, x, y, tx, ty, on){
+    c.strokeStyle = "#9ca3af"; c.lineWidth = 1; c.beginPath(); c.moveTo(x,y); c.lineTo(tx,ty); c.stroke();
+    label(c, txt, tx + (tx < 210 ? -4 : 4), ty, { size:13, align: tx < 210 ? "right" : "left", color: on ? "#c2410c" : "#374151" });
+  }
+  function draw(dt, now){
+    const target = sOf(ST[k].n), d = target - cur, n = ST[k].n;
+    if(Math.abs(d) > 1) cur += Math.sign(d)*Math.min(Math.abs(d), 260*dt); else cur = target;
+    c.clearRect(0,0,W,H);
+    // 身體輪廓
+    c.fillStyle = "#fdf0e3"; c.strokeStyle = "#ecd9c6"; c.lineWidth = 2;
+    c.beginPath(); c.arc(200,58,50,0,7); c.fill(); c.stroke();
+    rr(c,86,122,228,474,60); c.fill(); c.stroke(); c.fillRect(176,100,48,30);
+    // 肝、膽、胰（消化腺）
+    const G = "#eab308", GE = "#a16207", gl = n === "小腸前段";
+    c.fillStyle = "#b45309"; c.strokeStyle = gl ? "#facc15" : "#7c2d12"; c.lineWidth = gl ? 4 : 2;
+    c.beginPath(); c.moveTo(96,222); c.quadraticCurveTo(140,196,192,208); c.quadraticCurveTo(204,236,160,268); c.quadraticCurveTo(110,282,96,222); c.closePath(); c.fill(); c.stroke();
+    c.fillStyle = "#65a30d"; c.strokeStyle = gl ? "#facc15" : "#365314"; c.beginPath(); c.ellipse(150,282,8,13,.3,0,7); c.fill(); c.stroke();
+    c.strokeStyle = "#65a30d"; c.lineWidth = 3; c.beginPath(); c.moveTo(153,294); c.quadraticCurveTo(160,318,172,326); c.stroke();
+    c.fillStyle = G; c.strokeStyle = gl ? "#f97316" : GE; c.lineWidth = gl ? 4 : 2; c.beginPath(); c.ellipse(236,324,46,10,-.12,0,7); c.fill(); c.stroke();
+    // 消化管
+    tube(seg("口腔","食道").concat([PTS[3]]), 18, PE, n === "咽" || n === "食道" ? HOT : PINK);
+    c.fillStyle = n === "胃" ? HOT : PINK; c.strokeStyle = PE; c.lineWidth = 2.5;
+    c.beginPath(); c.moveTo(196,206); c.bezierCurveTo(230,186,292,206,284,262); c.bezierCurveTo(278,306,226,318,198,306); c.bezierCurveTo(188,300,196,288,210,286); c.bezierCurveTo(236,280,232,238,196,222); c.closePath(); c.fill(); c.stroke();
+    tube([[200,297],[182,304],[175,326],[172,350],[160,372],[150,382]], 19, PE, n === "小腸前段" ? HOT : PINK);
+    tube(PTS.slice(13,23), 19, PE, n === "小腸" ? HOT : PINK);
+    tube(PTS.slice(22), 27, "#a8553a", n === "大腸" || n === "肛門" ? "#fb923c" : "#f3b48f");
+    // 口腔與唾腺
+    c.fillStyle = n === "口腔" ? HOT : PINK; c.strokeStyle = PE; c.lineWidth = 2.5; c.beginPath(); c.ellipse(200,74,30,13,0,0,7); c.fill(); c.stroke();
+    [[160,92],[240,92]].forEach(p => { c.fillStyle = G; c.strokeStyle = n === "口腔" ? "#f97316" : GE; c.lineWidth = n === "口腔" ? 4 : 2; c.beginPath(); c.ellipse(p[0],p[1],10,7,0,0,7); c.fill(); c.stroke(); });
+    // 消化液的水滴
+    if(n === "口腔"){ drops([160,92],[188,76],"#38bdf8",now); drops([240,92],[212,76],"#38bdf8",now); }
+    if(n === "胃"){ drops([278,250],[250,256],"#a3e635",now); drops([240,206],[244,236],"#a3e635",now); drops([240,308],[240,284],"#a3e635",now); }
+    if(n === "小腸前段"){ drops([153,294],[173,326],"#65a30d",now); drops([210,328],[178,330],"#facc15",now); }
+    if(n === "小腸"){ drops([200,395],[200,409],"#facc15",now,2); drops([230,422],[230,436],"#facc15",now,2); }
+    // 標籤
+    lead("口腔",228,70,300,52,n === "口腔"); lead("唾腺",250,92,300,92,n === "口腔"); lead("咽",208,106,300,122,n === "咽");
+    lead("食道",208,160,300,160,n === "食道"); lead("胃",280,240,340,230,n === "胃"); lead("胰臟",278,320,340,300,gl);
+    lead("肝臟",110,228,74,196,gl); lead("膽囊",144,284,74,300,gl);
+    lead("小腸",272,422,340,420,n === "小腸" || gl); lead("大腸",98,430,74,430,n === "大腸"); lead("肛門",222,572,300,578,n === "肛門");
+    // 食物
+    const p = at(cur), small = k >= 5 ? (k >= 6 ? 6 : 8) : 10;
+    c.beginPath(); c.arc(p[0],p[1],small+5,0,7); c.fillStyle = "rgba(250,204,21,.45)"; c.fill();
+    ball(c, p[0], p[1], small, k >= 6 ? "#78350f" : "#f59e0b");
+  }
+  go(0);
+})();
+
+// ===================== ④ 誰消化誰 =====================
+(function(){
+  const ROWS = ["口腔","胃","小腸","大腸"], COLS = ["澱粉","蛋白質","脂質"];
+  const ANS = { "0-0":1, "1-1":1, "2-0":1, "2-1":1, "2-2":1 };
+  const t = $("mx"); let locked = false;
+  t.innerHTML = `<tr><th></th>${COLS.map(x => `<th>${x}</th>`).join("")}</tr>` + ROWS.map((r,i) => `<tr><th>${r}</th>${COLS.map((_,j) => `<td><button data-c="${i}-${j}">　</button></td>`).join("")}</tr>`).join("");
+  const bs = [...t.querySelectorAll("button")];
+  bs.forEach(b => b.onclick = () => { if(locked) return; b.classList.toggle("sel"); b.textContent = b.classList.contains("sel") ? "有" : "　"; });
+  $("mxChk").onclick = () => {
+    if(locked) return; locked = true; let bad = 0;
+    bs.forEach(b => { const a = !!ANS[b.dataset.c], s = b.classList.contains("sel"); if(a){ b.classList.add(s ? "ok" : "no"); b.textContent = "有"; if(!s) bad++; } else if(s){ b.classList.add("no"); b.textContent = "沒有"; bad++; } });
+    pracCount++; if(!bad) pracOk++;
+    logEv({ type:"matrix", ok:!bad });
+    $("mxMsg").innerHTML = (bad ? `<b class="big">有 ${bad} 格不對（紅色）。</b>` : `<b class="big">全對！</b>`) + "<br>口腔只處理澱粉。胃只處理蛋白質。小腸三種都處理，而且在這裡完成。大腸完全沒有消化。";
+  };
+  $("mxClr").onclick = () => { locked = false; bs.forEach(b => { b.className = ""; b.textContent = "　"; }); $("mxMsg").textContent = "提示：一共有 5 格。"; };
+})();
+
+// ===================== ⑤ 絨毛 =====================
+(function(){
+  const W = 640, H = 280, BASE = 236, HALF = 310, N = 26;
+  const c = scene("cvVil", W, H, draw);
+  const VX = [44,100,156,212,268], VW = 30, VT = 96;   // 絨毛中心（相對於右半邊）、寬、頂端 y
+  const COLS = ["#eab308","#ef4444","#3b82f6"];
+  let cnt = [0,0];
+  const mk = () => ({ x:rnd(12,HALF-12), y:rnd(14,60), vx:rnd(-1,1), vy:rnd(.2,1), col:COLS[Math.floor(rnd(0,3))] });
+  const P = [[],[]]; for(let i=0;i<N;i++){ const p = mk(); p.y = rnd(14,200); P[0].push(p); P[1].push(Object.assign({}, p)); }
+  const flashes = [];
+  function half(side, ox, dt){
+    c.save(); c.translate(ox, 0);
+    c.fillStyle = "#fff7ed"; c.fillRect(0,0,HALF,BASE);
+    c.fillStyle = "#f9a8b8"; c.strokeStyle = "#be5a72"; c.lineWidth = 2;
+    c.fillRect(0,BASE,HALF,H-BASE);
+    if(side) VX.forEach(x => {
+      rr(c, x-VW/2, VT, VW, BASE-VT+12, 14); c.fill(); c.stroke();
+      c.strokeStyle = "#dc2626"; c.lineWidth = 2.5; c.beginPath(); c.moveTo(x-6,BASE+10); c.lineTo(x-6,VT+16); c.quadraticCurveTo(x,VT+4,x+6,VT+16); c.lineTo(x+6,BASE+10); c.stroke();
+      c.strokeStyle = "#be5a72"; c.lineWidth = 2;
+    });
+    c.strokeStyle = "#dc2626"; c.lineWidth = 3; c.beginPath(); c.moveTo(0,BASE+24); c.lineTo(HALF,BASE+24); c.stroke();
+    P[side].forEach((p,i) => {
+      p.x += p.vx*46*dt; p.y += p.vy*46*dt;
+      if(Math.random() < .03){ p.vx = rnd(-1,1); p.vy = rnd(-.6,1); }
+      if(p.x < 8 || p.x > HALF-8){ p.vx *= -1; p.x = clamp(p.x,8,HALF-8); }
+      if(p.y < 8){ p.vy = Math.abs(p.vy); p.y = 8; }
+      const hit = p.y > BASE-4 || (side && p.y > VT && VX.some(x => Math.abs(p.x-x) < VW/2+3));
+      if(hit){ cnt[side]++; $(side ? "vB" : "vA").textContent = cnt[side]; flashes.push({ x:ox+p.x, y:p.y, t:.4 }); P[side][i] = mk(); }
+      else ball(c, p.x, p.y, 5, p.col);
+    });
+    label(c, side ? "有絨毛" : "平的腸壁", HALF/2, 18, { size:14, halo:"rgba(255,247,237,.9)" });
+    label(c, "微血管", HALF-34, BASE+34, { size:11, color:"#991b1b", halo:"rgba(249,168,184,.9)" });
+    c.restore();
+  }
+  function draw(dt){
+    c.clearRect(0,0,W,H);
+    half(0, 4, dt); half(1, 326, dt);
+    c.fillStyle = "#fffaf3"; c.fillRect(314,0,12,H);
+    for(let i=flashes.length-1;i>=0;i--){ const f = flashes[i]; f.t -= dt; if(f.t <= 0){ flashes.splice(i,1); continue; } c.beginPath(); c.arc(f.x,f.y,6+(.4-f.t)*30,0,7); c.strokeStyle = `rgba(22,163,74,${f.t*2.5})`; c.lineWidth = 2; c.stroke(); }
+  }
+  $("vReset").onclick = () => { cnt = [0,0]; $("vA").textContent = $("vB").textContent = "0"; };
+})();
+
+// ===================== ⑥ 分類 =====================
+classify("clA", ["物理性","化學性"], [
+  ["牙齒把食物咬碎", 0, "只是變小塊，物質沒變。"],
+  ["唾液把澱粉分解", 1, "有酵素參與，澱粉變成別的物質。"],
+  ["胃壁蠕動，把食物攪成糊狀", 0, "只是攪拌。"],
+  ["胃液分解蛋白質", 1, "胃液裡有酵素。"],
+  ["膽汁把大油滴變成小油滴", 0, "膽汁沒有酵素。油還是油，只是變小滴。這題最容易錯。"],
+  ["胰液把脂質分解成脂肪酸和甘油", 1, "胰液裡有酵素，脂質變成別的物質。"]
+]);
+classify("clB", ["會經過","不會經過"], [
+  ["食道", 0, "食道是消化管。"],
+  ["肝臟", 1, "肝臟是消化腺。它做膽汁，食物不會進去。"],
+  ["胃", 0, "胃是消化管。"],
+  ["胰臟", 1, "胰臟是消化腺。胰液用小管子送進小腸。"],
+  ["大腸", 0, "大腸是消化管的後段。"],
+  ["唾腺", 1, "唾腺是消化腺。只有唾液流進口腔。"],
+  ["膽囊", 1, "膽囊只是存放膽汁的袋子。"]
+]);
+
+// ===================== ⑦ ⑧ 小測驗與錯題本 =====================
+setupQuiz("L2", [
+  { q:"為什麼食物要先經過消化？", o:["把大分子切成小分子，才能被吸收","把食物變熱","把細菌全部殺死","讓食物變成氧氣"], a:0, sec:"s1", why:"澱粉、蛋白質、脂質的分子太大，要切成小分子才進得了細胞。" },
+  { q:"下列哪一種養分「不需要」消化，就能直接吸收？", o:["澱粉","蛋白質","脂質","維生素"], a:3, sec:"s1", why:"維生素、礦物質、水本來就是小分子，不用消化。" },
+  { q:"澱粉完全消化之後，會變成什麼？", o:["胺基酸","葡萄糖","脂肪酸","甘油"], a:1, sec:"s1", why:"澱粉 → 葡萄糖。蛋白質 → 胺基酸。脂質 → 脂肪酸和甘油。" },
+  { q:"蛋白質完全消化之後，會變成什麼？", o:["胺基酸","葡萄糖","脂肪酸和甘油","麥芽糖"], a:0, sec:"s1", why:"蛋白質 → 胺基酸。" },
+  { q:"下列哪一個是消化管的正確順序？", o:["口腔→食道→咽→胃→大腸→小腸→肛門","口腔→咽→食道→胃→小腸→大腸→肛門","口腔→咽→胃→食道→小腸→大腸→肛門","口腔→咽→食道→小腸→胃→大腸→肛門"], a:1, sec:"s2", why:"口腔 → 咽 → 食道 → 胃 → 小腸 → 大腸 → 肛門。" },
+  { q:"食物在食道裡，靠什麼往下移動？", o:["地心引力而已","食道肌肉的蠕動","胃把它吸下去","消化液沖下去"], a:1, sec:"s2", why:"食道管壁的肌肉一縮一放，叫做蠕動。所以躺著也吞得下去。" },
+  { q:"澱粉最早在哪裡開始被分解？", o:["口腔","胃","小腸","大腸"], a:0, sec:"s2", why:"唾液裡有分解澱粉的酵素。" },
+  { q:"蛋白質最早在哪裡開始被分解？", o:["口腔","胃","小腸","大腸"], a:1, sec:"s2", why:"胃液裡有分解蛋白質的酵素。" },
+  { q:"脂質是在哪裡被酵素分解的？", o:["口腔","胃","小腸","大腸"], a:2, sec:"s2", why:"脂質到小腸才開始。先被膽汁乳化，再被胰液的酵素分解。" },
+  { q:"飯嚼久了會有甜味，最主要的原因是？", o:["飯裡本來加了糖","唾液把一部分澱粉分解成糖","牙齒把飯磨成葡萄糖","舌頭分泌糖"], a:1, sec:"s2", why:"唾液的酵素把澱粉分解成有甜味的糖（麥芽糖）。" },
+  { q:"膽汁是哪個器官製造的？", o:["膽囊","胰臟","肝臟","胃"], a:2, sec:"s3", why:"肝臟製造，膽囊只是存放。這題很容易選成膽囊。" },
+  { q:"關於膽汁，下列哪一個正確？", o:["含有分解脂質的酵素","不含酵素，可以把脂質乳化成小油滴","可以分解蛋白質","在胃裡作用"], a:1, sec:"s3", why:"膽汁沒有酵素。它把大油滴打散，讓酵素比較好作用。" },
+  { q:"哪一種消化液，可以分解醣類、蛋白質、脂質三種養分？", o:["唾液","胃液","膽汁","胰液"], a:3, sec:"s3", why:"胰液的酵素種類最多，三種都能分解。" },
+  { q:"膽汁和胰液最後都送到哪裡？", o:["胃","小腸","大腸","口腔"], a:1, sec:"s3", why:"兩種都注入小腸的前段。" },
+  { q:"下列消化腺，哪一組是藏在消化管的管壁裡面？", o:["唾腺和肝臟","胃腺和腸腺","肝臟和胰臟","唾腺和胰臟"], a:1, sec:"s3", why:"胃腺在胃壁、腸腺在小腸壁。唾腺、肝臟、胰臟在消化管外面。" },
+  { q:"胃液是酸性、中性還是鹼性？", o:["酸性，因為含有鹽酸","中性","鹼性","沒有酸鹼之分"], a:0, sec:"s3", why:"胃液含鹽酸，很酸。胃裡的酵素在酸性環境才做得好。" },
+  { q:"食物「不會」經過下列哪一個器官？", o:["食道","胃","肝臟","大腸"], a:2, sec:"s6", why:"肝臟是消化腺。食物只走消化管。" },
+  { q:"消化最完整、也是吸收養分最主要的器官是？", o:["胃","小腸","大腸","食道"], a:1, sec:"s5", why:"小腸把三種養分都分解完，並且由絨毛吸收。" },
+  { q:"小腸內壁有很多絨毛，主要的好處是？", o:["讓食物走得更快","增加吸收養分的表面積","製造膽汁","把細菌擋住"], a:1, sec:"s5", why:"表面積越大，接觸到養分的機會越多。" },
+  { q:"大腸最主要的功能是？", o:["分解蛋白質","吸收剩下的水分，形成糞便","分泌胰液","吸收大部分的養分"], a:1, sec:"s5", why:"大腸沒有消化作用。它吸收水分。" },
+  { q:"下列哪一個屬於「物理性消化」？", o:["唾液分解澱粉","胃液分解蛋白質","牙齒把食物咬碎","胰液分解脂質"], a:2, sec:"s6", why:"咬碎只是變小塊。其他三個都有酵素，是化學性消化。" },
+  { q:"膽汁把脂質乳化成小油滴，算是哪一種消化？", o:["物理性消化","化學性消化","兩種都不是","兩種都是"], a:0, sec:"s6", why:"膽汁沒有酵素。油還是油，只是變小滴。" },
+  { q:"膽囊被切除的人，一次吃太多哪一類食物，比較容易不舒服？", o:["白飯","水果","炸雞等油炸食物","青菜"], a:2, sec:"s3", why:"膽囊負責存膽汁。沒有膽囊，一次能用的膽汁比較少，大量的油比較難處理。" }
+], { s1:"① 為什麼要消化", s2:"② 跟食物走一趟", s3:"③ 消化腺和消化液", s5:"⑤ 小腸怎麼吸收", s6:"⑥ 分類練習" });
+
+runScenes();
+
+</script>
+</body>
+</html>
