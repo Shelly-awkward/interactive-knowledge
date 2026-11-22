@@ -79,6 +79,8 @@
   .q .opts{display:grid; gap:6px;}
   .q .opts button{border:1px solid var(--border); background:#fff; border-radius:8px; padding:9px 12px; font-family:inherit; font-size:.95rem; cursor:pointer; text-align:left; color:var(--ink);}
   .q .opts button:hover{border-color:var(--main);}
+  .q .opts button.ok{background:var(--green-soft); border-color:var(--green); font-weight:bold;}
+  .q .opts button.no{background:var(--red-soft); border-color:var(--red);}
   .q .why{display:none; font-size:.9rem; margin-top:8px; background:#f8fafc; border-radius:8px; padding:6px 10px;}
   .q.done .why{display:block;}
   .qbar{display:flex; justify-content:space-between; font-size:.88rem; color:var(--sub);}
@@ -370,41 +372,52 @@ function saveW(w){ try{ localStorage.setItem(WKEY, JSON.stringify(w)); }catch(e)
 function setupQuiz(PRE, Q, SECS){
   const box = $("quizBox"), wb = $("wrongBox");
   const key = i => PRE + "-" + i;
-  let list = [], pos = 0, ok = 0, missed = [], mode = "";
+  let list = [], pos = 0, ok = 0, missed = [], guessed = [], mode = "";
   const myWrong = () => { const w = loadW(); return Q.map((_,i)=>i).filter(i => w[key(i)]); };
 
   function home(){
-    box.innerHTML = `<p class="lead">題庫共 ${Q.length} 題。每題點一個答案，馬上告訴你對不對、為什麼。答錯的題目會自動收進下面的錯題本。</p>
+    box.innerHTML = `<p class="lead">題庫共 ${Q.length} 題。每題點一個答案，馬上告訴你對不對、為什麼。答錯的題目會自動收進下面的錯題本。<b>答對但其實是猜的</b>，按「這題我是猜的」，也會收進去。</p>
       <div class="ctrl"><button class="chip big on" id="qGo10">抽 10 題</button><button class="chip big" id="qGoAll">全部 ${Q.length} 題</button></div>`;
     $("qGo10").onclick = () => start(shuffle(Q.map((_,i)=>i)).slice(0,10), "小測驗");
     $("qGoAll").onclick = () => start(shuffle(Q.map((_,i)=>i)), "小測驗");
   }
-  function start(idx, m){ list = idx; mode = m; pos = 0; ok = 0; missed = []; show(); box.scrollIntoView({ block:"start", behavior:"smooth" }); }
+  function start(idx, m){ list = idx; mode = m; pos = 0; ok = 0; missed = []; guessed = []; show(); box.scrollIntoView({ block:"start", behavior:"smooth" }); }
   function show(){
     const i = list[pos], q = Q[i];
-    box.innerHTML = `<div class="qbar"><span>${mode}　第 ${pos+1} / ${list.length} 題</span><span>答對 ${ok} 題</span></div>
+    box.innerHTML = `<div class="qbar"><span>${mode}　第 ${pos+1} / ${list.length} 題</span><span id="qOk">答對 ${ok} 題</span></div>
       <div class="prog"><div style="width:${pos/list.length*100}%"></div></div>
       <div class="q"><p class="t">${q.q}</p><div class="opts"></div><div class="why"></div></div>
-      <div class="ctrl"><button class="chip big on" id="qNext" style="display:none">${pos+1 < list.length ? "下一題" : "看結果"}</button></div>`;
+      <div class="ctrl"><button class="chip big on" id="qNext" style="display:none">${pos+1 < list.length ? "下一題" : "看結果"}</button><button class="chip big" id="qGuess" style="display:none">這題我是猜的</button></div>`;
     const qd = box.querySelector(".q"), opts = qd.querySelector(".opts");
     shuffle(q.o.map((_,k)=>k)).forEach(k => {
       const b = document.createElement("button"); b.textContent = q.o[k]; b.dataset.k = k;
       b.addEventListener("click", ()=>{
         if(qd.classList.contains("done")) return;
         qd.classList.add("done"); pracCount++;
-        const right = k === q.a, w = loadW(), id = key(i);
+        const right = k === q.a, w = loadW(), id = key(i), prev = w[id] ? Object.assign({}, w[id]) : null;
         if(right){
           ok++; pracOk++;
           if(w[id]){ w[id].s = (w[id].s||0) + 1; if(w[id].s >= 2) delete w[id]; }
         }else{
           missed.push(i);
-          w[id] = { n: ((w[id] && w[id].n) || 0) + 1, s: 0 };
+          w[id] = { n: ((w[id] && w[id].n) || 0) + 1, s: 0, g: (w[id] && w[id].g) || 0 };
         }
         saveW(w);
+        $("qOk").textContent = `答對 ${ok} 題`;
         b.classList.add(right ? "ok" : "no");
         opts.querySelector(`[data-k="${q.a}"]`).classList.add("ok");
         qd.querySelector(".why").innerHTML = (right ? "<b>答對了。</b>" : "<b>答錯了，已收進錯題本。</b>") + q.why;
         $("qNext").style.display = "";
+        if(right){
+          // 答對但其實是猜的：一樣收進錯題本，而且這次不算「答對一次」
+          const gb = $("qGuess"); gb.style.display = "";
+          gb.onclick = () => {
+            const w2 = loadW(), old = prev || {};
+            w2[id] = { n: old.n || 0, s: 0, g: (old.g || 0) + 1 }; saveW(w2);
+            guessed.push(i); gb.disabled = true; gb.textContent = "已收進錯題本";
+            logEv({ type:"quiz_guess", q:i+1 }); renderWrong();
+          };
+        }
         logEv({ type:"quiz", q:i+1, ok:right });
         renderWrong();
       });
@@ -415,10 +428,10 @@ function setupQuiz(PRE, Q, SECS){
   function result(){
     const n = list.length;
     cloudSend({ type: mode, detail: `${CH} ${n} 題`, score: `${ok}/${n}` });
-    const miss = [...new Set(missed)];
+    const miss = [...new Set(missed)], gs = [...new Set(guessed)];
     box.innerHTML = `<div class="res"><div class="n">${ok} / ${n}</div>
-      <p>${ok === n ? "全對！這一課很熟了。" : `有 ${miss.length} 題答錯，已經放進錯題本。`}</p></div>
-      ${miss.map(i => `<div class="q done"><p class="t">${Q[i].q}</p><div class="why" style="display:block">正確答案：<b>${Q[i].o[Q[i].a]}</b>　<a href="#${Q[i].sec}">回去看 ${SECS[Q[i].sec]}</a></div></div>`).join("")}
+      <p>${ok === n && !gs.length ? "全對！這一課很熟了。" : [miss.length ? `有 ${miss.length} 題答錯` : "", gs.length ? `有 ${gs.length} 題是猜對的` : ""].filter(Boolean).join("，") + "，已經放進錯題本。"}</p></div>
+      ${miss.concat(gs).map(i => `<div class="q done"><p class="t">${Q[i].q}</p><div class="why" style="display:block">${missed.includes(i) ? "" : "（猜對的）"}正確答案：<b>${Q[i].o[Q[i].a]}</b>　<a href="#${Q[i].sec}">回去看 ${SECS[Q[i].sec]}</a></div></div>`).join("")}
       <div class="ctrl" style="justify-content:center; margin-top:12px;"><button class="chip big on" id="qAgain">再來一回</button>${myWrong().length ? `<button class="chip big" id="qToW">去錯題本</button>` : ""}</div>`;
     $("qAgain").onclick = home;
     if($("qToW")) $("qToW").onclick = () => $("sW").scrollIntoView({ behavior:"smooth" });
@@ -426,11 +439,11 @@ function setupQuiz(PRE, Q, SECS){
   function renderWrong(){
     const w = loadW(), ids = myWrong();
     if(!ids.length){ wb.innerHTML = `<div class="empty">目前沒有錯題。先去做小測驗，答錯的會自動出現在這裡。</div>`; return; }
-    ids.sort((a,b) => w[key(b)].n - w[key(a)].n);
-    wb.innerHTML = `<p class="lead">現在有 <b>${ids.length}</b> 題。先自己想答案，再點題目看解答。重練時<b>連續答對 2 次</b>，那一題就會自動移出。</p>
+    const wt = i => (w[key(i)].n || 0) + (w[key(i)].g || 0); ids.sort((a,b) => wt(b) - wt(a));
+    wb.innerHTML = `<p class="lead">現在有 <b>${ids.length}</b> 題。答錯的和猜對的都在這裡。先自己想答案，再點題目看解答。重練時<b>連續答對 2 次</b>，那一題就會自動移出。</p>
       <div class="ctrl"><button class="chip big on" id="wGo">重練這 ${ids.length} 題</button><button class="chip" id="wClr">清空這一課的錯題</button></div>` +
       ids.map(i => { const q = Q[i], e = w[key(i)];
-        return `<div class="w"><div class="hd"><p>${q.q}</p><span class="bad">錯 ${e.n} 次${e.s ? "・已對 1 次" : ""}</span></div>
+        return `<div class="w"><div class="hd"><p>${q.q}</p><span class="bad">${[e.n ? `錯 ${e.n} 次` : "", e.g ? `猜的 ${e.g} 次` : "", e.s ? "已對 1 次" : ""].filter(Boolean).join("・")}</span></div>
           <div class="tip">點一下看答案</div>
           <div class="ans">答案：<b>${q.o[q.a]}</b><br>${q.why}<br><a href="#${q.sec}">回去看 ${SECS[q.sec]}</a></div></div>`; }).join("");
     wb.querySelectorAll(".w").forEach(d => d.addEventListener("click", e => { if(e.target.tagName !== "A") d.classList.toggle("open"); }));
