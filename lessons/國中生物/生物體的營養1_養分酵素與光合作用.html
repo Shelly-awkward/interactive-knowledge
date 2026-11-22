@@ -111,6 +111,25 @@
   #leafSvg g[data-k]{cursor:pointer;}
   #leafSvg g.on > *{stroke:#f59e0b; stroke-width:3;}
   .steps{display:flex; gap:4px; flex-wrap:wrap; margin:8px 0;}
+/* ===== 測驗（比照「人體的循環」：一回 10 題、答錯診斷、跳回複習、弱點分析）===== */
+  .q .qhead{display:flex; justify-content:space-between; gap:8px; font-size:.84rem; color:var(--sub); margin-bottom:4px;}
+  .qtag{display:inline-block; background:#f1f5f9; border-radius:99px; padding:0 9px; font-size:.78rem; color:#475569; white-space:nowrap;}
+  .guess{display:block; font-size:.88rem; color:var(--sub); margin:2px 0 8px; cursor:pointer;}
+  .fb{margin-top:10px; border-radius:10px; padding:10px 12px; font-size:.94rem;}
+  .fb.good{background:var(--green-soft);} .fb.bad{background:var(--red-soft);}
+  .fb p{margin-top:6px;}
+  .dx{display:inline-block; background:#fff; border:1px solid #fca5a5; color:#b91c1c; border-radius:6px; padding:0 7px; font-size:.8rem; font-weight:bold; margin-right:6px;}
+  .dx.k{border-color:#86efac; color:#15803d;}
+  .chip.jump{border-color:var(--blue); color:var(--blue);}
+  .miss{border-top:1px dashed var(--border); padding-top:8px; margin-top:8px;} .miss ul{font-size:.9rem; color:var(--sub);} .miss .chip{margin-left:6px;}
+  .abars{display:grid; gap:6px;}
+  .abar{display:grid; grid-template-columns:9.5em 1fr 6.5em; gap:8px; align-items:center; font-size:.88rem;}
+  .abar .tr{height:12px; background:#f1f5f9; border-radius:99px; overflow:hidden;} .abar .tr i{display:block; height:100%; border-radius:99px;}
+  .abar .pc{color:var(--sub); text-align:right;}
+  .wb{font-size:.92rem;} .wb li{margin-bottom:6px;} .wb .chip{padding:2px 10px; font-size:.8rem;}
+  .card.flash{animation:flash 2.6s;} @keyframes flash{0%,60%{box-shadow:0 0 0 4px #facc15;}100%{box-shadow:0 0 0 0 transparent;}}
+  #backBtn{position:fixed; right:14px; bottom:16px; z-index:20; background:var(--blue); color:#fff; border:none; border-radius:99px; padding:11px 18px; font-family:inherit; font-size:1rem; font-weight:bold; box-shadow:0 4px 14px rgba(0,0,0,.25); cursor:pointer;}
+  [hidden]{display:none !important;}
 </style>
 </head>
 <body>
@@ -122,7 +141,7 @@
 </header>
 
 <nav class="toc">
-  <a href="#s1">① 食物裡的養分</a><a href="#s2">② 檢驗養分</a><a href="#s3">③ 代謝和酵素</a><a href="#s4">④ 光合作用</a><a href="#s4b">④之二 製糖廠</a><a href="#s5">⑤ 葉子裡面</a><a href="#s6">⑥ 驗葉子的澱粉</a><a href="#sQ">⑦ 小測驗</a><a href="#sW">⑧ 錯題本</a>
+  <a href="#s1">① 食物裡的養分</a><a href="#s2">② 檢驗養分</a><a href="#s3">③ 代謝和酵素</a><a href="#s4">④ 光合作用</a><a href="#s4b">④之二 製糖廠</a><a href="#s5">⑤ 葉子裡面</a><a href="#s6">⑥ 驗葉子的澱粉</a><a href="#sQ">⑦ 考考你</a><a href="#sW">⑧ 弱點和錯題本</a>
 </nav>
 
 <div class="card" id="s1">
@@ -259,13 +278,21 @@
 </div>
 
 <div class="card" id="sQ">
-  <h2>⑦ 小測驗</h2>
-  <div id="quizBox"></div>
+  <h2>⑦ 考考你：是真的懂，還是只是背起來？</h2>
+  <p class="lead">一回 10 題，一次一題。每一段都會考到。</p>
+  <ul style="font-size:.92rem">
+    <li>答錯時，會告訴你<b>可能是哪裡想錯</b>，還有一個按鈕直接跳回那一段。</li>
+    <li>不確定就勾「用猜的」。猜對的題目也會進錯題本，之後再考一次。</li>
+    <li>下一回會先出<b>上次錯的</b>和<b>還沒做過的</b>。</li>
+  </ul>
+  <div id="quiz"></div>
 </div>
 
 <div class="card" id="sW">
-  <h2>⑧ 我的錯題本</h2>
-  <div id="wrongBox"></div>
+  <h2>⑧ 我的弱點和錯題本</h2>
+  <div id="ana"></div>
+</div>
+<button id="backBtn" hidden>↩ 回到題目</button>
 </div>
 
 <a class="nextl" href="生物體的營養2_人體的消化.html">下一課：② 人體的消化 →</a>
@@ -388,90 +415,6 @@ function classify(boxId, cats, items){
   });
 }
 
-// ===== 小測驗＋錯題本 =====
-// 錯題存在這台裝置的瀏覽器裡。兩課共用一個存放處，各課只顯示自己的題目。
-const WKEY = "bio_ch2_wrong_v1";
-function loadW(){ try{ return JSON.parse(localStorage.getItem(WKEY) || "{}"); }catch(e){ return {}; } }
-function saveW(w){ try{ localStorage.setItem(WKEY, JSON.stringify(w)); }catch(e){} }
-function setupQuiz(PRE, Q, SECS){
-  // 比照「人體的循環」：全部題目一次列出，點答案馬上看對錯和原因。
-  const box = $("quizBox"), wb = $("wrongBox");
-  const key = i => PRE + "-" + i;
-  let practicing = false;
-  const myWrong = () => { const w = loadW(); return Q.map((_,i)=>i).filter(i => w[key(i)]); };
-  function card(i, num, onAns){
-    const q = Q[i], d = document.createElement("div"); d.className = "q";
-    d.innerHTML = `<p class="t">${num}. ${q.q}</p><div class="opts"></div><div class="why"></div>`;
-    const opts = d.querySelector(".opts");
-    shuffle(q.o.map((_,k)=>k)).forEach(k => {
-      const b = document.createElement("button"); b.textContent = q.o[k]; b.dataset.k = k;
-      b.addEventListener("click", ()=>{
-        if(d.classList.contains("done")) return;
-        d.classList.add("done"); pracCount++;
-        const right = k === q.a, w = loadW(), id = key(i), prev = w[id] ? Object.assign({}, w[id]) : null;
-        if(right){ pracOk++; if(w[id]){ w[id].s = (w[id].s||0) + 1; if(w[id].s >= 2) delete w[id]; } }
-        else w[id] = { n: ((w[id] && w[id].n) || 0) + 1, s: 0, g: (w[id] && w[id].g) || 0 };
-        saveW(w);
-        b.classList.add(right ? "ok" : "no");
-        opts.querySelector(`[data-k="${q.a}"]`).classList.add("ok");
-        const why = d.querySelector(".why");
-        why.innerHTML = (right ? "<b>答對了。</b>" : "<b>再想一下。已收進錯題本。</b>") + q.why + (right ? "" : `　<a href="#${q.sec}">回去看 ${SECS[q.sec]}</a>`);
-        if(right){
-          // 答對但其實是猜的：一樣收進錯題本，而且這次不算「答對一次」
-          const gb = document.createElement("button"); gb.className = "chip"; gb.style.marginLeft = "8px"; gb.textContent = "這題我是猜的";
-          gb.onclick = () => {
-            const w2 = loadW(), old = prev || {};
-            w2[id] = { n: old.n || 0, s: 0, g: (old.g || 0) + 1 }; saveW(w2);
-            gb.disabled = true; gb.textContent = "已收進錯題本";
-            logEv({ type:"quiz_guess", q:i+1 }); renderWrong();
-          };
-          why.appendChild(gb);
-        }
-        logEv({ type:"quiz", q:i+1, ok:right });
-        onAns(right); renderWrong();
-      });
-      opts.appendChild(b);
-    });
-    return d;
-  }
-  function renderQuiz(){
-    let done = 0, ok = 0;
-    box.innerHTML = `<p class="lead">共 ${Q.length} 題。每題點一個答案，馬上告訴你對不對、為什麼。答錯的會自動收進下面的錯題本。<b>答對但其實是猜的</b>，按「這題我是猜的」，也會收進去。</p>
-      <div id="qList"></div><div id="score" style="font-weight:bold; margin-top:12px;"></div>
-      <div class="ctrl"><button class="chip" id="qReset">全部重做一次</button></div>`;
-    Q.forEach((_, i) => $("qList").appendChild(card(i, i+1, right => {
-      done++; if(right) ok++;
-      $("score").textContent = `已作答 ${done} / ${Q.length} 題，答對 ${ok} 題`;
-      if(done === Q.length) cloudSend({ type:"小測驗", detail:`${CH} ${Q.length} 題`, score:`${ok}/${Q.length}` });
-    })));
-    $("qReset").onclick = () => { renderQuiz(); $("sQ").scrollIntoView({ behavior:"smooth" }); };
-  }
-  function renderWrong(){
-    if(practicing) return;
-    const w = loadW(), ids = myWrong();
-    if(!ids.length){ wb.innerHTML = `<div class="empty">目前沒有錯題。先去做小測驗，答錯的和猜對的會自動出現在這裡。</div>`; return; }
-    const wt = i => (w[key(i)].n || 0) + (w[key(i)].g || 0); ids.sort((a,b) => wt(b) - wt(a));
-    wb.innerHTML = `<p class="lead">現在有 <b>${ids.length}</b> 題。答錯的和猜對的都在這裡。先自己想答案，再點題目看解答。重練時<b>連續答對 2 次</b>，那一題就會自動移出。</p>
-      <div class="ctrl"><button class="chip big on" id="wGo">重練這 ${ids.length} 題</button><button class="chip" id="wClr">清空這一課的錯題</button></div>` +
-      ids.map(i => { const q = Q[i], e = w[key(i)];
-        return `<div class="w"><div class="hd"><p>${q.q}</p><span class="bad">${[e.n ? `錯 ${e.n} 次` : "", e.g ? `猜的 ${e.g} 次` : "", e.s ? "已對 1 次" : ""].filter(Boolean).join("・")}</span></div>
-          <div class="tip">點一下看答案</div>
-          <div class="ans">答案：<b>${q.o[q.a]}</b><br>${q.why}<br><a href="#${q.sec}">回去看 ${SECS[q.sec]}</a></div></div>`; }).join("");
-    wb.querySelectorAll(".w").forEach(d => d.addEventListener("click", e => { if(e.target.tagName !== "A") d.classList.toggle("open"); }));
-    $("wGo").onclick = () => {
-      practicing = true; const list = shuffle(myWrong()); let done = 0, ok = 0;
-      wb.innerHTML = `<p class="lead"><b>錯題重練</b>：共 ${list.length} 題。</p><div id="wList"></div><div id="wScore" style="font-weight:bold; margin-top:12px;"></div>
-        <div class="ctrl"><button class="chip big on" id="wBack">回到錯題清單</button></div>`;
-      list.forEach((i, n) => $("wList").appendChild(card(i, n+1, right => { done++; if(right) ok++; $("wScore").textContent = `已作答 ${done} / ${list.length} 題，答對 ${ok} 題`; })));
-      $("wBack").onclick = () => { practicing = false; renderWrong(); $("sW").scrollIntoView({ behavior:"smooth" }); };
-    };
-    $("wClr").onclick = () => {
-      if(!confirm("確定要清空這一課的錯題嗎？清掉就找不回來。")) return;
-      const w2 = loadW(); Q.forEach((_,i) => delete w2[key(i)]); saveW(w2); renderWrong();
-    };
-  }
-  renderQuiz(); renderWrong();
-}
 
 
 // ===================== ① 能量計算 =====================
@@ -850,38 +793,215 @@ function setupQuiz(PRE, Q, SECS){
 })();
 
 // ===================== ⑦ ⑧ 小測驗與錯題本 =====================
-setupQuiz("L1", [
-  { q:"下列哪一類養分「不能」提供能量？", o:["醣類","蛋白質","脂質","維生素"], a:3, sec:"s1", why:"能提供能量的只有醣類、蛋白質、脂質。維生素、礦物質、水都不提供能量。" },
-  { q:"人體最主要的能量來源是哪一類養分？", o:["醣類","蛋白質","脂質","礦物質"], a:0, sec:"s1", why:"醣類是最主要的能量來源，像飯和麵。" },
-  { q:"同樣 1 公克，哪一類養分提供的能量最多？", o:["醣類","蛋白質","脂質","三種一樣"], a:2, sec:"s1", why:"脂質每克約 9 大卡。醣類和蛋白質每克約 4 大卡。" },
-  { q:"一份點心有醣類 10 克、蛋白質 5 克、脂質 5 克，大約有多少大卡？", o:["80 大卡","105 大卡","100 大卡","180 大卡"], a:1, sec:"s1", why:"10×4 ＋ 5×4 ＋ 5×9 ＝ 40 ＋ 20 ＋ 45 ＝ 105 大卡。" },
-  { q:"把碘液滴在饅頭上，顏色會怎麼變？", o:["黃褐色變藍黑色","淡藍色變紅色","不會變色","藍黑色變黃褐色"], a:0, sec:"s2", why:"饅頭有澱粉。碘液遇到澱粉，從黃褐色變成藍黑色（有的澱粉會呈紫紅色）。" },
-  { q:"用本氏液檢驗糖的時候，一定要做哪一件事？", o:["放進冰箱","隔水加熱","加入碘液","照光"], a:1, sec:"s2", why:"本氏液要隔水加熱才會變色。沒加熱看不出來。" },
-  { q:"含糖很多的溶液，加本氏液再隔水加熱，最可能變成什麼顏色？", o:["藍黑色","還是淡藍色","橙紅色","白色"], a:2, sec:"s2", why:"糖越多顏色越偏紅：綠 → 黃 → 橙 → 紅。" },
-  { q:"「代謝作用」指的是什麼？", o:["只有分解養分的反應","生物體內所有的化學反應","只有植物才有的反應","把食物排出體外"], a:1, sec:"s3", why:"代謝是體內所有化學反應的總稱，包含合成作用和分解作用。" },
-  { q:"酵素的主要成分是什麼？", o:["醣類","脂質","蛋白質","礦物質"], a:2, sec:"s3", why:"酵素主要由蛋白質組成，所以也怕高溫。" },
-  { q:"分解澱粉的酵素不能分解蛋白質。這是酵素的什麼特性？", o:["專一性","重複性","耐熱性","酸性"], a:0, sec:"s3", why:"一種酵素只對特定物質有作用，叫做專一性。" },
-  { q:"酵素幫忙完成一次反應之後，自己會怎樣？", o:["被用掉消失","變成產物的一部分","本身不變，可以再用","變成另一種酵素"], a:2, sec:"s3", why:"酵素作用前後不變，可以重複使用。" },
-  { q:"把唾液煮沸、放涼之後，再加進澱粉液。澱粉會被分解嗎？", o:["會，而且更快","會，跟原來一樣","不會，酵素被高溫破壞了","不會，因為澱粉被煮熟了"], a:2, sec:"s3", why:"高溫會破壞酵素，就算放涼也不會恢復。" },
-  { q:"把唾液放進冰箱，再拿出來回到 37℃ 左右。酵素的活性會怎樣？", o:["永遠失去活性","恢復活性","變成原來的兩倍","變成酸性"], a:1, sec:"s3", why:"低溫只是讓酵素變慢，沒有破壞它。回溫就恢復。" },
-  { q:"光合作用的原料是什麼？", o:["氧氣和葡萄糖","二氧化碳和水","氧氣和水","二氧化碳和葡萄糖"], a:1, sec:"s4", why:"原料是二氧化碳和水。產物是葡萄糖、氧氣和水。" },
-  { q:"光合作用的產物有哪些？", o:["只有葡萄糖","葡萄糖和氧氣","葡萄糖、氧氣和水","二氧化碳和水"], a:2, sec:"s4", why:"產物有三個：葡萄糖、氧氣、水。水是原料，也是產物，最容易漏掉。" },
-  { q:"光合作用在細胞的哪個構造裡進行？", o:["細胞核","細胞膜","葉綠體","液泡"], a:2, sec:"s4", why:"葉綠體裡有葉綠素，可以吸收光。" },
-  { q:"光合作用把什麼能量，轉成什麼能量？", o:["化學能轉成光能","光能轉成化學能","熱能轉成光能","光能轉成電能"], a:1, sec:"s4", why:"把光能轉成化學能，存在葡萄糖裡。" },
-  { q:"植物做出來的葡萄糖如果用不完，通常會怎麼處理？", o:["從氣孔排掉","轉成澱粉存起來","變成氧氣","變成水"], a:1, sec:"s4", why:"多的葡萄糖會轉成澱粉儲存。所以可以用碘液檢驗葉子。" },
-  { q:"光合製糖廠的第一生產線「光反應」，是誰負責的？", o:["葉綠素","酵素","粒線體","氣孔"], a:0, sec:"s4b", why:"光反應由葉綠素負責，照到光才會動。第二生產線暗反應由酵素負責。" },
-  { q:"光反應把水分解之後，會得到哪些東西？", o:["葡萄糖和水","氧氣、氫離子和能量","二氧化碳和氧氣","澱粉和氧氣"], a:1, sec:"s4b", why:"水被分解成氧氣和氫離子，同時產生能量。氧氣從氣孔放出去，氫離子和能量交給暗反應。" },
-  { q:"光合作用放出的氧氣，是從哪一種原料來的？", o:["二氧化碳","水","葡萄糖","葉綠素"], a:1, sec:"s4b", why:"氧氣是光反應分解水得到的，不是從二氧化碳來的。" },
-  { q:"暗反應用哪些東西，做出葡萄糖和水？", o:["氧氣和水","光和葉綠素","氫離子、能量和二氧化碳","澱粉和酵素"], a:2, sec:"s4b", why:"酵素把光反應送來的氫離子、能量，加上氣孔進來的二氧化碳，做成葡萄糖和水。" },
-  { q:"暗反應不直接用到光。為什麼太陽下山後它也會停？", o:["酵素晚上會被破壞","氣孔晚上打不開，完全沒有二氧化碳","光反應停了，沒有氫離子和能量可以用","葉綠體晚上會消失"], a:2, sec:"s4b", why:"暗反應的原料靠光反應供應。光反應一停，暗反應沒貨可用，只好跟著停。" },
-  { q:"植物細胞裡，哪一個是 24 小時都在進行的？", o:["光反應","暗反應","光合作用","呼吸作用"], a:3, sec:"s4b", why:"呼吸作用在粒線體進行。只要是活的細胞，不分白天晚上都在進行。" },
-  { q:"葡萄糖可以靠其他酵素轉變成別的物質。下列哪一個「不是」？", o:["澱粉","纖維素","蛋白質和脂質","氧氣"], a:3, sec:"s4b", why:"葡萄糖可以轉變成澱粉、纖維素、蛋白質、脂質等。氧氣是光反應分解水產生的。" },
-  { q:"二氧化碳和氧氣進出葉片，主要經過哪裡？", o:["葉脈","角質層","氣孔","柵狀組織"], a:2, sec:"s5", why:"氣孔由兩個保衛細胞圍成，是氣體進出的門。" },
-  { q:"下列葉片的細胞，哪一種「沒有」葉綠體？", o:["保衛細胞","柵狀組織的細胞","海綿組織的細胞","一般的表皮細胞"], a:3, sec:"s5", why:"一般表皮細胞沒有葉綠體。保衛細胞是表皮上的例外，有葉綠體。" },
-  { q:"檢驗葉片的澱粉時，為什麼要用酒精隔水加熱？", o:["把澱粉溶出來","把葉綠素溶出來，才看得清楚顏色","讓葉片長大","殺死細菌"], a:1, sec:"s6", why:"酒精可以溶出葉綠素。葉片變白之後，碘液的顏色變化才看得清楚。" },
-  { q:"被鋁箔遮住的葉片部位，滴上碘液會是什麼顏色？為什麼？", o:["藍黑色，因為有澱粉","黃褐色，因為沒照光、沒有做出澱粉","綠色，因為葉綠素還在","紅色，因為有糖"], a:1, sec:"s6", why:"沒照光就不能行光合作用，沒有澱粉，碘液維持黃褐色。" },
-  { q:"酒精為什麼要「隔水」加熱，不能直接用火燒？", o:["酒精容易燒起來，很危險","酒精加熱會變成水","直接加熱會讓葉子變綠","這樣比較省酒精"], a:0, sec:"s6", why:"酒精是易燃物。隔著一鍋水加熱才安全。" }
-], { s1:"① 食物裡的養分", s2:"② 檢驗養分", s3:"③ 代謝和酵素", s4:"④ 光合作用", s4b:"④之二 光合製糖廠", s5:"⑤ 葉子裡面", s6:"⑥ 驗葉子的澱粉" });
+// ===================== ⑦ 考考你（比照「人體的循環」的測驗引擎）=====================
+(function(){
+  const SEC = {"s1":"① 食物裡的養分","s2":"② 檢驗養分","s3":"③ 代謝和酵素","s4":"④ 光合作用","s4b":"④之二 光合製糖廠","s5":"⑤ 葉子裡面","s6":"⑥ 驗葉子的澱粉"};
+  // o 的第一個是正確答案（出題時會打亂）；其他每個選項後面是「你可能是這樣想的」
+  const Q = [
+    {id:"l1q1", s:"s1", q:"下列哪一類養分「不能」提供能量？",
+      o:[["維生素",""],["醣類","醣類是最主要的能量來源，每克 4 大卡。"],["蛋白質","蛋白質也能提供能量，每克 4 大卡。"],["脂質","脂質每克 9 大卡，是能量最多的。"]],
+      why:"能提供能量的只有醣類、蛋白質、脂質。維生素、礦物質、水都不提供能量。"},
+    {id:"l1q2", s:"s1", q:"人體最主要的能量來源是哪一類養分？",
+      o:[["醣類",""],["蛋白質","蛋白質主要拿來生長和修補身體。"],["脂質","脂質能量多，但主要是儲存用，不是最先用的。"],["礦物質","礦物質不提供能量。"]],
+      why:"醣類是最主要的能量來源，像飯和麵。"},
+    {id:"l1q3", s:"s1", q:"同樣 1 公克，哪一類養分提供的能量最多？",
+      o:[["脂質",""],["醣類","醣類每克 4 大卡，比脂質少。"],["蛋白質","蛋白質每克 4 大卡，比脂質少。"],["三種一樣","醣類和蛋白質一樣是 4，但脂質是 9。"]],
+      why:"脂質每克約 9 大卡。醣類和蛋白質每克約 4 大卡。"},
+    {id:"l1q4", s:"s1", q:"一份點心有醣類 10 克、蛋白質 5 克、脂質 5 克，大約有多少大卡？",
+      o:[["105 大卡",""],["80 大卡","你可能三種都乘 4。脂質要乘 9。"],["100 大卡","脂質 5 克是 5×9＝45，不是 40。"],["180 大卡","你可能三種都乘 9。醣類和蛋白質是乘 4。"]],
+      why:"10×4 ＋ 5×4 ＋ 5×9 ＝ 40 ＋ 20 ＋ 45 ＝ 105 大卡。"},
+    {id:"l1q5", s:"s2", q:"把碘液滴在饅頭上，顏色會怎麼變？",
+      o:[["黃褐色變藍黑色",""],["淡藍色變紅色","那是本氏液遇到糖的變化，不是碘液。"],["不會變色","饅頭有澱粉，碘液一定會變色。"],["藍黑色變黃褐色","方向反了。碘液原本就是黃褐色。"]],
+      why:"饅頭有澱粉。碘液遇到澱粉，從黃褐色變成藍黑色（有的澱粉會呈紫紅色）。"},
+    {id:"l1q6", s:"s2", q:"用本氏液檢驗糖的時候，一定要做哪一件事？",
+      o:[["隔水加熱",""],["放進冰箱","低溫不會讓本氏液變色。"],["加入碘液","碘液是驗澱粉的。兩種試劑不用混在一起。"],["照光","跟光沒有關係，是要加熱。"]],
+      why:"本氏液要隔水加熱才會變色。沒加熱看不出來。"},
+    {id:"l1q7", s:"s2", q:"含糖很多的溶液，加本氏液再隔水加熱，最可能變成什麼顏色？",
+      o:[["橙紅色",""],["藍黑色","藍黑色是碘液遇到澱粉。"],["還是淡藍色","淡藍色代表沒有糖，或是還沒加熱。"],["白色","本氏液不會變成白色。"]],
+      why:"糖越多顏色越偏紅：綠 → 黃 → 橙 → 紅。"},
+    {id:"l1q8", s:"s3", q:"「代謝作用」指的是什麼？",
+      o:[["生物體內所有的化學反應",""],["只有分解養分的反應","代謝也包含合成作用，不是只有分解。"],["只有植物才有的反應","所有生物都有代謝作用。"],["把食物排出體外","那是排遺，不是代謝。"]],
+      why:"代謝是體內所有化學反應的總稱，包含合成作用和分解作用。"},
+    {id:"l1q9", s:"s3", q:"酵素的主要成分是什麼？",
+      o:[["蛋白質",""],["醣類","酵素主要是蛋白質，所以怕高溫。"],["脂質","酵素主要是蛋白質，不是脂質。"],["礦物質","酵素主要是蛋白質，不是礦物質。"]],
+      why:"酵素主要由蛋白質組成，所以也怕高溫。"},
+    {id:"l1q10", s:"s3", q:"分解澱粉的酵素不能分解蛋白質。這是酵素的什麼特性？",
+      o:[["專一性",""],["重複性","重複使用是另一個特性。這題講的是「只對特定物質有用」。"],["耐熱性","酵素不耐熱，高溫會被破壞。"],["酸性","酸鹼會影響酵素，但這題講的不是這個。"]],
+      why:"一種酵素只對特定物質有作用，叫做專一性。"},
+    {id:"l1q11", s:"s3", q:"酵素幫忙完成一次反應之後，自己會怎樣？",
+      o:[["本身不變，可以再用",""],["被用掉消失","酵素不是原料，不會被用掉。"],["變成產物的一部分","酵素只是幫忙，不會跑進產物裡。"],["變成另一種酵素","酵素作用前後是同一個，不會變。"]],
+      why:"酵素作用前後不變，可以重複使用。"},
+    {id:"l1q12", s:"s3", q:"把唾液煮沸、放涼之後，再加進澱粉液。澱粉會被分解嗎？",
+      o:[["不會，酵素被高溫破壞了",""],["會，而且更快","溫度太高不會更快，酵素會被破壞。"],["會，跟原來一樣","高溫的破壞救不回來，放涼也沒用。"],["不會，因為澱粉被煮熟了","被煮的是唾液，不是澱粉。問題出在酵素。"]],
+      why:"高溫會破壞酵素，就算放涼也不會恢復。"},
+    {id:"l1q13", s:"s3", q:"把唾液放進冰箱，再拿出來回到 37℃ 左右。酵素的活性會怎樣？",
+      o:[["恢復活性",""],["永遠失去活性","低溫只是讓酵素變慢，沒有破壞它。高溫才救不回來。"],["變成原來的兩倍","回溫只會恢復原狀，不會變更多。"],["變成酸性","溫度不會改變酸鹼。"]],
+      why:"低溫只是讓酵素變慢，沒有破壞它。回溫就恢復。"},
+    {id:"l1q14", s:"s4", q:"光合作用的原料是什麼？",
+      o:[["二氧化碳和水",""],["氧氣和葡萄糖","這兩個是產物，不是原料。"],["氧氣和水","氧氣是產物。原料是二氧化碳和水。"],["二氧化碳和葡萄糖","葡萄糖是產物。"]],
+      why:"原料是二氧化碳和水。產物是葡萄糖、氧氣和水。"},
+    {id:"l1q15", s:"s4", q:"光合作用的產物有哪些？",
+      o:[["葡萄糖、氧氣和水",""],["只有葡萄糖","還有氧氣和水。"],["葡萄糖和氧氣","漏了水。水是原料，也是產物。"],["二氧化碳和水","這是原料，不是產物。"]],
+      why:"產物有三個：葡萄糖、氧氣、水。水是原料，也是產物，最容易漏掉。"},
+    {id:"l1q16", s:"s4", q:"光合作用在細胞的哪個構造裡進行？",
+      o:[["葉綠體",""],["細胞核","細胞核是控制中心，不做光合作用。"],["細胞膜","細胞膜管的是物質進出。"],["液泡","液泡是儲存水和物質的地方。"]],
+      why:"葉綠體裡有葉綠素，可以吸收光。"},
+    {id:"l1q17", s:"s4", q:"光合作用把什麼能量，轉成什麼能量？",
+      o:[["光能轉成化學能",""],["化學能轉成光能","方向反了。植物是吸收光，不是發光。"],["熱能轉成光能","植物沒有發光。"],["光能轉成電能","那是太陽能板。植物是把能量存進葡萄糖。"]],
+      why:"把光能轉成化學能，存在葡萄糖裡。"},
+    {id:"l1q18", s:"s4", q:"植物做出來的葡萄糖如果用不完，通常會怎麼處理？",
+      o:[["轉成澱粉存起來",""],["從氣孔排掉","氣孔進出的是氣體，不是葡萄糖。"],["變成氧氣","氧氣是分解水得到的，不是葡萄糖變的。"],["變成水","植物不會把做好的養分變回水。"]],
+      why:"多的葡萄糖會轉成澱粉儲存。所以可以用碘液檢驗葉子。"},
+    {id:"l1q19", s:"s4b", q:"光合製糖廠的第一生產線「光反應」，是誰負責的？",
+      o:[["葉綠素",""],["酵素","酵素負責的是第二生產線暗反應。"],["粒線體","粒線體是隔壁的呼吸發電廠。"],["氣孔","氣孔是氣體進出的門，不是工人。"]],
+      why:"光反應由葉綠素負責，照到光才會動。第二生產線暗反應由酵素負責。"},
+    {id:"l1q20", s:"s4b", q:"光反應把水分解之後，會得到哪些東西？",
+      o:[["氧氣、氫離子和能量",""],["葡萄糖和水","那是第二生產線暗反應的產物。"],["二氧化碳和氧氣","二氧化碳是從氣孔進來的原料，不是水分解出來的。"],["澱粉和氧氣","澱粉是之後才由葡萄糖轉變的。"]],
+      why:"水被分解成氧氣和氫離子，同時產生能量。氧氣從氣孔放出去，氫離子和能量交給暗反應。"},
+    {id:"l1q21", s:"s4b", q:"光合作用放出的氧氣，是從哪一種原料來的？",
+      o:[["水",""],["二氧化碳","很多人這樣想。但氧氣是光反應分解水得到的。"],["葡萄糖","葡萄糖是產物，不是原料。"],["葉綠素","葉綠素是工人，不是原料。"]],
+      why:"氧氣是光反應分解水得到的，不是從二氧化碳來的。"},
+    {id:"l1q22", s:"s4b", q:"暗反應用哪些東西，做出葡萄糖和水？",
+      o:[["氫離子、能量和二氧化碳",""],["氧氣和水","氧氣已經從氣孔放出去了，暗反應不用它。"],["光和葉綠素","那是第一生產線光反應。"],["澱粉和酵素","澱粉是葡萄糖之後才轉變成的。"]],
+      why:"酵素把光反應送來的氫離子、能量，加上氣孔進來的二氧化碳，做成葡萄糖和水。"},
+    {id:"l1q23", s:"s4b", q:"暗反應不直接用到光。為什麼太陽下山後它也會停？",
+      o:[["光反應停了，沒有氫離子和能量可以用",""],["酵素晚上會被破壞","酵素沒有壞，只是沒有原料可以用。"],["氣孔晚上打不開，完全沒有二氧化碳","講義的重點不是二氧化碳，是光反應停了、沒人供貨。"],["葉綠體晚上會消失","葉綠體一直都在。"]],
+      why:"暗反應的原料靠光反應供應。光反應一停，暗反應沒貨可用，只好跟著停。"},
+    {id:"l1q24", s:"s4b", q:"植物細胞裡，哪一個是 24 小時都在進行的？",
+      o:[["呼吸作用",""],["光反應","光反應要有光才會動。"],["暗反應","暗反應要靠光反應供貨，晚上也會停。"],["光合作用","光合作用沒有光就停工。"]],
+      why:"呼吸作用在粒線體進行。只要是活的細胞，不分白天晚上都在進行。"},
+    {id:"l1q25", s:"s4b", q:"葡萄糖可以靠其他酵素轉變成別的物質。下列哪一個「不是」？",
+      o:[["氧氣",""],["澱粉","葡萄糖可以靠酵素轉變成澱粉。"],["纖維素","葡萄糖可以靠酵素轉變成纖維素。"],["蛋白質和脂質","葡萄糖可以靠酵素轉變成蛋白質和脂質。"]],
+      why:"葡萄糖可以轉變成澱粉、纖維素、蛋白質、脂質等。氧氣是光反應分解水產生的。"},
+    {id:"l1q26", s:"s5", q:"二氧化碳和氧氣進出葉片，主要經過哪裡？",
+      o:[["氣孔",""],["葉脈","葉脈運的是水和養分，不是氣體。"],["角質層","角質層是防水的蠟，氣體不容易通過。"],["柵狀組織","柵狀組織是做光合作用的細胞，不是門。"]],
+      why:"氣孔由兩個保衛細胞圍成，是氣體進出的門。"},
+    {id:"l1q27", s:"s5", q:"下列葉片的細胞，哪一種「沒有」葉綠體？",
+      o:[["一般的表皮細胞",""],["保衛細胞","保衛細胞是表皮上的例外，它有葉綠體。"],["柵狀組織的細胞","柵狀組織的葉綠體最多。"],["海綿組織的細胞","海綿組織也有葉綠體，只是比較少。"]],
+      why:"一般表皮細胞沒有葉綠體。保衛細胞是表皮上的例外，有葉綠體。"},
+    {id:"l1q28", s:"s6", q:"檢驗葉片的澱粉時，為什麼要用酒精隔水加熱？",
+      o:[["把葉綠素溶出來，才看得清楚顏色",""],["把澱粉溶出來","澱粉要留在葉子裡，才驗得到。"],["讓葉片長大","葉片已經摘下來了，不會再長。"],["殺死細菌","目的是去掉綠色，才看得清楚碘液的顏色。"]],
+      why:"酒精可以溶出葉綠素。葉片變白之後，碘液的顏色變化才看得清楚。"},
+    {id:"l1q29", s:"s6", q:"被鋁箔遮住的葉片部位，滴上碘液會是什麼顏色？為什麼？",
+      o:[["黃褐色，因為沒照光、沒有做出澱粉",""],["藍黑色，因為有澱粉","遮住的地方沒照光，做不出澱粉。"],["綠色，因為葉綠素還在","葉綠素已經被酒精溶掉了。"],["紅色，因為有糖","紅色是本氏液的反應。這裡用的是碘液。"]],
+      why:"沒照光就不能行光合作用，沒有澱粉，碘液維持黃褐色。"},
+    {id:"l1q30", s:"s6", q:"酒精為什麼要「隔水」加熱，不能直接用火燒？",
+      o:[["酒精容易燒起來，很危險",""],["酒精加熱會變成水","酒精不會變成水。"],["直接加熱會讓葉子變綠","加熱不會讓葉子變綠。"],["這樣比較省酒精","是為了安全，不是為了省。"]],
+      why:"酒精是易燃物。隔著一鍋水加熱才安全。"},
+  ];
+  const KEY = "nutri1_quiz_v1"; let ST = {};
+  try{ ST = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(e){}
+  const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} };
+  const rec = id => ST[id] || (ST[id] = { n:0, ok:0, last:"" });
+  const isWrong = q => { const r = ST[q.id]; return r && (r.last === "no" || r.last === "guess"); };
+  const shuf = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+  const esc = s => s.replace(/[&<>]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[c]));
+  const box = $("quiz"), ana = $("ana"), back = $("backBtn");
+  let round = [], idx = 0, okN = 0, misses = [];
+
+  // 跳回去看那一段，再跳回題目
+  function goSec(s){
+    const el = $(s); el.scrollIntoView({ behavior:"smooth", block:"start" });
+    el.classList.add("flash"); setTimeout(()=> el.classList.remove("flash"), 2600); back.hidden = false;
+  }
+  back.addEventListener("click", ()=>{ $("sQ").scrollIntoView({ behavior:"smooth", block:"start" }); back.hidden = true; });
+  const jumpBtn = s => `<button class="chip jump" data-go="${s}">回去看 ${SEC[s]}</button>`;
+  document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if(b) goSec(b.dataset.go); });
+
+  function build(onlyWrong){
+    const pri = q => isWrong(q) ? 0 : !ST[q.id] || !ST[q.id].n ? 1 : 2;
+    const pool = shuf(Q.filter(q => !onlyWrong || isWrong(q))).sort((a,b) => pri(a)-pri(b));
+    const out = [], cnt = {};
+    // 每一段先各出一題，再補到 10 題，確保六個概念都考到
+    for(const cap of (onlyWrong ? [99] : [1,2,99]))
+      for(const q of pool){ if(out.length >= 10) break; if(out.includes(q) || (cnt[q.s]||0) >= cap) continue; cnt[q.s] = (cnt[q.s]||0)+1; out.push(q); }
+    return shuf(out);
+  }
+  function start(onlyWrong){
+    round = build(onlyWrong); idx = 0; okN = 0; misses = [];
+    if(!round.length){ box.innerHTML = `<p class="lead">錯題本是空的。先練一回吧。</p>`; return; }
+    show();
+  }
+  function finish(q, right, diag, picked){
+    const guess = box.querySelector(".guess input").checked, r = rec(q.id);
+    r.n++; if(right) r.ok++; r.last = !right ? "no" : guess ? "guess" : "ok"; save();
+    pracCount++; if(right){ pracOk++; okN++; } if(r.last !== "ok") misses.push(q);
+    logEv({ type:"quiz", q:q.id, sec:q.s, ok:right, guess });
+    const fb = box.querySelector(".fb"); fb.hidden = false; fb.className = "fb " + (right ? "good" : "bad");
+    let h = right ? (guess ? "<b>答對了。</b>不過你說是用猜的，我先把它放進錯題本，之後再考你一次。" : "<b>答對了。</b>") : "<b>這題沒答對。</b>";
+    if(!right && diag) h += `<p><span class="dx">你可能是這樣想的</span>${esc(diag)}</p>`;
+    h += `<p><span class="dx k">關鍵</span>${esc(q.why)}</p>`;
+    h += `<div class="ctrl">${right && !guess ? "" : jumpBtn(q.s)}<button class="chip on" id="nextQ">${idx+1 < round.length ? "下一題" : "看這一回的結果"}</button></div>`;
+    fb.innerHTML = h; box.querySelector(".guess").style.display = "none";
+    $("nextQ").addEventListener("click", ()=>{ idx++; idx < round.length ? show() : summary(); });
+    renderAna();
+  }
+  function show(){
+    const q = round[idx];
+    let h = `<div class="q"><div class="qhead"><span>第 ${idx+1} / ${round.length} 題</span><span class="qtag">${SEC[q.s]}</span></div><p class="t">${esc(q.q)}</p>`;
+    h += `<label class="guess"><input type="checkbox"> 這題我不太確定，是用猜的</label>`;
+    h += q.seq ? `<div class="ans"></div><div class="pool"></div><button class="chip" id="resetO">重排</button>` : `<div class="opts"></div>`;
+    h += `<div class="fb" hidden></div></div>`;
+    box.innerHTML = h;
+    if(q.seq){
+      const ans = box.querySelector(".ans"), pool = box.querySelector(".pool"); let pick = [], done = false;
+      const paint = () => {
+        ans.innerHTML = pick.length ? pick.map((t,i) => `<span class="oc">${i+1}. ${t}</span>`).join("<i>→</i>") : `<span class="ph">照順序點下面的站名</span>`;
+        [...pool.children].forEach(b => b.disabled = pick.includes(b.textContent));
+      };
+      shuf(q.seq).forEach(t => { const b = document.createElement("button"); b.className = "chip"; b.textContent = t;
+        b.addEventListener("click", ()=>{ if(done) return; pick.push(t); paint();
+          if(pick.length === q.seq.length){ done = true; $("resetO").style.display = "none";
+            const k = pick.findIndex((x,i) => x !== q.seq[i]), right = k < 0;
+            if(!right) ans.children[k*2].classList.add("no");
+            finish(q, right, right ? "" : (k === 0 ? `起點應該是「${q.seq[0]}」。` : `「${q.seq[k-1]}」的下一站應該是「${q.seq[k]}」，不是「${pick[k]}」。`)); } });
+        pool.appendChild(b); });
+      $("resetO").addEventListener("click", ()=>{ if(!done){ pick = []; paint(); } }); paint();
+    } else {
+      const opts = box.querySelector(".opts"), order = shuf(q.o.map((_,i) => i)); let done = false;
+      order.forEach(i => { const b = document.createElement("button"); b.textContent = q.o[i][0]; b.dataset.i = i;
+        b.addEventListener("click", ()=>{ if(done) return; done = true; const right = i === 0;
+          b.classList.add(right ? "ok" : "no"); opts.querySelector('[data-i="0"]').classList.add("ok"); finish(q, right, q.o[i][1]); });
+        opts.appendChild(b); });
+    }
+  }
+  function summary(){
+    const bySec = {}; misses.forEach(q => (bySec[q.s] = bySec[q.s] || []).push(q));
+    let h = `<div class="q"><p class="t">這一回：${round.length} 題答對 ${okN} 題</p>`;
+    if(!misses.length) h += `<p>全部答對，而且都不是用猜的。很紮實。</p>`;
+    else {
+      h += `<p>下面這幾段再看一次，然後按「只練錯題」。</p>`;
+      for(const s in bySec) h += `<div class="miss"><b>${SEC[s]}</b>（${bySec[s].length} 題）${jumpBtn(s)}<ul>${bySec[s].map(q => `<li>${esc(q.q)}</li>`).join("")}</ul></div>`;
+    }
+    h += `<div class="ctrl"><button class="chip on" id="again">再練一回（錯的和沒做過的先出）</button>${misses.length ? `<button class="chip" id="onlyW">只練錯題</button>` : ""}</div></div>`;
+    box.innerHTML = h;
+    $("again").addEventListener("click", ()=> start(false));
+    if($("onlyW")) $("onlyW").addEventListener("click", ()=> start(true));
+    cloudSend({ type:"小測驗", detail:`養分酵素與光合作用 一回 ${round.length} 題；要再看：${Object.keys(bySec).map(s => SEC[s]).join("、") || "無"}`, score:`${okN}/${round.length}` });
+  }
+  function renderAna(){
+    const wrong = Q.filter(isWrong), seen = Q.filter(q => ST[q.id] && ST[q.id].n).length;
+    let h = `<p class="lead">題庫共 ${Q.length} 題，你做過 ${seen} 題。紀錄只存在這台裝置的瀏覽器。</p><div class="abars">`;
+    let weak = null, weakRate = 2;
+    for(const s in SEC){
+      let n = 0, ok = 0; Q.filter(q => q.s === s).forEach(q => { const r = ST[q.id]; if(r){ n += r.n; ok += r.ok; } });
+      const rate = n ? ok/n : 0; if(n >= 2 && rate < weakRate){ weakRate = rate; weak = s; }
+      h += `<div class="abar"><span class="nm">${SEC[s]}</span><span class="tr"><i style="width:${Math.round(rate*100)}%;background:${!n ? "#e5e7eb" : rate >= .8 ? "#16a34a" : rate >= .5 ? "#d97706" : "#dc2626"}"></i></span><span class="pc">${n ? `答對 ${ok}／${n}` : "還沒做"}</span></div>`;
+    }
+    h += `</div>`;
+    if(weak && weakRate < .8) h += `<div class="key">目前最需要再看的是 <b>${SEC[weak]}</b>。${jumpBtn(weak)}</div>`;
+    h += `<h3>錯題本（${wrong.length} 題）</h3>`;
+    if(!wrong.length) h += `<p style="color:var(--sub)">目前沒有錯題。答錯或用猜的題目會出現在這裡，之後答對就會移除。</p>`;
+    else h += `<ul class="wb">${wrong.map(q => `<li>${esc(q.q)} <span class="qtag">${ST[q.id].last === "guess" ? "用猜的" : "答錯"}</span> ${jumpBtn(q.s)}</li>`).join("")}</ul><div class="ctrl"><button class="chip on" id="anaW">只練錯題（${Math.min(10, wrong.length)} 題）</button></div>`;
+    h += `<div class="ctrl"><button class="chip" id="clr">清除我的作答紀錄</button></div>`;
+    ana.innerHTML = h;
+    if($("anaW")) $("anaW").addEventListener("click", ()=>{ start(true); $("sQ").scrollIntoView({ behavior:"smooth" }); });
+    $("clr").addEventListener("click", ()=>{ if(confirm("確定要清除這一課的作答紀錄和錯題本嗎？清掉就救不回來。")){ ST = {}; save(); renderAna(); } });
+  }
+  box.innerHTML = `<div class="ctrl"><button class="chip on big" id="go">開始練一回（10 題）</button></div>`;
+  $("go").addEventListener("click", ()=> start(false));
+  renderAna();
+})();
 
 runScenes();
 
