@@ -343,75 +343,62 @@ const WKEY = "bio_ch2_wrong_v1";
 function loadW(){ try{ return JSON.parse(localStorage.getItem(WKEY) || "{}"); }catch(e){ return {}; } }
 function saveW(w){ try{ localStorage.setItem(WKEY, JSON.stringify(w)); }catch(e){} }
 function setupQuiz(PRE, Q, SECS){
+  // 比照「人體的循環」：全部題目一次列出，點答案馬上看對錯和原因。
   const box = $("quizBox"), wb = $("wrongBox");
   const key = i => PRE + "-" + i;
-  let list = [], pos = 0, ok = 0, missed = [], guessed = [], mode = "";
+  let practicing = false;
   const myWrong = () => { const w = loadW(); return Q.map((_,i)=>i).filter(i => w[key(i)]); };
-
-  function home(){
-    box.innerHTML = `<p class="lead">題庫共 ${Q.length} 題。每題點一個答案，馬上告訴你對不對、為什麼。答錯的題目會自動收進下面的錯題本。<b>答對但其實是猜的</b>，按「這題我是猜的」，也會收進去。</p>
-      <div class="ctrl"><button class="chip big on" id="qGo10">抽 10 題</button><button class="chip big" id="qGoAll">全部 ${Q.length} 題</button></div>`;
-    $("qGo10").onclick = () => start(shuffle(Q.map((_,i)=>i)).slice(0,10), "小測驗");
-    $("qGoAll").onclick = () => start(shuffle(Q.map((_,i)=>i)), "小測驗");
-  }
-  function start(idx, m){ list = idx; mode = m; pos = 0; ok = 0; missed = []; guessed = []; show(); box.scrollIntoView({ block:"start", behavior:"smooth" }); }
-  function show(){
-    const i = list[pos], q = Q[i];
-    box.innerHTML = `<div class="qbar"><span>${mode}　第 ${pos+1} / ${list.length} 題</span><span id="qOk">答對 ${ok} 題</span></div>
-      <div class="prog"><div style="width:${pos/list.length*100}%"></div></div>
-      <div class="q"><p class="t">${q.q}</p><div class="opts"></div><div class="why"></div></div>
-      <div class="ctrl"><button class="chip big on" id="qNext" style="display:none">${pos+1 < list.length ? "下一題" : "看結果"}</button><button class="chip big" id="qGuess" style="display:none">這題我是猜的</button></div>`;
-    const qd = box.querySelector(".q"), opts = qd.querySelector(".opts");
+  function card(i, num, onAns){
+    const q = Q[i], d = document.createElement("div"); d.className = "q";
+    d.innerHTML = `<p class="t">${num}. ${q.q}</p><div class="opts"></div><div class="why"></div>`;
+    const opts = d.querySelector(".opts");
     shuffle(q.o.map((_,k)=>k)).forEach(k => {
       const b = document.createElement("button"); b.textContent = q.o[k]; b.dataset.k = k;
       b.addEventListener("click", ()=>{
-        if(qd.classList.contains("done")) return;
-        qd.classList.add("done"); pracCount++;
+        if(d.classList.contains("done")) return;
+        d.classList.add("done"); pracCount++;
         const right = k === q.a, w = loadW(), id = key(i), prev = w[id] ? Object.assign({}, w[id]) : null;
-        if(right){
-          ok++; pracOk++;
-          if(w[id]){ w[id].s = (w[id].s||0) + 1; if(w[id].s >= 2) delete w[id]; }
-        }else{
-          missed.push(i);
-          w[id] = { n: ((w[id] && w[id].n) || 0) + 1, s: 0, g: (w[id] && w[id].g) || 0 };
-        }
+        if(right){ pracOk++; if(w[id]){ w[id].s = (w[id].s||0) + 1; if(w[id].s >= 2) delete w[id]; } }
+        else w[id] = { n: ((w[id] && w[id].n) || 0) + 1, s: 0, g: (w[id] && w[id].g) || 0 };
         saveW(w);
-        $("qOk").textContent = `答對 ${ok} 題`;
         b.classList.add(right ? "ok" : "no");
         opts.querySelector(`[data-k="${q.a}"]`).classList.add("ok");
-        qd.querySelector(".why").innerHTML = (right ? "<b>答對了。</b>" : "<b>答錯了，已收進錯題本。</b>") + q.why;
-        $("qNext").style.display = "";
+        const why = d.querySelector(".why");
+        why.innerHTML = (right ? "<b>答對了。</b>" : "<b>再想一下。已收進錯題本。</b>") + q.why + (right ? "" : `　<a href="#${q.sec}">回去看 ${SECS[q.sec]}</a>`);
         if(right){
           // 答對但其實是猜的：一樣收進錯題本，而且這次不算「答對一次」
-          const gb = $("qGuess"); gb.style.display = "";
+          const gb = document.createElement("button"); gb.className = "chip"; gb.style.marginLeft = "8px"; gb.textContent = "這題我是猜的";
           gb.onclick = () => {
             const w2 = loadW(), old = prev || {};
             w2[id] = { n: old.n || 0, s: 0, g: (old.g || 0) + 1 }; saveW(w2);
-            guessed.push(i); gb.disabled = true; gb.textContent = "已收進錯題本";
+            gb.disabled = true; gb.textContent = "已收進錯題本";
             logEv({ type:"quiz_guess", q:i+1 }); renderWrong();
           };
+          why.appendChild(gb);
         }
         logEv({ type:"quiz", q:i+1, ok:right });
-        renderWrong();
+        onAns(right); renderWrong();
       });
       opts.appendChild(b);
     });
-    $("qNext").onclick = () => { pos++; pos < list.length ? show() : result(); };
+    return d;
   }
-  function result(){
-    const n = list.length;
-    cloudSend({ type: mode, detail: `${CH} ${n} 題`, score: `${ok}/${n}` });
-    const miss = [...new Set(missed)], gs = [...new Set(guessed)];
-    box.innerHTML = `<div class="res"><div class="n">${ok} / ${n}</div>
-      <p>${ok === n && !gs.length ? "全對！這一課很熟了。" : [miss.length ? `有 ${miss.length} 題答錯` : "", gs.length ? `有 ${gs.length} 題是猜對的` : ""].filter(Boolean).join("，") + "，已經放進錯題本。"}</p></div>
-      ${miss.concat(gs).map(i => `<div class="q done"><p class="t">${Q[i].q}</p><div class="why" style="display:block">${missed.includes(i) ? "" : "（猜對的）"}正確答案：<b>${Q[i].o[Q[i].a]}</b>　<a href="#${Q[i].sec}">回去看 ${SECS[Q[i].sec]}</a></div></div>`).join("")}
-      <div class="ctrl" style="justify-content:center; margin-top:12px;"><button class="chip big on" id="qAgain">再來一回</button>${myWrong().length ? `<button class="chip big" id="qToW">去錯題本</button>` : ""}</div>`;
-    $("qAgain").onclick = home;
-    if($("qToW")) $("qToW").onclick = () => $("sW").scrollIntoView({ behavior:"smooth" });
+  function renderQuiz(){
+    let done = 0, ok = 0;
+    box.innerHTML = `<p class="lead">共 ${Q.length} 題。每題點一個答案，馬上告訴你對不對、為什麼。答錯的會自動收進下面的錯題本。<b>答對但其實是猜的</b>，按「這題我是猜的」，也會收進去。</p>
+      <div id="qList"></div><div id="score" style="font-weight:bold; margin-top:12px;"></div>
+      <div class="ctrl"><button class="chip" id="qReset">全部重做一次</button></div>`;
+    Q.forEach((_, i) => $("qList").appendChild(card(i, i+1, right => {
+      done++; if(right) ok++;
+      $("score").textContent = `已作答 ${done} / ${Q.length} 題，答對 ${ok} 題`;
+      if(done === Q.length) cloudSend({ type:"小測驗", detail:`${CH} ${Q.length} 題`, score:`${ok}/${Q.length}` });
+    })));
+    $("qReset").onclick = () => { renderQuiz(); $("sQ").scrollIntoView({ behavior:"smooth" }); };
   }
   function renderWrong(){
+    if(practicing) return;
     const w = loadW(), ids = myWrong();
-    if(!ids.length){ wb.innerHTML = `<div class="empty">目前沒有錯題。先去做小測驗，答錯的會自動出現在這裡。</div>`; return; }
+    if(!ids.length){ wb.innerHTML = `<div class="empty">目前沒有錯題。先去做小測驗，答錯的和猜對的會自動出現在這裡。</div>`; return; }
     const wt = i => (w[key(i)].n || 0) + (w[key(i)].g || 0); ids.sort((a,b) => wt(b) - wt(a));
     wb.innerHTML = `<p class="lead">現在有 <b>${ids.length}</b> 題。答錯的和猜對的都在這裡。先自己想答案，再點題目看解答。重練時<b>連續答對 2 次</b>，那一題就會自動移出。</p>
       <div class="ctrl"><button class="chip big on" id="wGo">重練這 ${ids.length} 題</button><button class="chip" id="wClr">清空這一課的錯題</button></div>` +
@@ -420,13 +407,19 @@ function setupQuiz(PRE, Q, SECS){
           <div class="tip">點一下看答案</div>
           <div class="ans">答案：<b>${q.o[q.a]}</b><br>${q.why}<br><a href="#${q.sec}">回去看 ${SECS[q.sec]}</a></div></div>`; }).join("");
     wb.querySelectorAll(".w").forEach(d => d.addEventListener("click", e => { if(e.target.tagName !== "A") d.classList.toggle("open"); }));
-    $("wGo").onclick = () => start(shuffle(myWrong()), "錯題重練");
+    $("wGo").onclick = () => {
+      practicing = true; const list = shuffle(myWrong()); let done = 0, ok = 0;
+      wb.innerHTML = `<p class="lead"><b>錯題重練</b>：共 ${list.length} 題。</p><div id="wList"></div><div id="wScore" style="font-weight:bold; margin-top:12px;"></div>
+        <div class="ctrl"><button class="chip big on" id="wBack">回到錯題清單</button></div>`;
+      list.forEach((i, n) => $("wList").appendChild(card(i, n+1, right => { done++; if(right) ok++; $("wScore").textContent = `已作答 ${done} / ${list.length} 題，答對 ${ok} 題`; })));
+      $("wBack").onclick = () => { practicing = false; renderWrong(); $("sW").scrollIntoView({ behavior:"smooth" }); };
+    };
     $("wClr").onclick = () => {
       if(!confirm("確定要清空這一課的錯題嗎？清掉就找不回來。")) return;
       const w2 = loadW(); Q.forEach((_,i) => delete w2[key(i)]); saveW(w2); renderWrong();
     };
   }
-  home(); renderWrong();
+  renderQuiz(); renderWrong();
 }
 
 
