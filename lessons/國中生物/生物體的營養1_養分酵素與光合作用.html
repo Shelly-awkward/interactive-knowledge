@@ -122,7 +122,7 @@
 </header>
 
 <nav class="toc">
-  <a href="#s1">① 食物裡的養分</a><a href="#s2">② 檢驗養分</a><a href="#s3">③ 代謝和酵素</a><a href="#s4">④ 光合作用</a><a href="#s5">⑤ 葉子裡面</a><a href="#s6">⑥ 驗葉子的澱粉</a><a href="#sQ">⑦ 小測驗</a><a href="#sW">⑧ 錯題本</a>
+  <a href="#s1">① 食物裡的養分</a><a href="#s2">② 檢驗養分</a><a href="#s3">③ 代謝和酵素</a><a href="#s4">④ 光合作用</a><a href="#s4b">④之二 製糖廠</a><a href="#s5">⑤ 葉子裡面</a><a href="#s6">⑥ 驗葉子的澱粉</a><a href="#sQ">⑦ 小測驗</a><a href="#sW">⑧ 錯題本</a>
 </nav>
 
 <div class="card" id="s1">
@@ -213,8 +213,32 @@
     <tr><td>能量怎麼變</td><td><span class="hide">光能 → 化學能（存在葡萄糖裡）</span></td></tr>
     <tr><td>葡萄糖太多怎麼辦</td><td><span class="hide">轉成澱粉存起來</span></td></tr>
   </table></div>
-  <p class="note">補充：光合作用可以想成兩步。第一步，葉綠素吸收光，把水分解，放出氧氣。第二步，用二氧化碳做出葡萄糖。所以氧氣是從<b>水</b>來的。</p>
+  <p class="note">光合作用其實分成兩條生產線：<b>光反應</b>和<b>暗反應</b>。氧氣是光反應把<b>水</b>分解出來的。詳細過程看下面的「④之二 光合製糖廠」。</p>
   <p class="note"><b>為什麼兩邊都有水？</b>水是原料，反應過程中也會產生新的水。所以箭頭左邊、右邊都要寫水。產物一共三個：<b>葡萄糖、氧氣、水</b>。</p>
+</div>
+
+<div class="card" id="s4b">
+  <h2>④之二　光合製糖廠：兩條生產線</h2>
+  <p class="lead">工廠地點：<b>細胞質</b>裡的<b>葉綠體</b>。裡面有兩條生產線，一條接一條。按「太陽下山」看看會發生什麼事。</p>
+  <div class="ctrl"><button class="chip big on" id="fcDay">現在是白天　按一下讓太陽下山</button></div>
+  <div class="stage"><canvas id="cvFac"></canvas></div>
+  <div class="legend"><span><i style="background:#3b82f6"></i>水</span><span><i style="background:#f8fafc; border:1px solid #94a3b8"></i>氧氣</span><span><i style="background:#ef4444"></i>氫離子</span><span><i style="background:#facc15"></i>能量</span><span><i style="background:#6b7280"></i>二氧化碳</span><span><i style="background:#f97316"></i>葡萄糖</span></div>
+  <div class="status" id="fcMsg"></div>
+  <div class="count" style="grid-template-columns:repeat(3,1fr)"><div><small>放出的氧氣</small><b id="fcO">0</b></div><div><small>做出的葡萄糖</small><b id="fcG">0</b></div><div><small>產生的水</small><b id="fcW">0</b></div></div>
+  <div class="tw"><table>
+    <tr><th></th><th>第一生產線</th><th>第二生產線</th></tr>
+    <tr><th>名稱</th><td><span class="hide">光反應</span></td><td><span class="hide">暗反應</span></td></tr>
+    <tr><th>誰負責</th><td><span class="hide">葉綠素</span></td><td><span class="hide">酵素</span></td></tr>
+    <tr><th>進來的原料</th><td><span class="hide">根吸收的水</span></td><td><span class="hide">氫離子、能量，加上氣孔進來的二氧化碳</span></td></tr>
+    <tr><th>做出什麼</th><td><span class="hide">氧氣、氫離子、能量</span></td><td><span class="hide">葡萄糖、水</span></td></tr>
+    <tr><th>去哪裡</th><td><span class="hide">氧氣從氣孔放出去；氫離子和能量交給第二生產線</span></td><td><span class="hide">葡萄糖是最終產物；水從氣孔放出去</span></td></tr>
+    <tr><th>要不要光</th><td><span class="hide">要</span></td><td><span class="hide">不直接用光，但要靠光反應供貨</span></td></tr>
+  </table></div>
+  <div class="key"><b>太陽下山了：</b>光反應停止 → 沒有氫離子和能量 → 暗反應也跟著停 → 整個光合作用停工。</div>
+  <div class="life"><b>隔壁的呼吸發電廠「粒線體」</b>24 小時都在工作。不管動物還是植物，只要是活的細胞，<b>呼吸作用</b>就不停地進行。</div>
+  <h3>葡萄糖出貨之後</h3>
+  <p class="lead">其他細胞收到葡萄糖，可以直接拿來生長、利用。也可以靠<b>其他酵素</b>把它轉變成別的物質：</p>
+  <div class="ctrl"><span class="tag">澱粉</span><span class="tag">纖維素</span><span class="tag">蛋白質</span><span class="tag">脂質</span></div>
 </div>
 
 <div class="card" id="s5">
@@ -370,75 +394,62 @@ const WKEY = "bio_ch2_wrong_v1";
 function loadW(){ try{ return JSON.parse(localStorage.getItem(WKEY) || "{}"); }catch(e){ return {}; } }
 function saveW(w){ try{ localStorage.setItem(WKEY, JSON.stringify(w)); }catch(e){} }
 function setupQuiz(PRE, Q, SECS){
+  // 比照「人體的循環」：全部題目一次列出，點答案馬上看對錯和原因。
   const box = $("quizBox"), wb = $("wrongBox");
   const key = i => PRE + "-" + i;
-  let list = [], pos = 0, ok = 0, missed = [], guessed = [], mode = "";
+  let practicing = false;
   const myWrong = () => { const w = loadW(); return Q.map((_,i)=>i).filter(i => w[key(i)]); };
-
-  function home(){
-    box.innerHTML = `<p class="lead">題庫共 ${Q.length} 題。每題點一個答案，馬上告訴你對不對、為什麼。答錯的題目會自動收進下面的錯題本。<b>答對但其實是猜的</b>，按「這題我是猜的」，也會收進去。</p>
-      <div class="ctrl"><button class="chip big on" id="qGo10">抽 10 題</button><button class="chip big" id="qGoAll">全部 ${Q.length} 題</button></div>`;
-    $("qGo10").onclick = () => start(shuffle(Q.map((_,i)=>i)).slice(0,10), "小測驗");
-    $("qGoAll").onclick = () => start(shuffle(Q.map((_,i)=>i)), "小測驗");
-  }
-  function start(idx, m){ list = idx; mode = m; pos = 0; ok = 0; missed = []; guessed = []; show(); box.scrollIntoView({ block:"start", behavior:"smooth" }); }
-  function show(){
-    const i = list[pos], q = Q[i];
-    box.innerHTML = `<div class="qbar"><span>${mode}　第 ${pos+1} / ${list.length} 題</span><span id="qOk">答對 ${ok} 題</span></div>
-      <div class="prog"><div style="width:${pos/list.length*100}%"></div></div>
-      <div class="q"><p class="t">${q.q}</p><div class="opts"></div><div class="why"></div></div>
-      <div class="ctrl"><button class="chip big on" id="qNext" style="display:none">${pos+1 < list.length ? "下一題" : "看結果"}</button><button class="chip big" id="qGuess" style="display:none">這題我是猜的</button></div>`;
-    const qd = box.querySelector(".q"), opts = qd.querySelector(".opts");
+  function card(i, num, onAns){
+    const q = Q[i], d = document.createElement("div"); d.className = "q";
+    d.innerHTML = `<p class="t">${num}. ${q.q}</p><div class="opts"></div><div class="why"></div>`;
+    const opts = d.querySelector(".opts");
     shuffle(q.o.map((_,k)=>k)).forEach(k => {
       const b = document.createElement("button"); b.textContent = q.o[k]; b.dataset.k = k;
       b.addEventListener("click", ()=>{
-        if(qd.classList.contains("done")) return;
-        qd.classList.add("done"); pracCount++;
+        if(d.classList.contains("done")) return;
+        d.classList.add("done"); pracCount++;
         const right = k === q.a, w = loadW(), id = key(i), prev = w[id] ? Object.assign({}, w[id]) : null;
-        if(right){
-          ok++; pracOk++;
-          if(w[id]){ w[id].s = (w[id].s||0) + 1; if(w[id].s >= 2) delete w[id]; }
-        }else{
-          missed.push(i);
-          w[id] = { n: ((w[id] && w[id].n) || 0) + 1, s: 0, g: (w[id] && w[id].g) || 0 };
-        }
+        if(right){ pracOk++; if(w[id]){ w[id].s = (w[id].s||0) + 1; if(w[id].s >= 2) delete w[id]; } }
+        else w[id] = { n: ((w[id] && w[id].n) || 0) + 1, s: 0, g: (w[id] && w[id].g) || 0 };
         saveW(w);
-        $("qOk").textContent = `答對 ${ok} 題`;
         b.classList.add(right ? "ok" : "no");
         opts.querySelector(`[data-k="${q.a}"]`).classList.add("ok");
-        qd.querySelector(".why").innerHTML = (right ? "<b>答對了。</b>" : "<b>答錯了，已收進錯題本。</b>") + q.why;
-        $("qNext").style.display = "";
+        const why = d.querySelector(".why");
+        why.innerHTML = (right ? "<b>答對了。</b>" : "<b>再想一下。已收進錯題本。</b>") + q.why + (right ? "" : `　<a href="#${q.sec}">回去看 ${SECS[q.sec]}</a>`);
         if(right){
           // 答對但其實是猜的：一樣收進錯題本，而且這次不算「答對一次」
-          const gb = $("qGuess"); gb.style.display = "";
+          const gb = document.createElement("button"); gb.className = "chip"; gb.style.marginLeft = "8px"; gb.textContent = "這題我是猜的";
           gb.onclick = () => {
             const w2 = loadW(), old = prev || {};
             w2[id] = { n: old.n || 0, s: 0, g: (old.g || 0) + 1 }; saveW(w2);
-            guessed.push(i); gb.disabled = true; gb.textContent = "已收進錯題本";
+            gb.disabled = true; gb.textContent = "已收進錯題本";
             logEv({ type:"quiz_guess", q:i+1 }); renderWrong();
           };
+          why.appendChild(gb);
         }
         logEv({ type:"quiz", q:i+1, ok:right });
-        renderWrong();
+        onAns(right); renderWrong();
       });
       opts.appendChild(b);
     });
-    $("qNext").onclick = () => { pos++; pos < list.length ? show() : result(); };
+    return d;
   }
-  function result(){
-    const n = list.length;
-    cloudSend({ type: mode, detail: `${CH} ${n} 題`, score: `${ok}/${n}` });
-    const miss = [...new Set(missed)], gs = [...new Set(guessed)];
-    box.innerHTML = `<div class="res"><div class="n">${ok} / ${n}</div>
-      <p>${ok === n && !gs.length ? "全對！這一課很熟了。" : [miss.length ? `有 ${miss.length} 題答錯` : "", gs.length ? `有 ${gs.length} 題是猜對的` : ""].filter(Boolean).join("，") + "，已經放進錯題本。"}</p></div>
-      ${miss.concat(gs).map(i => `<div class="q done"><p class="t">${Q[i].q}</p><div class="why" style="display:block">${missed.includes(i) ? "" : "（猜對的）"}正確答案：<b>${Q[i].o[Q[i].a]}</b>　<a href="#${Q[i].sec}">回去看 ${SECS[Q[i].sec]}</a></div></div>`).join("")}
-      <div class="ctrl" style="justify-content:center; margin-top:12px;"><button class="chip big on" id="qAgain">再來一回</button>${myWrong().length ? `<button class="chip big" id="qToW">去錯題本</button>` : ""}</div>`;
-    $("qAgain").onclick = home;
-    if($("qToW")) $("qToW").onclick = () => $("sW").scrollIntoView({ behavior:"smooth" });
+  function renderQuiz(){
+    let done = 0, ok = 0;
+    box.innerHTML = `<p class="lead">共 ${Q.length} 題。每題點一個答案，馬上告訴你對不對、為什麼。答錯的會自動收進下面的錯題本。<b>答對但其實是猜的</b>，按「這題我是猜的」，也會收進去。</p>
+      <div id="qList"></div><div id="score" style="font-weight:bold; margin-top:12px;"></div>
+      <div class="ctrl"><button class="chip" id="qReset">全部重做一次</button></div>`;
+    Q.forEach((_, i) => $("qList").appendChild(card(i, i+1, right => {
+      done++; if(right) ok++;
+      $("score").textContent = `已作答 ${done} / ${Q.length} 題，答對 ${ok} 題`;
+      if(done === Q.length) cloudSend({ type:"小測驗", detail:`${CH} ${Q.length} 題`, score:`${ok}/${Q.length}` });
+    })));
+    $("qReset").onclick = () => { renderQuiz(); $("sQ").scrollIntoView({ behavior:"smooth" }); };
   }
   function renderWrong(){
+    if(practicing) return;
     const w = loadW(), ids = myWrong();
-    if(!ids.length){ wb.innerHTML = `<div class="empty">目前沒有錯題。先去做小測驗，答錯的會自動出現在這裡。</div>`; return; }
+    if(!ids.length){ wb.innerHTML = `<div class="empty">目前沒有錯題。先去做小測驗，答錯的和猜對的會自動出現在這裡。</div>`; return; }
     const wt = i => (w[key(i)].n || 0) + (w[key(i)].g || 0); ids.sort((a,b) => wt(b) - wt(a));
     wb.innerHTML = `<p class="lead">現在有 <b>${ids.length}</b> 題。答錯的和猜對的都在這裡。先自己想答案，再點題目看解答。重練時<b>連續答對 2 次</b>，那一題就會自動移出。</p>
       <div class="ctrl"><button class="chip big on" id="wGo">重練這 ${ids.length} 題</button><button class="chip" id="wClr">清空這一課的錯題</button></div>` +
@@ -447,13 +458,19 @@ function setupQuiz(PRE, Q, SECS){
           <div class="tip">點一下看答案</div>
           <div class="ans">答案：<b>${q.o[q.a]}</b><br>${q.why}<br><a href="#${q.sec}">回去看 ${SECS[q.sec]}</a></div></div>`; }).join("");
     wb.querySelectorAll(".w").forEach(d => d.addEventListener("click", e => { if(e.target.tagName !== "A") d.classList.toggle("open"); }));
-    $("wGo").onclick = () => start(shuffle(myWrong()), "錯題重練");
+    $("wGo").onclick = () => {
+      practicing = true; const list = shuffle(myWrong()); let done = 0, ok = 0;
+      wb.innerHTML = `<p class="lead"><b>錯題重練</b>：共 ${list.length} 題。</p><div id="wList"></div><div id="wScore" style="font-weight:bold; margin-top:12px;"></div>
+        <div class="ctrl"><button class="chip big on" id="wBack">回到錯題清單</button></div>`;
+      list.forEach((i, n) => $("wList").appendChild(card(i, n+1, right => { done++; if(right) ok++; $("wScore").textContent = `已作答 ${done} / ${list.length} 題，答對 ${ok} 題`; })));
+      $("wBack").onclick = () => { practicing = false; renderWrong(); $("sW").scrollIntoView({ behavior:"smooth" }); };
+    };
     $("wClr").onclick = () => {
       if(!confirm("確定要清空這一課的錯題嗎？清掉就找不回來。")) return;
       const w2 = loadW(); Q.forEach((_,i) => delete w2[key(i)]); saveW(w2); renderWrong();
     };
   }
-  home(); renderWrong();
+  renderQuiz(); renderWrong();
 }
 
 
@@ -671,6 +688,85 @@ function setupQuiz(PRE, Q, SECS){
   msg();
 })();
 
+// ===================== ④之二 光合製糖廠 =====================
+(function(){
+  const W = 640, H = 390, Y1 = 128, Y2 = 268, A = [220, Y1], B = [410, Y2];
+  const c = scene("cvFac", W, H, draw);
+  let day = true, P = [], tW = 0, tC = 0, stock = 0, busy = 0, nO = 0, nG = 0, nW = 0, lastState = "";
+  const COL = { h2o:["#3b82f6","水","#fff"], o2:["#f8fafc","O₂","#0f172a"], h:["#ef4444","H⁺","#fff"], en:["#facc15","能","#713f12"], co2:["#6b7280","CO₂","#fff"], glu:["#f97316","糖","#fff"], w2:["#7dd3fc","水","#0f172a"] };
+  const add = (type, pts, sp) => P.push({ type, pts, t:0, sp:sp || .45 });
+  function pos(p){ const n = p.pts.length-1, u = clamp(p.t,0,.9999)*n, i = Math.floor(u), f = u-i; return [lerp(p.pts[i][0],p.pts[i+1][0],f), lerp(p.pts[i][1],p.pts[i+1][1],f)]; }
+  function msg(){
+    const st = day ? "day" : stock > 0 ? "dusk" : "night";
+    if(st === lastState) return; lastState = st;
+    $("fcMsg").innerHTML = st === "day" ? "<b class='big'>白天，兩條生產線都在動。</b>葉綠素照到光，把水分解成氧氣、氫離子和能量。酵素再用氫離子、能量和二氧化碳，做出葡萄糖和水。"
+      : st === "dusk" ? "<b class='big'>太陽下山，光反應停了。</b>第二生產線還在用剩下的氫離子和能量。看它能撐多久。"
+      : "<b class='big'>整個工廠停工。</b>光反應停止，沒有氫離子和能量，暗反應也只好跟著停。隔壁的粒線體還在工作。";
+  }
+  $("fcDay").onclick = () => { day = !day; $("fcDay").classList.toggle("on", day); $("fcDay").textContent = day ? "現在是白天　按一下讓太陽下山" : "現在是晚上　按一下讓太陽出來"; msg(); };
+  function worker(x, y, col, name, awake, hat){
+    c.fillStyle = col; c.strokeStyle = "#1f2937"; c.lineWidth = 2;
+    c.beginPath(); c.ellipse(x, y+6, 20, 16, 0, 0, 7); c.fill(); c.stroke();
+    c.beginPath(); c.arc(x, y-20, 14, 0, 7); c.fill(); c.stroke();
+    if(hat){ c.fillStyle = "#fff"; c.fillRect(x-9, y-42, 18, 10); c.strokeRect(x-9, y-42, 18, 10); }
+    c.strokeStyle = "#1f2937"; c.lineWidth = 2; c.beginPath();
+    if(awake){ c.arc(x-5, y-22, 1.6, 0, 7); c.moveTo(x+6.6, y-22); c.arc(x+5, y-22, 1.6, 0, 7); }
+    else { c.moveTo(x-8, y-22); c.lineTo(x-2, y-22); c.moveTo(x+2, y-22); c.lineTo(x+8, y-22); }
+    c.stroke();
+    label(c, name, x, y+36, { size:13 });
+    if(!awake) label(c, "休息", x+34, y-34, { size:11, color:"#6b7280" });
+  }
+  function draw(dt, now){
+    if(day){ tW += dt; if(tW > .9){ tW = 0; add("h2o", [[14,Y1],[A[0]-22,Y1]]); } }
+    tC += dt; if(tC > 1.1){ tC = 0; add("co2", [[14,Y2],[B[0]-24,Y2]]); }
+    busy = Math.max(0, busy - dt);
+    P.forEach(p => p.t += p.sp*dt);
+    const old = P; P = [];          // 先換成新陣列，下面 add() 產生的新粒子才不會被丟掉
+    old.forEach(p => {
+      if(p.t < 1){ P.push(p); return; }
+      if(p.type === "h2o"){ add("o2", [[A[0],Y1-30],[300,60],[340,8]], .5); add("h", [[A[0]+20,Y1-6],[B[0]-10,Y1-6],[B[0]-10,Y2-40]], .4); add("en", [[A[0]+20,Y1+8],[B[0]+10,Y1+8],[B[0]+10,Y2-40]], .4); }
+      if(p.type === "o2"){ nO++; $("fcO").textContent = nO; }
+      if(p.type === "en") stock++;
+      if(p.type === "co2" && stock > 0){ stock--; busy = .5; add("glu", [[B[0]+22,Y2+4],[626,Y2+4]], .5); add("w2", [[B[0]+22,Y2-10],[540,210],[626,196]], .5); }
+      if(p.type === "glu"){ nG++; $("fcG").textContent = nG; }
+      if(p.type === "w2"){ nW++; $("fcW").textContent = nW; }
+    });
+    msg();
+    // 畫面
+    c.fillStyle = day ? "#e0f2fe" : "#1e293b"; c.fillRect(0,0,W,H);
+    c.fillStyle = day ? "#dcfce7" : "#a7c4b0"; c.strokeStyle = "#166534"; c.lineWidth = 3; rr(c, 62, 46, 500, 300, 46); c.fill(); c.stroke();
+    label(c, "葉綠體", 520, 66, { size:13, color:"#166534", halo:0 });
+    const tc = day ? "#1f2937" : "#f1f5f9", halo = day ? "rgba(224,242,254,.9)" : "rgba(30,41,59,.9)";
+    if(day){
+      ball(c, 40, 30, 22, "#fbbf24"); label(c, "光", 40, 30, { halo:0, color:"#7c2d12", size:14 });
+      c.strokeStyle = "#f59e0b"; c.lineWidth = 3; c.setLineDash([8,8]); c.lineDashOffset = -now*40;
+      [[60,42,A[0]-22,Y1-36],[64,32,A[0]-4,Y1-44]].forEach(l => { c.beginPath(); c.moveTo(l[0],l[1]); c.lineTo(l[2],l[3]); c.stroke(); }); c.setLineDash([]);
+    }else{ ball(c, 40, 30, 18, "#e2e8f0"); ball(c, 49, 24, 15, "#1e293b"); }
+    // 兩條輸送帶
+    [[Y1,"第一生產線：光反應",262],[Y2,"第二生產線：暗反應",84]].forEach(b => {
+      c.fillStyle = "#cbd5e1"; c.fillRect(80, b[0]+22, 464, 8);
+      c.fillStyle = "#fff"; c.strokeStyle = "#475569"; c.lineWidth = 1.5; rr(c, b[2], b[0]+34, 150, 22, 5); c.fill(); c.stroke();
+      label(c, b[1], b[2]+75, b[0]+45, { size:12, halo:0 });
+    });
+    worker(A[0], Y1, "#4ade80", "葉綠素", day);
+    worker(B[0], Y2, "#fdba74", "酵素", stock > 0 || busy > 0, true);
+    label(c, "存貨 " + stock, B[0]+56, Y2-42, { size:12, color: stock ? "#b91c1c" : "#6b7280", halo:"rgba(220,252,231,.9)" });
+    // 進出口文字
+    label(c, "水（根吸收）", 14, Y1-22, { size:12, color:tc, halo, align:"left" });
+    label(c, "二氧化碳（氣孔進來）", 14, Y2-22, { size:12, color:tc, halo, align:"left" });
+    label(c, "氧氣 → 氣孔", 404, 18, { size:12, color:tc, halo });
+    label(c, "水 → 氣孔", 594, 178, { size:12, color:tc, halo });
+    label(c, "葡萄糖", 600, Y2+26, { size:12, color:tc, halo });
+    label(c, "氫離子和能量", 490, Y1+64, { size:12, color:"#b91c1c", halo:"rgba(220,252,231,.9)" });
+    // 粒線體
+    const pu = 1 + .06*Math.sin(now*5);
+    c.fillStyle = "#fca5a5"; c.strokeStyle = "#991b1b"; c.lineWidth = 2; c.beginPath(); c.ellipse(150, 366, 46*pu, 15*pu, 0, 0, 7); c.fill(); c.stroke();
+    label(c, "粒線體", 150, 366, { size:12, halo:0, color:"#7f1d1d" });
+    label(c, "呼吸作用 24 小時不停", 290, 368, { size:12, color:tc, halo });
+    P.forEach(p => { const q = pos(p), s = COL[p.type]; ball(c, q[0], q[1], 11, s[0], s[1], s[2]); });
+  }
+})();
+
 // ===================== ⑤ 葉片剖面 =====================
 (function(){
   const NS = "http://www.w3.org/2000/svg", svg = $("leafSvg");
@@ -773,12 +869,19 @@ setupQuiz("L1", [
   { q:"光合作用在細胞的哪個構造裡進行？", o:["細胞核","細胞膜","葉綠體","液泡"], a:2, sec:"s4", why:"葉綠體裡有葉綠素，可以吸收光。" },
   { q:"光合作用把什麼能量，轉成什麼能量？", o:["化學能轉成光能","光能轉成化學能","熱能轉成光能","光能轉成電能"], a:1, sec:"s4", why:"把光能轉成化學能，存在葡萄糖裡。" },
   { q:"植物做出來的葡萄糖如果用不完，通常會怎麼處理？", o:["從氣孔排掉","轉成澱粉存起來","變成氧氣","變成水"], a:1, sec:"s4", why:"多的葡萄糖會轉成澱粉儲存。所以可以用碘液檢驗葉子。" },
+  { q:"光合製糖廠的第一生產線「光反應」，是誰負責的？", o:["葉綠素","酵素","粒線體","氣孔"], a:0, sec:"s4b", why:"光反應由葉綠素負責，照到光才會動。第二生產線暗反應由酵素負責。" },
+  { q:"光反應把水分解之後，會得到哪些東西？", o:["葡萄糖和水","氧氣、氫離子和能量","二氧化碳和氧氣","澱粉和氧氣"], a:1, sec:"s4b", why:"水被分解成氧氣和氫離子，同時產生能量。氧氣從氣孔放出去，氫離子和能量交給暗反應。" },
+  { q:"光合作用放出的氧氣，是從哪一種原料來的？", o:["二氧化碳","水","葡萄糖","葉綠素"], a:1, sec:"s4b", why:"氧氣是光反應分解水得到的，不是從二氧化碳來的。" },
+  { q:"暗反應用哪些東西，做出葡萄糖和水？", o:["氧氣和水","光和葉綠素","氫離子、能量和二氧化碳","澱粉和酵素"], a:2, sec:"s4b", why:"酵素把光反應送來的氫離子、能量，加上氣孔進來的二氧化碳，做成葡萄糖和水。" },
+  { q:"暗反應不直接用到光。為什麼太陽下山後它也會停？", o:["酵素晚上會被破壞","氣孔晚上打不開，完全沒有二氧化碳","光反應停了，沒有氫離子和能量可以用","葉綠體晚上會消失"], a:2, sec:"s4b", why:"暗反應的原料靠光反應供應。光反應一停，暗反應沒貨可用，只好跟著停。" },
+  { q:"植物細胞裡，哪一個是 24 小時都在進行的？", o:["光反應","暗反應","光合作用","呼吸作用"], a:3, sec:"s4b", why:"呼吸作用在粒線體進行。只要是活的細胞，不分白天晚上都在進行。" },
+  { q:"葡萄糖可以靠其他酵素轉變成別的物質。下列哪一個「不是」？", o:["澱粉","纖維素","蛋白質和脂質","氧氣"], a:3, sec:"s4b", why:"葡萄糖可以轉變成澱粉、纖維素、蛋白質、脂質等。氧氣是光反應分解水產生的。" },
   { q:"二氧化碳和氧氣進出葉片，主要經過哪裡？", o:["葉脈","角質層","氣孔","柵狀組織"], a:2, sec:"s5", why:"氣孔由兩個保衛細胞圍成，是氣體進出的門。" },
   { q:"下列葉片的細胞，哪一種「沒有」葉綠體？", o:["保衛細胞","柵狀組織的細胞","海綿組織的細胞","一般的表皮細胞"], a:3, sec:"s5", why:"一般表皮細胞沒有葉綠體。保衛細胞是表皮上的例外，有葉綠體。" },
   { q:"檢驗葉片的澱粉時，為什麼要用酒精隔水加熱？", o:["把澱粉溶出來","把葉綠素溶出來，才看得清楚顏色","讓葉片長大","殺死細菌"], a:1, sec:"s6", why:"酒精可以溶出葉綠素。葉片變白之後，碘液的顏色變化才看得清楚。" },
   { q:"被鋁箔遮住的葉片部位，滴上碘液會是什麼顏色？為什麼？", o:["藍黑色，因為有澱粉","黃褐色，因為沒照光、沒有做出澱粉","綠色，因為葉綠素還在","紅色，因為有糖"], a:1, sec:"s6", why:"沒照光就不能行光合作用，沒有澱粉，碘液維持黃褐色。" },
   { q:"酒精為什麼要「隔水」加熱，不能直接用火燒？", o:["酒精容易燒起來，很危險","酒精加熱會變成水","直接加熱會讓葉子變綠","這樣比較省酒精"], a:0, sec:"s6", why:"酒精是易燃物。隔著一鍋水加熱才安全。" }
-], { s1:"① 食物裡的養分", s2:"② 檢驗養分", s3:"③ 代謝和酵素", s4:"④ 光合作用", s5:"⑤ 葉子裡面", s6:"⑥ 驗葉子的澱粉" });
+], { s1:"① 食物裡的養分", s2:"② 檢驗養分", s3:"③ 代謝和酵素", s4:"④ 光合作用", s4b:"④之二 光合製糖廠", s5:"⑤ 葉子裡面", s6:"⑥ 驗葉子的澱粉" });
 
 runScenes();
 
