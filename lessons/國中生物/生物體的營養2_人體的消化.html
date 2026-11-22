@@ -113,6 +113,25 @@
   .mx td button.sel{background:var(--soft); border-color:var(--main); font-weight:bold;}
   .mx td button.ok{background:var(--green-soft); border-color:var(--green);}
   .mx td button.no{background:var(--red-soft); border-color:var(--red);}
+/* ===== 測驗（比照「人體的循環」：一回 10 題、答錯診斷、跳回複習、弱點分析）===== */
+  .q .qhead{display:flex; justify-content:space-between; gap:8px; font-size:.84rem; color:var(--sub); margin-bottom:4px;}
+  .qtag{display:inline-block; background:#f1f5f9; border-radius:99px; padding:0 9px; font-size:.78rem; color:#475569; white-space:nowrap;}
+  .guess{display:block; font-size:.88rem; color:var(--sub); margin:2px 0 8px; cursor:pointer;}
+  .fb{margin-top:10px; border-radius:10px; padding:10px 12px; font-size:.94rem;}
+  .fb.good{background:var(--green-soft);} .fb.bad{background:var(--red-soft);}
+  .fb p{margin-top:6px;}
+  .dx{display:inline-block; background:#fff; border:1px solid #fca5a5; color:#b91c1c; border-radius:6px; padding:0 7px; font-size:.8rem; font-weight:bold; margin-right:6px;}
+  .dx.k{border-color:#86efac; color:#15803d;}
+  .chip.jump{border-color:var(--blue); color:var(--blue);}
+  .miss{border-top:1px dashed var(--border); padding-top:8px; margin-top:8px;} .miss ul{font-size:.9rem; color:var(--sub);} .miss .chip{margin-left:6px;}
+  .abars{display:grid; gap:6px;}
+  .abar{display:grid; grid-template-columns:9.5em 1fr 6.5em; gap:8px; align-items:center; font-size:.88rem;}
+  .abar .tr{height:12px; background:#f1f5f9; border-radius:99px; overflow:hidden;} .abar .tr i{display:block; height:100%; border-radius:99px;}
+  .abar .pc{color:var(--sub); text-align:right;}
+  .wb{font-size:.92rem;} .wb li{margin-bottom:6px;} .wb .chip{padding:2px 10px; font-size:.8rem;}
+  .card.flash{animation:flash 2.6s;} @keyframes flash{0%,60%{box-shadow:0 0 0 4px #facc15;}100%{box-shadow:0 0 0 0 transparent;}}
+  #backBtn{position:fixed; right:14px; bottom:16px; z-index:20; background:var(--blue); color:#fff; border:none; border-radius:99px; padding:11px 18px; font-family:inherit; font-size:1rem; font-weight:bold; box-shadow:0 4px 14px rgba(0,0,0,.25); cursor:pointer;}
+  [hidden]{display:none !important;}
 </style>
 </head>
 <body>
@@ -124,7 +143,7 @@
 </header>
 
 <nav class="toc">
-  <a href="#s1">① 為什麼要消化</a><a href="#s2">② 跟食物走一趟</a><a href="#s3">③ 消化腺和消化液</a><a href="#s4">④ 誰消化誰</a><a href="#s5">⑤ 小腸怎麼吸收</a><a href="#s6">⑥ 兩個分類練習</a><a href="#sQ">⑦ 小測驗</a><a href="#sW">⑧ 錯題本</a>
+  <a href="#s1">① 為什麼要消化</a><a href="#s2">② 跟食物走一趟</a><a href="#s3">③ 消化腺和消化液</a><a href="#s4">④ 誰消化誰</a><a href="#s5">⑤ 小腸怎麼吸收</a><a href="#s6">⑥ 兩個分類練習</a><a href="#sQ">⑦ 考考你</a><a href="#sW">⑧ 弱點和錯題本</a>
 </nav>
 
 <div class="card" id="s1">
@@ -208,13 +227,21 @@
 </div>
 
 <div class="card" id="sQ">
-  <h2>⑦ 小測驗</h2>
-  <div id="quizBox"></div>
+  <h2>⑦ 考考你：是真的懂，還是只是背起來？</h2>
+  <p class="lead">一回 10 題，一次一題。每一段都會考到。</p>
+  <ul style="font-size:.92rem">
+    <li>答錯時，會告訴你<b>可能是哪裡想錯</b>，還有一個按鈕直接跳回那一段。</li>
+    <li>不確定就勾「用猜的」。猜對的題目也會進錯題本，之後再考一次。</li>
+    <li>下一回會先出<b>上次錯的</b>和<b>還沒做過的</b>。</li>
+  </ul>
+  <div id="quiz"></div>
 </div>
 
 <div class="card" id="sW">
-  <h2>⑧ 我的錯題本</h2>
-  <div id="wrongBox"></div>
+  <h2>⑧ 我的弱點和錯題本</h2>
+  <div id="ana"></div>
+</div>
+<button id="backBtn" hidden>↩ 回到題目</button>
 </div>
 
 <a class="nextl" href="生物體的營養1_養分酵素與光合作用.html">← 回上一課：① 養分、酵素與光合作用</a>
@@ -337,90 +364,6 @@ function classify(boxId, cats, items){
   });
 }
 
-// ===== 小測驗＋錯題本 =====
-// 錯題存在這台裝置的瀏覽器裡。兩課共用一個存放處，各課只顯示自己的題目。
-const WKEY = "bio_ch2_wrong_v1";
-function loadW(){ try{ return JSON.parse(localStorage.getItem(WKEY) || "{}"); }catch(e){ return {}; } }
-function saveW(w){ try{ localStorage.setItem(WKEY, JSON.stringify(w)); }catch(e){} }
-function setupQuiz(PRE, Q, SECS){
-  // 比照「人體的循環」：全部題目一次列出，點答案馬上看對錯和原因。
-  const box = $("quizBox"), wb = $("wrongBox");
-  const key = i => PRE + "-" + i;
-  let practicing = false;
-  const myWrong = () => { const w = loadW(); return Q.map((_,i)=>i).filter(i => w[key(i)]); };
-  function card(i, num, onAns){
-    const q = Q[i], d = document.createElement("div"); d.className = "q";
-    d.innerHTML = `<p class="t">${num}. ${q.q}</p><div class="opts"></div><div class="why"></div>`;
-    const opts = d.querySelector(".opts");
-    shuffle(q.o.map((_,k)=>k)).forEach(k => {
-      const b = document.createElement("button"); b.textContent = q.o[k]; b.dataset.k = k;
-      b.addEventListener("click", ()=>{
-        if(d.classList.contains("done")) return;
-        d.classList.add("done"); pracCount++;
-        const right = k === q.a, w = loadW(), id = key(i), prev = w[id] ? Object.assign({}, w[id]) : null;
-        if(right){ pracOk++; if(w[id]){ w[id].s = (w[id].s||0) + 1; if(w[id].s >= 2) delete w[id]; } }
-        else w[id] = { n: ((w[id] && w[id].n) || 0) + 1, s: 0, g: (w[id] && w[id].g) || 0 };
-        saveW(w);
-        b.classList.add(right ? "ok" : "no");
-        opts.querySelector(`[data-k="${q.a}"]`).classList.add("ok");
-        const why = d.querySelector(".why");
-        why.innerHTML = (right ? "<b>答對了。</b>" : "<b>再想一下。已收進錯題本。</b>") + q.why + (right ? "" : `　<a href="#${q.sec}">回去看 ${SECS[q.sec]}</a>`);
-        if(right){
-          // 答對但其實是猜的：一樣收進錯題本，而且這次不算「答對一次」
-          const gb = document.createElement("button"); gb.className = "chip"; gb.style.marginLeft = "8px"; gb.textContent = "這題我是猜的";
-          gb.onclick = () => {
-            const w2 = loadW(), old = prev || {};
-            w2[id] = { n: old.n || 0, s: 0, g: (old.g || 0) + 1 }; saveW(w2);
-            gb.disabled = true; gb.textContent = "已收進錯題本";
-            logEv({ type:"quiz_guess", q:i+1 }); renderWrong();
-          };
-          why.appendChild(gb);
-        }
-        logEv({ type:"quiz", q:i+1, ok:right });
-        onAns(right); renderWrong();
-      });
-      opts.appendChild(b);
-    });
-    return d;
-  }
-  function renderQuiz(){
-    let done = 0, ok = 0;
-    box.innerHTML = `<p class="lead">共 ${Q.length} 題。每題點一個答案，馬上告訴你對不對、為什麼。答錯的會自動收進下面的錯題本。<b>答對但其實是猜的</b>，按「這題我是猜的」，也會收進去。</p>
-      <div id="qList"></div><div id="score" style="font-weight:bold; margin-top:12px;"></div>
-      <div class="ctrl"><button class="chip" id="qReset">全部重做一次</button></div>`;
-    Q.forEach((_, i) => $("qList").appendChild(card(i, i+1, right => {
-      done++; if(right) ok++;
-      $("score").textContent = `已作答 ${done} / ${Q.length} 題，答對 ${ok} 題`;
-      if(done === Q.length) cloudSend({ type:"小測驗", detail:`${CH} ${Q.length} 題`, score:`${ok}/${Q.length}` });
-    })));
-    $("qReset").onclick = () => { renderQuiz(); $("sQ").scrollIntoView({ behavior:"smooth" }); };
-  }
-  function renderWrong(){
-    if(practicing) return;
-    const w = loadW(), ids = myWrong();
-    if(!ids.length){ wb.innerHTML = `<div class="empty">目前沒有錯題。先去做小測驗，答錯的和猜對的會自動出現在這裡。</div>`; return; }
-    const wt = i => (w[key(i)].n || 0) + (w[key(i)].g || 0); ids.sort((a,b) => wt(b) - wt(a));
-    wb.innerHTML = `<p class="lead">現在有 <b>${ids.length}</b> 題。答錯的和猜對的都在這裡。先自己想答案，再點題目看解答。重練時<b>連續答對 2 次</b>，那一題就會自動移出。</p>
-      <div class="ctrl"><button class="chip big on" id="wGo">重練這 ${ids.length} 題</button><button class="chip" id="wClr">清空這一課的錯題</button></div>` +
-      ids.map(i => { const q = Q[i], e = w[key(i)];
-        return `<div class="w"><div class="hd"><p>${q.q}</p><span class="bad">${[e.n ? `錯 ${e.n} 次` : "", e.g ? `猜的 ${e.g} 次` : "", e.s ? "已對 1 次" : ""].filter(Boolean).join("・")}</span></div>
-          <div class="tip">點一下看答案</div>
-          <div class="ans">答案：<b>${q.o[q.a]}</b><br>${q.why}<br><a href="#${q.sec}">回去看 ${SECS[q.sec]}</a></div></div>`; }).join("");
-    wb.querySelectorAll(".w").forEach(d => d.addEventListener("click", e => { if(e.target.tagName !== "A") d.classList.toggle("open"); }));
-    $("wGo").onclick = () => {
-      practicing = true; const list = shuffle(myWrong()); let done = 0, ok = 0;
-      wb.innerHTML = `<p class="lead"><b>錯題重練</b>：共 ${list.length} 題。</p><div id="wList"></div><div id="wScore" style="font-weight:bold; margin-top:12px;"></div>
-        <div class="ctrl"><button class="chip big on" id="wBack">回到錯題清單</button></div>`;
-      list.forEach((i, n) => $("wList").appendChild(card(i, n+1, right => { done++; if(right) ok++; $("wScore").textContent = `已作答 ${done} / ${list.length} 題，答對 ${ok} 題`; })));
-      $("wBack").onclick = () => { practicing = false; renderWrong(); $("sW").scrollIntoView({ behavior:"smooth" }); };
-    };
-    $("wClr").onclick = () => {
-      if(!confirm("確定要清空這一課的錯題嗎？清掉就找不回來。")) return;
-      const w2 = loadW(); Q.forEach((_,i) => delete w2[key(i)]); saveW(w2); renderWrong();
-    };
-  }
-  renderQuiz(); renderWrong();
-}
 
 
 // ===================== ② 消化道之旅 =====================
@@ -616,31 +559,194 @@ classify("clB", ["會經過","不會經過"], [
 ]);
 
 // ===================== ⑦ ⑧ 小測驗與錯題本 =====================
-setupQuiz("L2", [
-  { q:"為什麼食物要先經過消化？", o:["把大分子切成小分子，才能被吸收","把食物變熱","把細菌全部殺死","讓食物變成氧氣"], a:0, sec:"s1", why:"澱粉、蛋白質、脂質的分子太大，要切成小分子才進得了細胞。" },
-  { q:"下列哪一種養分「不需要」消化，就能直接吸收？", o:["澱粉","蛋白質","脂質","維生素"], a:3, sec:"s1", why:"維生素、礦物質、水本來就是小分子，不用消化。" },
-  { q:"澱粉完全消化之後，會變成什麼？", o:["胺基酸","葡萄糖","脂肪酸","甘油"], a:1, sec:"s1", why:"澱粉 → 葡萄糖。蛋白質 → 胺基酸。脂質 → 脂肪酸和甘油。" },
-  { q:"蛋白質完全消化之後，會變成什麼？", o:["胺基酸","葡萄糖","脂肪酸和甘油","麥芽糖"], a:0, sec:"s1", why:"蛋白質 → 胺基酸。" },
-  { q:"下列哪一個是消化管的正確順序？", o:["口腔→食道→咽→胃→大腸→小腸→肛門","口腔→咽→食道→胃→小腸→大腸→肛門","口腔→咽→胃→食道→小腸→大腸→肛門","口腔→咽→食道→小腸→胃→大腸→肛門"], a:1, sec:"s2", why:"口腔 → 咽 → 食道 → 胃 → 小腸 → 大腸 → 肛門。" },
-  { q:"食物在食道裡，靠什麼往下移動？", o:["地心引力而已","食道肌肉的蠕動","胃把它吸下去","消化液沖下去"], a:1, sec:"s2", why:"食道管壁的肌肉一縮一放，叫做蠕動。所以躺著也吞得下去。" },
-  { q:"澱粉最早在哪裡開始被分解？", o:["口腔","胃","小腸","大腸"], a:0, sec:"s2", why:"唾液裡有分解澱粉的酵素。" },
-  { q:"蛋白質最早在哪裡開始被分解？", o:["口腔","胃","小腸","大腸"], a:1, sec:"s2", why:"胃液裡有分解蛋白質的酵素。" },
-  { q:"脂質是在哪裡被酵素分解的？", o:["口腔","胃","小腸","大腸"], a:2, sec:"s2", why:"脂質到小腸才開始。先被膽汁乳化，再被胰液的酵素分解。" },
-  { q:"飯嚼久了會有甜味，最主要的原因是？", o:["飯裡本來加了糖","唾液把一部分澱粉分解成糖","牙齒把飯磨成葡萄糖","舌頭分泌糖"], a:1, sec:"s2", why:"唾液的酵素把澱粉分解成有甜味的糖（麥芽糖）。" },
-  { q:"膽汁是哪個器官製造的？", o:["膽囊","胰臟","肝臟","胃"], a:2, sec:"s3", why:"肝臟製造，膽囊只是存放。這題很容易選成膽囊。" },
-  { q:"關於膽汁，下列哪一個正確？", o:["含有分解脂質的酵素","不含酵素，可以把脂質乳化成小油滴","可以分解蛋白質","在胃裡作用"], a:1, sec:"s3", why:"膽汁沒有酵素。它把大油滴打散，讓酵素比較好作用。" },
-  { q:"哪一種消化液，可以分解醣類、蛋白質、脂質三種養分？", o:["唾液","胃液","膽汁","胰液"], a:3, sec:"s3", why:"胰液的酵素種類最多，三種都能分解。" },
-  { q:"膽汁和胰液最後都送到哪裡？", o:["胃","小腸","大腸","口腔"], a:1, sec:"s3", why:"兩種都注入小腸的前段。" },
-  { q:"下列消化腺，哪一組是藏在消化管的管壁裡面？", o:["唾腺和肝臟","胃腺和腸腺","肝臟和胰臟","唾腺和胰臟"], a:1, sec:"s3", why:"胃腺在胃壁、腸腺在小腸壁。唾腺、肝臟、胰臟在消化管外面。" },
-  { q:"胃液是酸性、中性還是鹼性？", o:["酸性，因為含有鹽酸","中性","鹼性","沒有酸鹼之分"], a:0, sec:"s3", why:"胃液含鹽酸，很酸。胃裡的酵素在酸性環境才做得好。" },
-  { q:"食物「不會」經過下列哪一個器官？", o:["食道","胃","肝臟","大腸"], a:2, sec:"s6", why:"肝臟是消化腺。食物只走消化管。" },
-  { q:"消化最完整、也是吸收養分最主要的器官是？", o:["胃","小腸","大腸","食道"], a:1, sec:"s5", why:"小腸把三種養分都分解完，並且由絨毛吸收。" },
-  { q:"小腸內壁有很多絨毛，主要的好處是？", o:["讓食物走得更快","增加吸收養分的表面積","製造膽汁","把細菌擋住"], a:1, sec:"s5", why:"表面積越大，接觸到養分的機會越多。" },
-  { q:"大腸最主要的功能是？", o:["分解蛋白質","吸收剩下的水分，形成糞便","分泌胰液","吸收大部分的養分"], a:1, sec:"s5", why:"大腸沒有消化作用。它吸收水分。" },
-  { q:"下列哪一個屬於「物理性消化」？", o:["唾液分解澱粉","胃液分解蛋白質","牙齒把食物咬碎","胰液分解脂質"], a:2, sec:"s6", why:"咬碎只是變小塊。其他三個都有酵素，是化學性消化。" },
-  { q:"膽汁把脂質乳化成小油滴，算是哪一種消化？", o:["物理性消化","化學性消化","兩種都不是","兩種都是"], a:0, sec:"s6", why:"膽汁沒有酵素。油還是油，只是變小滴。" },
-  { q:"膽囊被切除的人，一次吃太多哪一類食物，比較容易不舒服？", o:["白飯","水果","炸雞等油炸食物","青菜"], a:2, sec:"s3", why:"膽囊負責存膽汁。沒有膽囊，一次能用的膽汁比較少，大量的油比較難處理。" }
-], { s1:"① 為什麼要消化", s2:"② 跟食物走一趟", s3:"③ 消化腺和消化液", s5:"⑤ 小腸怎麼吸收", s6:"⑥ 分類練習" });
+// ===================== ⑦ 考考你（比照「人體的循環」的測驗引擎）=====================
+(function(){
+  const SEC = {"s1":"① 為什麼要消化","s2":"② 跟食物走一趟","s3":"③ 消化腺和消化液","s5":"⑤ 小腸怎麼吸收","s6":"⑥ 分類練習"};
+  // o 的第一個是正確答案（出題時會打亂）；其他每個選項後面是「你可能是這樣想的」
+  const Q = [
+    {id:"l2q1", s:"s1", q:"為什麼食物要先經過消化？",
+      o:[["把大分子切成小分子，才能被吸收",""],["把食物變熱","消化不是把食物加熱。"],["把細菌全部殺死","胃酸能殺掉一些細菌，但這不是消化的目的。"],["讓食物變成氧氣","食物不會變成氧氣。"]],
+      why:"澱粉、蛋白質、脂質的分子太大，要切成小分子才進得了細胞。"},
+    {id:"l2q2", s:"s1", q:"下列哪一種養分「不需要」消化，就能直接吸收？",
+      o:[["維生素",""],["澱粉","澱粉是大分子，要先切成葡萄糖。"],["蛋白質","蛋白質要先切成胺基酸。"],["脂質","脂質要先分解成脂肪酸和甘油。"]],
+      why:"維生素、礦物質、水本來就是小分子，不用消化。"},
+    {id:"l2q3", s:"s1", q:"澱粉完全消化之後，會變成什麼？",
+      o:[["葡萄糖",""],["胺基酸","胺基酸是蛋白質分解來的。"],["脂肪酸","脂肪酸是脂質分解來的。"],["甘油","甘油是脂質分解來的。"]],
+      why:"澱粉 → 葡萄糖。蛋白質 → 胺基酸。脂質 → 脂肪酸和甘油。"},
+    {id:"l2q4", s:"s1", q:"蛋白質完全消化之後，會變成什麼？",
+      o:[["胺基酸",""],["葡萄糖","葡萄糖是澱粉分解來的。"],["脂肪酸和甘油","那是脂質分解來的。"],["麥芽糖","麥芽糖是澱粉在口腔被切短後的產物。"]],
+      why:"蛋白質 → 胺基酸。"},
+    {id:"l2q5", s:"s2", q:"下列哪一個是消化管的正確順序？",
+      o:[["口腔→咽→食道→胃→小腸→大腸→肛門",""],["口腔→食道→咽→胃→大腸→小腸→肛門","咽在食道前面；小腸在大腸前面。"],["口腔→咽→胃→食道→小腸→大腸→肛門","食道在胃前面。"],["口腔→咽→食道→小腸→胃→大腸→肛門","胃在小腸前面。"]],
+      why:"口腔 → 咽 → 食道 → 胃 → 小腸 → 大腸 → 肛門。"},
+    {id:"l2q6", s:"s2", q:"食物在食道裡，靠什麼往下移動？",
+      o:[["食道肌肉的蠕動",""],["地心引力而已","躺著也吞得下去，所以不是只靠重力。"],["胃把它吸下去","胃不會把食物吸下去。"],["消化液沖下去","食道沒有消化液。"]],
+      why:"食道管壁的肌肉一縮一放，叫做蠕動。所以躺著也吞得下去。"},
+    {id:"l2q7", s:"s2", q:"澱粉最早在哪裡開始被分解？",
+      o:[["口腔",""],["胃","胃液處理的是蛋白質。"],["小腸","小腸是完成的地方。但澱粉在口腔就開始了。"],["大腸","大腸沒有消化作用。"]],
+      why:"唾液裡有分解澱粉的酵素。"},
+    {id:"l2q8", s:"s2", q:"蛋白質最早在哪裡開始被分解？",
+      o:[["胃",""],["口腔","唾液只處理澱粉。"],["小腸","小腸是完成的地方。但蛋白質在胃就開始了。"],["大腸","大腸沒有消化作用。"]],
+      why:"胃液裡有分解蛋白質的酵素。"},
+    {id:"l2q9", s:"s2", q:"脂質是在哪裡被酵素分解的？",
+      o:[["小腸",""],["口腔","唾液只處理澱粉。"],["胃","胃液處理的是蛋白質。"],["大腸","大腸沒有消化作用。"]],
+      why:"脂質到小腸才開始。先被膽汁乳化，再被胰液的酵素分解。"},
+    {id:"l2q10", s:"s2", q:"飯嚼久了會有甜味，最主要的原因是？",
+      o:[["唾液把一部分澱粉分解成糖",""],["飯裡本來加了糖","白飯沒有加糖。"],["牙齒把飯磨成葡萄糖","牙齒只能磨碎，不能把澱粉變成別的物質。"],["舌頭分泌糖","舌頭不會分泌糖。"]],
+      why:"唾液的酵素把澱粉分解成有甜味的糖（麥芽糖）。"},
+    {id:"l2q11", s:"s3", q:"膽汁是哪個器官製造的？",
+      o:[["肝臟",""],["膽囊","膽囊只負責存放，不製造。這題最容易選錯。"],["胰臟","胰臟做的是胰液。"],["胃","胃做的是胃液。"]],
+      why:"肝臟製造，膽囊只是存放。這題很容易選成膽囊。"},
+    {id:"l2q12", s:"s3", q:"關於膽汁，下列哪一個正確？",
+      o:[["不含酵素，可以把脂質乳化成小油滴",""],["含有分解脂質的酵素","膽汁沒有任何酵素。"],["可以分解蛋白質","膽汁沒有酵素，不能分解蛋白質。"],["在胃裡作用","膽汁是送到小腸，不是胃。"]],
+      why:"膽汁沒有酵素。它把大油滴打散，讓酵素比較好作用。"},
+    {id:"l2q13", s:"s3", q:"哪一種消化液，可以分解醣類、蛋白質、脂質三種養分？",
+      o:[["胰液",""],["唾液","唾液只分解澱粉。"],["胃液","胃液只分解蛋白質。"],["膽汁","膽汁沒有酵素。"]],
+      why:"胰液的酵素種類最多，三種都能分解。"},
+    {id:"l2q14", s:"s3", q:"膽汁和胰液最後都送到哪裡？",
+      o:[["小腸",""],["胃","兩種都是注入小腸的前段，不是胃。"],["大腸","大腸沒有消化作用。"],["口腔","口腔裡只有唾液。"]],
+      why:"兩種都注入小腸的前段。"},
+    {id:"l2q15", s:"s3", q:"下列消化腺，哪一組是藏在消化管的管壁裡面？",
+      o:[["胃腺和腸腺",""],["唾腺和肝臟","唾腺和肝臟都在消化管外面。"],["肝臟和胰臟","肝臟和胰臟都在消化管外面。"],["唾腺和胰臟","唾腺和胰臟都在消化管外面。"]],
+      why:"胃腺在胃壁、腸腺在小腸壁。唾腺、肝臟、胰臟在消化管外面。"},
+    {id:"l2q16", s:"s3", q:"胃液是酸性、中性還是鹼性？",
+      o:[["酸性，因為含有鹽酸",""],["中性","胃液含鹽酸，很酸。"],["鹼性","胃液含鹽酸，是酸性，不是鹼性。"],["沒有酸鹼之分","胃液是很明顯的酸性。"]],
+      why:"胃液含鹽酸，很酸。胃裡的酵素在酸性環境才做得好。"},
+    {id:"l2q17", s:"s6", q:"食物「不會」經過下列哪一個器官？",
+      o:[["肝臟",""],["食道","食道是消化管的一部分，食物會經過。"],["胃","胃是消化管的一部分，食物會經過。"],["大腸","大腸是消化管的後段，食物殘渣會經過。"]],
+      why:"肝臟是消化腺。食物只走消化管。"},
+    {id:"l2q18", s:"s5", q:"消化最完整、也是吸收養分最主要的器官是？",
+      o:[["小腸",""],["胃","胃只初步分解蛋白質，吸收很少。"],["大腸","大腸主要吸收水分。"],["食道","食道只是通道。"]],
+      why:"小腸把三種養分都分解完，並且由絨毛吸收。"},
+    {id:"l2q19", s:"s5", q:"小腸內壁有很多絨毛，主要的好處是？",
+      o:[["增加吸收養分的表面積",""],["讓食物走得更快","絨毛不是用來加速的。"],["製造膽汁","膽汁是肝臟做的。"],["把細菌擋住","絨毛的主要功能是增加吸收面積。"]],
+      why:"表面積越大，接觸到養分的機會越多。"},
+    {id:"l2q20", s:"s5", q:"大腸最主要的功能是？",
+      o:[["吸收剩下的水分，形成糞便",""],["分解蛋白質","大腸沒有消化作用。"],["分泌胰液","胰液是胰臟做的。"],["吸收大部分的養分","吸收大部分養分的是小腸。"]],
+      why:"大腸沒有消化作用。它吸收水分。"},
+    {id:"l2q21", s:"s6", q:"下列哪一個屬於「物理性消化」？",
+      o:[["牙齒把食物咬碎",""],["唾液分解澱粉","唾液有酵素，這是化學性消化。"],["胃液分解蛋白質","胃液有酵素，這是化學性消化。"],["胰液分解脂質","胰液有酵素，這是化學性消化。"]],
+      why:"咬碎只是變小塊。其他三個都有酵素，是化學性消化。"},
+    {id:"l2q22", s:"s6", q:"膽汁把脂質乳化成小油滴，算是哪一種消化？",
+      o:[["物理性消化",""],["化學性消化","膽汁沒有酵素。油還是油，只是變小滴。"],["兩種都不是","把油滴變小，就是物理性消化。"],["兩種都是","沒有酵素參與，不算化學性消化。"]],
+      why:"膽汁沒有酵素。油還是油，只是變小滴。"},
+    {id:"l2q23", s:"s3", q:"膽囊被切除的人，一次吃太多哪一類食物，比較容易不舒服？",
+      o:[["炸雞等油炸食物",""],["白飯","白飯主要是澱粉，不靠膽汁。"],["水果","水果的油很少，影響不大。"],["青菜","青菜的油很少，影響不大。"]],
+      why:"膽囊負責存膽汁。沒有膽囊，一次能用的膽汁比較少，大量的油比較難處理。"},
+  ];
+  const KEY = "nutri2_quiz_v1"; let ST = {};
+  try{ ST = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(e){}
+  const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} };
+  const rec = id => ST[id] || (ST[id] = { n:0, ok:0, last:"" });
+  const isWrong = q => { const r = ST[q.id]; return r && (r.last === "no" || r.last === "guess"); };
+  const shuf = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+  const esc = s => s.replace(/[&<>]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[c]));
+  const box = $("quiz"), ana = $("ana"), back = $("backBtn");
+  let round = [], idx = 0, okN = 0, misses = [];
+
+  // 跳回去看那一段，再跳回題目
+  function goSec(s){
+    const el = $(s); el.scrollIntoView({ behavior:"smooth", block:"start" });
+    el.classList.add("flash"); setTimeout(()=> el.classList.remove("flash"), 2600); back.hidden = false;
+  }
+  back.addEventListener("click", ()=>{ $("sQ").scrollIntoView({ behavior:"smooth", block:"start" }); back.hidden = true; });
+  const jumpBtn = s => `<button class="chip jump" data-go="${s}">回去看 ${SEC[s]}</button>`;
+  document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if(b) goSec(b.dataset.go); });
+
+  function build(onlyWrong){
+    const pri = q => isWrong(q) ? 0 : !ST[q.id] || !ST[q.id].n ? 1 : 2;
+    const pool = shuf(Q.filter(q => !onlyWrong || isWrong(q))).sort((a,b) => pri(a)-pri(b));
+    const out = [], cnt = {};
+    // 每一段先各出一題，再補到 10 題，確保六個概念都考到
+    for(const cap of (onlyWrong ? [99] : [1,2,99]))
+      for(const q of pool){ if(out.length >= 10) break; if(out.includes(q) || (cnt[q.s]||0) >= cap) continue; cnt[q.s] = (cnt[q.s]||0)+1; out.push(q); }
+    return shuf(out);
+  }
+  function start(onlyWrong){
+    round = build(onlyWrong); idx = 0; okN = 0; misses = [];
+    if(!round.length){ box.innerHTML = `<p class="lead">錯題本是空的。先練一回吧。</p>`; return; }
+    show();
+  }
+  function finish(q, right, diag, picked){
+    const guess = box.querySelector(".guess input").checked, r = rec(q.id);
+    r.n++; if(right) r.ok++; r.last = !right ? "no" : guess ? "guess" : "ok"; save();
+    pracCount++; if(right){ pracOk++; okN++; } if(r.last !== "ok") misses.push(q);
+    logEv({ type:"quiz", q:q.id, sec:q.s, ok:right, guess });
+    const fb = box.querySelector(".fb"); fb.hidden = false; fb.className = "fb " + (right ? "good" : "bad");
+    let h = right ? (guess ? "<b>答對了。</b>不過你說是用猜的，我先把它放進錯題本，之後再考你一次。" : "<b>答對了。</b>") : "<b>這題沒答對。</b>";
+    if(!right && diag) h += `<p><span class="dx">你可能是這樣想的</span>${esc(diag)}</p>`;
+    h += `<p><span class="dx k">關鍵</span>${esc(q.why)}</p>`;
+    h += `<div class="ctrl">${right && !guess ? "" : jumpBtn(q.s)}<button class="chip on" id="nextQ">${idx+1 < round.length ? "下一題" : "看這一回的結果"}</button></div>`;
+    fb.innerHTML = h; box.querySelector(".guess").style.display = "none";
+    $("nextQ").addEventListener("click", ()=>{ idx++; idx < round.length ? show() : summary(); });
+    renderAna();
+  }
+  function show(){
+    const q = round[idx];
+    let h = `<div class="q"><div class="qhead"><span>第 ${idx+1} / ${round.length} 題</span><span class="qtag">${SEC[q.s]}</span></div><p class="t">${esc(q.q)}</p>`;
+    h += `<label class="guess"><input type="checkbox"> 這題我不太確定，是用猜的</label>`;
+    h += q.seq ? `<div class="ans"></div><div class="pool"></div><button class="chip" id="resetO">重排</button>` : `<div class="opts"></div>`;
+    h += `<div class="fb" hidden></div></div>`;
+    box.innerHTML = h;
+    if(q.seq){
+      const ans = box.querySelector(".ans"), pool = box.querySelector(".pool"); let pick = [], done = false;
+      const paint = () => {
+        ans.innerHTML = pick.length ? pick.map((t,i) => `<span class="oc">${i+1}. ${t}</span>`).join("<i>→</i>") : `<span class="ph">照順序點下面的站名</span>`;
+        [...pool.children].forEach(b => b.disabled = pick.includes(b.textContent));
+      };
+      shuf(q.seq).forEach(t => { const b = document.createElement("button"); b.className = "chip"; b.textContent = t;
+        b.addEventListener("click", ()=>{ if(done) return; pick.push(t); paint();
+          if(pick.length === q.seq.length){ done = true; $("resetO").style.display = "none";
+            const k = pick.findIndex((x,i) => x !== q.seq[i]), right = k < 0;
+            if(!right) ans.children[k*2].classList.add("no");
+            finish(q, right, right ? "" : (k === 0 ? `起點應該是「${q.seq[0]}」。` : `「${q.seq[k-1]}」的下一站應該是「${q.seq[k]}」，不是「${pick[k]}」。`)); } });
+        pool.appendChild(b); });
+      $("resetO").addEventListener("click", ()=>{ if(!done){ pick = []; paint(); } }); paint();
+    } else {
+      const opts = box.querySelector(".opts"), order = shuf(q.o.map((_,i) => i)); let done = false;
+      order.forEach(i => { const b = document.createElement("button"); b.textContent = q.o[i][0]; b.dataset.i = i;
+        b.addEventListener("click", ()=>{ if(done) return; done = true; const right = i === 0;
+          b.classList.add(right ? "ok" : "no"); opts.querySelector('[data-i="0"]').classList.add("ok"); finish(q, right, q.o[i][1]); });
+        opts.appendChild(b); });
+    }
+  }
+  function summary(){
+    const bySec = {}; misses.forEach(q => (bySec[q.s] = bySec[q.s] || []).push(q));
+    let h = `<div class="q"><p class="t">這一回：${round.length} 題答對 ${okN} 題</p>`;
+    if(!misses.length) h += `<p>全部答對，而且都不是用猜的。很紮實。</p>`;
+    else {
+      h += `<p>下面這幾段再看一次，然後按「只練錯題」。</p>`;
+      for(const s in bySec) h += `<div class="miss"><b>${SEC[s]}</b>（${bySec[s].length} 題）${jumpBtn(s)}<ul>${bySec[s].map(q => `<li>${esc(q.q)}</li>`).join("")}</ul></div>`;
+    }
+    h += `<div class="ctrl"><button class="chip on" id="again">再練一回（錯的和沒做過的先出）</button>${misses.length ? `<button class="chip" id="onlyW">只練錯題</button>` : ""}</div></div>`;
+    box.innerHTML = h;
+    $("again").addEventListener("click", ()=> start(false));
+    if($("onlyW")) $("onlyW").addEventListener("click", ()=> start(true));
+    cloudSend({ type:"小測驗", detail:`人體的消化 一回 ${round.length} 題；要再看：${Object.keys(bySec).map(s => SEC[s]).join("、") || "無"}`, score:`${okN}/${round.length}` });
+  }
+  function renderAna(){
+    const wrong = Q.filter(isWrong), seen = Q.filter(q => ST[q.id] && ST[q.id].n).length;
+    let h = `<p class="lead">題庫共 ${Q.length} 題，你做過 ${seen} 題。紀錄只存在這台裝置的瀏覽器。</p><div class="abars">`;
+    let weak = null, weakRate = 2;
+    for(const s in SEC){
+      let n = 0, ok = 0; Q.filter(q => q.s === s).forEach(q => { const r = ST[q.id]; if(r){ n += r.n; ok += r.ok; } });
+      const rate = n ? ok/n : 0; if(n >= 2 && rate < weakRate){ weakRate = rate; weak = s; }
+      h += `<div class="abar"><span class="nm">${SEC[s]}</span><span class="tr"><i style="width:${Math.round(rate*100)}%;background:${!n ? "#e5e7eb" : rate >= .8 ? "#16a34a" : rate >= .5 ? "#d97706" : "#dc2626"}"></i></span><span class="pc">${n ? `答對 ${ok}／${n}` : "還沒做"}</span></div>`;
+    }
+    h += `</div>`;
+    if(weak && weakRate < .8) h += `<div class="key">目前最需要再看的是 <b>${SEC[weak]}</b>。${jumpBtn(weak)}</div>`;
+    h += `<h3>錯題本（${wrong.length} 題）</h3>`;
+    if(!wrong.length) h += `<p style="color:var(--sub)">目前沒有錯題。答錯或用猜的題目會出現在這裡，之後答對就會移除。</p>`;
+    else h += `<ul class="wb">${wrong.map(q => `<li>${esc(q.q)} <span class="qtag">${ST[q.id].last === "guess" ? "用猜的" : "答錯"}</span> ${jumpBtn(q.s)}</li>`).join("")}</ul><div class="ctrl"><button class="chip on" id="anaW">只練錯題（${Math.min(10, wrong.length)} 題）</button></div>`;
+    h += `<div class="ctrl"><button class="chip" id="clr">清除我的作答紀錄</button></div>`;
+    ana.innerHTML = h;
+    if($("anaW")) $("anaW").addEventListener("click", ()=>{ start(true); $("sQ").scrollIntoView({ behavior:"smooth" }); });
+    $("clr").addEventListener("click", ()=>{ if(confirm("確定要清除這一課的作答紀錄和錯題本嗎？清掉就救不回來。")){ ST = {}; save(); renderAna(); } });
+  }
+  box.innerHTML = `<div class="ctrl"><button class="chip on big" id="go">開始練一回（10 題）</button></div>`;
+  $("go").addEventListener("click", ()=> start(false));
+  renderAna();
+})();
 
 runScenes();
 
