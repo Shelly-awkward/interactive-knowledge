@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國一生物｜植物的運輸構造：看水和養分怎麼走</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f6f7f1; --card:#ffffff;
+    --pri:#15803d; --pri-soft:#dcfce7; --red:#dc2626; --red-soft:#fee2e2;
+    --water:#2563eb; --food:#ea580c; --food-soft:#ffedd5;
+    --amber:#b45309; --amber-soft:#fef3c7; --blue:#1d4ed8; --blue-soft:#dbeafe; --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:20px 16px 80px;}
+  a{color:var(--blue);}
+
+  header.hero{background:linear-gradient(135deg,#166534,#15803d 55%,#1d4ed8); color:#fff; border-radius:var(--radius); padding:26px 24px; margin-bottom:16px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.95; font-size:.95rem;}
+
+  nav.toc{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;}
+  nav.toc a{background:#fff; border:1px solid var(--border); border-radius:99px; padding:3px 12px; font-size:.86rem; text-decoration:none; color:var(--ink);}
+  nav.toc a:hover{border-color:var(--pri); color:var(--pri);}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:16px;}
+  .card h2{font-size:1.18rem; color:var(--pri); margin-bottom:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .card ul,.card ol{margin-left:1.3em;}
+  .lead{font-size:.98rem; margin-bottom:10px;}
+  .life{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.94rem;}
+  .life b{color:var(--amber);}
+  .key{background:var(--pri-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.95rem; color:#14532d;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e3a8a;}
+  .w{color:var(--water); font-weight:bold;} .f{color:var(--food); font-weight:bold;}
+
+  .ctrl{display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:8px 0;}
+  .ctrl .lab{font-size:.86rem; color:var(--sub); margin-right:2px;}
+  .chip{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 13px; cursor:pointer; font-family:inherit; font-size:.88rem; color:var(--ink);}
+  .chip:hover{border-color:var(--pri); color:var(--pri);}
+  .chip.on{background:var(--pri); border-color:var(--pri); color:#fff;}
+  .chip.on:hover{color:#fff;}
+  .chip.big{padding:8px 16px; font-size:.95rem; font-weight:bold;}
+  .chip:disabled{opacity:.4; cursor:default;}
+
+  .stage{background:#fbfdf7; border:1px solid #e3ead6; border-radius:12px; padding:6px;}
+  .stage canvas{display:block; width:100%; max-width:640px; margin:0 auto; touch-action:pan-y;}
+  .legend{display:flex; gap:12px; flex-wrap:wrap; font-size:.84rem; color:var(--sub); margin:6px 2px;}
+  .legend i{display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:4px; vertical-align:-1px;}
+
+  .follow{border:2px solid #facc15; background:#fefce8; border-radius:12px; padding:10px 14px; margin-top:10px;}
+  .follow .where{font-weight:bold; font-size:1.05rem;}
+  .follow .where span{display:inline-block; background:#facc15; border-radius:99px; min-width:1.9em; text-align:center; margin-right:6px;}
+  .follow p{font-size:.94rem;}
+  .route{margin-top:10px;}
+  .route .rowlab{font-size:.82rem; font-weight:bold; margin:6px 0 3px; color:var(--water);}
+  .route .row{display:flex; gap:4px; flex-wrap:wrap;}
+  .st{border:1px solid #bfdbfe; background:#eff6ff; border-radius:8px; padding:3px 8px; font-size:.84rem; cursor:pointer; font-family:inherit; color:var(--ink);}
+  .st b{margin-right:3px;}
+  .st.now{outline:3px solid #facc15;}
+  .status{border:2px solid #86efac; background:#f0fdf4; border-radius:12px; padding:10px 14px; margin-top:10px; font-size:.95rem; min-height:3.6em;}
+  .status.bad{border-color:#fca5a5; background:#fef2f2;}
+
+  .count{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:8px; margin-top:8px;}
+  .count div{background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:6px 10px; text-align:center;}
+  .count small{display:block; color:var(--sub); font-size:.78rem;}
+  .count b{font-size:1.15rem; color:var(--pri);}
+
+  table{border-collapse:collapse; width:100%; font-size:.92rem; margin-top:10px;}
+  th,td{border:1px solid var(--border); padding:6px 8px; text-align:center;}
+  th{background:#f8fafc;}
+  td.l{text-align:left;}
+  .tw{overflow-x:auto;} .tw table{min-width:440px;}
+  .hide{background:#e5e7eb; color:transparent; border-radius:6px; cursor:pointer; user-select:none; padding:0 6px;}
+  .hide.show{background:var(--amber-soft); color:var(--ink);}
+  .tip{font-size:.84rem; color:var(--sub); margin-top:4px;}
+
+  .q{border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-top:10px;}
+  .q p.t{font-weight:bold; margin-bottom:6px;}
+  .q .opts{display:grid; gap:6px;}
+  .q .opts button{border:1px solid var(--border); background:#fff; border-radius:8px; padding:7px 12px; font-family:inherit; font-size:.94rem; cursor:pointer; text-align:left; color:var(--ink);}
+  .q .opts button:hover{border-color:var(--pri);}
+  .q .opts button.ok{background:var(--pri-soft); border-color:var(--pri);}
+  .q .opts button.no{background:var(--red-soft); border-color:var(--red);}
+  .q .qhead{display:flex; justify-content:space-between; gap:8px; font-size:.84rem; color:var(--sub); margin-bottom:4px;}
+  .tag{display:inline-block; background:#f1f5f9; border-radius:99px; padding:0 9px; font-size:.78rem; color:#475569; white-space:nowrap;}
+  .guess{display:block; font-size:.88rem; color:var(--sub); margin:2px 0 8px; cursor:pointer;}
+  .fb{margin-top:10px; border-radius:10px; padding:10px 12px; font-size:.94rem;}
+  .fb.good{background:var(--pri-soft);} .fb.bad{background:var(--red-soft);}
+  .fb p{margin-top:6px;}
+  .dx{display:inline-block; background:#fff; border:1px solid #fca5a5; color:#b91c1c; border-radius:6px; padding:0 7px; font-size:.8rem; font-weight:bold; margin-right:6px;}
+  .dx.k{border-color:#86efac; color:#15803d;}
+  .chip.jump{border-color:var(--blue); color:var(--blue);}
+  .ans{min-height:44px; border:2px dashed var(--border); border-radius:10px; padding:6px 8px; margin-bottom:8px; display:flex; flex-wrap:wrap; gap:4px; align-items:center;}
+  .ans .oc{background:var(--blue-soft); border-radius:8px; padding:1px 8px; font-size:.9rem;} .ans .oc.no{background:var(--red-soft); outline:2px solid var(--red);}
+  .ans i{color:var(--sub); font-style:normal;} .ans .ph{color:var(--sub); font-size:.88rem;}
+  .pool{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;} .pool .chip:disabled{opacity:.3; cursor:default;}
+  .miss{border-top:1px dashed var(--border); padding-top:8px; margin-top:8px;} .miss ul{font-size:.9rem; color:var(--sub);} .miss .chip{margin-left:6px;}
+  .bars{display:grid; gap:6px;}
+  .bar{display:grid; grid-template-columns:9.5em 1fr 6.5em; gap:8px; align-items:center; font-size:.88rem;}
+  .bar .tr{height:12px; background:#f1f5f9; border-radius:99px; overflow:hidden;} .bar .tr i{display:block; height:100%; border-radius:99px;}
+  .bar .pc{color:var(--sub); text-align:right;}
+  .wb{font-size:.92rem;} .wb li{margin-bottom:6px;} .wb .chip{padding:2px 10px; font-size:.8rem;}
+  .card.flash{animation:flash 2.6s;} @keyframes flash{0%,60%{box-shadow:0 0 0 4px #facc15;}100%{box-shadow:0 0 0 0 transparent;}}
+  #backBtn{position:fixed; right:14px; bottom:16px; z-index:20; background:var(--blue); color:#fff; border:none; border-radius:99px; padding:11px 18px; font-family:inherit; font-size:1rem; font-weight:bold; box-shadow:0 4px 14px rgba(0,0,0,.25); cursor:pointer;}
+  .predict{border:2px dashed #93c5fd; background:#f0f7ff; border-radius:12px; padding:10px 14px; margin:10px 0; font-size:.95rem;}
+  .predict .pb{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0;}
+  .predict .pb button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 14px; font-family:inherit; font-size:.9rem; cursor:pointer; color:var(--ink);}
+  .predict .pb button.on{border-color:var(--blue); background:var(--blue-soft);} .predict .pb button.ok{border-color:var(--pri); background:var(--pri-soft);}
+  [hidden]{display:none !important;}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:24px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">國中自然 · 七年級生物 · 第 3 章 3-1</span>
+  <h1>植物的運輸構造：看水和養分怎麼走</h1>
+  <p>植物沒有心臟，水卻能從根爬到樹頂。葉子做的養分也能送到地底下的根。這一頁讓你直接<b>看它們怎麼走</b>。</p>
+</header>
+
+<nav class="toc">
+  <a href="#s1">① 兩條管線</a><a href="#s2">② 維管束怎麼排</a><a href="#s3">③ 年輪</a><a href="#s4">④ 樹皮被啃一圈</a><a href="#s5">⑤ 氣孔和水柱</a><a href="#s6">⑥ 蒸散實驗室</a><a href="#s7">⑦ 紅墨水實驗</a><a href="#s8">⑧ 考考你</a><a href="#s9">⑨ 錯題本</a>
+</nav>
+
+<!-- ============ ① ============ -->
+<div class="card" id="s1">
+  <h2>① 植物體內有兩條管線</h2>
+  <p class="lead">植物體內負責運輸的組織叫<b>維管束</b>。它從根一路通到葉、花和果實。裡面有兩種管線：<span class="w">藍色點是水</span>，走<b>木質部</b>。<span class="f">橘色點是養分</span>，走<b>韌皮部</b>。</p>
+
+  <div class="predict" data-id="p1" data-ans="2" data-exp="養分在韌皮部裡，往上往下都可以。夏天從葉子往下送到根儲存。早春沒有葉子，改從根往上送去開花。">
+    <p><b>先猜再看：</b>養分在韌皮部裡，是往哪個方向走？</p>
+    <div class="pb"><button>只能往下</button><button>只能往上</button><button>往上往下都可以</button></div>
+    <p class="watch" hidden>先不告訴你對不對。先按「夏天」看橘色的點，再按「早春」看一次。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+
+  <div class="ctrl" id="view1">
+    <span class="lab">只看</span>
+    <button class="chip on" data-v="all">全部</button>
+    <button class="chip" data-v="water">水（木質部）</button>
+    <button class="chip" data-v="food">養分（韌皮部）</button>
+  </div>
+  <div class="ctrl" id="season1">
+    <span class="lab">季節</span>
+    <button class="chip on" data-v="summer">夏天（葉子很多）</button>
+    <button class="chip" data-v="spring">早春（還沒長葉，先開花）</button>
+  </div>
+
+  <div class="stage"><canvas id="c1"></canvas></div>
+  <div class="legend">
+    <span><i style="background:#2563eb"></i>水和礦物質</span>
+    <span><i style="background:#ea580c"></i>養分</span>
+    <span><i style="background:#fff;border:3px solid #facc15"></i>小水（跟著它走）</span>
+    <span>這是示意圖，管線畫得比實際粗很多。</span>
+  </div>
+
+  <div class="follow">
+    <div class="where"><span id="stNum">1</span><span id="stName" style="background:none">根毛</span></div>
+    <p id="stText"></p>
+  </div>
+  <div class="route">
+    <div class="rowlab">小水的路線（點一站，小水就跳到那裡）</div>
+    <div class="row" id="rowW"></div>
+  </div>
+
+  <div class="tw">
+  <table>
+    <tr><th></th><th>木質部</th><th>韌皮部</th></tr>
+    <tr><td><b>運什麼</b></td><td><span class="hide">水分和礦物質</span></td><td><span class="hide">養分</span></td></tr>
+    <tr><td><b>方向</b></td><td><span class="hide">只往上 ↑</span></td><td><span class="hide">往上往下都可以 ↑↓</span></td></tr>
+    <tr><td><b>在莖裡的位置</b></td><td><span class="hide">內側</span></td><td><span class="hide">外側</span></td></tr>
+    <tr><td><b>管子粗細（老師補充）</b></td><td><span class="hide">比較粗</span></td><td><span class="hide">比較細</span></td></tr>
+  </table>
+  </div>
+  <p class="tip">灰色格子點一下就會出現答案。先在心裡講一次，再點開對。</p>
+
+  <div class="key"><b>一句話記住：</b>木質部運<b>水</b>，只往<b>上</b>。韌皮部運<b>養分</b>，<b>上下都走</b>。</div>
+  <div class="life"><b>生活裡看得到：</b>梅花和櫻花在早春開花時，樹上還沒有葉子。開花的養分是去年存在根和莖裡的，現在分解後由韌皮部往上送。按「早春」看一次。</div>
+  <div class="note"><b>最容易錯：</b>肥料裡的<b>礦物質</b>不是韌皮部運的。礦物質溶在水裡，跟著水一起走<b>木質部</b>。韌皮部運的「養分」，是葉子行光合作用做出來的。</div>
+</div>
+
+<!-- ============ ② ============ -->
+<div class="card" id="s2">
+  <h2>② 維管束在莖裡怎麼排：散生和環狀</h2>
+  <p class="lead">把莖橫著切開來看。每一小束維管束裡，<span class="w">藍色是木質部（靠內）</span>，<span class="f">橘色是韌皮部（靠外）</span>。排法有兩種。差別在有沒有<b>形成層</b>。</p>
+
+  <div class="ctrl" id="kind2">
+    <span class="lab">右邊換成</span>
+    <button class="chip on" data-v="tree">榕樹（多年生）</button>
+    <button class="chip" data-v="sun">向日葵（一年生）</button>
+  </div>
+  <div class="ctrl">
+    <button class="chip on big" id="grow2">讓它們再長一年</button>
+    <button class="chip" id="reset2">重來</button>
+  </div>
+  <div class="stage"><canvas id="c2"></canvas></div>
+  <div class="legend">
+    <span><i style="background:#60a5fa"></i>木質部</span>
+    <span><i style="background:#fb923c"></i>韌皮部</span>
+    <span><i style="background:#16a34a"></i>形成層（綠色線）</span>
+    <span><i style="background:#8b5e3c"></i>樹皮的外層</span>
+  </div>
+  <div class="status" id="st2"></div>
+
+  <div class="key">
+    <b>形成層</b>夾在木質部和韌皮部中間。它的細胞會分裂：<b>向內</b>長出新的木質部，<b>向外</b>長出新的韌皮部。所以莖會變粗。<br>
+    散生的維管束<b>沒有</b>形成層，莖長到一個程度就不太會再變粗。
+  </div>
+
+  <h3>老師補充：單子葉和雙子葉植物比一比</h3>
+  <div class="tw">
+  <table>
+    <tr><th></th><th>單子葉植物</th><th>雙子葉植物</th></tr>
+    <tr><td><b>子葉</b></td><td><span class="hide">1 片</span></td><td><span class="hide">2 片</span></td></tr>
+    <tr><td><b>葉脈</b></td><td><span class="hide">平行脈</span></td><td><span class="hide">網狀脈</span></td></tr>
+    <tr><td><b>維管束</b></td><td><span class="hide">散生</span></td><td><span class="hide">環狀</span></td></tr>
+    <tr><td><b>花瓣數</b></td><td><span class="hide">3 的倍數</span></td><td><span class="hide">4 或 5 的倍數</span></td></tr>
+    <tr><td><b>根</b></td><td><span class="hide">鬚根</span></td><td><span class="hide">軸根</span></td></tr>
+    <tr><td><b>形成層</b></td><td><span class="hide">大多沒有</span></td><td><span class="hide">草本不發達，木本發達</span></td></tr>
+    <tr><td><b>例子</b></td><td>玉米、水稻、小麥、椰子</td><td>向日葵、鬼針草、榕樹、相思樹</td></tr>
+  </table>
+  </div>
+  <div class="life"><b>生活裡看得到：</b>竹子和玉米長高之後，莖就差不多那麼粗。路邊的榕樹卻一年比一年粗。差別就在有沒有發達的形成層。</div>
+</div>
+
+<!-- ============ ③ ============ -->
+<div class="card" id="s3">
+  <h2>③ 樹皮、木材和年輪</h2>
+  <p class="lead">樹一年一年長，<b>木質部</b>不斷累積，就成了<b>木材</b>。<b>韌皮部和它外面的部分</b>合起來叫<b>樹皮</b>。木質部的細胞長得快或慢，顏色不一樣，就出現一圈一圈的<b>年輪</b>。</p>
+
+  <div class="ctrl" id="clim3">
+    <span class="lab">這棵樹長在</span>
+    <button class="chip on" data-v="temp">四季分明的地方</button>
+    <button class="chip" data-v="trop">整年溫暖多雨的地方</button>
+  </div>
+  <div class="ctrl">
+    <button class="chip on big" id="year3">長一年</button>
+    <button class="chip" id="dry3">長一年（這年很乾旱）</button>
+    <button class="chip" id="reset3">重來</button>
+  </div>
+  <div class="stage"><canvas id="c3"></canvas></div>
+  <div class="legend">
+    <span><i style="background:#f1d9a7;border:1px solid #c9a66b"></i>淺色：長得快的時候</span>
+    <span><i style="background:#8a5a2b"></i>深色：長得慢的時候</span>
+    <span><i style="background:#e7a35c"></i>韌皮部</span>
+    <span><i style="background:#5b4030"></i>樹皮的外層</span>
+  </div>
+  <div class="count">
+    <div><small>這棵樹實際幾歲</small><b id="age3">0</b></div>
+    <div><small>數得到幾圈深色環</small><b id="ring3">0</b></div>
+  </div>
+
+  <div class="tw">
+  <table>
+    <tr><th>氣候</th><th>木質部細胞長得</th><th>細胞大小</th><th>顏色</th></tr>
+    <tr><td>溫暖、雨量多</td><td><span class="hide">快</span></td><td><span class="hide">大</span></td><td><span class="hide">淺</span></td></tr>
+    <tr><td>氣溫下降、雨量少</td><td><span class="hide">慢</span></td><td><span class="hide">小</span></td><td><span class="hide">深</span></td></tr>
+  </table>
+  </div>
+  <div class="key"><b>怎麼數：</b>一圈淺色加一圈深色，合起來是一年。所以數深色的環有幾圈，大約就是幾歲。</div>
+  <div class="life"><b>生活裡看得到：</b>四季分明的地方，年輪很清楚。整年溫暖多雨的地方，樹一整年都長得差不多快，年輪就不明顯。切到「整年溫暖多雨」長幾年看看。</div>
+</div>
+
+<!-- ============ ④ ============ -->
+<div class="card" id="s4">
+  <h2>④ 樹皮被啃掉一圈，樹為什麼會死？</h2>
+  <p class="lead">松鼠會啃樹皮磨牙，柳杉是牠們最愛的樹。樹皮裡有<b>韌皮部</b>。如果被啃掉<b>完整一圈</b>（環狀剝皮），樹可能會死。可是樹心整個空掉的老樹，卻活得好好的。為什麼？</p>
+
+  <div class="predict" data-id="p4" data-ans="1" data-exp="先出問題的是根。木質部在裡面沒被啃到，水一開始照樣往上送。但養分下不來，根先餓死。根死了才吸不到水，葉子最後才枯。">
+    <p><b>先猜再看：</b>樹皮被啃掉一整圈。你猜哪裡最先出問題？</p>
+    <div class="pb"><button>葉子。因為水上不去</button><button>根。因為養分下不來</button></div>
+    <p class="watch" hidden>先不告訴你對不對。按下面的「松鼠啃掉一整圈」，看藍點和橘點哪一種先停。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+
+  <div class="ctrl" id="mode4">
+    <button class="chip on" data-v="ok">健康的樹</button>
+    <button class="chip" data-v="ring">松鼠啃掉一整圈</button>
+    <button class="chip" data-v="patch">只啃掉一小塊</button>
+    <button class="chip" data-v="hollow">樹心空掉的老樹</button>
+  </div>
+  <div class="stage"><canvas id="c4"></canvas></div>
+  <div class="legend">
+    <span><i style="background:#2563eb"></i>水（走木質部往上）</span>
+    <span><i style="background:#ea580c"></i>養分（走韌皮部往下）</span>
+    <span>樹幹是從中間剖開來看的樣子。</span>
+  </div>
+  <div class="status" id="st4"></div>
+
+  <div class="key">
+    <b>環狀剝皮的順序：</b>樹皮少一圈 → 韌皮部斷了 → 養分送不到根 → 根死亡，不能吸水 → 枝葉枯黃。<br>
+    <b>樹心中空沒事：</b>空掉的是最裡面、已經不運輸的<b>老舊木質部</b>。外圈還在工作的部分沒有壞。
+  </div>
+  <div class="note">動畫裡，缺口上方的樹皮會慢慢鼓起來。這是補充：往下送的養分被擋住，就堆在那裡。課本沒有寫這一點，但它能幫你記住「養分是從上面下來的」。</div>
+</div>
+
+<!-- ============ ⑤ ============ -->
+<div class="card" id="s5">
+  <h2>⑤ 水怎麼爬上去：根毛、連續水柱和氣孔</h2>
+  <p class="lead">水要從根走到葉子，靠的是三個地方一起合作。</p>
+  <ul>
+    <li><b>根毛</b>：根部表皮細胞向外突出的細絲。它讓吸水的<b>表面積</b>變大。水靠滲透作用進到根裡。</li>
+    <li><b>木質部</b>：根、莖、葉的木質部細胞上下相連，成為細管。裡面充滿水，連成一條<b>連續水柱</b>。</li>
+    <li><b>氣孔</b>：在葉子表面。大部分的水從這裡變成水氣散到空氣中，叫做<b>蒸散作用</b>。</li>
+  </ul>
+  <div class="key">把連續水柱想成一條<b>水做的繩子</b>。葉子的氣孔放走一點水，就產生拉力。整條水柱被往上拉一點，根再補進新的水。所以<b>蒸散作用是水往上走最主要的動力</b>。</div>
+
+  <h3>氣孔怎麼開、怎麼關</h3>
+  <p class="lead">氣孔由兩個成對的<b>保衛細胞</b>圍成。下面是從葉子表面正上方看下去的樣子。換一換條件，看保衛細胞的形狀。</p>
+  <div class="ctrl" id="day5">
+    <span class="lab">時間</span>
+    <button class="chip on" data-v="1">白天</button>
+    <button class="chip" data-v="0">晚上</button>
+  </div>
+  <div class="ctrl" id="wet5">
+    <span class="lab">土壤</span>
+    <button class="chip on" data-v="1">水很夠</button>
+    <button class="chip" data-v="0">缺水</button>
+  </div>
+  <div class="stage"><canvas id="c5"></canvas></div>
+  <div class="count">
+    <div><small>保衛細胞</small><b id="gc5">充水、膨脹、彎曲</b></div>
+    <div><small>氣孔</small><b id="sto5">打開</b></div>
+    <div><small>已經散出去的水氣</small><b id="out5">0</b></div>
+  </div>
+
+  <div class="tw">
+  <table>
+    <tr><th>環境</th><th>保衛細胞</th><th>形狀</th><th>氣孔</th></tr>
+    <tr><td>白天、水分充足</td><td><span class="hide">充水膨脹</span></td><td><span class="hide">彎曲</span></td><td><span class="hide">打開</span></td></tr>
+    <tr><td>晚上，或土壤缺水</td><td><span class="hide">失水萎縮</span></td><td><span class="hide">變直</span></td><td><span class="hide">關閉</span></td></tr>
+  </table>
+  </div>
+  <ul style="margin-top:10px">
+    <li>氣孔是水氣散出去的通道，也是氣體進出的通道。</li>
+    <li>陸地上的植物，氣孔大多在葉子的<b>下表皮</b>。那裡不會直接被太陽曬，水散失得慢一些。</li>
+    <li>水從氣孔是<b>只出不進</b>。植物喝水靠的是根。</li>
+    <li>蒸散作用的好處：幫忙把水往上拉、幫助根吸水、還能調節植物體的<b>溫度</b>。</li>
+  </ul>
+  <div class="note"><b>老師補充：</b>水往上走的動力有三個。根的<b>根壓</b>、莖裡細管的<b>毛細現象</b>、葉的<b>蒸散作用</b>。其中蒸散作用最重要。</div>
+</div>
+
+<!-- ============ ⑥ ============ -->
+<div class="card" id="s6">
+  <h2>⑥ 蒸散實驗室：什麼時候水散失得快？</h2>
+  <p class="lead">這是課本實驗 3-1 的第二部分。兩支粗細差不多的芹菜，各放進一個 10 mL 量筒，水面都調到 10。<b>甲</b>留著葉片，<b>乙</b>把葉片全部摘掉。放 30 分鐘後比水位。</p>
+
+  <div class="predict" data-id="p6" data-ans="1" data-exp="乙會降一點點。葉片摘掉了，但幼嫩的葉柄上也有少量氣孔，水面自己也會蒸發一點。不過比甲少很多。">
+    <p><b>先猜再看：</b>乙的葉片全摘掉了。30 分鐘後，乙的水位會怎樣？</p>
+    <div class="pb"><button>完全不變</button><button>降一點點</button><button>降得跟甲一樣多</button></div>
+    <p class="watch" hidden>先不告訴你對不對。按「開始靜置 30 分鐘」，看兩支量筒。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+
+  <div class="ctrl" id="env6">
+    <span class="lab">環境（點一下切換）</span>
+    <button class="chip on" data-k="light" data-on="光照：強" data-off="光照：弱">光照：強</button>
+    <button class="chip on" data-k="temp" data-on="溫度：高" data-off="溫度：低">溫度：高</button>
+    <button class="chip on" data-k="dry" data-on="空氣：乾燥" data-off="空氣：潮濕">空氣：乾燥</button>
+    <button class="chip on" data-k="wind" data-on="風：大" data-off="風：小">風：大</button>
+  </div>
+  <div class="ctrl">
+    <button class="chip on big" id="run6">開始靜置 30 分鐘</button>
+    <button class="chip" id="reset6">重設</button>
+  </div>
+  <div class="stage"><canvas id="c6"></canvas></div>
+  <div class="status" id="st6">先選環境，再按「開始靜置 30 分鐘」。試試把四個條件都換掉，再做一次。</div>
+  <p class="tip">水位的數字是示意，用來比較快慢。真的做實驗時，數字會跟這裡不一樣。</p>
+
+  <h3>哪一邊蒸散比較快？</h3>
+  <div class="tw">
+  <table>
+    <tr><th>比什麼</th><th>蒸散比較快的是</th><th class="l">為什麼</th></tr>
+    <tr><td>葉片大／葉片小</td><td><span class="hide">葉片大</span></td><td class="l">氣孔比較多</td></tr>
+    <tr><td>有葉片／沒有葉片</td><td><span class="hide">有葉片</span></td><td class="l">氣孔大多在葉片上</td></tr>
+    <tr><td>白天／晚上</td><td><span class="hide">白天</span></td><td class="l">白天氣孔打開</td></tr>
+    <tr><td>光照強／光照弱</td><td><span class="hide">光照強</span></td><td class="l">氣孔開得大</td></tr>
+    <tr><td>溫度高／溫度低</td><td><span class="hide">溫度高</span></td><td class="l">水變成水氣比較快</td></tr>
+    <tr><td>土壤潮濕／土壤乾燥</td><td><span class="hide">土壤潮濕</span></td><td class="l">水夠，氣孔才開著</td></tr>
+    <tr><td>空氣濕度高／濕度低</td><td><span class="hide">濕度低</span></td><td class="l">外面乾，水氣容易散出去</td></tr>
+    <tr><td>風大／風小</td><td><span class="hide">風大</span></td><td class="l">風把葉子旁邊的水氣帶走</td></tr>
+  </table>
+  </div>
+  <div class="life"><b>生活裡看得到：</b>很多樹在秋冬會落葉。葉子掉了，蒸散就少，可以<b>減少水分散失</b>。</div>
+  <div class="life"><b>生活裡看得到：</b>移植大樹之前，工人會先把很多枝葉剪掉。因為挖起來時根受傷了，吸水變少。葉子少一點，水就不會散失太快，樹比較容易活下來。</div>
+  <div class="note"><b>實驗為什麼這樣設計：</b>兩支芹菜粗細要差不多，水面都調到 10。這樣兩邊<b>只有「有沒有葉片」不一樣</b>，水位差多少，才能說是葉片造成的。</div>
+</div>
+
+<!-- ============ ⑦ ============ -->
+<div class="card" id="s7">
+  <h2>⑦ 紅墨水實驗：讓看不見的管線現形</h2>
+  <p class="lead">這是課本實驗 3-1 的第一部分。水是透明的，看不出它走到哪裡。把水染紅，再把植物放進去，水走過的地方就會變紅。</p>
+
+  <div class="predict" data-id="p7" data-ans="1" data-exp="會一邊偏紅、一邊偏藍。每一束維管束各自往上通到自己那一側的花瓣，兩種顏色的水不會在莖裡先混在一起。">
+    <p><b>先猜再看：</b>把白玫瑰的莖從中間剖成兩半。一半泡紅色的水，一半泡藍色的水。花會變成什麼樣子？</p>
+    <div class="pb"><button>整朵變紫色</button><button>一邊偏紅、一邊偏藍</button><button>不會變色</button></div>
+    <p class="watch" hidden>先不告訴你對不對。選下面的「白玫瑰」，再按「開始靜置」。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+
+  <div class="ctrl" id="plant7">
+    <span class="lab">材料</span>
+    <button class="chip on" data-v="celery">芹菜（紅色的水）</button>
+    <button class="chip" data-v="rose">白玫瑰（莖剖半，紅＋藍）</button>
+  </div>
+  <div class="ctrl" id="cut7">
+    <span class="lab">切芹菜的地方</span>
+    <button class="chip on" data-v="water">在水裡切</button>
+    <button class="chip" data-v="air">在空氣中切</button>
+  </div>
+  <div class="ctrl">
+    <button class="chip on big" id="run7">開始靜置</button>
+    <button class="chip" id="reset7">重來</button>
+  </div>
+  <div class="stage"><canvas id="c7"></canvas></div>
+  <div class="status" id="st7"></div>
+
+  <div class="key">
+    <b>染紅的地方就是木質部。</b>橫切看到的是一個一個紅點。縱切看到的是一條一條上下連通的紅線。<br>
+    葉柄、葉脈、花瓣都染得到顏色，表示維管束一路通到這些地方。
+  </div>
+  <div class="life"><b>生活裡看得到：</b>插花時，花店會把莖放在水裡剪。在空氣中剪，空氣會跑進木質部變成氣泡，把管子堵住，水就上不去，花很快就垂下來。</div>
+</div>
+
+<!-- ============ ⑧ ============ -->
+<div class="card" id="s8">
+  <h2>⑧ 考考你：是真的懂，還是只是背起來？</h2>
+  <p class="lead">這些題目很多是<b>情境題</b>，要用你剛剛看到的畫面去想。一回 10 題，一次一題。</p>
+  <ul style="font-size:.92rem">
+    <li>答錯時，會告訴你<b>可能是哪裡想錯</b>，還有一個按鈕直接跳回那一段動畫。</li>
+    <li>不確定就勾「用猜的」。猜對的題目也會進錯題本，之後再考一次。</li>
+    <li>下一回會先出<b>上次錯的</b>和<b>還沒做過的</b>。</li>
+  </ul>
+  <div id="quiz"></div>
+</div>
+
+<div class="card" id="s9">
+  <h2>⑨ 我的弱點和錯題本</h2>
+  <div id="ana"></div>
+</div>
+<button id="backBtn" hidden>↩ 回到題目</button>
+
+<footer>國中生物自學教材 · 植物的運輸構造<br>依七年級自然課本第 3 章 3-1 的單元架構與學校講義重點編寫，圖與文字為原創示意。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "生物 植物的運輸構造";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// 上傳網址不寫在教材裡；家長在「學習紀錄」頁設定一次，存於此瀏覽器。
+let CLOUD_URL = "";
+try{ CLOUD_URL = localStorage.getItem("cloud_url_v1") || ""; }catch(e){}
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// ===== 共用工具 =====
+const $ = id => document.getElementById(id);
+const FONT = '"Microsoft JhengHei","PingFang TC",system-ui,sans-serif';
+const mix = (a,b,t) => `rgb(${Math.round(a[0]+(b[0]-a[0])*t)},${Math.round(a[1]+(b[1]-a[1])*t)},${Math.round(a[2]+(b[2]-a[2])*t)})`;
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+const rnd = (a,b) => a + Math.random()*(b-a);
+const WATER = "#2563eb", FOOD = "#ea580c", XY = "#bfdbfe", PH = "#fed7aa";
+const scenes = [];
+function scene(id, W, H, draw){
+  const cv = $(id), ctx = cv.getContext("2d");
+  function fit(){
+    const w = cv.clientWidth || 600, dpr = window.devicePixelRatio || 1;
+    cv.style.height = (w*H/W) + "px";
+    cv.width = Math.round(w*dpr); cv.height = Math.round(w*H/W*dpr);
+    ctx.setTransform(cv.width/W, 0, 0, cv.width/W, 0, 0);
+    ctx.fs = clamp(500/w, 1, 1.35);
+  }
+  fit(); window.addEventListener("resize", fit);
+  const s = { cv, ctx, draw, vis:true };
+  if("IntersectionObserver" in window){
+    s.vis = false;
+    new IntersectionObserver(es => es.forEach(e => s.vis = e.isIntersecting), { rootMargin:"80px" }).observe(cv);
+  }
+  scenes.push(s); return ctx;
+}
+function rr(c,x,y,w,h,r){ c.beginPath(); c.moveTo(x+r,y); c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r); c.arcTo(x,y+h,x,y,r); c.arcTo(x,y,x+w,y,r); c.closePath(); }
+function label(c, txt, x, y, opt){
+  opt = opt || {};
+  c.font = (opt.bold===false?"":"bold ") + Math.round((opt.size||15)*(c.fs||1)) + "px " + FONT;
+  c.textAlign = opt.align || "center"; c.textBaseline = "middle";
+  c.lineWidth = 4; c.strokeStyle = opt.halo || "rgba(255,255,255,.9)"; c.lineJoin = "round";
+  c.strokeText(txt, x, y); c.fillStyle = opt.color || "#1f2937"; c.fillText(txt, x, y);
+}
+function dot(c,x,y,r,col){ c.beginPath(); c.arc(x,y,r,0,6.2832); c.fillStyle = col; c.fill(); }
+function line(c,pts,w,col){
+  c.beginPath(); c.moveTo(pts[0][0],pts[0][1]); for(let i=1;i<pts.length;i++) c.lineTo(pts[i][0],pts[i][1]);
+  c.lineWidth = w; c.strokeStyle = col; c.lineCap = "round"; c.lineJoin = "round"; c.stroke();
+}
+// 一小束維管束：朝外那一半是韌皮部，朝內那一半是木質部
+function bundle(c,x,y,ang,r,inCol,outCol){
+  c.beginPath(); c.moveTo(x,y); c.arc(x,y,r,ang-Math.PI/2,ang+Math.PI/2); c.closePath(); c.fillStyle = outCol; c.fill();
+  c.beginPath(); c.moveTo(x,y); c.arc(x,y,r,ang+Math.PI/2,ang+Math.PI*1.5); c.closePath(); c.fillStyle = inCol; c.fill();
+}
+function mkPath(pts){
+  const seg = []; let L = 0;
+  for(let i=0;i<pts.length-1;i++){
+    const dx = pts[i+1][0]-pts[i][0], dy = pts[i+1][1]-pts[i][1], len = Math.hypot(dx,dy) || 1e-6;
+    seg.push({ x:pts[i][0], y:pts[i][1], ux:dx/len, uy:dy/len, len, s0:L }); L += len;
+  }
+  return { seg, L, at(s){ s = clamp(s,0,L); let i = 0; while(i < seg.length-1 && s > seg[i].s0+seg[i].len) i++; const e = seg[i], d = s-e.s0; return [e.x+e.ux*d, e.y+e.uy*d]; } };
+}
+function chips(sel, attr, fn){
+  const bs = [...document.querySelectorAll(sel)];
+  bs.forEach(b => b.addEventListener("click", ()=>{ bs.forEach(x=>x.classList.remove("on")); b.classList.add("on"); fn(b.getAttribute(attr)); }));
+}
+
+// ===================== ① 兩條管線 =====================
+(function(){
+  const W = 640, H = 520, GY = 380, XW = 315, XP = 325, c = scene("c1", W, H, draw);
+  let view = "all", season = "summer", curSt = 0;
+  const LEAF = [ { at:205, mid:[215,170], tip:[120,150] }, { at:268, mid:[430,230], tip:[535,205] } ];
+  const RW = { left:[[160,474],[240,440],[XW,410]], main:[[XW,498],[XW,410]], right:[[430,433],[395,421],[XW,400]] };
+  const STO = [[XP,404],[395,428],[432,440],[478,448]];
+  const cache = {};
+  function wRoute(o, d){
+    const k = "w"+o+d; if(cache[k]) return cache[k];
+    const pts = RW[o].slice();
+    if(d === "F") pts.push([XW,96],[318,70]);
+    else { const l = LEAF[d]; pts.push([XW,l.at-3],[l.mid[0],l.mid[1]-3],[l.tip[0],l.tip[1]-3]); }
+    return cache[k] = mkPath(pts);
+  }
+  function fRoute(k){
+    if(cache[k]) return cache[k]; let pts;
+    if(k[0] === "L"){
+      const l = LEAF[+k[1]]; pts = [[l.tip[0],l.tip[1]+3],[l.mid[0],l.mid[1]+3],[XP,l.at+3]];
+      if(k[2] === "S") pts = pts.concat(STO); else if(k[2] === "F") pts.push([XP,96],[322,70]); else pts.push([XP,492]);
+    } else {
+      pts = STO.slice().reverse();
+      if(k[1] === "F") pts.push([XP,96],[322,70]);
+      else { const l = LEAF[+k[1]]; pts.push([XP,l.at],[k[1] === "0" ? 300 : 340, l.at-8]); }
+    }
+    return cache[k] = mkPath(pts);
+  }
+  const WP = [], FP = [];
+  function newW(p, first){
+    p.o = ["left","main","right"][Math.floor(Math.random()*3)];
+    p.d = season === "spring" ? "F" : (Math.random() < .2 ? "F" : Math.random() < .5 ? 0 : 1);
+    if(p.tr){ p.o = "left"; p.d = season === "spring" ? "F" : 1; }
+    p.path = wRoute(p.o, p.d);
+    const last = p.path.seg[p.path.seg.length-1].len;
+    p.end = p.d === "F" ? p.path.L : p.path.L - last*rnd(.05,.8);
+    p.s = first && !p.tr ? rnd(0,p.end) : 0; p.vap = -1; p.wob = rnd(0,6);
+  }
+  function newF(p, first){
+    const r = Math.random();
+    p.k = season === "summer" ? "L" + (Math.random() < .5 ? 0 : 1) + (r < .55 ? "S" : r < .8 ? "F" : "R") : (r < .6 ? "SF" : r < .8 ? "S0" : "S1");
+    p.path = fRoute(p.k);
+    p.s = first ? rnd(0,p.path.L) : rnd(0, season === "summer" ? p.path.seg[0].len*.7 : 20);
+  }
+  function init(){
+    WP.length = 0; FP.length = 0;
+    for(let i=0;i<46;i++){ const p = { tr:i === 0 }; newW(p, true); WP.push(p); }
+    for(let i=0;i<26;i++){ const p = {}; newF(p, true); FP.push(p); }
+    curSt = 0;
+  }
+  const ST = [
+    ["根毛", "水從土壤進到根毛。根毛是根部表皮細胞向外突出的細絲，數量很多，吸水的表面積就變大。"],
+    ["根的木質部", "水進到根裡面的木質部。礦物質溶在水裡，跟著一起走。"],
+    ["莖的木質部", "木質部的細胞上下相連，成為細管。水在裡面連成一條不斷的水柱，只往上走。"],
+    ["葉脈的木質部", "葉脈就是葉子裡的維管束。水被送到葉片各處，少部分留給細胞用。"],
+    ["氣孔", "大部分的水變成水氣，從氣孔散到空氣中，這就是蒸散作用。上面走掉一點，下面的水就被往上拉。"]
+  ];
+  const ST_SP = ["花和新芽", "現在樹上沒有葉子，蒸散很少，所以水走得慢。水被送到花芽，給細胞使用。"];
+  function station(p){
+    if(p.vap >= 0) return season === "spring" ? 4 : 5;
+    const q = p.path.at(p.s);
+    if(p.s < 28) return 1; if(q[1] > GY) return 2; if(Math.abs(q[0]-XW) < 1.5) return 3; return 4;
+  }
+  function buildRow(){
+    const n = season === "spring" ? 4 : 5; let h = "";
+    for(let i=1;i<=n;i++) h += `<button class="st" data-n="${i}"><b>${i}</b>${season === "spring" && i === 4 ? ST_SP[0] : ST[i-1][0]}</button>`;
+    $("rowW").innerHTML = h;
+  }
+  $("rowW").addEventListener("click", e => {
+    const b = e.target.closest(".st"); if(!b) return; const n = +b.dataset.n, p = WP[0]; p.vap = -1;
+    if(n === 5){ p.s = p.end - 1; return; }
+    for(let s=0; s<p.end; s+=2){ p.s = s; if(station(p) >= n) break; }
+  });
+  function showSt(n){
+    if(n === curSt) return; curSt = n;
+    const t = season === "spring" && n === 4 ? ST_SP : ST[n-1];
+    $("stNum").textContent = n; $("stName").textContent = t[0]; $("stText").textContent = t[1];
+    [...$("rowW").children].forEach(b => b.classList.toggle("now", +b.dataset.n === n));
+  }
+  chips("#view1 .chip", "data-v", v => view = v);
+  chips("#season1 .chip", "data-v", v => { season = v; buildRow(); init(); });
+
+  function leafShape(l){
+    const a = [320,l.at], q = [(a[0]+l.mid[0])/2,(a[1]+l.mid[1])/2], t = l.tip;
+    line(c, [a,l.mid], 7, "#6fb558");
+    const dx = t[0]-q[0], dy = t[1]-q[1], n = Math.hypot(dx,dy), nx = -dy/n, ny = dx/n, w = 62;
+    c.beginPath(); c.moveTo(q[0],q[1]); c.quadraticCurveTo(l.mid[0]+nx*w, l.mid[1]+ny*w, t[0], t[1]);
+    c.quadraticCurveTo(l.mid[0]-nx*w, l.mid[1]-ny*w, q[0], q[1]); c.fillStyle = "#57b356"; c.fill();
+    line(c, [[a[0],a[1]-3],[l.mid[0],l.mid[1]-3],[t[0],t[1]-3]], 2.5, XY);
+    line(c, [[a[0],a[1]+3],[l.mid[0],l.mid[1]+3],[t[0],t[1]+3]], 2.5, PH);
+  }
+  function draw(dt){
+    const sp = season === "spring";
+    // 更新
+    const vw = 55*(sp ? .35 : 1);
+    for(const p of WP){
+      if(p.vap < 0){ p.s += vw*dt; if(p.s >= p.end) p.vap = 0; }
+      else { p.vap += dt; if(p.vap > (p.d === "F" ? .5 : 1.4)) newW(p); }
+    }
+    for(const p of FP){ p.s += 42*dt; if(p.s >= p.path.L) newF(p); }
+    showSt(station(WP[0]));
+    // 背景
+    c.fillStyle = sp ? "#f3f6fb" : "#eef8ff"; c.fillRect(0,0,W,GY);
+    c.fillStyle = "#ead9bb"; c.fillRect(0,GY,W,H-GY);
+    dot(c, 565, 60, 30, sp ? "#fde68a" : "#fbbf24");
+    label(c, sp ? "早春" : "夏天", 565, 60, { size:14, color:"#92400e", halo:"rgba(255,255,255,.5)" });
+    // 根
+    line(c, [[160,474],[240,440],[320,410]], 9, "#cfae7c");
+    line(c, [[430,436],[395,424],[320,402]], 9, "#cfae7c");
+    line(c, [[320,500],[320,GY-2]], 16, "#cfae7c");
+    c.save(); c.translate(472,447); c.rotate(.15); c.beginPath(); c.ellipse(0,0,40,17,0,0,6.2832); c.fillStyle = "#e9c46a"; c.fill(); c.strokeStyle = "#c79a3a"; c.lineWidth = 2; c.stroke(); c.restore();
+    for(let i=0;i<7;i++){
+      const t = .08+i*.12, x = 160+(240-160)*t/.6*(t<.6?1:0)+(t>=.6?80+(320-240)*(t-.6)/.4:0), y = t<.6 ? 474-34*t/.6 : 440-30*(t-.6)/.4;
+      line(c, [[x,y],[x-5,y+16]], 1.5, "#b8935c"); line(c, [[x,y],[x+5,y-14]], 1.5, "#b8935c");
+    }
+    line(c, [[160,474],[240,440],[XW,410]], 2.5, XY); line(c, [[430,433],[395,421],[XW,400]], 2.5, XY); line(c, STO, 2.5, PH);
+    // 莖
+    line(c, [[320,GY+2],[320,96]], 20, "#86c06c"); line(c, [[320,96],[320,74]], 8, "#86c06c");
+    line(c, [[XW,498],[XW,96]], 5, XY); line(c, [[XP,492],[XP,96]], 5, PH);
+    // 葉或芽
+    if(sp){ for(const l of LEAF){ const dx = l.mid[0] < 320 ? -1 : 1; c.beginPath(); c.ellipse(320+dx*18, l.at-8, 10, 6, dx*-.5, 0, 6.2832); c.fillStyle = "#9ad17e"; c.fill(); } }
+    else LEAF.forEach(leafShape);
+    // 花
+    for(let i=0;i<5;i++){ const a = i*1.2566-1.57; dot(c, 320+Math.cos(a)*15, 58+Math.sin(a)*15, sp ? 13 : 10, "#f9a8d4"); }
+    dot(c, 320, 58, 7, "#fde047");
+    // 粒子
+    if(view !== "food") for(const p of WP){
+      const e = p.path.at(Math.min(p.s, p.end));
+      if(p.vap < 0){ dot(c, e[0], e[1], 3.6, WATER); }
+      else if(p.d === "F"){ c.globalAlpha = clamp(1-p.vap/.5,0,1); dot(c, e[0], e[1], 3.6, WATER); c.globalAlpha = 1; }
+      else { c.globalAlpha = clamp(1-p.vap/1.4,0,1); dot(c, e[0]+Math.sin(p.wob+p.vap*4)*5, e[1]-p.vap*34, 3+p.vap*1.5, "#60a5fa"); c.globalAlpha = 1; }
+      if(p.tr){ const y = p.vap >= 0 && p.d !== "F" ? e[1]-p.vap*34 : e[1]; c.beginPath(); c.arc(e[0], y, 8, 0, 6.2832); c.lineWidth = 3; c.strokeStyle = "#facc15"; c.stroke(); }
+    }
+    if(view !== "water") for(const p of FP){ const e = p.path.at(p.s); dot(c, e[0], e[1], 3.6, FOOD); }
+    // 標示
+    label(c, "木質部：水 ↑", 296, 330, { size:14, align:"right", color:WATER });
+    label(c, "韌皮部：養分 ↑↓", 344, 330, { size:14, align:"left", color:FOOD });
+    label(c, "根毛", 150, 498, { size:13, color:"#7c5a2a" });
+    label(c, "儲存養分的根", 505, 482, { size:13, color:"#7c5a2a" });
+    label(c, "土壤", 40, 400, { size:13, color:"#7c5a2a", halo:"rgba(234,217,187,.9)" });
+    if(!sp){ label(c, "水氣從氣孔離開", 150, 105, { size:13, color:"#3b82f6" }); label(c, "葉子做養分", 505, 265, { size:13, color:"#166534" }); }
+    else { label(c, "還沒長葉", 430, 235, { size:13, color:"#6b7280" }); label(c, "花芽需要養分", 430, 58, { size:13, color:"#be185d" }); }
+  }
+  buildRow(); init();
+})();
+
+// ===================== ② 維管束排列 =====================
+(function(){
+  const W = 640, H = 340, c = scene("c2", W, H, draw);
+  let kind = "tree", g = 0, ga = 0;
+  const CB = []; let seed = 11; const rand = () => (seed = (seed*16807) % 2147483647) / 2147483647;
+  for(let n=0; CB.length < 26 && n < 4000; n++){
+    const a = rand()*6.2832, r = Math.sqrt(rand())*78, x = Math.cos(a)*r, y = Math.sin(a)*r;
+    if(CB.every(b => Math.hypot(b[0]-x, b[1]-y) > 22)) CB.push([x,y]);
+  }
+  const maxG = () => kind === "tree" ? 5 : 1;
+  function say(){
+    let t = "<b>左邊玉米：</b>維管束散散地分布在整個莖裡，沒有形成層。" + (g ? "過了 " + g + " 年，還是一樣粗。" : "");
+    if(kind === "tree") t += "<br><b>右邊榕樹：</b>維管束排成一圈，有形成層。" + (g ? "形成層每年向內長新的木質部、向外長新的韌皮部。第 " + g + " 年，莖明顯變粗了。" + (g >= 5 ? "畫面放不下了，不過樹還會繼續長。" : "") : "按「再長一年」看看。");
+    else t += "<br><b>右邊向日葵：</b>維管束排成一圈，有形成層，但它是一年生植物，形成層不發達。" + (g ? "只粗了一點點，而且長一季就結束了。" : "按「再長一年」看看。");
+    $("st2").innerHTML = t; $("grow2").disabled = g >= maxG();
+  }
+  chips("#kind2 .chip", "data-v", v => { kind = v; g = 0; ga = 0; say(); });
+  $("grow2").addEventListener("click", ()=>{ if(g < maxG()){ g++; say(); } });
+  $("reset2").addEventListener("click", ()=>{ g = 0; ga = 0; say(); });
+  function ringBundles(cx, cy, R, alpha){
+    c.globalAlpha = alpha;
+    for(let i=0;i<10;i++){ const a = i*.62832; bundle(c, cx+Math.cos(a)*R, cy+Math.sin(a)*R, a, 12, "#60a5fa", "#fb923c"); }
+    c.globalAlpha = 1;
+  }
+  function draw(dt){
+    ga += (g-ga)*Math.min(1, dt*2.2);
+    c.clearRect(0,0,W,H);
+    // 左：玉米
+    const lx = 165, cy = 172;
+    dot(c, lx, cy, 92, "#eaf5da"); c.lineWidth = 4; c.strokeStyle = "#7fb069"; c.stroke();
+    for(const b of CB) bundle(c, lx+b[0], cy+b[1], Math.atan2(b[1],b[0]), 8, "#60a5fa", "#fb923c");
+    label(c, "玉米（單子葉）：散生", lx, 24, { size:15 });
+    label(c, "沒有形成層，粗細不變", lx, 318, { size:13, color:"#6b7280" });
+    // 右
+    const rx = 470;
+    if(kind === "sun"){
+      const R = 74 + 5*ga;
+      dot(c, rx, cy, R, "#eaf5da"); c.lineWidth = 4; c.strokeStyle = "#7fb069"; c.stroke();
+      c.setLineDash([5,5]); c.beginPath(); c.arc(rx, cy, R-22, 0, 6.2832); c.lineWidth = 2; c.strokeStyle = "#16a34a"; c.stroke(); c.setLineDash([]);
+      ringBundles(rx, cy, R-22, 1);
+      label(c, "向日葵（雙子葉、一年生）：環狀", rx, 24, { size:15 });
+      label(c, "形成層不發達，只粗一點點", rx, 318, { size:13, color:"#6b7280" });
+    } else {
+      const t = clamp(ga, 0, 1), Rw = 52 + 9*ga, Ro = Rw + 7 + 6 + ga;
+      if(t < 1){
+        dot(c, rx, cy, 74, "#eaf5da"); c.lineWidth = 4; c.strokeStyle = "#7fb069"; c.stroke();
+        c.beginPath(); c.arc(rx, cy, 52, 0, 6.2832); c.lineWidth = 2.5; c.strokeStyle = "#16a34a"; c.stroke();
+        ringBundles(rx, cy, 52, 1);
+      }
+      if(t > 0){
+        c.globalAlpha = t;
+        dot(c, rx, cy, Ro, "#8b5e3c"); dot(c, rx, cy, Rw+7, "#fb923c"); dot(c, rx, cy, Rw, "#bcd6f8");
+        for(let k=1;k<=Math.floor(ga+.02);k++){ c.beginPath(); c.arc(rx, cy, 52+9*k-9, 0, 6.2832); c.lineWidth = 1.2; c.strokeStyle = "#7ea6dd"; c.stroke(); }
+        dot(c, rx, cy, 9, "#eaf5da");
+        c.beginPath(); c.arc(rx, cy, Rw, 0, 6.2832); c.lineWidth = 3; c.strokeStyle = "#16a34a"; c.stroke();
+        c.globalAlpha = 1;
+        if(Math.abs(g-ga) > .03){
+          label(c, "← 新的木質部", rx+Rw-6, cy-12, { size:12, align:"right", color:"#1d4ed8" });
+          label(c, "新的韌皮部 →", rx+Rw-2, cy+14, { size:12, align:"right", color:"#c2410c" });
+        }
+      }
+      label(c, "榕樹（雙子葉、多年生）：環狀", rx, 24, { size:15 });
+      label(c, g ? "形成層發達：第 " + g + " 年" : "形成層發達，會一年一年變粗", rx, 318, { size:13, color:"#6b7280" });
+    }
+  }
+  say();
+})();
+
+// ===================== ③ 年輪 =====================
+(function(){
+  const W = 640, H = 340, c = scene("c3", W, H, draw);
+  const LIGHT = "#f1d9a7", DARKC = "#8a5a2b";
+  let clim = "temp", rings = [], cur = null, lastSeen = null;
+  function upd(){
+    $("age3").textContent = rings.length + " 歲";
+    $("ring3").textContent = rings.filter(r => r.d).length + " 圈";
+    const full = rings.length >= 8; $("year3").disabled = full; $("dry3").disabled = full;
+  }
+  function grow(dry){
+    if(cur || rings.length >= 8) return;
+    const trop = clim === "trop";
+    cur = { l: dry ? 5 : trop ? 13 : 11, d: trop ? 0 : 3.5, p:0, dry, trop };
+  }
+  chips("#clim3 .chip", "data-v", v => clim = v);
+  $("year3").addEventListener("click", ()=> grow(false));
+  $("dry3").addEventListener("click", ()=> grow(true));
+  $("reset3").addEventListener("click", ()=>{ rings = []; cur = null; lastSeen = null; upd(); });
+  function draw(dt){
+    if(cur){ cur.p += dt/1.9; if(cur.p >= 1){ rings.push(cur); lastSeen = cur; cur = null; upd(); } }
+    c.clearRect(0,0,W,H);
+    const cx = 175, cy = 172;
+    let r = 7; const rs = [];
+    for(const k of rings){ const a = r+k.l, b = a+k.d; rs.push([a,b,k.d]); r = b; }
+    let rl = r, rd = r, tl = 1;
+    if(cur){ tl = cur.d ? .72 : 1; rl = r + cur.l*clamp(cur.p/tl,0,1); rd = rl + cur.d*clamp((cur.p-tl)/(1-tl || 1),0,1); }
+    const R = cur ? rd : r;
+    dot(c, cx, cy, R+9, "#5b4030"); dot(c, cx, cy, R+4, "#e7a35c");
+    if(cur){ if(cur.d) dot(c, cx, cy, rd, DARKC); dot(c, cx, cy, rl, LIGHT); }
+    for(let i=rs.length-1;i>=0;i--){ if(rs[i][2]) dot(c, cx, cy, rs[i][1], DARKC); dot(c, cx, cy, rs[i][0], LIGHT); }
+    dot(c, cx, cy, 7, "#c9a66b");
+    if(!rings.length && !cur) label(c, "剛發芽的小樹", cx, cy+40, { size:13, color:"#6b7280" });
+    // 右邊：放大看細胞
+    const k = cur || lastSeen;
+    let msg = "按「長一年」";
+    if(cur) msg = cur.trop ? "整年溫暖多雨，一直長得快" : cur.p < tl ? (cur.dry ? "春夏很乾旱，長得很少" : "春夏：溫暖多雨，長得快") : "秋冬：變冷、雨少，長得慢";
+    else if(rings.length) msg = "又過了一年";
+    label(c, msg, 495, 40, { size:15, color:"#92400e" });
+    label(c, "放大看最新長出來的一圈", 495, 88, { size:13, color:"#6b7280" });
+    c.fillStyle = "#fffaf0"; rr(c, 362, 106, 266, 120, 10); c.fill(); c.strokeStyle = "#e5d5b5"; c.lineWidth = 1.5; c.stroke();
+    if(k){
+      const nL = Math.max(2, Math.round(k.l/2.2)), nD = k.d ? 3 : 0;
+      const pL = k === cur ? clamp(k.p/tl,0,1) : 1, pD = k === cur ? clamp((k.p-tl)/(1-tl || 1),0,1) : 1;
+      const sL = Math.ceil(nL*pL), sD = Math.ceil(nD*pD);
+      let x = 374; const y0 = 118;
+      for(let i=0;i<sL;i++){ for(let j=0;j<4;j++){ c.fillStyle = "#fdf3d1"; c.strokeStyle = "#b08a4a"; c.lineWidth = 1.5; rr(c, x, y0+j*24, 22, 22, 4); c.fill(); c.stroke(); } x += 24; }
+      const xD = x;
+      for(let i=0;i<sD;i++){ for(let j=0;j<8;j++){ c.fillStyle = "#b98a4e"; c.strokeStyle = "#6b4423"; c.lineWidth = 2; rr(c, x, y0+j*12, 10, 10, 2); c.fill(); c.stroke(); } x += 12; }
+      if(sL) label(c, k.dry ? "細胞大、顏色淺（但很少）" : "細胞大、顏色淺", Math.max(430, 374+sL*12), 244, { size:13, color:"#92400e" });
+      if(sD) label(c, "細胞小、顏色深", Math.min(560, xD+60), 268, { size:13, color:"#5b3413" });
+      if(!nD && k === lastSeen && !cur) label(c, "沒有深色的部分，分不出哪裡是一年", 495, 268, { size:12, color:"#6b7280" });
+    }
+    label(c, "← 靠樹心", 392, 296, { size:12, color:"#6b7280", bold:false });
+    label(c, "靠樹皮 →", 598, 296, { size:12, color:"#6b7280", bold:false });
+  }
+  upd();
+})();
+
+// ===================== ④ 環狀剝皮 =====================
+(function(){
+  const W = 640, H = 430, GY = 300, TOPY = 170, C0 = 232, C1 = 254, c = scene("c4", W, H, draw);
+  const WX = [308,332], FX = [298.5,341.5];
+  let mode = "ok", R = 1, leaf = 1, bulge = 0, lastMsg = "";
+  const WP = [], FP = [];
+  for(let i=0;i<22;i++) WP.push({ l:i%2, y:rnd(TOPY-10, GY+70) });
+  for(let i=0;i<18;i++) FP.push({ l:i%2, y:rnd(TOPY, GY+60) });
+  chips("#mode4 .chip", "data-v", v => { mode = v; R = 1; leaf = 1; bulge = 0; });
+  function say(){
+    let m, bad = false;
+    if(mode === "ok") m = "<b>健康的樹：</b>水走裡面的木質部往上。葉子做的養分走樹皮裡的韌皮部往下，送到根。";
+    else if(mode === "patch") m = "<b>只少了一小塊：</b>另一邊的韌皮部還連著，養分照樣送得到根。樹活得下去。";
+    else if(mode === "hollow") m = "<b>樹心空了：</b>空掉的是最裡面、早就不運輸的老舊木質部。外圈新的木質部和樹皮裡的韌皮部都還在，所以照樣枝葉茂盛。";
+    else { bad = true;
+      if(R > .66) m = "<b>A 樹皮被啃掉一圈：</b>韌皮部跟著斷了。養分下不去，堆在缺口上方。這時水還是照常往上，葉子還是綠的。";
+      else if(R > 0) m = "<b>B 根逐漸衰弱：</b>根得不到新的養分，只能用存糧。看右下角的存量一直掉。";
+      else if(leaf > .05) m = "<b>C 根死了：</b>根沒辦法吸水，藍點不見了。水上不去，枝葉開始枯黃。";
+      else m = "<b>整棵樹枯死了。</b>順序是：韌皮部斷 → 根餓死 → 吸不到水 → 葉子枯。";
+    }
+    if(m !== lastMsg){ lastMsg = m; $("st4").innerHTML = m; $("st4").classList.toggle("bad", bad); }
+  }
+  function draw(dt){
+    if(mode === "ring"){
+      if(R > 0) R = Math.max(0, R - dt/9); else leaf = Math.max(0, leaf - dt/7);
+      if(leaf > .3) bulge = Math.min(1, bulge + dt/10);
+    }
+    const wf = clamp(R*5, 0, 1), ff = clamp((leaf-.2)*3, 0, 1);
+    for(const p of WP){ p.y -= 58*wf*dt; if(p.y < TOPY-25) p.y = GY+70; }
+    for(const p of FP){
+      p.y += 44*dt;
+      const blocked = mode === "ring" || (mode === "patch" && p.l === 0);
+      if(blocked && p.y > C0-4 && p.y < C1+10) p.y = TOPY;
+      if(p.y > GY+62) p.y = TOPY;
+    }
+    say();
+    // 背景
+    c.fillStyle = "#eef8ff"; c.fillRect(0,0,W,GY); c.fillStyle = "#ead9bb"; c.fillRect(0,GY,W,H-GY);
+    // 根
+    const rc = mix([150,150,150], [150,104,62], R);
+    for(const e of [[190,395],[255,415],[385,415],[450,395]]) line(c, [[320,GY+8],[(320+e[0])/2,(GY+e[1])/2+8],e], 11, rc);
+    line(c, [[320,GY],[320,GY+85]], 64, rc);
+    line(c, [[WX[0],GY],[WX[0],GY+78]], 4, XY); line(c, [[WX[1],GY],[WX[1],GY+78]], 4, XY);
+    line(c, [[FX[0],GY],[FX[0],GY+68]], 4, PH); line(c, [[FX[1],GY],[FX[1],GY+68]], 4, PH);
+    // 樹幹（剖面）
+    const y0 = TOPY-20, h = GY-y0+4;
+    if(bulge > 0){ c.fillStyle = "#6b4a2f"; c.beginPath(); c.ellipse(290, C0-10, 5+9*bulge, 15, 0, 0, 6.2832); c.fill(); c.beginPath(); c.ellipse(350, C0-10, 5+9*bulge, 15, 0, 0, 6.2832); c.fill(); }
+    c.fillStyle = "#6b4a2f"; c.fillRect(288, y0, 64, h);
+    c.fillStyle = "#fdba74"; c.fillRect(294, y0, 52, h);
+    c.fillStyle = "#c9ddf7"; c.fillRect(303, y0, 34, h);
+    c.fillStyle = "#9fb2c9"; c.fillRect(314, y0, 12, h);
+    if(mode === "hollow"){ c.fillStyle = "#2d2118"; rr(c, 312, TOPY+35, 16, GY-TOPY-35, 8); c.fill(); }
+    if(mode === "ring" || mode === "patch"){
+      c.fillStyle = "#eef3fb"; c.fillRect(286, C0, 17, C1-C0); c.strokeStyle = "#b9c6d8"; c.lineWidth = 1; c.strokeRect(286.5, C0, 16, C1-C0);
+      if(mode === "ring"){ c.fillRect(337, C0, 17, C1-C0); c.strokeRect(337.5, C0, 16, C1-C0); }
+    }
+    // 樹冠
+    const lc = mix([176,120,50], [46,160,80], leaf), lc2 = mix([150,96,40], [34,139,68], leaf);
+    dot(c, 262, 128, 58, lc2); dot(c, 378, 128, 58, lc2); dot(c, 320, 98, 82, lc);
+    // 粒子
+    for(const p of WP){ if(p.y < TOPY-4) continue; c.globalAlpha = wf; dot(c, WX[p.l], p.y, 3.4, WATER); }
+    c.globalAlpha = 1;
+    for(const p of FP){ if(p.y < TOPY+4) continue; c.globalAlpha = ff; dot(c, FX[p.l], p.y, 3.4, FOOD); }
+    c.globalAlpha = 1;
+    if((mode === "ring") && ff > 0){ const n = Math.round(bulge*5); for(let i=0;i<n;i++){ dot(c, FX[0]-2-(i%2)*4, C0-6-i*4, 3.2, FOOD); dot(c, FX[1]+2+(i%2)*4, C0-6-i*4, 3.2, FOOD); } }
+    // 標示
+    const lead = (x1,y1,x2,y2) => { c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.lineWidth = 1.2; c.strokeStyle = "#6b7280"; c.stroke(); };
+    lead(FX[1], 205, 372, 205); label(c, "韌皮部（在樹皮裡）", 376, 205, { size:13, align:"left", color:"#c2410c" });
+    lead(WX[0], 278, 268, 278); label(c, "還在運輸的木質部", 264, 278, { size:13, align:"right", color:"#1d4ed8" });
+    lead(320, 284, 372, 284); label(c, mode === "hollow" ? "中空（原本是老舊木質部）" : "老舊木質部（已經不運輸）", 376, 284, { size:13, align:"left", color:"#475569" });
+    if(mode === "ring"){ lead(354, 243, 372, 243); label(c, "樹皮少了一整圈", 376, 243, { size:13, align:"left", color:"#b91c1c" }); if(bulge > .4) label(c, "養分堆在這裡", 264, C0-12, { size:13, align:"right", color:"#c2410c" }); }
+    if(mode === "patch") label(c, "只少了這一小塊", 264, 243, { size:13, align:"right", color:"#b91c1c" });
+    // 根的養分存量
+    label(c, "根的養分存量", 536, 340, { size:13, color:"#7c5a2a", halo:"rgba(234,217,187,.9)" });
+    c.fillStyle = "#fff"; rr(c, 476, 352, 120, 14, 7); c.fill();
+    if(R > .01){ c.fillStyle = R > .4 ? FOOD : "#dc2626"; rr(c, 476, 352, Math.max(14, 120*R), 14, 7); c.fill(); }
+    c.strokeStyle = "#b08a4a"; c.lineWidth = 1.5; rr(c, 476, 352, 120, 14, 7); c.stroke();
+    if(R <= 0) label(c, "根死了", 536, 380, { size:13, color:"#b91c1c", halo:"rgba(234,217,187,.9)" });
+  }
+})();
+
+// ===================== ⑤ 氣孔 =====================
+(function(){
+  const W = 640, H = 320, cx = 320, cy = 160, hh = 100, c = scene("c5", W, H, draw);
+  let day = true, wet = true, w = 1, acc = 0, out = 0, lastOpen = null; const vap = [];
+  chips("#day5 .chip", "data-v", v => day = v === "1");
+  chips("#wet5 .chip", "data-v", v => wet = v === "1");
+  function guard(s){
+    const inner = 1 + 26*w, outer = 46 + 20*w, m = (inner+outer)/2;
+    c.beginPath(); c.moveTo(cx, cy-hh); c.quadraticCurveTo(cx+s*outer*2, cy, cx, cy+hh); c.quadraticCurveTo(cx+s*inner*2, cy, cx, cy-hh); c.closePath();
+    c.fillStyle = mix([150,196,120], [124,198,106], w); c.fill(); c.lineWidth = 2.5; c.strokeStyle = "#3f8f3a"; c.stroke();
+    for(let i=1;i<=7;i++){ const t = i/8, x = cx + s*4*m*t*(1-t), y = cy + hh*(2*t-1)*.92; dot(c, x, y, 5, "#2f7d32"); }
+    const n = Math.round(1 + 7*w);
+    for(let i=0;i<n;i++){ const t = (i+.5)/8 + .03, x = cx + s*4*m*t*(1-t), y = cy + hh*(2*t-1)*.92; dot(c, x + s*6, y, 3, "#60a5fa"); }
+  }
+  function draw(dt){
+    const target = day && wet ? 1 : 0; w += (target-w)*Math.min(1, dt*1.6);
+    const open = clamp((w-.15)/.85, 0, 1), inner = 1 + 26*w;
+    acc += 16*open*dt;
+    while(acc >= 1){ acc--; out++; vap.push({ x:cx+rnd(-inner*.5, inner*.5), y:cy+rnd(-55,55), vx:rnd(-40,40), vy:rnd(-55,-10), a:1 }); }
+    for(let i=vap.length-1;i>=0;i--){ const p = vap[i]; p.x += p.vx*dt; p.y += p.vy*dt; p.a -= dt/1.6; if(p.a <= 0) vap.splice(i,1); }
+    const isOpen = open > .5;
+    if(isOpen !== lastOpen){ lastOpen = isOpen; $("gc5").textContent = isOpen ? "充水、膨脹、彎曲" : "失水、萎縮、變直"; $("sto5").textContent = isOpen ? "打開" : "關閉"; }
+    $("out5").textContent = out;
+    // 背景：表皮細胞
+    c.fillStyle = day ? "#e6f4d7" : "#c3d0c0"; c.fillRect(0,0,W,H);
+    c.strokeStyle = day ? "#b5d3a0" : "#9fb39a"; c.lineWidth = 2;
+    for(const q of [[0,70,150,40,210,110],[0,230,140,260,215,205],[640,60,500,40,430,105],[640,250,500,270,428,210],[210,110,180,160,215,205],[430,105,460,160,428,210],[210,110,260,30,330,0],[215,205,270,300,320,320],[430,105,400,40,330,0],[428,210,390,290,320,320]]){ c.beginPath(); c.moveTo(q[0],q[1]); c.quadraticCurveTo(q[2],q[3],q[4],q[5]); c.stroke(); }
+    dot(c, 62, 52, 24, day ? "#fbbf24" : "#e5e7eb"); if(!day) dot(c, 72, 46, 20, "#c3d0c0");
+    label(c, day ? "白天" : "晚上", 62, 92, { size:13, color:"#374151" });
+    label(c, wet ? "土壤水很夠" : "土壤缺水", 62, 114, { size:13, color:wet ? "#1d4ed8" : "#b45309" });
+    // 氣孔的洞
+    c.beginPath(); c.moveTo(cx, cy-hh); c.quadraticCurveTo(cx-inner*2, cy, cx, cy+hh); c.quadraticCurveTo(cx+inner*2, cy, cx, cy-hh); c.fillStyle = "#1f3b2a"; c.fill();
+    guard(-1); guard(1);
+    for(const p of vap){ c.globalAlpha = clamp(p.a,0,1)*.9; dot(c, p.x, p.y, 3+(1-p.a)*4, "#93c5fd"); }
+    c.globalAlpha = 1;
+    const lead = (x1,y1,x2,y2) => { c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.lineWidth = 1.2; c.strokeStyle = "#4b5563"; c.stroke(); };
+    const ox = 46 + 20*w;
+    lead(cx+ox-8, cy+30, 500, 200); label(c, "保衛細胞", 540, 200, { size:14 });
+    lead(cx, cy-20, 500, 120); label(c, isOpen ? "氣孔（開著）" : "氣孔（關著）", 550, 120, { size:14 });
+    label(c, "深綠色的點是葉綠體，藍色的點代表細胞裡的水", 320, 300, { size:12, color:"#4b5563", bold:false });
+  }
+})();
+
+// ===================== ⑥ 蒸散實驗室 =====================
+(function(){
+  const W = 640, H = 380, c = scene("c6", W, H, draw);
+  const F = { light:1, temp:1, dry:1, wind:1 };
+  let run = false, t = 0, done = false, acc = 0; const vap = [], wl = [];
+  for(let i=0;i<7;i++) wl.push({ x:rnd(0,W), y:rnd(40,150), s:rnd(120,200) });
+  const rateA = () => 2.0 * ["light","temp","dry","wind"].reduce((m,k) => m*(F[k] ? 1 : .6), 1);
+  const rateB = () => rateA()*.12;
+  function reset(msg){ run = false; done = false; t = 0; vap.length = 0; $("run6").disabled = false; if(msg) $("st6").innerHTML = msg; }
+  document.querySelectorAll("#env6 .chip").forEach(b => b.addEventListener("click", ()=>{
+    const k = b.dataset.k; F[k] = F[k] ? 0 : 1; b.classList.toggle("on", !!F[k]); b.textContent = F[k] ? b.dataset.on : b.dataset.off;
+    reset("環境換了，水位重設成 10。按「開始靜置 30 分鐘」再做一次。");
+  }));
+  $("run6").addEventListener("click", ()=>{ if(done) reset(); run = true; $("run6").disabled = true; $("st6").innerHTML = "靜置中。看兩支量筒的水面，還有葉子旁邊飄走的水氣。"; });
+  $("reset6").addEventListener("click", ()=> reset("先選環境，再按「開始靜置 30 分鐘」。"));
+  function cyl(x, lv, name, leafy){
+    const top = 150, bot = 330, y10 = 175, per = (bot-5-y10)/10, yl = bot-5 - lv*per;
+    // 芹菜
+    line(c, [[x,bot-10],[x,70]], 9, "#b7dc8f");
+    if(leafy){
+      for(const e of [[-38,70,-.5],[38,78,.5],[0,42,0],[-24,104,-.9],[26,110,.9]]){
+        line(c, [[x,e[1]+34],[x+e[0],e[1]]], 4, "#8cc66a");
+        c.save(); c.translate(x+e[0], e[1]); c.rotate(e[2]); c.beginPath(); c.ellipse(0,-6,17,24,0,0,6.2832); c.fillStyle = "#4caf50"; c.fill(); c.restore();
+      }
+    } else { for(const e of [[-14,84],[14,92],[-12,116],[12,122]]) line(c, [[x,e[1]+12],[x+e[0],e[1]]], 4, "#8cc66a"); }
+    // 量筒
+    c.fillStyle = "rgba(96,165,250,.4)"; c.fillRect(x-22, yl, 44, bot-yl);
+    c.strokeStyle = "#64748b"; c.lineWidth = 2.5; c.beginPath(); c.moveTo(x-22,top); c.lineTo(x-22,bot); c.lineTo(x+22,bot); c.lineTo(x+22,top); c.stroke();
+    line(c, [[x-36,bot+3],[x+36,bot+3]], 6, "#94a3b8");
+    c.lineWidth = 1; c.strokeStyle = "#64748b";
+    for(let m=0;m<=10;m++){ const y = bot-5-m*per; c.beginPath(); c.moveTo(x+22,y); c.lineTo(x+22-(m%5 ? 7 : 12),y); c.stroke(); }
+    label(c, "10", x+36, y10, { size:11, color:"#64748b", bold:false }); label(c, "5", x+34, bot-5-5*per, { size:11, color:"#64748b", bold:false });
+    c.setLineDash([4,4]); c.beginPath(); c.moveTo(x-48,y10); c.lineTo(x+22,y10); c.strokeStyle = "#ef4444"; c.lineWidth = 1.2; c.stroke(); c.setLineDash([]);
+    line(c, [[x-22,yl],[x+22,yl]], 2.5, WATER);
+    label(c, name, x-62, 250, { size:20 });
+    label(c, lv.toFixed(1) + " mL", x-62, 278, { size:15, color:WATER });
+    label(c, leafy ? "有葉片" : "葉片摘掉", x-62, 302, { size:12, color:"#6b7280" });
+  }
+  function draw(dt){
+    if(run){ t += dt*30/9; if(t >= 30){ t = 30; run = false; done = true; $("run6").disabled = false;
+      const a = rateA(), b = rateB();
+      $("st6").innerHTML = `<b>30 分鐘到了。</b>甲少了 ${a.toFixed(1)} mL，乙只少了 ${b.toFixed(1)} mL。有葉片的甲，水少得多。可見蒸散作用主要發生在<b>葉片</b>。` + (a < 1 ? "這次的環境讓蒸散變慢了，把條件換回來比比看。" : "");
+      logEv({ type:"lab", q:"transp", a:+a.toFixed(2) }); } }
+    const a = 10 - rateA()*t/30, b = 10 - rateB()*t/30;
+    c.fillStyle = F.light ? "#f4fbff" : "#e9edf2"; c.fillRect(0,0,W,H);
+    c.fillStyle = "#e7dccb"; c.fillRect(0,340,W,40);
+    // 環境
+    dot(c, 575, 56, 28, F.light ? "#fbbf24" : "#d1d5db");
+    if(!F.light){ dot(c, 560, 70, 20, "#f3f4f6"); dot(c, 585, 74, 24, "#f3f4f6"); dot(c, 610, 70, 18, "#f3f4f6"); }
+    if(!F.dry){ c.globalAlpha = .35; for(let i=0;i<60;i++) dot(c, (i*97)%640, 20+(i*53)%300, 3, "#60a5fa"); c.globalAlpha = 1; }
+    if(F.wind){ c.strokeStyle = "rgba(100,116,139,.55)"; c.lineWidth = 2; for(const p of wl){ p.x += p.s*dt; if(p.x > W+40) p.x = -60; c.beginPath(); c.moveTo(p.x,p.y); c.quadraticCurveTo(p.x+20,p.y-6,p.x+44,p.y); c.stroke(); } }
+    label(c, (F.light ? "光照強" : "光照弱") + "・" + (F.temp ? "溫度高" : "溫度低") + "・" + (F.dry ? "空氣乾燥" : "空氣潮濕") + "・" + (F.wind ? "風大" : "風小"), 14, 362, { size:12, align:"left", color:"#374151", halo:"rgba(231,220,203,.9)" });
+    label(c, "已經靜置 " + Math.floor(t) + " 分鐘", 626, 362, { align:"right", size:14, color:"#374151", halo:"rgba(231,220,203,.9)" });
+    cyl(215, a, "甲", true); cyl(465, b, "乙", false);
+    // 水氣
+    if(run){
+      acc += rateA()*7*dt;
+      while(acc >= 1){ acc--; const e = [[-38,66],[38,74],[0,38],[-24,100],[26,106]][Math.floor(Math.random()*5)]; vap.push({ x:215+e[0]+rnd(-10,10), y:e[1]+rnd(-12,8), a:1, vx:F.wind ? rnd(50,90) : rnd(-8,8) });
+        if(Math.random() < .12) vap.push({ x:465+rnd(-8,8), y:rnd(80,130), a:1, vx:F.wind ? rnd(50,90) : rnd(-8,8) }); }
+    }
+    for(let i=vap.length-1;i>=0;i--){ const p = vap[i]; p.x += p.vx*dt; p.y -= 26*dt; p.a -= dt/1.5; if(p.a <= 0){ vap.splice(i,1); continue; } c.globalAlpha = p.a*.85; dot(c, p.x, p.y, 3+(1-p.a)*3, "#60a5fa"); }
+    c.globalAlpha = 1;
+  }
+})();
+
+// ===================== ⑦ 紅墨水實驗 =====================
+(function(){
+  const W = 640, H = 380, c = scene("c7", W, H, draw);
+  const RED = [220,38,38], BLUE = [59,110,235], PALE = [176,208,150], WHITE = [255,251,247];
+  let plant = "celery", cut = "water", run = false, p = 0, lastMsg = "";
+  chips("#plant7 .chip", "data-v", v => { plant = v; p = 0; run = false; $("cut7").hidden = v !== "celery"; });
+  chips("#cut7 .chip", "data-v", v => { cut = v; p = 0; run = false; });
+  $("run7").addEventListener("click", ()=>{ if(p >= 1) p = 0; run = true; });
+  $("reset7").addEventListener("click", ()=>{ p = 0; run = false; });
+  function say(rise){
+    let m;
+    if(plant === "celery"){
+      if(cut === "air") m = p === 0 ? "這支芹菜是在<b>空氣中</b>切的。切口吸進了空氣。按「開始靜置」看會怎樣。" : "<b>紅色幾乎上不去。</b>在空氣中切，空氣跑進木質部變成氣泡，把管子堵住了。所以課本要你<b>在水中切</b>。";
+      else if(p === 0) m = "芹菜葉柄在水中切好，插進紅色的水。按「開始靜置」。";
+      else if(rise < .75) m = "紅色的水沿著葉柄裡的細管往上走。右邊的橫切面出現<b>紅點</b>，縱切面出現<b>紅線</b>。";
+      else if(p < 1) m = "紅色到了葉片，<b>葉脈</b>也變紅了。葉脈就是葉子裡的維管束。";
+      else m = "<b>30 分鐘到了。</b>染紅的是<b>木質部</b>。看右邊的橫切面：每一束只有靠內的那一半變紅，旁邊的韌皮部沒有紅。";
+    } else {
+      if(p === 0) m = "白玫瑰的莖從中間剖成兩半。左半泡紅色的水，右半泡藍色的水。按「開始靜置」。";
+      else if(p < .6) m = "紅色和藍色各自沿著自己那一半的木質部往上走。";
+      else if(p < 1) m = "顏色到花瓣了。";
+      else m = "<b>花一邊偏紅、一邊偏藍。</b>每一束維管束各自通到自己那一側的花瓣，顏色不會先混在一起。這也證明<b>花瓣裡有維管束</b>。";
+    }
+    if(m !== lastMsg){ lastMsg = m; $("st7").innerHTML = m; }
+  }
+  function celery(rise){
+    const x = 165, sT = clamp(rise/.75, 0, 1), lT = clamp((rise-.75)/.25, 0, 1), yT = 318 - sT*218;
+    // 葉
+    const veinCol = mix([120,170,90], RED, lT);
+    for(const e of [[-52,62,-.6],[0,36,0],[52,62,.6]]){
+      c.save(); c.translate(x+e[0], e[1]); c.rotate(e[2]); c.beginPath(); c.ellipse(0,0,24,34,0,0,6.2832); c.fillStyle = "#58b45a"; c.fill();
+      line(c, [[0,30],[0,-26]], 2.2, veinCol); line(c, [[0,10],[-14,-6]], 1.6, veinCol); line(c, [[0,10],[14,-6]], 1.6, veinCol); line(c, [[0,-6],[-11,-20]], 1.6, veinCol); line(c, [[0,-6],[11,-20]], 1.6, veinCol);
+      c.restore();
+      line(c, [[x,100],[x+e[0]*.75, e[1]+26]], 5, "#b7dc8f"); line(c, [[x,100],[x+e[0]*.75, e[1]+26]], 1.8, veinCol);
+    }
+    // 葉柄
+    line(c, [[x,322],[x,100]], 18, "#cfe8b0");
+    for(const dx of [-5,0,5]){ line(c, [[x+dx,320],[x+dx,100]], 1.6, "#a9cf86"); if(sT > 0) line(c, [[x+dx,320],[x+dx,yT]], 2.2, "#dc2626"); }
+    // 錐形瓶
+    c.beginPath(); c.moveTo(x-16,215); c.lineTo(x-16,255); c.lineTo(x-62,338); c.lineTo(x+62,338); c.lineTo(x+16,255); c.lineTo(x+16,215);
+    c.fillStyle = "rgba(226,240,255,.35)"; c.fill();
+    c.save(); c.clip(); c.fillStyle = "rgba(220,38,38,.6)"; c.fillRect(x-70, 300, 140, 40); c.restore();
+    c.strokeStyle = "#64748b"; c.lineWidth = 2.5; c.stroke();
+    label(c, "紅色的水", x, 356, { size:13, color:"#b91c1c" });
+    if(cut === "air"){ for(const dx of [-5,0,5]){ dot(c, x+dx, 314, 3.6, "#fff"); c.lineWidth = 1.2; c.strokeStyle = "#475569"; c.stroke(); } line(c, [[x+10,312],[x+72,290]], 1.2, "#6b7280"); label(c, "氣泡堵住了", x+108, 284, { size:13, color:"#b91c1c" }); }
+    // 橫切面
+    const cx = 470, cy = 80, dT = clamp(rise*3.5, 0, 1);
+    label(c, "葉柄橫切", cx, 24, { size:15 });
+    c.beginPath(); c.arc(cx, cy, 92, .12*Math.PI, .88*Math.PI); c.quadraticCurveTo(cx, cy+55, cx+92*Math.cos(.12*Math.PI), cy+92*Math.sin(.12*Math.PI)); c.closePath();
+    c.fillStyle = "#e3f2cf"; c.fill(); c.lineWidth = 2.5; c.strokeStyle = "#8fbf6a"; c.stroke();
+    for(let i=0;i<9;i++){ const a = (.17+i*.0825)*Math.PI, bx = cx+Math.cos(a)*76, by = cy+Math.sin(a)*76; bundle(c, bx, by, a, 7, mix(PALE, RED, dT), "#b6d39a"); }
+    label(c, dT > .5 ? "紅點＝木質部（每束靠內的一半）" : "一束一束的維管束", cx, 196, { size:13, color:dT > .5 ? "#b91c1c" : "#6b7280" });
+    // 縱切面
+    label(c, "葉柄縱切", cx, 236, { size:15 });
+    c.fillStyle = "#e3f2cf"; rr(c, cx-110, 256, 220, 62, 8); c.fill(); c.strokeStyle = "#8fbf6a"; c.lineWidth = 2.5; c.stroke();
+    for(let i=0;i<4;i++){ const y = 268+i*13; line(c, [[cx-104,y],[cx+104,y]], 2, "#a9cf86"); if(sT > 0) line(c, [[cx-104,y],[cx-104+208*sT,y]], 2.6, "#dc2626"); }
+    label(c, "下 ←　紅線上下連通　→ 上", cx, 336, { size:12, color:"#6b7280", bold:false });
+  }
+  function rose(){
+    const x = 170, sT = clamp(p/.6, 0, 1), k = clamp((p-.6)/.4, 0, 1)*.85;
+    const cl = mix(WHITE, [240,100,130], k), cr = mix(WHITE, [90,140,235], k);
+    // 兩支試管
+    for(const [tx,col] of [[x-26,"rgba(220,38,38,.6)"],[x+26,"rgba(59,110,235,.6)"]]){
+      c.fillStyle = col; rr(c, tx-10, 286, 20, 58, 9); c.fill();
+      c.strokeStyle = "#64748b"; c.lineWidth = 2; c.beginPath(); c.moveTo(tx-10,250); c.lineTo(tx-10,334); c.arc(tx,334,10,Math.PI,0,true); c.lineTo(tx+10,250); c.stroke();
+    }
+    // 莖
+    line(c, [[x,120],[x,222]], 8, "#6fb558"); line(c, [[x-2,222],[x-26,262],[x-26,332]], 4, "#6fb558"); line(c, [[x+2,222],[x+26,262],[x+26,332]], 4, "#6fb558");
+    c.save(); c.translate(x+30,180); c.rotate(.9); c.beginPath(); c.ellipse(0,0,10,22,0,0,6.2832); c.fillStyle = "#57b356"; c.fill(); c.restore();
+    const PL = mkPath([[x-26,330],[x-26,262],[x-2,222],[x-2,120]]), PR = mkPath([[x+26,330],[x+26,262],[x+2,222],[x+2,120]]);
+    if(sT > 0) for(const [P,col] of [[PL,"#dc2626"],[PR,"#3b6eeb"]]){ const pts = []; for(let s=0; s<=P.L*sT; s+=6) pts.push(P.at(s)); pts.push(P.at(P.L*sT)); line(c, pts, 2, col); }
+    // 花
+    const petal = (px,py,r) => { dot(c, px, py, r, px < x-1 ? cl : px > x+1 ? cr : mix(WHITE, [170,120,190], k*.6)); c.lineWidth = 1.5; c.strokeStyle = "#e3cfc9"; c.stroke(); };
+    for(let i=0;i<6;i++){ const a = i*1.0472+.52; petal(x+Math.cos(a)*30, 86+Math.sin(a)*26, 24); }
+    for(let i=0;i<4;i++){ const a = i*1.5708+.78; petal(x+Math.cos(a)*14, 86+Math.sin(a)*12, 17); }
+    petal(x-6, 86, 10); petal(x+6, 86, 10);
+    label(c, "紅色的水", x-58, 356, { size:13, color:"#b91c1c" }); label(c, "藍色的水", x+58, 356, { size:13, color:"#1d4ed8" });
+    // 莖的橫切
+    const cx = 470, cy = 140, dT = clamp(p*3, 0, 1);
+    label(c, "莖的橫切（剖成左右兩半）", cx, 24, { size:15 });
+    dot(c, cx, cy, 80, "#e3f2cf"); c.lineWidth = 2.5; c.strokeStyle = "#8fbf6a"; c.stroke();
+    c.setLineDash([6,5]); line(c, [[cx,cy-92],[cx,cy+92]], 2, "#6b7280"); c.setLineDash([]);
+    for(let i=0;i<10;i++){ const a = i*.62832, bx = cx+Math.cos(a)*58, by = cy+Math.sin(a)*58; bundle(c, bx, by, a, 9, mix(PALE, bx < cx ? RED : BLUE, dT), "#b6d39a"); }
+    label(c, "左半的木質部", cx-70, 252, { size:13, color:"#b91c1c" }); label(c, "右半的木質部", cx+70, 252, { size:13, color:"#1d4ed8" });
+    label(c, "各自通到自己那一側的花瓣", cx, 290, { size:13, color:"#374151" });
+  }
+  function draw(dt){
+    if(run){ p += dt/8; if(p >= 1){ p = 1; run = false; logEv({ type:"lab", q:"dye-"+plant+"-"+cut }); } }
+    const rise = plant === "celery" && cut === "air" ? Math.min(p, .06) : p;
+    say(rise);
+    c.fillStyle = "#fbfdf7"; c.fillRect(0,0,W,H);
+    c.strokeStyle = "#e3ead6"; c.lineWidth = 1.5; c.beginPath(); c.moveTo(322,14); c.lineTo(322,366); c.stroke();
+    if(plant === "celery") celery(rise); else rose();
+    label(c, "已經靜置 " + Math.round(p*30) + " 分鐘", 12, 18, { size:12, align:"left", color:"#6b7280", bold:false });
+  }
+})();
+
+// ===================== 共用動畫迴圈 =====================
+(function(){
+  let last = performance.now();
+  function loop(now){
+    const dt = Math.min(.05, (now-last)/1000); last = now;
+    for(const s of scenes) if(s.vis) s.draw(dt);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+// 表格遮答案
+document.querySelectorAll(".hide").forEach(e => e.addEventListener("click", ()=> e.classList.toggle("show")));
+
+// ===================== 先猜再看 =====================
+document.querySelectorAll(".predict").forEach(box => {
+  const bs = [...box.querySelectorAll(".pb button")], watch = box.querySelector(".watch"), res = box.querySelector(".res");
+  let pick = -1;
+  bs.forEach((b, i) => b.addEventListener("click", ()=>{ if(!res.hidden) return; pick = i; bs.forEach(x => x.classList.remove("on")); b.classList.add("on"); watch.hidden = false; }));
+  box.querySelector(".rev").addEventListener("click", ()=>{
+    const ok = pick === +box.dataset.ans;
+    res.hidden = false; res.innerHTML = (ok ? "<b>你猜對了。</b>" : "<b>跟你猜的不一樣。</b>猜錯沒關係，先猜過再看，會記得比較久。") + box.dataset.exp;
+    bs[+box.dataset.ans].classList.add("ok"); logEv({ type:"predict", q:box.dataset.id, ok });
+  });
+});
+
+// ===================== ⑧ 考考你 =====================
+(function(){
+  const SEC = { s1:"① 兩條管線", s2:"② 維管束怎麼排", s3:"③ 年輪", s4:"④ 樹皮被啃一圈", s5:"⑤ 氣孔和水柱", s6:"⑥ 蒸散實驗室", s7:"⑦ 紅墨水實驗" };
+  // 選擇題：o 的第一個是正確答案（出題時會打亂）；其他每個選項後面是「你可能是這樣想的」
+  // 排序題：seq 是正確順序
+  const Q = [
+    // ---- ① 兩條管線
+    {id:"a1", s:"s1", q:"農夫幫水稻施肥，肥料裡有礦物質。水稻吸收之後，礦物質是靠哪裡運輸的？",
+      o:[["木質部",""],["韌皮部","你把「肥料」想成「養分」了。韌皮部運的養分，是葉子光合作用做出來的。礦物質溶在水裡，跟水一起走。"],["木質部和韌皮部各運一半","礦物質溶在水裡，水走哪裡它就走哪裡。水只走木質部。"],["形成層","形成層的工作是分裂出新細胞，讓莖變粗。它不負責運輸。"]],
+      why:"木質部運水分和礦物質。礦物質是溶在水裡一起往上送的。"},
+    {id:"a2", s:"s1", q:"馬鈴薯長在土裡，裡面存了很多澱粉。這些養分最原本是從哪裡來、走哪條路到地下的？",
+      o:[["葉子光合作用做出來，由韌皮部往下運",""],["根從土壤吸收澱粉，由木質部運來","根從土壤吸收的是水和礦物質。土壤裡沒有現成的澱粉可以吸。"],["葉子做出來，由木質部往下運","木質部運的是水和礦物質，而且只往上。"],["馬鈴薯自己行光合作用做的","它在土裡照不到光，沒辦法行光合作用。"]],
+      why:"養分由葉子製造，再由韌皮部送到其他部位使用或儲存。"},
+    {id:"a3", s:"s1", q:"櫻花在早春開花時，樹上一片葉子都還沒長。花芽生長需要的養分是怎麼來的？",
+      o:[["分解根和莖裡儲存的養分，由韌皮部往上運",""],["花瓣自己行光合作用","光合作用主要在葉子進行。花瓣不是做養分的地方。"],["木質部從土壤把養分運上來","土壤給的是水和礦物質。花要的養分是以前葉子做好存起來的。"],["不需要養分，有水就能開花","細胞生長一定要養分。"]],
+      why:"儲存的養分在需要時可以分解，再由韌皮部運到需要的地方。這時方向是往上。"},
+    {id:"a4", s:"s1", q:"關於韌皮部運輸養分的方向，哪一個說法正確？",
+      o:[["可以往上，也可以往下",""],["只能往下，從葉送到根","夏天確實常常往下。但早春開花時，養分是從根往上送的。"],["只能往上，跟水一樣","只往上的是木質部裡的水。"],["白天往上，晚上往下","方向看的是哪裡需要養分，不是看白天晚上。"]],
+      why:"韌皮部把養分送到需要的地方。需要的地方在上面就往上，在下面就往下。"},
+    {id:"a5", s:"s1", q:"把一滴水在植物體內走的路線排出來：", seq:["根毛","根的木質部","莖的木質部","葉脈的木質部","氣孔"],
+      why:"水由根毛吸收，經根、莖、葉的木質部一路往上，最後大部分從氣孔散失。"},
+    {id:"a6", s:"s1", q:"在莖的一束維管束裡，木質部和韌皮部的位置是怎樣？",
+      o:[["木質部在內側，韌皮部在外側",""],["木質部在外側，韌皮部在內側","反了。記法：樹「皮」在外面，所以韌「皮」部在外側。"],["兩個混在一起，分不出來","它們分得很清楚，各在一邊。"],["木質部在上面，韌皮部在下面","它們是內外並排，一起從根通到葉。不是分上下兩段。"]],
+      why:"莖內的維管束，木質部在內側，韌皮部在外側。"},
+    // ---- ② 排列
+    {id:"b1", s:"s2", q:"玉米長高之後，莖幾乎不再變粗。榕樹卻一年比一年粗。最主要的差別是什麼？",
+      o:[["榕樹的維管束有發達的形成層，玉米沒有",""],["榕樹吸的水比較多","吸水多不會讓莖變粗。變粗要靠形成層長出新細胞。"],["玉米沒有木質部","玉米也有木質部和韌皮部，只是中間沒有形成層。"],["玉米的維管束排成一圈","反了。玉米是散生，榕樹才是環狀。"]],
+      why:"形成層的細胞會分裂，向內長木質部、向外長韌皮部，莖才會加粗。"},
+    {id:"b2", s:"s2", q:"形成層的細胞分裂之後，新的木質部和新的韌皮部各長在哪一邊？",
+      o:[["向內長木質部，向外長韌皮部",""],["向內長韌皮部，向外長木質部","反了。木質部本來就在內側，新長的也在內側。"],["兩種都向內長","如果都向內，外側的韌皮部就不會更新了。"],["兩種都向外長","如果都向外，裡面的木材就不會累積了。"]],
+      why:"形成層夾在中間：向內產生新的木質部，向外產生新的韌皮部。"},
+    {id:"b3", s:"s2", q:"顯微鏡下看一種植物的莖橫切面，維管束散散地分布在整個莖裡。它最可能是哪一種植物？",
+      o:[["水稻",""],["向日葵","向日葵的維管束排成一圈，是環狀排列。"],["榕樹","榕樹的維管束排成一圈，而且有發達的形成層。"],["相思樹","相思樹是多年生的樹，維管束是環狀排列。"]],
+      why:"散生排列的例子：玉米、水稻、小麥。"},
+    {id:"b4", s:"s2", q:"向日葵的維管束也有形成層。為什麼它的莖不會像榕樹那樣越長越粗？",
+      o:[["它是一年生植物，形成層比較不發達",""],["它的維管束是散生的","向日葵是環狀排列，不是散生。"],["它沒有韌皮部","有維管束就有木質部和韌皮部。"],["它的木質部在外側","木質部一樣在內側。"]],
+      why:"一年生植物的形成層較不發達。多年生的樹木，形成層才發達。"},
+    {id:"b5", s:"s2", q:"有一種植物：葉脈平行、鬚根、花瓣 6 片。它的莖最可能是哪一種？（老師補充的內容）",
+      o:[["維管束散生，沒有形成層",""],["維管束環狀，形成層發達","這些特徵是單子葉植物。環狀排列是雙子葉植物的特徵。"],["維管束環狀，形成層不發達","這是向日葵這類雙子葉草本植物的樣子。"],["沒有維管束","會開花的植物都有維管束。"]],
+      why:"平行脈、鬚根、花瓣 3 的倍數，是單子葉植物。它們的維管束散生，大多沒有形成層。"},
+    // ---- ③ 年輪
+    {id:"c1", s:"s3", q:"一段樹幹的橫切面，從中心往外可以數到 12 圈深色的環。這棵樹大約幾歲？",
+      o:[["12 歲",""],["6 歲","你把深色環兩圈算一年了。一圈淺色加一圈深色才是一年，深色環一年只有一圈。"],["24 歲","不用乘以 2。深色環一年長一圈。"],["沒辦法知道","四季分明的地方，年輪可以用來估樹齡。"]],
+      why:"一年長出一圈淺色和一圈深色。數深色環的圈數，大約就是年齡。"},
+    {id:"c2", s:"s3", q:"年輪裡顏色深的部分，是什麼時候長的？細胞是什麼樣子？",
+      o:[["氣溫低、雨少的時候長的，細胞小",""],["溫暖多雨的時候長的，細胞大","這是淺色的部分。長得快，細胞大，顏色才淺。"],["溫暖多雨的時候長的，細胞小","溫暖多雨時長得快，細胞是大的。"],["氣溫低、雨少的時候長的，細胞大","條件差的時候長得慢，細胞是小的。"]],
+      why:"氣溫下降、雨量減少時，木質部細胞生長緩慢，細胞小、顏色深。"},
+    {id:"c3", s:"s3", q:"整年都溫暖多雨的地方，樹木的年輪通常會怎樣？",
+      o:[["不明顯，因為一整年長的速度都差不多",""],["特別明顯，因為長得快","長得快只會讓淺色的部分變寬。沒有長得慢的季節，就沒有深色環來分界。"],["一年會長出兩圈","沒有季節變化，反而連一圈都不清楚。"],["完全沒有木質部","樹一定有木質部，只是看不出一圈一圈的。"]],
+      why:"年輪來自生長快慢的差別。沒有明顯的季節，深淺差別就小。"},
+    {id:"c4", s:"s3", q:"課本說的「樹皮」，包含哪些部分？",
+      o:[["韌皮部和它外側的部分",""],["只有最外面那層褐色的硬皮","樹皮也包含韌皮部。所以樹皮被剝掉，養分的路就斷了。"],["木質部和韌皮部","木質部累積起來是木材，不算樹皮。"],["形成層以內的全部","形成層以內是木質部，那是木材。"]],
+      why:"木質部累積成木材。韌皮部和它外側的部位稱為樹皮。"},
+    {id:"c5", s:"s3", q:"有一年特別乾旱，雨下得很少。那一年長出來的年輪會怎樣？",
+      o:[["比其他年窄",""],["比其他年寬","雨少，細胞長得慢，長出來的就少。"],["跟其他年一樣寬","年輪的寬度會受氣候影響。"],["那一年不會留下任何痕跡","只要樹有生長就會留下，只是比較窄。"]],
+      why:"雨量少時木質部細胞生長緩慢，所以那一圈比較窄。年輪可以用來推測以前的氣候。"},
+    {id:"c6", s:"s3", q:"我們拿來做桌椅的「木材」，主要是樹的哪個部分累積成的？",
+      o:[["木質部",""],["韌皮部","韌皮部很薄，在樹皮裡。"],["形成層","形成層只是薄薄一層會分裂的細胞。"],["樹皮","樹皮在木材的外面。"]],
+      why:"隨著樹木逐年生長，木質部不斷累積而形成木材。"},
+    // ---- ④ 環狀剝皮
+    {id:"d1", s:"s4", q:"柳杉的樹皮被松鼠啃掉完整一圈。最先撐不下去的是哪裡？為什麼？",
+      o:[["根。因為葉子做的養分送不下來",""],["葉子。因為水馬上送不上去","木質部在樹皮裡面，沒被啃到。一開始水照樣往上送，葉子還是綠的。"],["整棵樹同時死掉","有先後順序。根先餓死，葉子後來才因為缺水而枯。"],["花。因為花最脆弱","問題出在養分送不到根。"]],
+      why:"樹皮包含韌皮部。韌皮部斷了，養分無法向下運輸到根部。"},
+    {id:"d2", s:"s4", q:"把柳杉被環狀剝皮後發生的事，照順序排出來：", seq:["樹皮少了一圈","韌皮部斷了","養分送不到根","根死亡，不能吸水","枝葉枯黃"],
+      why:"韌皮部斷 → 根缺養分死亡 → 無法吸收水分 → 枝葉枯黃凋零。"},
+    {id:"d3", s:"s4", q:"森林裡有些巨木，樹心整個空掉，樹梢卻枝葉茂盛。為什麼它還活得好好的？",
+      o:[["空掉的是已經不運輸的老舊木質部",""],["樹其實不需要木質部","需要。外圈比較新的木質部還在運水。"],["水改由韌皮部運輸","韌皮部運的是養分，不會改運水。"],["樹洞可以存水給樹用","跟存水沒有關係。重點是外圈還在運輸的部分沒有壞。"]],
+      why:"中空的部分是已不具運輸功能的老化木質部，所以不影響生存。"},
+    {id:"d4", s:"s4", q:"有人只在樹幹的一側削掉一小塊樹皮，沒有繞一整圈。這棵樹通常不會死。為什麼？",
+      o:[["其他地方的韌皮部還連著，養分還是送得到根",""],["木質部會代替韌皮部運養分","木質部只運水和礦物質，不會代替。"],["樹皮本來就不重要","樹皮裡有韌皮部，很重要。只是這次沒有整圈斷掉。"],["根可以自己做養分","根在土裡照不到光，不能行光合作用。"]],
+      why:"要「環狀」剝掉一整圈，養分的路才會完全斷掉。"},
+    {id:"d5", s:"s4", q:"樹被環狀剝皮一段時間後，缺口「上方」的樹皮常常會鼓起來。最合理的原因是什麼？",
+      o:[["往下送的養分被擋住，堆在缺口上方",""],["往上送的水被擋住，堆在缺口上方","水走木質部，木質部沒有斷。而且水是由下往上，被擋住的話會堆在下方。"],["根的養分往上衝","養分是葉子做的，從上面下來。"],["形成層跑到上面去了","形成層不會搬家。"]],
+      why:"葉子做的養分由韌皮部往下運。路斷了，就堆在缺口上面。"},
+    {id:"d6", s:"s4", q:"假想相反的情況：樹皮完全沒事，但莖裡的木質部全部被堵住了。最先會看到什麼？",
+      o:[["葉子很快就缺水下垂",""],["根先餓死","韌皮部沒壞，養分還是送得到根。"],["什麼事都不會發生","木質部堵住，水就上不去了。"],["缺口上方鼓起來","那是韌皮部斷掉才會發生的。"]],
+      why:"木質部負責把水往上送。它不通，葉子最先缺水。"},
+    // ---- ⑤ 氣孔和水柱
+    {id:"e1", s:"s5", q:"根毛最主要的功能是什麼？",
+      o:[["增加吸收水分的表面積",""],["把植物固定在土裡","固定主要靠比較粗的根。根毛又細又短。"],["行光合作用","根在土裡照不到光。"],["儲存養分","儲存養分的是根和莖裡的細胞，不是細細的根毛。"]],
+      why:"根毛是根部表皮細胞向外的突起，可以增加吸收的表面積。"},
+    {id:"e2", s:"s5", q:"植物體內的水能一路往上送，最主要的動力是什麼？",
+      o:[["葉子的蒸散作用",""],["根壓","根壓有幫忙，但不是最主要的。"],["毛細現象","毛細現象有幫忙，但不是最主要的。"],["光合作用","光合作用會用掉一點水，但它不是把水往上拉的力量。"]],
+      why:"水從氣孔散失時產生拉力，把木質部裡的水往上牽引。"},
+    {id:"e3", s:"s5", q:"保衛細胞吸滿水、膨脹起來的時候，氣孔會怎樣？",
+      o:[["保衛細胞變彎，氣孔打開",""],["保衛細胞脹大，把氣孔塞住","直覺會這樣想。但保衛細胞膨脹時是往外彎，中間反而被撐開。"],["保衛細胞變直，氣孔關閉","變直是失水萎縮的時候。"],["沒有變化","保衛細胞的形狀決定氣孔開或關。"]],
+      why:"保衛細胞充水膨脹 → 彎曲 → 氣孔打開。失水萎縮 → 變直 → 氣孔關閉。"},
+    {id:"e4", s:"s5", q:"大熱天土壤很乾的時候，葉子的氣孔多半會關起來。這對植物有什麼好處？",
+      o:[["減少水分散失",""],["讓光合作用變多","氣孔關了，二氧化碳也進不來，光合作用反而變少。"],["讓更多二氧化碳進來","氣孔關了，氣體更進不來。"],["讓根吸水變快","氣孔關了，蒸散變少，往上拉的力量也變小。"]],
+      why:"缺水時保衛細胞失水、氣孔關閉，可以避免流失更多水。"},
+    {id:"e5", s:"s5", q:"水從根到葉，為什麼能一路連著往上，中間不會斷掉？",
+      o:[["木質部的細胞相連成細管，水在裡面連成連續水柱，上面被拉走，下面就跟上",""],["莖的細胞一格一格用力把水往上擠","莖裡沒有像心臟那樣會擠的構造。"],["韌皮部把水推上去","韌皮部運的是養分，不負責運水。"],["水先在根變成水氣，再飄上去","水在木質部裡是液體。到了氣孔才變成水氣離開。"]],
+      why:"木質部細胞相連接形成細管，管內充滿水分，形成連續水柱。"},
+    {id:"e6", s:"s5", q:"下面哪一個「不是」蒸散作用帶來的好處？",
+      o:[["製造養分",""],["幫忙把水往上拉","這是蒸散作用的好處。題目問的是「不是」的。"],["幫助根吸收水分","這是蒸散作用的好處。題目問的是「不是」的。"],["調節植物體的溫度","這是蒸散作用的好處。題目問的是「不是」的。"]],
+      why:"製造養分是光合作用的工作。蒸散作用是水從氣孔散失。"},
+    {id:"e7", s:"s5", q:"陸地上的植物，氣孔大多長在葉子的下表皮。最合理的好處是什麼？",
+      o:[["不會被太陽直接曬，水散失得慢一些",""],["下雨時方便吸水","氣孔不是用來吸水的。水從氣孔是只出不進。"],["離根比較近","上下表皮只差一片葉子的厚度，跟離根遠近無關。"],["下表皮沒有細胞，比較好開洞","下表皮也是由細胞組成的。"]],
+      why:"氣孔在下表皮，可以減少水分過度散失。"},
+    // ---- ⑥ 蒸散實驗室
+    {id:"f1", s:"s6", q:"工人移植老樹之前，會先把很多枝葉剪掉。這樣做為什麼能提高存活率？",
+      o:[["葉子變少，蒸散變少。根受傷吸水變差時，樹才不會缺水",""],["讓樹變輕，比較好搬","也許順便有這個效果，但題目問的是存活率。關鍵在水。"],["讓樹的光合作用變多","葉子少了，光合作用是變少。"],["讓養分不會往下流","跟養分的方向無關。重點是減少水分散失。"]],
+      why:"蒸散主要發生在葉片。剪掉枝葉可以減少水分散失。"},
+    {id:"f2", s:"s6", q:"同一盆植物，在哪一種天氣下水分散失得最快？",
+      o:[["晴天、高溫、空氣乾燥、風大",""],["陰天、涼爽、空氣潮濕、沒有風","這四個條件都讓蒸散變慢。"],["晴天、高溫、空氣潮濕、沒有風","空氣潮濕和沒有風，都會讓水氣不容易散出去。"],["晚上、涼爽、風大","晚上氣孔大多關閉。"]],
+      why:"光照強、溫度高、濕度低、風大，蒸散都比較快。"},
+    {id:"f3", s:"s6", q:"實驗裡，甲量筒的芹菜有葉片，乙的葉片全部摘掉。30 分鐘後水位會怎樣？",
+      o:[["甲下降得比較多",""],["乙下降得比較多","葉片上氣孔多。有葉片的甲蒸散比較多。"],["兩個下降得一樣多","只差在有沒有葉片，結果就不一樣。"],["兩個都完全不變","有蒸散作用，水就會被往上吸走。"]],
+      why:"氣孔大多在葉片上。有葉片，蒸散多，量筒的水就少得多。"},
+    {id:"f4", s:"s6", q:"乙量筒的芹菜葉片全摘光了，水位還是降了一點點。最合理的解釋是什麼？",
+      o:[["幼嫩的葉柄上也有少量氣孔，水面自己也會蒸發一點",""],["量筒在漏水","先從植物本身想。葉柄上還有少量氣孔。"],["葉柄行光合作用，用掉很多水","光合作用用的水很少，不會是主要原因。"],["木質部把水變成了養分","木質部只負責運輸，不會製造養分。"]],
+      why:"植物幼嫩的莖上也有氣孔，只是不多。"},
+    {id:"f5", s:"s6", q:"這個實驗要選「粗細相近」的兩支芹菜，水面也都調到 10。為什麼要這樣？",
+      o:[["讓兩邊只有「有沒有葉片」不同，結果才能說是葉片造成的",""],["這樣比較好看","重點是公平比較。"],["這樣比較省水","跟省水無關。"],["讓兩支芹菜吸的水一樣多","我們就是要看它們吸的水有沒有不一樣。"]],
+      why:"一次只改變一個條件，其他都保持一樣，才知道差別是誰造成的。"},
+    {id:"f6", s:"s6", q:"空氣濕度很高的時候，蒸散作用會怎樣？",
+      o:[["變慢",""],["變快","你可能想成「濕＝水多＝蒸散多」。其實外面水氣已經很多，葉子裡的水氣更難散出去。"],["不受影響","濕度是影響蒸散的因素之一。"],["完全停止","只是變慢，不會完全停。"]],
+      why:"空氣濕度低時，水氣容易散出去，蒸散比較快。濕度高則相反。"},
+    {id:"f7", s:"s6", q:"很多樹在秋冬會落葉。從水分的角度看，這有什麼好處？",
+      o:[["葉子少了，蒸散變少，可以減少水分散失",""],["讓根可以吸更多水","落葉不會讓根吸更多水。"],["讓蒸散變快","沒有葉子，蒸散是變少。"],["讓木質部休息","重點是少了葉片，水就不會一直散掉。"]],
+      why:"落葉可以減少水分散失。"},
+    // ---- ⑦ 紅墨水實驗
+    {id:"g1", s:"s7", q:"芹菜插在紅色的水裡 30 分鐘，再把葉柄橫切。切面上染紅的小點是什麼？",
+      o:[["木質部",""],["韌皮部","韌皮部運的是養分。紅色的水走的是運水的管子。"],["形成層","形成層不負責運輸。"],["氣孔","氣孔在表面，不在葉柄裡面。"]],
+      why:"紅色的水由木質部往上運，所以染紅的是木質部。"},
+    {id:"g2", s:"s7", q:"實驗要「在水中」切芹菜。插花時也要在水裡剪莖。原因是什麼？",
+      o:[["避免空氣進到木質部變成氣泡，把管子堵住",""],["避免養分從切口流掉","重點是水的通道。"],["讓韌皮部也能吸水","吸水往上走的是木質部。"],["水可以殺菌","跟殺菌無關。"]],
+      why:"氣泡會堵住木質部，讓連續水柱斷掉，水就上不去。"},
+    {id:"g3", s:"s7", q:"把白玫瑰的莖縱切成兩半，一半泡紅色的水，一半泡藍色的水。過一段時間，花會變成什麼樣子？",
+      o:[["一邊偏紅，一邊偏藍",""],["整朵變成均勻的紫色","每一束維管束各自往上通到自己那一側的花瓣。兩種顏色不會在莖裡先混勻。"],["整朵變紅色","右半邊吸的是藍色的水。"],["不會變色","花瓣裡也有維管束，水會送到花瓣。"]],
+      why:"維管束上下連通。左半的木質部通到左邊的花瓣，右半通到右邊。"},
+    {id:"g4", s:"s7", q:"這個實驗為什麼要用紅色的水，不用清水？",
+      o:[["方便看出水走到哪裡",""],["紅色的水比較有營養","色素只是用來染色的。"],["色素會讓水上升得比較快","色素不會加快速度。"],["紅色可以保護芹菜","跟保護無關。"]],
+      why:"水是透明的。染色之後，才看得出水經過哪些構造。"},
+    {id:"g5", s:"s7", q:"把染過色的芹菜葉柄「縱切」（直直剖開），會看到什麼？",
+      o:[["一條一條上下連通的紅色細線",""],["一個一個分開的紅點","紅點是橫切看到的樣子。"],["整個切面都是紅的","只有木質部的地方會紅。"],["只有表皮是紅的","紅色在裡面的維管束，不在表皮。"]],
+      why:"木質部是上下連通的細管。縱切時剛好順著管子切，所以看到長長的紅線。"},
+    {id:"g6", s:"s7", q:"白色的花泡在有顏色的水裡，花瓣也會染上顏色。這能說明什麼？",
+      o:[["花瓣裡也有維管束",""],["花瓣會從空氣中吸收顏色","顏色是跟著水，從莖裡面送上來的。"],["花瓣會行光合作用","染色跟光合作用無關。"],["色素是韌皮部送上來的","有顏色的水走的是木質部。"]],
+      why:"維管束由根延伸到葉片、花和果實。水能送到花瓣，表示那裡也有木質部。"},
+  ];
+  const KEY = "plant_transport_quiz_v1"; let ST = {};
+  try{ ST = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(e){}
+  const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} };
+  const rec = id => ST[id] || (ST[id] = { n:0, ok:0, last:"" });
+  const isWrong = q => { const r = ST[q.id]; return r && (r.last === "no" || r.last === "guess"); };
+  const shuf = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+  const esc = s => s.replace(/[&<>]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[c]));
+  const box = $("quiz"), ana = $("ana"), back = $("backBtn");
+  let round = [], idx = 0, okN = 0, misses = [];
+
+  // 跳回去看那一段，再跳回題目
+  function goSec(s){
+    const el = $(s); el.scrollIntoView({ behavior:"smooth", block:"start" });
+    el.classList.add("flash"); setTimeout(()=> el.classList.remove("flash"), 2600); back.hidden = false;
+  }
+  back.addEventListener("click", ()=>{ $("s8").scrollIntoView({ behavior:"smooth", block:"start" }); back.hidden = true; });
+  const jumpBtn = s => `<button class="chip jump" data-go="${s}">回去看 ${SEC[s]}</button>`;
+  document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if(b) goSec(b.dataset.go); });
+
+  function build(onlyWrong){
+    const pri = q => isWrong(q) ? 0 : !ST[q.id] || !ST[q.id].n ? 1 : 2;
+    const pool = shuf(Q.filter(q => !onlyWrong || isWrong(q))).sort((a,b) => pri(a)-pri(b));
+    const out = [], cnt = {};
+    // 每一段先各出一題，再補到 10 題，確保七個概念都考到
+    for(const cap of (onlyWrong ? [99] : [1,2,99]))
+      for(const q of pool){ if(out.length >= 10) break; if(out.includes(q) || (cnt[q.s]||0) >= cap) continue; cnt[q.s] = (cnt[q.s]||0)+1; out.push(q); }
+    return shuf(out);
+  }
+  function start(onlyWrong){
+    round = build(onlyWrong); idx = 0; okN = 0; misses = [];
+    if(!round.length){ box.innerHTML = `<p class="lead">錯題本是空的。先練一回吧。</p>`; return; }
+    show();
+  }
+  function finish(q, right, diag){
+    const guess = box.querySelector(".guess input").checked, r = rec(q.id);
+    r.n++; if(right) r.ok++; r.last = !right ? "no" : guess ? "guess" : "ok"; save();
+    pracCount++; if(right){ pracOk++; okN++; } if(r.last !== "ok") misses.push(q);
+    logEv({ type:"quiz", q:q.id, sec:q.s, ok:right, guess });
+    const fb = box.querySelector(".fb"); fb.hidden = false; fb.className = "fb " + (right ? "good" : "bad");
+    let h = right ? (guess ? "<b>答對了。</b>不過你說是用猜的，我先把它放進錯題本，之後再考你一次。" : "<b>答對了。</b>") : "<b>這題沒答對。</b>";
+    if(!right && diag) h += `<p><span class="dx">你可能是這樣想的</span>${esc(diag)}</p>`;
+    h += `<p><span class="dx k">關鍵</span>${esc(q.why)}</p>`;
+    h += `<div class="ctrl">${right && !guess ? "" : jumpBtn(q.s)}<button class="chip on" id="nextQ">${idx+1 < round.length ? "下一題" : "看這一回的結果"}</button></div>`;
+    fb.innerHTML = h; box.querySelector(".guess").style.display = "none";
+    $("nextQ").addEventListener("click", ()=>{ idx++; idx < round.length ? show() : summary(); });
+    renderAna();
+  }
+  function show(){
+    const q = round[idx];
+    let h = `<div class="q"><div class="qhead"><span>第 ${idx+1} / ${round.length} 題</span><span class="tag">${SEC[q.s]}</span></div><p class="t">${esc(q.q)}</p>`;
+    h += `<label class="guess"><input type="checkbox"> 這題我不太確定，是用猜的</label>`;
+    h += q.seq ? `<div class="ans"></div><div class="pool"></div><button class="chip" id="resetO">重排</button>` : `<div class="opts"></div>`;
+    h += `<div class="fb" hidden></div></div>`;
+    box.innerHTML = h;
+    if(q.seq){
+      const ans = box.querySelector(".ans"), pool = box.querySelector(".pool"); let pick = [], done = false;
+      const paint = () => {
+        ans.innerHTML = pick.length ? pick.map((t,i) => `<span class="oc">${i+1}. ${t}</span>`).join("<i>→</i>") : `<span class="ph">照順序點下面的選項</span>`;
+        [...pool.children].forEach(b => b.disabled = pick.includes(b.textContent));
+      };
+      shuf(q.seq).forEach(t => { const b = document.createElement("button"); b.className = "chip"; b.textContent = t;
+        b.addEventListener("click", ()=>{ if(done) return; pick.push(t); paint();
+          if(pick.length === q.seq.length){ done = true; $("resetO").style.display = "none";
+            const k = pick.findIndex((x,i) => x !== q.seq[i]), right = k < 0;
+            if(!right) ans.children[k*2].classList.add("no");
+            finish(q, right, right ? "" : (k === 0 ? `起點應該是「${q.seq[0]}」。` : `「${q.seq[k-1]}」的下一個應該是「${q.seq[k]}」，不是「${pick[k]}」。`)); } });
+        pool.appendChild(b); });
+      $("resetO").addEventListener("click", ()=>{ if(!done){ pick = []; paint(); } }); paint();
+    } else {
+      const opts = box.querySelector(".opts"), order = shuf(q.o.map((_,i) => i)); let done = false;
+      order.forEach(i => { const b = document.createElement("button"); b.textContent = q.o[i][0]; b.dataset.i = i;
+        b.addEventListener("click", ()=>{ if(done) return; done = true; const right = i === 0;
+          b.classList.add(right ? "ok" : "no"); opts.querySelector('[data-i="0"]').classList.add("ok"); finish(q, right, q.o[i][1]); });
+        opts.appendChild(b); });
+    }
+  }
+  function summary(){
+    const bySec = {}; misses.forEach(q => (bySec[q.s] = bySec[q.s] || []).push(q));
+    let h = `<div class="q"><p class="t">這一回：${round.length} 題答對 ${okN} 題</p>`;
+    if(!misses.length) h += `<p>全部答對，而且都不是用猜的。很紮實。</p>`;
+    else {
+      h += `<p>下面這幾段再看一次，然後按「只練錯題」。</p>`;
+      for(const s in bySec) h += `<div class="miss"><b>${SEC[s]}</b>（${bySec[s].length} 題）${jumpBtn(s)}<ul>${bySec[s].map(q => `<li>${esc(q.q)}</li>`).join("")}</ul></div>`;
+    }
+    h += `<div class="ctrl"><button class="chip on" id="again">再練一回（錯的和沒做過的先出）</button>${misses.length ? `<button class="chip" id="onlyW">只練錯題</button>` : ""}</div></div>`;
+    box.innerHTML = h;
+    $("again").addEventListener("click", ()=> start(false));
+    if($("onlyW")) $("onlyW").addEventListener("click", ()=> start(true));
+    cloudSend({ type:"小測驗", detail:`植物的運輸構造 一回 ${round.length} 題；要再看：${Object.keys(bySec).map(s => SEC[s]).join("、") || "無"}`, score:`${okN}/${round.length}` });
+  }
+  function renderAna(){
+    const wrong = Q.filter(isWrong), seen = Q.filter(q => ST[q.id] && ST[q.id].n).length;
+    let h = `<p class="lead">題庫共 ${Q.length} 題，你做過 ${seen} 題。紀錄只存在這台裝置的瀏覽器。</p><div class="bars">`;
+    let weak = null, weakRate = 2;
+    for(const s in SEC){
+      let n = 0, ok = 0; Q.filter(q => q.s === s).forEach(q => { const r = ST[q.id]; if(r){ n += r.n; ok += r.ok; } });
+      const rate = n ? ok/n : 0; if(n >= 2 && rate < weakRate){ weakRate = rate; weak = s; }
+      h += `<div class="bar"><span class="nm">${SEC[s]}</span><span class="tr"><i style="width:${Math.round(rate*100)}%;background:${!n ? "#e5e7eb" : rate >= .8 ? "#16a34a" : rate >= .5 ? "#d97706" : "#dc2626"}"></i></span><span class="pc">${n ? `答對 ${ok}／${n}` : "還沒做"}</span></div>`;
+    }
+    h += `</div>`;
+    if(weak && weakRate < .8) h += `<div class="key">目前最需要再看的是 <b>${SEC[weak]}</b>。${jumpBtn(weak)}</div>`;
+    h += `<h3>錯題本（${wrong.length} 題）</h3>`;
+    if(!wrong.length) h += `<p style="color:var(--sub)">目前沒有錯題。答錯或用猜的題目會出現在這裡，之後答對就會移除。</p>`;
+    else h += `<ul class="wb">${wrong.map(q => `<li>${esc(q.q)} <span class="tag">${ST[q.id].last === "guess" ? "用猜的" : "答錯"}</span> ${jumpBtn(q.s)}</li>`).join("")}</ul><div class="ctrl"><button class="chip on" id="anaW">只練錯題（${Math.min(10, wrong.length)} 題）</button></div>`;
+    h += `<div class="ctrl"><button class="chip" id="clr">清除我的作答紀錄</button></div>`;
+    ana.innerHTML = h;
+    if($("anaW")) $("anaW").addEventListener("click", ()=>{ start(true); $("s8").scrollIntoView({ behavior:"smooth" }); });
+    $("clr").addEventListener("click", ()=>{ if(confirm("確定要清除這一課的作答紀錄和錯題本嗎？清掉就救不回來。")){ ST = {}; save(); renderAna(); } });
+  }
+  box.innerHTML = `<div class="ctrl"><button class="chip on big" id="go">開始練一回（10 題）</button></div>`;
+  $("go").addEventListener("click", ()=> start(false));
+  renderAna();
+})();
+</script>
+</body>
+</html>
