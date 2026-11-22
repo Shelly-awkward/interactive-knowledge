@@ -98,6 +98,7 @@
   .nextl{display:block; text-align:center; background:var(--main); color:#fff; border-radius:var(--radius); padding:14px; text-decoration:none; font-weight:bold; margin-bottom:16px;}
   footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:24px;}
   :root{ --main:#15803d; --soft:#dcfce7; --deep:#14532d; --hero:linear-gradient(135deg,#15803d,#166534 55%,#ca8a04); }
+  .tw table{min-width:480px;}
   .tubes{display:flex; gap:18px; align-items:flex-end; justify-content:center; flex-wrap:wrap; margin:10px 0;}
   .tube{width:74px; text-align:center; font-size:.82rem; color:var(--sub);}
   .tube .g{width:46px; height:130px; margin:0 auto 4px; border:3px solid #9ca3af; border-top:none; border-radius:0 0 23px 23px; position:relative; overflow:hidden; background:#fff;}
@@ -156,7 +157,7 @@
   <div class="status" id="testMsg"></div>
   <div class="tw"><table>
     <tr><th>試劑</th><th>檢驗什麼</th><th>原本顏色</th><th>有的話變成</th><th>要加熱嗎</th></tr>
-    <tr><td>碘液</td><td><span class="hide">澱粉</span></td><td>黃褐色</td><td><span class="hide">藍黑色</span></td><td><span class="hide">不用</span></td></tr>
+    <tr><td>碘液</td><td><span class="hide">澱粉</span></td><td>黃褐色</td><td><span class="hide">藍黑色（或紫紅色）</span></td><td><span class="hide">不用</span></td></tr>
     <tr><td>本氏液</td><td><span class="hide">糖（例如葡萄糖、麥芽糖）</span></td><td>淡藍色</td><td><span class="hide">綠 → 黃 → 橙 → 紅（糖越多越紅）</span></td><td><span class="hide">要，隔水加熱</span></td></tr>
   </table></div>
   <p class="note">灰色格子點一下才會出現答案。先自己猜再點。</p>
@@ -469,7 +470,7 @@ function setupQuiz(PRE, Q, SECS){
     let m;
     if(!dropped) m = `兩支試管都裝了<b>${s.name}</b>。按「滴試劑」。`;
     else{
-      m = s.st ? "碘液：變成<b>藍黑色</b>，有澱粉。" : "碘液：還是<b>黃褐色</b>，沒有澱粉。";
+      m = s.st ? "碘液：變成<b>藍黑色</b>（有的澱粉會是紫紅色），有澱粉。" : "碘液：還是<b>黃褐色</b>，沒有澱粉。";
       if(!heated) m += "<br>本氏液：現在是淡藍色。<b>還沒加熱，看不出來。</b>按「隔水加熱」。";
       else m += "<br>本氏液加熱後：" + ["還是<b>淡藍色</b>，沒有糖。","變成<b>黃色</b>，有一些糖。","變成<b>橙紅色</b>，糖很多。"][s.su];
       if(heated && smp === "both") m += "<br>為什麼兩個都有？唾液裡的酵素把一部分澱粉分解成糖了。所以飯越嚼越甜。";
@@ -711,7 +712,7 @@ function setupQuiz(PRE, Q, SECS){
     { n:"熱水煮", leaf:"#22c55e", band:"#22c55e", cup:["#bae6fd","熱水"], t:"<b class='big'>2. 摘下葉片、拿掉鋁箔，放進熱水煮。</b>目的：讓葉片變軟，後面的藥品才進得去。這時候看不出兩個部分有差別。" },
     { n:"酒精", leaf:"#fef9c3", band:"#fef9c3", cup:["#86efac","酒精"], t:"<b class='big'>3. 放進酒精，隔水加熱。</b>目的：把<b>葉綠素</b>溶出來。葉片變成淡黃白色，酒精變綠。酒精容易燒起來，所以不能直接用火加熱。" },
     { n:"漂洗", leaf:"#fef9c3", band:"#fef9c3", cup:["#bae6fd","熱水"], t:"<b class='big'>4. 再用熱水漂洗。</b>目的：洗掉酒精，讓變硬的葉片再變軟。" },
-    { n:"滴碘液", leaf:"#1e1b4b", band:"#c98a2b", cup:null, t:"<b class='big'>5. 滴上碘液。</b>照光的部分變<b>藍黑色</b>，有澱粉。被鋁箔遮住的部分是<b>黃褐色</b>，沒有澱粉。結論：光合作用需要光，而且會產生澱粉。" }
+    { n:"滴碘液", leaf:"#1e1b4b", band:"#c98a2b", cup:null, t:"<b class='big'>5. 滴上碘液。</b>照光的部分變<b>藍黑色</b>（或紫紅色），有澱粉。被鋁箔遮住的部分是<b>黃褐色</b>，沒有澱粉。結論：光合作用需要光，而且會產生澱粉。" }
   ];
   let k = 0;
   function el(tag, at, parent){ const e = document.createElementNS(NS, tag); for(const a in at) e.setAttribute(a, at[a]); (parent||svg).appendChild(e); return e; }
@@ -745,7 +746,7 @@ setupQuiz("L1", [
   { q:"人體最主要的能量來源是哪一類養分？", o:["醣類","蛋白質","脂質","礦物質"], a:0, sec:"s1", why:"醣類是最主要的能量來源，像飯和麵。" },
   { q:"同樣 1 公克，哪一類養分提供的能量最多？", o:["醣類","蛋白質","脂質","三種一樣"], a:2, sec:"s1", why:"脂質每克約 9 大卡。醣類和蛋白質每克約 4 大卡。" },
   { q:"一份點心有醣類 10 克、蛋白質 5 克、脂質 5 克，大約有多少大卡？", o:["80 大卡","105 大卡","100 大卡","180 大卡"], a:1, sec:"s1", why:"10×4 ＋ 5×4 ＋ 5×9 ＝ 40 ＋ 20 ＋ 45 ＝ 105 大卡。" },
-  { q:"把碘液滴在饅頭上，顏色會怎麼變？", o:["黃褐色變藍黑色","淡藍色變紅色","不會變色","藍黑色變黃褐色"], a:0, sec:"s2", why:"饅頭有澱粉。碘液遇到澱粉，從黃褐色變成藍黑色。" },
+  { q:"把碘液滴在饅頭上，顏色會怎麼變？", o:["黃褐色變藍黑色","淡藍色變紅色","不會變色","藍黑色變黃褐色"], a:0, sec:"s2", why:"饅頭有澱粉。碘液遇到澱粉，從黃褐色變成藍黑色（有的澱粉會呈紫紅色）。" },
   { q:"用本氏液檢驗糖的時候，一定要做哪一件事？", o:["放進冰箱","隔水加熱","加入碘液","照光"], a:1, sec:"s2", why:"本氏液要隔水加熱才會變色。沒加熱看不出來。" },
   { q:"含糖很多的溶液，加本氏液再隔水加熱，最可能變成什麼顏色？", o:["藍黑色","還是淡藍色","橙紅色","白色"], a:2, sec:"s2", why:"糖越多顏色越偏紅：綠 → 黃 → 橙 → 紅。" },
   { q:"「代謝作用」指的是什麼？", o:["只有分解養分的反應","生物體內所有的化學反應","只有植物才有的反應","把食物排出體外"], a:1, sec:"s3", why:"代謝是體內所有化學反應的總稱，包含合成作用和分解作用。" },
