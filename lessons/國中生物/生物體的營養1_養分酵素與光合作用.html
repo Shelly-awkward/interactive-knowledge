@@ -198,19 +198,20 @@
   </div>
   <div class="stage"><canvas id="cvPS"></canvas></div>
   <div class="status" id="psMsg"></div>
-  <div class="count"><div><small>做出的葡萄糖</small><b id="psG">0</b></div><div><small>放出的氧氣</small><b id="psO">0</b></div></div>
+  <div class="count" style="grid-template-columns:repeat(3,1fr)"><div><small>做出的葡萄糖</small><b id="psG">0</b></div><div><small>放出的氧氣</small><b id="psO">0</b></div><div><small>產生的水</small><b id="psW">0</b></div></div>
   <div class="key" style="text-align:center; font-size:1.02rem;">
-    二氧化碳 ＋ 水 <span style="white-space:nowrap">──（光、葉綠體）→</span> 葡萄糖 ＋ 氧氣
+    二氧化碳 ＋ 水 <span style="white-space:nowrap">──（光、葉綠體）→</span> 葡萄糖 ＋ 氧氣 ＋ 水
   </div>
   <div class="tw"><table>
     <tr><th>項目</th><th>答案</th></tr>
     <tr><td>在哪裡進行</td><td><span class="hide">葉綠體（裡面有葉綠素，負責吸收光）</span></td></tr>
     <tr><td>原料</td><td><span class="hide">二氧化碳、水</span></td></tr>
-    <tr><td>產物</td><td><span class="hide">葡萄糖、氧氣</span></td></tr>
+    <tr><td>產物</td><td><span class="hide">葡萄糖、氧氣、水</span></td></tr>
     <tr><td>能量怎麼變</td><td><span class="hide">光能 → 化學能（存在葡萄糖裡）</span></td></tr>
     <tr><td>葡萄糖太多怎麼辦</td><td><span class="hide">轉成澱粉存起來</span></td></tr>
   </table></div>
   <p class="note">補充：光合作用可以想成兩步。第一步，葉綠素吸收光，把水分解，放出氧氣。第二步，用二氧化碳做出葡萄糖。所以氧氣是從<b>水</b>來的。</p>
+  <p class="note"><b>為什麼兩邊都有水？</b>水是原料，反應過程中也會產生新的水。所以箭頭左邊、右邊都要寫水。產物一共三個：<b>葡萄糖、氧氣、水</b>。</p>
 </div>
 
 <div class="card" id="s5">
@@ -589,11 +590,11 @@ function setupQuiz(PRE, Q, SECS){
   const NAME = { light:"光", co2:"二氧化碳", water:"水", chl:"葉綠體" };
   const LF = { x:330, y:170 };            // 葉子中心（葉綠體工廠）
   const STO = { x:330, y:236 };           // 氣孔
-  let P = [], acc = 0, nG = 0, nO = 0, tIn = 0;
+  let P = [], acc = 0, nG = 0, nO = 0, nW = 0, tIn = 0;
   const works = () => on.light && on.co2 && on.water && on.chl;
   function msg(){
     const miss = Object.keys(on).filter(k => !on[k]).map(k => NAME[k]);
-    $("psMsg").innerHTML = works() ? "<b class='big'>光合作用進行中。</b>二氧化碳從氣孔進來，水從根往上送。葉綠體用光把它們做成葡萄糖，氧氣從氣孔出去。"
+    $("psMsg").innerHTML = works() ? "<b class='big'>光合作用進行中。</b>二氧化碳從氣孔進來，水從根往上送。葉綠體用光把它們做成葡萄糖，同時產生氧氣和水。氧氣和水蒸氣從氣孔出去。"
       : `<b class='big'>光合作用停了。</b>缺少：<b>${miss.join("、")}</b>。四個條件少一個都不行。`;
   }
   document.querySelectorAll("[data-ps]").forEach(b => b.addEventListener("click", ()=>{
@@ -606,6 +607,7 @@ function setupQuiz(PRE, Q, SECS){
     if(type === "co2") P.push({ type, pts:[[rnd(520,630),rnd(250,300)],[400,270],[STO.x,STO.y+6],[LF.x+rnd(-20,20),LF.y+10]], t:0, sp:.28 });
     if(type === "h2o") P.push({ type, pts:[[rnd(120,170),rnd(345,385)],[160,300],[180,200],[LF.x-40,LF.y]], t:0, sp:.3 });
     if(type === "o2")  P.push({ type, pts:[[LF.x+20,LF.y+10],[STO.x+4,STO.y+8],[430,290],[rnd(540,640),rnd(200,330)]], t:0, sp:.26 });
+    if(type === "w2")  P.push({ type, pts:[[LF.x+40,LF.y+10],[STO.x+8,STO.y+8],[400,300],[rnd(440,560),rnd(150,300)]], t:0, sp:.24 });
     if(type === "glu") P.push({ type, pts:[[LF.x-30,LF.y],[185,190],[160,290],[rnd(215,250),rnd(348,372)]], t:0, sp:.22 });
   }
   function pos(p){
@@ -615,9 +617,9 @@ function setupQuiz(PRE, Q, SECS){
   function draw(dt, now){
     tIn += dt;
     if(tIn > .45){ tIn = 0; if(on.co2) spawn("co2"); if(on.water) spawn("h2o"); }
-    if(works()){ acc += dt; if(acc > 1.1){ acc = 0; spawn("o2"); spawn("glu"); } }
+    if(works()){ acc += dt; if(acc > 1.1){ acc = 0; spawn("o2"); spawn("glu"); spawn("w2"); } }
     P.forEach(p => p.t += p.sp*dt);
-    P = P.filter(p => { if(p.t < 1) return true; if(p.type === "o2"){ nO++; $("psO").textContent = nO; } if(p.type === "glu"){ nG++; $("psG").textContent = nG; } return false; });
+    P = P.filter(p => { if(p.t < 1) return true; if(p.type === "o2"){ nO++; $("psO").textContent = nO; } if(p.type === "w2"){ nW++; $("psW").textContent = nW; } if(p.type === "glu"){ nG++; $("psG").textContent = nG; } return false; });
     // 背景
     c.fillStyle = on.light ? "#e0f2fe" : "#1e293b"; c.fillRect(0,0,W,GY);
     c.fillStyle = "#a16207"; c.fillRect(0,GY,W,H-GY); c.fillStyle = "#854d0e"; c.fillRect(0,GY,W,6);
@@ -649,8 +651,8 @@ function setupQuiz(PRE, Q, SECS){
     label(c, "氣孔", STO.x-36, STO.y+16, { size:12, color:tc, halo });
     if(on.co2) label(c, "空氣中的二氧化碳", 548, 316-22, { size:12, color:tc, halo });
     // 粒子
-    const ST = { co2:["#6b7280","CO₂"], h2o:["#3b82f6","水"], o2:["#f8fafc","O₂"], glu:["#f97316","糖"] };
-    P.forEach(p => { const q = pos(p), s = ST[p.type]; ball(c, q[0], q[1], 11, s[0], s[1], p.type === "o2" ? "#0f172a" : "#fff"); });
+    const ST = { co2:["#6b7280","CO₂"], h2o:["#3b82f6","水"], o2:["#f8fafc","O₂"], glu:["#f97316","糖"], w2:["#7dd3fc","水"] };
+    P.forEach(p => { const q = pos(p), s = ST[p.type]; ball(c, q[0], q[1], 11, s[0], s[1], p.type === "o2" || p.type === "w2" ? "#0f172a" : "#fff"); });
   }
   msg();
 })();
@@ -752,7 +754,8 @@ setupQuiz("L1", [
   { q:"酵素幫忙完成一次反應之後，自己會怎樣？", o:["被用掉消失","變成產物的一部分","本身不變，可以再用","變成另一種酵素"], a:2, sec:"s3", why:"酵素作用前後不變，可以重複使用。" },
   { q:"把唾液煮沸、放涼之後，再加進澱粉液。澱粉會被分解嗎？", o:["會，而且更快","會，跟原來一樣","不會，酵素被高溫破壞了","不會，因為澱粉被煮熟了"], a:2, sec:"s3", why:"高溫會破壞酵素，就算放涼也不會恢復。" },
   { q:"把唾液放進冰箱，再拿出來回到 37℃ 左右。酵素的活性會怎樣？", o:["永遠失去活性","恢復活性","變成原來的兩倍","變成酸性"], a:1, sec:"s3", why:"低溫只是讓酵素變慢，沒有破壞它。回溫就恢復。" },
-  { q:"光合作用的原料是什麼？", o:["氧氣和葡萄糖","二氧化碳和水","氧氣和水","二氧化碳和葡萄糖"], a:1, sec:"s4", why:"原料是二氧化碳和水。葡萄糖和氧氣是產物。" },
+  { q:"光合作用的原料是什麼？", o:["氧氣和葡萄糖","二氧化碳和水","氧氣和水","二氧化碳和葡萄糖"], a:1, sec:"s4", why:"原料是二氧化碳和水。產物是葡萄糖、氧氣和水。" },
+  { q:"光合作用的產物有哪些？", o:["只有葡萄糖","葡萄糖和氧氣","葡萄糖、氧氣和水","二氧化碳和水"], a:2, sec:"s4", why:"產物有三個：葡萄糖、氧氣、水。水是原料，也是產物，最容易漏掉。" },
   { q:"光合作用在細胞的哪個構造裡進行？", o:["細胞核","細胞膜","葉綠體","液泡"], a:2, sec:"s4", why:"葉綠體裡有葉綠素，可以吸收光。" },
   { q:"光合作用把什麼能量，轉成什麼能量？", o:["化學能轉成光能","光能轉成化學能","熱能轉成光能","光能轉成電能"], a:1, sec:"s4", why:"把光能轉成化學能，存在葡萄糖裡。" },
   { q:"植物做出來的葡萄糖如果用不完，通常會怎麼處理？", o:["從氣孔排掉","轉成澱粉存起來","變成氧氣","變成水"], a:1, sec:"s4", why:"多的葡萄糖會轉成澱粉儲存。所以可以用碘液檢驗葉子。" },
