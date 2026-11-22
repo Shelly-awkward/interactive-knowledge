@@ -98,6 +98,7 @@
   .nextl{display:block; text-align:center; background:var(--main); color:#fff; border-radius:var(--radius); padding:14px; text-decoration:none; font-weight:bold; margin-bottom:16px;}
   footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:24px;}
   :root{ --main:#15803d; --soft:#dcfce7; --deep:#14532d; --hero:linear-gradient(135deg,#15803d,#166534 55%,#ca8a04); }
+  .tw table{min-width:480px;}
   .tubes{display:flex; gap:18px; align-items:flex-end; justify-content:center; flex-wrap:wrap; margin:10px 0;}
   .tube{width:74px; text-align:center; font-size:.82rem; color:var(--sub);}
   .tube .g{width:46px; height:130px; margin:0 auto 4px; border:3px solid #9ca3af; border-top:none; border-radius:0 0 23px 23px; position:relative; overflow:hidden; background:#fff;}
@@ -156,7 +157,7 @@
   <div class="status" id="testMsg"></div>
   <div class="tw"><table>
     <tr><th>試劑</th><th>檢驗什麼</th><th>原本顏色</th><th>有的話變成</th><th>要加熱嗎</th></tr>
-    <tr><td>碘液</td><td><span class="hide">澱粉</span></td><td>黃褐色</td><td><span class="hide">藍黑色</span></td><td><span class="hide">不用</span></td></tr>
+    <tr><td>碘液</td><td><span class="hide">澱粉</span></td><td>黃褐色</td><td><span class="hide">藍黑色（或紫紅色）</span></td><td><span class="hide">不用</span></td></tr>
     <tr><td>本氏液</td><td><span class="hide">糖（例如葡萄糖、麥芽糖）</span></td><td>淡藍色</td><td><span class="hide">綠 → 黃 → 橙 → 紅（糖越多越紅）</span></td><td><span class="hide">要，隔水加熱</span></td></tr>
   </table></div>
   <p class="note">灰色格子點一下才會出現答案。先自己猜再點。</p>
@@ -198,19 +199,20 @@
   </div>
   <div class="stage"><canvas id="cvPS"></canvas></div>
   <div class="status" id="psMsg"></div>
-  <div class="count"><div><small>做出的葡萄糖</small><b id="psG">0</b></div><div><small>放出的氧氣</small><b id="psO">0</b></div></div>
+  <div class="count" style="grid-template-columns:repeat(3,1fr)"><div><small>做出的葡萄糖</small><b id="psG">0</b></div><div><small>放出的氧氣</small><b id="psO">0</b></div><div><small>產生的水</small><b id="psW">0</b></div></div>
   <div class="key" style="text-align:center; font-size:1.02rem;">
-    二氧化碳 ＋ 水 <span style="white-space:nowrap">──（光、葉綠體）→</span> 葡萄糖 ＋ 氧氣
+    二氧化碳 ＋ 水 <span style="white-space:nowrap">──（光、葉綠體）→</span> 葡萄糖 ＋ 氧氣 ＋ 水
   </div>
   <div class="tw"><table>
     <tr><th>項目</th><th>答案</th></tr>
     <tr><td>在哪裡進行</td><td><span class="hide">葉綠體（裡面有葉綠素，負責吸收光）</span></td></tr>
     <tr><td>原料</td><td><span class="hide">二氧化碳、水</span></td></tr>
-    <tr><td>產物</td><td><span class="hide">葡萄糖、氧氣</span></td></tr>
+    <tr><td>產物</td><td><span class="hide">葡萄糖、氧氣、水</span></td></tr>
     <tr><td>能量怎麼變</td><td><span class="hide">光能 → 化學能（存在葡萄糖裡）</span></td></tr>
     <tr><td>葡萄糖太多怎麼辦</td><td><span class="hide">轉成澱粉存起來</span></td></tr>
   </table></div>
   <p class="note">補充：光合作用可以想成兩步。第一步，葉綠素吸收光，把水分解，放出氧氣。第二步，用二氧化碳做出葡萄糖。所以氧氣是從<b>水</b>來的。</p>
+  <p class="note"><b>為什麼兩邊都有水？</b>水是原料，反應過程中也會產生新的水。所以箭頭左邊、右邊都要寫水。產物一共三個：<b>葡萄糖、氧氣、水</b>。</p>
 </div>
 
 <div class="card" id="s5">
@@ -468,7 +470,7 @@ function setupQuiz(PRE, Q, SECS){
     let m;
     if(!dropped) m = `兩支試管都裝了<b>${s.name}</b>。按「滴試劑」。`;
     else{
-      m = s.st ? "碘液：變成<b>藍黑色</b>，有澱粉。" : "碘液：還是<b>黃褐色</b>，沒有澱粉。";
+      m = s.st ? "碘液：變成<b>藍黑色</b>（有的澱粉會是紫紅色），有澱粉。" : "碘液：還是<b>黃褐色</b>，沒有澱粉。";
       if(!heated) m += "<br>本氏液：現在是淡藍色。<b>還沒加熱，看不出來。</b>按「隔水加熱」。";
       else m += "<br>本氏液加熱後：" + ["還是<b>淡藍色</b>，沒有糖。","變成<b>黃色</b>，有一些糖。","變成<b>橙紅色</b>，糖很多。"][s.su];
       if(heated && smp === "both") m += "<br>為什麼兩個都有？唾液裡的酵素把一部分澱粉分解成糖了。所以飯越嚼越甜。";
@@ -589,11 +591,11 @@ function setupQuiz(PRE, Q, SECS){
   const NAME = { light:"光", co2:"二氧化碳", water:"水", chl:"葉綠體" };
   const LF = { x:330, y:170 };            // 葉子中心（葉綠體工廠）
   const STO = { x:330, y:236 };           // 氣孔
-  let P = [], acc = 0, nG = 0, nO = 0, tIn = 0;
+  let P = [], acc = 0, nG = 0, nO = 0, nW = 0, tIn = 0;
   const works = () => on.light && on.co2 && on.water && on.chl;
   function msg(){
     const miss = Object.keys(on).filter(k => !on[k]).map(k => NAME[k]);
-    $("psMsg").innerHTML = works() ? "<b class='big'>光合作用進行中。</b>二氧化碳從氣孔進來，水從根往上送。葉綠體用光把它們做成葡萄糖，氧氣從氣孔出去。"
+    $("psMsg").innerHTML = works() ? "<b class='big'>光合作用進行中。</b>二氧化碳從氣孔進來，水從根往上送。葉綠體用光把它們做成葡萄糖，同時產生氧氣和水。氧氣和水蒸氣從氣孔出去。"
       : `<b class='big'>光合作用停了。</b>缺少：<b>${miss.join("、")}</b>。四個條件少一個都不行。`;
   }
   document.querySelectorAll("[data-ps]").forEach(b => b.addEventListener("click", ()=>{
@@ -606,6 +608,7 @@ function setupQuiz(PRE, Q, SECS){
     if(type === "co2") P.push({ type, pts:[[rnd(520,630),rnd(250,300)],[400,270],[STO.x,STO.y+6],[LF.x+rnd(-20,20),LF.y+10]], t:0, sp:.28 });
     if(type === "h2o") P.push({ type, pts:[[rnd(120,170),rnd(345,385)],[160,300],[180,200],[LF.x-40,LF.y]], t:0, sp:.3 });
     if(type === "o2")  P.push({ type, pts:[[LF.x+20,LF.y+10],[STO.x+4,STO.y+8],[430,290],[rnd(540,640),rnd(200,330)]], t:0, sp:.26 });
+    if(type === "w2")  P.push({ type, pts:[[LF.x+40,LF.y+10],[STO.x+8,STO.y+8],[400,300],[rnd(440,560),rnd(150,300)]], t:0, sp:.24 });
     if(type === "glu") P.push({ type, pts:[[LF.x-30,LF.y],[185,190],[160,290],[rnd(215,250),rnd(348,372)]], t:0, sp:.22 });
   }
   function pos(p){
@@ -615,9 +618,9 @@ function setupQuiz(PRE, Q, SECS){
   function draw(dt, now){
     tIn += dt;
     if(tIn > .45){ tIn = 0; if(on.co2) spawn("co2"); if(on.water) spawn("h2o"); }
-    if(works()){ acc += dt; if(acc > 1.1){ acc = 0; spawn("o2"); spawn("glu"); } }
+    if(works()){ acc += dt; if(acc > 1.1){ acc = 0; spawn("o2"); spawn("glu"); spawn("w2"); } }
     P.forEach(p => p.t += p.sp*dt);
-    P = P.filter(p => { if(p.t < 1) return true; if(p.type === "o2"){ nO++; $("psO").textContent = nO; } if(p.type === "glu"){ nG++; $("psG").textContent = nG; } return false; });
+    P = P.filter(p => { if(p.t < 1) return true; if(p.type === "o2"){ nO++; $("psO").textContent = nO; } if(p.type === "w2"){ nW++; $("psW").textContent = nW; } if(p.type === "glu"){ nG++; $("psG").textContent = nG; } return false; });
     // 背景
     c.fillStyle = on.light ? "#e0f2fe" : "#1e293b"; c.fillRect(0,0,W,GY);
     c.fillStyle = "#a16207"; c.fillRect(0,GY,W,H-GY); c.fillStyle = "#854d0e"; c.fillRect(0,GY,W,6);
@@ -649,8 +652,8 @@ function setupQuiz(PRE, Q, SECS){
     label(c, "氣孔", STO.x-36, STO.y+16, { size:12, color:tc, halo });
     if(on.co2) label(c, "空氣中的二氧化碳", 548, 316-22, { size:12, color:tc, halo });
     // 粒子
-    const ST = { co2:["#6b7280","CO₂"], h2o:["#3b82f6","水"], o2:["#f8fafc","O₂"], glu:["#f97316","糖"] };
-    P.forEach(p => { const q = pos(p), s = ST[p.type]; ball(c, q[0], q[1], 11, s[0], s[1], p.type === "o2" ? "#0f172a" : "#fff"); });
+    const ST = { co2:["#6b7280","CO₂"], h2o:["#3b82f6","水"], o2:["#f8fafc","O₂"], glu:["#f97316","糖"], w2:["#7dd3fc","水"] };
+    P.forEach(p => { const q = pos(p), s = ST[p.type]; ball(c, q[0], q[1], 11, s[0], s[1], p.type === "o2" || p.type === "w2" ? "#0f172a" : "#fff"); });
   }
   msg();
 })();
@@ -709,7 +712,7 @@ function setupQuiz(PRE, Q, SECS){
     { n:"熱水煮", leaf:"#22c55e", band:"#22c55e", cup:["#bae6fd","熱水"], t:"<b class='big'>2. 摘下葉片、拿掉鋁箔，放進熱水煮。</b>目的：讓葉片變軟，後面的藥品才進得去。這時候看不出兩個部分有差別。" },
     { n:"酒精", leaf:"#fef9c3", band:"#fef9c3", cup:["#86efac","酒精"], t:"<b class='big'>3. 放進酒精，隔水加熱。</b>目的：把<b>葉綠素</b>溶出來。葉片變成淡黃白色，酒精變綠。酒精容易燒起來，所以不能直接用火加熱。" },
     { n:"漂洗", leaf:"#fef9c3", band:"#fef9c3", cup:["#bae6fd","熱水"], t:"<b class='big'>4. 再用熱水漂洗。</b>目的：洗掉酒精，讓變硬的葉片再變軟。" },
-    { n:"滴碘液", leaf:"#1e1b4b", band:"#c98a2b", cup:null, t:"<b class='big'>5. 滴上碘液。</b>照光的部分變<b>藍黑色</b>，有澱粉。被鋁箔遮住的部分是<b>黃褐色</b>，沒有澱粉。結論：光合作用需要光，而且會產生澱粉。" }
+    { n:"滴碘液", leaf:"#1e1b4b", band:"#c98a2b", cup:null, t:"<b class='big'>5. 滴上碘液。</b>照光的部分變<b>藍黑色</b>（或紫紅色），有澱粉。被鋁箔遮住的部分是<b>黃褐色</b>，沒有澱粉。結論：光合作用需要光，而且會產生澱粉。" }
   ];
   let k = 0;
   function el(tag, at, parent){ const e = document.createElementNS(NS, tag); for(const a in at) e.setAttribute(a, at[a]); (parent||svg).appendChild(e); return e; }
@@ -743,7 +746,7 @@ setupQuiz("L1", [
   { q:"人體最主要的能量來源是哪一類養分？", o:["醣類","蛋白質","脂質","礦物質"], a:0, sec:"s1", why:"醣類是最主要的能量來源，像飯和麵。" },
   { q:"同樣 1 公克，哪一類養分提供的能量最多？", o:["醣類","蛋白質","脂質","三種一樣"], a:2, sec:"s1", why:"脂質每克約 9 大卡。醣類和蛋白質每克約 4 大卡。" },
   { q:"一份點心有醣類 10 克、蛋白質 5 克、脂質 5 克，大約有多少大卡？", o:["80 大卡","105 大卡","100 大卡","180 大卡"], a:1, sec:"s1", why:"10×4 ＋ 5×4 ＋ 5×9 ＝ 40 ＋ 20 ＋ 45 ＝ 105 大卡。" },
-  { q:"把碘液滴在饅頭上，顏色會怎麼變？", o:["黃褐色變藍黑色","淡藍色變紅色","不會變色","藍黑色變黃褐色"], a:0, sec:"s2", why:"饅頭有澱粉。碘液遇到澱粉，從黃褐色變成藍黑色。" },
+  { q:"把碘液滴在饅頭上，顏色會怎麼變？", o:["黃褐色變藍黑色","淡藍色變紅色","不會變色","藍黑色變黃褐色"], a:0, sec:"s2", why:"饅頭有澱粉。碘液遇到澱粉，從黃褐色變成藍黑色（有的澱粉會呈紫紅色）。" },
   { q:"用本氏液檢驗糖的時候，一定要做哪一件事？", o:["放進冰箱","隔水加熱","加入碘液","照光"], a:1, sec:"s2", why:"本氏液要隔水加熱才會變色。沒加熱看不出來。" },
   { q:"含糖很多的溶液，加本氏液再隔水加熱，最可能變成什麼顏色？", o:["藍黑色","還是淡藍色","橙紅色","白色"], a:2, sec:"s2", why:"糖越多顏色越偏紅：綠 → 黃 → 橙 → 紅。" },
   { q:"「代謝作用」指的是什麼？", o:["只有分解養分的反應","生物體內所有的化學反應","只有植物才有的反應","把食物排出體外"], a:1, sec:"s3", why:"代謝是體內所有化學反應的總稱，包含合成作用和分解作用。" },
@@ -752,7 +755,8 @@ setupQuiz("L1", [
   { q:"酵素幫忙完成一次反應之後，自己會怎樣？", o:["被用掉消失","變成產物的一部分","本身不變，可以再用","變成另一種酵素"], a:2, sec:"s3", why:"酵素作用前後不變，可以重複使用。" },
   { q:"把唾液煮沸、放涼之後，再加進澱粉液。澱粉會被分解嗎？", o:["會，而且更快","會，跟原來一樣","不會，酵素被高溫破壞了","不會，因為澱粉被煮熟了"], a:2, sec:"s3", why:"高溫會破壞酵素，就算放涼也不會恢復。" },
   { q:"把唾液放進冰箱，再拿出來回到 37℃ 左右。酵素的活性會怎樣？", o:["永遠失去活性","恢復活性","變成原來的兩倍","變成酸性"], a:1, sec:"s3", why:"低溫只是讓酵素變慢，沒有破壞它。回溫就恢復。" },
-  { q:"光合作用的原料是什麼？", o:["氧氣和葡萄糖","二氧化碳和水","氧氣和水","二氧化碳和葡萄糖"], a:1, sec:"s4", why:"原料是二氧化碳和水。葡萄糖和氧氣是產物。" },
+  { q:"光合作用的原料是什麼？", o:["氧氣和葡萄糖","二氧化碳和水","氧氣和水","二氧化碳和葡萄糖"], a:1, sec:"s4", why:"原料是二氧化碳和水。產物是葡萄糖、氧氣和水。" },
+  { q:"光合作用的產物有哪些？", o:["只有葡萄糖","葡萄糖和氧氣","葡萄糖、氧氣和水","二氧化碳和水"], a:2, sec:"s4", why:"產物有三個：葡萄糖、氧氣、水。水是原料，也是產物，最容易漏掉。" },
   { q:"光合作用在細胞的哪個構造裡進行？", o:["細胞核","細胞膜","葉綠體","液泡"], a:2, sec:"s4", why:"葉綠體裡有葉綠素，可以吸收光。" },
   { q:"光合作用把什麼能量，轉成什麼能量？", o:["化學能轉成光能","光能轉成化學能","熱能轉成光能","光能轉成電能"], a:1, sec:"s4", why:"把光能轉成化學能，存在葡萄糖裡。" },
   { q:"植物做出來的葡萄糖如果用不完，通常會怎麼處理？", o:["從氣孔排掉","轉成澱粉存起來","變成氧氣","變成水"], a:1, sec:"s4", why:"多的葡萄糖會轉成澱粉儲存。所以可以用碘液檢驗葉子。" },
