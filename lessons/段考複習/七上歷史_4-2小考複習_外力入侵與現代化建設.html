@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>七上歷史小考｜4-2 外力入侵與現代化建設</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f7f5f2; --card:#ffffff;
+    --pri:#9a3412; --pri-soft:#ffedd5;
+    --shen:#ea580c; --shen-soft:#ffedd5; --liu:#0d9488; --liu-soft:#ccfbf1;
+    --red:#dc2626; --red-soft:#fee2e2;
+    --green:#15803d; --green-soft:#dcfce7; --amber:#b45309; --amber-soft:#fef3c7;
+    --blue:#1d4ed8; --blue-soft:#dbeafe; --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:20px 16px 80px;}
+  a{color:var(--blue);}
+
+  header.hero{background:linear-gradient(135deg,#c2410c,#9a3412 50%,#0f766e); color:#fff; border-radius:var(--radius); padding:26px 24px; margin-bottom:16px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.95; font-size:.95rem;}
+
+  nav.toc{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;}
+  nav.toc a{background:#fff; border:1px solid var(--border); border-radius:99px; padding:3px 12px; font-size:.86rem; text-decoration:none; color:var(--ink);}
+  nav.toc a:hover{border-color:var(--pri); color:var(--pri);}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:16px;}
+  .card h2{font-size:1.18rem; color:var(--pri); margin-bottom:8px;}
+  .card h2.s{color:var(--shen);} .card h2.l{color:var(--liu);}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .card ul,.card ol{margin-left:1.3em;}
+  .card li{margin-bottom:2px;}
+  .lead{font-size:.98rem; margin-bottom:10px;}
+  .sup{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.93rem;}
+  .sup > b:first-child{color:var(--amber);}
+  .sup ul{margin-top:2px;}
+  .key{background:var(--pri-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.95rem; color:#7c2d12;}
+  .key.l{background:var(--liu-soft); color:#134e4a;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e3a8a;}
+  mark{background:#fef08a; border-radius:3px; padding:0 2px;}
+
+  .ctrl{display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:8px 0;}
+  .ctrl .lab{font-size:.86rem; color:var(--sub); margin-right:2px;}
+  .chip{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 13px; cursor:pointer; font-family:inherit; font-size:.88rem; color:var(--ink);}
+  .chip:hover{border-color:var(--pri); color:var(--pri);}
+  .chip.on{background:var(--pri); border-color:var(--pri); color:#fff;}
+  .chip.on:hover{color:#fff;}
+  .chip.big{padding:8px 16px; font-size:.95rem; font-weight:bold;}
+  .chip.s.on{background:var(--shen); border-color:var(--shen);} .chip.l.on{background:var(--liu); border-color:var(--liu);}
+  .chip:disabled{opacity:.4; cursor:default;}
+
+  /* 時間軸 */
+  .tlw{overflow-x:auto; padding-bottom:4px;}
+  .tl{display:grid; grid-template-columns:repeat(7,minmax(96px,1fr)); gap:5px; min-width:700px;}
+  .tl .band{font-size:.82rem; font-weight:bold; text-align:center; border-radius:6px; padding:1px 4px; color:#fff;}
+  .tl .b1{background:#6b7280;} .tl .b2{background:var(--pri);}
+  .tl button{border:1px solid var(--border); background:#fff; border-radius:10px; padding:6px 6px; font-family:inherit; font-size:.82rem; cursor:pointer; color:var(--ink); line-height:1.45; text-align:center;}
+  .tl button b{display:block; font-size:.98rem; color:var(--pri);}
+  .tl button.on{border-color:var(--pri); background:var(--pri-soft);}
+  .tl button.x{border-style:dashed;}
+  .tlinfo{border:2px solid #facc15; background:#fefce8; border-radius:12px; padding:10px 14px; margin-top:10px; font-size:.95rem;}
+  .chain{display:grid; gap:6px; margin-top:8px;}
+  .chain .r{display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:6px; align-items:center; font-size:.9rem;}
+  .chain .r > div{border:1px solid var(--border); border-radius:10px; padding:6px 8px; text-align:center; background:#fff;}
+  .chain .r > i{font-style:normal; color:var(--sub);}
+  .chain .r > div small{display:block; color:var(--sub); font-size:.78rem;}
+  @media (max-width:560px){ .chain .r{grid-template-columns:1fr;} .chain .r > i{text-align:center; transform:rotate(90deg);} }
+
+  /* 地圖 */
+  .mapbox{display:flex; gap:14px; flex-wrap:wrap; align-items:flex-start; margin-top:8px;}
+  .mapbox .m{flex:0 1 300px; background:#eef7fd; border:1px solid #cfe5f3; border-radius:12px; padding:4px;}
+  .mapbox .m.w{flex:1 1 380px;}
+  .mapbox .side{flex:1 1 240px; min-width:220px;}
+  .mp{display:block; width:100%; height:auto; touch-action:manipulation;}
+  .mp text{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; font-size:12px; fill:#1f2937;}
+  .mp .land{fill:#fbf3cf; stroke:#b9a15a; stroke-width:1;}
+  .mp .land2{fill:#f3e3a6; stroke:#b9a15a; stroke-width:1;}
+  .mp .dot{fill:#fff; stroke:#1f2937; stroke-width:1.6;}
+  .mp .lb{paint-order:stroke; stroke:#fff; stroke-width:3px; stroke-linejoin:round;}
+  .mp .sea{fill:#3b82a6; font-size:11px; font-style:italic;}
+  .mp .flow{stroke-dasharray:7 5; animation:dash 1s linear infinite;}
+  @keyframes dash{to{stroke-dashoffset:-24;}}
+  .mp .now{animation:pulse 1s ease-in-out infinite;}
+  @keyframes pulse{50%{opacity:.35;}}
+  .mp .hit{cursor:pointer;}
+  .mp .port{cursor:pointer;}
+  .mp .port.sel .dot{fill:#facc15;}
+  .mp.quizzing .pl{display:none;}
+  .mp .it{cursor:pointer;}
+  .mp .it.sel .glow{opacity:1;}
+  .mp .glow{opacity:0; stroke:#facc15; fill:none;}
+  .mp .bd{font-size:10px; font-weight:bold; fill:#fff;}
+  .info{border:2px solid #facc15; background:#fefce8; border-radius:12px; padding:10px 14px; font-size:.94rem;}
+  .info h3{margin:0 0 2px;}
+  .info .who{display:inline-block; color:#fff; border-radius:99px; padding:0 9px; font-size:.78rem; margin-right:6px;}
+  .who.s{background:var(--shen);} .who.l{background:var(--liu);}
+  .stepbar{display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin:8px 0;}
+  .stepbar .n{font-size:.86rem; color:var(--sub);}
+  .legend{display:flex; gap:12px; flex-wrap:wrap; font-size:.84rem; color:var(--sub); margin:6px 2px;}
+  .legend i{display:inline-block; width:18px; height:4px; border-radius:2px; margin-right:4px; vertical-align:3px;}
+
+  table{border-collapse:collapse; width:100%; font-size:.92rem; margin-top:10px;}
+  th,td{border:1px solid var(--border); padding:6px 8px; text-align:center;}
+  th{background:#f8fafc;}
+  th.s{background:var(--shen); color:#fff;} th.l{background:var(--liu); color:#fff;}
+  td.l{text-align:left;}
+  .tw{overflow-x:auto;}
+  .hide{background:#e5e7eb; color:transparent; border-radius:6px; cursor:pointer; user-select:none; padding:0 6px;}
+  .hide.show{background:var(--amber-soft); color:var(--ink);}
+
+  /* 行政區 */
+  .adm{display:grid; gap:8px; margin-top:8px;}
+  .adm .fu{border:2px solid var(--border); border-radius:12px; padding:8px 10px; background:#fff;}
+  .adm .fu .hd{display:flex; gap:8px; align-items:baseline; flex-wrap:wrap; margin-bottom:4px;}
+  .adm .fu .hd b{font-size:1.02rem;}
+  .adm .fu .hd small{color:var(--sub);}
+  .adm .pos{display:inline-block; background:#1f2937; color:#fff; border-radius:6px; padding:0 7px; font-size:.78rem;}
+  .adm .u{display:inline-block; border-radius:8px; padding:0 9px; margin:2px 3px 2px 0; font-size:.88rem; border:1px solid var(--border);}
+  .adm .u.x{background:#dbeafe; border-color:#93c5fd;} .adm .u.t{background:#fef3c7; border-color:#fcd34d;} .adm .u.z{background:#fce7f3; border-color:#f9a8d4;}
+  .adm .u.new{outline:2px solid var(--liu);}
+  .adm .f1{border-color:#fdba74; background:#fff7ed;} .adm .f2{border-color:#86efac; background:#f0fdf4;} .adm .f3{border-color:#f9a8d4; background:#fdf2f8;} .adm .f4{border-color:#fde047; background:#fefce8;}
+  .count{display:grid; grid-template-columns:repeat(auto-fit,minmax(90px,1fr)); gap:8px; margin-top:8px;}
+  .count div{background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:6px 10px; text-align:center;}
+  .count small{display:block; color:var(--sub); font-size:.78rem;}
+  .count b{font-size:1.25rem; color:var(--pri);}
+
+  /* 誰做的 */
+  .whoq{border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-top:10px;}
+  .whoq .it{font-weight:bold; font-size:1.05rem; margin:4px 0 8px;}
+  .whoq .res{font-size:.92rem; margin-top:6px; min-height:1.8em;}
+
+  .q{border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-top:10px;}
+  .q p.t{font-weight:bold; margin-bottom:6px;}
+  .q .opts{display:grid; gap:6px;}
+  .q button{border:1px solid var(--border); background:#fff; border-radius:8px; padding:7px 12px; font-family:inherit; font-size:.94rem; cursor:pointer; text-align:left; color:var(--ink);}
+  .q button:hover{border-color:var(--pri);}
+  .q button.ok{background:var(--green-soft); border-color:var(--green);}
+  .q button.no{background:var(--red-soft); border-color:var(--red);}
+  .q .qhead{display:flex; justify-content:space-between; gap:8px; font-size:.84rem; color:var(--sub); margin-bottom:4px;}
+  .q .chip{border-radius:99px; text-align:center;}
+  .q .chip.on{background:var(--pri); color:#fff;}
+  .tag{display:inline-block; background:#f1f5f9; border-radius:99px; padding:0 9px; font-size:.78rem; color:#475569; white-space:nowrap;}
+  .guess{display:block; font-size:.92rem; color:#374151; margin:2px 0 8px; cursor:pointer; background:#f8fafc; border:1px dashed #cbd5e1; border-radius:8px; padding:4px 10px;}
+  .guess input{transform:scale(1.25); margin-right:6px;}
+  .fb{margin-top:10px; border-radius:10px; padding:10px 12px; font-size:.94rem;}
+  .fb.good{background:var(--green-soft);} .fb.bad{background:var(--red-soft);}
+  .fb p{margin-top:6px;}
+  .dx{display:inline-block; background:#fff; border:1px solid #fca5a5; color:#b91c1c; border-radius:6px; padding:0 7px; font-size:.8rem; font-weight:bold; margin-right:6px;}
+  .dx.k{border-color:#86efac; color:#15803d;}
+  .chip.jump{border-color:var(--blue); color:var(--blue);}
+  .ans{min-height:44px; border:2px dashed var(--border); border-radius:10px; padding:6px 8px; margin-bottom:8px; display:flex; flex-wrap:wrap; gap:4px; align-items:center;}
+  .ans .oc{background:var(--blue-soft); border-radius:8px; padding:1px 8px; font-size:.9rem;} .ans .oc.no{background:var(--red-soft); outline:2px solid var(--red);}
+  .ans i{color:var(--sub); font-style:normal;} .ans .ph{color:var(--sub); font-size:.88rem;}
+  .pool{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;} .pool .chip:disabled{opacity:.3; cursor:default;}
+  .miss{border-top:1px dashed var(--border); padding-top:8px; margin-top:8px;} .miss ul{font-size:.9rem; color:var(--sub);} .miss .chip{margin-left:6px;}
+  .bars{display:grid; gap:6px;}
+  .bar{display:grid; grid-template-columns:9.5em 1fr 6.5em; gap:8px; align-items:center; font-size:.88rem;}
+  .bar .tr{height:12px; background:#f1f5f9; border-radius:99px; overflow:hidden;} .bar .tr i{display:block; height:100%; border-radius:99px;}
+  .bar .pc{color:var(--sub); text-align:right;}
+  .wb{font-size:.92rem;} .wb li{margin-bottom:6px;} .wb .chip{padding:2px 10px; font-size:.8rem;}
+  .card.flash{animation:flash 2.6s;} @keyframes flash{0%,60%{box-shadow:0 0 0 4px #facc15;}100%{box-shadow:0 0 0 0 transparent;}}
+  #backBtn{position:fixed; right:14px; bottom:16px; z-index:20; background:var(--blue); color:#fff; border:none; border-radius:99px; padding:11px 18px; font-family:inherit; font-size:1rem; font-weight:bold; box-shadow:0 4px 14px rgba(0,0,0,.25); cursor:pointer;}
+  .predict{border:2px dashed #93c5fd; background:#f0f7ff; border-radius:12px; padding:10px 14px; margin:10px 0; font-size:.95rem;}
+  .predict .pb{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0;}
+  .predict .pb button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 14px; font-family:inherit; font-size:.9rem; cursor:pointer; color:var(--ink);}
+  .predict .pb button.on{border-color:var(--blue); background:var(--blue-soft);} .predict .pb button.ok{border-color:var(--green); background:var(--green-soft);}
+  [hidden]{display:none !important;}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:24px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">七年級社會 · 歷史 · 第 4 章 4-2（課本 p.132～135）</span>
+  <h1>外力入侵與現代化建設</h1>
+  <p>這一課其實只有一個故事：<b>臺灣被外國打了三次，清廷每被打一次，就多重視臺灣一點。</b>先看懂這條線，人名和年代就不用硬背。</p>
+</header>
+
+<nav class="toc">
+  <a href="#s1">① 整課一條線</a><a href="#s2">② 開港通商</a><a href="#s3">③ 牡丹社事件</a><a href="#s4">④ 沈葆楨</a><a href="#s5">⑤ 清法戰爭與建省</a><a href="#s6">⑥ 劉銘傳</a><a href="#s7">⑦ 行政區與兩人對照</a><a href="#s8">⑧ 考考你</a><a href="#s9">⑨ 錯題本</a>
+</nav>
+
+<div class="note">看到<b style="color:#b45309">黃色框「老師補充」</b>，代表課本沒有寫。它是幫你理解用的，不用背。其他內容都照課本。灰色的格子點一下才會出現答案，先自己想再點。</div>
+
+<!-- ============ ① ============ -->
+<div class="card" id="s1">
+  <h2>① 整課一條線：從「不想管」到「趕快建設」</h2>
+  <p class="lead">清廷一開始治理臺灣的想法是<mark>「為防臺而治臺」</mark>。意思是：怕臺灣變成反抗清廷的基地，所以把它管住。但不想花力氣建設。</p>
+  <p class="lead">後來外國一次一次打過來，清廷才改成<mark>加強對臺建設</mark>。點下面每一格看看。</p>
+  <div class="tlw"><div class="tl" id="tl"></div></div>
+  <div class="tlinfo" id="tlinfo"></div>
+
+  <h3>三次外力，三個結果（灰色格子先想再點）</h3>
+  <div class="chain">
+    <div class="r"><div><b>英法聯軍之役</b><small>1857 年起 · 英國、法國</small></div><i>→</i><div>結果：<span class="hide">開放四個通商口岸</span></div><i>→</i><div>外國勢力<span class="hide">再度進入臺灣</span></div></div>
+    <div class="r"><div><b>牡丹社事件</b><small>1874 年 · 日本</small></div><i>→</i><div>結果：派<span class="hide">沈葆楨</span>來臺</div><i>→</i><div>強化防務、<span class="hide">開山撫番</span>、設臺北府</div></div>
+    <div class="r"><div><b>清法戰爭</b><small>1884 年 · 法國</small></div><i>→</i><div>結果：1885 年<span class="hide">臺灣建省</span></div><i>→</i><div>首任巡撫<span class="hide">劉銘傳</span>，鐵路、電報、輪船、郵局</div></div>
+  </div>
+  <div class="key"><b>記年代的小技巧：</b>牡丹社 18<b>74</b>，清法 18<b>84</b>，剛好差十年。清法戰爭的隔一年 18<b>85</b> 建省。</div>
+  <div class="sup"><b>老師補充：</b>為什麼被打了才想建設？因為清廷發現，臺灣如果被外國占走，敵人的船很快就能到福建、浙江。臺灣是東南沿海的大門。門要顧好，就得派人、花錢、蓋炮臺。</div>
+</div>
+
+<!-- ============ ② ============ -->
+<div class="card" id="s2">
+  <h2>② 開港通商：外國勢力「再度」進入臺灣</h2>
+  <ul>
+    <li><b>1857 年（咸豐 7 年）</b>，清帝國和英國、法國打仗，叫做<mark>英法聯軍之役</mark>。</li>
+    <li>清帝國打輸了，<b>被迫</b>簽訂條約。</li>
+    <li>陸續開放 <mark>淡水、安平、雞籠、打狗</mark> 四個通商口岸。</li>
+    <li>英法聯軍之後，外患更多。跟臺灣有關的是<b>牡丹社事件</b>和<b>清法戰爭</b>。</li>
+  </ul>
+  <div class="mapbox">
+    <div class="m"><svg class="mp" id="mapPort"></svg></div>
+    <div class="side">
+      <div class="info" id="portInfo">點地圖上的港口，看它是今天的哪裡。</div>
+      <div class="ctrl"><button class="chip" id="portQuiz">考考我：把名字藏起來</button></div>
+      <div class="key"><b>口訣：</b>北部兩個（淡水、雞籠），南部兩個（安平、打狗）。四個都在西半邊。</div>
+    </div>
+  </div>
+  <div class="sup"><b>老師補充：</b>
+    <ul>
+      <li>為什麼說「再度」？因為 17 世紀荷蘭人、西班牙人就來過臺灣。這是外國人第二次進來。</li>
+      <li>被迫簽的條約是《天津條約》和《北京條約》。</li>
+      <li>開港以後，外國商人來開「洋行」買茶、糖、樟腦。傳教士也來了，像北部的馬偕。</li>
+      <li>開港只是讓外國人來<b>做生意</b>，不是讓外國人<b>統治</b>臺灣。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ ③ ============ -->
+<div class="card" id="s3">
+  <h2>③ 牡丹社事件：日本找藉口出兵</h2>
+  <div class="predict" data-id="p1" data-ans="1" data-exp="日本打的是牡丹社，最後拿到的卻是琉球。清廷承認日本是「保民義舉」，等於承認琉球人是日本的人民。">
+    <p><b>先猜再看：</b>日本出兵打的是臺灣南部的牡丹社。你猜，日本最後真正拿到手的是什麼？</p>
+    <div class="pb"><button>臺灣南部的土地</button><button>琉球</button><button>四個通商口岸</button></div>
+    <p class="watch" hidden>先不告訴你對不對。按下面的「下一步」，把故事看到最後一格。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+  <div class="stepbar"><button class="chip" id="mdPrev">上一步</button><button class="chip on" id="mdNext">下一步</button><span class="n" id="mdN"></span></div>
+  <div class="mapbox">
+    <div class="m w"><svg class="mp" id="mapAsia"></svg></div>
+    <div class="m w"><svg class="mp" id="mapHc"></svg></div>
+  </div>
+  <div class="info" id="mdInfo" style="margin-top:10px"></div>
+
+  <h3>課本重點整理</h3>
+  <div class="tw"><table>
+    <tr><th style="width:6em">年代</th><th>發生什麼事</th></tr>
+    <tr><td>1871<br><small>同治 10 年</small></td><td class="l">琉球人民因船難漂流到<b>恆春半島</b>，遭到原住民殺害。</td></tr>
+    <tr><td>1874<br><small>同治 13 年</small></td><td class="l">日本以<mark>「懲辦兇手」</mark>為藉口，出兵攻打臺灣南部<b>牡丹社</b>等部落。</td></tr>
+    <tr><td>之後</td><td class="l">清、日簽約。清廷承認日本出兵是<mark>「保民義舉」</mark>。日本藉此聲稱琉球人是日本臣民，不久就<b>併吞琉球</b>。</td></tr>
+    <tr><td>影響</td><td class="l">清廷意識到臺灣的重要，改變「為防臺而治臺」的政策，派<mark>沈葆楨</mark>來臺強化防務，並開展相關建設。</td></tr>
+  </table></div>
+  <div class="key"><b>為什麼「保民義舉」四個字這麼嚴重？</b>「保民」就是保護自己的人民。清廷承認了這句話，就等於承認琉球人是日本的人民。</div>
+  <div class="sup"><b>老師補充：</b>
+    <ul>
+      <li>日本為什麼突然變強？日本被外國逼著開港（黑船事件）之後，進行改革，叫做「明治維新」。國力變強以後開始向外擴張。課本小幫手講的就是這件事。</li>
+      <li>琉球本來是一個王國，同時向清朝和日本進貢。日本想把它完全變成自己的，所以需要一個「琉球人是日本人」的證明。</li>
+      <li>那次船難有 54 人被殺，另外 12 人被當地漢人救了，送回琉球。車城的墓碑上刻著「大日本琉球藩民五十四名墓」，就是日軍立的，用來宣示琉球人是日本臣民。</li>
+      <li>牡丹社是排灣族的部落。日軍從社寮港登陸。</li>
+      <li>1879 年，日本把琉球改成「沖繩縣」。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ ④ ============ -->
+<div class="card" id="s4">
+  <h2 class="s">④ 沈葆楨：牡丹社事件後來臺（1874）</h2>
+  <p class="lead">沈葆楨來臺灣要解決一個問題：<b>日本人能打進來，是因為清廷根本沒有管到山區和東部。</b>所以他做的事，都是在「把整個臺灣管起來」。</p>
+  <div class="tw"><table>
+    <tr><th style="width:4.5em">類別</th><th class="s">沈葆楨做了什麼</th></tr>
+    <tr><td>政治</td><td class="l">廢除<mark>渡臺禁令</mark>及<mark>劃界封山</mark>政策。<br>進行<mark>「開山撫番」</mark>，加強對原住民的管理。<br>調整行政區劃，增設<mark>臺北府</mark>等，提高行政效能。（1875 年：二府、八縣、四廳）</td></tr>
+    <tr><td>軍事</td><td class="l">在<mark>安平</mark>等地修築西式炮臺。</td></tr>
+    <tr><td>交通</td><td class="l">開闢<mark>北、中、南三條</mark>通往山區及東部的道路。</td></tr>
+  </table></div>
+  <div class="mapbox">
+    <div class="m w"><svg class="mp" id="mapS"></svg></div>
+    <div class="side">
+      <div class="info" id="infoS">點地圖上橘色的線或圓點，或點下面的按鈕。</div>
+      <div class="ctrl" id="chipsS"></div>
+    </div>
+  </div>
+  <div class="key"><b>臺南的二鯤鯓炮臺（億載金城）：</b>沈葆楨來臺興建的<b>第一座西式炮臺</b>，防禦機能完善，有助於鞏固海防。</div>
+  <div class="sup"><b>老師補充：</b>
+    <ul>
+      <li>以前是「禁止」：不准隨便渡海來臺（渡臺禁令），不准漢人進山（劃界封山）。沈葆楨改成「開放」：歡迎人來開墾，主動開路進山。方向完全相反。</li>
+      <li>為什麼要鼓勵人來？東部人多了、有官府了，外國就不能再說「那裡沒有人管」。</li>
+      <li>中路經過的「八通關」，現在還留有八通關古道。</li>
+      <li>開路進山對原住民來說，是外人進入自己的土地，所以過程中發生過不少衝突。</li>
+      <li>為什麼設臺北府？開港後北部賣茶，人口和生意越來越多，需要一個府就近管理。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ ⑤ ============ -->
+<div class="card" id="s5">
+  <h2>⑤ 清法戰爭與臺灣建省（1884～1885）</h2>
+  <div class="predict" data-id="p2" data-ans="1" data-exp="法軍進攻過基隆、淡水和澎湖。清廷因此更重視臺灣，隔年就下令建省。">
+    <p><b>先猜再看：</b>這場戰爭是為了越南打的。你猜法軍有沒有打到臺灣？</p>
+    <div class="pb"><button>沒有，只在越南打</button><button>有，還打了不只一個地方</button></div>
+    <p class="watch" hidden>先不告訴你對不對。按下面的「下一步」，看紅色箭頭走到哪裡。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+  <div class="stepbar"><button class="chip" id="frPrev">上一步</button><button class="chip on" id="frNext">下一步</button><span class="n" id="frN"></span></div>
+  <div class="mapbox"><div class="m w" style="flex-basis:100%"><svg class="mp" id="mapFr"></svg></div></div>
+  <div class="info" id="frInfo" style="margin-top:10px"></div>
+
+  <h3>課本重點整理</h3>
+  <ul>
+    <li><b>1884 年（光緒 10 年）</b>，法軍進攻清帝國的<mark>藩屬越南</mark>，雙方爆發<mark>清法戰爭</mark>。</li>
+    <li>戰爭期間，法軍曾進攻<mark>基隆、淡水與澎湖</mark>等地。</li>
+    <li>這場戰爭讓清廷更加重視臺灣的經營。</li>
+    <li><b>1885 年（光緒 11 年）</b>下令<mark>臺灣建省</mark>，任命<mark>劉銘傳</mark>為<b>首任巡撫</b>，展開許多現代化建設。</li>
+  </ul>
+  <div class="key"><b>藩屬是什麼？</b>古代中國和其他國家建立外交關係時，以中國為君、他國為臣。藩屬國名義上臣服於中國。所以發生內亂外患時，可以請中國出兵幫忙。</div>
+
+  <h3>課本表 2-4-1：兩件事比一比（灰色格子先想再點）</h3>
+  <div class="tw"><table>
+    <tr><th class="s">牡丹社事件</th><th style="width:5em">比較</th><th class="l">清法戰爭</th></tr>
+    <tr><td><span class="hide">1874</span></td><td>時間</td><td><span class="hide">1884</span></td></tr>
+    <tr><td><span class="hide">琉球人民遭臺灣原住民殺害</span></td><td>起因</td><td><span class="hide">法軍進攻越南</span></td></tr>
+    <tr><td><span class="hide">日本、牡丹社</span></td><td>參戰方</td><td><span class="hide">清帝國、法國</span></td></tr>
+    <tr><td><span class="hide">沈葆楨來臺強化防務</span></td><td>影響</td><td><span class="hide">臺灣建省，劉銘傳為首任巡撫</span></td></tr>
+  </table></div>
+
+  <h3>課本 p.133「實作與練習」：英國人哈利</h3>
+  <p style="font-size:.94rem">哈利是 19 世紀在臺灣北部做國際貿易的英國人。北部發生戰事，他去淡水英國領事館求助。路上聽說有人被搜出法國國旗。</p>
+  <ol style="font-size:.94rem">
+    <li>哈利能住在臺灣，和哪件事最有關？答：<span class="hide">(B) 清廷開放臺灣通商口岸。鄭氏和英國貿易是 17 世紀的事。</span></li>
+    <li>文中的戰爭對臺灣造成什麼影響？答：<span class="hide">(D) 臺灣建省，劉銘傳為首位巡撫。有法國國旗、打北部，所以是清法戰爭。</span></li>
+  </ol>
+  <div class="sup"><b>老師補充：</b>
+    <ul>
+      <li>解題線索：看到<b>法國</b>、<b>北部</b>、<b>基隆淡水</b>，就是清法戰爭。看到<b>日本</b>、<b>南部</b>、<b>琉球</b>，就是牡丹社事件。</li>
+      <li>建省以前，臺灣歸福建省管。建省就是臺灣自己變成一個省，有自己的最高長官「巡撫」。</li>
+      <li>法軍在淡水吃了敗仗。當時臺灣民間把這場戰爭叫做「西仔反」。</li>
+      <li>劉銘傳是戰爭時就被派來臺灣指揮防守的人，所以戰後由他當第一任巡撫。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ ⑥ ============ -->
+<div class="card" id="s6">
+  <h2 class="l">⑥ 劉銘傳：建省後的首任巡撫（1885）</h2>
+  <div class="tw"><table>
+    <tr><th style="width:4.5em">類別</th><th class="l">劉銘傳做了什麼</th></tr>
+    <tr><td>政治</td><td class="l">臺灣建省後調整行政區為<mark>三府</mark>，並設置<mark>臺東直隸州</mark>，加強對<b>東部</b>地區的管理。（1887 年：三府、十一縣、三廳、一直隸州）</td></tr>
+    <tr><td>軍事</td><td class="l">在<mark>基隆</mark>等地修築西式炮臺。</td></tr>
+    <tr><td>交通</td><td class="l">①修築從基隆到臺北的<mark>鐵路</mark>　②架設<mark>電報</mark>系統　③購置<mark>輪船</mark>　④設立<mark>郵局</mark></td></tr>
+  </table></div>
+  <div class="key l"><b>交通四件事口訣：鐵、電、船、郵。</b>鐵路、電報、輪船、郵局。</div>
+  <div class="predict" data-id="p3" data-ans="1" data-exp="劉銘傳完成的是基隆到臺北（1891 年通車）。臺北到新竹是繼任的巡撫完工的（1893 年通車）。">
+    <p><b>先猜再看：</b>清末的鐵路從基隆一路通到新竹。你猜，這整條都是劉銘傳任內完工的嗎？</p>
+    <div class="pb"><button>是，全部都是</button><button>不是，只有其中一段</button></div>
+    <p class="watch" hidden>先不告訴你對不對。在下面地圖點兩段鐵路，看通車的年份。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+  <div class="mapbox">
+    <div class="m w"><svg class="mp" id="mapL"></svg></div>
+    <div class="side">
+      <div class="info" id="infoL">點地圖上綠色的線或圓點，或點下面的按鈕。</div>
+      <div class="ctrl" id="chipsL"></div>
+    </div>
+  </div>
+  <div class="key l"><b>獅球嶺隧道：</b>臺灣<b>最早的火車隧道</b>，位於臺北到基隆之間，隧道口題有<mark>「曠宇天開」</mark>四個字。</div>
+  <div class="note"><b>課本小幫手：清末臺灣的鐵路建設。</b>劉銘傳完成<b>基隆到臺北</b>的鐵路。<b>臺北到新竹</b>的鐵路，則是由<b>繼任巡撫</b>完工。</div>
+  <div class="sup"><b>老師補充：</b>
+    <ul>
+      <li>電報線從臺灣接到福州，中間是鋪在海底的電線。以前送公文要坐船好幾天，有了電報當天就能通知。打仗時這很重要。</li>
+      <li>鐵路、電報、輪船、炮臺，全都和「防守」有關：運兵要快、消息要快、海岸要守。所以劉銘傳的建設是清法戰爭教訓出來的。</li>
+      <li>電燈、西學堂、電報學堂、郵政總局都設在<b>臺北</b>。建省以後，臺灣的重心從南部慢慢移到北部。</li>
+      <li>臺北到新竹那一段的繼任巡撫叫邵友濂。課本沒寫名字，不用背。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ ⑦ ============ -->
+<div class="card" id="s7">
+  <h2>⑦ 行政區怎麼變，還有兩個人不要搞混</h2>
+  <div class="predict" data-id="p4" data-ans="1" data-exp="1887 年的臺灣府在中部（今天臺中一帶）。原本在臺南的那個府，改名叫臺南府。">
+    <p><b>先猜再看：</b>1887 年的地圖上有一個「臺灣府」。你猜它在今天的哪裡？</p>
+    <div class="pb"><button>臺南一帶</button><button>臺中一帶</button><button>臺北一帶</button></div>
+    <p class="watch" hidden>先不告訴你對不對。按下面的「1887 年」，看「臺灣府」排在北、中、南哪一格。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+  <div class="ctrl"><span class="lab">切換</span><button class="chip s on" data-y="1875">1875 年（沈葆楨時期）</button><button class="chip l" data-y="1887">1887 年（劉銘傳時期）</button></div>
+  <div class="count" id="admCount"></div>
+  <div class="adm" id="adm"></div>
+  <div class="legend"><span><span class="u x" style="padding:0 8px;border:1px solid #93c5fd;background:#dbeafe;border-radius:6px">縣</span></span><span><span style="padding:0 8px;border:1px solid #fcd34d;background:#fef3c7;border-radius:6px">廳</span></span><span><span style="padding:0 8px;border:1px solid #f9a8d4;background:#fce7f3;border-radius:6px">直隸州</span></span><span id="admNewLg" hidden>綠色外框＝1887 年新出現或改名的</span></div>
+  <div class="key" id="admKey"></div>
+
+  <h3>兩個人對照表（灰色格子先想再點）</h3>
+  <div class="tw"><table>
+    <tr><th style="width:5.5em">比較</th><th class="s">沈葆楨</th><th class="l">劉銘傳</th></tr>
+    <tr><td>為什麼來</td><td><span class="hide">1874 牡丹社事件（日本）</span></td><td><span class="hide">1884 清法戰爭（法國）</span></td></tr>
+    <tr><td>行政區</td><td><span class="hide">二府、八縣、四廳（1875）</span></td><td><span class="hide">三府、十一縣、三廳、一直隸州（1887）</span></td></tr>
+    <tr><td>政治</td><td><span class="hide">廢除渡臺禁令及劃界封山、開山撫番、增設臺北府</span></td><td><span class="hide">建省後調整為三府、設臺東直隸州</span></td></tr>
+    <tr><td>炮臺在哪</td><td><span class="hide">安平等地</span></td><td><span class="hide">基隆等地</span></td></tr>
+    <tr><td>交通</td><td><span class="hide">北、中、南三條通往山區及東部的道路</span></td><td><span class="hide">鐵路、電報、輪船、郵局</span></td></tr>
+    <tr><td>課本照片</td><td><span class="hide">二鯤鯓炮臺（億載金城）</span></td><td><span class="hide">獅球嶺隧道「曠宇天開」</span></td></tr>
+  </table></div>
+  <div class="key"><b>怎麼分？</b>沈葆楨先來，重點是「<b>把人和路帶進山區、東部</b>」（開放、開路）。劉銘傳後來，重點是「<b>新科技</b>」（鐵路、電報、輪船、郵局）。炮臺兩人都有蓋：沈在南（安平），劉在北（基隆）。</div>
+
+  <h3>快速練習：這是誰做的？</h3>
+  <div class="whoq" id="whoq"></div>
+
+  <h3>課本 p.135「學習 check」（先自己說一遍，再點開）</h3>
+  <ul style="font-size:.94rem">
+    <li>我能說明清帝國改變治臺態度的原因：<span class="hide">外力侵擾（牡丹社事件、清法戰爭）讓清廷意識到臺灣的重要性，所以從「為防臺而治臺」改成加強對臺灣的建設。</span></li>
+    <li>我能分析臺灣現代化建設產生的影響：<span class="hide">防務加強；交通和通訊更方便（鐵路、電報、輪船、郵局）；對東部和山區的管理加強；臺灣成為當時中國相當進步的省分。</span></li>
+  </ul>
+</div>
+
+<!-- ============ ⑧ ============ -->
+<div class="card" id="s8">
+  <h2>⑧ 考考你：是真的懂，還是只是背起來？</h2>
+  <p class="lead">題目大多是<b>情境題和理解題</b>。一回 10 題，一次一題，每一段至少出一題。</p>
+  <ul style="font-size:.92rem">
+    <li>答錯時，會告訴你<b>可能是哪裡想錯</b>，還有一個按鈕直接跳回那一段。</li>
+    <li>不確定就勾「用猜的」。猜對的題目也會進錯題本，之後再考一次。</li>
+    <li>下一回會先出<b>上次錯的</b>和<b>還沒做過的</b>。</li>
+  </ul>
+  <div id="quiz"></div>
+</div>
+
+<div class="card" id="s9">
+  <h2>⑨ 我的弱點和錯題本</h2>
+  <div id="ana"></div>
+</div>
+<button id="backBtn" hidden>↩ 回到題目</button>
+
+<footer>七年級歷史小考複習 · 4-2 外力入侵與現代化建設<br>依七年級社會課本第 4 章 4-2（p.132～135）的內容與架構編寫。地圖與文字為原創示意，地點位置為大約。標示「老師補充」的內容課本沒有寫。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "歷史 4-2 外力入侵與現代化建設";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// 上傳網址不寫在教材裡；家長在「學習紀錄」頁設定一次，存於此瀏覽器。
+let CLOUD_URL = "";
+try{ CLOUD_URL = localStorage.getItem("cloud_url_v1") || ""; }catch(e){}
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// ===== 共用工具 =====
+const $ = id => document.getElementById(id);
+document.querySelectorAll(".hide").forEach(e => e.addEventListener("click", ()=> e.classList.toggle("show")));
+
+// ===== 地圖工具（經緯度 → 畫面座標；海岸線為簡化示意）=====
+const COS = Math.cos(23.5 * Math.PI / 180);
+const proj = (lon0, lat1, k) => (lon, lat) => [+((lon - lon0) * COS * k).toFixed(1), +((lat1 - lat) * k).toFixed(1)];
+function smooth(pts, closed){
+  const n = pts.length, g = i => closed ? pts[(i + n) % n] : pts[Math.max(0, Math.min(n - 1, i))];
+  let d = `M${pts[0][0]},${pts[0][1]}`;
+  for(let i = 0; i < (closed ? n : n - 1); i++){
+    const p0 = g(i-1), p1 = g(i), p2 = g(i+1), p3 = g(i+2);
+    d += `C${(p1[0]+(p2[0]-p0[0])/6).toFixed(1)},${(p1[1]+(p2[1]-p0[1])/6).toFixed(1)} ${(p2[0]-(p3[0]-p1[0])/6).toFixed(1)},${(p2[1]-(p3[1]-p1[1])/6).toFixed(1)} ${p2[0]},${p2[1]}`;
+  }
+  return d + (closed ? "Z" : "");
+}
+const poly = (P, a) => "M" + a.map(p => P(p[0], p[1]).join(",")).join("L") + "Z";
+const line = (P, a) => smooth(a.map(p => P(p[0], p[1])), false);
+const TW = [[121.51,25.29],[121.60,25.27],[121.66,25.21],[121.74,25.16],[121.83,25.14],[121.92,25.13],[122.00,25.01],[121.92,24.95],[121.85,24.87],[121.83,24.72],[121.87,24.60],[121.84,24.47],[121.77,24.31],[121.67,24.15],[121.62,23.98],[121.60,23.80],[121.55,23.62],[121.51,23.48],[121.46,23.32],[121.40,23.12],[121.30,22.95],[121.19,22.78],[121.10,22.70],[121.02,22.60],[120.96,22.45],[120.905,22.33],[120.895,22.25],[120.89,22.18],[120.885,22.11],[120.87,22.05],[120.86,21.98],[120.855,21.91],[120.80,21.945],[120.745,21.925],[120.715,21.98],[120.70,22.05],[120.69,22.11],[120.67,22.19],[120.635,22.29],[120.59,22.38],[120.48,22.44],[120.38,22.50],[120.30,22.57],[120.25,22.68],[120.19,22.85],[120.14,22.99],[120.06,23.10],[120.09,23.25],[120.13,23.38],[120.14,23.55],[120.17,23.72],[120.27,23.90],[120.40,24.04],[120.50,24.22],[120.57,24.36],[120.68,24.50],[120.80,24.66],[120.91,24.82],[121.02,24.97],[121.13,25.07],[121.28,25.12],[121.40,25.17],[121.46,25.25]];
+const PH = [[119.50,23.64],[119.60,23.68],[119.69,23.60],[119.63,23.52],[119.53,23.53]];
+const twPath = P => smooth(TW.map(p => P(p[0], p[1])), true);
+const phPath = P => smooth(PH.map(p => P(p[0], p[1])), true);
+const svgEl = (id, w, h, html) => { const s = $(id); s.setAttribute("viewBox", `0 0 ${w} ${h}`); s.innerHTML = html; return s; };
+const arrowDef = (id, col) => `<marker id="${id}" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="${col}"/></marker>`;
+// 文字標籤：a = 對齊（s 靠左、m 置中、e 靠右）
+const T = (x, y, s, o) => { o = o || {}; return `<text x="${x}" y="${y}" class="lb ${o.c || ""}" text-anchor="${o.a === "e" ? "end" : o.a === "m" ? "middle" : "start"}" style="${o.st || ""}">${s}</text>`; };
+
+// ===== ① 時間軸 =====
+(function(){
+  const EV = [
+    {y:"1684", t:"納入版圖、渡臺禁令", d:"清廷把臺灣納入版圖。但規定不能隨便渡海來臺（渡臺禁令）。這時候的想法是「為防臺而治臺」。"},
+    {y:"1722", t:"劃界封山", d:"畫一條界線，不准漢人越過界線進入山區。清廷只想管好西部平原，山區和東部不去管。"},
+    {y:"1857～1858", t:"英法聯軍、臺灣開港通商", d:"清帝國被英國、法國打敗，被迫簽約。臺灣陸續開放淡水、安平、雞籠、打狗四個通商口岸。外國勢力再度進入臺灣。", x:1},
+    {y:"1874", t:"牡丹社事件、沈葆楨來臺", d:"日本出兵攻打臺灣南部牡丹社等部落。清廷第一次意識到臺灣很重要，派沈葆楨來臺。政策從這裡開始轉彎。"},
+    {y:"1884", t:"清法戰爭", d:"法軍進攻清的藩屬越南，雙方開戰。法軍還進攻基隆、淡水與澎湖。清廷更加重視臺灣。"},
+    {y:"1885", t:"臺灣建省、劉銘傳任巡撫", d:"清廷下令臺灣建省，劉銘傳是首任巡撫，展開鐵路、電報、輪船、郵局等現代化建設。"},
+    {y:"1895", t:"清廷割臺", d:"清廷把臺灣割讓給日本。這是下一冊的內容，這裡知道它是清帝國時期的終點就好。", x:1}
+  ];
+  let h = `<div class="band b1" style="grid-column:1/3">為防臺而治臺</div><div></div><div class="band b2" style="grid-column:4/7">加強對臺建設</div><div></div>`;
+  EV.forEach((e, i) => h += `<button data-i="${i}" class="${e.x ? "x" : ""}"><b>${e.y}</b>${e.t}</button>`);
+  $("tl").innerHTML = h;
+  const bs = [...$("tl").querySelectorAll("button")];
+  const pick = i => { bs.forEach((b, j) => b.classList.toggle("on", i === j)); $("tlinfo").innerHTML = `<b>${EV[i].y} 年　${EV[i].t}</b><br>${EV[i].d}`; };
+  bs.forEach((b, i) => b.addEventListener("click", ()=> pick(i)));
+  pick(3);
+})();
+
+// ===== ② 四個通商口岸 =====
+(function(){
+  const P = proj(119.5, 25.45, 120), W = 292, H = 438;
+  const PORTS = [
+    {k:"ts", n:"淡水", lon:121.44, lat:25.17, dx:-9, dy:-8, a:"e", d:"<b>淡水</b>：今天新北市淡水。在北部，淡水河出海口。<br><span style='color:#b45309'>老師補充：開港後北部的茶葉從這裡賣出去。</span>"},
+    {k:"kl", n:"雞籠", lon:121.74, lat:25.13, dx:9, dy:-7, a:"s", d:"<b>雞籠</b>：就是今天的<b>基隆</b>。在北部。<br>清法戰爭時法軍打的也是這裡。"},
+    {k:"ap", n:"安平", lon:120.16, lat:23.00, dx:-9, dy:4, a:"e", d:"<b>安平</b>：今天臺南市安平。在南部。<br>沈葆楨的西式炮臺也蓋在安平。"},
+    {k:"tk", n:"打狗", lon:120.27, lat:22.62, dx:-9, dy:6, a:"e", d:"<b>打狗</b>：就是今天的<b>高雄</b>。在南部。<br><span style='color:#b45309'>老師補充：開港後南部的糖從這裡賣出去。</span>"}
+  ];
+  let h = `<path class="land" d="${twPath(P)}"/><path class="land" d="${phPath(P)}"/>` + T(22, 200, "臺灣海峽", {c:"sea"}) + T(232, 300, "太平洋", {c:"sea"});
+  PORTS.forEach(p => { const [x, y] = P(p.lon, p.lat);
+    h += `<g class="port" data-k="${p.k}"><circle cx="${x}" cy="${y}" r="16" fill="transparent"/><circle class="dot" cx="${x}" cy="${y}" r="6"/><g class="pl">${T(x + p.dx, y + p.dy, p.n, {a:p.a, st:"font-size:14px;font-weight:bold"})}</g></g>`; });
+  const svg = svgEl("mapPort", W, H, h), info = $("portInfo"), qb = $("portQuiz");
+  let ask = null;
+  const next = () => { const c = PORTS.filter(p => p !== ask); ask = c[Math.floor(Math.random() * c.length)]; info.innerHTML = `請在地圖上點出：<b style="font-size:1.1rem">${ask.n}</b>`; };
+  svg.querySelectorAll(".port").forEach(g => g.addEventListener("click", ()=>{
+    const p = PORTS.find(x => x.k === g.dataset.k);
+    svg.querySelectorAll(".port").forEach(x => x.classList.toggle("sel", x === g));
+    if(ask){
+      const ok = p === ask; logEv({ type:"map", q:"port-" + ask.k, ok });
+      const said = ok ? `<b style="color:#15803d">對了，這裡是${ask.n}。</b>` : `<b style="color:#dc2626">這裡是${p.n}，不是${ask.n}。</b>`;
+      const old = ask; next(); info.innerHTML = said + (ok ? "" : `（${old.n}在${old.lat > 24 ? "北部" : "南部"}）`) + "<br>" + info.innerHTML;
+    } else info.innerHTML = p.d;
+  }));
+  qb.addEventListener("click", ()=>{
+    if(ask){ ask = null; svg.classList.remove("quizzing"); qb.textContent = "考考我：把名字藏起來"; qb.classList.remove("on"); info.innerHTML = "點地圖上的港口，看它是今天的哪裡。"; }
+    else { svg.classList.add("quizzing"); qb.textContent = "不考了，把名字顯示回來"; qb.classList.add("on"); next(); }
+  });
+})();
+
+// ===== 一步一步看的故事 =====
+function story(prefix, svgs, steps){
+  let i = 0;
+  const prev = $(prefix + "Prev"), next = $(prefix + "Next"), n = $(prefix + "N"), info = $(prefix + "Info");
+  function show(){
+    svgs.forEach(s => s.querySelectorAll("[data-from]").forEach(el => {
+      const f = +el.dataset.from, t = el.dataset.to === undefined ? 99 : +el.dataset.to;
+      el.style.display = (i >= f && i <= t) ? "" : "none";
+      if(el.dataset.now !== undefined) el.classList.toggle("now", i === f);
+    }));
+    info.innerHTML = `<h3>${steps[i].t}</h3>${steps[i].d}`;
+    n.textContent = `第 ${i+1} / ${steps.length} 格`;
+    prev.disabled = i === 0; next.disabled = i === steps.length - 1;
+    next.textContent = i === steps.length - 1 ? "看完了" : "下一步";
+  }
+  prev.addEventListener("click", ()=>{ if(i > 0){ i--; show(); } });
+  next.addEventListener("click", ()=>{ if(i < steps.length - 1){ i++; show(); } });
+  show();
+}
+
+// ===== ③ 牡丹社事件 =====
+(function(){
+  // 東亞小地圖
+  const A = proj(117, 35, 22), AW = 323, AH = 308;
+  const CN = [[117,35],[119.3,35],[120.3,34.3],[120.9,33.0],[121.8,31.9],[121.9,30.9],[121.2,30.4],[122.0,29.9],[121.6,28.3],[120.7,27.6],[120.1,26.9],[119.6,26.0],[119.2,25.3],[118.6,24.7],[118.0,24.4],[117.3,23.7],[117,23.5]];
+  const KR = [[126.2,35],[126.3,34.4],[127.5,34.6],[128.7,34.9],[129.3,35]];
+  const KY = [[130.2,31.2],[130.7,31.0],[131.1,31.4],[131.7,32.6],[131.9,33.3],[131.0,33.9],[130.4,33.7],[129.7,33.2],[129.8,32.6],[130.2,32.1]];
+  const HS = [[131.0,34.0],[131.9,34.0],[133,34.4],[133,35],[131.3,35],[130.9,34.4]];
+  const SK = [[132.1,33.0],[133,33.3],[133,34.0],[132.6,33.9],[132.4,33.4]];
+  const RK = [[123.0,24.45],[124.2,24.4],[125.3,24.8],[126.8,26.35],[127.9,26.5],[128.6,27.4],[129.5,28.3],[130.5,30.3]];
+  const jp = `fill="#f5b7b1" stroke="#b03a2e"`;
+  let a = `<defs>${arrowDef("aA", "#1d4ed8")}${arrowDef("aB", "#b91c1c")}</defs>`;
+  a += `<path class="land" d="${poly(A, CN)}"/><path class="land" d="${poly(A, KR)}"/>`;
+  [KY, HS, SK].forEach(p => a += `<path ${jp} d="${poly(A, p)}"/>`);
+  a += `<path class="land" d="${twPath(A)}"/>`;
+  RK.forEach((p, k) => { const [x, y] = A(p[0], p[1]); a += `<circle cx="${x}" cy="${y}" r="${k === 4 ? 4.5 : 3}" fill="#fde68a" stroke="#92400e" data-from="0" data-to="4"/><circle cx="${x}" cy="${y}" r="${k === 4 ? 4.5 : 3}" ${jp} data-from="5"/>`; });
+  a += T(...A(118.2, 29.5), "清", {st:"font-size:20px;font-weight:bold;fill:#92400e"}) + T(...A(130.3, 32.6), "日本", {st:"font-weight:bold;fill:#7f1d1d"});
+  a += T(...A(122.3, 22.9), "臺灣", {st:"font-weight:bold"}) + T(...A(127.2, 25.4), "琉球群島", {st:"fill:#92400e;font-weight:bold"});
+  a += `<g data-from="5">${T(...A(127.2, 24.5), "→ 被日本併吞", {st:"fill:#b91c1c;font-weight:bold"})}</g>`;
+  // 1871 漂流
+  a += `<path data-from="0" data-to="1" d="${line(A, [[125.2,24.7],[123.6,23.4],[121.6,22.3]])}" fill="none" stroke="#1d4ed8" stroke-width="2.5" class="flow" marker-end="url(#aA)"/><g data-from="0" data-to="1">${T(...A(123.2, 22.7), "船難漂流", {st:"fill:#1d4ed8"})}</g>`;
+  // 1874 出兵
+  a += `<path data-from="2" data-to="4" d="${line(A, [[129.8,32.3],[126.5,28.5],[123.0,23.6],[121.3,22.0]])}" fill="none" stroke="#b91c1c" stroke-width="3" class="flow" marker-end="url(#aB)"/><g data-from="2" data-to="4">${T(...A(125.6, 29.6), "日本出兵", {st:"fill:#b91c1c;font-weight:bold"})}</g>`;
+  const [bx, by] = A(120.5, 22.5);
+  a += `<rect x="${bx-3}" y="${by-3}" width="20" height="18" fill="none" stroke="#1f2937" stroke-dasharray="3 2"/>` + T(8, AH - 8, "虛線框＝右邊放大的地方", {st:"font-size:10px;fill:#6b7280"});
+  const sA = svgEl("mapAsia", AW, AH, a);
+
+  // 恆春半島
+  const P = proj(120.45, 22.45, 700), W = 353, H = 420;
+  const pt = (lon, lat) => P(lon, lat);
+  const town = (lon, lat, n, o) => { const [x, y] = pt(lon, lat); o = o || {}; return `<circle class="dot" cx="${x}" cy="${y}" r="4"/>` + T(x + (o.dx === undefined ? 7 : o.dx), y + (o.dy === undefined ? 4 : o.dy), n, {a:o.a}); };
+  let h = `<defs>${arrowDef("hA", "#b91c1c")}${arrowDef("hB", "#1d4ed8")}</defs><path class="land" d="${twPath(P)}"/>`;
+  h += T(30, 250, "臺灣海峽", {c:"sea"}) + T(300, 330, "太平洋", {c:"sea"}) + T(176, 30, "恆春半島（今屏東縣南部）", {a:"m", st:"font-weight:bold"});
+  h += town(120.59, 22.37, "枋寮", {dx:8}) + town(120.675, 22.19, "楓港", {dx:8}) + town(120.745, 22.00, "恆春", {dx:8});
+  h += town(120.712, 22.09, "車城", {dx:-7, dy:-3, a:"e"});
+  // 牡丹社
+  { const [x, y] = pt(120.80, 22.145); h += `<g><rect x="${x-6}" y="${y-6}" width="12" height="12" fill="#a16207" stroke="#422006" transform="rotate(45 ${x} ${y})"/>${T(x - 11, y - 6, "牡丹社", {a:"e", st:"font-weight:bold;font-size:13px"})}</g>`; }
+  // 八瑤灣
+  { const [x, y] = pt(120.885, 22.105); h += `<g data-from="0" data-now><circle cx="${x}" cy="${y}" r="8" fill="#1d4ed8" opacity=".85"/></g><g data-from="0">${T(346, y + 24, "1871 琉球人上岸處", {a:"e", st:"fill:#1d4ed8;font-size:11px"})}</g>`;
+    const [mx, my] = pt(120.83, 22.13);
+    h += `<path data-from="1" data-to="1" d="M${x-6},${y-4} Q${mx+20},${my-18} ${mx+4},${my}" fill="none" stroke="#1d4ed8" stroke-width="2.5" class="flow" marker-end="url(#hB)"/>`;
+    h += `<g data-from="1"><path d="M${mx-6},${my-6}l12,12M${mx+6},${my-6}l-12,12" stroke="#b91c1c" stroke-width="3"/></g><g data-from="1">${T(mx + 11, my + 4, "遇害", {st:"fill:#b91c1c;font-size:11px;font-weight:bold"})}</g>`; }
+  // 社寮港登陸
+  { const [x, y] = pt(120.70, 22.052); const [sx, sy] = pt(120.52, 22.03);
+    h += `<path data-from="2" d="M${sx},${sy} L${x-9},${y}" fill="none" stroke="#b91c1c" stroke-width="3" class="flow" marker-end="url(#hA)"/>`;
+    h += `<g data-from="2" data-now><circle cx="${x}" cy="${y}" r="6" fill="#b91c1c"/></g><g data-from="2">${T(x - 6, y + 20, "1874 日軍登陸", {a:"e", st:"fill:#b91c1c;font-size:11px;font-weight:bold"})}${T(x - 6, y + 33, "（社寮港）", {a:"e", st:"fill:#b91c1c;font-size:11px"})}</g>`;
+    const [tx, ty] = pt(120.795, 22.138); const [cx, cy] = pt(120.765, 22.075);
+    h += `<path data-from="3" d="M${x+6},${y-4} Q${cx},${cy} ${tx-10},${ty+8}" fill="none" stroke="#b91c1c" stroke-width="3" class="flow" marker-end="url(#hA)"/>`;
+    h += `<g data-from="3">${T(tx - 44, ty + 18, "進攻牡丹社等部落", {a:"e", st:"fill:#b91c1c;font-size:11px;font-weight:bold"})}</g>`; }
+  const sH = svgEl("mapHc", W, H, h);
+
+  story("md", [sA, sH], [
+    {t:"1871 年：琉球人的船遇難", d:"琉球人民因為<b>船難</b>，漂流到臺灣南部的<b>恆春半島</b>。<br><span style='color:#b45309'>老師補充：他們從琉球的宮古島出發，上岸的地方叫八瑤灣。</span>"},
+    {t:"1871 年：遭到原住民殺害", d:"上岸的琉球人走進山區，<b>遭到原住民殺害</b>。<br><span style='color:#b45309'>老師補充：雙方語言不通、互相誤會，才發生悲劇。有 54 人遇害，12 人後來被救回。</span>"},
+    {t:"1874 年：日本以「懲辦兇手」為藉口出兵", d:"事情過了三年，日本才以<b>「懲辦兇手」</b>為藉口出兵。<br>課本用「藉口」兩個字，代表這不是日本真正的目的。<br><span style='color:#b45309'>老師補充：日軍從恆春半島西邊的社寮港登陸。</span>"},
+    {t:"1874 年：攻打牡丹社等部落", d:"日軍攻打臺灣南部<b>牡丹社</b>等部落。這件事史稱<b>「牡丹社事件」</b>。<br><span style='color:#b45309'>老師補充：牡丹社是排灣族的部落。</span>"},
+    {t:"之後：清、日簽約", d:"清廷承認日本的出兵行為是<b>「保民義舉」</b>。<br>「保民」就是保護自己的人民。這等於承認琉球人是日本的人民。"},
+    {t:"之後：日本併吞琉球", d:"日本藉此聲稱<b>琉球人是日本臣民</b>，不久就正式<b>併吞琉球</b>。<br>左邊地圖上，琉球群島變成和日本一樣的顏色了。"},
+    {t:"對臺灣的影響：沈葆楨來臺", d:"牡丹社事件讓清廷<b>意識到臺灣的重要性</b>。<br>清廷改變「為防臺而治臺」的政策，派遣<b>沈葆楨</b>來臺強化防務，並開展相關建設。"}
+  ]);
+})();
+
+// ===== ⑤ 清法戰爭 =====
+(function(){
+  const P = proj(104, 28, 30), W = 550, H = 390;
+  const QING = [[104,28],[121.6,28],[120.9,27.6],[120.2,27.0],[119.7,26.3],[119.6,25.9],[119.1,25.3],[118.7,24.8],[118.1,24.4],[117.3,23.7],[116.7,23.3],[115.5,22.75],[114.3,22.3],[113.5,22.1],[112.6,21.7],[111.6,21.5],[110.6,21.3],[110.5,20.4],[110.1,20.25],[109.8,20.7],[109.75,21.4],[109.1,21.5],[108.0,21.55],[106.7,22.0],[106.6,22.9],[105.3,23.3],[104,22.6]];
+  const VN = [[104,22.6],[105.3,23.3],[106.6,22.9],[106.7,22.0],[108.0,21.55],[107.6,21.3],[107.0,20.9],[106.6,20.2],[105.9,19.3],[105.7,18.8],[106.4,17.9],[107.1,17.0],[107.8,16.3],[108.3,16.0],[108.9,15.2],[109.0,15],[107.5,15],[107.3,15.9],[106.5,16.8],[105.6,17.8],[105.0,18.8],[104.9,19.8],[104,20.4]];
+  const OTHER = [[104,20.4],[104.9,19.8],[105.0,18.8],[105.6,17.8],[106.5,16.8],[107.3,15.9],[107.5,15],[104,15]];
+  let h = `<defs>${arrowDef("fA", "#b91c1c")}</defs>`;
+  h += `<path d="${poly(P, OTHER)}" fill="#eee9dc" stroke="#b9a15a"/><path class="land" d="${poly(P, QING)}"/><path d="${poly(P, VN)}" fill="#fdba74" stroke="#9a3412"/>`;
+  { const [x, y] = P(109.7, 19.2); h += `<ellipse class="land" cx="${x}" cy="${y}" rx="26" ry="22"/>`; }
+  h += `<path class="land" d="${twPath(P)}"/><path class="land" d="${phPath(P)}"/>`;
+  h += T(...P(111.5, 25.5), "清帝國", {st:"font-size:22px;font-weight:bold;fill:#92400e"}) + T(...P(104.3, 22.05), "越南", {st:"font-size:16px;font-weight:bold;fill:#7c2d12"}) + T(...P(107.6, 22.75), "↙ 清的藩屬", {st:"font-size:11px;fill:#7c2d12;font-weight:bold"});
+  h += T(...P(114, 18.5), "南海", {c:"sea", st:"font-size:14px"}) + T(...P(122.2, 23.3), "臺灣", {st:"font-weight:bold"});
+  const dot = (lon, lat, n, o) => { const [x, y] = P(lon, lat); o = o || {}; return `<circle class="dot" cx="${x}" cy="${y}" r="3.5"/>` + T(x + (o.dx === undefined ? 6 : o.dx), y + (o.dy === undefined ? 4 : o.dy), n, {a:o.a, st:"font-size:11px"}); };
+  h += dot(105.85, 21.03, "河內", {dx:-4, dy:15, a:"m"}) + dot(119.45, 26.0, "馬尾（福州）", {dx:-7, dy:-4, a:"e"}) + dot(121.44, 25.17, "淡水", {dx:-10, dy:-10, a:"e"}) + dot(121.74, 25.13, "基隆", {dx:11, dy:-8});
+  h += T(...P(119.4, 23.2), "澎湖", {a:"e", st:"font-size:11px"});
+  const arr = (from, to, pts, w) => `<path data-from="${from}" ${to === null ? "" : `data-to="${to}"`} d="${line(P, pts)}" fill="none" stroke="#b91c1c" stroke-width="${w || 3}" class="flow" marker-end="url(#fA)"/>`;
+  const boom = (from, lon, lat) => { const [x, y] = P(lon, lat); return `<g data-from="${from}" data-now><circle cx="${x}" cy="${y}" r="7" fill="#ef4444" opacity=".8"/></g>`; };
+  h += arr(0, null, [[109.5,15.6],[108.6,18.0],[107.4,20.0],[106.9,20.7]]) + boom(0, 106.75, 20.75);
+  h += arr(1, null, [[107.6,19.6],[111.5,19.9],[115.5,21.3],[118.3,23.3],[119.7,25.2],[119.75,25.7]]) + boom(1, 119.45, 26.0);
+  h += arr(2, null, [[120.0,26.0],[120.9,25.9],[121.5,25.55]]) + boom(2, 121.44, 25.17) + boom(2, 121.74, 25.13);
+  h += arr(3, null, [[121.4,25.6],[120.5,25.0],[119.9,24.1],[119.65,23.85]]) + boom(3, 119.58, 23.6);
+  h += `<g data-from="0" data-to="0">${T(...P(110.0, 17.0), "法軍進攻越南", {st:"fill:#b91c1c;font-weight:bold"})}</g>`;
+  h += `<g data-from="1" data-to="1">${T(...P(113.5, 20.3), "法國軍艦北上", {st:"fill:#b91c1c;font-weight:bold"})}</g>`;
+  h += `<g data-from="2" data-to="2">${T(...P(120.6, 26.7), "進攻基隆、淡水", {st:"fill:#b91c1c;font-weight:bold"})}</g>`;
+  h += `<g data-from="3" data-to="3">${T(...P(117.2, 22.6), "進攻澎湖", {a:"e", st:"fill:#b91c1c;font-weight:bold"})}</g>`;
+  { const [x, y] = P(120.6, 22.45); h += `<g data-from="4"><rect x="${x-34}" y="${y+22}" width="108" height="40" rx="8" fill="#0d9488"/><text x="${x+20}" y="${y+39}" text-anchor="middle" style="fill:#fff;font-weight:bold;font-size:13px">1885 臺灣建省</text><text x="${x+20}" y="${y+55}" text-anchor="middle" style="fill:#fff;font-size:11px">首任巡撫 劉銘傳</text></g>`; }
+  const s = svgEl("mapFr", W, H, h);
+  story("fr", [s], [
+    {t:"起因：法軍進攻越南", d:"越南是清帝國的<b>藩屬</b>。藩屬有外患時，可以請中國出兵幫忙。<br>所以法國打越南，清帝國就被捲進來了。"},
+    {t:"1884 年：清法戰爭爆發", d:"雙方爆發<b>清法戰爭</b>。法國軍艦沿著海岸往北走。<br><span style='color:#b45309'>老師補充：法軍先攻擊福州的馬尾。那裡有清朝重要的造船廠和艦隊。</span>"},
+    {t:"戰爭期間：法軍進攻基隆、淡水", d:"法軍進攻臺灣北部的<b>基隆</b>和<b>淡水</b>。<br><span style='color:#b45309'>老師補充：基隆附近有煤礦，軍艦需要煤當燃料。這是法軍想打基隆的原因之一。淡水一戰清軍守住了。</span>"},
+    {t:"戰爭期間：法軍進攻澎湖", d:"法軍也進攻<b>澎湖</b>。<br>記三個地名：<b>基隆、淡水、澎湖</b>。兩個在北部，一個是離島。"},
+    {t:"影響：1885 年臺灣建省", d:"這場戰爭讓清廷<b>更加重視</b>對臺灣的經營。<br>1885 年（光緒 11 年）下令<b>臺灣建省</b>，任命<b>劉銘傳</b>為<b>首任巡撫</b>，展開許多現代化建設。"}
+  ]);
+})();
+
+// ===== ④⑥ 建設地圖 =====
+const BUILD = {
+  ban:{w:"s", n:"廢除渡臺禁令", d:"以前規定不能隨便渡海來臺。沈葆楨廢除<b>渡臺禁令</b>和<b>劃界封山</b>，讓人可以合法來臺灣、進山開墾。"},
+  tpf:{w:"s", n:"增設臺北府", d:"調整行政區劃，增設<b>臺北府</b>等，以提高行政效能。1875 年變成二府、八縣、四廳。"},
+  rn:{w:"s", n:"北路", d:"<b>開山撫番．北路</b>：蘇澳 → 花蓮。沿著東部海岸走。"},
+  rm:{w:"s", n:"中路", d:"<b>開山撫番．中路</b>：林圯埔（竹山）→ 八通關 → 璞石閣（玉里）。橫越中央山脈。"},
+  rs:{w:"s", n:"南路", d:"<b>開山撫番．南路</b>：從赤山、射寮（枋寮）一帶出發 → 卑南（今臺東）。"},
+  cap:{w:"s", n:"安平炮臺", d:"在<b>安平</b>等地修築西式炮臺。臺南的<b>二鯤鯓炮臺（億載金城）</b>是沈葆楨來臺興建的第一座西式炮臺。"},
+  cqh:{w:"s", n:"旗後炮臺", d:"課本地圖上，<b>旗後</b>（今高雄旗津）也標了沈葆楨時期的西式炮臺。考試最常考的還是<b>安平</b>。"},
+  r1:{w:"l", n:"鐵路：基隆～臺北", d:"<b>1891 年（光緒 17 年）基隆～臺北通車</b>。這一段是劉銘傳完成的。中間的獅球嶺隧道是臺灣最早的火車隧道。"},
+  r2:{w:"l", n:"鐵路：臺北～新竹", d:"<b>1893 年（光緒 19 年）臺北～新竹通車</b>。這一段是<b>繼任巡撫</b>完工的，不是劉銘傳。"},
+  tel:{w:"l", n:"電報線", d:"在臺灣設置<b>電報線</b>，並遠達<b>福州</b>。地圖上的虛線就是電報線，也連到澎湖的媽宮（馬公）。"},
+  ckl:{w:"l", n:"基隆炮臺", d:"在<b>基隆</b>等地修築西式炮臺。清法戰爭時法軍打的就是北部，所以把北部守好。"},
+  cts:{w:"l", n:"淡水炮臺", d:"課本地圖上，<b>淡水</b>也標了劉銘傳時期的西式炮臺。課文寫的是「基隆等地」。"},
+  tp:{w:"l", n:"臺北的新建設", d:"<b>電燈、西學堂、電報學堂、郵政總局</b>，都設在<b>臺北</b>。"},
+  ship:{w:"l", n:"輪船", d:"購置<b>輪船</b>，航行於<b>臺灣、中國大陸與東南亞</b>之間。"}
+};
+function buildMap(svgId, infoId, chipsId, who){
+  const P = proj(119.25, 25.5, 150), W = 460, H = 555, S = "#ea580c", L = "#0d9488";
+  const town = (lon, lat, n, o) => { const [x, y] = P(lon, lat); o = o || {}; return `<circle class="dot" cx="${x}" cy="${y}" r="3.5"/>` + T(x + (o.dx === undefined ? 6 : o.dx), y + (o.dy === undefined ? 4 : o.dy), n, {a:o.a, st:"font-size:11px"}); };
+  const road = (k, pts, col, dash) => { const d = line(P, pts); return `<g class="it" data-k="${k}"><path class="glow" d="${d}" stroke-width="11" stroke-linecap="round"/><path d="${d}" fill="none" stroke="${col}" stroke-width="3.5" stroke-linecap="round" ${dash ? `stroke-dasharray="${dash}"` : ""}/><path class="hit" d="${d}" fill="none" stroke="transparent" stroke-width="22"/></g>`; };
+  const badge = (k, lon, lat, ch, col, dx, dy) => { const [x0, y0] = P(lon, lat), x = x0 + (dx || 0), y = y0 + (dy || 0); return `<g class="it" data-k="${k}"><circle class="glow" cx="${x}" cy="${y}" r="13" stroke-width="5"/><circle cx="${x}" cy="${y}" r="9.5" fill="${col}" stroke="#fff" stroke-width="1.5"/><text class="bd" x="${x}" y="${y+3.5}" text-anchor="middle">${ch}</text><circle class="hit" cx="${x}" cy="${y}" r="17" fill="transparent"/></g>`; };
+  let h = `<defs>${arrowDef(svgId + "a", S)}${arrowDef(svgId + "b", L)}</defs><path class="land" d="${twPath(P)}"/><path class="land" d="${phPath(P)}"/>`;
+  h += T(...P(119.4, 23.95), "臺灣海峽", {c:"sea"}) + T(...P(121.75, 22.5), "太平洋", {c:"sea"});
+  if(who === "s"){
+    h += road("rn", [[121.86,24.59],[121.80,24.45],[121.73,24.30],[121.64,24.15],[121.60,23.99]], S);
+    h += road("rm", [[120.69,23.76],[120.85,23.70],[120.95,23.58],[121.02,23.49],[121.16,23.40],[121.31,23.33]], S);
+    h += road("rs", [[120.61,22.59],[120.78,22.56],[120.93,22.60],[121.02,22.66],[121.12,22.77]], S);
+    h += road("rs", [[120.60,22.38],[120.75,22.36],[120.90,22.44],[120.98,22.58]], S);
+    h += town(121.86, 24.59, "蘇澳", {dx:7}) + town(121.60, 23.98, "花蓮", {dx:7});
+    h += town(120.69, 23.76, "林圯埔（竹山）", {dx:-6, dy:-6, a:"e"}) + town(121.02, 23.49, "八通關", {dx:7, dy:-6}) + town(121.31, 23.33, "璞石閣（玉里）", {dx:-4, dy:16, a:"e"});
+    h += town(120.61, 22.59, "赤山", {dx:-8, a:"e"}) + town(120.60, 22.38, "射寮（枋寮）", {dx:-6, dy:12, a:"e"}) + town(121.12, 22.77, "卑南", {dx:7});
+    h += town(120.20, 23.00, "臺南", {dx:8, dy:4}) + town(121.51, 25.04, "臺北", {dx:-7, dy:-5, a:"e"});
+    { const [x, y] = P(121.74, 24.20); h += T(x + 10, y, "北路", {st:`fill:${S};font-weight:bold;font-size:13px`}); }
+    { const [x, y] = P(120.86, 23.86); h += T(x, y, "中路", {st:`fill:${S};font-weight:bold;font-size:13px`}); }
+    { const [x, y] = P(120.80, 22.72); h += T(x, y, "南路", {a:"m", st:`fill:${S};font-weight:bold;font-size:13px`}); }
+    h += badge("cap", 120.16, 23.00, "炮", S, -14, 0) + badge("cqh", 120.27, 22.61, "炮", S, -13, 2);
+    { const [x, y] = P(120.16, 23.0); h += T(x - 27, y + 4, "安平", {a:"e", st:"font-size:11px"}); }
+    { const [x, y] = P(120.27, 22.61); h += T(x - 26, y + 6, "旗後", {a:"e", st:"font-size:11px"}); }
+    { const [x1, y1] = P(119.4, 24.8), [x2, y2] = P(120.42, 24.33);
+      h += `<g class="it" data-k="ban"><path class="glow" d="M${x1},${y1}L${x2},${y2}" stroke-width="14" stroke-linecap="round"/><path d="M${x1},${y1}L${x2},${y2}" stroke="${S}" stroke-width="5" fill="none" marker-end="url(#${svgId}a)"/><path class="hit" d="M${x1},${y1}L${x2},${y2}" stroke="transparent" stroke-width="26"/>${T(x1 - 4, y1 - 9, "廢除渡臺禁令", {st:`fill:${S};font-weight:bold`})}</g>`; }
+    { const [x, y] = P(121.51, 25.04); h += `<g class="it" data-k="tpf"><rect class="glow" x="${x+10}" y="${y-2}" width="54" height="20" rx="6" stroke-width="5"/><rect x="${x+10}" y="${y-2}" width="54" height="20" rx="6" fill="${S}"/><text class="bd" x="${x+37}" y="${y+12}" text-anchor="middle" style="font-size:11px">臺北府</text></g>`; }
+  } else {
+    const tl = (pts) => `<path d="${line(P, pts)}" fill="none" stroke="${L}" stroke-width="2" stroke-dasharray="2 4"/>`;
+    const telPts = [[[121.44,25.17],[120.9,25.35],[120.2,25.5]], [[121.51,25.04],[121.2,24.6],[120.75,24.0],[120.45,23.5],[120.25,23.05]], [[120.16,23.0],[119.9,23.3],[119.58,23.57]]];
+    h += `<g class="it" data-k="tel">` + telPts.map(p => `<path class="glow" d="${line(P, p)}" stroke-width="10" stroke-linecap="round"/>`).join("") + telPts.map(tl).join("") + telPts.map(p => `<path class="hit" d="${line(P, p)}" fill="none" stroke="transparent" stroke-width="20"/>`).join("") + `</g>`;
+    h += road("r1", [[121.74,25.13],[121.63,25.08],[121.51,25.04]], L);
+    h += road("r2", [[121.51,25.04],[121.30,24.98],[121.12,24.90],[120.97,24.81]], L, "7 4");
+    h += town(121.74, 25.13, "雞籠（基隆）", {dx:28, dy:-4}) + town(121.51, 25.04, "臺北", {dx:2, dy:17, a:"m"}) + town(120.97, 24.81, "新竹", {dx:-7, dy:6, a:"e"}) + town(121.44, 25.17, "淡水", {dx:-22, dy:-12, a:"e"});
+    h += town(120.27, 23.00, "臺南", {dx:7, dy:4}) + town(120.16, 23.0, "安平", {dx:-7, dy:14, a:"e"}) + town(119.58, 23.57, "媽宮（馬公）", {dx:0, dy:-12, a:"m"});
+    h += T(124, 14, "↖ 往福州", {a:"e", st:`fill:${L};font-weight:bold;font-size:11px`});
+    h += T(226, 68, "1893 通車", {a:"e", st:`fill:${L};font-size:11px`}) + T(232, 82, "（繼任巡撫完工）", {a:"e", st:`fill:${L};font-size:11px`});
+    { const [x, y] = P(121.55, 25.32); h += T(x + 60, y - 3, "1891 通車", {a:"e", st:`fill:${L};font-size:11px`}); }
+    h += badge("ckl", 121.74, 25.13, "炮", L, 15, -8) + badge("cts", 121.44, 25.17, "炮", L, -12, -8);
+    { const [x, y] = P(121.51, 25.04); h += `<g class="it" data-k="tp"><path d="M${x+4},${y+2}L${x+62},${y+22}" stroke="${L}" stroke-width="1.5"/><rect class="glow" x="${x+60}" y="${y+14}" width="80" height="50" rx="6" stroke-width="5"/><rect x="${x+60}" y="${y+14}" width="80" height="50" rx="6" fill="${L}"/><text class="bd" x="${x+100}" y="${y+29}" text-anchor="middle">電燈、西學堂</text><text class="bd" x="${x+100}" y="${y+43}" text-anchor="middle">電報學堂</text><text class="bd" x="${x+100}" y="${y+57}" text-anchor="middle">郵政總局</text></g>`; }
+    { const [x, y] = P(119.75, 22.55); h += `<g class="it" data-k="ship"><circle class="glow" cx="${x}" cy="${y-2}" r="26" stroke-width="5"/><path d="M${x-24},${y}h48l-7,10h-34z" fill="#334155"/><rect x="${x-10}" y="${y-9}" width="18" height="9" fill="#64748b"/><rect x="${x-3}" y="${y-18}" width="5" height="9" fill="#334155"/><path d="M${x-28},${y+13}q7,-5 14,0t14,0t14,0t14,0" fill="none" stroke="${L}" stroke-width="1.5"/><circle class="hit" cx="${x}" cy="${y-2}" r="30" fill="transparent"/>${T(x, y + 28, "輪船", {a:"m", st:`fill:${L};font-weight:bold`})}</g>`; }
+  }
+  const svg = svgEl(svgId, W, H, h), info = $(infoId), chips = $(chipsId);
+  const keys = Object.keys(BUILD).filter(k => BUILD[k].w === who);
+  chips.innerHTML = keys.map(k => `<button class="chip ${who}" data-k="${k}">${BUILD[k].n}</button>`).join("");
+  const pick = k => {
+    const b = BUILD[k];
+    svg.querySelectorAll(".it").forEach(g => g.classList.toggle("sel", g.dataset.k === k));
+    chips.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c.dataset.k === k));
+    info.innerHTML = `<h3><span class="who ${b.w}">${b.w === "s" ? "沈葆楨" : "劉銘傳"}</span>${b.n}</h3>${b.d}`;
+  };
+  svg.querySelectorAll(".it").forEach(g => g.addEventListener("click", ()=> pick(g.dataset.k)));
+  chips.querySelectorAll(".chip").forEach(c => c.addEventListener("click", ()=> pick(c.dataset.k)));
+}
+buildMap("mapS", "infoS", "chipsS", "s");
+buildMap("mapL", "infoL", "chipsL", "l");
+
+// ===== ⑦ 行政區 =====
+(function(){
+  const D = {
+    1875:{ cnt:[["府",2],["縣",8],["廳",4]], say:"<b>二府、八縣、四廳。</b>整個中部、南部、東部都歸「臺灣府」管，府治在今天的臺南。範圍太大，管不過來。",
+      fu:[ {c:"f1", pos:"北部", n:"臺北府", note:"沈葆楨增設", u:[["淡水縣","x"],["新竹縣","x"],["宜蘭縣","x"],["基隆廳","t"]]},
+           {c:"f2", pos:"中部＋南部＋東部", n:"臺灣府", note:"府治在今臺南", u:[["彰化縣","x"],["嘉義縣","x"],["臺灣縣","x"],["鳳山縣","x"],["恆春縣","x"],["埔里社廳","t"],["澎湖廳","t"],["卑南廳","t"]]} ]},
+    1887:{ cnt:[["府",3],["縣",11],["廳",3],["直隸州",1]], say:"<b>三府、十一縣、三廳、一直隸州。</b>注意陷阱：<b>「臺灣府」搬到中部了</b>，原本在南部的改叫「臺南府」。東部的卑南廳升格成「臺東直隸州」，加強對東部的管理。",
+      fu:[ {c:"f1", pos:"北部", n:"臺北府", note:"", u:[["淡水縣","x"],["新竹縣","x"],["宜蘭縣","x"],["基隆廳","t"]]},
+           {c:"f3", pos:"中部", n:"臺灣府", note:"新設，在今臺中一帶", nw:1, u:[["苗栗縣","x",1],["臺灣縣","x",1],["彰化縣","x"],["雲林縣","x",1],["埔里社廳","t"]]},
+           {c:"f2", pos:"南部", n:"臺南府", note:"原本的臺灣府改名", nw:1, u:[["嘉義縣","x"],["安平縣","x",1],["鳳山縣","x"],["恆春縣","x"],["澎湖廳","t"]]},
+           {c:"f4", pos:"東部", n:"臺東直隸州", note:"原本的卑南廳，直接歸省管", nw:1, z:1, u:[]} ]}
+  };
+  const bs = [...document.querySelectorAll("#s7 [data-y]")];
+  function show(y){
+    const d = D[y];
+    bs.forEach(b => b.classList.toggle("on", b.dataset.y == y));
+    $("admCount").innerHTML = d.cnt.map(c => `<div><small>${c[0]}</small><b>${c[1]}</b></div>`).join("");
+    $("adm").innerHTML = d.fu.map(f => `<div class="fu ${f.c}"><div class="hd"><span class="pos">${f.pos}</span><b>${f.z ? `<span class="u z${f.nw ? " new" : ""}">${f.n}</span>` : f.n}</b><small>${f.note}</small></div>${f.u.map(u => `<span class="u ${u[1]}${u[2] ? " new" : ""}">${u[0]}</span>`).join("")}</div>`).join("");
+    $("admKey").innerHTML = d.say; $("admNewLg").hidden = y != 1887;
+  }
+  bs.forEach(b => b.addEventListener("click", ()=> show(+b.dataset.y)));
+  show(1875);
+})();
+
+// ===== ⑦ 這是誰做的 =====
+(function(){
+  const IT = [["廢除渡臺禁令","s"],["開山撫番","s"],["增設臺北府","s"],["在安平修築西式炮臺","s"],["開闢北、中、南三條通往東部的道路","s"],["興建二鯤鯓炮臺（億載金城）","s"],["廢除劃界封山政策","s"],["因為牡丹社事件來臺","s"],
+    ["修築基隆到臺北的鐵路","l"],["架設電報系統","l"],["購置輪船","l"],["設立郵局","l"],["設置臺東直隸州","l"],["在基隆修築西式炮臺","l"],["臺灣首任巡撫","l"],["因為清法戰爭來臺","l"],["把行政區調整為三府","l"],["獅球嶺隧道「曠宇天開」","l"]];
+  const box = $("whoq"); let order = [], i = 0, ok = 0, lock = false;
+  const shuf = a => { a = a.slice(); for(let k=a.length-1;k>0;k--){ const j = Math.floor(Math.random()*(k+1)); [a[k],a[j]] = [a[j],a[k]]; } return a; };
+  function start(){ order = shuf(IT).slice(0, 10); i = 0; ok = 0; show(); }
+  function show(){
+    if(i >= order.length){ box.innerHTML = `<p class="it">10 題答對 ${ok} 題。</p><div class="ctrl"><button class="chip on" id="whoAgain">再來 10 題</button></div>`; $("whoAgain").addEventListener("click", start); return; }
+    lock = false;
+    box.innerHTML = `<div style="font-size:.84rem;color:var(--sub)">第 ${i+1} / ${order.length} 題</div><p class="it">${order[i][0]}</p><div class="ctrl"><button class="chip big s" data-w="s">沈葆楨</button><button class="chip big l" data-w="l">劉銘傳</button></div><p class="res"></p>`;
+    box.querySelectorAll("[data-w]").forEach(b => b.addEventListener("click", ()=>{
+      if(lock) return; lock = true; const right = b.dataset.w === order[i][1]; if(right) ok++;
+      logEv({ type:"who", q:order[i][0], ok:right });
+      box.querySelector('[data-w="' + order[i][1] + '"]').classList.add("on");
+      box.querySelector(".res").innerHTML = (right ? `<b style="color:#15803d">對。</b>` : `<b style="color:#dc2626">不對，是${order[i][1] === "s" ? "沈葆楨" : "劉銘傳"}。</b>`) + ` <button class="chip" id="whoNext">下一題</button>`;
+      $("whoNext").addEventListener("click", ()=>{ i++; show(); });
+    }));
+  }
+  start();
+})();
+
+// ===================== 先猜再看 =====================
+document.querySelectorAll(".predict").forEach(box => {
+  const bs = [...box.querySelectorAll(".pb button")], watch = box.querySelector(".watch"), res = box.querySelector(".res");
+  let pick = -1;
+  bs.forEach((b, i) => b.addEventListener("click", ()=>{ if(!res.hidden) return; pick = i; bs.forEach(x => x.classList.remove("on")); b.classList.add("on"); watch.hidden = false; }));
+  box.querySelector(".rev").addEventListener("click", ()=>{
+    const ok = pick === +box.dataset.ans;
+    res.hidden = false; res.innerHTML = (ok ? "<b>你猜對了。</b>" : "<b>跟你猜的不一樣。</b>猜錯沒關係，先猜過再看，會記得比較久。") + box.dataset.exp;
+    bs[+box.dataset.ans].classList.add("ok"); logEv({ type:"predict", q:box.dataset.id, ok });
+  });
+});
+
+// ===================== ⑧ 考考你 =====================
+(function(){
+  const SEC = { s1:"① 整課一條線", s2:"② 開港通商", s3:"③ 牡丹社事件", s4:"④ 沈葆楨", s5:"⑤ 清法與建省", s6:"⑥ 劉銘傳", s7:"⑦ 行政區與對照" };
+  // 選擇題：o 的第一個是正確答案（出題時會打亂）；其他每個選項後面是「你可能是這樣想的」
+  // 排序題：seq 是正確順序
+  const Q = [
+    // ---- ① 整課一條線
+    {id:"a1", s:"s1", q:"把這五件事照發生的先後排出來。",
+      seq:["渡臺禁令","英法聯軍後開港","牡丹社事件","清法戰爭","臺灣建省"],
+      why:"1684 渡臺禁令 → 1857 起英法聯軍、開港 → 1874 牡丹社 → 1884 清法 → 1885 建省。"},
+    {id:"a2", s:"s1", q:"清廷原本治理臺灣的態度是「為防臺而治臺」。這句話最接近下面哪個意思？",
+      o:[["怕臺灣變成反抗清廷的基地，所以把它管住，但不想多花力氣建設",""],["為了保護臺灣人民不被外國欺負，所以用心治理","你把「防」想成「保護」了。這裡的「防」是「防備」，防的是臺灣本身。"],["為了不讓外國搶走臺灣，所以大力建設","那是 1874 年以後才有的想法。「為防臺而治臺」是之前的消極態度。"],["為了讓臺灣變成最進步的省分","這是後來建設的結果，不是清廷一開始的想法。"]],
+      why:"「為防臺而治臺」是消極的。清廷只想讓臺灣不要出亂子，所以有渡臺禁令、劃界封山。"},
+    {id:"a3", s:"s1", q:"有一位清朝官員，1870 年說「臺灣不用花錢建設」，1876 年卻說「臺灣要趕快建設」。最可能讓他改變想法的是哪件事？",
+      o:[["1874 年日本出兵攻打牡丹社",""],["1884 年的清法戰爭","清法戰爭在 1884 年，比 1876 年晚。還沒發生的事不會改變他的想法。"],["1857 年開始的英法聯軍之役","這件事在 1870 年以前就發生了。他那時還是覺得不用建設。"],["1895 年清廷割讓臺灣","1895 年比 1876 年晚很多，而且那時臺灣已經不歸清廷管了。"]],
+      why:"牡丹社事件（1874）讓清廷第一次意識到臺灣的重要性，是政策轉彎的起點。"},
+    {id:"a4", s:"s1", q:"下面哪一組「事件 → 結果」是對的？",
+      o:[["清法戰爭 → 臺灣建省",""],["英法聯軍之役 → 沈葆楨來臺","英法聯軍的結果是開放通商口岸。沈葆楨是牡丹社事件後才來的。"],["牡丹社事件 → 臺灣建省","牡丹社事件的結果是沈葆楨來臺。建省要等到十年後的清法戰爭。"],["清法戰爭 → 開放四個通商口岸","開港是英法聯軍之役的結果，比清法戰爭早二十多年。"]],
+      why:"三組配對：英法聯軍 → 開港。牡丹社 → 沈葆楨。清法 → 建省、劉銘傳。"},
+    {id:"a5", s:"s1", q:"課本說臺灣成為「當時中國相當進步的省分」。主要原因是什麼？",
+      o:[["外力侵擾後，清廷加強建設，沈葆楨、劉銘傳等官員推動現代化",""],["清廷從一開始就最重視臺灣","剛好相反。清廷一開始是「為防臺而治臺」，不想建設。"],["外國人直接統治臺灣，幫臺灣蓋了鐵路","開港只是讓外國人來做生意。鐵路是劉銘傳蓋的。"],["渡臺禁令讓臺灣人口變少，比較好管理","渡臺禁令是消極政策，而且沈葆楨把它廢除了。"]],
+      why:"課本原句：外力的侵擾使清廷意識到臺灣的重要性，加強對臺灣的建設。"},
+    {id:"a6", s:"s1", q:"1722 年清廷「劃界封山」，1874 年以後卻「開山撫番」。這個改變說明了什麼？",
+      o:[["清廷從「不讓漢人進山」，變成「主動把山區和東部管起來」",""],["清廷越來越不想管臺灣","相反。開路進山是更積極地管。"],["渡臺禁令變得更嚴格了","渡臺禁令和劃界封山是同時被廢除的。"],["清廷想把所有漢人都搬到東部","沒有強迫搬家。是開放讓人去開墾，並加強管理。"]],
+      why:"封山是「不要管」。開山是「要管」。方向完全相反，原因是牡丹社事件。"},
+    // ---- ② 開港通商
+    {id:"b1", s:"s2", q:"1865 年，有一位英國商人在淡水開店買茶葉。他能合法來臺灣做生意，和哪件事最有關？",
+      o:[["英法聯軍之役後，清廷被迫開放通商口岸",""],["牡丹社事件","牡丹社事件在 1874 年，比 1865 年晚，而且出兵的是日本。"],["清法戰爭","清法戰爭在 1884 年，比 1865 年晚。"],["鄭氏政權和英國有貿易往來","那是 17 世紀的事，鄭氏政權早就結束了。"]],
+      why:"英法聯軍之役後，清帝國被迫簽約，陸續開放淡水、安平、雞籠、打狗。"},
+    {id:"b2", s:"s2", q:"臺灣開放的四個通商口岸是哪一組？",
+      o:[["淡水、雞籠、安平、打狗",""],["淡水、雞籠、鹿港、打狗","鹿港是開港以前就很熱鬧的港口，但不在這四個裡面。"],["淡水、艋舺、安平、恆春","艋舺和恆春都不是通商口岸。"],["基隆、蘇澳、花蓮、臺東","四個口岸都在西半邊。東部那時清廷還沒有好好管理。"]],
+      why:"北部：淡水、雞籠。南部：安平、打狗。"},
+    {id:"b3", s:"s2", q:"通商口岸裡的「雞籠」和「打狗」，是今天的哪裡？",
+      o:[["基隆、高雄",""],["基隆、臺南","安平才在臺南。打狗是高雄。"],["淡水、高雄","淡水就叫淡水，是另一個口岸。雞籠是基隆。"],["宜蘭、屏東","都不是。雞籠是基隆，打狗是高雄。"]],
+      why:"雞籠＝基隆（北部）。打狗＝高雄（南部）。"},
+    {id:"b4", s:"s2", q:"課本說開港後「外國勢力再度進入臺灣」。為什麼用「再度」這兩個字？",
+      o:[["因為 17 世紀荷蘭、西班牙就來過臺灣，這是第二次",""],["因為英國、法國在清朝時已經占領過臺灣一次","沒有這件事。上一次外國人來是荷蘭和西班牙。"],["因為臺灣開港開了兩次","「再度」說的是外國勢力進來，不是開港的次數。"],["因為日本來過兩次","這時候日本還沒出兵。牡丹社事件是後來的事。"]],
+      why:"上一章學過：大航海時代荷蘭、西班牙來過臺灣。清帝國時期的開港是外國勢力第二次進來。"},
+    {id:"b5", s:"s2", q:"清帝國開放臺灣的通商口岸，是自願的嗎？",
+      o:[["不是，是打了敗仗後被迫簽訂條約",""],["是，因為清廷想多賺一點稅","課本寫的是「戰敗後被迫簽訂條約」。"],["是，因為臺灣的商人要求開港","不是商人要求的，是打輸英國和法國的結果。"],["不是，是臺灣的地方官自己決定的","是清帝國戰敗後簽的條約，不是地方官決定的。"]],
+      why:"1857 年起的英法聯軍之役，清帝國戰敗，被迫簽約開港。"},
+    {id:"b6", s:"s2", q:"小華在地圖上標出四個通商口岸。下面哪個描述是對的？",
+      o:[["北部兩個、南部兩個，都在西半邊",""],["四個都在北部","北部只有淡水、雞籠。安平和打狗在南部。"],["東部兩個、西部兩個","東部沒有通商口岸。"],["四個都在南部","南部只有安平、打狗。"]],
+      why:"北：淡水、雞籠。南：安平、打狗。"},
+    // ---- ③ 牡丹社事件
+    {id:"c1", s:"s3", q:"把牡丹社事件的經過照先後排出來。",
+      seq:["琉球人船難漂到恆春半島遇害","日本以懲辦兇手為藉口出兵","清廷承認是保民義舉","日本併吞琉球"],
+      why:"1871 琉球人遇害 → 1874 日本出兵 → 清日簽約（保民義舉）→ 日本併吞琉球。"},
+    {id:"c2", s:"s3", q:"日本說出兵是為了「懲辦兇手」。課本卻用「藉口」來形容。這代表什麼？",
+      o:[["日本真正的目的是向外擴張，還想把琉球變成自己的",""],["日本真的只是想幫琉球人討公道","如果只是討公道，就不會叫「藉口」。而且日本等了三年才出兵。"],["日本想和清朝做生意","做生意不需要出兵打部落。"],["日本想幫清朝管理原住民","日本不是來幫忙的，是來找機會擴張的。"]],
+      why:"日本國力大增後向外擴張。牡丹社事件後，日本就併吞了琉球。"},
+    {id:"c3", s:"s3", q:"清廷承認日本出兵是「保民義舉」。這四個字為什麼讓清廷吃了大虧？",
+      o:[["等於承認琉球人是日本的人民，日本就有理由併吞琉球",""],["等於把臺灣割讓給日本","割讓臺灣是 1895 年的事。這時候臺灣還是清廷的。"],["等於承認牡丹社是日本的土地","日軍後來撤走了，沒有拿到臺灣的土地。"],["等於答應日本開放通商口岸","開港是英法聯軍之役的結果，和這件事無關。"]],
+      why:"「保民」是保護自己的人民。日本藉此聲稱琉球人是日本臣民，不久就併吞琉球。"},
+    {id:"c4", s:"s3", q:"牡丹社事件裡有 1871 和 1874 兩個年代。哪個說法是對的？",
+      o:[["1871 年琉球人遇害，1874 年日本出兵",""],["1871 年日本出兵，1874 年琉球人遇害","順序反了。要先有人遇害，日本才有藉口。"],["兩件事都發生在 1874 年","中間隔了三年。日本是之後才拿這件事當藉口。"],["1871 年日本併吞琉球，1874 年出兵","併吞琉球是出兵以後的事。"]],
+      why:"1871（同治 10 年）船難遇害。1874（同治 13 年）日本出兵，史稱牡丹社事件。"},
+    {id:"c5", s:"s3", q:"牡丹社事件對臺灣最重要的影響是什麼？",
+      o:[["清廷意識到臺灣的重要，派沈葆楨來臺強化防務",""],["臺灣建省","建省是清法戰爭之後的事（1885）。"],["臺灣開港通商","開港是英法聯軍之役的結果，比牡丹社事件早。"],["臺灣被割讓給日本","那是 1895 年。牡丹社事件後日軍就撤走了。"]],
+      why:"課本原句：牡丹社事件使清廷意識到臺灣的重要性，派遣沈葆楨來臺強化防務。"},
+    {id:"c6", s:"s3", q:"新聞報導說：「某國軍隊在恆春半島登陸，進攻山區的部落。」這是哪一件事？",
+      o:[["牡丹社事件（日本）",""],["清法戰爭（法國）","法軍打的是北部的基隆、淡水，還有澎湖。恆春半島在最南邊。"],["英法聯軍之役","英法聯軍主要不是在臺灣打的。臺灣受到的影響是開港。"],["沈葆楨開山撫番","開山撫番是清朝官員開路，不是外國軍隊登陸。"]],
+      why:"看地點：南部、恆春半島 → 牡丹社事件。北部、基隆淡水、澎湖 → 清法戰爭。"},
+    {id:"c7", s:"s3", q:"日本為什麼在 1870 年代有能力出兵臺灣？",
+      o:[["日本受到外力侵犯後進行改革，國力大增，開始向外擴張",""],["英國和法國派軍隊幫日本","沒有。日本是靠自己改革變強的。"],["清朝邀請日本來幫忙","清朝沒有邀請。清廷是被這件事嚇到的。"],["日本已經統治臺灣南部很久了","日本這時候沒有統治臺灣。統治臺灣是 1895 年以後。"]],
+      why:"課本小幫手：19 世紀中期以後，日本在外力侵犯下興起改革運動，國力大增，向外擴張。"},
+    {id:"c8", s:"s3", q:"屏東車城有一座墓碑，日軍在上面刻了「大日本琉球藩民五十四名墓」。日軍這樣刻，是想表達什麼？",
+      o:[["琉球人是日本的臣民",""],["琉球人是清朝的人民","如果是這樣，就不會刻「大日本」。"],["這是紀念戰死的日本士兵","墓裡是 1871 年遇難的琉球人，不是日本士兵。"],["這座墓是琉球國王蓋的","是日軍在牡丹社事件後立的。"]],
+      why:"課本圖說：日軍為罹難的琉球人設立墓碑，宣示琉球人為日本臣民。"},
+    // ---- ④ 沈葆楨
+    {id:"d1", s:"s4", q:"1876 年，一位福建的農民想搬到臺灣東部開墾。和他 1700 年的祖先比，最大的不同是什麼？",
+      o:[["他可以合法渡海、合法進山，因為渡臺禁令和劃界封山都廢除了",""],["他還是只能偷渡","沈葆楨已經廢除渡臺禁令，不用偷渡了。"],["他可以坐火車到東部","這時候還沒有鐵路。鐵路是劉銘傳蓋的，而且在北部。"],["他只能住在臺北府","沒有這個規定。廢除禁令就是讓人可以去開墾。"]],
+      why:"沈葆楨廢除渡臺禁令及劃界封山政策，並開路通往山區及東部。"},
+    {id:"d2", s:"s4", q:"沈葆楨「開山撫番」時開了幾條路？通到哪裡？",
+      o:[["北、中、南三條，通往山區及東部",""],["一條，從基隆到臺北","那是劉銘傳的鐵路。"],["三條，都通往澎湖","澎湖是離島，路開不過去。三條路是通往東部。"],["兩條，通往臺北和臺南","是三條，而且目的是通往山區和東部。"]],
+      why:"北路：蘇澳到花蓮。中路：林圯埔經八通關到璞石閣。南路：到卑南。"},
+    {id:"d3", s:"s4", q:"日本出兵之後，沈葆楨特別重視山區和東部。最合理的原因是什麼？",
+      o:[["日本打的地方就是清廷沒有好好管的地區，要把那裡管起來",""],["要讓外國商人去東部買茶","通商口岸都在西部。開路的目的是管理，不是通商。"],["要在東部蓋鐵路","沈葆楨沒有蓋鐵路。"],["要把原住民全部搬到西部","課本寫的是「加強對原住民的管理」，沒有搬遷。"]],
+      why:"牡丹社事件暴露出清廷管不到山區和東部。所以要開路、開放開墾、加強管理。"},
+    {id:"d4", s:"s4", q:"沈葆楨在哪裡修築西式炮臺？課本照片是哪一座？",
+      o:[["安平；二鯤鯓炮臺（億載金城）",""],["基隆；獅球嶺","基隆的炮臺是劉銘傳修的。獅球嶺是火車隧道，不是炮臺。"],["淡水；紅毛城","紅毛城是更早的西班牙、荷蘭時期留下來的。"],["安平；熱蘭遮城","熱蘭遮城是荷蘭人蓋的城堡，不是沈葆楨蓋的。"]],
+      why:"二鯤鯓炮臺（億載金城）在臺南，是沈葆楨來臺興建的第一座西式炮臺。"},
+    {id:"d5", s:"s4", q:"沈葆楨調整行政區時，增設了哪一個府？",
+      o:[["臺北府",""],["臺南府","臺南府是 1887 年劉銘傳時期才出現的名字。"],["臺東直隸州","那是劉銘傳時期設的，而且它是「州」不是「府」。"],["臺灣府","臺灣府原本就有，不是新增的。"]],
+      why:"沈葆楨增設臺北府，行政區變成二府（臺北府、臺灣府）、八縣、四廳。"},
+    {id:"d6", s:"s4", q:"開山撫番的三條路裡，「八通關」在哪一條路上？",
+      o:[["中路",""],["北路","北路是蘇澳到花蓮，沿著東海岸走。"],["南路","南路是從屏東一帶到卑南（臺東）。"],["基隆到臺北的鐵路","那是劉銘傳的鐵路，和開山撫番無關。"]],
+      why:"中路：林圯埔（竹山）→ 八通關 → 璞石閣（玉里）。"},
+    {id:"d7", s:"s4", q:"下面哪一項「不是」沈葆楨做的？",
+      o:[["修築基隆到臺北的鐵路",""],["廢除渡臺禁令","這是沈葆楨做的。"],["進行開山撫番","這是沈葆楨做的。"],["增設臺北府","這是沈葆楨做的。"]],
+      why:"鐵路是劉銘傳的建設。沈葆楨的交通建設是三條通往東部的道路。"},
+    {id:"d8", s:"s4", q:"沈葆楨來臺灣，是因為哪一件事？",
+      o:[["1874 年牡丹社事件",""],["1884 年清法戰爭","清法戰爭後來的是劉銘傳。"],["1857 年英法聯軍之役","英法聯軍的結果是開港，沒有派沈葆楨來。"],["1885 年臺灣建省","建省時的首任巡撫是劉銘傳。"]],
+      why:"牡丹社事件 → 沈葆楨。清法戰爭 → 建省 → 劉銘傳。"},
+    // ---- ⑤ 清法戰爭與建省
+    {id:"e1", s:"s5", q:"清法戰爭是怎麼打起來的？",
+      o:[["法軍進攻清帝國的藩屬越南",""],["法國人在臺灣被原住民殺害","你把它和牡丹社事件混在一起了。那是琉球人。"],["法國要求清廷開放通商口岸","那是更早的英法聯軍之役。"],["法國想要併吞琉球","併吞琉球的是日本。"]],
+      why:"1884 年法軍進攻清帝國藩屬越南，雙方爆發清法戰爭。"},
+    {id:"e2", s:"s5", q:"越南是清帝國的「藩屬」。這是什麼樣的關係？",
+      o:[["名義上臣服中國，有內亂外患時可以請中國出兵幫忙",""],["越南是清帝國的一個省","藩屬是另一個國家，不是清帝國直接管的省。"],["兩國是平等的盟友","不平等。是以中國為君、他國為臣。"],["越南是清帝國的通商口岸","通商口岸是開放給外國人做生意的港口，和藩屬不一樣。"]],
+      why:"課本小幫手：以中國為君、他國為臣。藩屬國名義上臣服於中國。"},
+    {id:"e3", s:"s5", q:"清法戰爭期間，法軍進攻過臺灣的哪些地方？",
+      o:[["基隆、淡水、澎湖",""],["安平、打狗、恆春","法軍打的是北部和澎湖，不是南部。"],["車城、牡丹社","那是牡丹社事件，日軍打的地方。"],["臺南、鹿港、花蓮","都不是。記：基隆、淡水、澎湖。"]],
+      why:"戰爭期間，法軍曾進攻基隆、淡水與澎湖等地。"},
+    {id:"e4", s:"s5", q:"1884 年，一位在臺灣北部做生意的英國人聽到炮聲，聽說有人身上被搜出法國國旗。這場戰爭後來對臺灣最大的影響是什麼？",
+      o:[["臺灣建省，劉銘傳為首任巡撫",""],["沈葆楨來臺，強化防務與建設","那是牡丹社事件的影響。有法國國旗，所以是清法戰爭。"],["實施渡臺禁令，避免移民過多","渡臺禁令是 1684 年的事，而且這時已經廢除了。"],["清廷開放臺灣通商口岸","英國人能在臺灣做生意，表示早就開港了。"]],
+      why:"法國、北部 → 清法戰爭 → 1885 年臺灣建省，劉銘傳為首任巡撫。"},
+    {id:"e5", s:"s5", q:"臺灣建省是哪一年？首任巡撫是誰？",
+      o:[["1885 年；劉銘傳",""],["1884 年；劉銘傳","1884 年是清法戰爭那一年。建省是隔一年。"],["1874 年；沈葆楨","1874 年是牡丹社事件。沈葆楨沒有當過臺灣巡撫。"],["1885 年；沈葆楨","年代對了，人錯了。首任巡撫是劉銘傳。"]],
+      why:"1885 年（光緒 11 年）下令臺灣建省，任命劉銘傳為首任巡撫。"},
+    {id:"e6", s:"s5", q:"課本比較表裡，牡丹社事件和清法戰爭的「參戰方」分別是誰？",
+      o:[["牡丹社事件：日本、牡丹社。清法戰爭：清帝國、法國",""],["牡丹社事件：日本、法國。清法戰爭：清帝國、越南","日本和法國沒有互打。清法戰爭是清和法打。"],["牡丹社事件：清帝國、琉球。清法戰爭：清帝國、法國","清和琉球沒有打仗。是日本打牡丹社。"],["牡丹社事件：日本、牡丹社。清法戰爭：日本、法國","清法戰爭和日本無關。"]],
+      why:"課本表 2-4-1：牡丹社事件是日本、牡丹社。清法戰爭是清帝國、法國。"},
+    {id:"e7", s:"s5", q:"法國明明是在越南開戰，為什麼這場戰爭會讓清廷決定在臺灣建省？",
+      o:[["因為法軍打到了臺灣，清廷更加重視臺灣的經營",""],["因為法國要求臺灣要建省","法國是敵人，不會幫清廷出主意。"],["因為越南被併入臺灣","沒有這件事。"],["因為沈葆楨向皇帝建議","這時候是劉銘傳的時代。建省是清法戰爭的教訓。"]],
+      why:"法軍進攻基隆、淡水、澎湖。清廷發現臺灣很重要，所以建省，派巡撫專門管。"},
+    {id:"e8", s:"s5", q:"考卷上有一段資料：「外國軍隊封鎖臺灣北部海面，基隆的煤礦是他們的目標之一。」這是哪一件事？",
+      o:[["清法戰爭",""],["牡丹社事件","牡丹社事件發生在南部的恆春半島，不是北部。"],["英法聯軍之役","英法聯軍對臺灣的影響是開港，不是打基隆。"],["開山撫番","開山撫番是清朝官員開路，不是外國軍隊。"]],
+      why:"北部、基隆 → 清法戰爭。南部、恆春 → 牡丹社事件。"},
+    // ---- ⑥ 劉銘傳
+    {id:"f1", s:"s6", q:"劉銘傳的交通建設是哪四項？",
+      o:[["鐵路、電報、輪船、郵局",""],["鐵路、三條通往東部的道路、輪船、郵局","三條通往東部的道路是沈葆楨開的。"],["電報、輪船、炮臺、臺北府","炮臺算軍事。臺北府是沈葆楨增設的。"],["鐵路、電報、渡臺禁令、郵局","渡臺禁令不是建設，而且是被沈葆楨廢除的。"]],
+      why:"口訣：鐵、電、船、郵。"},
+    {id:"f2", s:"s6", q:"關於清末臺灣的鐵路，哪個說法是對的？",
+      o:[["劉銘傳完成基隆到臺北；臺北到新竹由繼任巡撫完工",""],["基隆到新竹全部都是劉銘傳完成的","課本小幫手特別提醒：臺北到新竹是繼任巡撫完工的。"],["劉銘傳完成臺北到新竹；基隆到臺北由繼任巡撫完工","兩段說反了。先通車的是基隆到臺北（1891）。"],["劉銘傳把鐵路蓋到了高雄","清末的鐵路只到新竹。"]],
+      why:"1891 年基隆～臺北通車（劉銘傳）。1893 年臺北～新竹通車（繼任巡撫）。"},
+    {id:"f3", s:"s6", q:"1890 年，臺北的官員有一件急事要馬上通知福州。用劉銘傳的哪一項建設最快？",
+      o:[["電報",""],["鐵路","鐵路只在臺灣北部。火車開不過海。"],["郵局","寄信可以，但要等船，慢很多。"],["輪船","輪船要開好幾個小時到幾天。電報幾乎馬上就到。"]],
+      why:"劉銘傳在臺灣設置電報線，並遠達福州。"},
+    {id:"f4", s:"s6", q:"劉銘傳在哪裡修築西式炮臺？",
+      o:[["基隆等地",""],["安平等地","安平的炮臺是沈葆楨修的。"],["恆春等地","恆春不是課本提到的炮臺地點。"],["花蓮等地","東部不是課本提到的炮臺地點。"]],
+      why:"沈葆楨在安平（南）。劉銘傳在基隆（北）。清法戰爭時法軍打的就是北部。"},
+    {id:"f5", s:"s6", q:"小明去基隆玩，看到一個老隧道，洞口上方有「曠宇天開」四個字。這是什麼？",
+      o:[["獅球嶺隧道，臺灣最早的火車隧道，劉銘傳時期建的",""],["沈葆楨蓋的西式炮臺","沈葆楨的炮臺是臺南的二鯤鯓炮臺（億載金城）。"],["開山撫番北路的山洞","北路是蘇澳到花蓮，不在基隆。"],["荷蘭人蓋的城堡","荷蘭人蓋的是熱蘭遮城，在臺南。"]],
+      why:"獅球嶺隧道位於臺北到基隆之間，隧道口題有「曠宇天開」四字。"},
+    {id:"f6", s:"s6", q:"課本地圖上，電燈、西學堂、電報學堂、郵政總局，都標在哪一個城市？",
+      o:[["臺北",""],["臺南","以前的重心在臺南。但劉銘傳這些新建設設在臺北。"],["基隆","基隆有炮臺和鐵路的起點，但這四項標在臺北。"],["新竹","新竹是鐵路 1893 年通到的地方。"]],
+      why:"這四項都在臺北。建省後臺灣的重心逐漸移到北部。"},
+    {id:"f7", s:"s6", q:"劉銘傳設置「臺東直隸州」，目的是什麼？",
+      o:[["加強對東部地區的管理",""],["加強北部的海防","海防靠的是炮臺。直隸州是行政區。"],["讓外國人到東部通商","通商口岸都在西部。"],["管理澎湖","澎湖是澎湖廳，不屬於臺東直隸州。"]],
+      why:"課本原句：設置臺東直隸州，加強對東部地區的管理。"},
+    {id:"f8", s:"s6", q:"劉銘傳購置的輪船，主要航行在哪些地方之間？",
+      o:[["臺灣、中國大陸與東南亞",""],["只在臺灣的河流裡","輪船是用來跑外海的。"],["臺灣和歐洲","課本寫的是中國大陸與東南亞。"],["臺灣、日本和美國","課本寫的是中國大陸與東南亞。"]],
+      why:"課本地圖：輪船航行於臺灣、中國大陸與東南亞之間。"},
+    // ---- ⑦ 行政區與對照
+    {id:"g1", s:"s7", q:"從沈葆楨時期（1875）到劉銘傳時期（1887），臺灣的「府」怎麼變？",
+      o:[["二府 → 三府",""],["一府 → 二府","一府是更早的時候。1875 年沈葆楨增設臺北府後已經是二府。"],["三府 → 二府","順序反了。行政區是越分越細。"],["二府 → 四府","臺東是「直隸州」，不算府。所以是三府。"]],
+      why:"1875：二府、八縣、四廳。1887：三府、十一縣、三廳、一直隸州。"},
+    {id:"g2", s:"s7", q:"1887 年的地圖上，「臺灣府」在哪裡？",
+      o:[["中部（今臺中一帶）",""],["南部（今臺南一帶）","這是 1875 年的位置。1887 年南部的府改叫臺南府了。"],["北部（今臺北一帶）","北部一直是臺北府。"],["東部（今臺東一帶）","東部是臺東直隸州。"]],
+      why:"建省後，臺灣府設在中部。原本在南部的臺灣府改名臺南府。"},
+    {id:"g3", s:"s7", q:"「三府、十一縣、三廳、一直隸州」裡的「一直隸州」指的是哪裡？",
+      o:[["臺東直隸州",""],["澎湖","澎湖是「廳」，算在三廳裡面。"],["埔里社","埔里社也是「廳」。"],["臺北","臺北是「府」。"]],
+      why:"臺東直隸州，用來加強對東部地區的管理。"},
+    {id:"g4", s:"s7", q:"1875 年有四個廳，1887 年剩三個廳。少掉的「卑南廳」變成了什麼？",
+      o:[["臺東直隸州",""],["併入恆春縣","恆春縣在最南端，卑南在東部。"],["變成澎湖廳","澎湖廳本來就有。"],["被廢除，不再管理","相反。是升格，加強管理。"]],
+      why:"卑南廳（東部）升格成臺東直隸州。所以廳少一個，多了一個直隸州。"},
+    {id:"g5", s:"s7", q:"關於西式炮臺，哪一組配對是對的？",
+      o:[["沈葆楨：安平。劉銘傳：基隆",""],["沈葆楨：基隆。劉銘傳：安平","兩個人說反了。沈在南，劉在北。"],["兩個人都只在安平蓋","劉銘傳是在基隆等地。"],["兩個人都只在基隆蓋","沈葆楨是在安平等地。"]],
+      why:"沈葆楨防的是南部（牡丹社事件在南部）。劉銘傳防的是北部（清法戰爭打北部）。"},
+    {id:"g6", s:"s7", q:"沈葆楨和劉銘傳，分別是因為哪件事來臺灣的？",
+      o:[["沈葆楨：牡丹社事件。劉銘傳：清法戰爭",""],["沈葆楨：清法戰爭。劉銘傳：牡丹社事件","兩個人說反了。沈葆楨先來（1874）。"],["兩個人都是因為牡丹社事件","劉銘傳是十年後清法戰爭時來的。"],["沈葆楨：英法聯軍。劉銘傳：清法戰爭","英法聯軍的結果是開港，沒有派沈葆楨。"]],
+      why:"1874 牡丹社 → 沈葆楨。1884 清法 → 劉銘傳。"},
+    {id:"g7", s:"s7", q:"有一張清朝末年的老照片：火車從隧道開出來，旁邊立著電線桿。這張照片最早可能是什麼時候拍的？",
+      o:[["劉銘傳建設之後",""],["沈葆楨時期","沈葆楨時期還沒有鐵路。他開的是走路的山路。"],["開港通商以前","那時候更沒有鐵路和電報。"],["荷蘭人統治的時候","那是 17 世紀，還沒有火車。"]],
+      why:"鐵路和電報都是劉銘傳的建設。"},
+    {id:"g8", s:"s7", q:"下面哪一項是「沈葆楨和劉銘傳都有做」的事？",
+      o:[["修築西式炮臺",""],["修築鐵路","只有劉銘傳。"],["廢除渡臺禁令","只有沈葆楨。"],["設立郵局","只有劉銘傳。"]],
+      why:"兩人都修西式炮臺：沈在安平等地，劉在基隆等地。兩人也都調整過行政區。"},
+    {id:"g9", s:"s7", q:"比較 1875 年和 1887 年的行政區。哪兩個縣是 1887 年才出現在地圖上的？",
+      o:[["苗栗縣、雲林縣",""],["淡水縣、新竹縣","這兩個 1875 年就有了。"],["鳳山縣、恆春縣","這兩個 1875 年就有了。"],["宜蘭縣、彰化縣","這兩個 1875 年就有了。"]],
+      why:"1887 年中部分得更細，多了苗栗縣、雲林縣。所以縣從八個變成十一個。"}
+  ];
+  const KEY = "hist42_quiz_v1"; let ST = {};
+  try{ ST = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(e){}
+  const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} };
+  const rec = id => ST[id] || (ST[id] = { n:0, ok:0, last:"" });
+  const isWrong = q => { const r = ST[q.id]; return r && (r.last === "no" || r.last === "guess"); };
+  const shuf = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+  const esc = s => s.replace(/[&<>]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[c]));
+  const box = $("quiz"), ana = $("ana"), back = $("backBtn");
+  let round = [], idx = 0, okN = 0, misses = [];
+
+  // 跳回去看那一段，再跳回題目
+  function goSec(s){
+    const el = $(s); el.scrollIntoView({ behavior:"smooth", block:"start" });
+    el.classList.add("flash"); setTimeout(()=> el.classList.remove("flash"), 2600); back.hidden = false;
+  }
+  back.addEventListener("click", ()=>{ $("s8").scrollIntoView({ behavior:"smooth", block:"start" }); back.hidden = true; });
+  const jumpBtn = s => `<button class="chip jump" data-go="${s}">回去看 ${SEC[s]}</button>`;
+  document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if(b) goSec(b.dataset.go); });
+
+  function build(onlyWrong){
+    const pri = q => isWrong(q) ? 0 : !ST[q.id] || !ST[q.id].n ? 1 : 2;
+    const pool = shuf(Q.filter(q => !onlyWrong || isWrong(q))).sort((a,b) => pri(a)-pri(b));
+    const out = [], cnt = {};
+    // 每一段先各出一題，再補到 10 題，確保七段都考到
+    for(const cap of (onlyWrong ? [99] : [1,2,99]))
+      for(const q of pool){ if(out.length >= 10) break; if(out.includes(q) || (cnt[q.s]||0) >= cap) continue; cnt[q.s] = (cnt[q.s]||0)+1; out.push(q); }
+    return shuf(out);
+  }
+  function start(onlyWrong){
+    round = build(onlyWrong); idx = 0; okN = 0; misses = [];
+    if(!round.length){ box.innerHTML = `<p class="lead">錯題本是空的。先練一回吧。</p><div class="ctrl"><button class="chip on big" id="go">開始練一回（10 題）</button></div>`; $("go").addEventListener("click", ()=> start(false)); return; }
+    show();
+  }
+  function finish(q, right, diag){
+    const guess = box.querySelector(".guess input").checked, r = rec(q.id);
+    r.n++; if(right) r.ok++; r.last = !right ? "no" : guess ? "guess" : "ok"; save();
+    pracCount++; if(right){ pracOk++; okN++; } if(r.last !== "ok") misses.push(q);
+    logEv({ type:"quiz", q:q.id, sec:q.s, ok:right, guess });
+    const fb = box.querySelector(".fb"); fb.hidden = false; fb.className = "fb " + (right ? "good" : "bad");
+    let h = right ? (guess ? "<b>答對了。</b>不過你說是用猜的，我先把它放進錯題本，之後再考你一次。" : "<b>答對了。</b>") : "<b>這題沒答對。</b>";
+    if(!right && diag) h += `<p><span class="dx">你可能是這樣想的</span>${esc(diag)}</p>`;
+    h += `<p><span class="dx k">關鍵</span>${esc(q.why)}</p>`;
+    h += `<div class="ctrl">${right && !guess ? "" : jumpBtn(q.s)}<button class="chip on" id="nextQ">${idx+1 < round.length ? "下一題" : "看這一回的結果"}</button></div>`;
+    fb.innerHTML = h; box.querySelector(".guess").style.display = "none";
+    $("nextQ").addEventListener("click", ()=>{ idx++; idx < round.length ? show() : summary(); });
+    renderAna();
+  }
+  function show(){
+    const q = round[idx];
+    let h = `<div class="q"><div class="qhead"><span>第 ${idx+1} / ${round.length} 題</span><span class="tag">${SEC[q.s]}</span></div><p class="t">${esc(q.q)}</p>`;
+    h += `<label class="guess"><input type="checkbox"> 這題我不太確定，是用猜的</label>`;
+    h += q.seq ? `<div class="ans"></div><div class="pool"></div><button class="chip" id="resetO">重排</button>` : `<div class="opts"></div>`;
+    h += `<div class="fb" hidden></div></div>`;
+    box.innerHTML = h;
+    if(q.seq){
+      const ans = box.querySelector(".ans"), pool = box.querySelector(".pool"); let pick = [], done = false;
+      const paint = () => {
+        ans.innerHTML = pick.length ? pick.map((t,i) => `<span class="oc">${i+1}. ${t}</span>`).join("<i>→</i>") : `<span class="ph">照順序點下面的事件</span>`;
+        [...pool.children].forEach(b => b.disabled = pick.includes(b.textContent));
+      };
+      shuf(q.seq).forEach(t => { const b = document.createElement("button"); b.className = "chip"; b.textContent = t;
+        b.addEventListener("click", ()=>{ if(done) return; pick.push(t); paint();
+          if(pick.length === q.seq.length){ done = true; $("resetO").style.display = "none";
+            const k = pick.findIndex((x,i) => x !== q.seq[i]), right = k < 0;
+            if(!right) ans.children[k*2].classList.add("no");
+            finish(q, right, right ? "" : (k === 0 ? `最早的應該是「${q.seq[0]}」。` : `「${q.seq[k-1]}」的下一件應該是「${q.seq[k]}」，不是「${pick[k]}」。`)); } });
+        pool.appendChild(b); });
+      $("resetO").addEventListener("click", ()=>{ if(!done){ pick = []; paint(); } }); paint();
+    } else {
+      const opts = box.querySelector(".opts"), order = shuf(q.o.map((_,i) => i)); let done = false;
+      order.forEach(i => { const b = document.createElement("button"); b.textContent = q.o[i][0]; b.dataset.i = i;
+        b.addEventListener("click", ()=>{ if(done) return; done = true; const right = i === 0;
+          b.classList.add(right ? "ok" : "no"); opts.querySelector('[data-i="0"]').classList.add("ok"); finish(q, right, q.o[i][1]); });
+        opts.appendChild(b); });
+    }
+  }
+  function summary(){
+    const bySec = {}; misses.forEach(q => (bySec[q.s] = bySec[q.s] || []).push(q));
+    let h = `<div class="q"><p class="t">這一回：${round.length} 題答對 ${okN} 題</p>`;
+    if(!misses.length) h += `<p>全部答對，而且都不是用猜的。很紮實。</p>`;
+    else {
+      h += `<p>下面這幾段再看一次，然後按「只練錯題」。</p>`;
+      for(const s in bySec) h += `<div class="miss"><b>${SEC[s]}</b>（${bySec[s].length} 題）${jumpBtn(s)}<ul>${bySec[s].map(q => `<li>${esc(q.q)}</li>`).join("")}</ul></div>`;
+    }
+    h += `<div class="ctrl"><button class="chip on" id="again">再練一回（錯的和沒做過的先出）</button>${misses.length ? `<button class="chip" id="onlyW">只練錯題</button>` : ""}</div></div>`;
+    box.innerHTML = h;
+    $("again").addEventListener("click", ()=> start(false));
+    if($("onlyW")) $("onlyW").addEventListener("click", ()=> start(true));
+    cloudSend({ type:"小測驗", detail:`歷史 4-2 一回 ${round.length} 題；要再看：${Object.keys(bySec).map(s => SEC[s]).join("、") || "無"}`, score:`${okN}/${round.length}` });
+  }
+  function renderAna(){
+    const wrong = Q.filter(isWrong), seen = Q.filter(q => ST[q.id] && ST[q.id].n).length;
+    let h = `<p class="lead">題庫共 ${Q.length} 題，你做過 ${seen} 題。紀錄只存在這台裝置的瀏覽器。</p><div class="bars">`;
+    let weak = null, weakRate = 2;
+    for(const s in SEC){
+      let n = 0, ok = 0; Q.filter(q => q.s === s).forEach(q => { const r = ST[q.id]; if(r){ n += r.n; ok += r.ok; } });
+      const rate = n ? ok/n : 0; if(n >= 2 && rate < weakRate){ weakRate = rate; weak = s; }
+      h += `<div class="bar"><span class="nm">${SEC[s]}</span><span class="tr"><i style="width:${Math.round(rate*100)}%;background:${!n ? "#e5e7eb" : rate >= .8 ? "#16a34a" : rate >= .5 ? "#d97706" : "#dc2626"}"></i></span><span class="pc">${n ? `答對 ${ok}／${n}` : "還沒做"}</span></div>`;
+    }
+    h += `</div>`;
+    if(weak && weakRate < .8) h += `<div class="key">目前最需要再看的是 <b>${SEC[weak]}</b>。${jumpBtn(weak)}</div>`;
+    h += `<h3>錯題本（${wrong.length} 題）</h3>`;
+    if(!wrong.length) h += `<p style="color:var(--sub)">目前沒有錯題。答錯或用猜的題目會出現在這裡，之後答對就會移除。</p>`;
+    else h += `<ul class="wb">${wrong.map(q => `<li>${esc(q.q)} <span class="tag">${ST[q.id].last === "guess" ? "用猜的" : "答錯"}</span> ${jumpBtn(q.s)}</li>`).join("")}</ul><div class="ctrl"><button class="chip on" id="anaW">只練錯題（${Math.min(10, wrong.length)} 題）</button></div>`;
+    h += `<div class="ctrl"><button class="chip" id="clr">清除我的作答紀錄</button></div>`;
+    ana.innerHTML = h;
+    if($("anaW")) $("anaW").addEventListener("click", ()=>{ start(true); $("s8").scrollIntoView({ behavior:"smooth" }); });
+    $("clr").addEventListener("click", ()=>{ if(confirm("確定要清除這一課的作答紀錄和錯題本嗎？清掉就救不回來。")){ ST = {}; save(); renderAna(); } });
+  }
+  box.innerHTML = `<div class="ctrl"><button class="chip on big" id="go">開始練一回（10 題）</button></div>`;
+  $("go").addEventListener("click", ()=> start(false));
+  renderAna();
+})();
+</script>
+</body>
+</html>
