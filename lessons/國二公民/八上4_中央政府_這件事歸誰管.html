@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國二公民｜第4章 中央政府：這件事歸誰管？</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff; --border:#e5e7eb; --radius:14px;
+    --pri:#4338ca; --pri-soft:#e0e7ff;
+    --red:#dc2626; --red-soft:#fee2e2; --green:#15803d; --green-soft:#dcfce7;
+    --amber:#b45309; --amber-soft:#fef3c7; --blue:#1d4ed8; --blue-soft:#dbeafe;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:20px 16px 80px;}
+  a{color:var(--blue);}
+
+  header.hero{background:linear-gradient(120deg,#312e81 0%,#4338ca 40%,#115e59 80%,#0f766e 100%); color:#fff; border-radius:var(--radius); padding:26px 24px; margin-bottom:16px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px; line-height:1.4;}
+  header.hero p{opacity:.95; font-size:.95rem;}
+
+  nav.toc{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;}
+  nav.toc a{background:#fff; border:1px solid var(--border); border-radius:99px; padding:3px 12px; font-size:.86rem; text-decoration:none; color:var(--ink);}
+  nav.toc a:hover{border-color:var(--pri); color:var(--pri);}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:16px;}
+  .card h2{font-size:1.18rem; color:var(--pri); margin-bottom:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .card ul,.card ol{margin-left:1.3em;}
+  .lead{font-size:.98rem; margin-bottom:10px;}
+  .key{background:var(--pri-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.95rem; color:#312e81;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e3a8a;}
+  .sup{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.93rem;}
+  .sup > b:first-child{color:var(--amber);}
+
+  .ctrl{display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:8px 0;}
+  .ctrl .lab{font-size:.86rem; color:var(--sub); margin-right:2px;}
+  .chip{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 13px; cursor:pointer; font-family:inherit; font-size:.88rem; color:var(--ink);}
+  .chip:hover{border-color:var(--pri); color:var(--pri);}
+  .chip.on{background:var(--pri); border-color:var(--pri); color:#fff;}
+  .chip.on:hover{color:#fff;}
+  .chip.big{padding:8px 16px; font-size:.95rem; font-weight:bold;}
+  .chip:disabled{opacity:.35; cursor:default;}
+
+  /* ① 總機 */
+  .ev{border:2px solid #c7d2fe; border-radius:12px; padding:12px 14px; background:#fff;}
+  .ev .evh{display:flex; justify-content:space-between; gap:8px; font-size:.84rem; color:var(--sub); margin-bottom:6px; flex-wrap:wrap;}
+  .ev .call{background:#f8fafc; border-radius:12px; padding:10px 14px; font-size:1.02rem; font-weight:bold; margin-bottom:8px;}
+  .ev .call small{display:block; font-weight:normal; color:var(--sub); font-size:.8rem;}
+  .six{display:grid; grid-template-columns:repeat(3,1fr); gap:6px;}
+  .six button{border:1px solid var(--border); background:#fff; border-radius:10px; padding:9px 6px; font-family:inherit; font-size:.98rem; font-weight:bold; cursor:pointer; color:var(--ink);}
+  .six button:hover{border-color:var(--pri);}
+  .six button.ok{background:var(--green-soft); border-color:var(--green);}
+  .six button.no{background:var(--red-soft); border-color:var(--red);}
+  .six button:disabled{cursor:default;}
+  .trip{font-weight:bold; color:var(--red);}
+  .prog{height:8px; background:#e5e7eb; border-radius:99px; overflow:hidden; margin-bottom:10px;}
+  .prog i{display:block; height:100%; background:var(--pri); border-radius:99px; transition:width .3s;}
+
+  table{border-collapse:collapse; width:100%; font-size:.92rem; margin-top:10px;}
+  th,td{border:1px solid var(--border); padding:6px 8px; text-align:left; vertical-align:top;}
+  th{background:#f8fafc; white-space:nowrap;}
+  td.nw{white-space:nowrap;}
+  .tw{overflow-x:auto;}
+
+  /* ② 卡片 */
+  .inst{border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-top:8px; background:#fff;}
+  .inst h3{margin:0 0 2px; color:var(--pri);}
+  .inst .pw{font-size:.9rem; color:var(--sub); margin-bottom:6px;}
+  .inst dl{display:grid; grid-template-columns:3em 1fr; gap:4px 10px; font-size:.94rem;}
+  .inst dt{font-weight:bold; color:var(--sub);}
+  .inst dd ul{margin-left:1.1em;}
+  .tags{display:flex; flex-wrap:wrap; gap:4px; margin-top:4px;}
+  .tags span{background:#f1f5f9; border-radius:99px; padding:0 10px; font-size:.84rem;}
+  .lane{display:flex; flex-wrap:wrap; gap:6px; align-items:stretch; margin-top:8px;}
+  .lane .box{flex:1 1 130px; border:1px solid var(--border); border-radius:10px; padding:6px 10px; background:#fff; font-size:.9rem;}
+  .lane .box b{display:block; color:var(--pri);}
+  .lane .box.hl{border-color:#eab308; background:#fef9c3;}
+  .lane .ar{align-self:center; color:var(--sub); font-size:.82rem;}
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px;}
+  .two > div{border:1px solid var(--border); border-radius:10px; padding:8px 10px; font-size:.92rem; background:#fafbff;}
+  .two b{color:var(--pri);}
+  @media (max-width:520px){ .two{grid-template-columns:1fr;} }
+
+  /* 流程 */
+  .mini{display:grid; gap:5px; margin:8px 0;}
+  .mini span{border:1px solid var(--border); border-radius:8px; text-align:center; font-size:.86rem; padding:5px 2px; color:#9ca3af; background:#fff;}
+  .mini span.now{background:#fef08a; border-color:#eab308; color:var(--ink); font-weight:bold;}
+  .step{border:1px solid var(--border); border-radius:12px; padding:10px 14px; background:#fff; margin-top:8px;}
+  .step .no{display:inline-block; background:var(--pri); color:#fff; border-radius:99px; min-width:1.9em; text-align:center; margin-right:6px;}
+  .step p{font-size:.94rem; margin-top:4px;}
+  .dots{display:flex; gap:4px; flex-wrap:wrap;}
+  .dots button{border:1px solid var(--border); background:#fff; border-radius:8px; padding:2px 9px; font-family:inherit; font-size:.82rem; cursor:pointer; color:var(--ink);}
+  .dots button.on{background:var(--pri); border-color:var(--pri); color:#fff;}
+
+  /* 分類 */
+  .sort{display:grid; gap:6px; margin-top:8px;}
+  .sc{display:grid; grid-template-columns:1fr; gap:4px; border:1px solid var(--border); border-radius:10px; padding:6px 10px; background:#fff;}
+  .sc .tx{font-size:.95rem; font-weight:bold;}
+  .sc .bt{display:flex; gap:4px; flex-wrap:wrap;}
+  .sc .bt button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:3px 11px; font-family:inherit; font-size:.84rem; cursor:pointer; color:var(--ink);}
+  .sc .bt button.ok{background:var(--green-soft); border-color:var(--green);} .sc .bt button.no{background:var(--red-soft); border-color:var(--red);}
+  .sc .ex{font-size:.86rem; color:var(--sub);}
+  .sc.right{border-color:#86efac;} .sc.wrong{border-color:#fca5a5;}
+  .hide{background:#e5e7eb; color:transparent; border-radius:6px; cursor:pointer; user-select:none; padding:0 6px;}
+  .hide.show{background:var(--amber-soft); color:var(--ink);}
+
+  /* 測驗引擎（照「人體的循環」那一頁） */
+  .q{border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-top:10px;}
+  .q p.t{font-weight:bold; margin-bottom:6px;}
+  .q .opts{display:grid; gap:6px;}
+  .q button{border:1px solid var(--border); background:#fff; border-radius:8px; padding:7px 12px; font-family:inherit; font-size:.94rem; cursor:pointer; text-align:left; color:var(--ink);}
+  .q button:hover{border-color:var(--pri);}
+  .q button.ok{background:var(--green-soft); border-color:var(--green);}
+  .q button.no{background:var(--red-soft); border-color:var(--red);}
+  .q .qhead{display:flex; justify-content:space-between; gap:8px; font-size:.84rem; color:var(--sub); margin-bottom:4px;}
+  .tag{display:inline-block; background:#f1f5f9; border-radius:99px; padding:0 9px; font-size:.78rem; color:#475569; white-space:nowrap;}
+  .guess{display:block; font-size:.88rem; color:var(--sub); margin:2px 0 8px; cursor:pointer;}
+  .fb{margin-top:10px; border-radius:10px; padding:10px 12px; font-size:.94rem;}
+  .fb.good{background:var(--green-soft);} .fb.bad{background:var(--red-soft);}
+  .fb p{margin-top:6px;}
+  .dx{display:inline-block; background:#fff; border:1px solid #fca5a5; color:#b91c1c; border-radius:6px; padding:0 7px; font-size:.8rem; font-weight:bold; margin-right:6px;}
+  .dx.k{border-color:#86efac; color:#15803d;}
+  .chip.jump{border-color:var(--blue); color:var(--blue);}
+  .ans{min-height:44px; border:2px dashed var(--border); border-radius:10px; padding:6px 8px; margin-bottom:8px; display:flex; flex-wrap:wrap; gap:4px; align-items:center;}
+  .ans .oc{background:var(--blue-soft); border-radius:8px; padding:1px 8px; font-size:.9rem;} .ans .oc.no{background:var(--red-soft); outline:2px solid var(--red);}
+  .ans i{color:var(--sub); font-style:normal;} .ans .ph{color:var(--sub); font-size:.88rem;}
+  .pool{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;} .pool .chip:disabled{opacity:.3; cursor:default;}
+  .miss{border-top:1px dashed var(--border); padding-top:8px; margin-top:8px;} .miss ul{font-size:.9rem; color:var(--sub);} .miss .chip{margin-left:6px;}
+  .bars{display:grid; gap:6px;}
+  .bar{display:grid; grid-template-columns:9.5em 1fr 6.5em; gap:8px; align-items:center; font-size:.88rem;}
+  .bar .tr{height:12px; background:#f1f5f9; border-radius:99px; overflow:hidden;} .bar .tr i{display:block; height:100%; border-radius:99px;}
+  .bar .pc{color:var(--sub); text-align:right;}
+  .wb{font-size:.92rem;} .wb li{margin-bottom:6px;} .wb .chip{padding:2px 10px; font-size:.8rem;}
+  .card.flash{animation:flash 2.6s;} @keyframes flash{0%,60%{box-shadow:0 0 0 4px #facc15;}100%{box-shadow:0 0 0 0 transparent;}}
+  #backBtn{position:fixed; right:14px; bottom:16px; z-index:20; background:var(--blue); color:#fff; border:none; border-radius:99px; padding:11px 18px; font-family:inherit; font-size:1rem; font-weight:bold; box-shadow:0 4px 14px rgba(0,0,0,.25); cursor:pointer;}
+  .predict{border:2px dashed #93c5fd; background:#f0f7ff; border-radius:12px; padding:10px 14px; margin:10px 0; font-size:.95rem;}
+  .predict .pb{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0;}
+  .predict .pb button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 14px; font-family:inherit; font-size:.9rem; cursor:pointer; color:var(--ink);}
+  .predict .pb button.on{border-color:var(--blue); background:var(--blue-soft);} .predict .pb button.ok{border-color:var(--green); background:var(--green-soft);}
+  .links{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:8px;}
+  .links a{border:1px solid var(--border); border-radius:10px; padding:8px 12px; text-decoration:none; color:var(--ink); font-size:.9rem; background:#fff;}
+  .links a:hover{border-color:var(--pri);}
+  [hidden]{display:none !important;}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:24px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">國中公民 · 第 4 章 中央政府 · 課本 p.176～181</span>
+  <h1>中央政府：這件事歸誰管？</h1>
+  <p>範圍就是課本這六頁：4-1 中央政府的組成、4-2 中央政府的互動關係。先玩一輪「總機」，再照課本的順序看一次。</p>
+</header>
+
+<nav class="toc">
+  <a href="#s1">① 總機遊戲</a><a href="#s2">② 總統和五院</a><a href="#s3">③ 官員怎麼產生</a><a href="#s4">④ 監察院和預算</a><a href="#s5">⑤ 互動關係</a><a href="#s6">⑥ 考考你</a><a href="#s7">⑦ 錯題本</a>
+</nav>
+
+<div class="note">內容都照課本 p.176～181。只有<b style="color:#b45309">黃色框「老師補充」</b>是課本沒印的（來自上課筆記），其他都是課本的內容。</div>
+
+<!-- ============ ① ============ -->
+<div class="card" id="s1">
+  <h2>① 先玩一輪：中央政府的總機</h2>
+  <p class="lead">你今天在中央政府的總機值班。有 10 通電話打進來，每一通都要轉給對的機關：<b>總統</b>，或<b>五個院</b>的其中一個。</p>
+  <p style="font-size:.92rem">轉錯了沒關係，會告訴你那個機關是做什麼的，再轉一次。</p>
+  <div id="sim" style="margin-top:10px"></div>
+</div>
+
+<!-- ============ ② ============ -->
+<div class="card" id="s2">
+  <h2>② 總統和五院（課本 p.176～178）</h2>
+  <p class="lead">中央政府管理<b>全國</b>的事務。基於權力分立原則，由<b>總統及五院</b>組成。點一個看看。</p>
+  <div class="ctrl" id="instTabs"></div>
+  <div class="inst" id="instBox"></div>
+  <div class="key">五種權力一句話：<b>行政</b>是執行法律與政策；<b>立法</b>是制定、修改和廢止法律；<b>司法</b>是發生糾紛時公正裁判；<b>考試</b>是選拔人才當公務員；<b>監察</b>是監督政府施政和經費運用。</div>
+</div>
+
+<!-- ============ ③ ============ -->
+<div class="card" id="s3">
+  <h2>③ 重要官員怎麼產生（課本 p.179）</h2>
+  <div class="predict" data-id="p1" data-ans="1" data-exp="行政院院長由總統直接任命。不是人民選的，也不用立法院同意。">
+    <b>先猜再看：</b>行政院院長是怎麼產生的？
+    <div class="pb"><button>人民直接選舉</button><button>總統直接任命</button><button>立法委員互選</button></div>
+    <button class="chip rev" hidden>我猜好了，對答案</button>
+    <div class="res" hidden></div>
+  </div>
+  <p class="lead">一共只有五種方式。先自己分分看，分完下面有對照表。</p>
+  <div class="ctrl"><span id="sortScore" style="font-size:.9rem; color:var(--sub)"></span></div>
+  <div class="sort" id="sortBox"></div>
+
+  <h3>對照表</h3>
+  <div class="tw"><table>
+    <tr><th></th><th>重要職稱</th><th>產生方式</th></tr>
+    <tr><td class="nw" rowspan="2"><b>總統</b></td><td>總統</td><td rowspan="2">人民直接選舉</td></tr>
+    <tr><td>副總統</td></tr>
+    <tr><td class="nw" rowspan="2"><b>行政院</b></td><td>院長</td><td>總統直接任命</td></tr>
+    <tr><td>副院長、各部會首長</td><td>行政院院長提請總統任命</td></tr>
+    <tr><td class="nw" rowspan="2"><b>立法院</b></td><td>院長、副院長</td><td>由立法委員互選產生</td></tr>
+    <tr><td>立法委員</td><td>人民直接選舉</td></tr>
+    <tr><td class="nw"><b>司法院</b></td><td>院長、副院長、大法官</td><td rowspan="3">由總統提名，經立法院同意後由總統任命</td></tr>
+    <tr><td class="nw"><b>考試院</b></td><td>院長、副院長、考試委員</td></tr>
+    <tr><td class="nw"><b>監察院</b></td><td>院長、副院長、監察委員、審計長</td></tr>
+  </table></div>
+  <div class="key">課本問：為什麼有些官員由總統提名後，還要立法委員同意？<br>想一想再點：<span class="hide">立法委員是人民選的，代表人民把關。總統不能一個人決定，這也是一種制衡。</span></div>
+</div>
+
+<!-- ============ ④ ============ -->
+<div class="card" id="s4">
+  <h2>④ 監察院：管錢，也管人和事（課本 p.178）</h2>
+  <h3>預算和決算怎麼走</h3>
+  <div class="predict" data-id="p2" data-ans="2" data-exp="審核決算的是監察院的審計部。花錢之前，立法院先審查預算；花完之後，審計部審核決算。">
+    <b>先猜再看：</b>政府把錢花完以後，是誰來查帳（審核決算）？
+    <div class="pb"><button>行政院自己</button><button>立法院</button><button>監察院審計部</button></div>
+    <button class="chip rev" hidden>我猜好了。先把下面的流程走到第 4 步，再按這裡對答案</button>
+    <div class="res" hidden></div>
+  </div>
+  <div id="budget"></div>
+
+  <h3>彈劾、糾舉、糾正</h3>
+  <div class="tw"><table>
+    <tr><th></th><th>對象</th><th>向誰提出</th></tr>
+    <tr><td class="nw"><b>彈劾</b></td><td rowspan="2">以「<b>人</b>」為對象：中央與地方公務人員<br>（不含總統、副總統與民意代表）</td><td>向司法院懲戒法院提出</td></tr>
+    <tr><td class="nw"><b>糾舉</b></td><td>向被糾舉人的主管或上級長官提出</td></tr>
+    <tr><td class="nw"><b>糾正</b></td><td>以「<b>事</b>」為對象：行政院及其所屬機關的不當施政</td><td>向不當施政的行政機關提出</td></tr>
+  </table></div>
+  <div class="key">記法：<b>彈劾、糾舉對人；糾正對事。</b>人違法失職，事是機關沒做好。</div>
+
+  <h3>換你判斷：這是對人，還是對事？</h3>
+  <div class="sort" id="pvBox"></div>
+</div>
+
+<!-- ============ ⑤ ============ -->
+<div class="card" id="s5">
+  <h2>⑤ 中央政府的互動關係（課本 p.180～181）</h2>
+  <p class="lead">權力分立之後，各機關還要互相<b>制衡</b>，才能防止政府濫權。課本講了三組。</p>
+
+  <h3>一、行政權和立法權</h3>
+  <p><b>不信任案與解散制度</b>：立法院可以對行政院院長提出不信任案。</p>
+  <div id="noconf"></div>
+  <div class="note">不信任案如果<b>沒有通過</b>：一年內不得對同一位行政院院長再提不信任案。</div>
+  <div class="sup"><b>老師補充（上課筆記）：</b>行政院又叫「內閣」，行政院院長又叫「閣揆」。不信任案通過、院長下臺，俗稱「倒閣」。</div>
+
+  <p style="margin-top:12px"><b>覆議制度</b>：行政院必須執行立法院通過的法律與政策。但如果行政院認為立法院決議的<b>法律案、預算案、條約案</b>窒礙難行（很難執行），可以請立法院再表決一次。</p>
+  <div class="lane">
+    <div class="box"><b>立法院</b>決議</div><span class="ar">→</span>
+    <div class="box"><b>行政院</b>認為窒礙難行</div><span class="ar">經總統核可 →</span>
+    <div class="box"><b>立法院</b>覆議（立法委員投票）</div>
+  </div>
+  <div class="ctrl"><span class="lab">投票結果</span><span id="reTabs"></span></div>
+  <div class="step" id="reOut"></div>
+
+  <h3>二和三、兩種彈劾，不要搞混</h3>
+  <div class="predict" data-id="p3" data-ans="0" data-exp="總統、副總統的彈劾案，由立法院提出，司法院大法官組成的憲法法庭審理。監察院彈劾的是公務人員，不包含總統、副總統。">
+    <b>先猜再看：</b>總統的彈劾案，是哪個機關提出的？
+    <div class="pb"><button>立法院</button><button>監察院</button><button>司法院</button></div>
+    <button class="chip rev" hidden>我猜好了，對答案</button>
+    <div class="res" hidden></div>
+  </div>
+  <div class="tw"><table>
+    <tr><th>彈劾誰</th><th>提出機關</th><th>審理機關</th></tr>
+    <tr><td><b>總統、副總統</b><br><small style="color:var(--sub)">立法權和司法權的互動</small></td><td>立法院</td><td>司法院大法官（憲法法庭）</td></tr>
+    <tr><td><b>公務人員</b><br><small style="color:var(--sub)">監察權和司法權的互動</small></td><td>監察院</td><td>司法院懲戒法院</td></tr>
+  </table></div>
+  <div class="key">兩種彈劾都是<b>一個機關提出、司法院審理</b>。提出的人不能自己審，這就是制衡。</div>
+</div>
+
+<!-- ============ ⑥ ============ -->
+<div class="card" id="s6">
+  <h2>⑥ 考考你：是真的懂，還是只是背起來？</h2>
+  <p class="lead">題目大多是<b>情境題</b>。一回 10 題，一次一題。</p>
+  <ul style="font-size:.92rem">
+    <li>答錯時，會告訴你<b>可能是哪裡想錯</b>，還有一個按鈕直接跳回那一段。</li>
+    <li>不確定就勾「用猜的」。猜對的題目也會進錯題本，之後再考一次。</li>
+    <li>下一回會先出<b>上次錯的</b>和<b>還沒做過的</b>。</li>
+  </ul>
+  <div id="quiz"></div>
+</div>
+
+<div class="card" id="s7">
+  <h2>⑦ 我的弱點和錯題本</h2>
+  <div id="ana"></div>
+</div>
+
+<div class="card">
+  <h2>前一章</h2>
+  <div class="links">
+    <a href="八上3-1_人治與法治.html"><b>第 3 章① 人治與法治</b><br>統治者和法律，誰在上面？</a>
+    <a href="八上3-2_權力與權利.html"><b>第 3 章② 權力與權利</b><br>只差一個字，差很多。</a>
+    <a href="八上3-3_權力分立.html"><b>第 3 章③ 權力分立</b><br>為什麼要把權力拆開？</a>
+  </div>
+</div>
+<button id="backBtn" hidden>↩ 回到題目</button>
+
+<footer>國中公民自學教材 · 第 4 章 中央政府<br>依課本第 4 章 4-1、4-2（p.176～181）的內容與架構編寫，文字與示意圖為原創整理。標示「老師補充」的內容課本沒有印。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "公民 第4章 中央政府";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// 上傳網址不寫在教材裡；家長在「學習紀錄」頁設定一次，存於此瀏覽器。
+let CLOUD_URL = "";
+try{ CLOUD_URL = localStorage.getItem("cloud_url_v1") || ""; }catch(e){}
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// ===== 共用工具 =====
+const $ = id => document.getElementById(id);
+const shuf = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+const esc = s => s.replace(/[&<>]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[c]));
+function tabs(el, items, fn, first){
+  el.innerHTML = items.map(([k, t]) => `<button class="chip" data-k="${k}">${t}</button>`).join(" ");
+  const bs = [...el.querySelectorAll("button")];
+  const pick = k => { bs.forEach(b => b.classList.toggle("on", b.dataset.k === k)); fn(k); };
+  bs.forEach(b => b.addEventListener("click", ()=> pick(b.dataset.k)));
+  if(first) pick(first);
+}
+// 一步一步走的流程圖：orgs 是上面那排機關，steps 是 { w:[亮哪幾個], t:標題, d:說明 }
+function stepper(el, orgs, steps){
+  let i = 0;
+  el.innerHTML = `<div class="mini" style="grid-template-columns:repeat(${orgs.length},1fr)"></div><div class="dots"></div><div class="step"></div>
+    <div class="ctrl"><button class="chip prev">上一步</button><button class="chip on next">下一步</button></div>`;
+  const mini = el.querySelector(".mini"), dots = el.querySelector(".dots"), st = el.querySelector(".step"), pv = el.querySelector(".prev"), nx = el.querySelector(".next");
+  function paint(){
+    const s = steps[i];
+    mini.innerHTML = orgs.map(([k, n]) => `<span class="${s.w.includes(k) ? "now" : ""}">${n}</span>`).join("");
+    dots.innerHTML = steps.map((x, k) => `<button class="${k === i ? "on" : ""}" data-i="${k}">${k+1}. ${x.t}</button>`).join("");
+    st.innerHTML = `<b><span class="no">${i+1}</span>${s.t}</b><p>${s.d}</p>`;
+    pv.disabled = i === 0; nx.disabled = i === steps.length-1;
+  }
+  dots.addEventListener("click", e => { const b = e.target.closest("button"); if(b){ i = +b.dataset.i; paint(); } });
+  pv.addEventListener("click", ()=>{ if(i > 0){ i--; paint(); } });
+  nx.addEventListener("click", ()=>{ if(i < steps.length-1){ i++; paint(); } });
+  paint();
+}
+// 兩顆以上按鈕的分類練習：items 是 [文字, 正確代號, 說明]，btns 是 [代號, 按鈕文字]
+function sorter(box, items, btns, logId, onScore){
+  let done = 0, ok = 0;
+  box.innerHTML = items.map((s, i) => `<div class="sc" data-i="${i}"><span class="tx">${s[0]}</span><span class="bt">${btns.map(([v, t]) => `<button data-v="${v}">${t}</button>`).join("")}</span></div>`).join("");
+  box.addEventListener("click", e => {
+    const b = e.target.closest("button"); if(!b) return;
+    const row = b.closest(".sc"); if(row.dataset.done) return;
+    const s = items[+row.dataset.i], right = b.dataset.v === s[1];
+    row.dataset.done = 1; done++; if(right) ok++;
+    b.classList.add(right ? "ok" : "no"); row.querySelector(`[data-v="${s[1]}"]`).classList.add("ok"); row.classList.add(right ? "right" : "wrong");
+    row.insertAdjacentHTML("beforeend", `<span class="ex">${right ? "" : "不是。"}${s[2]}</span>`);
+    logEv({ type:"sort", q:logId + row.dataset.i, ok:right }); if(onScore) onScore(done, ok);
+  });
+  if(onScore) onScore(0, 0);
+}
+
+// ===================== ① 總機 =====================
+(function(){
+  const ORG = [["pres","總統"],["exe","行政院"],["leg","立法院"],["jud","司法院"],["exam","考試院"],["ctrl","監察院"]];
+  const NAME = Object.fromEntries(ORG);
+  const JOB = {
+    pres:"總統是國家元首：統率三軍、公布法律、任命或提名官員、發布緊急命令。",
+    exe:"行政院負責國家政策的規畫與法案執行，像內政、教育、交通。",
+    leg:"立法院負責制定法律與監督政府，例如審查預算、質詢官員。",
+    jud:"司法院負責審判。大法官組成的憲法法庭，審理法律是否違反憲法。",
+    exam:"考試院負責國家考試，還有公務人員的銓敘、撫卹、退休。",
+    ctrl:"監察院負責彈劾、糾舉、糾正，審計部審核決算。",
+  };
+  // a 是正確的機關；ok 是轉對時的說明；hint 是轉錯時的提示
+  const EV = [
+    { c:"我大學畢業了，想考公務員。這個考試是誰辦的？", a:"exam", ok:"考試院的考選部，主管公務人員、專門職業及技術人員等國家考試。", hint:"他要的是「國家考試」。" },
+    { c:"酒駕的處罰太輕了！我希望修改法律。", a:"leg", ok:"制定、修改和廢止法律，是立法院的權力。", hint:"他要的是「修改法律」。" },
+    { c:"我和房東有糾紛，要打官司。是誰負責審判？", a:"jud", ok:"司法院設各級法院，負責各種訴訟的審判。", hint:"他要的是「審判」。" },
+    { c:"我要檢舉！某機關有公務人員違法收錢。", a:"ctrl", ok:"監察委員可以對違法或失職的公務人員行使彈劾、糾舉權。", hint:"對象是「違法的公務人員」。" },
+    { c:"全國的鐵路、公路政策，是誰在規畫和執行？", a:"exe", ok:"行政院負責國家政策的規畫與法案執行。交通事務由底下的交通部負責。", hint:"他問的是「政策的規畫和執行」。" },
+    { c:"發生大地震，災情嚴重，等修法來不及了。誰可以發布緊急命令？", a:"pres", ok:"總統。先經行政院會議決議，總統發布，十日內還要立法院追認。", hint:"「發布緊急命令」是誰的職權？" },
+    { c:"明年中央政府打算花多少錢，是誰在審查？", a:"leg", ok:"審查中央政府總預算，是立法院的職權。", hint:"他問的是「審查預算」。編預算的是行政院，審查的是另一個院。" },
+    { c:"我認為有一條法律違反憲法。誰來審理？", a:"jud", ok:"司法院的大法官組成憲法法庭，審理法律是否違反憲法。", hint:"他要有人「審理法律有沒有違憲」。" },
+    { c:"政府今年的錢花完了。有沒有亂花，是誰查帳？", a:"ctrl", ok:"監察院下設審計部，對各機關的年度決算行使審計權。", hint:"花完之後的「查帳」，也就是審核決算。" },
+    { c:"我剛當上公務員。我的等級和薪水是誰審定的？", a:"exam", ok:"考試院的銓敘部。審定公務人員的等級俸給，就叫「銓敘」。", hint:"公務人員的等級俸給，是哪個院在管？" },
+  ];
+  const box = $("sim"); let i = 0, trips = 0, clean = 0;
+  function show(){
+    const e = EV[i]; let miss = 0, done = false;
+    box.innerHTML = `<div class="prog"><i style="width:${Math.round(i/EV.length*100)}%"></i></div>
+      <div class="ev"><div class="evh"><span>第 ${i+1} / ${EV.length} 通電話</span><span>轉錯 <span class="trip">${trips}</span> 次</span></div>
+      <div class="call"><small>電話那頭說：</small>「${e.c}」</div><div class="six">${ORG.map(([k, n]) => `<button data-k="${k}">${n}</button>`).join("")}</div><div class="fb" hidden></div></div>`;
+    const fb = box.querySelector(".fb");
+    box.querySelectorAll(".six button").forEach(b => b.addEventListener("click", ()=>{
+      if(done || b.disabled) return; fb.hidden = false;
+      if(b.dataset.k === e.a){
+        done = true; b.classList.add("ok"); box.querySelectorAll(".six button").forEach(x => x.disabled = true);
+        if(!miss) clean++; logEv({ type:"sim", q:"c"+(i+1), ok: miss === 0 });
+        fb.className = "fb good";
+        fb.innerHTML = `<b>轉對了。</b>${e.ok}<div class="ctrl"><button class="chip on" id="simNext">${i+1 < EV.length ? "接下一通" : "看結果"}</button></div>`;
+        $("simNext").addEventListener("click", ()=>{ i++; i < EV.length ? show() : end(); });
+      } else {
+        miss++; trips++; b.classList.add("no"); b.disabled = true; box.querySelector(".trip").textContent = trips;
+        fb.className = "fb bad"; fb.innerHTML = `<b>轉錯了。</b>${JOB[b.dataset.k]}<p><span class="dx k">提示</span>${e.hint}再轉一次。</p>`;
+      }
+    }));
+  }
+  function end(){
+    box.innerHTML = `<div class="prog"><i style="width:100%"></i></div><div class="ev">
+      <p style="font-weight:bold">10 通電話，你一次就轉對 ${clean} 通，總共轉錯 ${trips} 次。</p>
+      <p>${trips ? "轉錯的地方，等一下在 ② 會看到那個機關完整的職權。" : "全部一次轉對。很厲害。"}</p>
+      <div class="ctrl"><button class="chip on" data-go="s2">去 ② 看總統和五院</button><button class="chip" id="simAgain">再玩一次</button></div></div>`;
+    $("simAgain").addEventListener("click", start);
+    cloudSend({ type:"模擬", detail:`中央政府總機：轉錯 ${trips} 次`, score:`${clean}/${EV.length}` });
+  }
+  function start(){ i = 0; trips = 0; clean = 0; show(); }
+  box.innerHTML = `<div class="ctrl"><button class="chip on big" id="simGo">開始值班（10 通電話）</button></div>`;
+  $("simGo").addEventListener("click", start);
+})();
+
+// ===================== 先猜再看 =====================
+document.querySelectorAll(".predict").forEach(box => {
+  const bs = [...box.querySelectorAll(".pb button")], rev = box.querySelector(".rev"), res = box.querySelector(".res"); let pick = -1;
+  bs.forEach((b, i) => b.addEventListener("click", ()=>{ if(!res.hidden) return; pick = i; bs.forEach(x => x.classList.remove("on")); b.classList.add("on"); rev.hidden = false; }));
+  rev.addEventListener("click", ()=>{
+    const ok = pick === +box.dataset.ans;
+    res.hidden = false; rev.hidden = true;
+    res.innerHTML = (ok ? "<b>你猜對了。</b>" : "<b>跟你猜的不一樣。</b>猜錯沒關係，先猜過再看，會記得比較久。") + box.dataset.exp;
+    bs[+box.dataset.ans].classList.add("ok"); logEv({ type:"predict", q:box.dataset.id, ok });
+  });
+});
+document.addEventListener("click", e => { const h = e.target.closest(".hide"); if(h) h.classList.add("show"); });
+
+// ===================== ② 總統和五院 =====================
+(function(){
+  const I = {
+    pres:{ n:"總統", is:"國家元首", pw:"我國的行政權由總統及行政院行使。",
+      who:"由人民直接選舉產生，任期四年，連選得連任一次。",
+      job:["統率全國陸海空三軍","依法公布法律、發布命令","任命或提名政府官員","發布緊急命令","決定國家安全大政方針"],
+      more:`<h3>緊急命令怎麼發布</h3><div class="lane"><div class="box">國家遭遇緊急危難，或要應付財政經濟上的重大變故</div><span class="ar">→</span><div class="box"><b>行政院會議</b>決議</div><span class="ar">→</span><div class="box"><b>總統</b>發布緊急命令</div><span class="ar">→</span><div class="box hl"><b>立法院</b>十日內追認</div></div>
+        <div class="two"><div><b>立法院同意</b><br>緊急命令有效</div><div><b>立法院不同意</b><br>緊急命令立即失效</div></div>` },
+    exe:{ n:"行政院", is:"我國最高行政機關", pw:"行政權：執行法律與政策的權力。",
+      who:"院長由總統任命。副院長及各部會首長，由行政院院長提請總統任命。",
+      job:["負責國家政策的規畫與法案執行，包括內政、教育與交通等事務","依法對立法院負責","院長及各部會首長要向立法院提出施政方針與施政報告，並接受立法委員的質詢"],
+      more:`<h3>行政院的 15 個部</h3><div class="tags">${["內政部","外交部","國防部","財政部","教育部","法務部","經濟部","交通部","文化部","衛生福利部","環境部","勞動部","農業部","數位發展部","運動部"].map(x => `<span>${x}</span>`).join("")}</div>` },
+    leg:{ n:"立法院", is:"我國最高立法機關，也是中央民意機關", pw:"立法權：制定、修改和廢止法律的權力。",
+      who:"由民選的立法委員組成，任期四年，連選得連任。院長及副院長由立法委員互選產生。",
+      job:["制定法律","審查中央政府總預算","質詢政府官員","對總統提名的官員行使人事同意權","對行政院院長提出不信任案","各項提案權（見下表）"],
+      more:`<h3>立法院的提案權：提出之後，誰決定？</h3><div class="tw"><table><tr><th>事由</th><th>提案</th><th>決議方式</th></tr>
+        <tr><td>憲法修正案</td><td rowspan="4">立法院提案</td><td rowspan="2">交由選舉人投票<b>複決</b></td></tr><tr><td>領土變更案</td></tr>
+        <tr><td>總統、副總統罷免案</td><td>交由選舉人投票<b>罷免</b></td></tr>
+        <tr><td>總統、副總統彈劾案</td><td>大法官召開<b>憲法法庭</b>審理</td></tr></table></div>
+        <div class="sup"><b>老師補充（上課筆記）：</b>立法委員的選舉是「單一選區兩票制」。一票選人：區域 73 席、原住民 6 席。一票選黨：不分區 34 席。</div>` },
+    jud:{ n:"司法院", is:"我國最高司法機關", pw:"司法權：以法律為依據，當發生糾紛時做為公正裁判的權力。",
+      who:"院長、副院長與大法官，皆由總統提名，經立法院同意後由總統任命。",
+      job:["設各級法院，負責各種訴訟的審判","設懲戒法院，專門處理公務人員違法失職的懲戒事項","大法官組成憲法法庭"],
+      more:`<h3>司法院的三種權</h3><div class="tw"><table><tr><th>權</th><th>誰負責</th><th>做什麼</th></tr>
+        <tr><td class="nw">解釋權</td><td class="nw">憲法法庭</td><td>審理法律是否違反憲法、總統副總統彈劾案、政黨違憲的解散案等</td></tr>
+        <tr><td class="nw">審判權</td><td class="nw">各級法院</td><td>各種訴訟的審判</td></tr>
+        <tr><td class="nw">懲戒權</td><td class="nw">懲戒法院</td><td>處理公務人員違法失職的懲戒事項</td></tr></table></div>` },
+    exam:{ n:"考試院", is:"我國最高考試機關", pw:"考試權：選拔、任用優秀人才做為國家公務員的權力。",
+      who:"院長、副院長及考試委員，皆由總統提名，經立法院同意後由總統任命。",
+      job:["設有考選部及銓敘部等機關","五院內的公務人員，須經考試院的考試才能任用"],
+      more:`<div class="two"><div><b>考選部</b><br>主管公務人員、專門職業及技術人員等國家考試。</div><div><b>銓敘部</b><br>負責公務人員的銓敘、撫卹、退休及其任免等事項。</div></div>
+        <h3>兩個難字（課本小幫手）</h3><ul><li><b>銓敘</b>（ㄑㄩㄢˊ ㄒㄩˋ）：考核公務人員的任用資格，例如資歷、考績，依法審定其等級俸給。</li><li><b>撫卹</b>（ㄈㄨˇ ㄒㄩˋ）：公務人員因公死亡、病故或意外死亡，由政府給與其家屬的幫助。</li></ul>` },
+    ctrl:{ n:"監察院", is:"我國最高監察機關", pw:"監察權：監督政府施政及經費運用的權力。",
+      who:"院長、副院長、監察委員及審計長，皆由總統提名，經立法院同意後由總統任命。",
+      job:["對違法或失職的公務人員行使彈劾、糾舉權","對行政機關的不當施政提出糾正案","下設審計部，對各機關年度決算行使審計權"],
+      more:`<div class="ctrl"><button class="chip jump" data-go="s4">去 ④ 看監察院的細節</button></div>` },
+  };
+  tabs($("instTabs"), Object.keys(I).map(k => [k, I[k].n]), k => {
+    const o = I[k];
+    $("instBox").innerHTML = `<h3>${o.n}：${o.is}</h3><p class="pw">${o.pw}</p><dl><dt>人員</dt><dd>${o.who}</dd><dt>職權</dt><dd><ul>${o.job.map(x => `<li>${x}</li>`).join("")}</ul></dd></dl>${o.more}`;
+  }, "pres");
+})();
+
+// ===================== ③ 官員怎麼產生 =====================
+sorter($("sortBox"), [
+  ["總統、副總統","v","人民直接選舉。"],
+  ["行政院院長","p","總統直接任命。"],
+  ["各部會首長（例如教育部部長）","r","行政院院長提請總統任命。"],
+  ["立法委員","v","人民直接選舉。"],
+  ["立法院院長、副院長","m","由立法委員互選產生。"],
+  ["司法院大法官","n","由總統提名，經立法院同意後由總統任命。"],
+  ["行政院副院長","r","行政院院長提請總統任命。"],
+  ["考試委員","n","由總統提名，經立法院同意後由總統任命。"],
+  ["監察委員","n","由總統提名，經立法院同意後由總統任命。"],
+  ["審計長","n","由總統提名，經立法院同意後由總統任命。"],
+], [["v","人民直接選舉"],["p","總統直接任命"],["r","行政院院長提請總統任命"],["m","立法委員互選"],["n","總統提名，立法院同意"]], "o",
+  (done, ok) => $("sortScore").textContent = done ? `已經分了 ${done} / 10 個，第一次就分對 ${ok} 個。` : "共 10 個職位。點它的產生方式。");
+
+// ===================== ④ 預算、對人對事 =====================
+stepper($("budget"), [["exe","行政院"],["leg","立法院"],["ctrl","監察院審計部"]], [
+  { w:["exe"], t:"編列預算", d:"行政院彙編各院的預算。" },
+  { w:["leg"], t:"審查預算", d:"立法院審查。" },
+  { w:["exe"], t:"執行預算、做成決算", d:"行政院照預算執行。年度結束，把實際花的錢做成決算。" },
+  { w:["ctrl"], t:"審核決算", d:"監察院的審計部審核。" },
+  { w:["leg"], t:"審議審核報告", d:"審計部的審核報告，再送立法院審議。" },
+]);
+sorter($("pvBox"), [
+  ["某位官員收受廠商的賄賂","p","人違法了。對人：彈劾或糾舉。"],
+  ["某部會的防災政策執行不當","t","是機關的施政沒做好。對事：糾正。"],
+  ["某位公務人員違法在外面兼職","p","人違法了。對人：彈劾或糾舉。"],
+  ["行政機關發放補助的方式不公平","t","是機關的施政不當。對事：糾正。"],
+  ["某位主管長期怠忽職守，該做的事都不做","p","人失職了。對人：彈劾或糾舉。"],
+  ["某機關一直沒有積極處理民眾的申訴案件","t","是機關沒有把事情做好。對事：糾正。"],
+], [["p","對人：彈劾、糾舉"],["t","對事：糾正"]], "v");
+
+// ===================== ⑤ 互動關係 =====================
+stepper($("noconf"), [["leg","立法院"],["exe","行政院院長"],["pres","總統"]], [
+  { w:["leg","exe"], t:"提出不信任案", d:"立法院對行政院院長提出不信任案。" },
+  { w:["exe","pres"], t:"院長辭職", d:"不信任案通過後，行政院院長應提出辭職，並且可以同時呈請總統解散立法院。" },
+  { w:["pres","leg"], t:"被動解散", d:"總統解散立法院，立法委員必須重新選舉。叫「被動」，是因為總統不能自己主動解散，要等行政院院長呈請。" },
+]);
+tabs($("reTabs"), [["keep","1/2 以上立委維持原決議"],["drop","否決原決議"]], k => {
+  $("reOut").innerHTML = k === "keep" ? `<b>維持原決議</b><p>行政院院長要<b>接受該決議</b>，照著執行。</p>` : `<b>否決原決議</b><p><b>原決議失效</b>。行政院不用執行原本那個決議。</p>`;
+}, "keep");
+
+// ===================== ⑥ 考考你 =====================
+(function(){
+  const SEC = { s2:"② 總統和五院", s3:"③ 官員怎麼產生", s4:"④ 監察院和預算", s5:"⑤ 互動關係" };
+  // 選擇題：o 的第一個是正確答案（出題時會打亂）；其他每個選項後面是「你可能是這樣想的」
+  // 排序題：seq 是正確順序
+  const Q = [
+    // ---- ② 總統和五院
+    {id:"a1", s:"s2", q:"發生嚴重災害，總統發布了緊急命令。發布之後，還要經過哪個機關追認？期限是多久？",
+      o:[["立法院，十日內",""],["行政院，十日內","行政院會議是在發布「之前」決議。發布「之後」追認的是立法院。"],["司法院，十日內","司法院負責審判。追認緊急命令的是代表民意的立法院。"],["不需要追認","緊急命令的權力很大，所以事後一定要立法院追認，這是制衡。"]],
+      why:"行政院會議決議 → 總統發布 → 立法院十日內追認。"},
+    {id:"a2", s:"s2", q:"把緊急命令的流程排出來：", seq:["國家遭遇緊急危難","行政院會議決議","總統發布緊急命令","立法院十日內追認"],
+      why:"先有危難，行政院會議決議，總統發布，最後立法院十日內追認。"},
+    {id:"a3", s:"s2", q:"總統發布緊急命令後，立法院表決「不同意」。這道緊急命令會怎樣？",
+      o:[["立即失效",""],["繼續有效，因為是總統發布的","總統發布的也要被監督。立法院不同意，緊急命令就立即失效。"],["交給憲法法庭決定","課本的流程裡，是由立法院追認，不同意就立即失效。"],["十日後才失效","十日是立法院追認的期限。不同意的話是「立即」失效。"]],
+      why:"立法院同意：有效。不同意：立即失效。"},
+    {id:"a4", s:"s2", q:"新聞說：「行政院院長今天到立法院提出施政報告，並接受立法委員質詢。」為什麼行政院院長要這樣做？",
+      o:[["因為行政院依法對立法院負責",""],["因為行政院院長是立法委員選出來的","行政院院長是總統任命的。但行政院仍然要對立法院負責。"],["因為立法院院長是行政院院長的上司","兩個院沒有上下關係。這是立法院在監督行政院。"],["因為法律是行政院制定的，要去說明","制定法律是立法院的權力。行政院負責執行。"]],
+      why:"行政院依法對立法院負責：提出施政方針與施政報告，接受質詢。"},
+    {id:"a5", s:"s2", q:"新聞說：「立法院今天行使人事同意權。」這最可能是在做什麼？",
+      o:[["對總統提名的大法官人選投票，決定同不同意",""],["選出新的行政院院長","行政院院長由總統直接任命，不需要立法院同意。"],["審查中央政府總預算","審預算也是立法院的職權，但那不叫人事同意權。"],["對行政院院長提出不信任案","不信任案是要讓院長下臺，不是同意人事。"]],
+      why:"人事同意權：對總統提名的官員，決定同意或不同意。"},
+    {id:"a6", s:"s2", q:"司法院的懲戒法院，工作是什麼？",
+      o:[["處理公務人員違法失職的懲戒事項",""],["審理法律是否違反憲法","那是憲法法庭的工作。"],["審理一般民眾的各種訴訟","那是各級法院的工作。"],["對公務人員提出彈劾","提出彈劾的是監察院。懲戒法院是負責審理的機關。"]],
+      why:"解釋權是憲法法庭，審判權是各級法院，懲戒權是懲戒法院。"},
+    {id:"a7", s:"s2", q:"下面哪一件事，是由憲法法庭審理的？",
+      o:[["政黨違憲的解散案",""],["公務人員違法失職的懲戒","那是懲戒法院。"],["兩位民眾之間的車禍官司","那是各級法院。"],["中央政府總預算","審查預算是立法院的職權，不是司法院的。"]],
+      why:"憲法法庭審理：法律是否違憲、總統副總統彈劾案、政黨違憲的解散案等。"},
+    {id:"a8", s:"s2", q:"阿哲剛考上公務員。「舉辦這場考試」和「審定他的等級俸給」，分別是考試院的哪個部？",
+      o:[["考選部辦考試，銓敘部審定等級俸給",""],["銓敘部辦考試，考選部審定等級俸給","剛好相反。「考選」是考試選人，「銓敘」是審定等級。"],["兩件都是考選部","考選部只管考試。考上之後的銓敘、撫卹、退休是銓敘部。"],["兩件都是行政院","國家考試和公務人員的銓敘，是考試院的職權。"]],
+      why:"考選部：國家考試。銓敘部：銓敘、撫卹、退休及任免等事項。"},
+    {id:"a9", s:"s2", q:"一位公務人員因公死亡，政府給他的家屬一筆幫助。這叫什麼？由哪個部負責？",
+      o:[["撫卹，銓敘部",""],["銓敘，考選部","銓敘是審定公務人員的等級俸給，不是給家屬的幫助。"],["退休，銓敘部","退休是本人離開職位。這裡是人過世了，幫助的是家屬。"],["撫卹，審計部","名稱對了。但審計部在監察院，負責審核決算。撫卹歸考試院的銓敘部。"]],
+      why:"撫卹：公務人員因公死亡、病故或意外死亡，由政府給與其家屬的幫助。"},
+    {id:"a10", s:"s2", q:"有民眾希望廢止一條過時的法律。這是哪個機關的權力？",
+      o:[["立法院",""],["行政院","行政院負責執行法律，不能自己廢止法律。"],["司法院","憲法法庭可以審理法律是否違憲。但制定、修改和廢止法律，是立法院的權力。"],["總統","總統依法公布法律，但不能自己廢止。"]],
+      why:"立法權：制定、修改和廢止法律的權力。"},
+    {id:"a11", s:"s2", q:"立法院提出憲法修正案之後，最後是怎麼決定的？",
+      o:[["交由選舉人投票複決",""],["由憲法法庭審理","交給憲法法庭的是總統、副總統彈劾案。"],["由總統決定","修憲不是總統一個人能決定的，要人民投票。"],["立法院通過就生效","立法院只是「提案」。憲法修正案還要交給選舉人投票複決。"]],
+      why:"憲法修正案、領土變更案：立法院提案，交由選舉人投票複決。"},
+    {id:"a12", s:"s2", q:"立法院提出的「總統罷免案」和「總統彈劾案」，最後的決定方式有什麼不同？",
+      o:[["罷免案交由選舉人投票，彈劾案由憲法法庭審理",""],["罷免案由憲法法庭審理，彈劾案交由選舉人投票","剛好相反。"],["兩種都交由選舉人投票","彈劾案不是用投票的，是大法官召開憲法法庭審理。"],["兩種都由憲法法庭審理","罷免案是交給選舉人投票。"]],
+      why:"罷免：人民投票。彈劾：憲法法庭審理。"},
+    {id:"a13", s:"s2", q:"課本說：我國的行政權由誰行使？",
+      o:[["總統及行政院",""],["只有行政院","行政院是最高行政機關沒錯。但課本寫的是「總統及行政院」，總統也有統率三軍、發布緊急命令等職權。"],["只有總統","日常的政策規畫和法案執行，是行政院在負責。"],["行政院及立法院","立法院行使的是立法權。"]],
+      why:"行政權：執行法律與政策的權力，由總統及行政院行使。"},
+    // ---- ③ 官員怎麼產生
+    {id:"b1", s:"s3", q:"下面哪一位「不是」人民直接選舉產生的？",
+      o:[["行政院院長",""],["總統","總統由人民直接選舉。"],["副總統","副總統和總統一起，由人民直接選舉。"],["立法委員","立法委員由人民直接選舉。"]],
+      why:"行政院院長由總統直接任命。"},
+    {id:"b2", s:"s3", q:"教育部部長是怎麼產生的？",
+      o:[["行政院院長提請總統任命",""],["總統提名，經立法院同意後任命","那是大法官、考試委員、監察委員、審計長。部會首長不用立法院同意。"],["人民直接選舉","人民直接選的只有總統、副總統和立法委員。"],["總統直接任命，不經過行政院院長","總統直接任命的是行政院院長。部會首長要由院長提請。"]],
+      why:"行政院副院長、各部會首長：行政院院長提請總統任命。"},
+    {id:"b3", s:"s3", q:"立法院院長是怎麼產生的？",
+      o:[["由立法委員互選產生",""],["人民直接選舉","人民選的是立法委員。院長是立法委員們自己互選出來的。"],["總統直接任命","總統直接任命的是行政院院長。"],["總統提名，經立法院同意","那是司法院、考試院、監察院的院長。立法院院長是互選的。"]],
+      why:"五個院長只有立法院院長是「互選」產生。"},
+    {id:"b4", s:"s3", q:"下面哪一組人，全部都是「由總統提名，經立法院同意後由總統任命」？",
+      o:[["大法官、考試委員、監察委員、審計長",""],["行政院院長、大法官、考試委員","行政院院長是總統直接任命，不用立法院同意。"],["立法院院長、監察委員、審計長","立法院院長是立法委員互選的。"],["各部會首長、考試委員、監察委員","部會首長是行政院院長提請總統任命。"]],
+      why:"司法院、考試院、監察院的重要官員，都是總統提名、立法院同意。"},
+    {id:"b5", s:"s3", q:"為什麼大法官、考試委員、監察委員由總統提名之後，還要經過立法院同意？",
+      o:[["讓民選的立法委員代表人民把關，總統不能一個人決定",""],["因為總統不認識這些人","重點不是認不認識，是權力不能集中在一個人手上。"],["因為這些人是立法院的部屬","他們分屬司法院、考試院、監察院，不是立法院的部屬。"],["因為這樣比較快","多一關其實比較慢。多這一關是為了制衡。"]],
+      why:"一個提名、一個同意，是權力分立下的制衡。"},
+    {id:"b6", s:"s3", q:"總統任命行政院院長，需不需要立法院同意？",
+      o:[["不需要，總統直接任命",""],["需要，和大法官一樣","大法官要立法院同意。行政院院長不用。"],["需要，由立法委員投票選出","行政院院長不是選出來的。"],["需要，由人民投票同意","人民直接選的是總統、副總統和立法委員。"]],
+      why:"行政院院長：總統直接任命。"},
+    // ---- ④ 監察院和預算
+    {id:"c1", s:"s4", q:"把預算和決算的流程排出來：", seq:["行政院編列預算","立法院審查預算","行政院執行預算、做成決算","監察院審計部審核決算","立法院審議審核報告"],
+      why:"行政院編、立法院審、行政院執行並做成決算、審計部審核、立法院審議審核報告。"},
+    {id:"c2", s:"s4", q:"政府今年把錢花完了。「審核決算」是哪個機關的工作？",
+      o:[["監察院審計部",""],["立法院","立法院在花錢之前審查預算，最後審議審計部的審核報告。但審核決算本身是審計部的工作。"],["行政院","行政院負責執行預算、做成決算。自己審自己不行，所以交給審計部。"],["司法院","司法院負責審判，不審核決算。"]],
+      why:"監察院下設審計部，對各機關年度決算行使審計權。"},
+    {id:"c3", s:"s4", q:"某個部會的防災政策執行不當。沒有人違法，是事情沒做好。監察院可以怎麼做？",
+      o:[["提出糾正案",""],["彈劾","彈劾的對象是「人」，要有公務人員違法或失職。這裡是機關的施政不當。"],["糾舉","糾舉的對象也是「人」。"],["提出不信任案","不信任案是立法院對行政院院長提的，不是監察院的職權。"]],
+      why:"糾正：以「事」為對象，針對行政院及其所屬機關的不當施政。"},
+    {id:"c4", s:"s4", q:"一位縣政府的官員貪汙。監察院彈劾之後，案子交給誰審理？",
+      o:[["司法院懲戒法院",""],["憲法法庭","憲法法庭審理的是總統、副總統的彈劾案。"],["立法院","立法院不審理公務人員的彈劾案。"],["這位官員的主管","向主管或上級長官提出的是「糾舉」，不是彈劾。"]],
+      why:"公務人員彈劾案：監察院提出，司法院懲戒法院審理。"},
+    {id:"c5", s:"s4", q:"監察院彈劾、糾舉的對象，「不包括」下面哪一種人？",
+      o:[["立法委員",""],["中央機關的公務人員","中央的公務人員是彈劾、糾舉的對象。"],["縣市政府的公務人員","地方的公務人員也是彈劾、糾舉的對象。"],["部會裡違法失職的職員","他是公務人員，是彈劾、糾舉的對象。"]],
+      why:"彈劾、糾舉的對象是中央與地方公務人員，但不含總統、副總統與民意代表。"},
+    {id:"c6", s:"s4", q:"彈劾和糾舉都是以「人」為對象。它們分別向誰提出？",
+      o:[["彈劾向懲戒法院，糾舉向被糾舉人的主管或上級長官",""],["彈劾向主管或上級長官，糾舉向懲戒法院","剛好相反。"],["兩種都向懲戒法院提出","糾舉是向被糾舉人的主管或上級長官提出。"],["兩種都向立法院提出","立法院不是受理的機關。"]],
+      why:"彈劾：向司法院懲戒法院提出。糾舉：向主管或上級長官提出。"},
+    {id:"c7", s:"s4", q:"某機關的職員洩漏民眾的個人資料，機關卻一直沒有處理。監察院對「那位職員」和「那個機關」，分別可以怎麼做？",
+      o:[["對職員彈劾，對機關糾正",""],["對職員糾正，對機關彈劾","剛好相反。糾正是對事（機關的施政），彈劾是對人。"],["兩個都糾正","職員是「人」，違法失職要用彈劾或糾舉。"],["兩個都彈劾","機關沒把事情做好，是「事」，要用糾正。"]],
+      why:"對人：彈劾、糾舉。對事：糾正。"},
+    {id:"c8", s:"s4", q:"「監督政府施政及經費運用的權力」，是五權裡的哪一種？",
+      o:[["監察權",""],["立法權","立法院也監督政府，但課本對立法權的定義是：制定、修改和廢止法律的權力。"],["司法權","司法權是發生糾紛時做為公正裁判的權力。"],["考試權","考試權是選拔、任用人才做為公務員的權力。"]],
+      why:"監察權：監督施政（彈劾、糾舉、糾正）和經費運用（審計）。"},
+    // ---- ⑤ 互動關係
+    {id:"d1", s:"s5", q:"立法院通過了對行政院院長的不信任案。接下來會怎樣？",
+      o:[["行政院院長應提出辭職，並得同時呈請總統解散立法院",""],["總統要辭職","不信任案的對象是行政院院長，不是總統。"],["立法院院長接任行政院院長","行政院院長由總統任命，不是立法院院長接任。"],["什麼都不會發生","不信任案通過，院長就必須辭職。"]],
+      why:"不信任案通過：院長辭職，並得呈請總統解散立法院，立法委員重新選舉。"},
+    {id:"d2", s:"s5", q:"把不信任案通過後的流程排出來：", seq:["立法院提出不信任案","行政院院長辭職，並呈請總統解散立法院","總統解散立法院","立法委員重新選舉"],
+      why:"立法院提出 → 院長辭職並呈請總統解散立法院 → 立法委員重新選舉。"},
+    {id:"d3", s:"s5", q:"立法院對行政院院長提出不信任案，結果沒有通過。會怎樣？",
+      o:[["一年內不得對同一位行政院院長再提不信任案",""],["行政院院長還是要辭職","沒有通過，院長就不用辭職。"],["立法院會被解散","解散要在不信任案「通過」、院長呈請之後才會發生。"],["下個月可以再提一次","沒通過的話，一年內不能對同一位院長再提。"]],
+      why:"未通過：一年內不得對同一行政院院長再提不信任案。"},
+    {id:"d4", s:"s5", q:"總統可以想解散立法院就解散嗎？",
+      o:[["不行。要立法院通過不信任案，行政院院長呈請之後才能解散",""],["可以，這是總統的權力","總統不能主動解散。課本叫它「被動解散」。"],["不行，要司法院同意才可以","不是司法院同意，是要不信任案通過後行政院院長呈請。"],["不行，立法院永遠不能被解散","可以被解散，只是有條件。"]],
+      why:"被動解散：不信任案通過 → 院長呈請 → 總統才能解散立法院。"},
+    {id:"d5", s:"s5", q:"行政院認為立法院通過的法律窒礙難行，想移請覆議。要先經過誰核可？",
+      o:[["總統",""],["司法院","覆議的流程裡沒有司法院。"],["監察院","覆議的流程裡沒有監察院。"],["不需要，行政院自己決定","要先經總統核可，才能移請立法院覆議。"]],
+      why:"行政院認為窒礙難行 → 經總統核可 → 移請立法院覆議。"},
+    {id:"d6", s:"s5", q:"覆議的時候，有 1/2 以上的立法委員投票維持原決議。結果是什麼？",
+      o:[["行政院院長要接受該決議",""],["原決議失效","那是「否決原決議」的結果，剛好相反。"],["行政院院長要辭職","辭職是不信任案通過的結果，不是覆議。"],["立法院被解散","解散是不信任案那一套制度，不是覆議。"]],
+      why:"維持原決議 → 行政院院長接受。否決原決議 → 原決議失效。"},
+    {id:"d7", s:"s5", q:"下面哪一種案子，行政院「不能」移請立法院覆議？",
+      o:[["不信任案",""],["法律案","法律案可以覆議。"],["預算案","預算案可以覆議。"],["條約案","條約案可以覆議。"]],
+      why:"可以覆議的是法律案、預算案、條約案。"},
+    {id:"d8", s:"s5", q:"總統的彈劾案，是誰提出、誰審理？",
+      o:[["立法院提出，憲法法庭審理",""],["監察院提出，懲戒法院審理","那是公務人員的彈劾案。監察院的彈劾對象不含總統、副總統。"],["監察院提出，憲法法庭審理","提出的機關是立法院，不是監察院。"],["立法院提出，懲戒法院審理","審理的是司法院大法官組成的憲法法庭。"]],
+      why:"總統、副總統：立法院 → 憲法法庭。公務人員：監察院 → 懲戒法院。"},
+    {id:"d9", s:"s5", q:"「不信任案」和「覆議」，分別是誰對誰做的？",
+      o:[["不信任案是立法院對行政院院長；覆議是行政院請立法院再表決",""],["不信任案是行政院對立法院；覆議是立法院請行政院再想","剛好相反。"],["兩個都是立法院對行政院","覆議是行政院發動的，請立法院重新表決。"],["兩個都是行政院對立法院","不信任案是立法院發動的。"]],
+      why:"這是行政權和立法權互相制衡的兩種方法，方向相反。"},
+    {id:"d10", s:"s5", q:"不信任案、覆議、彈劾，這些制度共同的目的是什麼？",
+      o:[["讓各機關互相制衡，防止政府濫權",""],["讓政府做事更快","互相制衡其實會讓事情變慢。目的不是快，是不讓權力被濫用。"],["讓總統的權力變大","剛好相反。這些制度連總統都可以被彈劾。"],["讓立法院管理其他四個院","五院之間沒有誰管誰，是互相制衡。"]],
+      why:"權力分立是民主國家政府運作的原則，以制衡關係防止政府濫權。"},
+  ];
+  const KEY = "gov4_quiz_v1"; let ST = {};
+  try{ ST = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(e){}
+  const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} };
+  const rec = id => ST[id] || (ST[id] = { n:0, ok:0, last:"" });
+  const isWrong = q => { const r = ST[q.id]; return r && (r.last === "no" || r.last === "guess"); };
+  const box = $("quiz"), ana = $("ana"), back = $("backBtn");
+  let round = [], idx = 0, okN = 0, misses = [];
+
+  // 跳回去看那一段，再跳回題目
+  function goSec(s, fromQuiz){
+    const el = $(s); el.scrollIntoView({ behavior:"smooth", block:"start" });
+    el.classList.add("flash"); setTimeout(()=> el.classList.remove("flash"), 2600);
+    back.hidden = !fromQuiz;
+  }
+  back.addEventListener("click", ()=>{ $("s6").scrollIntoView({ behavior:"smooth", block:"start" }); back.hidden = true; });
+  const jumpBtn = s => `<button class="chip jump" data-go="${s}" data-q="1">回去看 ${SEC[s]}</button>`;
+  document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if(b) goSec(b.dataset.go, !!b.dataset.q); });
+
+  function build(onlyWrong){
+    const pri = q => isWrong(q) ? 0 : !ST[q.id] || !ST[q.id].n ? 1 : 2;
+    const pool = shuf(Q.filter(q => !onlyWrong || isWrong(q))).sort((a,b) => pri(a)-pri(b));
+    const out = [], cnt = {};
+    // 每一段先各出一題，再平均補到 10 題，確保四段都考到
+    for(const cap of (onlyWrong ? [99] : [1,2,3,99]))
+      for(const q of pool){ if(out.length >= 10) break; if(out.includes(q) || (cnt[q.s]||0) >= cap) continue; cnt[q.s] = (cnt[q.s]||0)+1; out.push(q); }
+    return shuf(out);
+  }
+  function start(onlyWrong){
+    round = build(onlyWrong); idx = 0; okN = 0; misses = [];
+    if(!round.length){ box.innerHTML = `<p class="lead">錯題本是空的。先練一回吧。</p>`; return; }
+    show();
+  }
+  function finish(q, right, diag){
+    const guess = box.querySelector(".guess input").checked, r = rec(q.id);
+    r.n++; if(right) r.ok++; r.last = !right ? "no" : guess ? "guess" : "ok"; save();
+    pracCount++; if(right){ pracOk++; okN++; } if(r.last !== "ok") misses.push(q);
+    logEv({ type:"quiz", q:q.id, sec:q.s, ok:right, guess });
+    const fb = box.querySelector(".fb"); fb.hidden = false; fb.className = "fb " + (right ? "good" : "bad");
+    let h = right ? (guess ? "<b>答對了。</b>不過你說是用猜的，我先把它放進錯題本，之後再考你一次。" : "<b>答對了。</b>") : "<b>這題沒答對。</b>";
+    if(!right && diag) h += `<p><span class="dx">你可能是這樣想的</span>${esc(diag)}</p>`;
+    h += `<p><span class="dx k">關鍵</span>${esc(q.why)}</p>`;
+    h += `<div class="ctrl">${right && !guess ? "" : jumpBtn(q.s)}<button class="chip on" id="nextQ">${idx+1 < round.length ? "下一題" : "看這一回的結果"}</button></div>`;
+    fb.innerHTML = h; box.querySelector(".guess").style.display = "none";
+    $("nextQ").addEventListener("click", ()=>{ idx++; idx < round.length ? show() : summary(); });
+    renderAna();
+  }
+  function show(){
+    const q = round[idx];
+    let h = `<div class="q"><div class="qhead"><span>第 ${idx+1} / ${round.length} 題</span><span class="tag">${SEC[q.s]}</span></div><p class="t">${esc(q.q)}</p>`;
+    h += `<label class="guess"><input type="checkbox"> 這題我不太確定，是用猜的</label>`;
+    h += q.seq ? `<div class="ans"></div><div class="pool"></div><button class="chip" id="resetO">重排</button>` : `<div class="opts"></div>`;
+    h += `<div class="fb" hidden></div></div>`;
+    box.innerHTML = h;
+    if(q.seq){
+      const ans = box.querySelector(".ans"), pool = box.querySelector(".pool"); let pick = [], done = false;
+      const paint = () => {
+        ans.innerHTML = pick.length ? pick.map((t,i) => `<span class="oc">${i+1}. ${t}</span>`).join("<i>→</i>") : `<span class="ph">照順序點下面的步驟</span>`;
+        [...pool.children].forEach(b => b.disabled = pick.includes(b.textContent));
+      };
+      shuf(q.seq).forEach(t => { const b = document.createElement("button"); b.className = "chip"; b.textContent = t;
+        b.addEventListener("click", ()=>{ if(done) return; pick.push(t); paint();
+          if(pick.length === q.seq.length){ done = true; $("resetO").style.display = "none";
+            const k = pick.findIndex((x,i) => x !== q.seq[i]), right = k < 0;
+            if(!right) ans.children[k*2].classList.add("no");
+            finish(q, right, right ? "" : (k === 0 ? `第一步應該是「${q.seq[0]}」。` : `「${q.seq[k-1]}」的下一步應該是「${q.seq[k]}」，不是「${pick[k]}」。`)); } });
+        pool.appendChild(b); });
+      $("resetO").addEventListener("click", ()=>{ if(!done){ pick = []; paint(); } }); paint();
+    } else {
+      const opts = box.querySelector(".opts"), order = shuf(q.o.map((_,i) => i)); let done = false;
+      order.forEach(i => { const b = document.createElement("button"); b.textContent = q.o[i][0]; b.dataset.i = i;
+        b.addEventListener("click", ()=>{ if(done) return; done = true; const right = i === 0;
+          b.classList.add(right ? "ok" : "no"); opts.querySelector('[data-i="0"]').classList.add("ok"); finish(q, right, q.o[i][1]); });
+        opts.appendChild(b); });
+    }
+  }
+  function summary(){
+    const bySec = {}; misses.forEach(q => (bySec[q.s] = bySec[q.s] || []).push(q));
+    let h = `<div class="q"><p class="t">這一回：${round.length} 題答對 ${okN} 題</p>`;
+    if(!misses.length) h += `<p>全部答對，而且都不是用猜的。很紮實。</p>`;
+    else {
+      h += `<p>下面這幾段再看一次，然後按「只練錯題」。</p>`;
+      for(const s in bySec) h += `<div class="miss"><b>${SEC[s]}</b>（${bySec[s].length} 題）${jumpBtn(s)}<ul>${bySec[s].map(q => `<li>${esc(q.q)}</li>`).join("")}</ul></div>`;
+    }
+    h += `<div class="ctrl"><button class="chip on" id="again">再練一回（錯的和沒做過的先出）</button>${misses.length ? `<button class="chip" id="onlyW">只練錯題</button>` : ""}</div></div>`;
+    box.innerHTML = h;
+    $("again").addEventListener("click", ()=> start(false));
+    if($("onlyW")) $("onlyW").addEventListener("click", ()=> start(true));
+    cloudSend({ type:"小測驗", detail:`第4章 中央政府 一回 ${round.length} 題；要再看：${Object.keys(bySec).map(s => SEC[s]).join("、") || "無"}`, score:`${okN}/${round.length}` });
+  }
+  function renderAna(){
+    const wrong = Q.filter(isWrong), seen = Q.filter(q => ST[q.id] && ST[q.id].n).length;
+    let h = `<p class="lead">題庫共 ${Q.length} 題，你做過 ${seen} 題。紀錄只存在這台裝置的瀏覽器。</p><div class="bars">`;
+    let weak = null, weakRate = 2;
+    for(const s in SEC){
+      let n = 0, ok = 0; Q.filter(q => q.s === s).forEach(q => { const r = ST[q.id]; if(r){ n += r.n; ok += r.ok; } });
+      const rate = n ? ok/n : 0; if(n >= 2 && rate < weakRate){ weakRate = rate; weak = s; }
+      h += `<div class="bar"><span class="nm">${SEC[s]}</span><span class="tr"><i style="width:${Math.round(rate*100)}%;background:${!n ? "#e5e7eb" : rate >= .8 ? "#16a34a" : rate >= .5 ? "#d97706" : "#dc2626"}"></i></span><span class="pc">${n ? `答對 ${ok}／${n}` : "還沒做"}</span></div>`;
+    }
+    h += `</div>`;
+    if(weak && weakRate < .8) h += `<div class="key">目前最需要再看的是 <b>${SEC[weak]}</b>。${jumpBtn(weak)}</div>`;
+    h += `<h3>錯題本（${wrong.length} 題）</h3>`;
+    if(!wrong.length) h += `<p style="color:var(--sub)">目前沒有錯題。答錯或用猜的題目會出現在這裡，之後答對就會移除。</p>`;
+    else h += `<ul class="wb">${wrong.map(q => `<li>${esc(q.q)} <span class="tag">${ST[q.id].last === "guess" ? "用猜的" : "答錯"}</span> ${jumpBtn(q.s)}</li>`).join("")}</ul><div class="ctrl"><button class="chip on" id="anaW">只練錯題（${Math.min(10, wrong.length)} 題）</button></div>`;
+    h += `<div class="ctrl"><button class="chip" id="clr">清除我的作答紀錄</button></div>`;
+    ana.innerHTML = h;
+    if($("anaW")) $("anaW").addEventListener("click", ()=>{ start(true); $("s6").scrollIntoView({ behavior:"smooth" }); });
+    $("clr").addEventListener("click", ()=>{ if(confirm("確定要清除這一課的作答紀錄和錯題本嗎？清掉就救不回來。")){ ST = {}; save(); renderAna(); } });
+  }
+  box.innerHTML = `<div class="ctrl"><button class="chip on big" id="go">開始練一回（10 題）</button></div>`;
+  $("go").addEventListener("click", start.bind(null, false));
+  renderAna();
+})();
+</script>
+</body>
+</html>
