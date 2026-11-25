@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國二公民｜政府怎麼運作：遇到問題找誰？</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f5f7fa; --card:#ffffff; --border:#e5e7eb; --radius:14px;
+    --pri:#4338ca; --pri-soft:#e0e7ff; --teal:#0f766e; --teal-soft:#d9f2ee;
+    --red:#dc2626; --red-soft:#fee2e2; --green:#15803d; --green-soft:#dcfce7;
+    --amber:#b45309; --amber-soft:#fef3c7; --blue:#1d4ed8; --blue-soft:#dbeafe;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:20px 16px 80px;}
+  a{color:var(--blue);}
+
+  header.hero{background:linear-gradient(120deg,#312e81 0%,#4338ca 40%,#115e59 80%,#0f766e 100%); color:#fff; border-radius:var(--radius); padding:26px 24px; margin-bottom:16px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px; line-height:1.4;}
+  header.hero p{opacity:.95; font-size:.95rem;}
+
+  nav.toc{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;}
+  nav.toc a{background:#fff; border:1px solid var(--border); border-radius:99px; padding:3px 12px; font-size:.86rem; text-decoration:none; color:var(--ink);}
+  nav.toc a:hover{border-color:var(--pri); color:var(--pri);}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:16px;}
+  .card h2{font-size:1.18rem; color:var(--pri); margin-bottom:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .card ul,.card ol{margin-left:1.3em;}
+  .lead{font-size:.98rem; margin-bottom:10px;}
+  .key{background:var(--pri-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.95rem; color:#312e81;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e3a8a;}
+  .sup{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.93rem;}
+  .sup > b:first-child{color:var(--amber);}
+
+  .ctrl{display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:8px 0;}
+  .ctrl .lab{font-size:.86rem; color:var(--sub); margin-right:2px; min-width:5.5em;}
+  .chip{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 13px; cursor:pointer; font-family:inherit; font-size:.88rem; color:var(--ink);}
+  .chip:hover{border-color:var(--pri); color:var(--pri);}
+  .chip.on{background:var(--pri); border-color:var(--pri); color:#fff;}
+  .chip.on:hover{color:#fff;}
+  .chip.big{padding:8px 16px; font-size:.95rem; font-weight:bold;}
+  .chip:disabled{opacity:.35; cursor:default;}
+
+  /* 政府地圖 */
+  .gmap{border:1px solid var(--border); border-radius:12px; padding:10px; background:#fafbff; margin:10px 0;}
+  .gmap .tier{display:grid; grid-template-columns:5.2em 1fr; gap:8px; align-items:stretch;}
+  .gmap .tier + .tier{margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);}
+  .gmap .tl{font-weight:bold; font-size:.9rem; display:flex; flex-direction:column; justify-content:center;}
+  .gmap .tl small{font-weight:normal; color:var(--sub); font-size:.74rem; line-height:1.4;}
+  .gmap .nodes{display:grid; grid-template-columns:repeat(auto-fit,minmax(104px,1fr)); gap:6px;}
+  .gn{border:1px solid var(--border); background:#fff; border-radius:10px; padding:6px 8px; font-family:inherit; text-align:left; cursor:pointer; color:#9ca3af; line-height:1.45;}
+  .gn b{display:block; font-size:.92rem;}
+  .gn small{font-size:.74rem;}
+  .gn.lit{color:var(--ink); border-color:#a5b4fc; background:var(--pri-soft);}
+  .gn.lit.loc{border-color:#5eead4; background:var(--teal-soft);}
+  .gn.now{outline:3px solid #facc15; color:var(--ink);}
+  .gmap .info{font-size:.88rem; color:var(--sub); margin-top:8px; min-height:1.6em;}
+  @media (max-width:520px){ .gmap .tier{grid-template-columns:1fr;} .gmap .tl{flex-direction:row; gap:8px; align-items:baseline; justify-content:flex-start;} }
+
+  /* 模擬 */
+  .ev{border:2px solid #c7d2fe; border-radius:12px; padding:12px 14px; background:#fff;}
+  .ev .evh{display:flex; justify-content:space-between; gap:8px; font-size:.84rem; color:var(--sub); margin-bottom:4px; flex-wrap:wrap;}
+  .ev .mon{display:inline-block; background:var(--pri); color:#fff; border-radius:99px; padding:0 10px; font-size:.8rem; margin-right:6px;}
+  .ev .story{font-size:.98rem; margin-bottom:6px;}
+  .ev .ask{font-weight:bold; margin-bottom:6px;}
+  .ev .opts{display:grid; gap:6px;}
+  .ev .opts button,.q button{border:1px solid var(--border); background:#fff; border-radius:8px; padding:7px 12px; font-family:inherit; font-size:.94rem; cursor:pointer; text-align:left; color:var(--ink);}
+  .ev .opts button:hover,.q button:hover{border-color:var(--pri);}
+  .ev .opts button.ok,.q button.ok{background:var(--green-soft); border-color:var(--green);}
+  .ev .opts button.no,.q button.no{background:var(--red-soft); border-color:var(--red);}
+  .ev .opts button:disabled{cursor:default;}
+  .trip{font-weight:bold; color:var(--red);}
+  .prog{height:8px; background:#e5e7eb; border-radius:99px; overflow:hidden; margin-bottom:10px;}
+  .prog i{display:block; height:100%; background:var(--pri); border-radius:99px; transition:width .3s;}
+
+  table{border-collapse:collapse; width:100%; font-size:.92rem; margin-top:10px;}
+  th,td{border:1px solid var(--border); padding:6px 8px; text-align:left; vertical-align:top;}
+  th{background:#f8fafc; white-space:nowrap;}
+  td.nw{white-space:nowrap;}
+  .tw{overflow-x:auto;}
+
+  /* 分流器 */
+  .result{border:2px solid #facc15; background:#fefce8; border-radius:12px; padding:10px 14px; margin-top:8px;}
+  .result .go{font-weight:bold; font-size:1.05rem;}
+  .result p{font-size:.94rem;}
+
+  /* 院卡片 */
+  .inst{border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-top:8px; background:#fff;}
+  .inst h3{margin:0 0 4px; color:var(--pri);}
+  .inst dl{display:grid; grid-template-columns:5.5em 1fr; gap:4px 10px; font-size:.93rem;}
+  .inst dt{font-weight:bold; color:var(--sub);}
+  .inst dd ul{margin-left:1.1em;}
+  .inst .mix{background:var(--red-soft); border-radius:8px; padding:6px 10px; margin-top:8px; font-size:.9rem; color:#7f1d1d;}
+
+  /* 流程 */
+  .mini{display:grid; grid-template-columns:repeat(6,1fr); gap:5px; margin:8px 0;}
+  .mini span{border:1px solid var(--border); border-radius:8px; text-align:center; font-size:.84rem; padding:5px 2px; color:#9ca3af; background:#fff;}
+  .mini span.now{background:#fef08a; border-color:#eab308; color:var(--ink); font-weight:bold;}
+  @media (max-width:520px){ .mini{grid-template-columns:repeat(3,1fr);} }
+  .step{border:1px solid var(--border); border-radius:12px; padding:10px 14px; background:#fff;}
+  .step .no{display:inline-block; background:var(--pri); color:#fff; border-radius:99px; min-width:1.9em; text-align:center; margin-right:6px;}
+  .step p{font-size:.94rem; margin-top:4px;}
+  .dots{display:flex; gap:4px; flex-wrap:wrap;}
+  .dots button{border:1px solid var(--border); background:#fff; border-radius:8px; padding:2px 9px; font-family:inherit; font-size:.82rem; cursor:pointer; color:var(--ink);}
+  .dots button.on{background:var(--pri); border-color:var(--pri); color:#fff;}
+
+  /* 地方政府樹 */
+  .tree{display:grid; gap:8px; margin-top:8px;}
+  .lv{border:1px solid var(--border); border-radius:12px; padding:8px 12px; background:#fff;}
+  .lv .lvn{font-weight:bold; font-size:.9rem; color:var(--teal);}
+  .lv .pair{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:4px;}
+  .lv .pair > div{border-radius:8px; padding:6px 10px; font-size:.9rem; background:#f8fafc;}
+  .lv .pair > div.none{background:repeating-linear-gradient(45deg,#f8fafc,#f8fafc 6px,#f1f5f9 6px,#f1f5f9 12px); color:var(--sub);}
+  .lv small{color:var(--sub);}
+  .pill{display:inline-block; border-radius:99px; padding:0 8px; font-size:.76rem; font-weight:bold; margin-left:4px; white-space:nowrap;}
+  .pill.v{background:var(--green-soft); color:var(--green);} .pill.a{background:var(--amber-soft); color:var(--amber);}
+  .arrow{text-align:center; color:var(--sub); font-size:.8rem; line-height:1;}
+  @media (max-width:520px){ .lv .pair{grid-template-columns:1fr;} }
+
+  /* 分類 */
+  .sort{display:grid; gap:6px; margin-top:8px;}
+  .sc{display:grid; grid-template-columns:1fr auto; gap:6px 10px; align-items:center; border:1px solid var(--border); border-radius:10px; padding:6px 10px; background:#fff;}
+  .sc .tx{font-size:.94rem;}
+  .sc .bt{display:flex; gap:4px;}
+  .sc .bt button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:3px 12px; font-family:inherit; font-size:.86rem; cursor:pointer; color:var(--ink);}
+  .sc .bt button.ok{background:var(--green-soft); border-color:var(--green);} .sc .bt button.no{background:var(--red-soft); border-color:var(--red);}
+  .sc .ex{grid-column:1 / -1; font-size:.86rem; color:var(--sub);}
+  .sc.right{border-color:#86efac;} .sc.wrong{border-color:#fca5a5;}
+
+  /* 救濟路線 */
+  .lane{display:flex; flex-wrap:wrap; gap:6px; align-items:stretch; margin-top:8px;}
+  .lane .box{flex:1 1 150px; border:1px solid var(--border); border-radius:10px; padding:8px 10px; background:#fff; font-size:.9rem;}
+  .lane .box b{display:block; color:var(--pri);}
+  .lane .ar{align-self:center; color:var(--sub);}
+  .tel{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:6px; margin-top:8px;}
+  .tel div{border:1px solid var(--border); border-radius:10px; padding:6px 10px; font-size:.88rem; background:#fff;}
+  .tel b{font-size:1.1rem; color:var(--pri); margin-right:6px;}
+
+  /* 測驗引擎（照「人體的循環」那一頁） */
+  .q{border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-top:10px;}
+  .q p.t{font-weight:bold; margin-bottom:6px;}
+  .q .opts{display:grid; gap:6px;}
+  .q .qhead{display:flex; justify-content:space-between; gap:8px; font-size:.84rem; color:var(--sub); margin-bottom:4px;}
+  .tag{display:inline-block; background:#f1f5f9; border-radius:99px; padding:0 9px; font-size:.78rem; color:#475569; white-space:nowrap;}
+  .guess{display:block; font-size:.88rem; color:var(--sub); margin:2px 0 8px; cursor:pointer;}
+  .fb{margin-top:10px; border-radius:10px; padding:10px 12px; font-size:.94rem;}
+  .fb.good{background:var(--green-soft);} .fb.bad{background:var(--red-soft);}
+  .fb p{margin-top:6px;}
+  .dx{display:inline-block; background:#fff; border:1px solid #fca5a5; color:#b91c1c; border-radius:6px; padding:0 7px; font-size:.8rem; font-weight:bold; margin-right:6px;}
+  .dx.k{border-color:#86efac; color:#15803d;}
+  .chip.jump{border-color:var(--blue); color:var(--blue);}
+  .ans{min-height:44px; border:2px dashed var(--border); border-radius:10px; padding:6px 8px; margin-bottom:8px; display:flex; flex-wrap:wrap; gap:4px; align-items:center;}
+  .ans .oc{background:var(--blue-soft); border-radius:8px; padding:1px 8px; font-size:.9rem;} .ans .oc.no{background:var(--red-soft); outline:2px solid var(--red);}
+  .ans i{color:var(--sub); font-style:normal;} .ans .ph{color:var(--sub); font-size:.88rem;}
+  .pool{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;} .pool .chip:disabled{opacity:.3; cursor:default;}
+  .miss{border-top:1px dashed var(--border); padding-top:8px; margin-top:8px;} .miss ul{font-size:.9rem; color:var(--sub);} .miss .chip{margin-left:6px;}
+  .bars{display:grid; gap:6px;}
+  .bar{display:grid; grid-template-columns:9.5em 1fr 6.5em; gap:8px; align-items:center; font-size:.88rem;}
+  .bar .tr{height:12px; background:#f1f5f9; border-radius:99px; overflow:hidden;} .bar .tr i{display:block; height:100%; border-radius:99px;}
+  .bar .pc{color:var(--sub); text-align:right;}
+  .wb{font-size:.92rem;} .wb li{margin-bottom:6px;} .wb .chip{padding:2px 10px; font-size:.8rem;}
+  .card.flash{animation:flash 2.6s;} @keyframes flash{0%,60%{box-shadow:0 0 0 4px #facc15;}100%{box-shadow:0 0 0 0 transparent;}}
+  #backBtn{position:fixed; right:14px; bottom:16px; z-index:20; background:var(--blue); color:#fff; border:none; border-radius:99px; padding:11px 18px; font-family:inherit; font-size:1rem; font-weight:bold; box-shadow:0 4px 14px rgba(0,0,0,.25); cursor:pointer;}
+  .predict{border:2px dashed #93c5fd; background:#f0f7ff; border-radius:12px; padding:10px 14px; margin:10px 0; font-size:.95rem;}
+  .predict .pb{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0;}
+  .predict .pb button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 14px; font-family:inherit; font-size:.9rem; cursor:pointer; color:var(--ink);}
+  .predict .pb button.on{border-color:var(--blue); background:var(--blue-soft);} .predict .pb button.ok{border-color:var(--green); background:var(--green-soft);}
+  .links{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:8px;}
+  .links a{border:1px solid var(--border); border-radius:10px; padding:8px 12px; text-decoration:none; color:var(--ink); font-size:.9rem; background:#fff;}
+  .links a:hover{border-color:var(--pri);}
+  [hidden]{display:none !important;}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:24px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">108 課綱 · 國中公民 八年級上學期 · 中央政府與地方政府（公Be-Ⅳ-3）</span>
+  <h1>政府怎麼運作：遇到問題找誰？</h1>
+  <p>課本會告訴你五個院、縣市政府各有什麼職權。這一頁反過來：先讓你<b>遇到事情</b>，自己決定要找誰。找錯了也沒關係，你會知道那個機關為什麼幫不上忙。</p>
+</header>
+
+<nav class="toc">
+  <a href="#s1">① 小安家的一年</a><a href="#s2">② 三個問題</a><a href="#s3">③ 總統和五院</a><a href="#s4">④ 接力和牽制</a><a href="#s5">⑤ 地方政府</a><a href="#s6">⑥ 中央還是地方</a><a href="#s7">⑦ 權益受損怎麼辦</a><a href="#s8">⑧ 考考你</a><a href="#s9">⑨ 錯題本</a>
+</nav>
+
+<div class="note">這一頁是照課綱和現行法規寫的，<b>還沒有對照你的課本</b>。用詞和課本不一樣時，以課本為準。看到<b style="color:#b45309">黃色框「補充」</b>，代表八上的課本多半沒有寫，是幫你理解用的。</div>
+
+<!-- ============ ① ============ -->
+<div class="card" id="s1">
+  <h2>① 先玩一輪：小安家的一年</h2>
+  <p class="lead">小安念國二。今年全家搬到<b>晴川市東河區</b>（虛構的直轄市）。這一年他們家碰到 12 件事。每件事你都要決定：<b>去找誰？</b></p>
+  <ul style="font-size:.92rem">
+    <li>找錯了算<b>白跑一趟</b>，會告訴你那個機關為什麼幫不上忙，然後再選一次。</li>
+    <li>找對了，下面那張「政府地圖」就會亮一格。</li>
+  </ul>
+  <div id="sim" style="margin-top:10px"></div>
+  <div class="gmap" id="mapA"></div>
+</div>
+
+<!-- ============ ② ============ -->
+<div class="card" id="s2">
+  <h2>② 不用背電話簿：問自己三個問題</h2>
+  <p class="lead">政府機關有幾百個，背不完。但你剛剛每一次找對，其實都是先想清楚了這三件事。</p>
+  <div class="tw"><table>
+    <tr><th>問題</th><th>你的答案</th><th>該找哪一種機關</th></tr>
+    <tr><td rowspan="5"><b>第一問</b><br>我要的是什麼？</td><td>請政府做事、辦手續、處理問題</td><td><b>行政</b>機關</td></tr>
+    <tr><td>想改規則（法律、自治條例）</td><td><b>立法</b>機關</td></tr>
+    <tr><td>有糾紛，要有人判誰對誰錯</td><td><b>司法</b>機關（法院）</td></tr>
+    <tr><td>公務員違法、失職</td><td><b>監察</b>院</td></tr>
+    <tr><td>想當公務員、考專業執照</td><td><b>考試</b>院</td></tr>
+    <tr><td><b>第二問</b><br>範圍多大？</td><td>全國都要一樣，或代表整個國家<br>只跟這個縣市有關</td><td><b>中央</b>政府<br><b>地方</b>政府</td></tr>
+    <tr><td><b>第三問</b><br>（有糾紛時）對方是誰？</td><td>一般人或公司<br>有人犯罪<br>政府機關的決定</td><td>調解、民事法院<br>報警、檢察官、刑事法院<br>訴願、行政法院</td></tr>
+  </table></div>
+
+  <h3>換你試：分流器</h3>
+  <p style="font-size:.92rem">想一件事，照順序點。下面會告訴你去找誰，地圖也會標出來。</p>
+  <div class="ctrl"><span class="lab">我要的是</span><span id="rWant"></span></div>
+  <div class="ctrl" id="rScopeRow" hidden><span class="lab">範圍</span><span id="rScope"></span></div>
+  <div class="ctrl" id="rWhoRow" hidden><span class="lab">對方是</span><span id="rWho"></span></div>
+  <div class="result" id="rOut" hidden></div>
+  <div class="gmap" id="mapB"></div>
+  <div class="key">找錯機關不只是白跑。那個機關<b>沒有權力</b>處理你的事，就算它想幫也不行。這就是上一章學的「權力分立」：每個機關只能做憲法和法律交給它的事。</div>
+</div>
+
+<!-- ============ ③ ============ -->
+<div class="card" id="s3">
+  <h2>③ 中央政府：總統和五個院</h2>
+  <p class="lead">中央政府管全國的事。我國把權力分給五個院，加上一位總統。</p>
+  <div class="predict" data-id="p1" data-ans="1" data-exp="行政院長是總統任命的，不是選出來的，也不用立法院同意。但是他要對立法院負責，要去立法院報告、被立委質詢。">
+    <b>先猜再看：</b>行政院長是誰決定的？
+    <div class="pb"><button>全國人民投票選</button><button>總統任命</button><button>立法委員投票選</button></div>
+    <button class="chip rev" hidden>我猜好了。先點下面的「行政院」找答案，找到再按這裡對答案</button>
+    <div class="res" hidden></div>
+  </div>
+  <div class="ctrl" id="instTabs"></div>
+  <div class="inst" id="instBox"></div>
+
+  <h3>他們是怎麼產生的</h3>
+  <div class="tw"><table>
+    <tr><th>怎麼產生</th><th>是誰</th></tr>
+    <tr><td>人民直接投票選</td><td>總統、副總統、立法委員</td></tr>
+    <tr><td>總統任命</td><td>行政院長</td></tr>
+    <tr><td>總統提名，<b>立法院同意</b>後任命</td><td>司法院大法官、考試委員、監察委員（包含這三個院的院長、副院長）</td></tr>
+  </table></div>
+  <div class="key">規律：<b>人民選總統和立委</b>。其他的重要職位，由這兩個人民選出來的機關<b>一個提名、一個同意</b>，誰也不能自己說了算。</div>
+</div>
+
+<!-- ============ ④ ============ -->
+<div class="card" id="s4">
+  <h2>④ 五個院怎麼接力，又怎麼互相牽制</h2>
+  <p class="lead">五個院不是各做各的。一件事常常要經過好幾個院，每一棒都有人把關。跟著一筆錢和一條法律走一次。</p>
+  <div class="predict" data-id="p2" data-ans="2" data-exp="查帳的是監察院底下的審計部。編預算的（行政院）、同意預算的（立法院）、查帳的（監察院）是三個不同的院。">
+    <b>先猜再看：</b>政府把錢花完以後，是誰來查帳？
+    <div class="pb"><button>行政院自己查</button><button>立法院</button><button>監察院的審計部</button></div>
+    <button class="chip rev" hidden>我猜好了。先把下面「一筆預算」走到最後一步，再按這裡對答案</button>
+    <div class="res" hidden></div>
+  </div>
+  <div class="ctrl"><span class="lab">跟著誰走</span><button class="chip on" data-flow="bud">一筆預算</button><button class="chip" data-flow="law">一條法律</button></div>
+  <div class="mini" id="flowMini"></div>
+  <div class="dots" id="flowDots"></div>
+  <div class="step" id="flowStep" style="margin-top:8px"></div>
+  <div class="ctrl"><button class="chip" id="flowPrev">上一步</button><button class="chip on" id="flowNext">下一步</button></div>
+
+  <h3>互相牽制：誰可以擋誰</h3>
+  <div class="tw"><table>
+    <tr><th>誰</th><th>牽制誰</th><th>用什麼方法</th></tr>
+    <tr><td class="nw">立法院</td><td>行政院</td><td>質詢、審預算和法律案、對行政院長提<b>不信任案</b></td></tr>
+    <tr><td class="nw">行政院</td><td>立法院</td><td>覺得立法院通過的法律很難執行，經總統核可，請立法院再議一次（<b>覆議</b>）</td></tr>
+    <tr><td class="nw">總統</td><td>立法院</td><td>立法院通過不信任案後，行政院長可以請總統<b>解散立法院</b>，重新選舉</td></tr>
+    <tr><td class="nw">司法院</td><td>立法院、行政院</td><td>憲法法庭可以宣告法律或命令<b>違憲</b></td></tr>
+    <tr><td class="nw">監察院</td><td>各機關的公務人員</td><td><b>彈劾</b>、糾舉違法失職的人；<b>糾正</b>機關；審計部查帳</td></tr>
+    <tr><td class="nw">立法院</td><td>總統</td><td>提出<b>彈劾案</b>（由憲法法庭審理）；提出<b>罷免案</b>（由人民投票決定）</td></tr>
+  </table></div>
+  <p style="font-size:.9rem; color:var(--sub); margin-top:6px">想多練「誰來牽制誰」，可以回去看 <a href="八上3-3_權力分立.html">第 3 章③ 權力分立</a> 的九個情境。</p>
+</div>
+
+<!-- ============ ⑤ ============ -->
+<div class="card" id="s5">
+  <h2>⑤ 地方政府：離你最近的政府</h2>
+  <p class="lead">垃圾、路燈、公園、國中小，這些每天碰到的事，大多是地方政府在管。地方政府也分<b>行政</b>和<b>立法</b>兩邊。</p>
+  <div class="predict" data-id="p3" data-ans="1" data-exp="直轄市的區長是市長派任的，不是選的，區也沒有區民代表會。但是縣底下的鄉長、鎮長、縣轄市長是選出來的。這是最常搞混的地方。">
+    <b>先猜再看：</b>小安住在直轄市的東河區。「區長」是怎麼來的？
+    <div class="pb"><button>區民投票選</button><button>市長派任</button><button>市議會選</button></div>
+    <button class="chip rev" hidden>我猜好了。先看下面「直轄市」那張圖，再按這裡對答案</button>
+    <div class="res" hidden></div>
+  </div>
+  <div class="ctrl"><span class="lab">你住在</span><span id="locTabs"></span></div>
+  <div id="locBox"></div>
+
+  <h3>地方的行政和立法，各做什麼</h3>
+  <div class="tw"><table>
+    <tr><th></th><th>行政機關</th><th>立法機關</th></tr>
+    <tr><th>是誰</th><td>直轄市政府、縣（市）政府、鄉（鎮、市）公所</td><td>直轄市議會、縣（市）議會、鄉（鎮、市）民代表會</td></tr>
+    <tr><th>做什麼</th><td>辦理地方的事務：教育、環保、警察、消防、戶政、社會福利、道路公園</td><td>訂定自治條例、審地方的預算、質詢首長、接受人民請願</td></tr>
+    <tr><th>任期</th><td>首長 4 年，只能連任一次</td><td>議員、代表 4 年，連任沒有次數限制</td></tr>
+  </table></div>
+  <div class="key">地方和中央是同一個道理：<b>政府編預算、議會審；議會訂規則、政府執行</b>。只是範圍從全國縮小到一個縣市。</div>
+  <div class="note">各縣市的局處名稱不完全一樣。直轄市多半叫「教育<b>局</b>」，縣政府多半叫「教育<b>處</b>」。做的事是一樣的。</div>
+</div>
+
+<!-- ============ ⑥ ============ -->
+<div class="card" id="s6">
+  <h2>⑥ 這件事歸中央，還是地方？</h2>
+  <p class="lead">判斷的方法只有一個：這件事需要<b>全國一致</b>，還是可以<b>因地制宜</b>（每個地方情況不同，各自決定）？先自己分分看。</p>
+  <div class="ctrl"><span id="sortScore" style="font-size:.9rem; color:var(--sub)"></span></div>
+  <div class="sort" id="sortBox"></div>
+  <div class="key">也有很多事是<b>中央訂規則、地方來辦</b>。例如戶籍怎麼登記，全國用同一部法律；但是收件、辦理的是你家附近的戶政事務所。</div>
+</div>
+
+<!-- ============ ⑦ ============ -->
+<div class="card" id="s7">
+  <h2>⑦ 權益受損了，怎麼討回來</h2>
+  <div class="sup"><b>補充：</b>這一段的訴願、調解、訴訟，八年級下學期的法律單元會正式教。先放在這裡，是因為「遇到問題找誰」少了這一塊就不完整。</div>
+  <p class="lead">先看<b>對方是誰</b>，路線就不一樣。點一條看看。</p>
+  <div class="ctrl" id="laneTabs"></div>
+  <div id="laneBox"></div>
+  <div class="key">法院是<b>被動</b>的：有人提告，或檢察官起訴，法院才審。法官不會自己上街找案子，這樣才能保持中立。</div>
+  <h3>記不得找誰時，先打這些電話</h3>
+  <div class="tel">
+    <div><b>110</b>報案</div><div><b>119</b>火災、救護</div><div><b>165</b>反詐騙</div><div><b>113</b>家暴、兒少保護</div>
+    <div><b>1999</b>市民專線（多數縣市有）</div><div><b>1950</b>消費糾紛</div><div><b>1955</b>勞工問題</div>
+  </div>
+</div>
+
+<!-- ============ ⑧ ============ -->
+<div class="card" id="s8">
+  <h2>⑧ 考考你：是真的懂，還是只是背起來？</h2>
+  <p class="lead">這些題目大多是<b>情境題</b>，要用上面的三個問題去想。一回 10 題，一次一題。</p>
+  <ul style="font-size:.92rem">
+    <li>答錯時，會告訴你<b>可能是哪裡想錯</b>，還有一個按鈕直接跳回那一段。</li>
+    <li>不確定就勾「用猜的」。猜對的題目也會進錯題本，之後再考一次。</li>
+    <li>下一回會先出<b>上次錯的</b>和<b>還沒做過的</b>。</li>
+  </ul>
+  <div id="quiz"></div>
+</div>
+
+<div class="card" id="s9">
+  <h2>⑨ 我的弱點和錯題本</h2>
+  <div id="ana"></div>
+</div>
+
+<div class="card">
+  <h2>同一冊的其他課</h2>
+  <div class="links">
+    <a href="八上3-1_人治與法治.html"><b>第 3 章① 人治與法治</b><br>統治者和法律，誰在上面？</a>
+    <a href="八上3-2_權力與權利.html"><b>第 3 章② 權力與權利</b><br>只差一個字，差很多。</a>
+    <a href="八上3-3_權力分立.html"><b>第 3 章③ 權力分立</b><br>為什麼要把權力拆開？</a>
+  </div>
+</div>
+<button id="backBtn" hidden>↩ 回到題目</button>
+
+<footer>國中公民自學教材 · 政府怎麼運作<br>依 108 課綱（公Be-Ⅳ-3 中央政府與地方政府如何組成）與現行憲法、地方制度法等法規原創編寫，不是出版社教材。「晴川市」和小安一家是虛構的。用語若和課本不同，以課本為準。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "公民八上 政府怎麼運作";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// 上傳網址不寫在教材裡；家長在「學習紀錄」頁設定一次，存於此瀏覽器。
+let CLOUD_URL = "";
+try{ CLOUD_URL = localStorage.getItem("cloud_url_v1") || ""; }catch(e){}
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// ===== 共用工具 =====
+const $ = id => document.getElementById(id);
+const shuf = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+const esc = s => s.replace(/[&<>]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[c]));
+// 一排可切換的按鈕
+function tabs(el, items, fn, first){
+  el.innerHTML = items.map(([k, t]) => `<button class="chip" data-k="${k}">${t}</button>`).join(" ");
+  const bs = [...el.querySelectorAll("button")];
+  const pick = k => { bs.forEach(b => b.classList.toggle("on", b.dataset.k === k)); fn(k); };
+  bs.forEach(b => b.addEventListener("click", ()=> pick(b.dataset.k)));
+  if(first) pick(first);
+  return { clear(){ bs.forEach(b => b.classList.remove("on")); } };
+}
+
+// ===================== 政府地圖 =====================
+const NODE = {
+  pres:{ n:"總統", j:"國家元首", d:"對外代表國家，任命行政院長。一般人日常的問題很少直接找總統。" },
+  exe:{ n:"行政院", j:"做事：全國的政策", d:"底下有外交部、教育部、勞動部等部會。全國一致的事由它們負責。" },
+  leg:{ n:"立法院", j:"訂規則：法律、預算", d:"立法委員訂定和修改全國的法律，也審中央政府的預算。" },
+  jud:{ n:"司法院", j:"判對錯：各級法院", d:"法院審判民事、刑事、行政訴訟。憲法法庭審查法律有沒有違憲。" },
+  exam:{ n:"考試院", j:"國家考試、公務員人事", d:"公務員和醫師、律師等專業執照的考試都是它辦的。" },
+  ctrl:{ n:"監察院", j:"查公務員、查帳", d:"彈劾違法失職的公務人員，審計部查政府的帳。" },
+  lexe:{ n:"市（縣）政府", j:"做事：各局處", d:"教育局、環保局、勞工局、警察局、戶政事務所等，處理地方的事務。", loc:1 },
+  lleg:{ n:"市（縣）議會", j:"訂地方規則、審預算", d:"議員訂定這個縣市的自治條例，審市（縣）政府的預算。", loc:1 },
+  town:{ n:"區／鄉鎮市公所", j:"最近的窗口", d:"辦各種申請，裡面還有調解委員會，幫民眾調解糾紛。", loc:1 },
+  vil:{ n:"里長／村長", j:"鄰里的第一個窗口", d:"把鄰里的問題反映給公所和市（縣）政府。", loc:1 },
+};
+function makeMap(el){
+  const node = k => `<button class="gn${NODE[k].loc ? " loc" : ""}" data-n="${k}"><b>${NODE[k].n}</b><small>${NODE[k].j}</small></button>`;
+  el.innerHTML = `<div class="tier"><span class="tl">中央政府<small>管全國的事</small></span><div class="nodes">${["pres","exe","leg","jud","exam","ctrl"].map(node).join("")}</div></div>
+    <div class="tier"><span class="tl">地方政府<small>管這個縣市的事</small></span><div class="nodes">${["lexe","lleg","town","vil"].map(node).join("")}</div></div>
+    <div class="info">點任何一格，看它是做什麼的。</div>`;
+  const info = el.querySelector(".info"), get = k => el.querySelector(`[data-n="${k}"]`);
+  el.querySelectorAll(".gn").forEach(b => b.addEventListener("click", ()=>{ const o = NODE[b.dataset.n]; info.innerHTML = `<b>${o.n}</b>：${o.d}`; }));
+  return {
+    light(ks){ ks.forEach(k => get(k).classList.add("lit")); },
+    mark(ks){ el.querySelectorAll(".gn").forEach(b => b.classList.toggle("now", ks.includes(b.dataset.n))); },
+    reset(){ el.querySelectorAll(".gn").forEach(b => b.classList.remove("lit", "now")); },
+    all(){ el.querySelectorAll(".gn").forEach(b => b.classList.add("lit")); }
+  };
+}
+
+// ===================== ① 小安家的一年 =====================
+(function(){
+  // o 的第一個是該找的機關，其他是「白跑一趟」和原因
+  const EV = [
+    { m:"八月", t:"搬家", s:"全家搬到晴川市。媽媽說要先把戶籍遷過來，小安才能在學區內的國中註冊。", q:"遷戶籍要去哪裡辦？", n:["lexe"],
+      o:[["東河區的戶政事務所","辦好了。戶政事務所是市政府底下的機關，就在你家附近。"],
+         ["內政部","內政部是中央機關，負責全國的戶籍制度。它不在櫃檯收你的申請。"],
+         ["晴川市議會","議會是開會訂規則、審預算的地方，沒有辦手續的櫃檯。"],
+         ["地方法院","法院是有糾紛、要判誰對誰錯才去。遷戶籍沒有人在吵架。"]],
+      clue:"這是「請政府辦手續」，而且每個地方都有窗口。找地方的行政機關。" },
+    { m:"九月", t:"路燈", s:"家門口巷子的路燈壞了一個星期，晚上回家很暗。", q:"找誰最快？", n:["vil","town"],
+      o:[["跟里長說，或打市民專線 1999","三天後修好了。里長把問題報給區公所和市政府負責的單位。"],
+         ["立法委員","繞了一大圈。立委管的是全國的法律和預算。他的服務處頂多幫你把話轉給市政府。"],
+         ["行政院","行政院管全國性的政策。一盞巷子裡的路燈，是市政府的事。"],
+         ["監察院","太早了。監察院是查公務員違法失職的。現在沒有人失職，只是還沒有人知道路燈壞了。"]],
+      clue:"路燈是地方的事，而且是「請政府做事」。從離你最近的窗口開始找。" },
+    { m:"十月", t:"颱風", s:"颱風要來了。小安和同學在群組裡猜明天會不會放假。", q:"誰宣布晴川市明天停止上班上課？", n:["lexe"],
+      o:[["晴川市長","晚上八點，市長宣布明天停班停課。"],
+         ["總統","總統是國家元首，不會去決定哪個縣市放颱風假。"],
+         ["行政院長","各地風雨不一樣，行政院不會一次幫全國決定。這件事交給各縣市首長。"],
+         ["中央氣象署","氣象署負責預報和發警報。市長參考它的資料，自己做決定。"]],
+      clue:"颱風對每個縣市的影響不一樣，所以由各地的首長決定。這叫因地制宜。" },
+    { m:"十二月", t:"護照", s:"寒假全家要出國，小安需要一本護照。", q:"護照是哪個機關發的？", n:["exe"],
+      o:[["外交部","拿到護照了。護照是國家對外證明你的身分，全國都一樣。"],
+         ["晴川市政府","如果每個縣市發的護照都不一樣，外國海關會看不懂。這是中央的事。"],
+         ["立法院","立法院訂法律，不發證件。"],
+         ["司法院","司法院管審判，不發證件。"]],
+      clue:"「全國一致」或「代表整個國家」的事，找中央的行政機關。",
+      sup:"第一次辦護照，有些戶政事務所可以幫忙收件。但審核和發照的是外交部。" },
+    { m:"一月", t:"公園", s:"東河公園的告示牌寫著：依「晴川市公園管理自治條例」，禁止帶狗進入。爸爸覺得牽好繩子就該可以進去，想讓這條規定改掉。", q:"誰能把這條規定改掉？", n:["lleg"],
+      o:[["晴川市議會（找市議員）","市議員答應提案修改。自治條例要市議會通過才能改。"],
+         ["晴川市長","差一步。市政府可以提出修改草案，但一定要市議會通過才算數。"],
+         ["立法委員","找錯層級。立法院訂的是全國的法律。這是晴川市自己的自治條例。"],
+         ["地方法院","法院判的是個別案件誰對誰錯，不會幫人修改規定。"]],
+      clue:"這是「改規則」，而且是晴川市自己的規則。找地方的立法機關。" },
+    { m:"三月", t:"欠薪", s:"姐姐在飲料店打工。老闆已經兩個月沒發薪水，一直說下週給。", q:"姐姐可以找誰出面處理？", n:["lexe"],
+      o:[["晴川市政府勞工局","勞工局安排雙方調解，老闆答應補發薪水。"],
+         ["勞動部","方向對，層級不對。勞動部是中央機關，負責全國的勞動政策。個別的欠薪案件，是各縣市勞工局在處理。"],
+         ["監察院","老闆不是公務員。監察院查的是公務員。"],
+         ["考試院","考試院管的是國家考試和公務員的人事制度。"]],
+      clue:"請政府出面處理，找行政機關。個別的案件，由地方的局處受理。",
+      sup:"真的不知道找誰，可以先打勞動部的 1955 專線，它會告訴你去哪裡辦。" },
+    { m:"四月", t:"修法", s:"姐姐查了資料才知道，法律對打工族的某些保障比她想的少。她希望全國的法律都能改。", q:"法律要誰通過才能修改？", n:["leg"],
+      o:[["立法院（找立法委員）","姐姐寫信向立委陳情。法律要立法院開會通過才能修改。"],
+         ["晴川市議會","找錯層級。市議會只能訂晴川市的自治條例，改不了全國的法律。"],
+         ["勞動部","差一步。勞動部可以擬修法草案，經行政院送到立法院。但法律一定要立法院通過。"],
+         ["總統","總統負責公布立法院通過的法律，不能自己改法律。"]],
+      clue:"這是「改規則」，而且是全國的法律。找中央的立法機關。" },
+    { m:"五月", t:"詐騙", s:"媽媽接到假客服的電話，被騙走三萬元。", q:"第一步該怎麼做？", n:["lexe","jud"],
+      o:[["打 165，或到警察局報案","警察受理報案，查到帳戶後交給檢察官偵辦。檢察官起訴之後，法院才開始審判。"],
+         ["直接到法院，請法官去抓人","法官不會去抓人。法院是被動的，要等檢察官起訴才審。查案是警察和檢察官的工作。"],
+         ["里長","里長會安慰你，然後叫你趕快去報警。他沒有查案的權力。"],
+         ["監察院","詐騙集團不是公務員。監察院查的是公務員。"]],
+      clue:"有人犯罪，先報警。法院不會自己找案子來審。",
+      sup:"警察局是市（縣）政府的機關。檢察官屬於法務部，在行政院底下。只有負責審判的法官屬於司法院。" },
+    { m:"六月", t:"裂縫", s:"樓上鄰居裝修，把小安家的天花板震出裂縫。鄰居不肯賠。爸爸不想一開始就打官司。", q:"可以先去哪裡？", n:["town","jud"],
+      o:[["東河區公所的調解委員會","調解委員把兩家人找來談，鄰居同意付修理費。調解不用錢。"],
+         ["行政法院","走錯法院。行政法院是人民告政府機關用的。鄰居不是政府。"],
+         ["監察院","鄰居不是公務員。"],
+         ["晴川市議會","議會訂規則、審預算，不處理兩戶人家之間的賠償。"]],
+      clue:"一般人和一般人的糾紛。先調解；談不成，再到地方法院打民事訴訟。" },
+    { m:"七月", t:"罰單", s:"家裡收到環保局的罰單，說他們把垃圾亂丟在巷口。爸爸很確定那包垃圾不是他們家的。", q:"爸爸該怎麼做？", n:["lexe","jud"],
+      o:[["在期限內提起訴願","爸爸寫了訴願書。市政府重新審查，發現真的罰錯了，把罰單撤銷。"],
+         ["不理它，不繳就好","很危險。罰單不會自己消失，過了期限還可能被強制執行。"],
+         ["到地方法院民事庭告環保局","走錯庭。民事庭處理一般人之間的糾紛。不服政府的處分，要走訴願和行政訴訟。"],
+         ["向監察院陳情","監察院可以查公務員有沒有違法失職，但它不會直接幫你撤銷罰單。要撤銷罰單，走訴願。"]],
+      clue:"不服政府機關的處分：先訴願，請上級機關重新審查；還是不服，再到行政法院。" },
+    { m:"八月", t:"紅包", s:"爸爸去辦一項申請。承辦人員小聲說：「包個紅包，我可以幫你辦快一點。」", q:"爸爸該怎麼做？", n:["ctrl"],
+      o:[["向監察院陳情，或向廉政署檢舉","這是公務員違法。監察院可以調查、彈劾違法失職的公務員。貪污也是犯罪，廉政署和檢察官會偵辦。"],
+         ["考試院","考試院管國家考試和公務員的人事制度，不調查個別的公務員。"],
+         ["立法院","立法院監督的是行政院的施政，方法是質詢和審預算。查個別公務員失職的是監察院。"],
+         ["包紅包，辦快一點比較重要","不行。送紅包的人也違法。而且這樣下去，沒送紅包的人永遠排在後面。"]],
+      clue:"公務員違法失職，找監察院。" },
+    { m:"九月", t:"考試", s:"姐姐畢業了，想到晴川市政府當公務員。", q:"她要通過哪一關？", n:["exam"],
+      o:[["參加考試院辦的國家考試","姐姐報名了公務人員考試。"],
+         ["請市長直接錄取她","不行。如果首長愛用誰就用誰，公務員就只會聽首長的話。所以要用公開的考試選人。"],
+         ["教育部","教育部管學校教育。國家考試是考試院辦的。"],
+         ["行政院","行政院是用人的機關。但「考試」交給另一個院來辦，比較公平。"]],
+      clue:"公務員要通過考試院辦的考試。醫師、律師這些專業執照的考試，也是考試院辦的。" },
+  ];
+  const box = $("sim"), map = makeMap($("mapA"));
+  let i = 0, trips = 0, perEv = [];
+  function intro(){
+    box.innerHTML = `<div class="ctrl"><button class="chip on big" id="simGo">開始：八月，搬家</button></div>`;
+    $("simGo").addEventListener("click", ()=>{ i = 0; trips = 0; perEv = []; map.reset(); show(); });
+  }
+  function show(){
+    const e = EV[i]; let miss = 0, done = false;
+    box.innerHTML = `<div class="prog"><i style="width:${Math.round(i/EV.length*100)}%"></i></div>
+      <div class="ev"><div class="evh"><span><span class="mon">${e.m}</span>第 ${i+1} / ${EV.length} 件事：${e.t}</span><span>已經白跑 <span class="trip">${trips}</span> 趟</span></div>
+      <p class="story">${e.s}</p><p class="ask">${e.q}</p><div class="opts"></div><div class="fb" hidden></div></div>`;
+    const opts = box.querySelector(".opts"), fb = box.querySelector(".fb");
+    shuf(e.o.map((_, k) => k)).forEach(k => {
+      const b = document.createElement("button"); b.textContent = e.o[k][0];
+      b.addEventListener("click", ()=>{
+        if(done || b.disabled) return;
+        fb.hidden = false;
+        if(k === 0){
+          done = true; b.classList.add("ok"); opts.querySelectorAll("button").forEach(x => x.disabled = true);
+          map.light(e.n); map.mark(e.n); perEv.push(miss); logEv({ type:"sim", q:"e"+(i+1), ok: miss === 0 });
+          fb.className = "fb good";
+          fb.innerHTML = `<b>找對了。</b>${e.o[0][1]}<p><span class="dx k">判斷線索</span>${e.clue}</p>${e.sup ? `<div class="sup"><b>補充：</b>${e.sup}</div>` : ""}
+            <div class="ctrl"><button class="chip on" id="simNext">${i+1 < EV.length ? `下一件事：${EV[i+1].m}，${EV[i+1].t}` : "看這一年的結果"}</button></div>`;
+          $("simNext").addEventListener("click", ()=>{ i++; i < EV.length ? show() : end(); });
+        } else {
+          miss++; trips++; b.classList.add("no"); b.disabled = true;
+          box.querySelector(".trip").textContent = trips;
+          fb.className = "fb bad"; fb.innerHTML = `<b>白跑一趟。</b>${e.o[k][1]}<p>再選一次。</p>`;
+        }
+      });
+      opts.appendChild(b);
+    });
+  }
+  function end(){
+    const clean = perEv.filter(x => x === 0).length; map.mark([]);
+    const bad = EV.map((e, k) => perEv[k] ? `<li>${e.m}「${e.t}」：${e.clue}</li>` : "").join("");
+    box.innerHTML = `<div class="prog"><i style="width:100%"></i></div><div class="ev">
+      <p class="ask">這一年 12 件事，你一次就找對 ${clean} 件，總共白跑 ${trips} 趟。</p>
+      ${bad ? `<p>白跑過的那幾件，線索再看一次：</p><ul style="font-size:.92rem">${bad}</ul>` : `<p>一趟都沒有白跑。很厲害。</p>`}
+      <p style="margin-top:6px">地圖上只有<b>總統</b>沒亮。一般人日常的問題很少直接找總統，他的工作在 ③ 會講。</p>
+      <div class="ctrl"><button class="chip on" data-go="s2">去 ② 看：我剛剛是怎麼判斷的</button><button class="chip" id="simAgain">再玩一次</button></div></div>`;
+    $("simAgain").addEventListener("click", ()=>{ i = 0; trips = 0; perEv = []; map.reset(); show(); });
+    cloudSend({ type:"模擬", detail:`小安家的一年：白跑 ${trips} 趟`, score:`${clean}/${EV.length}` });
+  }
+  intro();
+})();
+
+// ===================== ② 分流器 =====================
+(function(){
+  const map = makeMap($("mapB")), out = $("rOut");
+  const R = {
+    "do-n":   { go:"行政院和它底下的部會", n:["exe"], p:"全國一致的事，由中央的行政機關負責。例如：護照找外交部，健保找衛生福利部的健保署。" },
+    "do-l":   { go:"市（縣）政府的局處、公所，或先找里長", n:["lexe","town","vil"], p:"地方的事，由地方的行政機關負責。例如：路燈、垃圾、戶籍、國中小的校舍。" },
+    "rule-n": { go:"立法院（向立法委員陳情）", n:["leg"], p:"全國的法律要立法院通過才能修改。如果要改的是憲法，還要全國人民投票複決。" },
+    "rule-l": { go:"市（縣）議會（找議員）", n:["lleg"], p:"只在這個縣市有效的自治條例，由這個縣市的議會通過。" },
+    "judge-p":{ go:"公所的調解委員會，談不成再到地方法院（民事）", n:["town","jud"], p:"一般人之間的糾紛，例如欠錢、賠償、押金。調解不用錢，也比較快。" },
+    "judge-c":{ go:"報警（110），之後由檢察官偵查、法院審判（刑事）", n:["lexe","jud"], p:"偷竊、詐騙、傷害都是犯罪。警察和檢察官負責查，法官負責審。" },
+    "judge-g":{ go:"先訴願，還是不服再到行政法院", n:["lexe","jud"], p:"不服政府機關的處分，例如罰單、不發執照。訴願是請上級機關重新審查一次。" },
+    "officer":{ go:"監察院（陳情）", n:["ctrl"], p:"監察院可以調查，彈劾違法失職的公務人員，也可以糾正機關。如果是貪污，還可以向廉政署檢舉。" },
+    "exam":   { go:"考試院辦的國家考試", n:["exam"], p:"公務人員考試，還有醫師、律師、會計師、護理師這些專業執照的考試，都是考試院辦的。" },
+  };
+  let want = "", sub;
+  const show = k => { const r = R[k]; out.hidden = false; out.innerHTML = `<div class="go">去找：${r.go}</div><p>${r.p}</p>`; map.mark(r.n); logEv({ type:"router", q:k }); };
+  const hide = () => { out.hidden = true; map.mark([]); };
+  const scope = tabs($("rScope"), [["n","全國都要一樣"],["l","只跟這個縣市有關"]], k => show(want + "-" + k));
+  const who = tabs($("rWho"), [["p","一般人或公司"],["c","有人犯罪"],["g","政府機關的決定"]], k => show("judge-" + k));
+  tabs($("rWant"), [["do","請政府做事、辦手續"],["rule","改規則"],["judge","有糾紛，要判對錯"],["officer","公務員違法失職"],["exam","考試、當公務員"]], k => {
+    want = k; scope.clear(); who.clear(); hide();
+    $("rScopeRow").hidden = !(k === "do" || k === "rule"); $("rWhoRow").hidden = k !== "judge";
+    if(k === "officer" || k === "exam") show(k);
+  });
+})();
+
+// ===================== 先猜再看 =====================
+document.querySelectorAll(".predict").forEach(box => {
+  const bs = [...box.querySelectorAll(".pb button")], rev = box.querySelector(".rev"), res = box.querySelector(".res"); let pick = -1;
+  bs.forEach((b, i) => b.addEventListener("click", ()=>{ if(!res.hidden) return; pick = i; bs.forEach(x => x.classList.remove("on")); b.classList.add("on"); rev.hidden = false; }));
+  rev.addEventListener("click", ()=>{
+    const ok = pick === +box.dataset.ans;
+    res.hidden = false; rev.hidden = true;
+    res.innerHTML = (ok ? "<b>你猜對了。</b>" : "<b>跟你猜的不一樣。</b>猜錯沒關係，先猜過再看，會記得比較久。") + box.dataset.exp;
+    bs[+box.dataset.ans].classList.add("ok"); logEv({ type:"predict", q:box.dataset.id, ok });
+  });
+});
+
+// ===================== ③ 總統和五院 =====================
+(function(){
+  const I = {
+    pres:{ n:"總統", is:"國家元首", from:"全國人民直接投票選出。任期 4 年，只能連任一次。",
+      job:["對外代表國家","統率全國陸海空軍","公布法律、發布命令","任命行政院長","提名大法官、考試委員、監察委員（要立法院同意）"],
+      mix:"總統不是行政院長。憲法規定最高行政機關是行政院，日常的行政由行政院長帶領各部會負責。" },
+    exe:{ n:"行政院", is:"國家最高行政機關", from:"行政院長由總統任命，不用立法院同意。各部會首長由行政院長提請總統任命。",
+      job:["執行法律、推動全國的政策","編列預算案，送立法院審議","向立法院提出法律案","底下有內政、外交、國防、財政、教育、法務、經濟、交通、勞動、衛生福利等部會"],
+      mix:"行政院長不是選出來的，但是要對立法院負責，要到立法院報告、接受質詢。另外，檢察官屬於法務部，在行政院底下，不屬於司法院。" },
+    leg:{ n:"立法院", is:"國家最高立法機關", from:"立法委員 113 人，由人民選出。任期 4 年，連任沒有次數限制。",
+      job:["訂定、修改法律","審議預算案","質詢行政院長和各部會首長","對總統提名的大法官、考試委員、監察委員行使同意權","提出憲法修正案（還要人民投票複決）"],
+      mix:"立法院審預算時只能刪減，不能提議增加支出。編預算是行政院的事。" },
+    jud:{ n:"司法院", is:"國家最高司法機關", from:"大法官 15 人（包含院長、副院長），由總統提名、立法院同意。任期 8 年，不能連任。",
+      job:["各級法院審判民事、刑事案件","行政法院審判人民和政府之間的行政訴訟","大法官組成憲法法庭，審查法律有沒有違反憲法","懲戒法院審理公務員的懲戒案件"],
+      mix:"法官依法獨立審判，任何人都不能干涉，連司法院長也不能指揮法官怎麼判。法院也是被動的，有人提告或檢察官起訴才審。" },
+    exam:{ n:"考試院", is:"國家最高考試機關", from:"院長、副院長、考試委員由總統提名、立法院同意。",
+      job:["舉辦公務人員考試","舉辦醫師、律師、會計師、護理師等專業執照的考試","掌管公務員的資格審查、保障、退休、撫卹等人事制度"],
+      mix:"國中會考、大學學測不是考試院辦的。考試院管的是「當公務員」和「拿專業執照」的國家考試。" },
+    ctrl:{ n:"監察院", is:"國家最高監察機關", from:"監察委員 29 人，由總統提名、立法院同意。任期 6 年。",
+      job:["彈劾、糾舉違法失職的公務人員（對人）","糾正行政機關，要它改進（對事）","審計部審核政府的決算，也就是查帳","接受人民陳情"],
+      mix:"彈劾總統不是監察院的工作，是立法院提出、憲法法庭審理。監察院也不管一般民眾和私人公司。" },
+  };
+  tabs($("instTabs"), Object.keys(I).map(k => [k, I[k].n]), k => {
+    const o = I[k];
+    $("instBox").innerHTML = `<h3>${o.n}：${o.is}</h3><dl><dt>怎麼產生</dt><dd>${o.from}</dd><dt>做什麼</dt><dd><ul>${o.job.map(x => `<li>${x}</li>`).join("")}</ul></dd></dl><div class="mix"><b>容易搞混：</b>${o.mix}</div>`;
+  }, "pres");
+})();
+
+// ===================== ④ 接力 =====================
+(function(){
+  const ORG = [["pres","總統"],["exe","行政院"],["leg","立法院"],["jud","司法院"],["exam","考試院"],["ctrl","監察院"]];
+  const F = {
+    bud:[
+      { w:["exe"], t:"行政院編預算案", d:"各機關明年要做什麼、要花多少錢，由行政院彙整成一本預算案，送到立法院。" },
+      { w:["leg"], t:"立法院審議", d:"立法委員一項一項審。可以刪減，但不能提議增加支出。立法院的角色是替人民看緊荷包。" },
+      { w:["pres"], t:"總統公布", d:"立法院通過的預算，由總統公布。" },
+      { w:["exe"], t:"行政機關執行", d:"各機關照預算做事、花錢。沒有編在預算裡的錢不能亂花。" },
+      { w:["ctrl"], t:"審計部查帳", d:"年度結束後，行政院要提出決算（實際花了多少）。監察院底下的審計部負責審核，再把審核報告送給立法院。" },
+    ],
+    law:[
+      { w:["exe","leg"], t:"提出法律案", d:"行政院和立法委員都可以提案。司法院、考試院、監察院也可以就自己主管的事提案。" },
+      { w:["leg"], t:"立法院三讀通過", d:"先在委員會審查，再到院會討論、表決。三讀都通過才算完成。" },
+      { w:["pres","exe"], t:"總統公布", d:"總統公布法律，還要行政院長一起簽名（叫做副署）。公布之後法律才生效。" },
+      { w:["exe"], t:"行政機關執行", d:"依法行政：法律怎麼寫，行政機關就怎麼做，不能多做也不能不做。" },
+      { w:["jud"], t:"法院依法審判", d:"有人違法，或發生糾紛，法院依照這條法律來審判。" },
+      { w:["jud"], t:"憲法法庭把關", d:"如果這條法律牴觸憲法，憲法法庭可以宣告它違憲，讓它失效。" },
+    ],
+  };
+  let cur = "bud", i = 0;
+  function paint(){
+    const st = F[cur], s = st[i];
+    $("flowMini").innerHTML = ORG.map(([k, n]) => `<span class="${s.w.includes(k) ? "now" : ""}">${n}</span>`).join("");
+    $("flowDots").innerHTML = st.map((x, k) => `<button class="${k === i ? "on" : ""}" data-i="${k}">${k+1}. ${x.t}</button>`).join("");
+    $("flowStep").innerHTML = `<b><span class="no">${i+1}</span>${s.t}</b><p>${s.d}</p>`;
+    $("flowPrev").disabled = i === 0; $("flowNext").disabled = i === st.length-1;
+  }
+  $("flowDots").addEventListener("click", e => { const b = e.target.closest("button"); if(b){ i = +b.dataset.i; paint(); } });
+  $("flowPrev").addEventListener("click", ()=>{ if(i > 0){ i--; paint(); } });
+  $("flowNext").addEventListener("click", ()=>{ if(i < F[cur].length-1){ i++; paint(); } });
+  document.querySelectorAll("[data-flow]").forEach(b => b.addEventListener("click", ()=>{
+    cur = b.dataset.flow; i = 0; document.querySelectorAll("[data-flow]").forEach(x => x.classList.toggle("on", x === b)); paint();
+  }));
+  paint();
+})();
+
+// ===================== ⑤ 地方政府 =====================
+(function(){
+  const V = `<span class="pill v">人民選</span>`, A = `<span class="pill a">市長派任</span>`;
+  const L = {
+    city6:{ ex:"全國 6 個：臺北市、新北市、桃園市、臺中市、臺南市、高雄市。",
+      lv:[["直轄市", `<b>市政府</b>：市長${V}`, `<b>市議會</b>：市議員${V}`],
+          ["區", `<b>區公所</b>：區長${A}`, null],
+          ["里", `里長${V}`, ""]],
+      n:"住在直轄市的人，地方選舉可以投 <b>3 種票</b>：市長、市議員、里長。<br>例外：直轄市的「山地原住民區」，區長和區民代表是人民選的。" },
+    county:{ ex:"全國 13 個，例如新竹縣、彰化縣、屏東縣、花蓮縣。",
+      lv:[["縣", `<b>縣政府</b>：縣長${V}`, `<b>縣議會</b>：縣議員${V}`],
+          ["鄉、鎮、縣轄市", `<b>公所</b>：鄉長、鎮長、市長${V}`, `<b>代表會</b>：鄉（鎮、市）民代表${V}`],
+          ["村、里", `村長、里長${V}`, ""]],
+      n:"住在縣的人，地方選舉可以投 <b>5 種票</b>：縣長、縣議員、鄉（鎮、市）長、鄉（鎮、市）民代表、村（里）長。" },
+    city3:{ ex:"全國 3 個：基隆市、新竹市、嘉義市。和縣同一級。",
+      lv:[["市", `<b>市政府</b>：市長${V}`, `<b>市議會</b>：市議員${V}`],
+          ["區", `<b>區公所</b>：區長${A}`, null],
+          ["里", `里長${V}`, ""]],
+      n:"和直轄市一樣，區長是市長派任的，區沒有代表會。地方選舉投 <b>3 種票</b>。" },
+  };
+  tabs($("locTabs"), [["city6","直轄市"],["county","縣"],["city3","市"]], k => {
+    const o = L[k];
+    $("locBox").innerHTML = `<p style="font-size:.9rem; color:var(--sub)">${o.ex}</p><div class="tree">` + o.lv.map(([name, ex, lg], j) =>
+      (j ? `<div class="arrow">▼ 底下再分成</div>` : "") + `<div class="lv"><span class="lvn">${name}</span>` +
+      (lg === "" ? `<div style="font-size:.9rem; margin-top:4px">${ex} <small>鄰里的第一個窗口</small></div>`
+        : `<div class="pair"><div><small>行政</small><br>${ex}</div>${lg === null ? `<div class="none"><small>立法</small><br>沒有區民代表會</div>` : `<div><small>立法</small><br>${lg}</div>`}</div>`) + `</div>`).join("") +
+      `</div><div class="note">${o.n}</div>`;
+  }, "city6");
+})();
+
+// ===================== ⑥ 中央還是地方 =====================
+(function(){
+  // [事情, c=中央 / l=地方, 說明]
+  const S = [
+    ["發護照","c","外交部。護照代表國家，全國一致。"],
+    ["每天收垃圾、資源回收","l","環保局的清潔隊，或鄉（鎮、市）公所。每個地方的路線、時間都不同。"],
+    ["國防和軍隊","c","國防部。保衛整個國家，不可能各縣市自己來。"],
+    ["修巷子裡的路燈","l","區（鄉鎮市）公所或市（縣）政府。"],
+    ["發行新臺幣","c","中央銀行。全國用同一種錢。"],
+    ["市立國中、國小的校舍和設備","l","市（縣）政府的教育局（處）。國中小是地方政府辦的。"],
+    ["決定課綱（全國學生要學什麼）","c","教育部。課綱全國一致，轉學才接得上。"],
+    ["宣布颱風假","l","各直轄市長、縣（市）長。各地風雨不同。"],
+    ["全民健保","c","衛生福利部的健保署。全國用同一張健保卡。"],
+    ["市區公車的路線和班次","l","市（縣）政府的交通局（處）。"],
+    ["和其他國家簽訂條約","c","行政院和外交部去談，立法院審議。這是整個國家的事。"],
+    ["維護社區公園","l","市（縣）政府或公所。"],
+    ["國道高速公路的維修","c","交通部的高速公路局。國道跨過很多縣市。"],
+    ["辦理戶籍登記","l","戶政事務所，是地方政府的機關。不過戶籍的法律是中央訂的，全國一樣。"],
+    ["發布颱風警報","c","交通部的中央氣象署。警報是對全國發的；放不放假才是各縣市決定。"],
+    ["消防隊救火、救護車","l","市（縣）政府的消防局。"],
+  ];
+  let done = 0, ok = 0;
+  const score = () => $("sortScore").textContent = done ? `已經分了 ${done} / ${S.length} 件，第一次就分對 ${ok} 件。` : `共 ${S.length} 件事。點「中央」或「地方」。`;
+  $("sortBox").innerHTML = S.map((s, i) => `<div class="sc" data-i="${i}"><span class="tx">${s[0]}</span><span class="bt"><button data-v="c">中央</button><button data-v="l">地方</button></span></div>`).join("");
+  $("sortBox").addEventListener("click", e => {
+    const b = e.target.closest("button"); if(!b) return;
+    const row = b.closest(".sc"); if(row.dataset.done) return;
+    const s = S[+row.dataset.i], right = b.dataset.v === s[1];
+    row.dataset.done = 1; done++; if(right) ok++;
+    b.classList.add(right ? "ok" : "no"); row.querySelector(`[data-v="${s[1]}"]`).classList.add("ok"); row.classList.add(right ? "right" : "wrong");
+    row.insertAdjacentHTML("beforeend", `<span class="ex">${right ? "" : "不是。"}${s[2]}</span>`);
+    logEv({ type:"sort", q:"m"+row.dataset.i, ok:right }); score();
+  });
+  score();
+})();
+
+// ===================== ⑦ 救濟路線 =====================
+(function(){
+  const LN = {
+    p:{ ex:"例如：欠錢不還、房東不退押金、鄰居弄壞你的東西。這叫<b>民事</b>糾紛。",
+      st:[["自己先談","能談成最好。"],["公所的調解委員會","不用錢。調解成立並經法院核定後，效力和判決一樣。"],["地方法院（民事）","談不成，請法官判。"],["上訴","不服判決，可以向上一級法院上訴。"]] },
+    c:{ ex:"例如：偷竊、詐騙、打傷人。這叫<b>刑事</b>案件。",
+      st:[["報警","打 110，或到警察局。詐騙可以先打 165。"],["檢察官偵查","檢察官指揮警察蒐集證據。"],["起訴","證據夠，檢察官把被告告上法院。"],["地方法院（刑事）","法官審判，決定有沒有罪、怎麼罰。"]] },
+    g:{ ex:"例如：覺得罰單罰錯了、申請執照被不合理地駁回。對方是<b>政府機關</b>。",
+      st:[["訴願","在期限內（原則上 30 天）提出，請上級機關重新審查一次。"],["行政法院","訴願沒過，還是不服，可以提起行政訴訟。"]] },
+    o:{ ex:"例如：公務員收紅包、故意刁難、該做的事不做。",
+      st:[["向監察院陳情","也可以先向那個機關的主管反映。貪污還可以向廉政署檢舉。"],["監察院調查","監察委員去查清楚。"],["彈劾或糾正","彈劾違法失職的人，送懲戒法院審理；或糾正機關，要它改進。"]] },
+  };
+  tabs($("laneTabs"), [["p","對方是一般人或公司"],["c","有人犯罪"],["g","不服政府的處分"],["o","公務員違法失職"]], k => {
+    const o = LN[k];
+    $("laneBox").innerHTML = `<p style="font-size:.92rem; margin-top:6px">${o.ex}</p><div class="lane">` +
+      o.st.map((s, i) => (i ? `<span class="ar">→</span>` : "") + `<div class="box"><b>${i+1}. ${s[0]}</b>${s[1]}</div>`).join("") + `</div>` +
+      (k === "o" ? "" : `<p style="font-size:.88rem; color:var(--sub); margin-top:6px">最後一關：訴訟都走完了，如果認為判決或判決用的法律違反憲法，還可以向<b>憲法法庭</b>聲請審查。</p>`);
+  }, "p");
+})();
+
+// ===================== ⑧ 考考你 =====================
+(function(){
+  const SEC = { s2:"② 三個問題", s3:"③ 總統和五院", s4:"④ 接力和牽制", s5:"⑤ 地方政府", s6:"⑥ 中央還是地方", s7:"⑦ 權益受損怎麼辦" };
+  // 選擇題：o 的第一個是正確答案（出題時會打亂）；其他每個選項後面是「你可能是這樣想的」
+  // 排序題：seq 是正確順序
+  const Q = [
+    // ---- ② 三個問題
+    {id:"a1", s:"s2", q:"小華家巷口的水溝蓋破了，騎車經過很危險。他最應該先找誰？",
+      o:[["里長或區公所",""],["立法委員","立委管的是全國的法律和預算。水溝蓋是地方的事，而且是「請政府做事」，不是「改規則」。"],["地方法院","法院是有糾紛、要判誰對誰錯才去。現在只是需要有人來修。"],["監察院","監察院查的是公務員違法失職。現在還沒有人失職，先讓負責的機關知道這件事。"]],
+      why:"請政府做事，而且是地方的事。找地方的行政機關，從最近的窗口開始。"},
+    {id:"a2", s:"s2", q:"「機車違規停在人行道要罰多少錢」寫在全國通用的法律裡。小美覺得罰太輕，想讓全國的規定都改掉。她要找誰？",
+      o:[["立法委員（立法院）",""],["交通部","行政機關負責執行法律，也可以擬修法草案。但法律一定要立法院通過才能改。"],["市議會","市議會只能訂這個市的自治條例，管不到全國的法律。"],["警察局","警察是照規定開單的人，不是訂規定的人。"]],
+      why:"這是「改規則」，而且是全國的法律。找中央的立法機關。"},
+    {id:"a3", s:"s2", q:"阿公說：「反正都是政府，找哪個機關都一樣。」下面哪一句話最能說明他哪裡想錯了？",
+      o:[["每個機關的權力不一樣，找錯的機關，它沒有權力處理你的事",""],["其實都一樣，只是有的機關比較近","不一樣。議會不能幫你辦戶籍，戶政事務所也不能幫你改法律。差別在權力，不在遠近。"],["大機關一定比小機關有用","不是比大小。行政院很大，但它不會來修你家巷口的路燈。"],["只有中央政府才算政府","地方政府也是政府，而且每天碰到的事大多是它在管。"]],
+      why:"權力分立：每個機關只能做憲法和法律交給它的事。"},
+    {id:"a4", s:"s2", q:"下面四件事，哪一件該找「司法」機關？",
+      o:[["房東不退押金，怎麼講都講不通，想要有人判誰對誰錯",""],["希望政府在社區多蓋一座公園","這是請政府做事，找行政機關。"],["希望修改法律，加重酒駕的處罰","這是改規則，找立法機關。"],["發現公務員收廠商的紅包，想要有人查","公務員違法失職，可以向監察院陳情。"]],
+      why:"有糾紛、要有人判對錯，才是法院的工作。"},
+    {id:"a5", s:"s2", q:"小安的爸爸發現，公所的承辦人員收了廠商的紅包。他可以向哪裡陳情？",
+      o:[["監察院",""],["考試院","考試院管的是國家考試和公務員的人事制度，不調查個別公務員有沒有違法。"],["立法院","立法院監督的是行政院的施政，方法是質詢和審預算。查個別公務員失職的是監察院。"],["行政法院","行政法院是審理人民不服政府處分的訴訟。這裡是要查公務員違法。"]],
+      why:"公務員違法失職，找監察院。貪污也是犯罪，還可以向廉政署檢舉。"},
+    {id:"a6", s:"s2", q:"「要不要蓋一座新的市立圖書館」和「要不要買新的戰鬥機」，這兩件事分別由誰規劃、誰審預算？",
+      o:[["圖書館：市政府規劃、市議會審。戰鬥機：行政院規劃、立法院審",""],["兩件都是行政院規劃、立法院審","市立圖書館只跟這個市有關，是地方的事。地方有自己的政府和議會。"],["兩件都是市政府規劃、市議會審","國防是全國的事，不會由一個市來決定。"],["圖書館：教育部決定。戰鬥機：總統決定","市立的設施是市政府在管。而且花錢都要有立法機關審預算，不是一個人決定。"]],
+      why:"先分中央或地方，再分行政（規劃、執行）和立法（審預算）。"},
+    // ---- ③ 總統和五院
+    {id:"b1", s:"s3", q:"新聞說：「行政院長今天到立法院報告，並接受立法委員質詢。」為什麼行政院長要去立法院被問？",
+      o:[["行政院要對立法院負責，立委代表人民監督行政院",""],["因為立法院長是行政院長的上司","兩個院是平行的，誰也不是誰的上司。這是監督，不是上下級。"],["因為行政院長是立委選出來的","行政院長是總統任命的，不是立委選的。但他仍然要對立法院負責。"],["因為法律是行政院訂的，要去說明","法律是立法院通過的。行政院負責執行。"]],
+      why:"立法委員是人民選的。行政院做得好不好，由立委代表人民來問。"},
+    {id:"b2", s:"s3", q:"檢察官負責偵辦案件、把嫌犯起訴。檢察官屬於哪一個院？",
+      o:[["行政院（法務部）",""],["司法院","很多人會這樣想，因為檢察官也在辦案。但屬於司法院的是負責審判的法官。檢察官屬於法務部。"],["監察院","監察院查的是公務員違法失職，不是偵辦一般的刑事案件。"],["立法院","立法院訂法律、審預算，不辦案。"]],
+      why:"起訴的人（檢察官）和審判的人（法官）分屬不同的院，才不會球員兼裁判。"},
+    {id:"b3", s:"s3", q:"有一條法律的規定可能牴觸憲法。誰有權宣告它違憲？",
+      o:[["司法院大法官組成的憲法法庭",""],["立法院","立法院可以自己修法。但「宣告違憲」是憲法法庭的權力。"],["總統","總統公布法律，但不能自己宣告法律違憲。"],["監察院","監察院查的是公務員和機關，不審查法律有沒有違憲。"]],
+      why:"憲法是最高的規則。法律有沒有牴觸憲法，由憲法法庭判斷。"},
+    {id:"b4", s:"s3", q:"小芳的哥哥想當公務員，姐姐想當律師。他們要參加的考試是哪個機關辦的？",
+      o:[["都是考試院",""],["哥哥是考試院，姐姐是司法院","律師雖然常在法院工作，但律師、醫師、會計師這些專業執照的考試，也是考試院辦的。"],["都是教育部","教育部管的是學校教育。國家考試是考試院的事。"],["都是行政院","行政院是用人的機關。考試交給另一個院辦，才公平。"]],
+      why:"考試院辦兩種國家考試：公務人員考試、專業執照考試。"},
+    {id:"b5", s:"s3", q:"政府今年把錢花到哪裡、有沒有照預算花。年度結束後，是誰來查帳？",
+      o:[["監察院的審計部",""],["立法院","立法院是在花錢「之前」審預算。花完「之後」查帳的是審計部。"],["行政院自己","花錢的人自己查自己，不容易查出問題。所以另外交給監察院的審計部。"],["財政部","財政部負責收稅、管國庫，是行政院底下的部會，不是查帳的機關。"]],
+      why:"事前：立法院審預算。事後：監察院的審計部審核決算。"},
+    {id:"b6", s:"s3", q:"總統和行政院長，誰是「國家元首」？誰是「最高行政機關的首長」？",
+      o:[["總統是國家元首，行政院長是最高行政機關的首長",""],["行政院長是國家元首，總統是最高行政機關的首長","剛好相反。對外代表國家的是總統。"],["兩個都是總統","總統是元首沒錯。但憲法規定最高行政機關是行政院，首長是行政院長。"],["兩個都是行政院長","國家元首是人民直接選出來的總統。"]],
+      why:"總統：國家元首。行政院長：帶領各部會處理全國的行政。"},
+    {id:"b7", s:"s3", q:"下面哪一位「不是」人民直接投票選出來的？",
+      o:[["行政院長",""],["總統","總統是全國人民直接選的。"],["立法委員","立法委員是人民選的。"],["縣（市）長","縣（市）長是當地的居民選的。"]],
+      why:"行政院長由總統任命。"},
+    {id:"b8", s:"s3", q:"大法官、考試委員、監察委員是怎麼產生的？",
+      o:[["總統提名，立法院同意後任命",""],["人民直接投票選","人民直接選的是總統和立法委員。"],["總統直接任命，不用別人同意","那是行政院長。這三種人多一關：要立法院同意。"],["立法院自己選","立法院有的是「同意權」，人選是總統提名的。"]],
+      why:"一個提名、一個同意。誰也不能自己說了算。"},
+    {id:"b9", s:"s3", q:"某位部長被發現違法失職。誰可以對他提出彈劾？",
+      o:[["監察院",""],["立法院","立法院可以提出彈劾的對象是總統、副總統。一般公務人員的彈劾是監察院的工作。"],["司法院","彈劾案通過以後，才送到懲戒法院審理。提出彈劾的是監察院。"],["考試院","考試院管公務員的人事制度，不負責彈劾。"]],
+      why:"監察院：彈劾、糾舉違法失職的公務人員。"},
+    // ---- ④ 接力和牽制
+    {id:"c1", s:"s4", q:"把「一筆預算的一生」排出來：", seq:["行政院編預算案","立法院審議","行政機關照預算執行","審計部審核決算"],
+      why:"行政院編、立法院審、行政機關花、監察院的審計部查。"},
+    {id:"c2", s:"s4", q:"立法院審預算的時候，可以做哪一件事？",
+      o:[["刪減行政院編的預算",""],["幫某個計畫加碼，增加支出","憲法規定立法院不能提議增加支出。它的角色是把關，不是加碼。"],["自己重編一本新的預算","編預算是行政院的事。立法院負責審。"],["直接決定把錢發給哪一家廠商","執行預算是行政機關的事。"]],
+      why:"立法院替人民看緊荷包：可以刪，不能加。"},
+    {id:"c3", s:"s4", q:"立法院通過了一條法律，行政院認為很難執行。行政院可以怎麼做？",
+      o:[["經總統核可，請立法院再議一次（覆議）",""],["不理它，不執行就好","行政機關要依法行政，不能自己決定哪條法律不執行。"],["請監察院把這條法律廢掉","監察院沒有廢除法律的權力。"],["行政院長自己宣布這條法律無效","行政院不能自己宣布法律無效。它只能請立法院再想一次。"]],
+      why:"覆議是行政院牽制立法院的方法。如果立法院還是維持原案，行政院長就要接受。"},
+    {id:"c4", s:"s4", q:"把「一條法律的一生」排出來：", seq:["提出法律案","立法院三讀通過","總統公布","行政機關執行"],
+      why:"提案、立法院三讀、總統公布、行政機關依法執行。"},
+    {id:"c5", s:"s4", q:"立法院對行政院長很不滿意，通過了「不信任案」。接下來會怎樣？",
+      o:[["行政院長要辭職，而且可以請總統解散立法院",""],["總統要辭職","不信任案的對象是行政院長，不是總統。"],["立法院長接任行政院長","行政院長由總統任命，不是立法院長接任。"],["什麼都不會發生，只是表達意見","不信任案有實際的效果：行政院長必須辭職。"]],
+      why:"立法院可以讓行政院長下臺。但立法院自己也可能被解散、重新選舉。雙方都要想清楚。"},
+    {id:"c6", s:"s4", q:"為什麼不讓行政院自己編預算、自己審、自己查帳？這樣不是比較快嗎？",
+      o:[["錢和權力集中在同一個機關，亂花了也沒有人會發現",""],["因為行政院的人手不夠","不是人手的問題。就算人手很夠，也不能自己審自己。"],["因為憲法規定行政院不能碰錢","行政院當然會碰錢，預算就是它編、它執行的。只是「審」和「查」要交給別人。"],["其實這樣比較好，只是大家習慣了","快不一定好。沒有人把關，出錯和濫用的機會就變大。"]],
+      why:"分給三個院，是為了互相把關。這就是權力分立。"},
+    // ---- ⑤ 地方政府
+    {id:"d1", s:"s5", q:"小安住在直轄市的東河區（一般的區）。下面哪一位「不是」他們家可以投票選的？",
+      o:[["區長",""],["市長","直轄市長是市民選的。"],["市議員","市議員是市民選的。"],["里長","里長是里民選的。"]],
+      why:"直轄市的區長由市長派任。只有山地原住民區的區長是選的。"},
+    {id:"d2", s:"s5", q:"阿嬤住在某個縣的一個鄉。地方選舉的時候，她可以選哪些人？",
+      o:[["縣長、縣議員、鄉長、鄉民代表、村長",""],["只有縣長和縣議員","鄉也有自己選出來的鄉長和鄉民代表。"],["縣長、縣議員、村長。鄉長是縣長派的","你把鄉和直轄市的區搞混了。區長是派的，鄉長是選的。"],["只有村長","縣和鄉兩層的首長和民意代表，都是選出來的。"]],
+      why:"縣底下的鄉、鎮、縣轄市，首長和代表都是人民選的。"},
+    {id:"d3", s:"s5", q:"市政府想花錢蓋一座運動中心。這筆預算要經過誰同意？",
+      o:[["市議會",""],["立法院","立法院審的是中央政府的預算。市的預算是市議會在審。"],["市長自己決定就好","行政機關編預算，要立法機關審過才能花。地方也是一樣的道理。"],["里長","里長是鄰里的窗口，沒有審預算的權力。"]],
+      why:"地方也是行政和立法分開：市政府編預算，市議會審。"},
+    {id:"d4", s:"s5", q:"市議員在議會裡問市長：「公車為什麼常常脫班？」這個動作叫什麼？目的是什麼？",
+      o:[["質詢，代表市民監督市政府",""],["訴願，請上級機關重新審查","訴願是人民不服政府處分時用的。議員問市長叫質詢。"],["彈劾，要讓市長下臺","彈劾是監察院對違法失職公務人員做的事。議員問問題不是彈劾。"],["覆議，請市長再想一次","覆議是行政機關請立法機關再議一次，方向剛好相反。"]],
+      why:"議員是市民選出來的，用質詢和審預算來監督市政府。"},
+    {id:"d5", s:"s5", q:"「晴川市公園管理自治條例」是誰通過的？在哪裡有效？",
+      o:[["晴川市議會通過，只在晴川市有效",""],["立法院通過，全國有效","立法院通過的是法律。名稱有「自治條例」，就是地方自己訂的規則。"],["晴川市長自己訂的","自治條例要議會通過。市政府負責公布和執行。"],["內政部訂的","內政部是中央的行政機關，不替各縣市訂自治條例。"]],
+      why:"自治條例由地方的立法機關通過，只在那個地方有效。"},
+    {id:"d6", s:"s5", q:"「市長只能連任一次，市議員卻可以一直連任。」下面哪個說法正確？",
+      o:[["這是對的。行政首長有連任限制，民意代表沒有",""],["不對，兩種都只能連任一次","只有首長（市長、縣長、鄉鎮市長）限制連任一次。議員和代表沒有次數限制。"],["不對，兩種都可以一直連任","首長手上有行政權，所以限制只能連任一次。"],["不對，市議員只能做一任","議員可以連任，而且沒有次數限制。"]],
+      why:"總統、直轄市長、縣（市）長都一樣：任期 4 年，只能連任一次。"},
+    // ---- ⑥ 中央還是地方
+    {id:"e1", s:"s6", q:"颱風要來了。宣布「某某縣明天停止上班上課」的是誰？",
+      o:[["那個縣的縣長",""],["總統","總統是國家元首，不會去決定各縣市放不放假。"],["行政院長","颱風對各地的影響不一樣，所以交給各縣市首長自己決定。"],["中央氣象署","氣象署負責預報和發警報。放不放假是地方首長決定。"]],
+      why:"因地制宜的事，由地方決定。"},
+    {id:"e2", s:"s6", q:"護照、國防、發行新臺幣。這些事為什麼歸中央政府管？",
+      o:[["這些事需要全國一致，或是代表整個國家",""],["因為地方政府沒有錢","重點不是錢。就算地方有錢，也不能各自發行不同的貨幣。"],["因為地方首長不是選出來的","地方首長也是人民選的。"],["因為這些事比較不重要","剛好相反。這些是關係到整個國家的大事。"]],
+      why:"全國一致的事歸中央，因地制宜的事歸地方。"},
+    {id:"e3", s:"s6", q:"小安念的是市立國中。「學校屋頂漏水要修」和「課綱規定要學什麼」，分別是誰負責？",
+      o:[["修屋頂找市政府教育局，課綱是教育部訂的",""],["兩件都是教育部","市立國中是市政府辦的學校。校舍和設備由市政府教育局負責。"],["兩件都是市政府教育局","課綱如果每個縣市都不一樣，轉學就接不上了。所以由教育部統一訂。"],["修屋頂找教育部，課綱是市政府教育局訂的","剛好相反。"]],
+      why:"同樣是教育，全國一致的部分歸中央，個別學校的事歸地方。"},
+    {id:"e4", s:"s6", q:"下面哪一件事是地方政府負責的？",
+      o:[["收垃圾和資源回收",""],["和外國簽訂條約","這是代表整個國家對外，是中央的事。"],["發行貨幣","全國用同一種錢，由中央銀行發行。"],["全民健保","全國用同一套健保制度，由衛生福利部的健保署負責。"]],
+      why:"垃圾怎麼收，每個地方的做法都不同，由地方政府負責。"},
+    {id:"e5", s:"s6", q:"搬家後要到戶政事務所遷戶籍。但是戶籍怎麼登記的法律，全國都一樣。這說明了什麼？",
+      o:[["有些事是中央訂規則，地方來辦理",""],["戶政事務所是中央機關","戶政事務所是地方政府底下的機關。"],["每個縣市可以自己決定戶籍的法律","戶籍的法律是全國一致的。"],["這件事中央和地方都不管","兩邊都有管：中央訂法律，地方辦理。"]],
+      why:"中央和地方不是一刀切開。很多事是一起合作完成的。"},
+    {id:"e6", s:"s6", q:"國道高速公路上有坑洞，和家門口的巷子有坑洞。分別要找誰？",
+      o:[["國道找交通部的高速公路局，巷子找地方政府",""],["兩個都找市政府","國道跨過很多縣市，由中央的交通部負責。"],["兩個都找交通部","巷子裡的路是地方政府在維護。"],["國道找市政府，巷子找交通部","剛好相反。"]],
+      why:"跨過很多縣市的國道歸中央。巷道、市區道路歸地方。"},
+    // ---- ⑦ 權益受損
+    {id:"f1", s:"s7", q:"小安的爸爸收到環保局的罰單，他認為罰錯了。第一步應該做什麼？",
+      o:[["在期限內提起訴願",""],["到地方法院的民事庭告環保局","民事庭處理一般人之間的糾紛。不服政府的處分，要走訴願和行政訴訟。"],["不要理它","不處理也不繳，處分還是有效，之後還可能被強制執行。"],["報警","警察處理的是犯罪。這是對政府的處分不服。"]],
+      why:"不服政府機關的處分：先訴願，請上級機關重新審查。"},
+    {id:"f2", s:"s7", q:"爸爸的訴願被駁回了，他還是不服。下一步可以去哪裡？",
+      o:[["行政法院",""],["監察院","監察院查的是公務員有沒有違法失職。它不會直接幫你撤銷罰單。"],["憲法法庭","憲法法庭是最後一關。要先把一般的訴訟都走完。"],["立法院","立法院訂法律，不審理個別的案件。"]],
+      why:"訴願之後是行政訴訟，由行政法院審理。"},
+    {id:"f3", s:"s7", q:"鄰居的盆栽掉下來，砸壞了小安家的機車。鄰居不肯賠。想省錢又快，可以先怎麼做？",
+      o:[["到區公所的調解委員會申請調解",""],["提起訴願","訴願是對政府機關的處分不服才用。鄰居不是政府。"],["向監察院陳情","鄰居不是公務員。"],["請議員修改自治條例","這是兩家人之間的賠償，不是規則的問題。"]],
+      why:"一般人之間的糾紛，先調解。調解不用錢。談不成再到地方法院。"},
+    {id:"f4", s:"s7", q:"阿姨被假網站騙走三萬元。把處理的順序排出來：", seq:["報警","檢察官偵查","檢察官起訴","法院審判"],
+      why:"警察和檢察官負責查。證據夠了才起訴。起訴之後法院才審判。"},
+    {id:"f5", s:"s7", q:"法官為什麼不自己上街找壞人來審判？",
+      o:[["法院是被動的，有人提告或檢察官起訴才審，這樣才能保持中立",""],["因為法官太忙了","不是忙不忙的問題。就算有空，法官也不能主動找案子。"],["因為法官沒有受過辦案的訓練","重點不在訓練。如果抓人和審判是同一個人，他很難公平。"],["其實可以，只是很少這樣做","不可以。查案和審判必須是不同的人。"]],
+      why:"查案的人（警察、檢察官）和審判的人（法官）分開，審判才公平。"},
+    {id:"f6", s:"s7", q:"下面哪一件事，屬於一般人之間的「民事」糾紛？",
+      o:[["房東不肯退押金",""],["腳踏車被偷了","偷竊是犯罪，是刑事案件，要報警。"],["不服政府開的罰單","對方是政府機關，要走訴願和行政訴訟。"],["公務員收紅包","貪污是犯罪，也可以向監察院陳情。"]],
+      why:"民事：一般人之間關於錢、東西、契約的糾紛。"},
+    {id:"f7", s:"s7", q:"有人把訴訟全部走完了，還是輸。但他認為法院用的那條法律本身就違反憲法。他還可以怎麼做？",
+      o:[["向憲法法庭聲請審查",""],["向監察院陳情","監察院不審查法律有沒有違憲。"],["請行政院長撤銷判決","行政不能干涉司法。這正是權力分立要防止的事。"],["回到同一個法院再告一次","判決確定之後，原則上不能同一件事再告一次。"]],
+      why:"憲法法庭是最後一關，審查法律和判決有沒有違反憲法。"},
+  ];
+  const KEY = "gov_quiz_v1"; let ST = {};
+  try{ ST = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(e){}
+  const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} };
+  const rec = id => ST[id] || (ST[id] = { n:0, ok:0, last:"" });
+  const isWrong = q => { const r = ST[q.id]; return r && (r.last === "no" || r.last === "guess"); };
+  const box = $("quiz"), ana = $("ana"), back = $("backBtn");
+  let round = [], idx = 0, okN = 0, misses = [];
+
+  // 跳回去看那一段，再跳回題目
+  function goSec(s){
+    const el = $(s); el.scrollIntoView({ behavior:"smooth", block:"start" });
+    el.classList.add("flash"); setTimeout(()=> el.classList.remove("flash"), 2600);
+    back.hidden = !SEC[s];
+  }
+  back.addEventListener("click", ()=>{ $("s8").scrollIntoView({ behavior:"smooth", block:"start" }); back.hidden = true; });
+  const jumpBtn = s => `<button class="chip jump" data-go="${s}">回去看 ${SEC[s]}</button>`;
+  document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if(b) goSec(b.dataset.go); });
+
+  function build(onlyWrong){
+    const pri = q => isWrong(q) ? 0 : !ST[q.id] || !ST[q.id].n ? 1 : 2;
+    const pool = shuf(Q.filter(q => !onlyWrong || isWrong(q))).sort((a,b) => pri(a)-pri(b));
+    const out = [], cnt = {};
+    // 每一段先各出一題，再補到 10 題，確保六段都考到
+    for(const cap of (onlyWrong ? [99] : [1,2,99]))
+      for(const q of pool){ if(out.length >= 10) break; if(out.includes(q) || (cnt[q.s]||0) >= cap) continue; cnt[q.s] = (cnt[q.s]||0)+1; out.push(q); }
+    return shuf(out);
+  }
+  function start(onlyWrong){
+    round = build(onlyWrong); idx = 0; okN = 0; misses = [];
+    if(!round.length){ box.innerHTML = `<p class="lead">錯題本是空的。先練一回吧。</p>`; return; }
+    show();
+  }
+  function finish(q, right, diag){
+    const guess = box.querySelector(".guess input").checked, r = rec(q.id);
+    r.n++; if(right) r.ok++; r.last = !right ? "no" : guess ? "guess" : "ok"; save();
+    pracCount++; if(right){ pracOk++; okN++; } if(r.last !== "ok") misses.push(q);
+    logEv({ type:"quiz", q:q.id, sec:q.s, ok:right, guess });
+    const fb = box.querySelector(".fb"); fb.hidden = false; fb.className = "fb " + (right ? "good" : "bad");
+    let h = right ? (guess ? "<b>答對了。</b>不過你說是用猜的，我先把它放進錯題本，之後再考你一次。" : "<b>答對了。</b>") : "<b>這題沒答對。</b>";
+    if(!right && diag) h += `<p><span class="dx">你可能是這樣想的</span>${esc(diag)}</p>`;
+    h += `<p><span class="dx k">關鍵</span>${esc(q.why)}</p>`;
+    h += `<div class="ctrl">${right && !guess ? "" : jumpBtn(q.s)}<button class="chip on" id="nextQ">${idx+1 < round.length ? "下一題" : "看這一回的結果"}</button></div>`;
+    fb.innerHTML = h; box.querySelector(".guess").style.display = "none";
+    $("nextQ").addEventListener("click", ()=>{ idx++; idx < round.length ? show() : summary(); });
+    renderAna();
+  }
+  function show(){
+    const q = round[idx];
+    let h = `<div class="q"><div class="qhead"><span>第 ${idx+1} / ${round.length} 題</span><span class="tag">${SEC[q.s]}</span></div><p class="t">${esc(q.q)}</p>`;
+    h += `<label class="guess"><input type="checkbox"> 這題我不太確定，是用猜的</label>`;
+    h += q.seq ? `<div class="ans"></div><div class="pool"></div><button class="chip" id="resetO">重排</button>` : `<div class="opts"></div>`;
+    h += `<div class="fb" hidden></div></div>`;
+    box.innerHTML = h;
+    if(q.seq){
+      const ans = box.querySelector(".ans"), pool = box.querySelector(".pool"); let pick = [], done = false;
+      const paint = () => {
+        ans.innerHTML = pick.length ? pick.map((t,i) => `<span class="oc">${i+1}. ${t}</span>`).join("<i>→</i>") : `<span class="ph">照順序點下面的步驟</span>`;
+        [...pool.children].forEach(b => b.disabled = pick.includes(b.textContent));
+      };
+      shuf(q.seq).forEach(t => { const b = document.createElement("button"); b.className = "chip"; b.textContent = t;
+        b.addEventListener("click", ()=>{ if(done) return; pick.push(t); paint();
+          if(pick.length === q.seq.length){ done = true; $("resetO").style.display = "none";
+            const k = pick.findIndex((x,i) => x !== q.seq[i]), right = k < 0;
+            if(!right) ans.children[k*2].classList.add("no");
+            finish(q, right, right ? "" : (k === 0 ? `第一步應該是「${q.seq[0]}」。` : `「${q.seq[k-1]}」的下一步應該是「${q.seq[k]}」，不是「${pick[k]}」。`)); } });
+        pool.appendChild(b); });
+      $("resetO").addEventListener("click", ()=>{ if(!done){ pick = []; paint(); } }); paint();
+    } else {
+      const opts = box.querySelector(".opts"), order = shuf(q.o.map((_,i) => i)); let done = false;
+      order.forEach(i => { const b = document.createElement("button"); b.textContent = q.o[i][0]; b.dataset.i = i;
+        b.addEventListener("click", ()=>{ if(done) return; done = true; const right = i === 0;
+          b.classList.add(right ? "ok" : "no"); opts.querySelector('[data-i="0"]').classList.add("ok"); finish(q, right, q.o[i][1]); });
+        opts.appendChild(b); });
+    }
+  }
+  function summary(){
+    const bySec = {}; misses.forEach(q => (bySec[q.s] = bySec[q.s] || []).push(q));
+    let h = `<div class="q"><p class="t">這一回：${round.length} 題答對 ${okN} 題</p>`;
+    if(!misses.length) h += `<p>全部答對，而且都不是用猜的。很紮實。</p>`;
+    else {
+      h += `<p>下面這幾段再看一次，然後按「只練錯題」。</p>`;
+      for(const s in bySec) h += `<div class="miss"><b>${SEC[s]}</b>（${bySec[s].length} 題）${jumpBtn(s)}<ul>${bySec[s].map(q => `<li>${esc(q.q)}</li>`).join("")}</ul></div>`;
+    }
+    h += `<div class="ctrl"><button class="chip on" id="again">再練一回（錯的和沒做過的先出）</button>${misses.length ? `<button class="chip" id="onlyW">只練錯題</button>` : ""}</div></div>`;
+    box.innerHTML = h;
+    $("again").addEventListener("click", ()=> start(false));
+    if($("onlyW")) $("onlyW").addEventListener("click", ()=> start(true));
+    cloudSend({ type:"小測驗", detail:`政府怎麼運作 一回 ${round.length} 題；要再看：${Object.keys(bySec).map(s => SEC[s]).join("、") || "無"}`, score:`${okN}/${round.length}` });
+  }
+  function renderAna(){
+    const wrong = Q.filter(isWrong), seen = Q.filter(q => ST[q.id] && ST[q.id].n).length;
+    let h = `<p class="lead">題庫共 ${Q.length} 題，你做過 ${seen} 題。紀錄只存在這台裝置的瀏覽器。</p><div class="bars">`;
+    let weak = null, weakRate = 2;
+    for(const s in SEC){
+      let n = 0, ok = 0; Q.filter(q => q.s === s).forEach(q => { const r = ST[q.id]; if(r){ n += r.n; ok += r.ok; } });
+      const rate = n ? ok/n : 0; if(n >= 2 && rate < weakRate){ weakRate = rate; weak = s; }
+      h += `<div class="bar"><span class="nm">${SEC[s]}</span><span class="tr"><i style="width:${Math.round(rate*100)}%;background:${!n ? "#e5e7eb" : rate >= .8 ? "#16a34a" : rate >= .5 ? "#d97706" : "#dc2626"}"></i></span><span class="pc">${n ? `答對 ${ok}／${n}` : "還沒做"}</span></div>`;
+    }
+    h += `</div>`;
+    if(weak && weakRate < .8) h += `<div class="key">目前最需要再看的是 <b>${SEC[weak]}</b>。${jumpBtn(weak)}</div>`;
+    h += `<h3>錯題本（${wrong.length} 題）</h3>`;
+    if(!wrong.length) h += `<p style="color:var(--sub)">目前沒有錯題。答錯或用猜的題目會出現在這裡，之後答對就會移除。</p>`;
+    else h += `<ul class="wb">${wrong.map(q => `<li>${esc(q.q)} <span class="tag">${ST[q.id].last === "guess" ? "用猜的" : "答錯"}</span> ${jumpBtn(q.s)}</li>`).join("")}</ul><div class="ctrl"><button class="chip on" id="anaW">只練錯題（${Math.min(10, wrong.length)} 題）</button></div>`;
+    h += `<div class="ctrl"><button class="chip" id="clr">清除我的作答紀錄</button></div>`;
+    ana.innerHTML = h;
+    if($("anaW")) $("anaW").addEventListener("click", ()=>{ start(true); $("s8").scrollIntoView({ behavior:"smooth" }); });
+    $("clr").addEventListener("click", ()=>{ if(confirm("確定要清除這一課的作答紀錄和錯題本嗎？清掉就救不回來。")){ ST = {}; save(); renderAna(); } });
+  }
+  box.innerHTML = `<div class="ctrl"><button class="chip on big" id="go">開始練一回（10 題）</button></div>`;
+  $("go").addEventListener("click", ()=> start(false));
+  renderAna();
+})();
+</script>
+</body>
+</html>
