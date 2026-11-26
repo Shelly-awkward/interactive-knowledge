@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大氣科學｜成鋒作用和消鋒作用：看等溫線怎麼被擠成鋒</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f4f6f8; --card:#ffffff;
+    --pri:#0f766e; --pri-soft:#d5f2ee; --red:#dc2626; --red-soft:#fee2e2;
+    --green:#15803d; --green-soft:#dcfce7; --amber:#b45309; --amber-soft:#fef3c7;
+    --blue:#1d4ed8; --blue-soft:#dbeafe; --vio:#6d28d9; --vio-soft:#ede9fe; --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:20px 16px 80px;}
+  a{color:var(--blue);}
+
+  header.hero{background:linear-gradient(135deg,#1d4ed8,#0f766e 60%,#b45309); color:#fff; border-radius:var(--radius); padding:26px 24px; margin-bottom:16px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.95; font-size:.95rem;}
+
+  nav.toc{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;}
+  nav.toc a{background:#fff; border:1px solid var(--border); border-radius:99px; padding:3px 12px; font-size:.86rem; text-decoration:none; color:var(--ink);}
+  nav.toc a:hover{border-color:var(--pri); color:var(--pri);}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:16px;}
+  .card h2{font-size:1.18rem; color:var(--pri); margin-bottom:8px;}
+  .card h3{font-size:1rem; margin:14px 0 6px;}
+  .card ul,.card ol{margin-left:1.3em;}
+  .card p{margin-bottom:6px;}
+  .lead{font-size:.98rem; margin-bottom:10px;}
+  .pg{display:inline-block; background:#f1f5f9; color:#475569; border-radius:6px; padding:0 8px; font-size:.78rem; margin-left:6px; font-weight:normal; vertical-align:2px;}
+  .life{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.94rem;}
+  .life b{color:var(--amber);}
+  .key{background:var(--pri-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.95rem; color:#134e4a;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e3a8a;}
+  .sup{border:2px solid #c4b5fd; background:#faf8ff; border-radius:10px; padding:8px 14px; margin:10px 0; font-size:.9rem;}
+  .sup .sl{display:inline-block; background:var(--vio); color:#fff; border-radius:6px; padding:0 8px; font-size:.78rem; font-weight:bold; margin-right:6px;}
+  .sup small{color:var(--sub);}
+  .term{border-bottom:2px dotted var(--pri); font-weight:bold;}
+
+  .ctrl{display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:8px 0;}
+  .ctrl .lab{font-size:.86rem; color:var(--sub); margin-right:2px;}
+  .chip{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 13px; cursor:pointer; font-family:inherit; font-size:.88rem; color:var(--ink);}
+  .chip:hover{border-color:var(--pri); color:var(--pri);}
+  .chip.on{background:var(--pri); border-color:var(--pri); color:#fff;}
+  .chip.on:hover{color:#fff;}
+  .chip.big{padding:8px 16px; font-size:.95rem; font-weight:bold;}
+  .ck{font-size:.9rem; cursor:pointer;}
+  .slider{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:8px 0; font-size:.9rem;}
+  .slider input[type=range]{flex:1; min-width:180px; accent-color:var(--pri);}
+  .slider b{min-width:5.5em; display:inline-block;}
+  .slider .ends{display:flex; justify-content:space-between; width:100%; font-size:.78rem; color:var(--sub); margin-top:-6px;}
+
+  .stage{background:#fbfcfd; border:1px solid #e2e8f0; border-radius:12px; padding:6px;}
+  .stage canvas{display:block; width:100%; max-width:640px; margin:0 auto; touch-action:pan-y;}
+  .legend{display:flex; gap:12px; flex-wrap:wrap; font-size:.84rem; color:var(--sub); margin:6px 2px;}
+  .legend i{display:inline-block; width:18px; height:0; border-top:3px solid #000; margin-right:4px; vertical-align:4px;}
+  .legend i.d{border-top-style:dashed;}
+
+  .count{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:8px; margin-top:8px;}
+  .count div{background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:6px 10px; text-align:center;}
+  .count small{display:block; color:var(--sub); font-size:.78rem;}
+  .count b{font-size:1.15rem; color:var(--pri);}
+  .count b.up{color:var(--red);} .count b.dn{color:var(--blue);}
+  .status{border:2px solid #facc15; background:#fefce8; border-radius:12px; padding:8px 14px; margin-top:10px; font-size:.95rem;}
+
+  table{border-collapse:collapse; width:100%; font-size:.92rem; margin-top:10px;}
+  th,td{border:1px solid var(--border); padding:6px 8px; text-align:center;}
+  th{background:#f8fafc;}
+  td.l{text-align:left;}
+  td.chg{background:var(--amber-soft); font-weight:bold;}
+  tr.now td{outline:2px solid #facc15; outline-offset:-2px;}
+  .tw{overflow-x:auto;}
+
+  .q{border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-top:10px;}
+  .q p.t{font-weight:bold; margin-bottom:6px;}
+  .q .opts{display:grid; gap:6px;}
+  .q button{border:1px solid var(--border); background:#fff; border-radius:8px; padding:7px 12px; font-family:inherit; font-size:.94rem; cursor:pointer; text-align:left; color:var(--ink);}
+  .q button:hover{border-color:var(--pri);}
+  .q button.ok{background:var(--green-soft); border-color:var(--green);}
+  .q button.no{background:var(--red-soft); border-color:var(--red);}
+  .q .qhead{display:flex; justify-content:space-between; gap:8px; font-size:.84rem; color:var(--sub); margin-bottom:4px;}
+  .tag{display:inline-block; background:#f1f5f9; border-radius:99px; padding:0 9px; font-size:.78rem; color:#475569; white-space:nowrap;}
+  .guess{display:block; font-size:.88rem; color:var(--sub); margin:2px 0 8px; cursor:pointer;}
+  .fb{margin-top:10px; border-radius:10px; padding:10px 12px; font-size:.94rem;}
+  .fb.good{background:var(--green-soft);} .fb.bad{background:var(--red-soft);}
+  .fb p{margin-top:6px;}
+  .dx{display:inline-block; background:#fff; border:1px solid #fca5a5; color:#b91c1c; border-radius:6px; padding:0 7px; font-size:.8rem; font-weight:bold; margin-right:6px;}
+  .dx.k{border-color:#86efac; color:#15803d;}
+  .chip.jump{border-color:var(--blue); color:var(--blue);}
+  .ans{min-height:44px; border:2px dashed var(--border); border-radius:10px; padding:6px 8px; margin-bottom:8px; display:flex; flex-wrap:wrap; gap:4px; align-items:center;}
+  .ans .oc{background:var(--blue-soft); border-radius:8px; padding:1px 8px; font-size:.9rem;} .ans .oc.no{background:var(--red-soft); outline:2px solid var(--red);}
+  .ans i{color:var(--sub); font-style:normal;} .ans .ph{color:var(--sub); font-size:.88rem;}
+  .pool{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;} .pool .chip:disabled{opacity:.3; cursor:default;}
+  .miss{border-top:1px dashed var(--border); padding-top:8px; margin-top:8px;} .miss ul{font-size:.9rem; color:var(--sub);} .miss .chip{margin-left:6px;}
+  .bars{display:grid; gap:6px;}
+  .bar{display:grid; grid-template-columns:10.5em 1fr 6.5em; gap:8px; align-items:center; font-size:.88rem;}
+  .bar .tr{height:12px; background:#f1f5f9; border-radius:99px; overflow:hidden;} .bar .tr i{display:block; height:100%; border-radius:99px;}
+  .bar .pc{color:var(--sub); text-align:right;}
+  .wb{font-size:.92rem;} .wb li{margin-bottom:6px;} .wb .chip{padding:2px 10px; font-size:.8rem;}
+  .card.flash{animation:flash 2.6s;} @keyframes flash{0%,60%{box-shadow:0 0 0 4px #facc15;}100%{box-shadow:0 0 0 0 transparent;}}
+  #backBtn{position:fixed; right:14px; bottom:16px; z-index:20; background:var(--blue); color:#fff; border:none; border-radius:99px; padding:11px 18px; font-family:inherit; font-size:1rem; font-weight:bold; box-shadow:0 4px 14px rgba(0,0,0,.25); cursor:pointer;}
+  .predict{border:2px dashed #93c5fd; background:#f0f7ff; border-radius:12px; padding:10px 14px; margin:10px 0; font-size:.95rem;}
+  .predict .pb{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0;}
+  .predict .pb button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 14px; font-family:inherit; font-size:.9rem; cursor:pointer; color:var(--ink);}
+  .predict .pb button.on{border-color:var(--blue); background:var(--blue-soft);} .predict .pb button.ok{border-color:var(--green); background:var(--green-soft);}
+  [hidden]{display:none !important;}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:24px;}
+  .src{font-size:.86rem;} .src li{margin-bottom:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">大氣科學概論 · 第八章 次環流 · 五、成鋒作用和消鋒作用（p.269～274）</span>
+  <h1>成鋒作用和消鋒作用：看等溫線怎麼被擠成鋒</h1>
+  <p>課本用六頁文字和五張靜態圖，講「風怎麼把等溫線擠在一起」。這一頁把那五張圖都變成<b>會動的</b>：你可以拉桿子改風場，直接看等溫線被擠緊、被拉開。</p>
+</header>
+
+<nav class="toc">
+  <a href="#s1">① 鞍式區在哪</a><a href="#s2">② 變形場怎麼擠</a><a href="#s3">③ 四種單純運動</a><a href="#s4">④ 變形＋旋轉</a><a href="#s5">⑤ 輻合＋旋轉</a><a href="#s6">⑥ 垂直運動和潛熱</a><a href="#s7">⑦ 考考你</a><a href="#s8">⑧ 錯題本</a><a href="#sx">用詞和來源</a>
+</nav>
+
+<div class="card">
+  <h2>先用三句話抓住整節</h2>
+  <ol>
+    <li><b>鋒就是等溫線很密的地方。</b>等溫線變密叫<span class="term">成鋒作用</span>（frontogenesis），散開叫<span class="term">消鋒作用</span>（frontolysis）。</li>
+    <li><b>主角是「變形場」。</b>空氣從一個方向流進來、從垂直的方向流出去，等溫線就被擠成一束。</li>
+    <li><b>光靠水平的風不夠。</b>還要有垂直運動、凝結放熱和蒸發吸熱一起幫忙，鋒才會真的長出來。</li>
+  </ol>
+  <p style="font-size:.88rem;color:var(--sub)">圖裡的「氣旋形」都是指北半球的逆時針。紫色的「補充」框是課本沒寫的延伸內容，來自文末列的大學教材，和課本內容分開標示。</p>
+</div>
+
+<!-- ============ ① ============ -->
+<div class="card" id="s1">
+  <h2>① 成鋒從哪裡開始：鞍式區（col）<span class="pg">課本 p.269</span></h2>
+  <p class="lead">課本說：鋒不會突然產生。成鋒作用可以發生在氣壓場的<span class="term">鞍式區</span>，也叫<b>中性點</b>。它是槽和脊的交點。</p>
+  <p>想像一個馬鞍。往前後看，你坐的地方最低。往左右看，你坐的地方最高。氣壓場的「鞍」就是這樣的一點：</p>
+  <ul>
+    <li>在<b>兩個高壓之間</b>，它是氣壓相對<b>最低</b>的點。</li>
+    <li>在<b>兩個低壓之間</b>，它是氣壓相對<b>最高</b>的點。</li>
+  </ul>
+
+  <div class="predict" data-id="p1" data-ans="1" data-exp="鞍式區正中心兩邊的力量剛好抵銷，所以風幾乎是零。這就是它又叫「中性點」的原因。離中心越遠，風才越大。">
+    <p><b>先猜再看：</b>鞍式區正中心那一點，風會怎麼樣？</p>
+    <div class="pb"><button>四股氣流在這裡相撞，風最強</button><button>幾乎沒有風</button></div>
+    <p class="watch" hidden>先不告訴你對不對。看下面的圖，盯著正中央的小點，和四個角落的小點比速度。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+
+  <div class="ctrl">
+    <span class="lab">切一刀看氣壓</span>
+    <button class="chip on" data-cut="hh">沿兩個高壓的連線切</button>
+    <button class="chip" data-cut="ll">沿兩個低壓的連線切</button>
+    <button class="chip" data-cut="">不切</button>
+  </div>
+  <div class="stage"><canvas id="c1"></canvas></div>
+  <div class="legend">
+    <span><i style="border-color:#64748b"></i>等壓線</span>
+    <span><i style="border-color:#0f172a"></i>會動的小線＝風（高空風大致和等壓線平行）</span>
+    <span>示意圖，北半球。</span>
+  </div>
+  <div class="status" id="cutTxt"></div>
+
+  <div class="key"><b>怎麼在圖上找鞍：</b>課本說，地面天氣圖上通常不容易看出鞍的位置。要靠<b>基準層定壓面圖</b>，最常用 <b>850、700，甚至 500 毫巴</b>圖。高空風大致和等壓線平行，所以畫<b>流線</b>就能很快找出鞍式區。</div>
+  <div class="note"><b>為什麼不看地面：</b>課本說，成鋒、消鋒的活動過程，都以<b>對流層中部或上部</b>最明顯。地面附近的摩擦層裡，地面不規則、局地水汽和溫度擾動，都會把成鋒或消鋒的過程破壞掉。</div>
+</div>
+
+<!-- ============ ② ============ -->
+<div class="card" id="s2">
+  <h2>② 變形場怎麼把等溫線擠在一起<span class="pg">課本 p.269～270、272，圖 8-21、8-23</span></h2>
+  <p class="lead">把鏡頭拉近到鞍式區。這裡的流線長得像四條背對背的雙曲線，整個型式叫<span class="term">變形場</span>（deformation field）。</p>
+  <ul>
+    <li>空氣<b>往外流</b>的那條軸，叫<span class="term">伸張軸</span>（axis of dilatation）。</li>
+    <li>空氣<b>往裡流</b>的那條軸，叫<span class="term">收縮軸</span>（axis of contraction）。</li>
+    <li>虛線是等溫線。上面冷、下面暖，和圖 8-21 一樣標 T₀ 到 T₀+6。</li>
+  </ul>
+
+  <div class="predict" data-id="p2" data-ans="0" data-exp="空氣沿收縮軸的方向往中間擠，等溫線被推到伸張軸旁邊排成一束。所以「擠的方向」是收縮軸，「擠完躺的位置」是伸張軸。">
+    <p><b>先猜再看：</b>按下播放後，等溫線最後會擠在哪一條軸的旁邊？</p>
+    <div class="pb"><button>伸張軸（水平那條）</button><button>收縮軸（垂直那條）</button></div>
+    <p class="watch" hidden>先不告訴你對不對。按下面的「播放」，看虛線往哪裡靠。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+
+  <div class="slider">
+    <span>一開始等溫線和伸張軸的夾角 <b id="b2v">15°</b></span>
+    <input type="range" id="b2" min="0" max="90" step="5" value="15">
+    <div class="ends"><span>0°：平行伸張軸</span><span>45°</span><span>90°：平行收縮軸</span></div>
+  </div>
+  <div class="ctrl">
+    <button class="chip on big" id="play2">播放</button>
+    <button class="chip" id="re2">重來</button>
+    <button class="chip" data-b2="15">課本圖 8-21 的擺法</button>
+    <button class="chip" data-b2="90">試試平行收縮軸</button>
+    <label class="ck"><input type="checkbox" id="blob2" checked> 放一塊圓形空氣進去</label>
+  </div>
+  <div class="stage"><canvas id="c2"></canvas></div>
+  <div class="legend">
+    <span><i class="d" style="border-color:#334155"></i>等溫線</span>
+    <span><i style="border-color:#15803d"></i>伸張軸</span>
+    <span><i style="border-color:#6d28d9"></i>收縮軸</span>
+    <span>底色：藍＝冷，紅＝暖</span>
+  </div>
+  <div class="count">
+    <div><small>溫度梯度是一開始的</small><b id="r2g">1.0 倍</b></div>
+    <div><small>等溫線間距剩</small><b id="r2s">100%</b></div>
+    <div><small>等溫線和伸張軸夾角</small><b id="r2a">15°</b></div>
+    <div><small>那塊空氣的面積</small><b id="r2m">100%</b></div>
+  </div>
+  <div class="status" id="st2"></div>
+
+  <div class="key"><b>課本的兩句話是同一件事：</b>p.270 說等溫線「集中在伸張軸附近」，p.272 說「沿收縮軸集中」。看動畫就懂：<b>擠的方向</b>是收縮軸，擠完之後等溫線<b>躺在</b>伸張軸旁邊。這一帶就是成鋒作用的開始。</div>
+  <div class="note"><b>最容易錯：等溫線擠在一起，不代表空氣在這裡堆積。</b>看那塊圓形空氣。它被壓扁、拉長，但面積一直是 100%。課本的說法是：質量的輻合或輻散未必有關，流出的可能和流入的完全相等。</div>
+  <div class="life"><b>那消鋒呢：</b>把夾角拉到 90° 再播放。等溫線和收縮軸平行，這次是被<b>拉開</b>。課本 p.273～274 說，任何變形過程只要有利於等溫線散開，就是消鋒作用的開始階段，所以不另外討論。</div>
+  <div class="sup"><span class="sl">補充（課本沒寫）</span><b>45° 規則。</b>等溫線和伸張軸的夾角<b>小於 45°</b>，變形場此刻在成鋒。<b>大於 45°</b>，此刻在消鋒。把夾角拉到 70° 播放看看：一開始梯度先變小，但等溫線會被風慢慢轉向伸張軸，轉過 45° 之後又開始變密。<br><small>來源：美國國家氣象局 Louisville 辦公室訓練教材（Funk, 2004）；公式是 Petterssen 的成鋒函數 F = ½|∇θ|(D cos 2β − δ)，D 是變形、β 是那個夾角、δ 是輻散。</small></div>
+</div>
+
+<!-- ============ ③ ============ -->
+<div class="card" id="s3">
+  <h2>③ 一大塊空氣的四種單純運動<span class="pg">課本 p.270～271，圖 8-22</span></h2>
+  <p class="lead">課本先把問題擱一邊，回頭問：一大塊空氣可以怎麼動？先假設運動只在水平方向，可以拆成四種。看下面那塊方形空氣，裡面畫了五條等溫線。</p>
+
+  <div class="predict" data-id="p3" data-ans="1" data-exp="純旋轉只改變方位。整塊一起轉，線和線之間的距離不會變，所以轉再快也擠不出鋒。">
+    <p><b>先猜再看：</b>讓這塊空氣原地快速旋轉，裡面的等溫線會被擠密嗎？</p>
+    <div class="pb"><button>會，轉越快越密</button><button>不會</button></div>
+    <p class="watch" hidden>先不告訴你對不對。按「純旋轉」，看下面「等溫線間距」的數字有沒有變。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+
+  <div class="ctrl" id="m3">
+    <button class="chip on" data-m="tr">純移置（圖 a）</button>
+    <button class="chip" data-m="ro">純旋轉（圖 b）</button>
+    <button class="chip" data-m="co">純輻合（圖 c）</button>
+    <button class="chip" data-m="di">純輻散（和 c 相反）</button>
+    <button class="chip" data-m="de">純變形（圖 d）</button>
+  </div>
+  <div class="stage"><canvas id="c3"></canvas></div>
+  <div class="count">
+    <div><small>這塊空氣的面積</small><b id="r3a">100%</b></div>
+    <div><small>裡面等溫線的間距</small><b id="r3s">100%</b></div>
+  </div>
+  <div class="status" id="st3"></div>
+
+  <div class="tw"><table id="t3">
+    <tr><th>運動</th><th>位置</th><th>方位</th><th>面積（容積）</th><th>形狀</th><th>等溫線間距</th></tr>
+    <tr data-m="tr"><td class="l">純移置 pure translation</td><td class="chg">變</td><td>不變</td><td>不變</td><td>不變</td><td>不變</td></tr>
+    <tr data-m="ro"><td class="l">純旋轉 pure rotation</td><td>不變</td><td class="chg">變</td><td>不變</td><td>不變</td><td>不變</td></tr>
+    <tr data-m="co"><td class="l">純輻合（容積收縮）</td><td>不變</td><td>不變</td><td class="chg">變小</td><td>不變</td><td class="chg">變小</td></tr>
+    <tr data-m="di"><td class="l">純輻散（純膨脹 pure expansion）</td><td>不變</td><td>不變</td><td class="chg">變大</td><td>不變</td><td class="chg">變大</td></tr>
+    <tr data-m="de"><td class="l">純變形 pure deformation</td><td>不變</td><td>不變</td><td>不變</td><td class="chg">變</td><td class="chg">變（看等溫線怎麼擺）</td></tr>
+  </table></div>
+
+  <div class="key"><b>課本的結論：</b>純移置<b>不會</b>使等溫線密集。純旋轉<b>也一樣</b>不會。變形的情況<b>截然不同</b>，合流運動會讓等溫線集中。</div>
+  <div class="note"><b>輻合明明會讓間距變小，為什麼課本先不談？</b>課本 p.271 說：擴張（負的是輻合、正的是輻散）在其他情況很重要，但和其他運動相比<b>顯得很小</b>，所以目前的討論先剔除。到 p.274 講垂直運動時，課本又把水平輻合請回來，見第 ⑤ 段。</div>
+  <div class="note"><b>提醒：</b>真正的空氣運動不限於水平方向，也不會剛好是其中一種，大都是好幾種結合。這四種是拆開來想的零件。</div>
+  <div class="note" style="background:#fff7ed;color:#7c2d12"><b>課本這一句請向老師確認：</b>p.271 寫「循相等間隔彼此平行的直線等壓線吹的一種地轉風運動為典型的純<b>旋轉</b>」。照前面的定義，每一點風向風速都一樣的氣流，應該是純<b>移置</b>。這可能是誤植，但我不確定，考試請以老師的說法為準。</div>
+  <div class="sup"><span class="sl">補充（課本沒寫）</span>大學教材把「變形」再分成<b>伸縮變形</b>和<b>切變變形</b>兩種，所以有的書說五種運動。切變變形其實只是把伸縮變形轉 45° 來看，兩種可以合成一個「總變形」加一條伸張軸。<br><small>來源：Penn State METEO 300 第 9 課；LMU 慕尼黑大學 Roger Smith 動力氣象講義第 14 章。</small></div>
+</div>
+
+<!-- ============ ④ ============ -->
+<div class="card" id="s4">
+  <h2>④ 把零件疊起來：變形＋旋轉<span class="pg">課本 p.272～273，圖 8-24</span></h2>
+  <p class="lead">課本說，看幾種單純運動的組合更有教育意義，在真實大氣中也更有代表性。這裡在變形場上再疊一個旋轉。拉下面的桿子，看流線怎麼變。</p>
+
+  <div class="predict" data-id="p4" data-ans="2" data-exp="旋轉和變形剛好一樣強時，兩條軸會疊成一條直線。線的兩邊是方向相反的直線氣流，線上的風速是零。">
+    <p><b>先猜再看：</b>旋轉慢慢加強，強到和變形<b>剛好相等</b>的那一刻，流線長什麼樣子？</p>
+    <div class="pb"><button>正圓形</button><button>橢圓形</button><button>互相平行的直線</button></div>
+    <p class="watch" hidden>先不告訴你對不對。把下面的桿子慢慢往右拉到「相等」。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+
+  <div class="slider">
+    <span>旋轉的強度（變形固定為 1） <b id="r4v">0</b></span>
+    <input type="range" id="r4" min="-2" max="2" step="0.05" value="0">
+    <div class="ends"><span>← 反氣旋形（順時針）</span><span>0：只有變形</span><span>氣旋形（逆時針）→</span></div>
+  </div>
+  <div class="ctrl" id="pre4">
+    <button class="chip on" data-r="0">只有變形</button>
+    <button class="chip" data-r="0.55">圖 a：弱氣旋形</button>
+    <button class="chip" data-r="1">旋轉＝變形</button>
+    <button class="chip" data-r="1.6">圖 b：強氣旋形</button>
+    <button class="chip" data-r="-0.55">圖 c：弱反氣旋形</button>
+    <button class="chip" data-r="-1.6">圖 d：強反氣旋形</button>
+  </div>
+  <div class="stage"><canvas id="c4"></canvas></div>
+  <div class="legend">
+    <span><i style="border-color:#94a3b8"></i>流線</span>
+    <span><i style="border-color:#15803d"></i>伸張軸</span>
+    <span><i style="border-color:#6d28d9"></i>收縮軸</span>
+    <span style="color:#dc2626">L 低壓</span><span style="color:#1d4ed8">H 高壓</span>
+  </div>
+  <div class="status" id="st4"></div>
+
+  <div class="key"><b>課本的三個階段（以氣旋形為例）：</b>
+    <ol>
+      <li><b>旋轉比變形弱：</b>變形場歪斜（圖 8-24a）。氣旋形彎曲的地方被加強，反氣旋形彎曲的地方被抵銷。</li>
+      <li><b>旋轉等於變形：</b>軸更偏斜，直到變成一條直線軸兩邊的反向直線氣流。軸線上氣流淨速度為零。</li>
+      <li><b>旋轉控制變形：</b>低壓周圍形成橢圓形環流，長軸指向兩個低壓原先的位置（圖 8-24b）。</li>
+    </ol>
+    反氣旋形旋轉疊上去，結果類似（圖 8-24c、d）。
+  </div>
+  <div class="note"><b>課本的提醒：</b>等溫線密集對成鋒很重要，但不能過度強調雙曲線流線這種合流運動，把問題過於簡化。其他氣流型式也可能對變形有貢獻，甚至範圍更大。這裡至少要看懂：<b>為什麼變形場能當作等溫線密集的機制</b>。</div>
+
+  <div class="sup"><span class="sl">補充（課本沒寫）</span><b>疊上旋轉之後，等溫線還擠得起來嗎？</b>
+    <label class="ck" style="display:block;margin:4px 0"><input type="checkbox" id="iso4"> 在上面的圖加上等溫線，看梯度怎麼變</label>
+    <div class="count" id="iso4box" hidden><div><small>溫度梯度是一開始的</small><b id="r4g">1.0 倍</b></div></div>
+    <p>旋轉本身只會把等溫線<b>轉向</b>，不會讓梯度變大或變小。但它會把等溫線轉離伸張軸，變形的擠壓就打了折扣。旋轉比變形強時，等溫線擠一下又被轉開，梯度只會來回擺動。</p>
+    <small>來源：美國國家氣象局訓練教材「Pure vorticity acts to rotate isotherms, it cannot tighten or weaken the gradient」；Roger Smith 講義推導成鋒函數時，渦度一項不出現在右邊。梯度的數字是照這個線性風場算出來的。</small>
+  </div>
+</div>
+
+<!-- ============ ⑤ ============ -->
+<div class="card" id="s5">
+  <h2>⑤ 輻合＋旋轉：熟悉的低壓和高壓<span class="pg">課本 p.274，圖 8-25</span></h2>
+  <p class="lead">前面先把輻合輻散放一邊。現在課本把它請回來，和旋轉疊在一起，就是天氣圖上最熟悉的兩種環流。</p>
+  <div class="slider">
+    <span>輻合／輻散 <b id="d5v">輻合</b></span>
+    <input type="range" id="d5" min="-1" max="1" step="0.1" value="-0.6">
+    <div class="ends"><span>← 輻合（往中心流）</span><span>0</span><span>輻散（往外流）→</span></div>
+  </div>
+  <div class="slider">
+    <span>旋轉 <b id="z5v">氣旋形</b></span>
+    <input type="range" id="z5" min="-1" max="1" step="0.1" value="0.7">
+    <div class="ends"><span>← 反氣旋形（順時針）</span><span>0</span><span>氣旋形（逆時針）→</span></div>
+  </div>
+  <div class="ctrl" id="pre5">
+    <button class="chip on" data-d="-0.6" data-z="0.7">圖 8-25a：輻合＋氣旋形</button>
+    <button class="chip" data-d="0.6" data-z="-0.7">圖 8-25b：輻散＋反氣旋形</button>
+    <button class="chip" data-d="-0.6" data-z="0">只有輻合</button>
+    <button class="chip" data-d="0" data-z="0.7">只有旋轉</button>
+  </div>
+  <div class="stage"><canvas id="c5"></canvas></div>
+  <div class="status" id="st5"></div>
+  <div class="key"><b>課本的說法：</b>
+    <ul>
+      <li>水平向<b>輻合</b>加上<b>氣旋形</b>旋轉，產生和<b>地面低壓</b>相伴的熟知環流型（圖 8-25a）。</li>
+      <li>水平向<b>輻散</b>加上<b>反氣旋形</b>旋轉，產生和<b>地面高壓</b>相伴的環流型（圖 8-25b）。</li>
+      <li>水平向輻合再加上正（氣旋形）渦度增加，在成鋒作用中佔很重要的地位。水平向輻散也同樣重要。</li>
+    </ul>
+  </div>
+  <div class="sup"><span class="sl">補充（課本沒寫）</span><b>右邊的側面圖在講什麼：</b>低層空氣往中間擠，沒地方去只能往上，所以容易成雲降水。低層空氣往外散，上面的空氣就下沉來補。這就是輻合輻散和「垂直運動」的連結，也是下一段的主題。<br><small>來源：Penn State METEO 300 第 9.5 節「low-level air converges into low-pressure regions, causing uplift, which causes clouds and precipitation」。</small></div>
+  <div class="sup"><span class="sl">補充（課本沒寫）</span><b>合流不等於輻合。</b>合流（confluence）是<b>流線</b>靠近。輻合（convergence）是<b>空氣量</b>真的堆進來。第 ② 段的變形場流線靠近，但面積沒變，所以是合流、不是輻合。<br><small>來源：Penn State METEO 300 第 9.1 節。</small></div>
+</div>
+
+<!-- ============ ⑥ ============ -->
+<div class="card" id="s6">
+  <h2>⑥ 成鋒是立體的：垂直運動、凝結和蒸發<span class="pg">課本 p.274</span></h2>
+  <p class="lead">課本最後說：還有幾種其他過程，對成鋒作用有重大的貢獻。這一段把鏡頭從「上面往下看」換成「從側面看」。</p>
+  <ul>
+    <li>一個地區<b>除非有斜壓度集中，否則決不會有鋒</b>。白話說：要先有冷暖的對比被集中起來。</li>
+    <li>這必須伴隨<span class="term">熱力性直接環流</span>：<b>暖空氣上升、冷空氣下沉</b>。所以垂直運動對成鋒非常重要。</li>
+    <li>結論：成鋒作用顯然是一種<b>三度空間的過程</b>。</li>
+  </ul>
+  <h3>非保守性過程（nonconservative processes）</h3>
+  <p><span class="term">位溫</span>像空氣塊的身分證。只要<b>沒有凝結或蒸發</b>，空氣塊上升下沉時位溫都不變，這叫「保守」。一旦有凝結或蒸發，位溫就會被改掉，這就是非保守性過程。按下面兩個開關看看：</p>
+  <div class="ctrl">
+    <button class="chip" id="cond6">暖區凝結成雲：放出潛熱</button>
+    <button class="chip" id="evap6">雨落進冷空氣被蒸發：取走熱量</button>
+  </div>
+  <div class="stage"><canvas id="c6"></canvas></div>
+  <div class="legend">
+    <span><i style="border-color:#dc2626"></i>暖空氣上升</span>
+    <span><i style="border-color:#1d4ed8"></i>冷空氣下沉</span>
+    <span><i class="d" style="border-color:#6d28d9"></i>等位溫線（技術上叫等熵線 isentropes）</span>
+    <span>示意圖，不是算出來的。真實的鋒面坡度比圖上平緩很多。</span>
+  </div>
+  <div class="status" id="st6"></div>
+  <div class="key"><b>課本的因果鏈：</b>
+    <ol>
+      <li>凝結大都發生在<b>暖區</b>。暖空氣上升，可以因為<b>潛熱釋出而加快</b>。</li>
+      <li>雲的降水落進發展中鋒面下方的<b>冷氣團</b>，被蒸發。冷空氣的下降或沉降，有時可以用<b>蒸發取出熱量</b>來解釋。</li>
+      <li>兩者之一或兩者都有，都可<b>增強力管環流</b>，因而直接<b>有利於成鋒作用</b>。</li>
+    </ol>
+  </div>
+  <div class="note"><b>白話整理：</b>凝結是在暖的那一邊<b>加熱</b>，蒸發是在冷的那一邊<b>冷卻</b>。暖的更暖、冷的更冷，冷暖對比就更大。課本說這個問題在後面講波型氣旋和氣旋生成時還會再談。</div>
+  <div class="sup"><span class="sl">補充（課本沒寫）</span>大學教材把成鋒的原因列成四項：<b>水平變形</b>、<b>水平輻合</b>、<b>垂直運動把等溫面弄斜</b>（tilting）、<b>加熱不均</b>（diabatic heating）。課本這六頁剛好四項都點到了：第 ② 到 ④ 段是變形，第 ⑤ 段是輻合，這一段是後兩項。<br><small>來源：Roger Smith 動力氣象講義第 14 章的 T1～T4 四項；美國國家氣象局訓練教材。</small></div>
+</div>
+
+<!-- ============ ⑦ ============ -->
+<div class="card" id="s7">
+  <h2>⑦ 考考你：是真的懂，還是只是背起來？</h2>
+  <p class="lead">這些題目大多是<b>情境題</b>，課本上找不到一樣的句子，要用剛剛看到的畫面去想。一回 10 題，一次一題。</p>
+  <ul style="font-size:.92rem">
+    <li>答錯時，會告訴你<b>可能是哪裡想錯</b>，還有一個按鈕直接跳回那一段動畫。</li>
+    <li>不確定就勾「用猜的」。猜對的題目也會進錯題本，之後再考一次。</li>
+    <li>下一回會先出<b>上次錯的</b>和<b>還沒做過的</b>。</li>
+  </ul>
+  <div id="quiz"></div>
+</div>
+
+<div class="card" id="s8">
+  <h2>⑧ 我的弱點和錯題本</h2>
+  <div id="ana"></div>
+</div>
+<button id="backBtn" hidden>↩ 回到題目</button>
+
+<div class="card" id="sx">
+  <h2>課本用詞對照</h2>
+  <div class="tw"><table>
+    <tr><th>課本用詞</th><th>英文</th><th>一句白話</th></tr>
+    <tr><td>成鋒作用</td><td>frontogenesis</td><td class="l">鋒的形成，等溫線變密</td></tr>
+    <tr><td>消鋒作用</td><td>frontolysis</td><td class="l">鋒的消散，等溫線散開</td></tr>
+    <tr><td>鞍式區（中性點）</td><td>col</td><td class="l">槽和脊的交點；兩高之間最低、兩低之間最高</td></tr>
+    <tr><td>基準層</td><td>mandatory level</td><td class="l">固定要分析的定壓面，例如 850、700、500 毫巴</td></tr>
+    <tr><td>伸張軸</td><td>axis of dilatation</td><td class="l">空氣往外流的那條軸</td></tr>
+    <tr><td>收縮軸</td><td>axis of contraction</td><td class="l">空氣往裡流的那條軸</td></tr>
+    <tr><td>變形場</td><td>deformation field</td><td class="l">一個方向流進、垂直方向流出的整個型式</td></tr>
+    <tr><td>純移置</td><td>pure translation</td><td class="l">整塊搬走，形狀、體積、方位都不變</td></tr>
+    <tr><td>純旋轉</td><td>pure rotation</td><td class="l">只改方位</td></tr>
+    <tr><td>純膨脹（輻散）／收縮（輻合）</td><td>pure expansion</td><td class="l">只改體積</td></tr>
+    <tr><td>純變形</td><td>pure deformation</td><td class="l">只改形狀</td></tr>
+    <tr><td>非保守性過程</td><td>nonconservative processes</td><td class="l">會改變位溫的過程，例如凝結、蒸發</td></tr>
+    <tr><td>等熵線</td><td>isentropes</td><td class="l">等位溫線</td></tr>
+  </table></div>
+  <h3>資料來源</h3>
+  <ul class="src">
+    <li><b>主要內容：</b>《大氣科學》第八章「次環流」五、成鋒作用和消鋒作用，p.269～274（依上傳的六張課本照片）。圖都是重新畫的示意動畫，不是課本原圖。</li>
+    <li><b>補充框參考的專家教材：</b></li>
+    <li>Roger K. Smith（慕尼黑大學 LMU）, Dynamic Meteorology 講義 Chapter 14 “Fronts and Frontogenesis”：<a href="https://www.meteo.physik.uni-muenchen.de/~roger/Lectures/Dm_Lectures/DM_L15_2007.pdf" target="_blank" rel="noopener">講義 PDF</a></li>
+    <li>Ted Funk（美國國家氣象局 Louisville）, “Understanding Frontogenesis and its Application to Winter Weather Forecasting”, 2004：<a href="https://www.weather.gov/media/lmk/soo/frontogenesis_lmk2.pdf" target="_blank" rel="noopener">訓練教材 PDF</a></li>
+    <li>Penn State METEO 300, Lesson 9 “Kinematics”：<a href="https://courses.ems.psu.edu/meteo300/book/export/html/695" target="_blank" rel="noopener">課程網頁</a></li>
+    <li>Roland Stull, Practical Meteorology, 10.9 “Kinematics”：<a href="https://geo.libretexts.org/Bookshelves/Meteorology_and_Climate_Science/Practical_Meteorology_(Stull)/10%3A_Atmospheric_Forces_and_Winds/10.9%3A_Kinematics" target="_blank" rel="noopener">線上教科書</a></li>
+    <li>J. D. Wilson（Alberta 大學）EAS 372 “Deformation and frontogenesis” 投影片。</li>
+  </ul>
+  <p style="font-size:.86rem;color:var(--sub)">模擬怎麼算的：第 ②④⑤ 段用的是「風速和離中心的距離成正比」的線性風場，等溫線和溫度梯度是照這個風場算出來的。第 ① 段是四個高低壓疊出來的示意氣壓場。第 ⑥ 段是手畫的示意圖。</p>
+</div>
+
+<footer>大氣科學概論自學教材 · 成鋒作用和消鋒作用<br>依課本 p.269～274 的架構與用詞編寫，圖與文字為原創示意。作答紀錄只存在這台裝置的瀏覽器。</footer>
+</div>
+
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "大氣科學 成鋒作用";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// 上傳網址不寫在教材裡；在「學習紀錄」頁設定一次，存於此瀏覽器。
+let CLOUD_URL = "";
+try{ CLOUD_URL = localStorage.getItem("cloud_url_v1") || ""; }catch(e){}
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// ===== 共用工具 =====
+const $ = id => document.getElementById(id);
+const FONT = '"Microsoft JhengHei","PingFang TC",system-ui,sans-serif';
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+const rnd = (a,b) => a + Math.random()*(b-a);
+const TAU = Math.PI*2;
+const scenes = [];
+function scene(id, W, H, draw){
+  const cv = $(id), ctx = cv.getContext("2d");
+  function fit(){
+    const w = cv.clientWidth || 600, dpr = window.devicePixelRatio || 1;
+    cv.style.height = (w*H/W) + "px";
+    cv.width = Math.round(w*dpr); cv.height = Math.round(w*H/W*dpr);
+    ctx.setTransform(cv.width/W, 0, 0, cv.width/W, 0, 0);
+    ctx.fs = clamp(500/w, 1, 1.35);
+  }
+  fit(); window.addEventListener("resize", fit);
+  const s = { cv, ctx, draw, vis:true };
+  if("IntersectionObserver" in window){
+    s.vis = false;
+    new IntersectionObserver(es => es.forEach(e => s.vis = e.isIntersecting), { rootMargin:"80px" }).observe(cv);
+  }
+  scenes.push(s); return ctx;
+}
+function txt(c, s, x, y, o){
+  o = o || {};
+  c.font = `${o.b ? "bold " : ""}${(o.size||13)*c.fs}px ${FONT}`;
+  c.textAlign = o.al || "center"; c.textBaseline = o.bl || "middle";
+  if(o.halo){ c.lineWidth = 4; c.strokeStyle = o.halo; c.lineJoin = "round"; c.strokeText(s, x, y); }
+  c.fillStyle = o.col || "#1f2937"; c.fillText(s, x, y);
+}
+function arrow(c, x1, y1, x2, y2, col, w, hd){
+  const a = Math.atan2(y2-y1, x2-x1); hd = hd || 9;
+  c.strokeStyle = col; c.fillStyle = col; c.lineWidth = w || 2; c.lineCap = "round";
+  c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2 - Math.cos(a)*hd*.6, y2 - Math.sin(a)*hd*.6); c.stroke();
+  c.beginPath(); c.moveTo(x2,y2); c.lineTo(x2 - Math.cos(a-.42)*hd, y2 - Math.sin(a-.42)*hd); c.lineTo(x2 - Math.cos(a+.42)*hd, y2 - Math.sin(a+.42)*hd); c.closePath(); c.fill();
+}
+// 會動的小線：跟著風場走的示蹤粒子
+function particles(n, B, vel){
+  const ps = [];
+  const spawn = p => { const q = B.spawn ? B.spawn() : [rnd(B.x0,B.x1), rnd(B.y0,B.y1)]; p.x = q[0]; p.y = q[1]; p.tr = []; p.age = 0; p.life = rnd(1.8, 4.4); };
+  for(let i=0;i<n;i++){ const p = {}; spawn(p); p.age = rnd(0, p.life); ps.push(p); }
+  return {
+    step(dt){
+      for(const p of ps){
+        const v = vel(p.x, p.y); p.tr.push(p.x, p.y); if(p.tr.length > 26) p.tr.splice(0, 2);
+        p.x += v[0]*dt; p.y += v[1]*dt; p.age += dt;
+        if(p.age > p.life || p.x < B.x0-.1 || p.x > B.x1+.1 || p.y < B.y0-.1 || p.y > B.y1+.1 || (B.dead && B.dead(p.x,p.y))) spawn(p);
+      }
+    },
+    draw(c, P, rgb){
+      c.lineCap = "round";
+      for(let k=0;k<3;k++){
+        c.beginPath();
+        for(const p of ps){
+          const t = p.tr, M = t.length/2 + 1; if(M < 3) continue;
+          const i0 = Math.floor((M-1)*k/3), i1 = Math.floor((M-1)*(k+1)/3); if(i1 <= i0) continue;
+          const pt = i => i < M-1 ? P(t[i*2], t[i*2+1]) : P(p.x, p.y);
+          let a = pt(i0); c.moveTo(a[0], a[1]);
+          for(let i=i0+1;i<=i1;i++){ a = pt(i); c.lineTo(a[0], a[1]); }
+        }
+        c.strokeStyle = `rgba(${rgb},${[.16,.38,.72][k]})`; c.lineWidth = [1,1.4,1.9][k]; c.stroke();
+      }
+      c.fillStyle = `rgba(${rgb},.9)`; c.beginPath();
+      for(const p of ps){ if(p.tr.length < 6) continue; const a = P(p.x, p.y); c.moveTo(a[0]+2, a[1]); c.arc(a[0], a[1], 2, 0, TAU); }
+      c.fill();
+    },
+    reset(){ ps.forEach(p => { spawn(p); p.age = rnd(0, p.life); }); }
+  };
+}
+// 等值線（marching squares），回傳每個 level 的線段陣列
+function contourSegs(f, x0, x1, y0, y1, nx, ny, levels){
+  const dx = (x1-x0)/nx, dy = (y1-y0)/ny, N = nx+1, v = new Float32Array(N*(ny+1));
+  for(let j=0;j<=ny;j++) for(let i=0;i<=nx;i++) v[j*N+i] = f(x0+i*dx, y0+j*dy);
+  return levels.map(L => {
+    const s = [];
+    for(let j=0;j<ny;j++) for(let i=0;i<nx;i++){
+      const a = v[j*N+i], b = v[j*N+i+1], d = v[(j+1)*N+i], e = v[(j+1)*N+i+1], x = x0+i*dx, y = y0+j*dy, p = [];
+      if((a<L) !== (b<L)) p.push(x+(L-a)/(b-a)*dx, y);
+      if((b<L) !== (e<L)) p.push(x+dx, y+(L-b)/(e-b)*dy);
+      if((d<L) !== (e<L)) p.push(x+(L-d)/(e-d)*dx, y+dy);
+      if((a<L) !== (d<L)) p.push(x, y+(L-a)/(d-a)*dy);
+      if(p.length >= 4) s.push(p[0],p[1],p[2],p[3]);
+      if(p.length === 8) s.push(p[4],p[5],p[6],p[7]);
+    }
+    return s;
+  });
+}
+function drawSegs(c, P, s){
+  c.beginPath();
+  for(let i=0;i<s.length;i+=4){ const a = P(s[i],s[i+1]), b = P(s[i+2],s[i+3]); c.moveTo(a[0],a[1]); c.lineTo(b[0],b[1]); }
+  c.stroke();
+}
+const isoCol = k => { const t = (k+3)/6; return `rgb(${Math.round(29+(190-29)*t)},${Math.round(78+(30-78)*t)},${Math.round(216+(45-216)*t)})`; };
+const SUBS = ["T₀","T₀+1","T₀+2","T₀+3","T₀+4","T₀+5","T₀+6"];
+// 畫等溫線。溫度 T = −(g·x)：g 指向冷的那邊。七條線 T = −3…3，標成 T₀…T₀+6
+function drawIso(c, P, sc, g, o){
+  const G = Math.hypot(g[0], g[1]), n = [g[0]/G, g[1]/G], t = [-n[1], n[0]], L = 4;
+  if(o.fill){
+    const a = P(-n[0]*3.7/G, -n[1]*3.7/G), b = P(n[0]*3.7/G, n[1]*3.7/G);
+    const gr = c.createLinearGradient(a[0], a[1], b[0], b[1]);
+    gr.addColorStop(0, "#f5ac9c"); gr.addColorStop(.5, "#fbf4e2"); gr.addColorStop(1, "#a3c4f3");
+    c.fillStyle = gr; c.fillRect(0, 0, o.W, o.H);
+  }
+  const gap = sc/G; // 相鄰等溫線的像素距離
+  c.save(); c.setLineDash([8,5]); c.lineWidth = 1.8;
+  for(let k=-3;k<=3;k++){
+    const s = k/G, x = n[0]*s, y = n[1]*s; // T = −k 在 n·x = k/G；k 越大越冷
+    const a = P(x - t[0]*L, y - t[1]*L), b = P(x + t[0]*L, y + t[1]*L);
+    c.strokeStyle = isoCol(-k); c.beginPath(); c.moveTo(a[0],a[1]); c.lineTo(b[0],b[1]); c.stroke();
+  }
+  c.restore();
+  if(o.labels){
+    const every = gap >= 15*c.fs ? 1 : gap >= 7*c.fs ? 3 : 0;
+    for(let k=-3;k<=3;k++){
+      if(!every || (k+3) % every) continue;
+      const s = k/G, x = n[0]*s, y = n[1]*s; let lx, ly;
+      if(Math.abs(t[0]) > .5){ const u = (o.lx - x)/t[0]; lx = o.lx; ly = y + t[1]*u; }
+      else { const u = (o.ly - y)/t[1]; ly = o.ly; lx = x + t[0]*u; }
+      if(Math.abs(lx) > o.rx || Math.abs(ly) > o.ry) continue;
+      const q = P(lx, ly); txt(c, SUBS[3-k], q[0], q[1], { size:12, b:1, col:isoCol(-k), halo:"rgba(255,255,255,.85)" });
+    }
+  }
+  return gap;
+}
+function chips(sel, attr, fn){
+  const bs = [...document.querySelectorAll(sel)];
+  bs.forEach(b => b.addEventListener("click", ()=>{ bs.forEach(x => x.classList.remove("on")); b.classList.add("on"); fn(b.dataset[attr], b); }));
+  return bs;
+}
+
+// ===================== ① 鞍式區 =====================
+(function(){
+  const W = 640, H = 560, sc = 200, cx = 320, cy = 200, P = (x,y) => [cx + x*sc, cy - y*sc];
+  const C = [[-.85,.55,1],[.85,-.55,1],[.85,.55,-1],[-.85,-.55,-1]], S2 = .45;
+  const p = (x,y) => { let s = 0; for(const q of C){ const dx = x-q[0], dy = y-q[1]; s += q[2]*Math.exp(-(dx*dx+dy*dy)/S2); } return s; };
+  const vel = (x,y) => { let px = 0, py = 0; for(const q of C){ const dx = x-q[0], dy = y-q[1], e = q[2]*Math.exp(-(dx*dx+dy*dy)/S2)*(-2/S2); px += e*dx; py += e*dy; } return [-py*.32, px*.32]; };
+  const B = { x0:-1.6, x1:1.6, y0:-1, y1:1 };
+  const ps = particles(210, B, vel);
+  const lv = []; for(let k=-4;k<=4;k++) lv.push(k*.2);
+  const segs = contourSegs(p, B.x0, B.x1, B.y0, B.y1, 80, 50, lv);
+  let cut = "hh", T = 0;
+  const CUT = { hh:{ d:[.85,-.55], a:"高", txt:"<b>沿兩個高壓的連線走：</b>氣壓先降後升，鞍式區是這條路上的<b>最低點</b>。", col:"#1d4ed8" },
+                ll:{ d:[.85,.55], a:"低", txt:"<b>沿兩個低壓的連線走：</b>氣壓先升後降，鞍式區是這條路上的<b>最高點</b>。", col:"#dc2626" } };
+  for(const k in CUT){ const d = CUT[k].d, m = Math.hypot(d[0], d[1]); CUT[k].L = m; CUT[k].u = [d[0]/m, d[1]/m]; }
+  function setCut(v){ cut = v; $("cutTxt").innerHTML = cut ? CUT[cut].txt + "同一個點，換個方向看，一下是最低、一下是最高，所以叫「鞍」。" : "圖正中央就是鞍式區。它在槽（兩個低壓連起來）和脊（兩個高壓連起來）的交點上。"; }
+  chips("[data-cut]", "cut", setCut); setCut("hh");
+  scene("c1", W, H, (c, dt) => {
+    T += dt; ps.step(dt);
+    c.clearRect(0,0,W,H);
+    c.save(); c.beginPath(); c.rect(0,0,W,400); c.clip();
+    c.fillStyle = "#f8fafc"; c.fillRect(0,0,W,400);
+    // 高低壓底色
+    for(const q of C){ const a = P(q[0], q[1]), g = c.createRadialGradient(a[0],a[1],0,a[0],a[1],150); g.addColorStop(0, q[2] > 0 ? "rgba(59,130,246,.22)" : "rgba(239,68,68,.2)"); g.addColorStop(1, "rgba(255,255,255,0)"); c.fillStyle = g; c.fillRect(0,0,W,400); }
+    c.strokeStyle = "#94a3b8"; c.lineWidth = 1.1; segs.forEach((s,i) => { c.lineWidth = lv[i] === 0 ? 1.8 : 1.1; drawSegs(c, P, s); });
+    ps.draw(c, P, "15,23,42");
+    for(const q of C){ const a = P(q[0], q[1]); txt(c, q[2] > 0 ? "H" : "L", a[0], a[1]-4, { size:30, b:1, col:q[2] > 0 ? "#1d4ed8" : "#dc2626", halo:"#fff" }); txt(c, q[2] > 0 ? "高壓" : "低壓", a[0], a[1]+22, { size:12, col:q[2] > 0 ? "#1d4ed8" : "#dc2626", halo:"#fff" }); }
+    // 鞍
+    c.setLineDash([5,4]); c.strokeStyle = "#b45309"; c.lineWidth = 2; c.beginPath(); c.arc(cx, cy, 26, 0, TAU); c.stroke(); c.setLineDash([]);
+    txt(c, "鞍式區（中性點）", cx, cy-40, { size:13, b:1, col:"#b45309", halo:"#fff" });
+    if(cut){
+      const K = CUT[cut], u = K.u, a = P(-u[0]*1.3, -u[1]*1.3), b = P(u[0]*1.3, u[1]*1.3);
+      c.strokeStyle = K.col; c.lineWidth = 3; c.globalAlpha = .55; c.beginPath(); c.moveTo(a[0],a[1]); c.lineTo(b[0],b[1]); c.stroke(); c.globalAlpha = 1;
+      const s = 1.25*Math.sin(T*.7), q = P(u[0]*s, u[1]*s);
+      c.fillStyle = "#facc15"; c.strokeStyle = "#1f2937"; c.lineWidth = 2; c.beginPath(); c.arc(q[0], q[1], 7, 0, TAU); c.fill(); c.stroke();
+    }
+    c.restore();
+    // 剖面
+    c.fillStyle = "#fff"; c.fillRect(0,400,W,160); c.strokeStyle = "#e2e8f0"; c.lineWidth = 1; c.beginPath(); c.moveTo(0,400.5); c.lineTo(W,400.5); c.stroke();
+    if(!cut){ txt(c, "按上面的按鈕切一刀，這裡會畫出沿著那條線的氣壓高低。", W/2, 480, { size:13, col:"#6b7280" }); return; }
+    const K = CUT[cut], u = K.u, X = s => 320 + s*200, Y = v => 485 - v*52;
+    c.strokeStyle = "#cbd5e1"; c.setLineDash([4,4]); c.beginPath(); c.moveTo(50, Y(0)); c.lineTo(590, Y(0)); c.stroke(); c.setLineDash([]);
+    c.strokeStyle = K.col; c.lineWidth = 3; c.beginPath();
+    for(let i=0;i<=100;i++){ const s = -1.3 + 2.6*i/100, v = p(u[0]*s, u[1]*s); i ? c.lineTo(X(s), Y(v)) : c.moveTo(X(s), Y(v)); } c.stroke();
+    txt(c, "氣壓高", 12, 425, { size:11, col:"#6b7280", al:"left" }); txt(c, "氣壓低", 12, 548, { size:11, col:"#6b7280", al:"left" });
+    const pe = p(u[0]*K.L, u[1]*K.L);
+    txt(c, K.a + "壓中心", X(-K.L), Y(pe) + (pe > 0 ? -14 : 16), { size:12, b:1, col:K.col }); txt(c, K.a + "壓中心", X(K.L), Y(pe) + (pe > 0 ? -14 : 16), { size:12, b:1, col:K.col });
+    txt(c, cut === "hh" ? "鞍：兩高之間最低" : "鞍：兩低之間最高", X(0), Y(0) + (cut === "hh" ? 20 : -18), { size:13, b:1, col:"#b45309" });
+    c.fillStyle = "#b45309"; c.beginPath(); c.arc(X(0), Y(0), 5, 0, TAU); c.fill();
+    const s = 1.25*Math.sin(T*.7), v = p(u[0]*s, u[1]*s);
+    c.fillStyle = "#facc15"; c.strokeStyle = "#1f2937"; c.lineWidth = 2; c.beginPath(); c.arc(X(s), Y(v), 7, 0, TAU); c.fill(); c.stroke();
+  });
+})();
+
+// ===================== ② 變形場和等溫線 =====================
+(function(){
+  const W = 640, H = 440, sc = 200, cx = 320, cy = 220, P = (x,y) => [cx + x*sc, cy - y*sc];
+  const A = .3, G0 = 3/.9, B = { x0:-1.6, x1:1.6, y0:-1.1, y1:1.1 };
+  const ps = particles(190, B, (x,y) => [A*x, -A*y]);
+  let beta = 15, t = 0, run = false, hold = 0, done = false, g = [0, G0];
+  const calc = () => { const b = beta*Math.PI/180; g = [-Math.sin(b)*G0*Math.exp(-A*t), Math.cos(b)*G0*Math.exp(A*t)]; };
+  function reset(){ t = 0; done = false; hold = 0; calc(); paint(); }
+  function setRun(v){ run = v; $("play2").textContent = run ? "暫停" : "播放"; $("play2").classList.toggle("on", !run); }
+  function paint(){
+    const r = Math.hypot(g[0], g[1])/G0, ang = Math.atan2(Math.abs(g[0]), Math.abs(g[1]))*180/Math.PI;
+    $("r2g").textContent = r.toFixed(r < 10 ? 1 : 0) + " 倍"; $("r2g").className = r > 1.05 ? "up" : r < .95 ? "dn" : "";
+    $("r2s").textContent = Math.round(100/r) + "%"; $("r2a").textContent = Math.round(ang) + "°";
+    const grow = Math.abs(g[1]) > Math.abs(g[0]) + 1e-9;
+    let h = Math.abs(Math.abs(g[1]) - Math.abs(g[0])) < 1e-6 ? "此刻剛好 45°：梯度不增不減。" :
+      grow ? "<b style='color:#dc2626'>此刻在成鋒：</b>等溫線正在被擠密。" : "<b style='color:#1d4ed8'>此刻在消鋒：</b>等溫線正在被拉開。";
+    if(done) h += r >= 7.9 ? " 梯度已經是原來的 8 倍，動畫先停在這裡，等一下自動重播。" : " 動畫先停在這裡，等一下自動重播。";
+    else if(!run && t === 0) h += " 按「播放」開始。";
+    $("st2").innerHTML = h;
+  }
+  $("b2").addEventListener("input", e => { beta = +e.target.value; $("b2v").textContent = beta + "°"; reset(); });
+  document.querySelectorAll("[data-b2]").forEach(b => b.addEventListener("click", ()=>{ beta = +b.dataset.b2; $("b2").value = beta; $("b2v").textContent = beta + "°"; reset(); setRun(true); }));
+  $("play2").addEventListener("click", ()=>{ if(done) reset(); setRun(!run); });
+  $("re2").addEventListener("click", ()=>{ reset(); });
+  reset();
+  scene("c2", W, H, (c, dt) => {
+    ps.step(dt);
+    if(run && !done){ t += dt; calc(); const r = Math.hypot(g[0], g[1])/G0; if(r >= 8 || r <= .125 || A*t >= 5.2){ done = true; hold = 0; } paint(); }
+    else if(run && done){ hold += dt; if(hold > 3.2){ reset(); } }
+    c.clearRect(0,0,W,H); c.save(); c.beginPath(); c.rect(0,0,W,H); c.clip();
+    const gap = drawIso(c, P, sc, g, { fill:1, W, H, labels:1, lx:-1.42, ly:.98, rx:1.55, ry:1.05 });
+    ps.draw(c, P, "30,41,59");
+    // 軸
+    c.lineWidth = 2.5; c.strokeStyle = "rgba(21,128,61,.75)"; c.beginPath(); c.moveTo(0,cy); c.lineTo(W,cy); c.stroke();
+    c.strokeStyle = "rgba(109,40,217,.75)"; c.beginPath(); c.moveTo(cx,0); c.lineTo(cx,H); c.stroke();
+    arrow(c, cx+150, cy, cx+300, cy, "#15803d", 4, 14); arrow(c, cx-150, cy, cx-300, cy, "#15803d", 4, 14);
+    arrow(c, cx, 20, cx, 120, "#6d28d9", 4, 14); arrow(c, cx, H-20, cx, H-120, "#6d28d9", 4, 14);
+    txt(c, "伸張軸：空氣往外流", cx+215, cy-16, { size:13, b:1, col:"#15803d", halo:"rgba(255,255,255,.9)" });
+    txt(c, "收縮軸：空氣往裡流", cx+8, 34, { size:13, b:1, col:"#6d28d9", halo:"rgba(255,255,255,.9)", al:"left" });
+    txt(c, "冷", W-24, 22, { size:15, b:1, col:"#1d4ed8", halo:"#fff" }); txt(c, "暖", W-24, H-20, { size:15, b:1, col:"#b91c1c", halo:"#fff" });
+    if($("blob2").checked){
+      const e = Math.exp(A*t), rx = .3*e*sc, ry = .3/e*sc;
+      c.fillStyle = "rgba(250,204,21,.35)"; c.strokeStyle = "#a16207"; c.lineWidth = 2; c.beginPath(); c.ellipse(cx, cy, rx, Math.max(ry, .8), 0, 0, TAU); c.fill(); c.stroke();
+      if(t === 0) txt(c, "一塊空氣", cx, cy+ry+14, { size:12, col:"#a16207", halo:"#fff" });
+    }
+    if(gap < 7*c.fs) txt(c, "等溫線擠成一束：這裡就是鋒要長出來的地方", cx, cy+34, { size:13, b:1, col:"#7f1d1d", halo:"rgba(255,255,255,.9)" });
+    c.restore();
+  });
+})();
+
+// ===================== ③ 四種單純運動 =====================
+(function(){
+  const W = 640, H = 380, sc = 150, cx = 320, cy = 190, P = (x,y) => [cx + x*sc, cy - y*sc];
+  const B = { x0:-2.15, x1:2.15, y0:-1.28, y1:1.28 };
+  const M = {
+    tr:{ v:(x,y) => [.62, 0], T:5.2, h:.42, F:t => [1,0,0,1], c:t => [-1.6 + .62*t, 0], area:t => 1, gap:t => 1,
+         s:"<b>純移置：</b>整塊空氣從一處搬到另一處。形狀、體積、方位都不變。等溫線跟著均勻的氣流走，<b>間距不變</b>。" },
+    ro:{ v:(x,y) => [-.8*y, .8*x], T:5.2, h:.5, F:t => { const a = .8*t; return [Math.cos(a), -Math.sin(a), Math.sin(a), Math.cos(a)]; }, c:t => [0,0], area:t => 1, gap:t => 1,
+         s:"<b>純旋轉：</b>只改變方位。不改形狀、體積，也不移到新位置。等溫線只是跟著轉向，<b>間距不變</b>。" },
+    co:{ v:(x,y) => [-.34*x, -.34*y], T:4.6, h:.85, F:t => { const e = Math.exp(-.34*t); return [e,0,0,e]; }, c:t => [0,0], area:t => Math.exp(-.68*t), gap:t => Math.exp(-.34*t),
+         s:"<b>純輻合：</b>空氣從四面八方流向中心，容積收縮。形狀不變，但整塊縮小，等溫線間距<b>也跟著縮小</b>。課本說它和其他運動比起來很小，這裡先不談。" },
+    di:{ v:(x,y) => [.34*x, .34*y], T:4.2, h:.26, F:t => { const e = Math.exp(.34*t); return [e,0,0,e]; }, c:t => [0,0], area:t => Math.exp(.68*t), gap:t => Math.exp(.34*t),
+         s:"<b>純輻散（純膨脹）：</b>空氣從中心直接向外流，容積擴張。等溫線間距<b>變大</b>。" },
+    de:{ v:(x,y) => [.34*x, -.34*y], T:4.6, h:.5, F:t => { const e = Math.exp(.34*t); return [e,0,0,1/e]; }, c:t => [0,0], area:t => 1, gap:t => Math.exp(-.34*t),
+         s:"<b>純變形：</b>只改變形狀。面積一直是 100%，但被壓扁、拉長。圖裡的等溫線平行伸張軸，所以<b>被擠密</b>。這就是成鋒要的那一種。" }
+  };
+  let mode = "tr", t = 0, hold = 0;
+  const ps = particles(170, B, (x,y) => M[mode].v(x,y));
+  function setMode(m){ mode = m; t = 0; hold = 0; ps.reset(); $("st3").innerHTML = M[m].s; document.querySelectorAll("#t3 tr").forEach(r => r.classList.toggle("now", r.dataset.m === m)); }
+  chips("#m3 .chip", "m", setMode); setMode("tr");
+  scene("c3", W, H, (c, dt) => {
+    const m = M[mode]; ps.step(dt);
+    if(t < m.T) t = Math.min(m.T, t + dt); else { hold += dt; if(hold > 1.4){ t = 0; hold = 0; } }
+    c.clearRect(0,0,W,H); c.fillStyle = "#f8fafc"; c.fillRect(0,0,W,H);
+    ps.draw(c, P, "71,85,105");
+    if(mode !== "tr"){ c.fillStyle = "#94a3b8"; c.beginPath(); c.arc(cx, cy, 3, 0, TAU); c.fill(); }
+    const F = m.F(t), o = m.c(t), h = m.h, X = (a,b) => P(o[0] + F[0]*a + F[1]*b, o[1] + F[2]*a + F[3]*b);
+    // 起始位置的虛線框
+    c.setLineDash([5,5]); c.strokeStyle = "#cbd5e1"; c.lineWidth = 1.5; const o0 = m.c(0), q0 = P(o0[0]-h, o0[1]+h); c.strokeRect(q0[0], q0[1], 2*h*sc, 2*h*sc); c.setLineDash([]);
+    const cs = [X(-h,-h), X(h,-h), X(h,h), X(-h,h)];
+    c.fillStyle = "rgba(255,255,255,.82)"; c.strokeStyle = "#0f766e"; c.lineWidth = 3; c.lineJoin = "round";
+    c.beginPath(); cs.forEach((q,i) => i ? c.lineTo(q[0],q[1]) : c.moveTo(q[0],q[1])); c.closePath(); c.fill();
+    c.save(); c.setLineDash([7,4]); c.lineWidth = 2;
+    for(let k=-2;k<=2;k++){ const a = X(-h, k*h*.4), b = X(h, k*h*.4); c.strokeStyle = isoCol(-k*1.5); c.beginPath(); c.moveTo(a[0],a[1]); c.lineTo(b[0],b[1]); c.stroke(); }
+    c.restore();
+    c.strokeStyle = "#0f766e"; c.lineWidth = 3; c.beginPath(); cs.forEach((q,i) => i ? c.lineTo(q[0],q[1]) : c.moveTo(q[0],q[1])); c.closePath(); c.stroke();
+    // 方位記號：上緣中間的小三角
+    const a = X(0,h), b = X(-h*.16, h*.72), e = X(h*.16, h*.72); c.fillStyle = "#0f766e"; c.beginPath(); c.moveTo(a[0],a[1]); c.lineTo(b[0],b[1]); c.lineTo(e[0],e[1]); c.closePath(); c.fill();
+    txt(c, "虛線框是一開始的樣子。小三角標示方位。", 10, H-12, { size:11, col:"#6b7280", al:"left" });
+    const ar = Math.round(m.area(t)*100), gp = Math.round(m.gap(t)*100);
+    $("r3a").textContent = ar + "%"; $("r3a").className = ar > 102 ? "up" : ar < 98 ? "dn" : "";
+    $("r3s").textContent = gp + "%"; $("r3s").className = gp > 102 ? "dn" : gp < 98 ? "up" : "";
+  });
+})();
+
+// ===================== ④ 變形＋旋轉 =====================
+(function(){
+  const W = 640, H = 460, sc = 200, cx = 320, cy = 230, P = (x,y) => [cx + x*sc, cy - y*sc];
+  const A = .5, G0 = 3/.9, B = { x0:-1.6, x1:1.6, y0:-1.15, y1:1.15 };
+  let r = 0, w = 0, segs = [], g = [0, G0], tg = 0, holdg = 0;
+  const lv = []; for(let n=1;n<=11;n++){ lv.push(.02*n*n); lv.unshift(-.02*n*n); }
+  const ps = particles(210, B, (x,y) => [A*x - w*y, -A*y + w*x]);
+  function resetG(){ g = [0, G0]; tg = 0; holdg = 0; }
+  function setR(v, fromChip){
+    r = Math.abs(v) < .03 ? 0 : Math.abs(Math.abs(v) - 1) < .03 ? Math.sign(v) : v; w = r*A;
+    segs = contourSegs((x,y) => w*(x*x + y*y)/2 - A*x*y, B.x0, B.x1, B.y0, B.y1, 96, 70, lv);
+    $("r4").value = r; $("r4v").textContent = r === 0 ? "0" : (r > 0 ? "氣旋形 " : "反氣旋形 ") + Math.abs(r).toFixed(2);
+    if(!fromChip) document.querySelectorAll("#pre4 .chip").forEach(b => b.classList.toggle("on", Math.abs(+b.dataset.r - r) < .001));
+    const ar = Math.abs(r), cyc = r > 0;
+    let h;
+    if(r === 0) h = "<b>只有變形：</b>標準的鞍式流線。伸張軸和收縮軸互相垂直（圖 8-24 最下面那張）。";
+    else if(ar < 1){ const s = Math.sqrt(1 - r*r), ang = Math.abs(Math.atan((1+s)/r) - Math.atan((1-s)/r))*180/Math.PI;
+      h = `<b>旋轉比變形弱（圖 8-24${cyc ? "a" : "c"}）：</b>還是鞍式，但變形場被扭歪了，兩條軸的夾角從 90° 剩下 <b>${Math.round(ang)}°</b>。${cyc ? "低壓那兩側（氣旋形彎曲）彎得更厲害，高壓那兩側被抵銷、變得比較直。" : "高壓那兩側（反氣旋形彎曲）彎得更厲害，低壓那兩側被抵銷、變得比較直。"}`; }
+    else if(ar === 1) h = "<b>旋轉＝變形：</b>兩條軸疊成同一條直線。線的兩邊是<b>方向相反的直線氣流</b>，線上的風速是零。離線越遠風越大。";
+    else h = cyc ? "<b>氣旋形旋轉控制變形（圖 8-24b）：</b>流線閉合成<b>橢圓</b>，繞著低壓逆時針轉。橢圓的長軸指向原先兩個低壓的位置。"
+                 : "<b>反氣旋形旋轉控制變形（圖 8-24d）：</b>流線閉合成<b>橢圓</b>，繞著高壓順時針轉。課本說結果和氣旋形類似；照同樣的道理，長軸指向原先兩個高壓的位置。";
+    $("st4").innerHTML = h; resetG();
+  }
+  $("r4").addEventListener("input", e => setR(+e.target.value));
+  chips("#pre4 .chip", "r", v => setR(+v, true));
+  $("iso4").addEventListener("change", e => { $("iso4box").hidden = !e.target.checked; resetG(); if(e.target.checked) $("s4").querySelector(".stage").scrollIntoView({ behavior:"smooth", block:"center" }); });
+  setR(0);
+  const line = (c, m, col, lab, side) => { // 過原點、斜率 m 的直線
+    const ux = 1/Math.hypot(1, m), uy = m*ux, a = P(-ux*2.2, -uy*2.2), b = P(ux*2.2, uy*2.2);
+    c.strokeStyle = col; c.lineWidth = 2.6; c.beginPath(); c.moveTo(a[0],a[1]); c.lineTo(b[0],b[1]); c.stroke();
+    if(lab){ const d = Math.min(1.35/Math.abs(ux || 1e-9), .95/Math.abs(uy || 1e-9))*.72, q = P(ux*d*side, uy*d*side); txt(c, lab, clamp(q[0], 50, W-50), clamp(q[1], 16, H-16), { size:13, b:1, col, halo:"rgba(255,255,255,.92)" }); }
+  };
+  scene("c4", W, H, (c, dt) => {
+    ps.step(dt);
+    const iso = $("iso4").checked;
+    if(iso){
+      const ratio = Math.hypot(g[0], g[1])/G0;
+      if(ratio >= 8 || tg > 16){ holdg += dt; if(holdg > 2.4) resetG(); }
+      else { // dg/dt = −Aᵀ g（RK2 小步）
+        const f = q => [-A*q[0] - w*q[1], w*q[0] + A*q[1]], n = 4, hh = dt/n;
+        for(let i=0;i<n;i++){ const k1 = f(g), mid = [g[0] + k1[0]*hh/2, g[1] + k1[1]*hh/2], k2 = f(mid); g = [g[0] + k2[0]*hh, g[1] + k2[1]*hh]; }
+        tg += dt;
+      }
+      const rr = Math.hypot(g[0], g[1])/G0; $("r4g").textContent = rr.toFixed(1) + " 倍"; $("r4g").className = rr > 1.05 ? "up" : rr < .95 ? "dn" : "";
+    }
+    c.clearRect(0,0,W,H); c.save(); c.beginPath(); c.rect(0,0,W,H); c.clip();
+    c.fillStyle = "#f8fafc"; c.fillRect(0,0,W,H);
+    if(iso) drawIso(c, P, sc, g, { fill:1, W, H });
+    c.strokeStyle = iso ? "rgba(100,116,139,.55)" : "#a8b4c4"; c.lineWidth = 1.2; segs.forEach(s => drawSegs(c, P, s));
+    ps.draw(c, P, "15,23,42");
+    const ar = Math.abs(r);
+    if(r === 0){ line(c, 0, "#15803d", "伸張軸", 1); c.strokeStyle = "#6d28d9"; c.lineWidth = 2.6; c.beginPath(); c.moveTo(cx,0); c.lineTo(cx,H); c.stroke(); txt(c, "收縮軸", cx+34, 18, { size:13, b:1, col:"#6d28d9", halo:"rgba(255,255,255,.92)" }); }
+    else if(ar < 1){ const s = Math.sqrt(1 - r*r); line(c, (1-s)/r, "#15803d", "伸張軸", 1); line(c, (1+s)/r, "#6d28d9", "收縮軸", 1); }
+    else if(ar === 1){ line(c, r, "#b45309", "軸線：風速為零", 1); }
+    else { c.setLineDash([8,6]); line(c, r > 0 ? 1 : -1, "#b45309", "橢圓的長軸", 1); c.setLineDash([]); }
+    // 高低壓標記
+    const far = ar > 1, al = far ? .35 : .85;
+    [[1,1,"L"],[-1,-1,"L"],[-1,1,"H"],[1,-1,"H"]].forEach(q => { const a = P(q[0]*1.25, q[1]*.92); c.globalAlpha = al; txt(c, q[2], a[0], a[1], { size:24, b:1, col:q[2] === "H" ? "#1d4ed8" : "#dc2626", halo:"#fff" }); c.globalAlpha = 1; });
+    if(far){ txt(c, r > 0 ? "L" : "H", cx, cy, { size:32, b:1, col:r > 0 ? "#dc2626" : "#1d4ed8", halo:"#fff" }); txt(c, "淡淡的 L、H 是原先的位置", W-10, H-12, { size:11, col:"#6b7280", al:"right", halo:"#fff" }); }
+    if(r !== 0){ // 旋轉方向的小圈
+      const x0 = cx - 62, y0 = H - 26, R = 15, cyc = r > 0;
+      c.fillStyle = "rgba(255,255,255,.9)"; c.beginPath(); c.rect(x0 - 24, y0 - 21, 172, 42); c.fill();
+      c.strokeStyle = cyc ? "#dc2626" : "#1d4ed8"; c.lineWidth = 2.5; c.beginPath(); c.arc(x0, y0, R, .5, 5.2); c.stroke();
+      const ang = cyc ? .5 : 5.2, ex = x0 + R*Math.cos(ang), ey = y0 + R*Math.sin(ang), td = cyc ? ang - Math.PI/2 : ang + Math.PI/2;
+      arrow(c, ex - Math.cos(td)*4, ey - Math.sin(td)*4, ex + Math.cos(td)*6, ey + Math.sin(td)*6, cyc ? "#dc2626" : "#1d4ed8", 2.5, 10);
+      txt(c, cyc ? "疊上氣旋形旋轉" : "疊上反氣旋形旋轉", x0+24, y0, { size:12, b:1, col:cyc ? "#dc2626" : "#1d4ed8", al:"left", halo:"#fff" });
+    }
+    c.restore();
+  });
+})();
+
+// ===================== ⑤ 輻合＋旋轉 =====================
+(function(){
+  const W = 640, H = 400, sc = 165, cx = 210, cy = 200, P = (x,y) => [cx + x*sc, cy - y*sc];
+  let d = -.6, z = .7, guides = [];
+  const B = { x0:-1.15, x1:1.15, y0:-1.15, y1:1.15, spawn(){ const a = rnd(0,TAU), rr = Math.sqrt(rnd(.004,1))*1.12; return [rr*Math.cos(a), rr*Math.sin(a)]; }, dead:(x,y) => { const q = x*x + y*y; return q > 1.3 || q < .0012; } };
+  const vel = (x,y) => [d*.55*x - z*.95*y, d*.55*y + z*.95*x];
+  const ps = particles(230, B, vel);
+  function build(){
+    guides = [];
+    const n = 8;
+    for(let i=0;i<n;i++){
+      const a0 = i/n*TAU, pts = []; let x, y, sgn;
+      if(d === 0 && z === 0) break;
+      if(d === 0){ if(i >= 4) break; const R = .25 + i*.25; for(let k=0;k<=60;k++) pts.push(R*Math.cos(k/60*TAU), R*Math.sin(k/60*TAU)); guides.push(pts); continue; }
+      x = 1.1*Math.cos(a0); y = 1.1*Math.sin(a0); sgn = d < 0 ? 1 : -1; // 輻合：從外圈往裡積分；輻散：倒著積分
+      for(let k=0;k<900;k++){ pts.push(x, y); const v = vel(x,y); x += v[0]*.02*sgn; y += v[1]*.02*sgn; if(x*x + y*y < .0009) break; }
+      guides.push(pts);
+    }
+  }
+  function set(nd, nz, fromChip){
+    d = nd; z = nz; build(); $("d5").value = d; $("z5").value = z;
+    $("d5v").textContent = d < 0 ? "輻合" : d > 0 ? "輻散" : "沒有"; $("z5v").textContent = z > 0 ? "氣旋形" : z < 0 ? "反氣旋形" : "沒有";
+    if(!fromChip) document.querySelectorAll("#pre5 .chip").forEach(b => b.classList.toggle("on", +b.dataset.d === d && +b.dataset.z === z));
+    let h;
+    if(d < 0 && z > 0) h = "<b>輻合＋氣旋形旋轉（圖 8-25a）：</b>空氣一邊逆時針轉、一邊往中心流，畫出往內捲的螺旋。這是和<b>地面低壓</b>相伴的環流型。";
+    else if(d > 0 && z < 0) h = "<b>輻散＋反氣旋形旋轉（圖 8-25b）：</b>空氣一邊順時針轉、一邊往外流，畫出往外甩的螺旋。這是和<b>地面高壓</b>相伴的環流型。";
+    else if(d === 0 && z === 0) h = "兩個都是零：沒有風。拉一下桿子。";
+    else if(d === 0) h = "<b>只有旋轉：</b>流線是一圈一圈的圓，空氣不進也不出。";
+    else if(z === 0) h = d < 0 ? "<b>只有輻合：</b>空氣直直流向中心，就是圖 8-22c。" : "<b>只有輻散：</b>空氣從中心直直往外流。";
+    else h = "這個組合不是課本圖 8-25 畫的兩種。課本畫的是「輻合配氣旋形」和「輻散配反氣旋形」。";
+    $("st5").innerHTML = h;
+  }
+  $("d5").addEventListener("input", e => set(+e.target.value, z)); $("z5").addEventListener("input", e => set(d, +e.target.value));
+  chips("#pre5 .chip", "d", (v, b) => set(+b.dataset.d, +b.dataset.z, true));
+  set(-.6, .7);
+  let T = 0;
+  scene("c5", W, H, (c, dt) => {
+    T += dt; ps.step(dt);
+    c.clearRect(0,0,W,H); c.fillStyle = "#f8fafc"; c.fillRect(0,0,W,H);
+    c.save(); c.beginPath(); c.arc(cx, cy, 1.12*sc, 0, TAU); c.clip(); c.fillStyle = "#fff"; c.fillRect(0,0,420,H);
+    c.strokeStyle = "#cbd5e1"; c.lineWidth = 1.2;
+    for(const g of guides){ c.beginPath(); for(let i=0;i<g.length;i+=2){ const q = P(g[i], g[i+1]); i ? c.lineTo(q[0],q[1]) : c.moveTo(q[0],q[1]); } c.stroke(); }
+    ps.draw(c, P, "15,23,42"); c.restore();
+    c.strokeStyle = "#cbd5e1"; c.lineWidth = 1.5; c.beginPath(); c.arc(cx, cy, 1.12*sc, 0, TAU); c.stroke();
+    txt(c, "從上面往下看", cx, 12, { size:12, col:"#6b7280" });
+    if(d < 0 && z > 0){ txt(c, "L", cx, cy-2, { size:34, b:1, col:"#dc2626", halo:"#fff" }); txt(c, "地面低壓", cx, cy+28, { size:13, b:1, col:"#dc2626", halo:"#fff" }); }
+    else if(d > 0 && z < 0){ txt(c, "H", cx, cy-2, { size:34, b:1, col:"#1d4ed8", halo:"#fff" }); txt(c, "地面高壓", cx, cy+28, { size:13, b:1, col:"#1d4ed8", halo:"#fff" }); }
+    // 側面圖（補充）
+    const x0 = 432, x1 = 628, xm = (x0+x1)/2, gy = 340;
+    c.fillStyle = "#faf8ff"; c.strokeStyle = "#c4b5fd"; c.lineWidth = 1.5; c.beginPath(); c.rect(x0, 30, x1-x0, 350); c.fill(); c.stroke();
+    txt(c, "補充：從側面看", xm, 46, { size:12, b:1, col:"#6d28d9" });
+    c.fillStyle = "#d6c7a8"; c.fillRect(x0+1, gy, x1-x0-2, 39); txt(c, "地面", xm, gy+20, { size:11, col:"#6b5a36" });
+    const ph = (T*.9) % 1;
+    if(d < 0){
+      const k = -d;
+      for(let i=0;i<3;i++){ const yy = gy - 40 - ((i + ph) % 3)*62; if(yy > 100) arrow(c, xm, yy+22, xm, yy-12, "#dc2626", 2 + 2*k, 10); }
+      arrow(c, x0+16, gy-14, xm-22, gy-14, "#334155", 2.5, 9); arrow(c, x1-16, gy-14, xm+22, gy-14, "#334155", 2.5, 9);
+      c.fillStyle = "#e2e8f0"; c.strokeStyle = "#94a3b8"; c.lineWidth = 1.2; [[-26,0,18],[0,-10,24],[28,0,18],[2,6,20]].forEach(q => { c.beginPath(); c.arc(xm+q[0], 92+q[1], q[2], 0, TAU); c.fill(); });
+      txt(c, "往中間擠 → 往上 → 成雲", xm, 128, { size:11.5, b:1, col:"#7f1d1d", halo:"#faf8ff" });
+    } else if(d > 0){
+      const k = d;
+      for(let i=0;i<3;i++){ const yy = 96 + ((i + ph) % 3)*62; if(yy < gy-60) arrow(c, xm, yy-12, xm, yy+22, "#1d4ed8", 2 + 2*k, 10); }
+      arrow(c, xm-22, gy-14, x0+16, gy-14, "#334155", 2.5, 9); arrow(c, xm+22, gy-14, x1-16, gy-14, "#334155", 2.5, 9);
+      c.fillStyle = "#fbbf24"; c.beginPath(); c.arc(x1-34, 82, 13, 0, TAU); c.fill();
+      txt(c, "往外散 → 上面下沉來補", xm, 68, { size:11.5, b:1, col:"#1e3a8a", halo:"#faf8ff" });
+    } else txt(c, "沒有輻合輻散：", xm, 180, { size:12, col:"#6b7280" }), txt(c, "空氣不會被逼著上升或下沉", xm, 200, { size:12, col:"#6b7280" });
+  });
+})();
+
+// ===================== ⑥ 側面看：垂直運動、凝結、蒸發 =====================
+(function(){
+  const W = 640, H = 360, GY = 318, FX = 440, FS = .6; // 鋒面：從地面 (FX,GY) 往左上斜，斜率 FS
+  let cond = false, evap = false, T = 0;
+  const fy = x => GY - (FX - x)*FS;
+  function upd(){
+    $("cond6").classList.toggle("on", cond); $("evap6").classList.toggle("on", evap);
+    const n = (cond ? 1 : 0) + (evap ? 1 : 0);
+    $("st6").innerHTML = `<b>力管環流強度：</b>${"■".repeat(n+1)}${"□".repeat(2-n)}　` +
+      (n === 0 ? "現在只有最基本的熱力性直接環流：暖空氣沿鋒面爬升，冷空氣在下面下沉。位溫是保守的。" :
+       n === 1 ? "凝結在暖區放出潛熱，暖空氣上升<b>加快</b>。位溫被改變了，這就是非保守性過程。" :
+                 "暖區加熱、冷區冷卻<b>同時發生</b>。上升和下沉都增強，鋒區的等位溫線更集中，直接有利於成鋒。");
+  }
+  $("cond6").addEventListener("click", ()=>{ cond = !cond; if(!cond) evap = false; upd(); });
+  $("evap6").addEventListener("click", ()=>{ evap = !evap; if(evap) cond = true; upd(); });
+  upd();
+  const smooth = pts => { for(let k=0;k<3;k++){ const o = [pts[0]]; for(let i=0;i<pts.length-1;i++){ const a = pts[i], b = pts[i+1]; o.push([a[0]*.75+b[0]*.25, a[1]*.75+b[1]*.25], [a[0]*.25+b[0]*.75, a[1]*.25+b[1]*.75]); } o.push(pts[pts.length-1]); pts = o; } return pts; };
+  const WARM = smooth([[622,288],[540,284],[470,272],[420,250],[340,fy(340)-40],[200,fy(200)-40],[60,fy(60)-40]]);
+  const COLD = smooth([[34,128],[40,205],[62,266],[112,298],[210,305],[392,306]]);
+  function flow(c, pts, col, w, ph){ // 沿折線流動的虛線＋箭頭
+    c.save(); c.strokeStyle = col; c.lineWidth = w; c.lineCap = "round"; c.lineJoin = "round"; c.setLineDash([14,10]); c.lineDashOffset = -ph*24;
+    c.beginPath(); pts.forEach((q,i) => i ? c.lineTo(q[0],q[1]) : c.moveTo(q[0],q[1])); c.stroke(); c.restore();
+    const n = pts.length, a = pts[n-3], b = pts[n-1], m = Math.hypot(b[0]-a[0], b[1]-a[1]) || 1, ux = (b[0]-a[0])/m, uy = (b[1]-a[1])/m; arrow(c, b[0], b[1], b[0] + ux*14, b[1] + uy*14, col, w, 15);
+  }
+  let pw = 0, pc = 0;
+  scene("c6", W, H, (c, dt) => {
+    T += dt; pw += dt*(1 + (cond ? 1.1 : 0)); pc += dt*(1 + (evap ? 1.1 : 0));
+    c.clearRect(0,0,W,H);
+    c.fillStyle = "#fde9dc"; c.fillRect(0,0,W,GY);
+    c.fillStyle = "#cfe0f7"; c.beginPath(); c.moveTo(0,GY); c.lineTo(FX,GY); c.lineTo(0, fy(0)); c.closePath(); c.fill();
+    c.fillStyle = "#d6c7a8"; c.fillRect(0,GY,W,H-GY);
+    // 鋒區的等位溫線
+    const n = (cond ? 1 : 0) + (evap ? 1 : 0), sp = 15 - 4.5*n;
+    c.save(); c.setLineDash([7,5]); c.strokeStyle = "#6d28d9"; c.lineWidth = 1.6;
+    for(let k=0;k<4;k++){ const off = k*sp; c.beginPath(); c.moveTo(FX - off/FS, GY); c.lineTo(-10, fy(-10) + off); c.stroke(); }
+    c.restore();
+    c.strokeStyle = "#7c3aed"; c.lineWidth = 3; c.beginPath(); c.moveTo(FX,GY); c.lineTo(0, fy(0)); c.stroke();
+    txt(c, "鋒區：等位溫線集中", 130, fy(130) + 18 + sp*3.2 + 10, { size:12, b:1, col:"#6d28d9", halo:"#cfe0f7" });
+    txt(c, "暖空氣", 560, 150, { size:17, b:1, col:"#b91c1c" }); txt(c, "冷空氣", 64, 292, { size:17, b:1, col:"#1d4ed8" });
+    // 雲和雨
+    if(cond){
+      c.fillStyle = "#f1f5f9"; c.strokeStyle = "#94a3b8"; c.lineWidth = 1;
+      [[250,100,24],[282,82,30],[318,96,26],[300,112,24],[266,116,22],[340,114,18]].forEach(q => { c.beginPath(); c.arc(q[0], q[1], q[2], 0, TAU); c.fill(); });
+      for(let i=0;i<5;i++){ const a = T*2 + i*1.3, x = 268 + i*17, y = 100 + Math.sin(a)*8; txt(c, "＋熱", x, y, { size:10, b:1, col:"#dc2626" }); }
+      txt(c, "凝結放出潛熱", 300, 40, { size:12, b:1, col:"#b91c1c", halo:"#fde9dc" });
+      c.strokeStyle = "#2563eb"; c.lineWidth = 2.2; c.lineCap = "round";
+      for(let i=0;i<13;i++){
+        const x = 244 + i*8, top = 138, bot = evap ? Math.min(GY, fy(x) + 46) : GY, ph = (T*1.3 + i*.383) % 1, y = top + (bot - top)*ph;
+        c.globalAlpha = evap && y > fy(x) ? clamp(1 - (y - fy(x))/46, 0, 1) : .85;
+        c.beginPath(); c.moveTo(x, y); c.lineTo(x-3, y+12); c.stroke();
+      }
+      c.globalAlpha = 1;
+      if(evap){ for(let i=0;i<4;i++){ const x = 258 + i*24, y = fy(x) + 30 + Math.sin(T*2 + i)*4; txt(c, "－熱", x, y, { size:10, b:1, col:"#1d4ed8" }); } txt(c, "雨被蒸發，取走熱量", 236, 256, { size:12, b:1, col:"#1e3a8a", halo:"#cfe0f7", al:"right" }); }
+    }
+    // 暖空氣上升、冷空氣下沉
+    flow(c, WARM, "#dc2626", 4 + (cond ? 2 : 0), pw);
+    flow(c, COLD, "#1d4ed8", 4 + (evap ? 2 : 0), pc);
+    txt(c, "暖空氣上升" + (cond ? "（加快）" : ""), 540, 258, { size:12.5, b:1, col:"#b91c1c", halo:"#fde9dc" });
+    txt(c, "冷空氣下沉" + (evap ? "（增強）" : ""), 150, GY+20, { size:12.5, b:1, col:"#1d4ed8" });
+    txt(c, "地面", 600, GY+20, { size:11, col:"#6b5a36" });
+    txt(c, "從側面看（垂直剖面）", 8, 14, { size:11, col:"#6b7280", al:"left" });
+  });
+})();
+
+// 動畫主迴圈
+(function(){
+  let last = performance.now();
+  function loop(now){
+    const dt = Math.min(.05, (now - last)/1000); last = now;
+    for(const s of scenes) if(s.vis) s.draw(s.ctx, dt);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+// ===================== 先猜再看 =====================
+document.querySelectorAll(".predict").forEach(box => {
+  const bs = [...box.querySelectorAll(".pb button")], watch = box.querySelector(".watch"), res = box.querySelector(".res");
+  let pick = -1;
+  bs.forEach((b, i) => b.addEventListener("click", ()=>{ if(!res.hidden) return; pick = i; bs.forEach(x => x.classList.remove("on")); b.classList.add("on"); watch.hidden = false; }));
+  box.querySelector(".rev").addEventListener("click", ()=>{
+    const ok = pick === +box.dataset.ans;
+    res.hidden = false; res.innerHTML = (ok ? "<b>你猜對了。</b>" : "<b>跟你猜的不一樣。</b>猜錯沒關係，先猜過再看，會記得比較久。") + box.dataset.exp;
+    bs[+box.dataset.ans].classList.add("ok"); logEv({ type:"predict", q:box.dataset.id, ok });
+  });
+});
+
+// ===================== ⑦ 考考你 =====================
+(function(){
+  const SEC = { s1:"① 鞍式區在哪", s2:"② 變形場怎麼擠", s3:"③ 四種單純運動", s4:"④ 變形＋旋轉", s5:"⑤ 輻合＋旋轉", s6:"⑥ 垂直運動和潛熱" };
+  // 選擇題：o 的第一個是正確答案（出題時會打亂）；其他每個選項後面是「你可能是這樣想的」
+  const Q = [
+    // ---- ① 成鋒、消鋒和鞍式區
+    {id:"a1", s:"s1", q:"天氣圖上，A 地剛好在兩個高壓中心的連線上，也在兩個低壓中心的連線上。沿著兩個高壓的連線走過 A 地，氣壓怎麼變？",
+      o:[["先降後升，A 地是這條路上最低的點",""],["先升後降，A 地是這條路上最高的點","這是沿著兩個低壓的連線走的結果。同一個點，換個方向看才會變成最高。"],["一路上都一樣","鞍式區不是平的。它像馬鞍，一個方向是谷底，另一個方向是山頂。"],["一路下降","兩頭都是高壓中心，中間不可能一路往下降。"]],
+      why:"鞍是兩高壓間相對最低氣壓之點，也是兩低壓間相對最高氣壓之點。"},
+    {id:"a2", s:"s1", q:"預報員想找鞍式區，但在地面天氣圖上看不出來。照課本的建議，下一步該怎麼做？",
+      o:[["改看 850、700 或 500 毫巴定壓面圖，做流線分析",""],["把地面圖的等壓線畫密一點","問題不在線畫得不夠密。地面附近受摩擦和地形干擾，型態本來就亂。"],["等鋒面出現，再回頭找","那就失去意義了。找鞍式區是為了知道哪裡可能要成鋒。"],["鞍式區只存在於高空，地面沒有","地面也有，課本只是說在地面上通常不容易看出它的位置。"]],
+      why:"課本：想找出鞍的位置，必須靠基準層定壓面圖的幫助，最常用 850、700 甚至 500 毫巴圖。"},
+    {id:"a3", s:"s1", q:"為什麼在高空圖上畫流線，就能很快找出鞍式區？",
+      o:[["高空風大致和等壓線平行，流線的形狀就反映了氣壓型",""],["高空幾乎沒有風，圖比較乾淨","高空風通常比地面還大。重點是風向和等壓線的關係。"],["高空風垂直穿過等壓線，直接指向低壓","課本說的是大致平行。垂直穿過是沒有考慮地球自轉的想法。"],["流線和氣壓沒有關係，只是比較好畫","有關係。正因為風大致沿等壓線吹，流線才能代替氣壓型。"]],
+      why:"高空風既然大致和等壓線平行，流線分析就可以很快找出鞍式區之有無及位置。"},
+    {id:"a4", s:"s1", q:"成鋒或消鋒的活動過程，在大氣的哪裡最明顯？",
+      o:[["對流層的中部或上部",""],["緊貼地面的摩擦層","地面附近反而最容易被破壞：地面不規則、局地水汽、溫度擾動都會干擾。"],["平流層","課本講的是對流層。天氣現象主要發生在對流層。"],["每一層都一樣明顯","不一樣。地面附近的過程常被局地因素破壞。"]],
+      why:"課本：成鋒也好，消鋒也好，活動過程都以對流層的中部或上部最明顯。"},
+    {id:"a5", s:"s1", q:"某地區的等溫線本來排得很鬆，兩天後變得很密，冷暖交界變得很清楚。這個變化叫什麼？",
+      o:[["成鋒作用",""],["消鋒作用","方向反了。消鋒是鋒的消散，等溫線散開。"],["囚錮","囚錮是冷鋒追上暖鋒、把暖空氣抬離地面，不是在講溫度梯度的增減。"],["純移置","純移置只是把整塊空氣搬走，等溫線的間距不會變。"]],
+      why:"成鋒作用（frontogenesis）指鋒的形成，消鋒作用（frontolysis）指鋒的消散。"},
+    {id:"a6", s:"s1", q:"一顆隨風飄的氣球，剛好停在鞍式區的正中心（中性點）。接下來幾分鐘它會怎樣？",
+      o:[["幾乎停在原地",""],["被快速吹向最近的低壓","中心點的風幾乎是零。要稍微偏離中心，風才會把它帶走。"],["原地不停繞圈","鞍式區是一進一出的變形場，不是旋轉。繞圈是氣旋或反氣旋。"],["被四股氣流夾住往上衝","這一節講的是水平的流場。中性點的意思是水平風在這裡抵銷。"]],
+      why:"鞍式區又叫中性點：氣流在這裡抵銷，風速接近零。離中心越遠風越大。"},
+    // ---- ② 變形場
+    {id:"b1", s:"s2", q:"圖 8-21 那種變形場：伸張軸東西向，收縮軸南北向。一開始東西向排列、間距很寬的等溫線，過一天後會怎樣？",
+      o:[["往伸張軸靠攏，間距變小",""],["轉成南北向，排在收縮軸上","你把「沿收縮軸方向被擠」聽成「排在收縮軸上」了。擠的方向是南北，擠完的線還是躺在東西向的伸張軸旁邊。"],["間距不變，只是整組被吹走","那是純移置。變形場裡南北兩邊的空氣是對著流進來的。"],["被越拉越開","等溫線平行伸張軸時是被擠。要和收縮軸平行才會被拉開。"]],
+      why:"空氣沿收縮軸往中間流，把等溫線推到伸張軸旁邊集中。這一帶可視作成鋒作用的開始。"},
+    {id:"b2", s:"s2", q:"在純變形場的中心放一塊圓形的空氣。過一陣子它變成又扁又長的橢圓。它的面積怎麼變？",
+      o:[["沒有變",""],["變小，因為被擠扁了","你只看到收縮軸方向被壓，沒算到伸張軸方向同時被拉長。兩邊剛好抵銷。"],["變大，因為被拉長了","你只看到伸張軸方向被拉長，沒算到收縮軸方向同時被壓扁。"],["先變小再變大","純變形從頭到尾面積都不變，只有形狀在變。"]],
+      why:"純變形只改變形狀。流出的和流入的完全相等，沒有輻合也沒有輻散。"},
+    {id:"b3", s:"s2", q:"同學說：「等溫線擠在一起，一定是空氣在那裡輻合堆積。」這句話對嗎？",
+      o:[["不一定。純變形場流進和流出一樣多，沒有輻合，等溫線照樣擠在一起",""],["對，沒有輻合就不可能擠","你把「流線靠近」和「空氣堆積」當成同一件事了。變形場裡空氣從另一個方向等量流走。"],["對，而且那裡的氣壓會一直升高","純變形沒有質量堆積，不能這樣推論。"],["不對，等溫線擠在一起是輻散造成的","輻散是把東西散開，會讓等溫線間距變大。"]],
+      why:"課本：質量的輻合或輻散未必有關。質量從一空間流出，可能和流入完全相等。"},
+    {id:"b4", s:"s2", q:"同一個變形場，換一種擺法：這次等溫線和收縮軸平行（和伸張軸垂直）。接下來會怎樣？",
+      o:[["等溫線被拉開，這是消鋒的開始",""],["一樣被擠密，變形場一定成鋒","變形場可以成鋒，也可以消鋒。要看等溫線相對兩條軸怎麼擺。"],["完全沒有影響","有影響。沿伸張軸方向，空氣是往兩邊拉開的，等溫線跟著被拉開。"],["等溫線立刻消失","等溫線不會消失，只是間距變大、梯度變小。"]],
+      why:"課本：任何變形過程之有利於使等溫線散開者，也就是消鋒作用的開始階段。"},
+    {id:"b5", s:"s2", q:"在變形場裡，空氣沿哪條軸流進來、沿哪條軸流出去？",
+      o:[["沿收縮軸流進來，沿伸張軸流出去",""],["沿伸張軸流進來，沿收縮軸流出去","名字記反了。伸張是往外拉長，所以伸張軸是外流的軸。"],["兩條軸都流進來","兩個方向都流進來是輻合，不是變形。"],["兩條軸都流出去","兩個方向都流出去是輻散，不是變形。"]],
+      why:"空氣外流的軸稱為伸張軸，代表內流的軸稱為收縮軸。"},
+    {id:"b6", s:"s2", q:"課本 p.270 說等溫線「集中在伸張軸附近」，p.272 又說「沿收縮軸集中」。這兩句話的關係是什麼？",
+      o:[["講的是同一件事：擠的方向是收縮軸，擠完的位置在伸張軸旁邊",""],["互相矛盾，一定有一句印錯","沒有矛盾。一句講等溫線最後在哪裡，一句講它是沿哪個方向被擠過去的。"],["講的是兩種不同的變形場","都是同一張圖的同一種變形場。"],["前一句講成鋒，後一句講消鋒","兩句都在講等溫線集中，也就是成鋒。"]],
+      why:"空氣沿收縮軸方向往中間流，把等溫線推到伸張軸旁邊排成一束。"},
+    // ---- ③ 四種單純運動
+    {id:"c1", s:"s3", q:"一大塊空氣整塊往東搬了 300 公里。形狀、大小、方位都沒變。裡面等溫線的間距怎麼變？",
+      o:[["不變",""],["變密，因為風很大","風大不等於會擠。整塊一起走，每一點的速度都一樣，線和線的距離不會變。"],["變疏，因為被拉長了","整塊搬走沒有拉長。每一點的速度一樣，沒有誰跑得比較快。"],["東邊變密、西邊變疏","那要東西兩邊風速不一樣才會發生。純移置每一點速度都相同。"]],
+      why:"純移置不會使等溫線密集或靠近。等溫線只是循均勻流移動。"},
+    {id:"c2", s:"s3", q:"一塊空氣原地轉了 90 度，其他都沒變。這對等溫線有什麼直接效果？",
+      o:[["等溫線跟著轉向，間距不變",""],["轉得越快，等溫線擠得越密","旋轉只改變方位。整塊一起轉，線和線的距離不會變。"],["等溫線被離心力甩開","這裡看的是運動的幾何。純旋轉不改變形狀和體積，間距不會變。"],["面積變小，所以等溫線變密","純旋轉不改變體積，也不改變形狀。"]],
+      why:"課本：純旋轉運動當然也是一樣（不會使等溫線密集），但變形的情況截然不同。"},
+    {id:"c3", s:"s3", q:"四種單純運動裡，哪一種只改變形狀，位置、方位、面積都不變？",
+      o:[["純變形",""],["純旋轉","旋轉改的是方位，形狀沒變。"],["純輻合","輻合改的是面積（容積收縮），形狀沒變。"],["純移置","移置改的是位置，形狀沒變。"]],
+      why:"純變形（pure deformation）：改變形狀而沒有其他運動。"},
+    {id:"c4", s:"s3", q:"圖 8-22c 的箭頭全部指向中心。如果把箭頭全部反過來，那是什麼運動？",
+      o:[["純輻散（純膨脹）",""],["純變形","變形是一個方向流進、另一個方向流出。全部往外流是輻散。"],["純旋轉","旋轉是繞著中心轉。箭頭直直往外是輻散。"],["還是純輻合","方向反了。全部往中心是輻合，全部往外是輻散。"]],
+      why:"課本圖說：(c) 純輻合；和 (c) 相反，即直接向外為純輻散。"},
+    {id:"c5", s:"s3", q:"真實大氣裡，某個地區的空氣運動通常是什麼樣子？",
+      o:[["好幾種運動結合，而且不限於水平方向",""],["四種裡面剛好其中一種","四種是拆開來想的理想零件。實際上大都是數種相結合。"],["只有水平運動，沒有垂直運動","課本只是「初步假設」運動限於水平，並說真正的空氣運動不限於水平方向。"],["永遠只有移置加旋轉","沒有這種限制。變形和輻合輻散也都會出現。"]],
+      why:"課本：真正的空氣運動並不限於水平方向，也不是純為任何一種，大都是數種相結合。"},
+    {id:"c6", s:"s3", q:"純輻合明明會讓等溫線間距變小。課本討論等溫線怎麼密集時，為什麼先把它放一邊？",
+      o:[["因為和其他運動相比，它顯得很小",""],["因為輻合不會影響等溫線","會影響。課本 p.274 也回頭說水平輻合很重要。這裡只是因為量小，先不談。"],["因為大氣裡根本沒有輻合","有。低壓附近就有輻合。"],["因為輻合只會造成消鋒","輻合是把空氣往中間收，會讓等溫線靠近，不是散開。"]],
+      why:"課本：擴張雖然在其他情況很重要，但和其他運動相比顯得很小，所以在目前的討論中暫時剔除。"},
+    // ---- ④ 變形＋旋轉
+    {id:"d1", s:"s4", q:"在變形場上疊一個比較弱的氣旋形旋轉。流線會變成什麼樣子？",
+      o:[["還是鞍式，但被扭歪，兩條軸不再互相垂直",""],["立刻變成橢圓形環流","橢圓要旋轉比變形強才會出現。弱旋轉只能把變形場扭歪。"],["完全不變","有變。氣旋形彎曲的地方被加強，反氣旋形彎曲的地方被抵銷。"],["變成互相平行的直線","那是旋轉和變形剛好相等的時候。"]],
+      why:"課本：只要旋轉效應比變形場弱，變形場將會歪斜成圖 8-24a。"},
+    {id:"d2", s:"s4", q:"旋轉和變形剛好一樣強的時候，流場長什麼樣子？",
+      o:[["一條直線軸的兩邊，是方向相反的直線氣流；軸線上風速為零",""],["到處都沒有風","只有軸線上是零。軸的兩邊都還在吹，而且方向相反。"],["橢圓形環流","橢圓是旋轉比變形強的結果。"],["正圓形環流","正圓是只有旋轉、完全沒有變形的情況。"]],
+      why:"課本：如果旋轉等於變形，變形軸更加偏斜，一直到兩種反向直線氣流在一直線軸的兩邊為止。"},
+    {id:"d3", s:"s4", q:"氣旋形旋轉壓過變形之後，低壓周圍形成橢圓形環流。橢圓的長軸指向哪裡？",
+      o:[["原先兩個低壓的位置",""],["原先兩個高壓的位置","氣旋形旋轉加強的是低壓那兩側的彎曲，所以橢圓往低壓原先的方向拉長。"],["原本的伸張軸","軸已經被扭歪了。長軸在原本伸張軸和收縮軸之間，指向低壓原先的位置。"],["原本的收縮軸","軸已經被扭歪了。長軸在原本伸張軸和收縮軸之間，指向低壓原先的位置。"]],
+      why:"課本：低壓周圍形成一種橢圓形環流，長軸指向兩個低壓原先的位置（圖 8-24b）。"},
+    {id:"d4", s:"s4", q:"在變形場上疊一個弱的氣旋形旋轉之後，流線的哪些部分會彎得更厲害？",
+      o:[["原本就是氣旋形彎曲的部分",""],["原本是反氣旋形彎曲的部分","那裡是被抵銷。變形場的反氣旋運動和疊上去的氣旋形旋轉方向相反，曲率變小。"],["全部都彎得更厲害","不是全部。方向相同的地方加強，方向相反的地方抵銷。"],["全部都變直","不是全部。只有反氣旋形彎曲的部分變得比較直。"]],
+      why:"課本：氣旋形旋轉將會增強變形場的氣旋形曲率，合計曲率當增大；反氣旋的部分曲率將會變小。"},
+    {id:"d5", s:"s4", q:"你在高空圖上看到一個被拉長的橢圓形低壓環流。用這一段的觀念，最合理的解讀是什麼？",
+      o:[["這裡旋轉比變形強，但變形還在，所以圓被拉成橢圓",""],["這裡只有旋轉，沒有變形","只有旋轉的話，流線會是正圓。"],["這裡只有變形，沒有旋轉","只有變形的話，流線是鞍式的雙曲線，不會繞成一圈。"],["這裡旋轉和變形剛好相等","剛好相等的話是兩股反向的直線氣流，不會閉合。"]],
+      why:"旋轉控制變形時，流線閉合成橢圓。變形越弱，橢圓越接近正圓。"},
+    {id:"d6", s:"s4", q:"課本講完雙曲線流線的合流運動之後，特別提醒了什麼？",
+      o:[["不能過於強調這種合流運動，其他氣流型式也可能對變形有貢獻",""],["成鋒只可能發生在鞍式區","課本說成鋒「可以」發生在鞍式區，並提醒不要把問題過於簡化。"],["等溫線密集對成鋒其實不重要","課本說等溫線密集對成鋒的重要性自無疑問。"],["消鋒要用完全不同的理論","課本說消鋒可以不必另外討論，因為有利於等溫線散開的變形過程就是消鋒的開始。"]],
+      why:"鞍式區的合流是一種示範模式，幫我們看出等溫線為什麼會集中，但不是唯一的型式。"},
+    // ---- ⑤ 輻合＋旋轉
+    {id:"e1", s:"s5", q:"北半球某個地面低壓附近，近地面的空氣是怎麼流的？",
+      o:[["一邊逆時針轉，一邊往中心流",""],["一邊順時針轉，一邊往外流","這是高壓：輻散加上反氣旋形旋轉。"],["逆時針轉，同時往外流","低壓配的是輻合，空氣往中心流。"],["直直流向中心，不會轉","那是純輻合。低壓的環流型是輻合再加上氣旋形旋轉。"]],
+      why:"水平向輻合加上氣旋形旋轉，產生和地面低壓相伴的熟知環流型（圖 8-25a）。"},
+    {id:"e2", s:"s5", q:"北半球某地近地面的空氣，一邊順時針轉、一邊往外流。地面天氣圖上，這裡最可能是什麼？",
+      o:[["高壓",""],["低壓","低壓是逆時針轉、往中心流。"],["鞍式區","鞍式區是一進一出的變形場，不會繞著中心轉。"],["鋒面","鋒是等溫線密集的帶狀區域，不是一圈往外流的環流。"]],
+      why:"水平向輻散加上反氣旋形旋轉，產生和地面高壓相伴的環流型（圖 8-25b）。"},
+    {id:"e3", s:"s5", q:"一個流場本來只有氣旋形旋轉，流線是一圈一圈的圓。再加上一點輻合之後，流線變成什麼？",
+      o:[["往內捲的螺旋",""],["往外甩的螺旋","往外是輻散。輻合是往中心流。"],["橢圓","橢圓是旋轉加上變形的結果，不是加上輻合。"],["鞍式的雙曲線","那是變形場。這裡加的是輻合。"]],
+      why:"旋轉讓空氣繞圈，輻合讓空氣同時往中心靠，合起來就是往內捲的螺旋。"},
+    {id:"e4", s:"s5", q:"課本說水平向輻合「再加上」什麼增加，在成鋒作用中佔很重要的地位？",
+      o:[["正的（氣旋形）渦度",""],["負的（反氣旋形）渦度","課本寫的是正（氣旋形）渦度。反氣旋形是配水平向輻散。"],["純移置的速度","移置不會改變等溫線間距。"],["氣壓","課本這裡講的是運動的型式：輻合加氣旋形渦度。"]],
+      why:"課本：水平向輻合再加上正（氣旋形）渦度增加佔據很重要的地位（圖 8-25a）。"},
+    {id:"e5", s:"s5", q:"第 ② 段的變形場裡，流線在收縮軸兩側互相靠近。這算是「輻合」嗎？",
+      o:[["不算。流線靠近，但空氣從另一個方向等量流走，面積沒變",""],["算，流線靠近就是輻合","流線靠近叫合流。輻合是空氣量真的堆進來、面積縮小。"],["算，所以那裡氣壓會升高","純變形場沒有質量堆積。"],["不算，那是輻散","也不是輻散。純變形的面積不變，既沒有輻合也沒有輻散。"]],
+      why:"課本：質量的輻合或輻散未必有關，流出的可能和流入的完全相等。"},
+    // ---- ⑥ 垂直運動、非保守性過程
+    {id:"f1", s:"s6", q:"「熱力性直接環流」指的是哪一種垂直運動？",
+      o:[["暖空氣上升，冷空氣下沉",""],["冷空氣上升，暖空氣下沉","方向反了。暖的輕、往上，冷的重、往下，這才叫直接。"],["空氣在水平面上繞圈","那是氣旋或反氣旋的水平環流。這裡講的是垂直方向。"],["空氣從高壓流向低壓","那是水平氣壓梯度造成的運動。這裡講的是冷暖造成的升降。"]],
+      why:"暖空氣上升、冷空氣下沉，是由冷暖差異直接推動的環流。"},
+    {id:"f2", s:"s6", q:"位溫在什麼條件下是「保守」的，也就是跟著空氣塊走都不會變？",
+      o:[["沒有凝結或蒸發進行的時候",""],["任何時候都保守","有凝結或蒸發，位溫就會變。這就是課本說的非保守性過程。"],["只有空氣上升的時候","和上升下沉無關。關鍵在有沒有凝結或蒸發。"],["只有在地面附近","和高度無關。關鍵在有沒有凝結或蒸發。"]],
+      why:"課本：位溫是大氣中一種很具有保守性的性質，只要沒有凝結或蒸發進行。"},
+    {id:"f3", s:"s6", q:"鋒面暖區的空氣上升時凝結成雲。這對暖空氣的上升有什麼影響？",
+      o:[["釋出潛熱，上升加快",""],["凝結會吸熱，所以上升變慢","記反了。凝結是放熱，蒸發才是吸熱。"],["沒有影響","有影響。放出的潛熱讓這團空氣更暖、更容易往上。"],["雲的重量把空氣壓下去","雲滴很小。課本講的機制是潛熱釋出。"]],
+      why:"課本：暖空氣的上升可以因為潛熱釋出而加快。"},
+    {id:"f4", s:"s6", q:"雨從暖區的雲落進鋒面下方的冷空氣，在那裡被蒸發。冷空氣會怎樣？",
+      o:[["被取走熱量，下沉增強",""],["被雨水加熱","蒸發是吸熱。雨滴蒸發會從周圍空氣取走熱量。"],["變輕而上升","被冷卻的空氣是變重，會往下沉。"],["沒有影響","有影響。蒸發取走熱量，可以解釋冷空氣的下降或沉降。"]],
+      why:"課本：冷空氣的下降或沉降，有時候可以用蒸發過程取出熱量來解釋。"},
+    {id:"f5", s:"s6", q:"暖側凝結放熱、冷側蒸發冷卻同時發生。對鋒有什麼影響？",
+      o:[["力管環流增強，直接有利於成鋒",""],["一個加熱一個冷卻，互相抵銷","沒有抵銷。加熱的是暖的那邊，冷卻的是冷的那邊，冷暖對比反而更大。"],["有利於消鋒","相反。上升和下沉都增強，是有利於成鋒。"],["只影響雨量，和鋒無關","有關。課本說兩者之一或兼而有之，都可增強力管環流。"]],
+      why:"課本：二者之一或二者兼而有之，都可增強力管環流，因而直接有利於成鋒作用。"},
+    {id:"f6", s:"s6", q:"某個地區的風場有很強的變形，但整個地區的溫度到處都一樣。這裡會長出鋒嗎？",
+      o:[["不會，沒有冷暖對比可以集中",""],["會，變形場一定產生鋒","變形只是把已經有的等溫線擠在一起。溫度到處一樣，就沒有等溫線可以擠。"],["會，因為風很大","風大小不是重點。重點是有沒有溫度的差異可以被集中。"],["要看氣壓是高是低","和氣壓高低無關。鋒的本質是冷暖對比集中。"]],
+      why:"課本：一個地區除非有斜壓度集中，否則決不會有鋒。"},
+    {id:"f7", s:"s6", q:"為什麼課本說成鋒作用「顯然是一種三度空間的過程」？",
+      o:[["因為要有鋒，必須有和垂直運動相伴的熱力性直接環流",""],["因為鋒面很高，所以是立體的","重點不在鋒有多高，而在成鋒需要垂直運動參與。"],["因為水平運動不重要","水平的變形和輻合仍然重要，只是光有水平運動不夠。"],["因為天氣圖有很多層","天氣圖分層是分析的方法，不是成鋒是立體過程的原因。"]],
+      why:"課本：必須具有和空氣垂直運動相伴的熱力性直接環流，可見垂直運動對成鋒作用非常重要。"}
+  ];
+  const KEY = "frontogenesis_quiz_v1"; let ST = {};
+  try{ ST = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(e){}
+  const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} };
+  const rec = id => ST[id] || (ST[id] = { n:0, ok:0, last:"" });
+  const isWrong = q => { const r = ST[q.id]; return r && (r.last === "no" || r.last === "guess"); };
+  const shuf = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+  const esc = s => s.replace(/[&<>]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[c]));
+  const box = $("quiz"), ana = $("ana"), back = $("backBtn");
+  let round = [], idx = 0, okN = 0, misses = [];
+
+  // 跳回去看那一段，再跳回題目
+  function goSec(s){
+    const el = $(s); el.scrollIntoView({ behavior:"smooth", block:"start" });
+    el.classList.add("flash"); setTimeout(()=> el.classList.remove("flash"), 2600); back.hidden = false;
+  }
+  back.addEventListener("click", ()=>{ $("s7").scrollIntoView({ behavior:"smooth", block:"start" }); back.hidden = true; });
+  const jumpBtn = s => `<button class="chip jump" data-go="${s}">回去看 ${SEC[s]}</button>`;
+  document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if(b) goSec(b.dataset.go); });
+
+  function build(onlyWrong){
+    const pri = q => isWrong(q) ? 0 : !ST[q.id] || !ST[q.id].n ? 1 : 2;
+    const pool = shuf(Q.filter(q => !onlyWrong || isWrong(q))).sort((a,b) => pri(a)-pri(b));
+    const out = [], cnt = {};
+    // 每一段先各出一題，再補到 10 題，確保六個概念都考到
+    for(const cap of (onlyWrong ? [99] : [1,2,99]))
+      for(const q of pool){ if(out.length >= 10) break; if(out.includes(q) || (cnt[q.s]||0) >= cap) continue; cnt[q.s] = (cnt[q.s]||0)+1; out.push(q); }
+    return shuf(out);
+  }
+  function start(onlyWrong){
+    round = build(onlyWrong); idx = 0; okN = 0; misses = [];
+    if(!round.length){ box.innerHTML = `<p class="lead">錯題本是空的。先練一回吧。</p>`; return; }
+    show();
+  }
+  function finish(q, right, diag){
+    const guess = box.querySelector(".guess input").checked, r = rec(q.id);
+    r.n++; if(right) r.ok++; r.last = !right ? "no" : guess ? "guess" : "ok"; save();
+    pracCount++; if(right){ pracOk++; okN++; } if(r.last !== "ok") misses.push(q);
+    logEv({ type:"quiz", q:q.id, sec:q.s, ok:right, guess });
+    const fb = box.querySelector(".fb"); fb.hidden = false; fb.className = "fb " + (right ? "good" : "bad");
+    let h = right ? (guess ? "<b>答對了。</b>不過你說是用猜的，我先把它放進錯題本，之後再考你一次。" : "<b>答對了。</b>") : "<b>這題沒答對。</b>";
+    if(!right && diag) h += `<p><span class="dx">你可能是這樣想的</span>${esc(diag)}</p>`;
+    h += `<p><span class="dx k">關鍵</span>${esc(q.why)}</p>`;
+    h += `<div class="ctrl">${right && !guess ? "" : jumpBtn(q.s)}<button class="chip on" id="nextQ">${idx+1 < round.length ? "下一題" : "看這一回的結果"}</button></div>`;
+    fb.innerHTML = h; box.querySelector(".guess").style.display = "none";
+    $("nextQ").addEventListener("click", ()=>{ idx++; idx < round.length ? show() : summary(); });
+    renderAna();
+  }
+  function show(){
+    const q = round[idx];
+    let h = `<div class="q"><div class="qhead"><span>第 ${idx+1} / ${round.length} 題</span><span class="tag">${SEC[q.s]}</span></div><p class="t">${esc(q.q)}</p>`;
+    h += `<label class="guess"><input type="checkbox"> 這題我不太確定，是用猜的</label>`;
+    h += q.seq ? `<div class="ans"></div><div class="pool"></div><button class="chip" id="resetO">重排</button>` : `<div class="opts"></div>`;
+    h += `<div class="fb" hidden></div></div>`;
+    box.innerHTML = h;
+    if(q.seq){
+      const ans = box.querySelector(".ans"), pool = box.querySelector(".pool"); let pick = [], done = false;
+      const paint = () => {
+        ans.innerHTML = pick.length ? pick.map((t,i) => `<span class="oc">${i+1}. ${t}</span>`).join("<i>→</i>") : `<span class="ph">照順序點下面的選項</span>`;
+        [...pool.children].forEach(b => b.disabled = pick.includes(b.textContent));
+      };
+      shuf(q.seq).forEach(t => { const b = document.createElement("button"); b.className = "chip"; b.textContent = t;
+        b.addEventListener("click", ()=>{ if(done) return; pick.push(t); paint();
+          if(pick.length === q.seq.length){ done = true; $("resetO").style.display = "none";
+            const k = pick.findIndex((x,i) => x !== q.seq[i]), right = k < 0;
+            if(!right) ans.children[k*2].classList.add("no");
+            finish(q, right, right ? "" : (k === 0 ? `第一個應該是「${q.seq[0]}」。` : `「${q.seq[k-1]}」的下一個應該是「${q.seq[k]}」，不是「${pick[k]}」。`)); } });
+        pool.appendChild(b); });
+      $("resetO").addEventListener("click", ()=>{ if(!done){ pick = []; paint(); } }); paint();
+    } else {
+      const opts = box.querySelector(".opts"), order = shuf(q.o.map((_,i) => i)); let done = false;
+      order.forEach(i => { const b = document.createElement("button"); b.textContent = q.o[i][0]; b.dataset.i = i;
+        b.addEventListener("click", ()=>{ if(done) return; done = true; const right = i === 0;
+          b.classList.add(right ? "ok" : "no"); opts.querySelector('[data-i="0"]').classList.add("ok"); finish(q, right, q.o[i][1]); });
+        opts.appendChild(b); });
+    }
+  }
+  function summary(){
+    const bySec = {}; misses.forEach(q => (bySec[q.s] = bySec[q.s] || []).push(q));
+    let h = `<div class="q"><p class="t">這一回：${round.length} 題答對 ${okN} 題</p>`;
+    if(!misses.length) h += `<p>全部答對，而且都不是用猜的。很紮實。</p>`;
+    else {
+      h += `<p>下面這幾段再看一次，然後按「只練錯題」。</p>`;
+      for(const s in bySec) h += `<div class="miss"><b>${SEC[s]}</b>（${bySec[s].length} 題）${jumpBtn(s)}<ul>${bySec[s].map(q => `<li>${esc(q.q)}</li>`).join("")}</ul></div>`;
+    }
+    h += `<div class="ctrl"><button class="chip on" id="again">再練一回（錯的和沒做過的先出）</button>${misses.length ? `<button class="chip" id="onlyW">只練錯題</button>` : ""}</div></div>`;
+    box.innerHTML = h;
+    $("again").addEventListener("click", ()=> start(false));
+    if($("onlyW")) $("onlyW").addEventListener("click", ()=> start(true));
+    cloudSend({ type:"小測驗", detail:`成鋒作用 一回 ${round.length} 題；要再看：${Object.keys(bySec).map(s => SEC[s]).join("、") || "無"}`, score:`${okN}/${round.length}` });
+  }
+  function renderAna(){
+    const wrong = Q.filter(isWrong), seen = Q.filter(q => ST[q.id] && ST[q.id].n).length;
+    let h = `<p class="lead">題庫共 ${Q.length} 題，你做過 ${seen} 題。紀錄只存在這台裝置的瀏覽器。</p><div class="bars">`;
+    let weak = null, weakRate = 2;
+    for(const s in SEC){
+      let n = 0, ok = 0; Q.filter(q => q.s === s).forEach(q => { const r = ST[q.id]; if(r){ n += r.n; ok += r.ok; } });
+      const rate = n ? ok/n : 0; if(n >= 2 && rate < weakRate){ weakRate = rate; weak = s; }
+      h += `<div class="bar"><span class="nm">${SEC[s]}</span><span class="tr"><i style="width:${Math.round(rate*100)}%;background:${!n ? "#e5e7eb" : rate >= .8 ? "#16a34a" : rate >= .5 ? "#d97706" : "#dc2626"}"></i></span><span class="pc">${n ? `答對 ${ok}／${n}` : "還沒做"}</span></div>`;
+    }
+    h += `</div>`;
+    if(weak && weakRate < .8) h += `<div class="key">目前最需要再看的是 <b>${SEC[weak]}</b>。${jumpBtn(weak)}</div>`;
+    h += `<h3>錯題本（${wrong.length} 題）</h3>`;
+    if(!wrong.length) h += `<p style="color:var(--sub)">目前沒有錯題。答錯或用猜的題目會出現在這裡，之後答對就會移除。</p>`;
+    else h += `<ul class="wb">${wrong.map(q => `<li>${esc(q.q)} <span class="tag">${ST[q.id].last === "guess" ? "用猜的" : "答錯"}</span> ${jumpBtn(q.s)}</li>`).join("")}</ul><div class="ctrl"><button class="chip on" id="anaW">只練錯題（${Math.min(10, wrong.length)} 題）</button></div>`;
+    h += `<div class="ctrl"><button class="chip" id="clr">清除我的作答紀錄</button></div>`;
+    ana.innerHTML = h;
+    if($("anaW")) $("anaW").addEventListener("click", ()=>{ start(true); $("s7").scrollIntoView({ behavior:"smooth" }); });
+    $("clr").addEventListener("click", ()=>{ if(confirm("確定要清除這一課的作答紀錄和錯題本嗎？清掉就救不回來。")){ ST = {}; save(); renderAna(); } });
+  }
+  box.innerHTML = `<div class="ctrl"><button class="chip on big" id="go">開始練一回（10 題）</button></div>`;
+  $("go").addEventListener("click", ()=> start(false));
+  renderAna();
+})();
+</script>
+</body>
+</html>
