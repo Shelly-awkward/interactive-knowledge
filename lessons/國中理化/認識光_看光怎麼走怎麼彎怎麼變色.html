@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國二理化｜認識光：看光怎麼走、怎麼彎、怎麼變色</title>
+<style>
+  :root{
+    --ink:#1f2937; --sub:#6b7280; --bg:#f6f5fb; --card:#ffffff;
+    --pri:#4338ca; --pri-soft:#e0e7ff; --red:#dc2626; --red-soft:#fee2e2;
+    --green:#15803d; --green-soft:#dcfce7; --amber:#b45309; --amber-soft:#fef3c7;
+    --blue:#1d4ed8; --blue-soft:#dbeafe; --vio:#7c3aed; --border:#e5e7eb; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.85;}
+  .wrap{max-width:860px; margin:0 auto; padding:20px 16px 80px;}
+  a{color:var(--blue);}
+
+  header.hero{background:linear-gradient(135deg,#1e1b4b,#4338ca 55%,#d97706); color:#fff; border-radius:var(--radius); padding:26px 24px; margin-bottom:16px;}
+  header.hero .badge{display:inline-block; background:rgba(255,255,255,.22); border-radius:99px; padding:2px 12px; font-size:.8rem; margin-bottom:8px;}
+  header.hero h1{font-size:1.5rem; margin-bottom:6px;}
+  header.hero p{opacity:.95; font-size:.95rem;}
+
+  nav.toc{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;}
+  nav.toc a{background:#fff; border:1px solid var(--border); border-radius:99px; padding:3px 12px; font-size:.86rem; text-decoration:none; color:var(--ink);}
+  nav.toc a:hover{border-color:var(--pri); color:var(--pri);}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:16px;}
+  .card h2{font-size:1.18rem; color:var(--pri); margin-bottom:8px;}
+  .card h3{font-size:1rem; margin:16px 0 6px;}
+  .card ul,.card ol{margin-left:1.3em;}
+  .pg{display:inline-block; background:#f1f5f9; color:#475569; border-radius:6px; padding:0 8px; font-size:.78rem; margin-left:6px; font-weight:normal; vertical-align:2px;}
+  .lead{font-size:.98rem; margin-bottom:10px;}
+  .life{background:var(--amber-soft); border-left:4px solid var(--amber); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.94rem;}
+  .life b{color:var(--amber);}
+  .key{background:var(--pri-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.95rem; color:#312e81;}
+  .note{background:var(--blue-soft); border-radius:8px; padding:8px 14px; margin:10px 0; font-size:.9rem; color:#1e3a8a;}
+  .sup{border:2px solid #c4b5fd; background:#faf8ff; border-radius:10px; padding:8px 14px; margin:10px 0; font-size:.9rem;}
+  .sup .sl{display:inline-block; background:var(--vio); color:#fff; border-radius:6px; padding:0 8px; font-size:.78rem; font-weight:bold; margin-right:6px;}
+  .ask{border:2px solid #f59e0b; background:#fffbeb; border-radius:10px; padding:8px 14px; margin:10px 0; font-size:.9rem;}
+  .ask .sl{display:inline-block; background:#d97706; color:#fff; border-radius:6px; padding:0 8px; font-size:.78rem; font-weight:bold; margin-right:6px;}
+  .term{border-bottom:2px dotted var(--pri); font-weight:bold;}
+
+  .ctrl{display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:8px 0;}
+  .ctrl .lab{font-size:.86rem; color:var(--sub); margin-right:2px;}
+  .chip{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 13px; cursor:pointer; font-family:inherit; font-size:.88rem; color:var(--ink);}
+  .chip:hover{border-color:var(--pri); color:var(--pri);}
+  .chip.on{background:var(--pri); border-color:var(--pri); color:#fff;}
+  .chip.on:hover{color:#fff;}
+  .chip.big{padding:8px 16px; font-size:.95rem; font-weight:bold;}
+  .chip:disabled{opacity:.35; cursor:default;}
+  .ck{font-size:.9rem; cursor:pointer;}
+  .slider{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:8px 0; font-size:.9rem;}
+  .slider input[type=range]{flex:1; min-width:170px; accent-color:var(--pri);}
+  .slider b{min-width:4.2em; display:inline-block;}
+  .slider .ends{display:flex; justify-content:space-between; width:100%; font-size:.78rem; color:var(--sub); margin-top:-6px;}
+
+  .stage{background:#0b1220; border:1px solid #1e293b; border-radius:12px; padding:6px;}
+  .stage.lt{background:#fbfcfd; border-color:#e2e8f0;}
+  .stage canvas{display:block; width:100%; max-width:640px; margin:0 auto; touch-action:pan-y;}
+  .read{background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:8px 12px; margin-top:8px; font-size:.93rem;}
+  .read b{color:var(--pri);}
+  .legend{display:flex; gap:12px; flex-wrap:wrap; font-size:.84rem; color:var(--sub); margin:6px 2px;}
+  .legend i{display:inline-block; width:18px; height:0; border-top:3px solid #000; margin-right:4px; vertical-align:4px;}
+  .legend i.d{border-top-style:dashed;}
+
+  table{border-collapse:collapse; width:100%; font-size:.92rem; margin-top:10px;}
+  th,td{border:1px solid var(--border); padding:6px 8px; text-align:center;}
+  th{background:#f8fafc;}
+  td.l{text-align:left;}
+  tr.now td{background:#fef9c3; font-weight:bold;}
+  .tw{overflow-x:auto;}
+
+  .q{border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-top:10px;}
+  .q p.t{font-weight:bold; margin-bottom:6px;}
+  .q .opts{display:grid; gap:6px;}
+  .q button{border:1px solid var(--border); background:#fff; border-radius:8px; padding:7px 12px; font-family:inherit; font-size:.94rem; cursor:pointer; text-align:left; color:var(--ink);}
+  .q button:hover{border-color:var(--pri);}
+  .q button.ok{background:var(--green-soft); border-color:var(--green);}
+  .q button.no{background:var(--red-soft); border-color:var(--red);}
+  .q .qhead{display:flex; justify-content:space-between; gap:8px; font-size:.84rem; color:var(--sub); margin-bottom:4px;}
+  .q .chip{border-radius:99px; text-align:center;}
+  .q .chip.on{background:var(--pri); color:#fff;}
+  .tag{display:inline-block; background:#f1f5f9; border-radius:99px; padding:0 9px; font-size:.78rem; color:#475569; white-space:nowrap;}
+  .guess{display:block; font-size:.88rem; color:var(--sub); margin:2px 0 8px; cursor:pointer;}
+  .fb{margin-top:10px; border-radius:10px; padding:10px 12px; font-size:.94rem;}
+  .fb.good{background:var(--green-soft);} .fb.bad{background:var(--red-soft);}
+  .fb p{margin-top:6px;}
+  .dx{display:inline-block; background:#fff; border:1px solid #fca5a5; color:#b91c1c; border-radius:6px; padding:0 7px; font-size:.8rem; font-weight:bold; margin-right:6px;}
+  .dx.k{border-color:#86efac; color:#15803d;}
+  .chip.jump, .q .chip.jump{border-color:var(--blue); color:var(--blue); background:#fff;}
+  .miss{border-top:1px dashed var(--border); padding-top:8px; margin-top:8px;} .miss ul{font-size:.9rem; color:var(--sub);} .miss .chip{margin-left:6px;}
+  .bars{display:grid; gap:6px;}
+  .bar{display:grid; grid-template-columns:10.5em 1fr 6.5em; gap:8px; align-items:center; font-size:.88rem;}
+  .bar .tr{height:12px; background:#f1f5f9; border-radius:99px; overflow:hidden;} .bar .tr i{display:block; height:100%; border-radius:99px;}
+  .bar .pc{color:var(--sub); text-align:right;}
+  @media (max-width:480px){ .bar{grid-template-columns:8.2em 1fr 5.6em; font-size:.8rem;} }
+  .wb{font-size:.92rem;} .wb li{margin-bottom:6px;} .wb .chip{padding:2px 10px; font-size:.8rem;}
+  .card.flash{animation:flash 2.6s;} @keyframes flash{0%,60%{box-shadow:0 0 0 4px #facc15;}100%{box-shadow:0 0 0 0 transparent;}}
+  #backBtn{position:fixed; right:14px; bottom:16px; z-index:20; background:var(--blue); color:#fff; border:none; border-radius:99px; padding:11px 18px; font-family:inherit; font-size:1rem; font-weight:bold; box-shadow:0 4px 14px rgba(0,0,0,.25); cursor:pointer;}
+  .predict{border:2px dashed #93c5fd; background:#f0f7ff; border-radius:12px; padding:10px 14px; margin:10px 0; font-size:.95rem;}
+  .predict .pb{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0;}
+  .predict .pb button{border:1px solid var(--border); background:#fff; border-radius:99px; padding:5px 14px; font-family:inherit; font-size:.9rem; cursor:pointer; color:var(--ink);}
+  .predict .pb button.on{border-color:var(--blue); background:var(--blue-soft);} .predict .pb button.ok{border-color:var(--green); background:var(--green-soft);}
+  [hidden]{display:none !important;}
+  footer{text-align:center; color:var(--sub); font-size:.8rem; margin-top:24px;}
+  .src{font-size:.86rem;} .src li{margin-bottom:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge">國中自然 · 八年級理化 · 第 4 單元 認識光（講義 p.60～76 的七頁）</span>
+  <h1>認識光：看光怎麼走、怎麼彎、怎麼變色</h1>
+  <p>講義用七頁文字和靜態圖講完整個單元。這一頁把那些圖變成<b>可以自己拉、自己按</b>的模擬。先看光怎麼走，再回頭讀講義，表格就不用硬背。</p>
+</header>
+
+<nav class="toc">
+  <a href="#s1">① 光走直線</a><a href="#s2">② 反射定律</a><a href="#s3">③ 平面鏡</a><a href="#s4">④ 凹凸面鏡</a><a href="#s5">⑤ 折射</a><a href="#s6">⑥ 透鏡和三稜鏡</a><a href="#s7">⑦ 光學儀器和眼睛</a><a href="#s8">⑧ 色散和顏色</a><a href="#s9">⑨ 考考你</a><a href="#s10">⑩ 錯題本</a><a href="#sx">用詞和來源</a>
+</nav>
+
+<div class="card">
+  <h2>先用三句話抓住整個單元</h2>
+  <ol>
+    <li><b>光在同一種均勻介質裡走直線。</b>影子、針孔成像都是這樣來的。</li>
+    <li><b>光碰到東西會轉彎，只有兩種轉法。</b>彈回來叫<span class="term">反射</span>（面鏡）。穿過去而且轉彎叫<span class="term">折射</span>（透鏡、三稜鏡）。</li>
+    <li><b>看得見，是因為光進了眼睛。</b>看到什麼顏色，要看是哪些色光進了眼睛。</li>
+  </ol>
+  <p style="font-size:.88rem;color:var(--sub)">每段標題旁邊標了講義頁數。紫色的「補充」框是講義沒寫的延伸內容。橘色的「請向老師確認」框，是講義和模擬對不起來、或看起來有疑問的地方，我沒有自己改。</p>
+</div>
+
+<!-- ============ ① ============ -->
+<div class="card" id="s1">
+  <h2>① 光走直線：影子、針孔成像和光速<span class="pg">講義 p.60</span></h2>
+  <p class="lead">光在<b>真空</b>或<b>均勻介質</b>中以<b>直線前進</b>。遇到不透明的物體過不去，物體後方就形成<b>陰影</b>。日晷就是看陰影的位置來知道時間。</p>
+
+  <h3>針孔成像：利用光的直線前進</h3>
+  <div class="predict" data-id="p1" data-ans="0" data-exp="屏愈遠，像愈大。光穿過針孔後是一直張開的，走得愈遠張得愈開。">
+    <p><b>先猜再看：</b>光源和針孔都不動。把屏幕往後拉遠，屏上的像會怎樣？</p>
+    <div class="pb"><button>變大</button><button>變小</button><button>不變</button></div>
+    <p class="watch" hidden>先不告訴你對不對。把下面「屏到針孔」的拉桿往右拉，看屏上的像。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+  <div class="slider"><span>光源到針孔 <b id="do1v">12 cm</b></span><input type="range" id="do1" min="6" max="24" step="1" value="12"></div>
+  <div class="slider"><span>屏到針孔 <b id="di1v">12 cm</b></span><input type="range" id="di1" min="4" max="24" step="1" value="12"></div>
+  <div class="stage"><canvas id="c1"></canvas></div>
+  <div class="read" id="r1"></div>
+  <div class="key"><b>看圖記住：</b>光源<b>上面</b>發出的光（橘色），穿過小孔後落在屏的<b>下面</b>。下面發出的光（藍色）落在上面。所以紙屏上的像<b>上下顛倒、左右相反</b>。</div>
+  <ul style="font-size:.94rem">
+    <li>光源、針孔不動，<b>屏愈遠，像愈大</b>。</li>
+    <li>屏、針孔不動，<b>光源愈遠，像愈小</b>。</li>
+  </ul>
+
+  <h3>光速：在不同介質裡不一樣快</h3>
+  <p>真空中的光速約為 <b>3×10<sup>8</sup> m/s</b>，寫成 c。一般而言，快慢是 <b>真空 ＞ 空氣 ＞ 水 ＞ 玻璃</b>。</p>
+  <div class="ctrl"><button class="chip on big" id="go1b">開跑</button><span class="lab">四束光同時出發，看同一段時間誰跑得遠。</span></div>
+  <div class="stage lt"><canvas id="c1b"></canvas></div>
+  <div class="tw"><table>
+    <tr><th>介質</th><th>光速（公尺／秒）</th><th>以 c 表示</th></tr>
+    <tr><td>真空</td><td>3×10<sup>8</sup></td><td>c</td></tr>
+    <tr><td>空氣</td><td>≒ 3×10<sup>8</sup></td><td>≒ c</td></tr>
+    <tr><td>水</td><td>≒ 2.25×10<sup>8</sup></td><td>≒ 3/4 c</td></tr>
+    <tr><td>玻璃</td><td>≒ 2×10<sup>8</sup></td><td>≒ 2/3 c</td></tr>
+  </table></div>
+  <div class="note"><b>先記住這個順序。</b>第 ⑤ 段的折射要用它：光往哪邊彎，就看它是變快還是變慢。</div>
+</div>
+
+<!-- ============ ② ============ -->
+<div class="card" id="s2">
+  <h2>② 光的反射：反射定律<span class="pg">講義 p.64</span></h2>
+  <p class="lead"><b>看見物體的條件：</b>要有光從物體表面射入眼睛。非發光體不能自己發光，但能<b>反射</b>發光體發出的光線，我們才能察覺它的存在。</p>
+  <div class="note"><b>最容易想錯：</b>不是眼睛「射出視線」去看東西。是<b>光進到眼睛</b>。全暗的房間裡看不到書，因為沒有光從書反射到你的眼睛。</div>
+
+  <h3>反射定律的三項條件</h3>
+  <ol style="font-size:.95rem">
+    <li>入射線、反射線與法線均在<b>同一平面</b>上。</li>
+    <li>入射線與反射線分別在法線的<b>兩側</b>。</li>
+    <li><b>反射角必等於入射角。</b></li>
+  </ol>
+  <div class="predict" data-id="p2" data-ans="0" data-exp="每一條都遵守。粗糙的表面每個小地方朝的方向不一樣，法線就不一樣，所以反射光才會射向四面八方。">
+    <p><b>先猜再看：</b>光照到粗糙的表面，反射光亂七八糟（漫反射）。這時候每一條光線還遵守反射定律嗎？</p>
+    <div class="pb"><button>遵守</button><button>不遵守</button></div>
+    <p class="watch" hidden>先不告訴你對不對。按下面的「粗糙表面：漫反射」，看每個落點上的小虛線（那是那一點的法線）。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+  <div class="ctrl" id="m2">
+    <button class="chip on" data-m2="one">一條光線：量角度</button>
+    <button class="chip" data-m2="smooth">光滑表面：單向反射</button>
+    <button class="chip" data-m2="rough">粗糙表面：漫反射</button>
+  </div>
+  <div class="slider"><span>入射角 <b id="a2v">40°</b></span><input type="range" id="a2" min="0" max="75" step="5" value="40"><div class="ends"><span>0°：沿著法線射進來</span><span>75°</span></div></div>
+  <div class="stage"><canvas id="c2"></canvas></div>
+  <div class="read" id="r2"></div>
+  <div class="tw"><table>
+    <tr><th>名詞</th><th>講義怎麼說</th></tr>
+    <tr><td>法線</td><td class="l">通過入射點、與鏡面<b>垂直</b>的直線</td></tr>
+    <tr><td>入射角</td><td class="l">入射線與<b>法線</b>的夾角</td></tr>
+    <tr><td>反射角</td><td class="l">反射線與<b>法線</b>的夾角</td></tr>
+  </table></div>
+  <div class="note"><b>最容易錯：</b>入射角是和<b>法線</b>的夾角，不是和鏡面的夾角。題目說「光和鏡面夾 30°」，入射角是 90°－30°＝60°。</div>
+  <div class="key"><b>反射定律的適用性：</b>光在<b>任何表面</b>（不論粗糙或光滑）發生反射時，均會遵守反射定律。</div>
+</div>
+
+<!-- ============ ③ ============ -->
+<div class="card" id="s3">
+  <h2>③ 平面鏡成像，還有實像和虛像<span class="pg">講義 p.64～65</span></h2>
+  <p class="lead">光線照射物體，反射至平面鏡，平面鏡再將光線反射到我們眼中。眼睛覺得光是從鏡子<b>後面</b>直直過來的，所以在那裡「看到」一個像。</p>
+  <div class="predict" data-id="p3" data-ans="2" data-exp="像不會動。像的位置只由物體和鏡子決定（物距＝像距），跟眼睛在哪裡沒有關係。">
+    <p><b>先猜再看：</b>蠟燭和鏡子都不動。你的眼睛往上移，鏡子裡蠟燭的像會跑到哪裡？</p>
+    <div class="pb"><button>跟著往上跑</button><button>反過來往下跑</button><button>留在原地不動</button></div>
+    <p class="watch" hidden>先不告訴你對不對。拉下面「眼睛的高度」，看虛線畫出來的像有沒有動。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+  <div class="slider"><span>物距（蠟燭到鏡面） <b id="d3v">12 cm</b></span><input type="range" id="d3" min="4" max="24" step="1" value="12"></div>
+  <div class="slider"><span>眼睛的高度</span><input type="range" id="e3" min="0" max="100" step="1" value="30"></div>
+  <div class="ctrl"><label class="ck"><input type="checkbox" id="pp3"> 在像的位置放一張白紙（當屏幕）</label></div>
+  <div class="stage"><canvas id="c3"></canvas></div>
+  <div class="legend"><span><i style="border-color:#fbbf24"></i>真的有光走的路</span><span><i class="d" style="border-color:#94a3b8"></i>往鏡子後面延伸的線（那裡沒有光）</span></div>
+  <div class="read" id="r3"></div>
+  <div class="key"><b>平面鏡成像的性質：</b>像與物體<b>形狀與大小相同</b>、<b>物距＝像距</b>、<b>以鏡面為軸對稱</b>。<br>物距是物體與鏡面的距離。像距是成像與鏡面的距離。</div>
+  <div class="note"><b>最容易錯：</b>你走近鏡子，覺得像「變大」。其實像一直和你<b>一樣大</b>，只是離你比較近。</div>
+
+  <h3>實像和虛像</h3>
+  <div class="tw"><table>
+    <tr><th>種類</th><th>實像</th><th>虛像</th></tr>
+    <tr><td>定義</td><td>由<b>實際光線會聚</b>而成</td><td><b>非</b>由實際光線會聚而成（反射線往後延伸交會所得的像）</td></tr>
+    <tr><td>屏幕上成像</td><td>可</td><td>無法</td></tr>
+    <tr><td>眼睛</td><td>可見</td><td>可見</td></tr>
+    <tr><td>例子</td><td>針孔成像（倒立）</td><td>平面鏡成像（正立）</td></tr>
+  </table></div>
+  <p style="font-size:.9rem;color:var(--sub)">勾上面的「放一張白紙」試試看：鏡子後面根本沒有光走到那裡，所以紙上接不到像。這就是虛像。</p>
+</div>
+
+<!-- ============ ④ ============ -->
+<div class="card" id="s4">
+  <h2>④ 凹面鏡和凸面鏡<span class="pg">講義 p.64～65</span></h2>
+  <p class="lead"><b>主軸</b>：通過鏡面中心且垂直鏡面的直線。<b>焦點</b>：平行主軸的光線入射鏡面，反射後射向的那一點。</p>
+  <div class="predict" data-id="p4" data-ans="1" data-exp="會平行射出。這就是把「平行光反射後聚到焦點」那條路倒過來走。手電筒和車前燈就是這樣做的。">
+    <p><b>先猜再看：</b>把小燈泡放在凹面鏡的焦點上。它射向鏡面的光，反射後會怎樣？</p>
+    <div class="pb"><button>聚成一點</button><button>平行射出</button><button>往四面八方散開</button></div>
+    <p class="watch" hidden>先不告訴你對不對。按下面的「凹面鏡：燈泡放在焦點」。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+  <div class="ctrl" id="m4">
+    <button class="chip on" data-m4="in">凹面鏡：平行光射進來</button>
+    <button class="chip" data-m4="out">凹面鏡：燈泡放在焦點</button>
+    <button class="chip" data-m4="cvx">凸面鏡：平行光射進來</button>
+  </div>
+  <div class="stage"><canvas id="c4"></canvas></div>
+  <div class="read" id="r4"></div>
+  <div class="tw"><table>
+    <tr><th>哪裡用到</th><th>哪一種</th><th>為什麼</th></tr>
+    <tr><td>太陽爐</td><td>凹面鏡</td><td class="l">太陽光平行主軸射進來，反射後集中在焦點，達到高溫</td></tr>
+    <tr><td>手電筒的燈頭、汽車的車前燈</td><td>凹面鏡</td><td class="l">光源放在焦點，光線反射後平行射出，能增強射出的光</td></tr>
+    <tr><td>化妝鏡</td><td>凹面鏡</td><td class="l">人臉靠近凹面鏡，產生正立的放大虛像</td></tr>
+    <tr><td>便利商店角落、馬路交叉口、山路轉彎處</td><td>凸面鏡</td><td class="l">看到的景物範圍會變廣</td></tr>
+  </table></div>
+
+  <h3>面鏡成像：拉拉看物體放哪裡<span class="pg">講義 p.65 的彙整表（講義標示為補充）</span></h3>
+  <div class="ctrl" id="k4">
+    <button class="chip on" data-k4="cc">凹面鏡</button>
+    <button class="chip" data-k4="cv">凸面鏡</button>
+  </div>
+  <div class="slider"><span>物距 <b id="p4v">25 cm</b></span><input type="range" id="p4" min="3" max="30" step="1" value="25"><div class="ends"><span>靠近鏡面</span><span>這面鏡子的焦距是 10 cm</span><span>遠離鏡面</span></div></div>
+  <div class="stage"><canvas id="c4b"></canvas></div>
+  <div class="read" id="r4b"></div>
+  <div class="tw"><table id="t4">
+    <tr><th></th><th>物距</th><th>成像位置</th><th>成像性質</th></tr>
+    <tr data-r="pl"><td>平面鏡</td><td>任何位置</td><td>物距＝像距</td><td>正立、等大、虛像</td></tr>
+    <tr data-r="cv"><td>凸面鏡</td><td>任何位置</td><td>焦距內</td><td>正立、縮小、虛像</td></tr>
+    <tr data-r="c0"><td rowspan="6">凹面鏡</td><td>焦距內</td><td>焦距外（與物同側）<sup>※</sup></td><td>正立、放大、虛像</td></tr>
+    <tr data-r="c1"><td>焦點上</td><td>無窮遠處</td><td>無法成像</td></tr>
+    <tr data-r="c2"><td>焦距與兩倍焦距間</td><td>兩倍焦距外</td><td>倒立、放大、實像</td></tr>
+    <tr data-r="c3"><td>兩倍焦距上</td><td>兩倍焦距上</td><td>倒立、等大、實像</td></tr>
+    <tr data-r="c4"><td>兩倍焦距外</td><td>焦距與兩倍焦距間</td><td>倒立、縮小、實像</td></tr>
+    <tr data-r="c5"><td>無窮遠處</td><td>焦點上</td><td>一點</td></tr>
+  </table></div>
+  <div class="ask"><span class="sl">請向老師確認</span>表格照講義 p.65 抄寫，有 ※ 的那一格我有疑問，沒有自己改：
+    <ul>
+      <li>講義寫凹面鏡焦距內的像「與物同側」。但照反射光路畫出來，這個虛像在<b>鏡子後面</b>，和物體<b>不同側</b>（上面的模擬把物距拉到 5 cm 就看得到）。這一格的字和 p.69 透鏡表的同一格一模一樣，可能是沿用。</li>
+      <li>講義寫像在「焦距外」。但物距小於焦距的一半時，算出來的像距比焦距短（例如物距 3 cm，像距約 4.3 cm）。</li>
+    </ul>
+    考試要怎麼寫，請以老師說的為準。
+  </div>
+</div>
+
+<!-- ============ ⑤ ============ -->
+<div class="card" id="s5">
+  <h2>⑤ 光的折射<span class="pg">講義 p.68</span></h2>
+  <p class="lead"><b>折射：</b>光在不同介質中行進速率不同。光線由一均勻介質進入另一均勻介質時，行進方向發生偏折的現象。</p>
+  <div class="predict" data-id="p5" data-ans="0" data-exp="偏向法線。空氣裡光速快，水裡光速慢。從快的進到慢的，會偏向法線。">
+    <p><b>先猜再看：</b>光從空氣斜斜射進水裡。進水之後，光線會往哪邊偏？</p>
+    <div class="pb"><button>偏向法線（變得比較直立）</button><button>偏離法線（變得比較躺平）</button><button>不轉彎</button></div>
+    <p class="watch" hidden>先不告訴你對不對。看下面的圖：白色點線是「如果不轉彎」的直進路徑，比比看真正的光在它的哪一邊。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+  <div class="ctrl" id="m5">
+    <button class="chip on" data-m5="aw">空氣 → 水</button>
+    <button class="chip" data-m5="ag">空氣 → 玻璃</button>
+    <button class="chip" data-m5="wa">水 → 空氣</button>
+  </div>
+  <div class="slider"><span>入射角 <b id="a5v">45°</b></span><input type="range" id="a5" min="0" max="75" step="5" value="45"></div>
+  <div class="ctrl"><button class="chip" id="rev5">把光倒著射回去（光的可逆性）</button></div>
+  <div class="stage"><canvas id="c5"></canvas></div>
+  <div class="read" id="r5"></div>
+  <div class="key"><b>光的偏折方向：</b><br>從光速較<b>快</b>的介質進入光速較<b>慢</b>的介質，會<b>偏向法線</b>（入射角 ＞ 折射角）。<br>從光速較<b>慢</b>的介質進入光速較<b>快</b>的介質，會<b>偏離法線</b>（入射角 ＜ 折射角）。</div>
+  <ul style="font-size:.94rem">
+    <li><b>折射線</b>：光線進入另一介質之後的行進路徑。<b>折射角</b>：折射線與法線的夾角。</li>
+    <li>把入射角拉到 0°：光沿著法線射進去，方向不變。但速率還是變了。</li>
+    <li><b>光的可逆性：</b>在一條光徑的終點，發出反方向的光，此光可沿原路徑回到原來的起點。</li>
+  </ul>
+  <p style="font-size:.86rem;color:var(--sub)">「水 → 空氣」的入射角只開放到 40°。角度再大會出現講義這幾頁沒有談的現象，這裡不做。</p>
+</div>
+
+<!-- ============ ⑥ ============ -->
+<div class="card" id="s6">
+  <h2>⑥ 透鏡和三稜鏡<span class="pg">講義 p.68～69</span></h2>
+  <p class="lead"><b>透鏡：</b>利用光的折射原理，使光線產生<b>會聚</b>或<b>發散</b>的透明體。</p>
+  <div class="tw"><table>
+    <tr><th></th><th>凸透鏡</th><th>凹透鏡</th></tr>
+    <tr><td>形狀</td><td>中間比邊緣<b>厚</b></td><td>中間比邊緣<b>薄</b></td></tr>
+    <tr><td>功能</td><td><b>會聚</b>光線</td><td><b>發散</b>光線</td></tr>
+    <tr><td>種類</td><td>雙凸、平凸、凹凸透鏡</td><td>雙凹、平凹、凸凹透鏡</td></tr>
+    <tr><td>平行主軸的光</td><td class="l">折射後偏向主軸，會聚於主軸上的一點（<b>焦點</b>）</td><td class="l">折射後偏離主軸；把折射光反向延伸，相交於主軸上的一點（<b>虛焦點</b>）</td></tr>
+    <tr><td>反過來（可逆性）</td><td class="l">通過焦點的光，折射後平行主軸</td><td class="l">射向鏡後虛焦點的光，折射後平行主軸</td></tr>
+  </table></div>
+  <ul style="font-size:.94rem">
+    <li><b>鏡心：</b>穿過透鏡中心的光線，折射後行進方向<b>不會改變</b>。</li>
+    <li><b>主軸：</b>通過鏡心且與鏡面垂直的直線。<b>焦距：</b>從焦點至透鏡中心的距離。</li>
+  </ul>
+
+  <h3>透鏡成像：把物體拉近拉遠</h3>
+  <div class="predict" data-id="p6" data-ans="0" data-exp="像變大，而且離透鏡更遠。物體往透鏡靠近，實像就往遠離透鏡的方向跑，兩個是同一個方向移動（講義 p.69 上方的圖）。">
+    <p><b>先猜再看：</b>物體在凸透鏡的兩倍焦距外，慢慢往透鏡靠近（還沒到焦點）。另一邊的實像會怎樣？</p>
+    <div class="pb"><button>變大，離透鏡更遠</button><button>變小，更靠近透鏡</button><button>大小和位置都不變</button></div>
+    <p class="watch" hidden>先不告訴你對不對。把下面的物距從 30 cm 慢慢拉到 12 cm，盯著右邊的像。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+  <div class="ctrl" id="k6">
+    <button class="chip on" data-k6="cx">凸透鏡</button>
+    <button class="chip" data-k6="cc">凹透鏡</button>
+    <span class="lab">物距快速跳到</span>
+    <button class="chip" data-p6="30">兩倍焦距外</button><button class="chip" data-p6="20">兩倍焦距上</button><button class="chip" data-p6="15">焦距與兩倍焦距間</button><button class="chip" data-p6="10">焦點上</button><button class="chip" data-p6="6">焦距內</button>
+  </div>
+  <div class="slider"><span>物距 <b id="p6v">30 cm</b></span><input type="range" id="p6" min="3" max="32" step="1" value="30"><div class="ends"><span>靠近透鏡</span><span>焦距 f＝10 cm（也可以直接在圖上拖箭頭）</span><span>遠離透鏡</span></div></div>
+  <div class="stage"><canvas id="c6" style="touch-action:pan-y; cursor:ew-resize"></canvas></div>
+  <div class="legend"><span><i style="border-color:#fbbf24"></i>平行主軸的光</span><span><i style="border-color:#34d399"></i>穿過鏡心的光</span><span><i style="border-color:#f472b6"></i>通過（或射向）焦點的光</span><span><i class="d" style="border-color:#94a3b8"></i>反向延伸線</span></div>
+  <div class="read" id="r6"></div>
+  <div class="tw"><table id="t6">
+    <tr><th></th><th>物距</th><th>成像位置</th><th>成像性質</th></tr>
+    <tr data-r="x0"><td rowspan="6">凸透鏡</td><td>焦距內</td><td>焦距外（與物同側）<sup>※</sup></td><td>正立、放大、虛像</td></tr>
+    <tr data-r="x1"><td>焦點上</td><td>無窮遠處</td><td>無法成像</td></tr>
+    <tr data-r="x2"><td>焦距與兩倍焦距間</td><td>兩倍焦距外</td><td>倒立、放大、實像</td></tr>
+    <tr data-r="x3"><td>兩倍焦距上</td><td>兩倍焦距上</td><td>倒立、等大、實像</td></tr>
+    <tr data-r="x4"><td>兩倍焦距外</td><td>焦距與兩倍焦距間</td><td>倒立、縮小、實像</td></tr>
+    <tr data-r="x5"><td>無窮遠處</td><td>焦點上</td><td>一點</td></tr>
+    <tr data-r="cc"><td>凹透鏡</td><td>任何位置</td><td>焦距內</td><td>正立、縮小、虛像</td></tr>
+  </table></div>
+  <div class="key"><b>不用硬背的看法：</b>凸透鏡只有兩個關卡，<b>焦點</b>和<b>兩倍焦距</b>。過焦點：實像變虛像、倒立變正立。過兩倍焦距：縮小變放大。凹透鏡沒有關卡，永遠是正立、縮小、虛像。</div>
+  <div class="ask"><span class="sl">請向老師確認</span>表格照講義 p.69 抄寫。有 ※ 的那一格：凸透鏡焦距內的虛像確實「與物同側」。但講義寫「焦距外」，而物距小於焦距的一半時，算出來的像距比焦距短（上面的模擬：物距 3 cm，像距約 4.3 cm；物距 5 cm，像距剛好 10 cm）。永遠成立的說法是「像比物體離透鏡更遠」。考試要怎麼寫，請以老師說的為準。</div>
+  <div class="sup"><span class="sl">補充（講義沒寫）</span><b>遮住半個透鏡，像會少一半嗎？</b>很多人猜會。其實不會。物體上每一點發出的光，穿過透鏡的<b>每個地方</b>都會聚到同一個像點。遮住一半，只是到達的光變少，像<b>還是完整的，只是變暗</b>。
+    <label class="ck" style="display:block;margin-top:4px"><input type="checkbox" id="cov6"> 在上面的模擬裡，遮住透鏡的上半部（先把物距拉到 15～30 cm 的實像）</label>
+    <small style="color:var(--sub)">來源：Goldberg 與 McDermott（1987）對學生的訪談研究，見文末。</small>
+  </div>
+
+  <h3>三稜鏡：光會往厚的地方偏</h3>
+  <p>三稜鏡各面均為平面。光由空氣射入任一面時會發生折射，從另一面穿出回到空氣時也會發生折射。結果是：光線通過稜鏡後，<b>會向厚度大的部分偏折</b>。</p>
+  <div class="ctrl" id="m6b">
+    <button class="chip on" data-m6b="up">一個稜鏡（尖端朝上）</button>
+    <button class="chip" data-m6b="dn">一個稜鏡（尖端朝下）</button>
+    <button class="chip" data-m6b="con">使光線會聚的組合</button>
+    <button class="chip" data-m6b="div">使光線發散的組合</button>
+  </div>
+  <div class="stage"><canvas id="c6b"></canvas></div>
+  <div class="read" id="r6b"></div>
+</div>
+
+<!-- ============ ⑦ ============ -->
+<div class="card" id="s7">
+  <h2>⑦ 常見的光學儀器和眼睛<span class="pg">講義 p.73</span></h2>
+
+  <h3>眼睛與眼鏡</h3>
+  <p class="lead">光線經<b>角膜</b>、<b>瞳孔</b>（控制入射光多寡），再由<b>水晶體</b>（可調整焦距）折射後，在<b>視網膜</b>上成<b>縮小倒立實像</b>。</p>
+  <div class="predict" data-id="p7" data-ans="0" data-exp="在視網膜前方。近視是水晶體的焦距過短，光太早會聚。所以要先用凹透鏡把光發散一點。">
+    <p><b>先猜再看：</b>近視的人看遠處的東西，像會落在視網膜的哪裡？</p>
+    <div class="pb"><button>視網膜前方</button><button>視網膜後方</button></div>
+    <p class="watch" hidden>先不告訴你對不對。按下面的「近視：看遠處」，看光線在哪裡交會。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+  <div class="ctrl" id="m7">
+    <button class="chip on" data-m7="nf">視力正常：看遠處</button>
+    <button class="chip" data-m7="nn">視力正常：看近處</button>
+    <button class="chip" data-m7="my">近視：看遠處</button>
+    <button class="chip" data-m7="hy">遠視：看近處</button>
+    <button class="chip" data-m7="pr">老花眼：看近處</button>
+  </div>
+  <div class="ctrl"><label class="ck"><input type="checkbox" id="g7"> 戴上適當焦距的眼鏡</label></div>
+  <div class="stage"><canvas id="c7"></canvas></div>
+  <div class="read" id="r7"></div>
+  <div class="tw"><table>
+    <tr><th></th><th>原因（講義的說法）</th><th>成像位置</th><th>配戴</th><th>眼鏡的作用</th></tr>
+    <tr><td>近視</td><td class="l">水晶體的焦距過<b>短</b></td><td>遠處的物體成像在視網膜<b>前方</b></td><td><b>凹透鏡</b></td><td class="l">使光線先行<b>發散</b>再進入眼睛</td></tr>
+    <tr><td>遠視</td><td class="l">水晶體的焦距過<b>長</b></td><td>近處的物體成像在視網膜<b>後方</b></td><td><b>凸透鏡</b></td><td class="l">使光線先行<b>會聚</b>再進入眼睛</td></tr>
+    <tr><td>老花眼</td><td class="l">一般較年長的人，<b>無法調整</b>水晶體焦距</td><td>—</td><td><b>凸透鏡</b></td><td class="l">—</td></tr>
+  </table></div>
+
+  <h3>數位照相機</h3>
+  <p>鏡頭為透鏡組，功能等同於<b>凸透鏡</b>。內部有控制入射光線量的<b>光圈</b>，及控制曝光時間的<b>快門</b>。拍照時，調整透鏡位置，使光線經透鏡折射後在<b>感光元件</b>上成<b>縮小倒立實像</b>。</p>
+  <div class="tw"><table>
+    <tr><th>工作</th><th>眼睛</th><th>數位照相機</th></tr>
+    <tr><td>把光折射、會聚</td><td>水晶體（可調整焦距）</td><td>鏡頭（調整透鏡位置）</td></tr>
+    <tr><td>控制進來的光量</td><td>瞳孔</td><td>光圈</td></tr>
+    <tr><td>成像的地方</td><td>視網膜</td><td>感光元件</td></tr>
+    <tr><td>成什麼像</td><td colspan="2"><b>縮小倒立實像</b>（物體都在兩倍焦距外，回去對第 ⑥ 段的表）</td></tr>
+  </table></div>
+
+  <h3>複式顯微鏡：放大兩次</h3>
+  <div class="ctrl" id="m7b">
+    <button class="chip on" data-m7b="1">第一步：只看物鏡</button>
+    <button class="chip" data-m7b="2">第二步：再加上目鏡</button>
+  </div>
+  <div class="stage"><canvas id="c7b"></canvas></div>
+  <div class="read" id="r7b"></div>
+  <ol style="font-size:.94rem">
+    <li>物體置於<b>物鏡焦點外</b>。第一次折射，成<b>放大倒立實像</b>，這個像落在<b>目鏡的焦點內</b>。</li>
+    <li>再經過目鏡第二次折射，得到<b>放大正立虛像</b>（對那個實像來說是正立）。</li>
+    <li>但對<b>原物</b>而言，最後看到的是<b>放大倒立虛像</b>：<b>上下顛倒、左右相反</b>。</li>
+  </ol>
+  <div class="life"><b>生活裡看得到：</b>用顯微鏡時，玻片往右推，視野裡的東西卻往左跑。就是因為像和實物上下顛倒、左右相反。</div>
+</div>
+
+<!-- ============ ⑧ ============ -->
+<div class="card" id="s8">
+  <h2>⑧ 光與顏色<span class="pg">講義 p.76</span></h2>
+  <h3>色散</h3>
+  <p class="lead">牛頓於西元 1666 年發現：太陽光（白光）通過透明的三稜鏡後，會被折射分散成<b>紅、橙、黃、綠、藍、靛、紫</b>等七種主要顏色的光。這種現象稱為<b>色散</b>。色散後連續排列的色光帶，稱為<b>可見光譜</b>。</p>
+  <div class="stage"><canvas id="c8a"></canvas></div>
+  <p style="font-size:.86rem;color:var(--sub)">這張是示意圖。為了看得清楚，各色光之間的偏折差距畫得比實際大。順序是照講義的圖：紅光偏折最少，紫光偏折最多。</p>
+  <div class="life"><b>講義小劇場：虹。</b>太陽光遇到小水滴，會被折射和反射。經過<b>一次反射及兩次折射</b>就形成虹，外圈是紅，內圈是紫。因為不同顏色的光偏折的程度不同，紫光偏折角度最大。</div>
+
+  <h3>光的三原色：紅、綠、藍</h3>
+  <p>任何色光，皆可由<b>紅、綠、藍</b>三種色光以不同的亮度混合產生。三原色光無法以其他色光混合而成。彩色螢幕就是調整三原色發光體的亮度比例。</p>
+  <div class="slider"><span style="color:#dc2626">紅光 <b id="cr8v">100%</b></span><input type="range" id="cr8" min="0" max="100" step="5" value="100" style="accent-color:#dc2626"></div>
+  <div class="slider"><span style="color:#16a34a">綠光 <b id="cg8v">100%</b></span><input type="range" id="cg8" min="0" max="100" step="5" value="100" style="accent-color:#16a34a"></div>
+  <div class="slider"><span style="color:#2563eb">藍光 <b id="cb8v">100%</b></span><input type="range" id="cb8" min="0" max="100" step="5" value="100" style="accent-color:#2563eb"></div>
+  <div class="ctrl" id="pre8">
+    <button class="chip" data-rgb="100,100,100">三個全開</button><button class="chip" data-rgb="100,100,0">只開紅和綠</button><button class="chip" data-rgb="100,0,100">只開紅和藍</button><button class="chip" data-rgb="0,100,100">只開綠和藍</button><button class="chip" data-rgb="100,50,0">紅全開、綠開一半</button>
+  </div>
+  <div class="stage"><canvas id="c8b"></canvas></div>
+  <div class="read" id="r8b"></div>
+  <div class="key"><b>以相同強度的色光照射（加法混合）：</b>紅＋綠＝<b>黃</b>。紅＋藍＝<b>洋紅</b>。藍＋綠＝<b>青</b>。紅＋綠＋藍＝<b>白</b>。</div>
+  <div class="note"><b>最容易錯：</b>這是<b>光</b>的混合，愈加愈亮。和水彩顏料混在一起愈混愈暗不一樣，不要拿調色盤的經驗來套。</div>
+
+  <h3>物體的顏色</h3>
+  <div class="predict" data-id="p8" data-ans="2" data-exp="黑色。紅蘋果只反射紅光。房間裡只有綠光，綠光被吸收，沒有任何光反射進眼睛。">
+    <p><b>先猜再看：</b>房間裡只開一盞<b>綠光</b>燈。這時候看紅蘋果，會是什麼顏色？</p>
+    <div class="pb"><button>紅色</button><button>綠色</button><button>黑色</button><button>黃色</button></div>
+    <p class="watch" hidden>先不告訴你對不對。在下面選「綠光」和「紅色物體」，看有沒有光反射進眼睛。 <button class="chip rev">我看完了，對答案</button></p>
+    <p class="res" hidden></p>
+  </div>
+  <div class="ctrl" id="k8"><span class="lab">物體是</span><button class="chip on" data-k8="op">不透明體（看反射的光）</button><button class="chip" data-k8="tr">透明體（看穿透的光）</button></div>
+  <div class="ctrl" id="l8"><span class="lab">照過來的光</span><button class="chip on" data-l8="w">白光</button><button class="chip" data-l8="r">紅光</button><button class="chip" data-l8="g">綠光</button><button class="chip" data-l8="b">藍光</button></div>
+  <div class="ctrl" id="o8"><span class="lab">物體的顏色</span><button class="chip on" data-o8="r">紅色</button><button class="chip" data-o8="g">綠色</button><button class="chip" data-o8="b">藍色</button><button class="chip" data-o8="w">白色</button><button class="chip" data-o8="k">黑色</button></div>
+  <div class="stage"><canvas id="c8c"></canvas></div>
+  <div class="read" id="r8c"></div>
+  <ul style="font-size:.94rem">
+    <li><b>不透明體：</b>物體<b>反射的色光</b>即為物體的顏色，其餘色光被吸收。白色物體反射所有色光。黑色物體吸收所有色光。紅色物體只反射紅光。</li>
+    <li><b>透明體：</b><b>可穿透的色光</b>即為透明體的顏色，其餘色光被吸收。紅色透明體只讓紅光穿過。</li>
+  </ul>
+  <p style="font-size:.86rem;color:var(--sub)">這個模擬照講義的簡化說法來算：白光＝紅＋綠＋藍，紅色物體只反射紅光。真實的東西沒有這麼純。</p>
+</div>
+
+<!-- ============ ⑨ ============ -->
+<div class="card" id="s9">
+  <h2>⑨ 考考你：是真的懂，還是只是背起來？</h2>
+  <p class="lead">這些題目大多是<b>情境題</b>，講義上找不到一樣的句子，要用你剛剛看到的畫面去想。一回 10 題，一次一題。</p>
+  <ul style="font-size:.92rem">
+    <li>答錯時，會告訴你<b>可能是哪裡想錯</b>，還有一個按鈕直接跳回那一段的模擬。</li>
+    <li>不確定就勾「用猜的」。猜對的題目也會進錯題本，之後再考一次。</li>
+    <li>下一回會先出<b>上次錯的</b>和<b>還沒做過的</b>。</li>
+  </ul>
+  <div id="quiz"></div>
+</div>
+
+<div class="card" id="s10">
+  <h2>⑩ 我的弱點和錯題本</h2>
+  <div id="ana"></div>
+</div>
+<button id="backBtn" hidden>↩ 回到題目</button>
+
+<div class="card" id="sx">
+  <h2>講義用詞對照</h2>
+  <div class="tw"><table>
+    <tr><th>用詞</th><th>一句白話</th></tr>
+    <tr><td>法線</td><td class="l">通過入射點、和表面垂直的那條線。所有角度都是對它量</td></tr>
+    <tr><td>單向反射／漫反射</td><td class="l">表面光滑，反射光整齊朝同一邊／表面粗糙不平，反射光射向各個方向</td></tr>
+    <tr><td>物距／像距</td><td class="l">物體到鏡面（或透鏡）的距離／像到鏡面（或透鏡）的距離</td></tr>
+    <tr><td>實像／虛像</td><td class="l">實際光線會聚成的，屏幕接得到／不是實際光線會聚成的，屏幕接不到，但眼睛看得到</td></tr>
+    <tr><td>主軸、焦點、焦距</td><td class="l">通過中心且垂直鏡面的線／平行主軸的光會聚（或看起來發出）的那一點／焦點到中心的距離</td></tr>
+    <tr><td>鏡心</td><td class="l">透鏡的中心。穿過這裡的光方向不變</td></tr>
+    <tr><td>會聚／發散</td><td class="l">光線愈走愈靠攏／愈走愈張開</td></tr>
+    <tr><td>光的可逆性</td><td class="l">光沿原路倒著走，會回到起點</td></tr>
+    <tr><td>色散、可見光譜</td><td class="l">白光被分成各種色光的現象／分出來連續排列的色光帶</td></tr>
+    <tr><td>加法混合</td><td class="l">色光疊在一起，愈疊愈亮</td></tr>
+  </table></div>
+  <h3>資料來源</h3>
+  <ul class="src">
+    <li><b>主要內容：</b>上傳的七張講義照片，八年級自然「第 4 單元 認識光」p.60、64、65、68、69、73、76（4-1 光的傳播、4-2 光的反射、4-3 光的折射、4-4 常見的光學儀器、4-5 光與顏色的關係）。範圍只做這七頁，用詞照講義。圖都是重新畫的示意模擬，不是講義原圖。</li>
+    <li><b>教法參考（用來決定怎麼教、怎麼畫，不是加內容）：</b></li>
+    <li>先預測、再看、再解釋：White &amp; Gunstone, <i>Probing Understanding</i>（1992）的「預測—觀察—解釋」做法，紐西蘭教育研究委員會的說明：<a href="https://arbs.nzcer.org.nz/node/7187" target="_blank" rel="noopener">NZCER</a>。只看示範不先預測，學習效果和沒看差不多：Crouch, Fagen, Callan &amp; Mazur, “Classroom demonstrations: Learning tools or entertainment?”, <i>Am. J. Phys.</i> 72, 835 (2004)：<a href="https://works.swarthmore.edu/fac-physics/203" target="_blank" rel="noopener">論文頁</a>。</li>
+    <li>學生常見的想法（遮住半個透鏡、平面鏡的像會不會跟著眼睛跑）：Goldberg &amp; McDermott, <i>Am. J. Phys.</i> 55, 108 (1987)：<a href="https://www.compadre.org/portal/items/detail.cfm?ID=2243" target="_blank" rel="noopener">摘要</a>；<i>The Physics Teacher</i> 24, 472 (1986)：<a href="https://www.compadre.org/portal/items/detail.cfm?ID=4366" target="_blank" rel="noopener">摘要</a>。兩篇原文要付費，題目內容是讀 Singh &amp; Schunn 的整理：<a href="https://arxiv.org/abs/1603.06024" target="_blank" rel="noopener">arXiv:1603.06024</a>。</li>
+    <li>「看見是光進到眼睛」的診斷題：英國物理學會 IOP Spark 與約克大學 BEST 的 “Seeing an explanation”。有色光照有色物體的常見想法：Haagen-Schützenhöfer, <i>Physics Education</i> 52, 044003 (2017)：<a href="https://iopscience.iop.org/article/10.1088/1361-6552/aa6d9c" target="_blank" rel="noopener">論文</a>。</li>
+    <li>可以自己拉的模擬怎麼設計：科羅拉多大學 PhET 的 <a href="https://phet.colorado.edu/en/simulations/geometric-optics" target="_blank" rel="noopener">Geometric Optics</a>、<a href="https://phet.colorado.edu/en/simulations/bending-light" target="_blank" rel="noopener">Bending Light</a>、<a href="https://phet.colorado.edu/en/simulations/color-vision" target="_blank" rel="noopener">Color Vision</a>。想玩更多可以去那裡。</li>
+    <li>光路圖畫法與數字核對：OpenStax <i>University Physics Volume 3</i> 第 2 章（<a href="https://openstax.org/books/university-physics-volume-3/pages/2-2-spherical-mirrors" target="_blank" rel="noopener">2.2 球面鏡</a>、<a href="https://openstax.org/books/university-physics-volume-3/pages/2-4-thin-lenses" target="_blank" rel="noopener">2.4 薄透鏡</a>、<a href="https://openstax.org/books/university-physics-volume-3/pages/2-5-the-eye" target="_blank" rel="noopener">2.5 眼睛</a>）；The Physics Classroom 的<a href="https://www.physicsclassroom.com/class/refrn/Lesson-5/Converging-Lenses-Ray-Diagrams" target="_blank" rel="noopener">凸透鏡光路圖</a>。老花眼：美國國家眼科研究所 <a href="https://www.nei.nih.gov/learn-about-eye-health/eye-conditions-and-diseases/presbyopia" target="_blank" rel="noopener">NEI</a>。</li>
+  </ul>
+  <p style="font-size:.86rem;color:var(--sub)">模擬怎麼算的：針孔成像用相似三角形（像高÷物高＝屏距÷物距）。反射用「反射角＝入射角」。折射和三稜鏡用講義 p.60 的光速比（空氣 1、水 3/4、玻璃 2/3）算偏折角。面鏡和透鏡的成像位置用高中才會教的成像公式算（國中不考公式），光線照講義的畫法畫；鏡面和透鏡的弧度是示意。眼睛、顯微鏡的尺寸和焦距是為了畫得清楚自己選的，不是真實比例。色散圖的偏折差距有放大。</p>
+</div>
+
+<footer>國中理化自學教材 · 認識光<br>依上傳的七頁講義（p.60～76）的架構與用詞編寫，圖與文字為原創示意。作答紀錄只存在這台裝置的瀏覽器。</footer>
+</div>
+<script>
+// ===== 學習紀錄（存在此瀏覽器的 localStorage，供「學習紀錄」頁面讀取）=====
+const LOG_KEY = "study_log_v1", CH = "理化 認識光";
+function logEv(ev){
+  try{
+    const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+    a.push(Object.assign({ t: Date.now(), ch: CH }, ev));
+    localStorage.setItem(LOG_KEY, JSON.stringify(a));
+  }catch(e){}
+}
+// 上傳網址不寫在教材裡；家長在「學習紀錄」頁設定一次，存於此瀏覽器。
+let CLOUD_URL = "";
+try{ CLOUD_URL = localStorage.getItem("cloud_url_v1") || ""; }catch(e){}
+function cloudSend(row){
+  if(!CLOUD_URL) return;
+  const body = JSON.stringify(Object.assign({ ch: CH }, row));
+  try{ navigator.sendBeacon(CLOUD_URL, new Blob([body], { type: "text/plain" })); }
+  catch(e){ try{ fetch(CLOUD_URL, { method: "POST", mode: "no-cors", body }); }catch(_){} }
+}
+let studySec = 0, pracCount = 0, pracOk = 0;
+(function(){
+  const vid = Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  logEv({ type: "visit", vid, min: 0 });
+  setInterval(()=>{
+    if(document.visibilityState !== "visible") return;
+    studySec += 30;
+    try{
+      const a = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      const v = a.find(e => e.vid === vid);
+      if(v){ v.min = Math.round(studySec / 6) / 10; localStorage.setItem(LOG_KEY, JSON.stringify(a)); }
+    }catch(e){}
+  }, 30000);
+})();
+window.addEventListener("pagehide", ()=>{
+  const min = Math.round(studySec / 6) / 10;
+  if(min < 0.5 && pracCount === 0) return;
+  cloudSend({ type: "念書時段", detail: `停留 ${min} 分鐘、練習 ${pracCount} 題、答對 ${pracOk} 題`, score: "" });
+  studySec = 0; pracCount = 0; pracOk = 0;
+});
+
+// ===== 共用工具 =====
+const $ = id => document.getElementById(id);
+const FONT = '"Microsoft JhengHei","PingFang TC",system-ui,sans-serif';
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+const DEG = Math.PI / 180;
+const r1 = v => Math.round(v * 10) / 10;
+const BG = "#0b1220", YEL = "#fbbf24", GRN = "#34d399", PNK = "#f472b6", CYA = "#38bdf8", DIM = "#94a3b8";
+let T = 0; // 全頁共用的時間（秒），讓虛線會流動
+const scenes = [];
+function scene(id, W, H, draw){
+  const cv = $(id), ctx = cv.getContext("2d");
+  function fit(){
+    const w = cv.clientWidth || 600;
+    const dpr = window.devicePixelRatio || 1;
+    cv.style.height = (w*H/W) + "px";
+    cv.width = Math.round(w*dpr); cv.height = Math.round(w*H/W*dpr);
+    ctx.setTransform(cv.width/W, 0, 0, cv.width/W, 0, 0);
+    ctx.fs = clamp(520/w, 1, 1.45);
+  }
+  fit(); window.addEventListener("resize", fit);
+  const s = { cv, ctx, draw, vis:true, W, H };
+  if("IntersectionObserver" in window){
+    s.vis = false;
+    new IntersectionObserver(es => es.forEach(e => s.vis = e.isIntersecting), { rootMargin:"120px" }).observe(cv);
+  }
+  scenes.push(s); return ctx;
+}
+function bg(c, W, H, col){ c.setLineDash([]); c.shadowBlur = 0; c.globalAlpha = 1; c.fillStyle = col || BG; c.fillRect(0, 0, W, H); }
+// 文字：深色畫布預設白字加深色描邊
+function lab(c, txt, x, y, o){
+  o = o || {};
+  c.save(); c.setLineDash([]); c.shadowBlur = 0;
+  c.font = (o.b === 0 ? "" : "bold ") + Math.round((o.size||13)*(c.fs||1)) + "px " + FONT;
+  c.textAlign = o.al || "center"; c.textBaseline = "middle"; c.lineJoin = "round";
+  c.lineWidth = 4; c.strokeStyle = o.halo || "rgba(8,13,26,.92)"; c.strokeText(txt, x, y);
+  c.fillStyle = o.col || "#e5e7eb"; c.fillText(txt, x, y); c.restore();
+}
+// 線段。o.dash 虛線、o.flow 會流動（表示光在走，1 順向、-1 逆向）、o.glow 發光
+function seg(c, x1, y1, x2, y2, col, o){
+  o = o || {};
+  c.save(); c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2);
+  c.strokeStyle = col; c.lineWidth = o.w || 2.4; c.lineCap = "round"; c.globalAlpha = o.a == null ? 1 : o.a;
+  if(o.dash){ c.setLineDash(o.dash); c.lineCap = "butt"; }
+  if(o.glow !== 0 && !o.dash){ c.shadowColor = col; c.shadowBlur = 7; }
+  c.stroke();
+  if(o.flow){ // 疊一層會動的亮點，看得出方向
+    c.setLineDash([3, 21]); c.lineDashOffset = -T * 60 * o.flow; c.strokeStyle = "#fff"; c.lineWidth = (o.w || 2.4) * .9; c.globalAlpha = .9; c.lineCap = "round"; c.stroke();
+  }
+  c.restore();
+}
+function head(c, x1, y1, x2, y2, t, col, sz){ // 在線段上 t 的位置畫箭頭
+  const x = x1 + (x2-x1)*t, y = y1 + (y2-y1)*t, a = Math.atan2(y2-y1, x2-x1); sz = sz || 8;
+  c.save(); c.translate(x, y); c.rotate(a); c.beginPath(); c.moveTo(sz, 0); c.lineTo(-sz*.7, -sz*.62); c.lineTo(-sz*.7, sz*.62); c.closePath();
+  c.fillStyle = col; c.fill(); c.restore();
+}
+function ray(c, x1, y1, x2, y2, col, o){ o = o || {}; seg(c, x1, y1, x2, y2, col, o); if(!o.dash && o.head !== 0) head(c, x1, y1, x2, y2, o.t || .5, col, o.sz); }
+function arrowV(c, x, y0, y1, col, o){ // 直立的箭頭（代表物體或像）
+  o = o || {};
+  c.save(); c.globalAlpha = o.a == null ? 1 : o.a; c.strokeStyle = col; c.fillStyle = col; c.lineWidth = o.w || 4; c.lineCap = "butt";
+  if(o.dash) c.setLineDash([5, 4]);
+  const dir = Math.sign(y1 - y0) || 1, hl = Math.min(11, Math.abs(y1 - y0) * .6);
+  c.beginPath(); c.moveTo(x, y0); c.lineTo(x, y1 - dir*hl*.6); c.stroke(); c.setLineDash([]);
+  c.beginPath(); c.moveTo(x, y1); c.lineTo(x - 7, y1 - dir*hl); c.lineTo(x + 7, y1 - dir*hl); c.closePath(); c.fill(); c.restore();
+}
+function arc(c, x, y, r, a0, a1, col){ c.save(); c.beginPath(); c.arc(x, y, r, Math.min(a0,a1), Math.max(a0,a1)); c.strokeStyle = col; c.lineWidth = 2; c.stroke(); c.restore(); }
+function dot(c, x, y, r, col){ c.save(); c.beginPath(); c.arc(x, y, r, 0, 7); c.fillStyle = col; c.shadowColor = col; c.shadowBlur = 8; c.fill(); c.restore(); }
+function eye(c, x, y, dir, s){ // dir: 1 看向右、-1 看向左
+  s = s || 1; c.save(); c.translate(x, y); c.scale(dir * s, s);
+  c.beginPath(); c.moveTo(-14, 0); c.quadraticCurveTo(0, -13, 14, 0); c.quadraticCurveTo(0, 13, -14, 0); c.fillStyle = "#f8fafc"; c.fill(); c.strokeStyle = "#cbd5e1"; c.lineWidth = 1.5; c.stroke();
+  c.beginPath(); c.arc(4, 0, 6, 0, 7); c.fillStyle = "#78350f"; c.fill(); c.beginPath(); c.arc(5, 0, 2.6, 0, 7); c.fillStyle = "#000"; c.fill(); c.restore();
+}
+function chips(sel, attr, fn){
+  const bs = [...document.querySelectorAll(sel)];
+  bs.forEach(b => b.addEventListener("click", ()=>{ bs.forEach(x=>x.classList.remove("on")); b.classList.add("on"); fn(b.getAttribute(attr)); }));
+  return bs;
+}
+function slide(id, fmt, fn){ const e = $(id), v = $(id + "v"); const up = () => { if(v) v.textContent = fmt(+e.value); if(fn) fn(+e.value); }; e.addEventListener("input", up); up(); return e; }
+
+// ===================== ① 針孔成像 =====================
+(function(){
+  const W = 640, H = 270, PX = 262, AY = 128, S = 9, HO = 4; // 光源高 4 cm
+  let dO = 12, dI = 12;
+  slide("do1", v => v + " cm", v => dO = v); slide("di1", v => v + " cm", v => dI = v);
+  function F(c, x, y, s, rot, col){ // 畫一個 F，看得出上下左右
+    c.save(); c.translate(x, y); if(rot) c.rotate(Math.PI); c.fillStyle = col; c.shadowColor = col; c.shadowBlur = 6;
+    c.fillRect(-s*.3, -s*.5, s*.2, s); c.fillRect(-s*.3, -s*.5, s*.62, s*.2); c.fillRect(-s*.3, -s*.08, s*.46, s*.18); c.restore();
+  }
+  const ctx = scene("c1", W, H, ()=>{
+    const c = ctx; bg(c, W, H);
+    const xo = PX - dO*S, xs = PX + dI*S, ho = HO*S/2, m = dI/dO, hi = ho*m;
+    seg(c, 20, AY, 476, AY, "#334155", { w:1, dash:[4,5] });
+    // 針孔板
+    c.fillStyle = "#64748b"; c.fillRect(PX-3, 24, 6, AY-24-3); c.fillRect(PX-3, AY+3, 6, 232-AY-3);
+    lab(c, "針孔", PX, 14, { col:"#cbd5e1" });
+    // 屏
+    c.fillStyle = "#e2e8f0"; c.fillRect(xs-2, 22, 4, 212); lab(c, "紙屏", xs, 14, { col:"#cbd5e1" });
+    // 光線：上端（橘）落到下面，下端（藍）落到上面
+    ray(c, xo, AY-ho, PX, AY, YEL, { flow:1, t:.55 }); ray(c, PX, AY, xs, AY+hi, YEL, { flow:1, t:.6 });
+    ray(c, xo, AY+ho, PX, AY, CYA, { flow:1, t:.55 }); ray(c, PX, AY, xs, AY-hi, CYA, { flow:1, t:.6 });
+    // 光源（側面看）
+    seg(c, xo, AY-ho, xo, AY+ho, "#f8fafc", { w:5, glow:0 }); dot(c, xo, AY-ho, 5, YEL); dot(c, xo, AY+ho, 5, CYA);
+    lab(c, "光源", xo, AY+ho+18); lab(c, "上", xo-14, AY-ho, { size:11, col:YEL }); lab(c, "下", xo-14, AY+ho, { size:11, col:CYA });
+    // 像
+    seg(c, xs, AY-hi, xs, AY+hi, "#f8fafc", { w:5, glow:0, a:.9 }); dot(c, xs, AY+hi, 5, YEL); dot(c, xs, AY-hi, 5, CYA);
+    // 距離
+    const yb = 250; seg(c, xo, yb, PX, yb, DIM, { w:1.2, glow:0 }); seg(c, PX, yb, xs, yb, DIM, { w:1.2, glow:0 });
+    [xo, PX, xs].forEach(x => seg(c, x, yb-4, x, yb+4, DIM, { w:1.2, glow:0 }));
+    lab(c, dO + " cm", (xo+PX)/2, yb-10, { size:11, col:"#cbd5e1" }); lab(c, dI + " cm", (PX+xs)/2, yb-10, { size:11, col:"#cbd5e1" });
+    // 右邊：正面看光源、看紙屏
+    c.fillStyle = "#111a2e"; c.strokeStyle = "#334155"; c.lineWidth = 1; c.fillRect(492, 14, 140, 242); c.strokeRect(492, 14, 140, 242);
+    lab(c, "直接看光源", 562, 28, { size:11, col:"#cbd5e1" }); F(c, 562, 62, 26, false, "#fde68a");
+    lab(c, "看紙屏上的像", 562, 104, { size:11, col:"#cbd5e1" }); F(c, 562, 180, clamp(26*m, 8, 112), true, "#fde68a");
+    $("r1").innerHTML = `像高 ÷ 光源高 ＝ 屏距 ÷ 物距 ＝ ${dI} ÷ ${dO} ＝ <b>${r1(m)} 倍</b>。光源高 ${HO} cm，像高 <b>${r1(HO*m)} cm</b>，是${m > 1.001 ? "<b>放大</b>" : m < .999 ? "<b>縮小</b>" : "<b>一樣大</b>"}的倒立像。`;
+  });
+})();
+
+// ===================== ① 光速比賽 =====================
+(function(){
+  const W = 640, H = 176, L = [["真空", 1, "c", "#0f172a"], ["空氣", 1, "≒ c", "#bae6fd"], ["水", .75, "≒ 3/4 c", "#60a5fa"], ["玻璃", 2/3, "≒ 2/3 c", "#a7f3d0"]];
+  let t = 0, run = true;
+  $("go1b").addEventListener("click", ()=>{ t = 0; run = true; });
+  const ctx = scene("c1b", W, H, dt => {
+    const c = ctx; bg(c, W, H, "#fbfcfd");
+    if(run){ t += dt / 2.6; if(t >= 1){ t = 1; run = false; } }
+    const x0 = 78, x1 = 520;
+    L.forEach((l, i) => {
+      const y = 26 + i*40;
+      c.fillStyle = l[3]; c.globalAlpha = i ? .55 : .9; c.fillRect(x0, y-13, x1-x0, 26); c.globalAlpha = 1;
+      lab(c, l[0], 40, y, { col:"#1f2937", halo:"#fbfcfd", size:14 });
+      const x = x0 + (x1-x0)*t*l[1];
+      c.save(); c.beginPath(); c.moveTo(x0, y); c.lineTo(x, y); c.strokeStyle = "#f59e0b"; c.lineWidth = 4; c.shadowColor = "#f59e0b"; c.shadowBlur = 8; c.stroke(); c.restore();
+      dot(c, x, y, 6, "#fbbf24");
+      lab(c, l[2], 580, y, { col:"#1f2937", halo:"#fbfcfd", size:13 });
+    });
+    if(t >= 1) lab(c, "同一段時間：水裡只跑了 3/4，玻璃裡只跑了 2/3", (x0+x1)/2, 168, { col:"#b45309", halo:"#fbfcfd", size:12 });
+  });
+})();
+
+// ===================== ② 反射 =====================
+(function(){
+  const W = 640, H = 300, SY = 250; let mode = "one", th = 40;
+  chips("#m2 .chip", "data-m2", v => mode = v); slide("a2", v => v + "°", v => th = v);
+  const rough = x => SY + 5*Math.sin(x/15) + 2.2*Math.sin(x/7.5 + 1) + 3*Math.sin(x/31 + 2);
+  const ctx = scene("c2", W, H, ()=>{
+    const c = ctx; bg(c, W, H); const a = th*DEG, sx = Math.sin(a), cy = Math.cos(a);
+    if(mode === "one"){
+      const X = 320, Lr = 215;
+      c.fillStyle = "#475569"; c.fillRect(60, SY, 520, 10); c.fillStyle = "#93c5fd"; c.fillRect(60, SY-2, 520, 3);
+      seg(c, X, SY, X, 30, "#e2e8f0", { w:1.5, dash:[6,5] }); lab(c, "法線", X, 20);
+      ray(c, X - Lr*sx, SY - Lr*cy, X, SY, YEL, { flow:1, t:.5 }); ray(c, X, SY, X + Lr*sx, SY - Lr*cy, YEL, { flow:1, t:.55 });
+      if(th > 0){
+        arc(c, X, SY, 56, -Math.PI/2 - a, -Math.PI/2, "#fb923c"); arc(c, X, SY, 66, -Math.PI/2, -Math.PI/2 + a, "#4ade80");
+        lab(c, "入射角 " + th + "°", X - 34 - 60*Math.sin(a/2), SY - 84*Math.cos(a/2), { col:"#fdba74", al:"right" });
+        lab(c, "反射角 " + th + "°", X + 34 + 60*Math.sin(a/2), SY - 84*Math.cos(a/2), { col:"#86efac", al:"left" });
+        lab(c, "入射線", X - Lr*sx*.78 - 8, SY - Lr*cy*.78 - 14, { size:12, col:"#fde68a" }); lab(c, "反射線", X + Lr*sx*.78 + 8, SY - Lr*cy*.78 - 14, { size:12, col:"#fde68a" });
+      } else lab(c, "沿著法線進來，就沿著原路回去（入射角 0°、反射角 0°）", X, 60, { size:12, col:"#fde68a" });
+      lab(c, "鏡面", 92, SY + 24, { size:12, col:"#cbd5e1" });
+      $("r2").innerHTML = `入射角 <b>${th}°</b>，反射角 <b>${th}°</b>。入射線和鏡面的夾角是 ${90-th}°，入射線和反射線的夾角是 ${2*th}°。`;
+      return;
+    }
+    const R = mode === "rough", ys = R ? rough : () => SY;
+    c.beginPath(); c.moveTo(40, H); for(let x = 40; x <= 600; x += 2) c.lineTo(x, ys(x)); c.lineTo(600, H); c.closePath(); c.fillStyle = "#475569"; c.fill();
+    c.beginPath(); for(let x = 40; x <= 600; x += 2) x === 40 ? c.moveTo(x, ys(x)) : c.lineTo(x, ys(x)); c.strokeStyle = "#93c5fd"; c.lineWidth = 2; c.stroke();
+    for(let k = 0; k < 6; k++){
+      const tx = 196 + k*47; // 光線要落在的大約位置
+      let x = tx - 320*sx, y = SY - 320*cy; const x0 = x, y0 = y;
+      for(let i = 0; i < 900 && y < ys(x); i++){ x += sx*.5; y += cy*.5; }
+      const m = (ys(x+1) - ys(x-1)) / 2, nl = Math.hypot(m, 1), nx = m/nl, ny = -1/nl; // 那一點的法線（朝上）
+      const d = sx*nx + cy*ny, rx = sx - 2*d*nx, ry = cy - 2*d*ny;
+      const sxs = Math.max(x0, 4), t0 = (sxs - x0) / (x - x0 || 1);
+      ray(c, x0 + (x-x0)*t0, y0 + (y-y0)*t0, x, y, YEL, { flow:1, t:.6, w:2 });
+      let len = 170; if(R) for(let q = 4; q < 170; q += 1) if(y + ry*q > ys(x + rx*q)){ len = q; break; } // 反射光又碰到表面就停在那裡
+      ray(c, x, y, x + rx*len, y + ry*len, R ? "#fb923c" : YEL, { flow:1, t:.6, w:2, head: len < 30 ? 0 : 1 });
+      seg(c, x, y, x + nx*46, y + ny*46, "#e2e8f0", { w:1.2, dash:[4,4] });
+    }
+    lab(c, R ? "表面粗糙不平：漫反射" : "表面光滑：單向反射", 320, 22, { size:14, col:"#fde68a" });
+    lab(c, "白色小虛線＝每個落點自己的法線", 320, 284, { size:11, col:"#cbd5e1", halo:"rgba(71,85,105,.9)" });
+    $("r2").innerHTML = R ? "粗糙表面：每個落點的法線方向都不一樣。每一條光線都是「反射角＝入射角」，但反射光射向各個方向。所以從哪個位置都看得到它。" : "光滑表面：每個落點的法線都朝同一邊。平行進來的光，反射後還是平行，整齊地朝同一個方向。";
+  });
+})();
+
+// ===================== ③ 平面鏡 =====================
+(function(){
+  const W = 640, H = 300, MX = 300, BY = 236, HT = 78, S = 10; let d = 12, ey = 30, paper = false;
+  slide("d3", v => v + " cm", v => d = v); $("e3").addEventListener("input", e => ey = +e.target.value); $("pp3").addEventListener("change", e => paper = e.target.checked);
+  function candle(c, x, a, dash){
+    c.save(); c.globalAlpha = a;
+    if(dash){ c.setLineDash([4,3]); c.strokeStyle = "#e2e8f0"; c.lineWidth = 1.5; c.strokeRect(x-6, BY-HT+18, 12, HT-18); }
+    else { c.fillStyle = "#f1f5f9"; c.fillRect(x-6, BY-HT+18, 12, HT-18); }
+    c.setLineDash([]); c.beginPath(); c.moveTo(x, BY-HT); c.quadraticCurveTo(x+8, BY-HT+12, x, BY-HT+18); c.quadraticCurveTo(x-8, BY-HT+12, x, BY-HT);
+    c.fillStyle = "#fb923c"; if(!dash){ c.shadowColor = "#fb923c"; c.shadowBlur = 12; } c.fill(); c.restore();
+  }
+  const ctx = scene("c3", W, H, ()=>{
+    const c = ctx; bg(c, W, H); const xo = MX + d*S, xi = MX - d*S, E = [606, 44 + ey*1.5];
+    c.fillStyle = "#0f1a30"; c.fillRect(0, 0, MX, H); // 鏡子後面
+    seg(c, 20, BY, 620, BY, "#334155", { w:1, glow:0 });
+    c.fillStyle = "#93c5fd"; c.fillRect(MX-2, 24, 4, 236); for(let y = 30; y < 258; y += 12) seg(c, MX-2, y, MX-10, y+8, "#64748b", { w:1.2, glow:0 });
+    lab(c, "平面鏡", MX, 14, { col:"#bfdbfe" }); lab(c, "鏡子後面（沒有光到得了）", 150, 14, { size:11, col:"#64748b" });
+    if(paper){ c.fillStyle = "#f8fafc"; c.fillRect(xi-22, BY-HT-14, 44, HT+14); lab(c, "紙上是空的", xi, BY-HT-26, { size:12, col:"#fca5a5" }); }
+    else candle(c, xi, .55, true);
+    candle(c, xo, 1, false);
+    [[xo, BY-HT+4, YEL], [xo, BY-4, CYA]].forEach(p => {
+      const ix = 2*MX - p[0], hy = p[1] + (E[1]-p[1]) * (MX-ix) / (E[0]-ix);
+      ray(c, p[0], p[1], MX, hy, p[2], { flow:1, t:.55, w:2 }); ray(c, MX, hy, E[0]-12, E[1] + (hy-E[1])*12/(E[0]-MX), p[2], { flow:1, t:.5, w:2 });
+      seg(c, MX, hy, ix, p[1], DIM, { w:1.5, dash:[6,5] });
+    });
+    eye(c, E[0], E[1], -1, 1.1); lab(c, "眼睛", E[0], E[1] + (E[1] > 140 ? -22 : 24), { size:12 });
+    lab(c, "物", xo, BY+14); lab(c, paper ? "像的位置" : "像（虛像）", xi, BY+14, { col:"#cbd5e1" });
+    const yb = 272; seg(c, xi, yb, MX, yb, DIM, { w:1.2, glow:0 }); seg(c, MX, yb, xo, yb, DIM, { w:1.2, glow:0 }); [xi, MX, xo].forEach(x => seg(c, x, yb-4, x, yb+4, DIM, { w:1.2, glow:0 }));
+    if(d >= 9){ lab(c, "像距 " + d + " cm", (xi+MX)/2, yb+14, { size:12, col:"#cbd5e1" }); lab(c, "物距 " + d + " cm", (xo+MX)/2, yb+14, { size:12, col:"#cbd5e1" }); }
+    else lab(c, "像距 " + d + " cm ＝ 物距 " + d + " cm", MX, yb+14, { size:12, col:"#cbd5e1" });
+    $("r3").innerHTML = `物距 <b>${d} cm</b>，像距 <b>${d} cm</b>。物和像相距 ${2*d} cm。` + (paper ? "白紙放在像的位置，<b>紙上什麼都沒有</b>：光被鏡子反射回去了，沒有光走到鏡子後面。這種像叫<b>虛像</b>。" : "眼睛移上移下，像都<b>不動</b>；像的大小也一直和蠟燭一樣。");
+  });
+})();
+
+// ===================== ④ 面鏡的焦點 =====================
+(function(){
+  const W = 640, H = 300, AY = 150, f = 130; let mode = "in";
+  const TXT = { in:"平行主軸的光線，經凹面鏡反射後都射向<b>焦點</b>。太陽爐把鍋子放在這裡。", out:"光源放在焦點，射向凹面鏡的光反射後<b>平行射出</b>。這是上一張圖倒過來走（光的可逆性）。手電筒、車前燈這樣把光集中往前送。", cvx:"平行主軸的光線，經凸面鏡反射後<b>散開</b>。把反射光往鏡子後面延伸，會交在鏡後的一點。凸面鏡讓光散開，所以能照到、看到更廣的範圍。" };
+  chips("#m4 .chip", "data-m4", v => { mode = v; $("r4").innerHTML = TXT[v]; }); $("r4").innerHTML = TXT.in;
+  const ctx = scene("c4", W, H, ()=>{
+    const c = ctx; bg(c, W, H); const cv = mode === "cvx", V = cv ? 380 : 480, sg = cv ? 1 : -1;
+    const mx = y => V + sg*y*y/(4*f);
+    seg(c, 20, AY, 620, AY, "#475569", { w:1, dash:[5,5] }); lab(c, "主軸", 50, AY-12, { size:12, col:"#cbd5e1" });
+    // 鏡子本體：反射面朝左
+    c.save(); c.beginPath(); for(let y = -118; y <= 118; y += 4) y === -118 ? c.moveTo(mx(y), AY+y) : c.lineTo(mx(y), AY+y);
+    c.strokeStyle = "#64748b"; c.lineWidth = 12; c.translate(6, 0); c.stroke(); c.translate(-6, 0); c.strokeStyle = "#bfdbfe"; c.lineWidth = 3; c.stroke(); c.restore();
+    const F = [V + sg*f, AY];
+    [-92, -48, 48, 92].forEach(y => {
+      const hx = mx(y), hy = AY + y;
+      if(mode === "in"){ ray(c, 30, hy, hx, hy, YEL, { flow:1, t:.4, w:2 }); const k = 1.55; ray(c, hx, hy, hx + (F[0]-hx)*k, hy + (F[1]-hy)*k, YEL, { flow:1, t:.4, w:2 }); }
+      else if(mode === "out"){ ray(c, F[0], F[1], hx, hy, YEL, { flow:1, t:.6, w:2 }); ray(c, hx, hy, 30, hy, YEL, { flow:1, t:.5, w:2 }); }
+      else { ray(c, 30, hy, hx, hy, YEL, { flow:1, t:.5, w:2 }); const dx = hx - F[0], dy = hy - F[1], k = 320 / Math.hypot(dx, dy); ray(c, hx, hy, hx + dx*k, hy + dy*k, "#fb923c", { flow:1, t:.5, w:2 }); seg(c, hx, hy, F[0], F[1], DIM, { w:1.4, dash:[6,5] }); }
+    });
+    dot(c, F[0], F[1], mode === "cvx" ? 4 : 7, mode === "cvx" ? DIM : "#fde68a");
+    if(mode === "out"){ lab(c, "💡", F[0], F[1] - 2, { size:18 }); lab(c, "光源在焦點", F[0], F[1] + 26, { col:"#fde68a" }); }
+    else lab(c, cv ? "焦點（在鏡子後面）" : "焦點", F[0] + (cv ? 10 : 0), F[1] + 22, { col: cv ? "#cbd5e1" : "#fde68a" });
+    lab(c, cv ? "凸面鏡" : "凹面鏡", V + (cv ? 30 : -4), 20, { col:"#bfdbfe" });
+  });
+})();
+
+// ===================== ④ 面鏡成像 =====================
+// 成像位置：1/p + 1/q = 1/f（凸面鏡 f 取負）。q>0 是鏡前的實像，q<0 是鏡後的虛像。
+function imgCase(p, f){ return p < f ? 0 : p === f ? 1 : p < 2*f ? 2 : p === 2*f ? 3 : 4; }
+function markRow(tid, key){ document.querySelectorAll("#" + tid + " tr").forEach(tr => tr.classList.toggle("now", tr.dataset.r === key)); }
+(function(){
+  const W = 640, H = 300, AY = 150, V = 400, S = 9, FC = 10, HO = 4; let kind = "cc", p = 25;
+  chips("#k4 .chip", "data-k4", v => kind = v); slide("p4", v => v + " cm", v => p = v);
+  const ctx = scene("c4b", W, H, ()=>{
+    const c = ctx; bg(c, W, H); const cv = kind === "cv", f = cv ? -FC : FC, fp = FC*S, sg = cv ? 1 : -1;
+    const mx = y => V + sg*y*y/(4*fp), ho = HO*S, xo = V - p*S;
+    c.fillStyle = "#0f1a30"; c.fillRect(V, 0, W-V, H);
+    seg(c, 10, AY, 630, AY, "#475569", { w:1, dash:[5,5] });
+    c.save(); c.beginPath(); for(let y = -120; y <= 120; y += 4) y === -120 ? c.moveTo(mx(y), AY+y) : c.lineTo(mx(y), AY+y);
+    c.strokeStyle = "#64748b"; c.lineWidth = 12; c.translate(6, 0); c.stroke(); c.translate(-6, 0); c.strokeStyle = "#bfdbfe"; c.lineWidth = 3; c.stroke(); c.restore();
+    lab(c, cv ? "凸面鏡" : "凹面鏡", V + (cv ? 34 : 30), 18, { col:"#bfdbfe" }); lab(c, "鏡子後面", 590, 18, { size:11, col:"#64748b" });
+    const fx = V - f*S, f2 = V - 2*f*S;
+    const marks = () => [[fx, "f"], [f2, "2f"]].forEach(a => { seg(c, a[0], AY-6, a[0], AY+6, "#f8fafc", { w:2, glow:0 }); lab(c, a[1], a[0], AY+18, { size:12, col:"#f8fafc" }); });
+    arrowV(c, xo, AY, AY-ho, "#f8fafc"); lab(c, "物", xo, AY-ho-12);
+    const T1 = [xo, AY-ho], h1 = [mx(-ho), AY-ho], h2 = [V, AY];
+    ray(c, T1[0], T1[1], h1[0], h1[1], YEL, { flow:1, t:.5, w:2 }); ray(c, T1[0], T1[1], h2[0], h2[1], GRN, { flow:1, t:.5, w:2 });
+    let txt;
+    if(!cv && p === FC){
+      // 焦點上：反射光互相平行
+      const dx = -p*S, dy = ho, k = 1/Math.hypot(dx, dy);
+      [h1, h2].forEach((h, i) => ray(c, h[0], h[1], h[0] + dx*k*420, h[1] + dy*k*420, i ? GRN : YEL, { flow:1, t:.3, w:2 }));
+      lab(c, "反射光互相平行，交不到一起", 200, 262, { col:"#fca5a5" });
+      txt = "物體在<b>焦點上</b>：反射光互相平行，<b>無法成像</b>（講義寫成像位置在無窮遠處）。"; markRow("t4", "c1");
+    } else {
+      const q = p*f/(p-f), m = -q/p, xi = V - q*S, yi = AY - m*ho, real = q > 0;
+      [[h1, YEL], [h2, GRN]].forEach(a => {
+        const h = a[0], dx = xi - h[0], dy = yi - h[1], L = Math.hypot(dx, dy), s = real ? 1 : -1, len = real ? Math.max(L + 70, 260) : 330;
+        ray(c, h[0], h[1], h[0] + s*dx/L*len, h[1] + s*dy/L*len, a[1], { flow:1, t: real ? Math.min(.5, L*.5/len) : .4, w:2 });
+        if(!real) seg(c, h[0], h[1], xi, yi, DIM, { w:1.4, dash:[6,5] });
+      });
+      const on = xi > 8 && xi < 632 && Math.abs(yi-AY) < 142;
+      if(on){ arrowV(c, xi, AY, yi, real ? "#fb923c" : "#c4b5fd", { dash:!real, a:.95 }); lab(c, real ? "實像" : "虛像", xi, yi + (m < 0 ? 14 : -12), { col: real ? "#fdba74" : "#ddd6fe" }); }
+      else lab(c, real ? "← 像在畫面外很遠的地方（很大）" : "像在鏡後很遠的地方（很大）→", real ? 150 : 520, 276, { size:12, col:"#fca5a5" });
+      const pos = cv ? "鏡子後面" : real ? "鏡子前面" : "鏡子後面";
+      txt = `物距 <b>${p} cm</b> → 像在<b>${pos}</b>，像距約 <b>${r1(Math.abs(q))} cm</b>。這是<b>${m > 0 ? "正立" : "倒立"}、${Math.abs(Math.abs(m)-1) < .001 ? "等大" : Math.abs(m) > 1 ? "放大" : "縮小"}的${real ? "實像" : "虛像"}</b>（大小是物體的 ${r1(Math.abs(m))} 倍）。` + (real ? "反射光真的交在那裡，屏幕接得到。" : "反射光沒有真的交會，是往鏡後延伸才交在一起，屏幕接不到。");
+      markRow("t4", cv ? "cv" : "c" + imgCase(p, FC));
+    }
+    marks(); $("r4b").innerHTML = txt;
+  });
+})();
+
+// ===================== ⑤ 折射 =====================
+// 用講義 p.60 的光速比來算：sin(折射角) ÷ sin(入射角) ＝ 第二種介質的光速 ÷ 第一種介質的光速
+(function(){
+  const W = 640, H = 340, IY = 170, X = 320, Lr = 150;
+  const MD = { aw:{ top:"空氣", bot:"水", v1:1, v2:.75, up:false, col:"#1d4ed8", max:75 }, ag:{ top:"空氣", bot:"玻璃", v1:1, v2:2/3, up:false, col:"#0f766e", max:75 }, wa:{ top:"空氣", bot:"水", v1:.75, v2:1, up:true, col:"#1d4ed8", max:40 } };
+  let mode = "aw", th = 45, rev = false; const sl = $("a5");
+  chips("#m5 .chip", "data-m5", v => { mode = v; sl.max = MD[v].max; if(th > MD[v].max){ sl.value = MD[v].max; } th = +sl.value; $("a5v").textContent = th + "°"; });
+  slide("a5", v => v + "°", v => th = v);
+  $("rev5").addEventListener("click", e => { rev = !rev; e.target.classList.toggle("on", rev); e.target.textContent = rev ? "恢復原來的方向" : "把光倒著射回去（光的可逆性）"; });
+  const ctx = scene("c5", W, H, ()=>{
+    const c = ctx, M = MD[mode]; bg(c, W, H);
+    c.fillStyle = M.col; c.globalAlpha = .5; c.fillRect(0, IY, W, H-IY); c.globalAlpha = 1;
+    seg(c, 0, IY, W, IY, "#93c5fd", { w:1.5, glow:0 });
+    const a = th*DEG, b = Math.asin(Math.sin(a) * M.v2 / M.v1), s = M.up ? -1 : 1; // s=1：光從上面進來
+    const P1 = [X - Lr*Math.sin(a), IY - s*Lr*Math.cos(a)], P2 = [X + Lr*Math.sin(b), IY + s*Lr*Math.cos(b)], P0 = [X + Lr*Math.sin(a), IY + s*Lr*Math.cos(a)];
+    seg(c, X, 14, X, H-14, "#e2e8f0", { w:1.4, dash:[6,5] }); lab(c, "法線", X + 22, 20, { size:12 });
+    lab(c, M.top + "（光速較快）", 86, IY - 18, { size:12, col:"#cbd5e1" }); lab(c, M.bot + "（光速較慢）", 86, IY + 18, { size:12, col:"#e0f2fe", halo:"rgba(15,30,70,.9)" });
+    if(th > 0) seg(c, X, IY, P0[0], P0[1], "#f8fafc", { w:1.4, dash:[2,6] });
+    const fl = rev ? -1 : 1;
+    if(!rev){ ray(c, P1[0], P1[1], X, IY, YEL, { flow:1, t:.5 }); ray(c, X, IY, P2[0], P2[1], YEL, { flow:1, t:.55 }); }
+    else { ray(c, P2[0], P2[1], X, IY, "#fb923c", { flow:1, t:.5 }); ray(c, X, IY, P1[0], P1[1], "#fb923c", { flow:1, t:.55 }); }
+    const n1 = rev ? "折射角" : "入射角", n2 = rev ? "入射角" : "折射角", bd = r1(b/DEG);
+    if(th > 0){
+      const u = -s*Math.PI/2; // 入射那一側的法線方向
+      arc(c, X, IY, 46, u - s*a, u, "#fb923c"); arc(c, X, IY, 58, -u, -u - s*b, "#4ade80");
+      lab(c, n1 + " " + (rev ? bd : th) + "°", P1[0] + (P1[0] < 110 ? 40 : -10), P1[1] - s*14, { col:"#fdba74", al: P1[0] < 110 ? "left" : "right" });
+      lab(c, n2 + " " + (rev ? th : bd) + "°", P2[0] + 12, P2[1] + s*14, { col:"#86efac", al:"left" });
+      lab(c, "直進路徑", P0[0] + 8, P0[1] - s*4, { size:11, col:"#cbd5e1", al:"left" });
+    }
+    const from = M.up ? M.bot : M.top, to = M.up ? M.top : M.bot, slow = M.v2 < M.v1;
+    let t = th === 0 ? `入射角 0°：光沿著法線進去，<b>方向不變</b>。不過速率還是${slow ? "變慢" : "變快"}了。` :
+      `光從<b>${from}</b>（${slow ? "快" : "慢"}）進入<b>${to}</b>（${slow ? "慢" : "快"}）：入射角 <b>${th}°</b>，折射角 <b>${bd}°</b>，折射線<b>${slow ? "偏向法線" : "偏離法線"}</b>。`;
+    if(rev && th > 0) t = `現在光<b>倒著走</b>：從${to}那一端沿原路射回來，入射角 ${bd}°，折射角 ${th}°。它走的還是<b>同一條路</b>。這就是光的可逆性。`;
+    $("r5").innerHTML = t;
+  });
+})();
+
+// ===================== ⑥ 透鏡成像 =====================
+(function(){
+  const W = 640, H = 320, LX = 320, AY = 160, S = 8, FC = 10, HO = 3.5, LH = 112; let kind = "cx", p = 30, cover = false;
+  const sl = $("p6"); const setP = v => { p = clamp(Math.round(v), 3, 32); sl.value = p; $("p6v").textContent = p + " cm"; };
+  chips("#k6 [data-k6]", "data-k6", v => kind = v); slide("p6", v => v + " cm", v => p = v);
+  document.querySelectorAll("#k6 [data-p6]").forEach(b => b.addEventListener("click", ()=> setP(+b.dataset.p6)));
+  $("cov6").addEventListener("change", e => cover = e.target.checked);
+  const cvs = $("c6"); let drag = false;
+  const toP = e => { const r = cvs.getBoundingClientRect(); setP((LX - (e.clientX - r.left) * W / r.width) / S); };
+  cvs.addEventListener("pointerdown", e => { drag = true; try{ cvs.setPointerCapture(e.pointerId); }catch(_){} toP(e); });
+  cvs.addEventListener("pointermove", e => { if(drag) toP(e); });
+  ["pointerup", "pointercancel"].forEach(n => cvs.addEventListener(n, ()=> drag = false));
+  function lens(c, cc){
+    c.save(); c.beginPath();
+    if(!cc){ c.moveTo(LX, AY-LH); c.quadraticCurveTo(LX+26, AY, LX, AY+LH); c.quadraticCurveTo(LX-26, AY, LX, AY-LH); }
+    else { c.moveTo(LX-13, AY-LH); c.lineTo(LX+13, AY-LH); c.quadraticCurveTo(LX-1, AY, LX+13, AY+LH); c.lineTo(LX-13, AY+LH); c.quadraticCurveTo(LX+1, AY, LX-13, AY-LH); }
+    c.closePath(); c.fillStyle = "rgba(125,211,252,.28)"; c.fill(); c.strokeStyle = "#7dd3fc"; c.lineWidth = 1.5; c.stroke(); c.restore();
+  }
+  // 從 (x,y) 沿方向畫到畫面邊緣
+  const far = (x, y, dx, dy) => { const k = 900 / Math.hypot(dx, dy); return [x + dx*k, y + dy*k]; };
+  const ctx = scene("c6", W, H, ()=>{
+    const c = ctx; bg(c, W, H); const cc = kind === "cc", f = cc ? -FC : FC, fp = FC*S, ho = HO*S, xo = LX - p*S, T1 = [xo, AY-ho];
+    seg(c, 6, AY, 634, AY, "#475569", { w:1, dash:[5,5] }); lens(c, cc);
+    const marks = () => { [[-2,"2f"],[-1,"f"],[1,"f"],[2,"2f"]].forEach(a => { const x = LX + a[0]*fp; seg(c, x, AY-6, x, AY+6, "#f8fafc", { w:2, glow:0 }); lab(c, a[1], x, AY+18, { size:12, col:"#f8fafc" }); }); lab(c, "O", LX+10, AY+16, { size:11, col:"#7dd3fc" }); };
+    lab(c, cc ? "凹透鏡" : "凸透鏡", LX, 16, { col:"#7dd3fc" });
+    arrowV(c, xo, AY, AY-ho, "#f8fafc"); lab(c, "物", xo, AY-ho-12);
+    let txt, key;
+    const none = !cc && p === FC, q = none ? 0 : p*f/(p-f), m = none ? 0 : -q/p, real = q > 0, I = [LX + q*S, AY - m*ho];
+    // 三條特別的光線打在透鏡上的高度（相對主軸，往上為負）
+    const hits = [[-ho, YEL]]; // 平行主軸
+    hits.push([0, GRN]); // 穿過鏡心
+    const yc = cc ? -ho*fp/(p*S + fp) : -ho*fp/(fp - p*S); // 通過焦點（凸）／射向鏡後虛焦點（凹）
+    if(!none && Math.abs(yc) < LH - 6) hits.push([yc, PNK]);
+    if(cover && !cc && !none && real){ hits.length = 0; [-96,-64,-32,32,64,96].forEach(y => hits.push([y, y < 0 ? "#64748b" : YEL])); }
+    hits.forEach(h => {
+      const Hp = [LX, AY + h[0]], blocked = cover && !cc && real && h[0] < 0;
+      ray(c, T1[0], T1[1], Hp[0], Hp[1], h[1], { flow: blocked ? 0 : 1, t:.5, w:2, a: blocked ? .7 : 1 });
+      if(blocked) return;
+      if(none){ // 焦點上：折射後互相平行（方向和穿過鏡心那條一樣）
+        const e = far(Hp[0], Hp[1], p*S, ho); ray(c, Hp[0], Hp[1], e[0], e[1], h[1], { flow:1, t:.18, w:2 }); return;
+      }
+      const dx = I[0] - Hp[0], dy = I[1] - Hp[1], s = real ? 1 : -1, e = far(Hp[0], Hp[1], s*dx, s*dy);
+      ray(c, Hp[0], Hp[1], e[0], e[1], h[1], { flow:1, t: real ? clamp(Math.hypot(dx,dy)*.5/900, .04, .2) : .16, w:2 });
+      if(!real) seg(c, Hp[0], Hp[1], I[0], I[1], DIM, { w:1.4, dash:[6,5] });
+    });
+    if(cover && !cc && !none && real){ c.fillStyle = "#020617"; c.fillRect(LX-9, AY-LH-4, 6, LH+4); c.strokeStyle = "#f87171"; c.lineWidth = 1.5; c.strokeRect(LX-9, AY-LH-4, 6, LH+4); lab(c, "遮住", LX-30, AY-LH+12, { size:11, col:"#fca5a5" }); }
+    if(none){
+      lab(c, "折射後互相平行，交不到一起", 480, 290, { col:"#fca5a5" });
+      txt = "物體在<b>焦點上</b>：折射光互相平行，<b>無法成像</b>（講義寫成像位置在無窮遠處）。"; key = "x1";
+    } else {
+      const on = I[0] > 8 && I[0] < 632 && Math.abs(I[1]-AY) < 150, dim = cover && !cc && real;
+      if(on){ arrowV(c, I[0], AY, I[1], real ? "#fb923c" : "#c4b5fd", { dash:!real, a: dim ? .5 : .95 }); lab(c, (real ? "實像" : "虛像") + (dim ? "（完整，但變暗）" : ""), I[0], I[1] + (m < 0 ? 14 : -12), { col: real ? "#fdba74" : "#ddd6fe" }); }
+      else lab(c, real ? "像在畫面外很遠的地方（很大）→" : "← 像在畫面外很遠的地方（很大）", real ? 500 : 150, 296, { size:12, col:"#fca5a5" });
+      if(!real){ eye(c, 606, AY - 40, -1, 1.1); lab(c, "從這邊往透鏡裡看", 560, AY - 66, { size:11, col:"#cbd5e1" }); }
+      const aq = Math.abs(q), where = real ? "透鏡的另一側" : "和物體同一側";
+      const zone = aq < FC - .001 ? "焦距內" : Math.abs(aq-FC) < .001 ? "剛好在焦點的位置" : aq < 2*FC - .001 ? "焦距與兩倍焦距間" : Math.abs(aq-2*FC) < .001 ? "兩倍焦距上" : "兩倍焦距外";
+      txt = `物距 <b>${p} cm</b>（${cc ? "任何位置都一樣" : ["焦距內","焦點上","焦距與兩倍焦距間","兩倍焦距上","兩倍焦距外"][imgCase(p, FC)]}）→ 像在<b>${where}</b>，像距約 <b>${r1(aq)} cm</b>（${zone}）。這是<b>${m > 0 ? "正立" : "倒立"}、${Math.abs(Math.abs(m)-1) < .001 ? "等大" : Math.abs(m) > 1 ? "放大" : "縮小"}的${real ? "實像" : "虛像"}</b>（${r1(Math.abs(m))} 倍）。` +
+        (real ? (dim ? "上半部被遮住，但下半部還是把光會聚到同一個地方：<b>像是完整的，只是變暗</b>。" : "折射光真的交在那裡，放屏幕接得到。") : "折射光沒有真的交會，往回延伸才交在一起，屏幕接不到，要從另一側用眼睛看。");
+      key = cc ? "cc" : "x" + imgCase(p, FC);
+    }
+    marks(); $("r6").innerHTML = txt; markRow("t6", key);
+  });
+})();
+
+// ===================== 三稜鏡用：一條光線穿過多邊形玻璃 =====================
+// polys：多邊形陣列（頂點座標）；n：玻璃相對空氣的折射比（光速比的倒數）。回傳經過的點和每個折射點的法線。
+function tracePoly(o, d, polys, n){
+  const pts = [o.slice()], nrm = []; let inside = null;
+  for(let k = 0; k < 8; k++){
+    let best = null;
+    for(const P of (inside ? [inside] : polys)) for(let i = 0; i < P.length; i++){
+      const a = P[i], b = P[(i+1) % P.length], ex = b[0]-a[0], ey = b[1]-a[1], den = d[0]*ey - d[1]*ex;
+      if(Math.abs(den) < 1e-9) continue;
+      const t = ((a[0]-o[0])*ey - (a[1]-o[1])*ex) / den, u = ((a[0]-o[0])*d[1] - (a[1]-o[1])*d[0]) / den;
+      if(t > 1e-4 && u >= 0 && u <= 1 && (!best || t < best.t)) best = { t, ex, ey, P };
+    }
+    if(!best){ pts.push([o[0] + d[0]*900, o[1] + d[1]*900]); break; }
+    const p = [o[0] + d[0]*best.t, o[1] + d[1]*best.t]; pts.push(p);
+    let nx = -best.ey, ny = best.ex; const L = Math.hypot(nx, ny); nx /= L; ny /= L;
+    if(nx*d[0] + ny*d[1] > 0){ nx = -nx; ny = -ny; }
+    nrm.push([p[0], p[1], nx, ny]);
+    const eta = inside ? n : 1/n, ci = -(nx*d[0] + ny*d[1]), k2 = 1 - eta*eta*(1 - ci*ci);
+    if(k2 < 0) d = [d[0] + 2*ci*nx, d[1] + 2*ci*ny];
+    else { const g = eta*ci - Math.sqrt(k2); d = [eta*d[0] + g*nx, eta*d[1] + g*ny]; inside = inside ? null : best.P; }
+    o = p;
+  }
+  return { pts, nrm };
+}
+function drawPoly(c, P){ c.save(); c.beginPath(); P.forEach((p, i) => i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1])); c.closePath(); c.fillStyle = "rgba(125,211,252,.25)"; c.fill(); c.strokeStyle = "#7dd3fc"; c.lineWidth = 1.5; c.stroke(); c.restore(); }
+
+(function(){
+  const W = 640, H = 300; let mode = "up";
+  const CFG = {
+    up:{ polys:[[[320,50],[235,235],[405,235]]], ys:[150], t:"光往<b>下</b>偏。這個稜鏡下面厚、上面尖：光<b>向厚度大的部分偏折</b>。進去折射一次，出來再折射一次，兩次都往同一邊。" },
+    dn:{ polys:[[[320,250],[235,65],[405,65]]], ys:[150], t:"把稜鏡倒過來，厚的部分在上面，光就往<b>上</b>偏。還是<b>向厚度大的部分偏折</b>。" },
+    con:{ polys:[[[320,36],[262,150],[378,150]], [[320,264],[262,150],[378,150]]], ys:[100,200], t:"兩個稜鏡<b>底對底</b>，中間厚、兩端薄。上面的光往下偏，下面的光往上偏：<b>會聚</b>。形狀和作用都像<b>凸透鏡</b>（圖上的虛線）。" },
+    div:{ polys:[[[320,150],[262,36],[378,36]], [[320,150],[262,264],[378,264]]], ys:[92,208], t:"兩個稜鏡<b>尖對尖</b>，中間薄、兩端厚。上面的光往上偏，下面的光往下偏：<b>發散</b>。形狀和作用都像<b>凹透鏡</b>（圖上的虛線）。" }
+  };
+  chips("#m6b .chip", "data-m6b", v => { mode = v; $("r6b").innerHTML = CFG[v].t; }); $("r6b").innerHTML = CFG.up.t;
+  const ctx = scene("c6b", W, H, ()=>{
+    const c = ctx, G = CFG[mode]; bg(c, W, H); G.polys.forEach(P => drawPoly(c, P));
+    c.save(); c.setLineDash([5,5]); c.strokeStyle = "#e2e8f0"; c.lineWidth = 1.3; c.globalAlpha = .7; c.beginPath();
+    if(mode === "con"){ c.moveTo(320, 30); c.quadraticCurveTo(396, 150, 320, 270); c.quadraticCurveTo(244, 150, 320, 30); }
+    if(mode === "div"){ c.moveTo(258, 30); c.lineTo(382, 30); c.quadraticCurveTo(326, 150, 382, 270); c.lineTo(258, 270); c.quadraticCurveTo(314, 150, 258, 30); }
+    c.stroke(); c.restore();
+    G.ys.forEach(y => {
+      const r = tracePoly([40, y], [1, 0], G.polys, 1.5), q = r.pts;
+      for(let i = 0; i < q.length-1; i++) ray(c, q[i][0], q[i][1], q[i+1][0], q[i+1][1], YEL, { flow:1, t: i === q.length-2 ? .12 : .5, w:2.2 });
+      r.nrm.forEach(n => seg(c, n[0] - n[2]*26, n[1] - n[3]*26, n[0] + n[2]*26, n[1] + n[3]*26, "#e2e8f0", { w:1.1, dash:[3,4] }));
+      seg(c, q[1][0], q[1][1], 600, y, "#f8fafc", { w:1.2, dash:[2,6] });
+    });
+    lab(c, "白色點線＝如果沒有稜鏡的直進路徑", 320, 288, { size:11, col:"#cbd5e1" });
+    lab(c, mode === "con" ? "會聚" : mode === "div" ? "發散" : mode === "up" ? "厚的在下面" : "厚的在上面", mode === "con" || mode === "div" ? 520 : 320, mode === "up" ? 258 : mode === "dn" ? 42 : 150, { col:"#fde68a" });
+  });
+})();
+
+// ===================== ⑦ 眼睛與眼鏡 =====================
+// 眼球尺寸和焦距都是示意用的數字：水晶體到視網膜 D＝175，眼鏡在水晶體前 80。
+(function(){
+  const W = 640, H = 300, AY = 150, XL = 362, XG = 282, CX = 446, R = 92, D = 175, XN = 72; let mode = "nf", glass = false;
+  const CASE = {
+    nf:{ near:false, fe:D, name:"視力正常", t:"看遠處：光線平行進來，水晶體把它們剛好會聚在<b>視網膜上</b>，成清晰的像。" },
+    nn:{ near:true, fe:1/(1/(XL-XN) + 1/D), name:"視力正常", t:"看近處：近物的光是張開進來的。<b>水晶體變厚、焦距變短</b>，還是剛好會聚在視網膜上。這就是「水晶體可隨物體的遠近調整焦距」。" },
+    my:{ near:false, fe:136, name:"近視", lens:"凹透鏡", t:"近視：水晶體的<b>焦距過短</b>。遠處物體的光太早會聚，成像在<b>視網膜前方</b>。光過了交會點又張開，落在視網膜上是糊的。", tg:"戴上<b>凹透鏡</b>：光線先行<b>發散</b>再進入眼睛，交會點往後移，剛好落在視網膜上。" },
+    hy:{ near:true, fe:134, name:"遠視", lens:"凸透鏡", t:"遠視：水晶體的<b>焦距過長</b>。近處物體的光還來不及會聚就碰到視網膜，成像在<b>視網膜後方</b>，所以是糊的。", tg:"戴上<b>凸透鏡</b>：光線先行<b>會聚</b>再進入眼睛，交會點往前移，剛好落在視網膜上。" },
+    pr:{ near:true, fe:134, name:"老花眼", lens:"凸透鏡", t:"老花眼：年紀較長，<b>無法調整水晶體焦距</b>。看近物時水晶體變不厚，光會聚得不夠（這張圖畫的是交會點落在視網膜後方）。", tg:"戴上<b>凸透鏡</b>，幫忙先會聚一些，近的東西就看得清楚。" }
+  };
+  const cb = $("g7");
+  function upd(){ const C = CASE[mode]; cb.disabled = !C.lens; if(!C.lens){ cb.checked = false; glass = false; } $("r7").innerHTML = (glass && C.tg) ? C.tg : C.t; }
+  chips("#m7 .chip", "data-m7", v => { mode = v; upd(); }); cb.addEventListener("change", ()=>{ glass = cb.checked; upd(); }); upd();
+  const ctx = scene("c7", W, H, ()=>{
+    const c = ctx, C = CASE[mode]; bg(c, W, H);
+    // 眼球
+    c.save(); c.beginPath(); c.arc(CX, AY, R, 0, 7); c.fillStyle = "#1e293b"; c.fill(); c.strokeStyle = "#e2e8f0"; c.lineWidth = 2; c.stroke();
+    c.beginPath(); c.arc(CX, AY, R, -1.0, 1.0); c.strokeStyle = "#fb923c"; c.lineWidth = 5; c.stroke(); // 視網膜
+    c.beginPath(); c.arc(CX - R + 26, AY, 34, Math.PI*.72, Math.PI*1.28); c.strokeStyle = "#7dd3fc"; c.lineWidth = 3; c.stroke(); // 角膜
+    const th = C.near && !C.lens ? 15 : mode === "my" ? 13 : 9; // 水晶體厚度
+    c.beginPath(); c.ellipse(XL, AY, th, 40, 0, 0, 7); c.fillStyle = "rgba(125,211,252,.35)"; c.fill(); c.strokeStyle = "#7dd3fc"; c.lineWidth = 1.5; c.stroke();
+    c.fillStyle = "#a16207"; c.fillRect(XL-16, AY-62, 5, 22); c.fillRect(XL-16, AY+40, 5, 22); c.restore(); // 虹膜（中間的開口是瞳孔）
+    lab(c, "角膜", CX - R - 4, AY + 62, { size:11, col:"#7dd3fc", al:"right" }); lab(c, "瞳孔", XL - 14, AY - 76, { size:11, col:"#fcd34d" });
+    lab(c, "水晶體", XL + 8, AY + 78, { size:11, col:"#7dd3fc" }); lab(c, "視網膜", CX + R - 4, AY - 82, { size:11, col:"#fdba74" });
+    // 眼鏡
+    const s0 = C.near ? 1/(XG - XN) : 0, k = 1 - D/C.fe, g = XL - XG; let aG = 0;
+    if(glass && C.lens){
+      aG = s0 + k/(g*k + D); // 1/眼鏡焦距：算到光剛好會聚在視網膜上
+      c.save(); c.beginPath();
+      if(aG > 0){ c.moveTo(XG, AY-70); c.quadraticCurveTo(XG+18, AY, XG, AY+70); c.quadraticCurveTo(XG-18, AY, XG, AY-70); }
+      else { c.moveTo(XG-9, AY-70); c.lineTo(XG+9, AY-70); c.quadraticCurveTo(XG, AY, XG+9, AY+70); c.lineTo(XG-9, AY+70); c.quadraticCurveTo(XG, AY, XG-9, AY-70); }
+      c.closePath(); c.fillStyle = "rgba(196,181,253,.35)"; c.fill(); c.strokeStyle = "#c4b5fd"; c.lineWidth = 1.5; c.stroke(); c.restore();
+      lab(c, C.lens, XG, AY - 84, { size:12, col:"#ddd6fe" });
+    }
+    if(C.near){ dot(c, XN, AY, 5, "#fde68a"); lab(c, "近處的物體", XN + 6, AY + 20, { size:11, col:"#fde68a" }); } else lab(c, "遠處來的光（平行）", 96, AY - 52, { size:11, col:"#fde68a" });
+    let fx = 0, spread = 0;
+    [-30, -15, 15, 30].forEach(y0 => {
+      // y0 是光線到眼鏡位置時的高度
+      const u0 = y0 * s0, xs = C.near ? XN : 24, ys = C.near ? AY : AY + y0;
+      const u1 = u0 - y0*aG, y2 = y0 + u1*g, u2 = u1 - y2/C.fe;
+      ray(c, xs, ys, XG, AY + y0, YEL, { flow:1, t:.5, w:1.8 }); ray(c, XG, AY + y0, XL, AY + y2, YEL, { flow:1, head:0, w:1.8 });
+      fx = XL - y2/u2;
+      // 走到視網膜（眼球後壁）為止
+      let x = XL, y = AY + y2; for(let i = 0; i < 400; i++){ const nx = x + 1, ny = y + u2; if(nx > CX && Math.hypot(nx-CX, ny-AY) >= R - 2) break; x = nx; y = ny; }
+      ray(c, XL, AY + y2, x, y, YEL, { flow:1, head:0, w:1.8 }); spread = Math.max(spread, Math.abs(y - AY));
+      if(fx > x + 3) seg(c, x, y, fx, AY, DIM, { w:1.2, dash:[5,4] });
+    });
+    const onR = Math.abs(fx - (XL + D)) < 3;
+    dot(c, fx, AY, 4.5, onR ? "#4ade80" : "#f87171");
+    lab(c, onR ? "交會在視網膜上" : fx < XL + D ? "交會在視網膜前方" : "交會在視網膜後方", clamp(fx, 330, 556), AY + 112, { size:12, col: onR ? "#86efac" : "#fca5a5" });
+    // 看到的樣子
+    c.fillStyle = "#111a2e"; c.strokeStyle = "#334155"; c.lineWidth = 1; c.fillRect(556, 14, 74, 70); c.strokeRect(556, 14, 74, 70);
+    lab(c, "看到的樣子", 593, 24, { size:10, col:"#cbd5e1" });
+    c.save(); c.font = "bold 34px " + FONT; c.textAlign = "center"; c.textBaseline = "middle"; c.fillStyle = "#f8fafc";
+    const bl = onR ? 0 : clamp(spread*.55, 2, 7);
+    if(!bl) c.fillText("光", 593, 56); else { c.globalAlpha = .1; for(let i = 0; i < 16; i++) c.fillText("光", 593 + bl*Math.cos(i*.39), 56 + bl*Math.sin(i*.39)); }
+    c.restore();
+    lab(c, C.name + (glass && C.lens ? "＋" + C.lens : ""), 96, 24, { size:14, col:"#fde68a" });
+  });
+})();
+
+// ===================== ⑦ 複式顯微鏡 =====================
+// 光由右往左走。尺寸是為了畫清楚選的：物鏡焦距 50、物距 64；目鏡焦距 95、第一個像離目鏡 60（在目鏡焦點內）。
+(function(){
+  const W = 640, H = 270, AY = 100, XO = 612, FO = 50, PO = 64, FE = 95, PE = 60, HO = 10; let step = 1;
+  const XB = XO - PO, qo = PO*FO/(PO-FO), X1 = XB - qo, h1 = HO*qo/PO, XE = X1 - PE, qe = PE*FE/(FE-PE), X2 = XE + qe, h2 = h1*qe/PE;
+  const TX = { 1:`第一步：物體放在<b>物鏡焦點外</b>一點點。光線經物鏡折射，在另一側真的交會，成<b>放大倒立實像</b>（這張圖是 ${r1(qo/PO)} 倍）。`, 2:`第二步：那個實像落在<b>目鏡焦點內</b>。目鏡像放大鏡一樣再放大一次，成<b>虛像</b>（再 ${r1(qe/PE)} 倍，合起來 ${r1(qo/PO*qe/PE)} 倍）。對原物來說，它是<b>放大倒立虛像</b>：上下顛倒、左右相反。` };
+  chips("#m7b .chip", "data-m7b", v => { step = +v; $("r7b").innerHTML = TX[v]; }); $("r7b").innerHTML = TX[1];
+  function ln(c, x, hh, col){ c.save(); c.beginPath(); c.moveTo(x, AY-hh); c.quadraticCurveTo(x+13, AY, x, AY+hh); c.quadraticCurveTo(x-13, AY, x, AY-hh); c.fillStyle = "rgba(125,211,252,.3)"; c.fill(); c.strokeStyle = col; c.lineWidth = 1.5; c.stroke(); c.restore(); }
+  const ctx = scene("c7b", W, H, ()=>{
+    const c = ctx; bg(c, W, H); seg(c, 40, AY, 632, AY, "#475569", { w:1, dash:[5,5] });
+    ln(c, XB, 34, "#7dd3fc"); lab(c, "物鏡", XB, AY - 44, { col:"#7dd3fc" });
+    [XB - FO, XB + FO].forEach(x => seg(c, x, AY-4, x, AY+4, "#7dd3fc", { w:1.5, glow:0 })); lab(c, "物鏡焦點", XB - FO, AY - 14, { size:10, col:"#7dd3fc" });
+    arrowV(c, XO, AY, AY - HO, "#f8fafc", { w:3 }); lab(c, "物", XO, AY - 24, { size:12 });
+    const T0 = [XO, AY-HO], I1 = [X1, AY+h1], A = [XB, AY-HO], B = [XB, AY];
+    const yE = P => I1[1] + (I1[1]-P[1]) * (X1-XE) / (P[0]-X1); // 兩條光線繼續走到目鏡的高度
+    const E1 = [XE, yE(A)], E2 = [XE, yE(B)];
+    ray(c, T0[0], T0[1], A[0], A[1], YEL, { flow:1, head:0, w:1.8 }); ray(c, T0[0], T0[1], B[0], B[1], GRN, { flow:1, head:0, w:1.8 });
+    const end = step === 1 ? null : true;
+    [[A, E1, YEL], [B, E2, GRN]].forEach(r => {
+      if(end) ray(c, r[0][0], r[0][1], r[1][0], r[1][1], r[2], { flow:1, t:.35, w:1.8 });
+      else { const k = 1.12; ray(c, r[0][0], r[0][1], r[0][0] + (I1[0]-r[0][0])*k, r[0][1] + (I1[1]-r[0][1])*k, r[2], { flow:1, t:.4, w:1.8 }); }
+    });
+    arrowV(c, X1, AY, AY + h1, "#fb923c", { w:3 }); lab(c, "放大倒立實像", X1 - 6, AY + h1 + 14, { size:11, col:"#fdba74" });
+    if(step === 2){
+      ln(c, XE, 62, "#c4b5fd"); lab(c, "目鏡", XE, AY - 74, { col:"#ddd6fe" });
+      seg(c, XE + FE, AY-4, XE + FE, AY+4, "#c4b5fd", { w:1.5, glow:0 }); lab(c, "目鏡焦點", XE + FE, AY - 14, { size:10, col:"#ddd6fe" });
+      const I2 = [X2, AY + h2];
+      [[E1, YEL], [E2, GRN]].forEach(r => {
+        const dx = r[0][0] - I2[0], dy = r[0][1] - I2[1], k = (96 - r[0][0]) / dx;
+        ray(c, r[0][0], r[0][1], r[0][0] + dx*k, r[0][1] + dy*k, r[1], { flow:1, t:.6, w:1.8 });
+        seg(c, r[0][0], r[0][1], I2[0], I2[1], DIM, { w:1.2, dash:[5,4] });
+      });
+      arrowV(c, X2, AY, AY + h2, "#c4b5fd", { dash:true, w:3 }); lab(c, "放大虛像（對原物是倒立）", X2 + 4, AY + h2 + 14, { size:11, col:"#ddd6fe" });
+      eye(c, 74, AY + 6, 1, 1.3); lab(c, "眼睛", 74, AY + 32, { size:11 });
+    } else lab(c, "目鏡還沒放上去", 200, AY - 30, { size:12, col:"#64748b" });
+  });
+})();
+
+// ===================== ⑧ 色散 =====================
+(function(){
+  const W = 640, H = 250, P = [[300,34],[212,214],[388,214]];
+  const COL = [["紅","#ef4444",1.47],["橙","#f97316",1.492],["黃","#facc15",1.514],["綠","#22c55e",1.536],["藍","#3b82f6",1.558],["靛","#4f46e5",1.58],["紫","#a855f7",1.602]];
+  const ctx = scene("c8a", W, H, ()=>{
+    const c = ctx; bg(c, W, H); drawPoly(c, P); lab(c, "三稜鏡", 300, 228, { size:12, col:"#7dd3fc" });
+    const o = [30, 168], d0 = [Math.cos(-.3), Math.sin(-.3)]; let first = null;
+    c.fillStyle = "#e2e8f0"; c.fillRect(586, 20, 5, 220); lab(c, "屏幕", 588, 12, { size:11, col:"#cbd5e1" });
+    COL.forEach((k, i) => {
+      const r = tracePoly(o, d0, [P], k[2]).pts; if(!first) first = r[1];
+      seg(c, r[1][0], r[1][1], r[2][0], r[2][1], k[1], { w:2, a:.9 });
+      const t = (586 - r[2][0]) / (r[3][0] - r[2][0]), e = [586, r[2][1] + (r[3][1]-r[2][1])*t];
+      seg(c, r[2][0], r[2][1], e[0], e[1], k[1], { w:2.4, flow: i % 3 === 0 ? 1 : 0 });
+      const ly = 46 + i*28; seg(c, 592, e[1], 606, ly, k[1], { w:1, glow:0, a:.7 }); lab(c, k[0], 618, ly, { size:13, col:k[1] });
+    });
+    ray(c, o[0], o[1], first[0], first[1], "#f8fafc", { flow:1, t:.5, w:3 }); lab(c, "白色光", 84, 132, { col:"#f8fafc" });
+  });
+})();
+
+// ===================== ⑧ 三原色光 =====================
+(function(){
+  const W = 640, H = 250; const v = { r:100, g:100, b:100 };
+  const set = (k, x) => { v[k] = x; };
+  slide("cr8", x => x + "%", x => set("r", x)); slide("cg8", x => x + "%", x => set("g", x)); slide("cb8", x => x + "%", x => set("b", x));
+  document.querySelectorAll("#pre8 .chip").forEach(b => b.addEventListener("click", ()=>{ const a = b.dataset.rgb.split(","); ["r","g","b"].forEach((k, i) => { const e = $("c" + k + "8"); e.value = a[i]; e.dispatchEvent(new Event("input")); }); }));
+  const NAME = { "1,1,1":"白", "1,1,0":"黃", "1,0,1":"洋紅", "0,1,1":"青", "1,0,0":"紅", "0,1,0":"綠", "0,0,1":"藍", "0,0,0":"黑（沒有光）" };
+  const ctx = scene("c8b", W, H, ()=>{
+    const c = ctx; bg(c, W, H, "#000"); const R = Math.round(v.r*2.55), G = Math.round(v.g*2.55), B = Math.round(v.b*2.55);
+    c.save(); c.globalCompositeOperation = "lighter";
+    [[212, 96, `rgb(${R},0,0)`], [306, 96, `rgb(0,0,${B})`], [259, 168, `rgb(0,${G},0)`]].forEach(a => { c.beginPath(); c.arc(a[0], a[1], 74, 0, 7); c.fillStyle = a[2]; c.fill(); });
+    c.restore();
+    const dk = { col:"#111827", halo:"rgba(255,255,255,.65)", size:12 }, lt = { size:12 };
+    if(v.r) lab(c, "紅", 176, 74, lt); if(v.b) lab(c, "藍", 342, 74, lt); if(v.g) lab(c, "綠", 259, 214, lt);
+    if(v.r === 100 && v.b === 100) lab(c, "洋紅", 259, 70, dk); if(v.r === 100 && v.g === 100) lab(c, "黃", 216, 142, dk); if(v.g === 100 && v.b === 100) lab(c, "青", 302, 142, dk);
+    if(v.r === 100 && v.g === 100 && v.b === 100) lab(c, "白", 259, 116, dk);
+    // 右邊：三種光都照到的地方
+    lab(c, "三種光都照到的地方", 520, 40, { size:12, col:"#e5e7eb" });
+    c.fillStyle = `rgb(${R},${G},${B})`; c.fillRect(460, 58, 120, 120); c.strokeStyle = "#475569"; c.lineWidth = 1; c.strokeRect(460, 58, 120, 120);
+    const key = [v.r, v.g, v.b].map(x => x === 100 ? 1 : x === 0 ? 0 : "x").join(","), nm = NAME[key];
+    lab(c, nm ? nm : "介於中間的顏色", 520, 198, { size:14, col:"#fde68a" });
+    $("r8b").innerHTML = `紅 ${v.r}%、綠 ${v.g}%、藍 ${v.b}% 疊在一起` + (nm ? `，看起來是<b>${nm}</b>。` : "。改變三種光的<b>亮度比例</b>，就調得出別的顏色。螢幕就是這樣顯示各種顏色的。");
+  });
+})();
+
+// ===================== ⑧ 物體的顏色 =====================
+(function(){
+  const W = 640, H = 250; let kind = "op", L = "w", O = "r";
+  const VEC = { w:[1,1,1], r:[1,0,0], g:[0,1,0], b:[0,0,1], k:[0,0,0] }, CN = { w:"白", r:"紅", g:"綠", b:"藍", k:"黑" }, CC = ["#ef4444", "#22c55e", "#3b82f6"], CNM = ["紅光", "綠光", "藍光"];
+  const HEX = { w:"#f8fafc", r:"#dc2626", g:"#16a34a", b:"#2563eb", k:"#111827" };
+  chips("#l8 .chip", "data-l8", v => L = v); chips("#o8 .chip", "data-o8", v => O = v);
+  const ob = [...document.querySelectorAll("#o8 .chip")];
+  chips("#k8 .chip", "data-k8", v => { kind = v; ob.forEach(b => { const k = b.dataset.o8; b.textContent = v === "tr" ? (k === "w" ? "無色透明" : k === "k" ? "黑色（不透光）" : CN[k] + "色玻璃紙") : CN[k] + "色"; }); });
+  const ctx = scene("c8c", W, H, ()=>{
+    const c = ctx; bg(c, W, H); const lv = VEC[L], ov = VEC[O], tr = kind === "tr", out = lv.map((x, i) => x*ov[i]), any = out.some(x => x);
+    const res = out.join() === "1,1,1" ? "w" : out[0] ? "r" : out[1] ? "g" : out[2] ? "b" : "k";
+    // 光源
+    dot(c, 54, 150, 16, L === "w" ? "#fef9c3" : HEX[L]); lab(c, CN[L] + "光", 54, 186, { size:12 });
+    const OX = 300, EX = tr ? 520 : 214, EY = tr ? 150 : 46, SX = tr ? EX + 30 : EX - 104;
+    // 物體
+    c.save(); if(tr){ c.globalAlpha = O === "k" ? 1 : .55; c.fillStyle = O === "w" ? "#bae6fd" : HEX[O]; c.fillRect(OX-8, 70, 16, 160); }
+    else { c.fillStyle = HEX[O]; c.strokeStyle = "#94a3b8"; c.lineWidth = 1.5; c.beginPath(); c.arc(OX + 34, 150, 46, 0, 7); c.fill(); c.stroke(); }
+    c.restore(); lab(c, tr ? ob.find(b => b.dataset.o8 === O).textContent : CN[O] + "色物體", OX + (tr ? 0 : 34), 236, { size:12 });
+    [0,1,2].forEach(i => {
+      if(!lv[i]) return; const y = 150 + (i-1)*16, x1 = tr ? OX-8 : OX - 10 + Math.abs(i-1)*5;
+      ray(c, 74, y, x1, y, CC[i], { flow:1, t:.5, w:2.4 });
+      if(out[i]){ if(tr) ray(c, OX+8, y, EX-24, y, CC[i], { flow:1, t:.5, w:2.4 }); else ray(c, x1, y, EX + 24 + (i-1)*8, EY + 14 - (i-1)*4, CC[i], { flow:1, t:.5, w:2.4 }); }
+      else { lab(c, "✕", x1 + (tr ? 14 : -2), y, { size:13, col:"#f8fafc" }); lab(c, "✕ " + CNM[i] + "被吸收", 120, 204 + i*15, { size:11, col:CC[i], al:"left" }); }
+    });
+    
+    eye(c, EX, EY, tr ? -1 : 1, 1.3); lab(c, "眼睛看到", SX + 30, EY - 24, { size:11, col:"#cbd5e1" });
+    c.fillStyle = HEX[res]; c.fillRect(SX, EY - 12, 60, 40); c.strokeStyle = "#94a3b8"; c.lineWidth = 1.5; c.strokeRect(SX, EY - 12, 60, 40);
+    lab(c, CN[res] + "色", SX + 30, EY + 42, { size:13, col:"#fde68a" });
+    const inL = L === "w" ? "紅、綠、藍光都有" : "只有" + CN[L] + "光", verb = tr ? "穿透" : "反射";
+    const can = O === "w" ? `${tr ? "無色透明體讓所有色光穿過" : "白色物體反射所有色光"}` : O === "k" ? `${tr ? "不透光的黑色物體擋住所有色光" : "黑色物體吸收所有色光"}` : `${CN[O]}色${tr ? "透明體只讓" : "物體只反射"}${CN[O]}光${tr ? "穿過" : ""}`;
+    $("r8c").innerHTML = `照過來的光${inL}。${can}。` + (any ? `${verb}進眼睛的是<b>${[0,1,2].filter(i => out[i]).map(i => CNM[i]).join("、")}</b>，所以看到<b>${CN[res]}色</b>。` : `沒有任何色光${verb}進眼睛，所以看到<b>黑色</b>。`);
+  });
+})();
+
+// ===================== 共用動畫迴圈 =====================
+(function(){
+  let last = performance.now();
+  function loop(now){
+    const dt = Math.min(.05, (now-last)/1000); last = now; T += dt;
+    for(const s of scenes) if(s.vis) s.draw(dt);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+// ===================== 先猜再看 =====================
+document.querySelectorAll(".predict").forEach(box => {
+  const bs = [...box.querySelectorAll(".pb button")], watch = box.querySelector(".watch"), res = box.querySelector(".res");
+  let pick = -1;
+  bs.forEach((b, i) => b.addEventListener("click", ()=>{ if(!res.hidden) return; pick = i; bs.forEach(x => x.classList.remove("on")); b.classList.add("on"); watch.hidden = false; }));
+  box.querySelector(".rev").addEventListener("click", ()=>{
+    const ok = pick === +box.dataset.ans;
+    res.hidden = false; res.innerHTML = (ok ? "<b>你猜對了。</b>" : "<b>跟你猜的不一樣。</b>猜錯沒關係，先猜過再看，會記得比較久。") + box.dataset.exp;
+    bs[+box.dataset.ans].classList.add("ok"); logEv({ type:"predict", q:box.dataset.id, ok });
+  });
+});
+
+// ===================== ⑨ 考考你 =====================
+(function(){
+  const SEC = { s1:"① 光走直線和光速", s2:"② 反射定律", s3:"③ 平面鏡和實虛像", s4:"④ 凹面鏡和凸面鏡", s5:"⑤ 折射", s6:"⑥ 透鏡和三稜鏡", s7:"⑦ 光學儀器和眼睛", s8:"⑧ 色散和顏色" };
+  // o:[[正確答案,""],[錯誤選項,"你可能是這樣想的…"],…]
+  const Q = [
+    // ---- ① 光走直線和光速
+    {id:"a1", s:"s1", q:"從早上到下午，日晷上的影子位置一直在變。最根本的原因是什麼？",
+      o:[["太陽的位置變了。光走直線，被晷針擋住的地方就跟著變",""],["光會繞過晷針，下午繞得比較多","光在空氣裡走直線，不會繞過去。影子就是光「繞不過去」才出現的。"],["下午的光速比較慢","光速和早上下午沒有關係。影子位置是看光從哪個方向來。"],["影子本身會慢慢移動","影子不是一個會自己動的東西。它只是光到不了的地方。"]],
+      why:"光在均勻介質中直線前進。遇到不透明的物體過不去，後方形成陰影。光來的方向變，陰影的位置就變。"},
+    {id:"a2", s:"s1", q:"用針孔相機看一支點著的蠟燭，火焰在上面。紙屏上的像是什麼樣子？",
+      o:[["火焰在下面，左右也相反",""],["和蠟燭一樣，火焰在上面","上面來的光穿過小孔後會落到下面。回去看橘色和藍色兩條光線怎麼交叉。"],["只有上下顛倒，左右不變","光穿過針孔時，上下交叉，左右也一樣交叉。"],["只有左右相反，上下不變","這是照平面鏡的情形。針孔成像是上下、左右都反過來。"]],
+      why:"針孔成像在紙屏上呈現上下顛倒、左右相反的像。"},
+    {id:"a3", s:"s1", q:"做針孔成像實驗時，針孔和紙屏都固定不動。把蠟燭往後拿遠，紙屏上的像會怎樣？",
+      o:[["變小",""],["變大","反了。蠟燭愈遠，穿過針孔的兩條光線夾得愈窄，像愈小。"],["大小不變","把模擬裡「光源到針孔」拉大看看，像會縮小。"],["像會消失","光還是穿得過針孔，像還在，只是變小。"]],
+      why:"屏、針孔不動，光源愈遠，像愈小。"},
+    {id:"a4", s:"s1", q:"小明做的針孔相機，像太小了看不清楚。蠟燭和針孔都不能動，他可以怎麼做讓像變大？",
+      o:[["把紙屏往後拉，離針孔遠一點",""],["把紙屏往前推，靠近針孔","反了。屏愈近，光還沒張開多少，像愈小。"],["換一張更大的紙屏","紙的大小不會改變像的大小。像多大是看屏離針孔多遠。"],["把房間的燈打開","開燈只會讓紙屏變亮，像反而更看不清楚，也不會變大。"]],
+      why:"光源、針孔不動，屏愈遠，像愈大。"},
+    {id:"a5", s:"s1", q:"一束光從空氣射進水裡。它在水裡的速率大約是多少？",
+      o:[["約 2.25×10⁸ m/s，比在空氣裡慢",""],["還是 3×10⁸ m/s，光速永遠不變","3×10⁸ m/s 是真空中的光速。在不同的介質中，光速不同。"],["比在空氣裡更快","順序是 真空 ＞ 空氣 ＞ 水 ＞ 玻璃。水比空氣慢。"],["約 2×10⁸ m/s","那是玻璃。水是約 2.25×10⁸ m/s，也就是約 3/4 c。"]],
+      why:"水中光速約 2.25×10⁸ m/s（約 3/4 c）。"},
+    {id:"a6", s:"s1", q:"三束光同時出發，分別穿過 1 公尺厚的真空、水、玻璃。哪一束最晚到？",
+      o:[["穿過玻璃的",""],["穿過真空的","真空裡光速最快，會最早到。"],["穿過水的","水比玻璃快一點。最慢的是玻璃。"],["三束同時到","在不同的介質中，光速不同。回去按一次「開跑」。"]],
+      why:"光速快慢：真空 ＞ 空氣 ＞ 水 ＞ 玻璃。玻璃裡最慢，所以最晚到。"},
+    {id:"a7", s:"s1", q:"針孔成像為什麼會是倒過來的？",
+      o:[["光走直線，物體上方發出的光穿過小孔後落在下方",""],["針孔像透鏡一樣把光折彎了","針孔只是一個洞，沒有折射。倒過來純粹是因為光走直線、在小孔交叉。"],["紙屏把像反射成倒的","紙屏只是接住光。光到紙屏之前就已經上下交叉了。"],["光在針孔裡轉了半圈","光沒有轉彎。它一直是直線。"]],
+      why:"針孔成像是利用光的直線前進。"},
+    // ---- ② 反射
+    {id:"b1", s:"s2", q:"一束光射向平面鏡，光線和鏡面的夾角是 30°。反射角是幾度？",
+      o:[["60°",""],["30°","30° 是光線和鏡面的夾角。入射角要對法線量：90°－30°＝60°。"],["120°","120° 是入射線和反射線的夾角。反射角只算反射線到法線。"],["90°","光沿著鏡面走才會是 90°。"]],
+      why:"入射角是入射線與法線的夾角：90°－30°＝60°。反射角等於入射角，也是 60°。"},
+    {id:"b2", s:"s2", q:"雷射筆垂直對著鏡面照（沿著法線射進去）。反射光會怎樣？",
+      o:[["沿著原路射回來",""],["沿著鏡面滑出去","入射角是 0°，反射角也是 0°，所以沿法線回來。"],["穿過鏡子繼續往前","鏡面會把光反射回來。"],["反射角是 90°","沿法線進來，入射角是 0°，不是 90°。"]],
+      why:"入射角 0°，反射角也是 0°。把模擬的入射角拉到 0° 看看。"},
+    {id:"b3", s:"s2", q:"教室的白牆，從每個座位都看得到。鏡子反射的燈光，卻只有某些座位看得到。為什麼？",
+      o:[["白牆表面粗糙，漫反射把光射向各個方向；鏡子光滑，反射光只朝一邊",""],["白牆不遵守反射定律，鏡子才遵守","任何表面都遵守反射定律。牆只是每個小地方的法線方向不同。"],["白牆自己會發光","牆是非發光體。它是反射別人的光。"],["鏡子會把大部分的光吸收掉","鏡子反射得很好。只是反射光整齊地朝同一個方向。"]],
+      why:"粗糙表面是漫反射，光射向四面八方。光滑表面是單向反射。"},
+    {id:"b4", s:"s2", q:"光照在粗糙的紙上發生漫反射。下面哪一句是對的？",
+      o:[["每一條光線都遵守反射定律，只是各處的法線方向不同",""],["漫反射的光線不遵守反射定律","反射定律適用於任何表面，不論粗糙或光滑。"],["只有一部分光線遵守","沒有例外。每一條都是反射角等於入射角。"],["粗糙的表面沒有法線","每個落點都有自己的法線，只是方向各不相同。"]],
+      why:"光在任何表面（不論粗糙或光滑）發生反射時，均會遵守反射定律。"},
+    {id:"b5", s:"s2", q:"在完全沒有光的房間裡，為什麼看不到桌上的課本？",
+      o:[["沒有光照到課本，就沒有光從課本反射進眼睛",""],["眼睛在暗處發不出視線","看見東西不是眼睛發出什麼。是光進到眼睛。"],["課本在暗處把光都留在裡面","課本不會存光。是根本沒有光照到它。"],["課本要夠亮才會自己發光","課本是非發光體，再怎樣都不會自己發光。"]],
+      why:"非發光體要反射發光體的光，射入眼睛，我們才看得見。"},
+    {id:"b6", s:"s2", q:"入射角從 20° 增加到 50°。這時候入射線和反射線的夾角是幾度？",
+      o:[["100°",""],["50°","50° 只是入射角。反射線在法線另一邊，還要再加一個 50°。"],["70°","不是 20＋50。現在入射角 50°、反射角 50°，加起來 100°。"],["130°","入射線到法線 50°，法線到反射線 50°，合起來是 100°。"]],
+      why:"反射角等於入射角。兩條線的夾角＝入射角＋反射角＝100°。"},
+    {id:"b7", s:"s2", q:"晚上看得到月亮。月亮的光是怎麼來的？",
+      o:[["月亮反射太陽的光，射進我們的眼睛",""],["月亮自己發光","月亮是非發光體，不能自行發光。"],["我們的眼睛發出光照到月亮","眼睛不會發光。是光進到眼睛。"],["月亮把白天吸收的光放出來","月亮是當下反射太陽光，不是存起來再放。"]],
+      why:"非發光體不能自行發光，但能反射發光體發出的光線。"},
+    // ---- ③ 平面鏡、實像虛像
+    {id:"c1", s:"s3", q:"小美站在穿衣鏡前 1.5 公尺。她和鏡子裡的像相距多遠？",
+      o:[["3 公尺",""],["1.5 公尺","1.5 公尺是她到鏡面（物距）。像在鏡後還有 1.5 公尺。"],["0.75 公尺","沒有除以 2 的道理。物距＝像距，兩段要相加。"],["6 公尺","物距 1.5 加像距 1.5，是 3 公尺。"]],
+      why:"平面鏡成像物距＝像距。人到鏡 1.5，像到鏡 1.5，人和像相距 3 公尺。"},
+    {id:"c2", s:"s3", q:"小美慢慢走近穿衣鏡。鏡子裡她的像，大小會怎樣？",
+      o:[["不變，一直和她一樣大",""],["變大","看起來變大，是因為像離你變近了。像本身一直和物體一樣大。"],["變小","平面鏡的像和物體大小相同，不會縮小。"],["先變大再變小","平面鏡的像大小只跟物體有關，跟距離無關。"]],
+      why:"平面鏡成像與物體形狀與大小相同。"},
+    {id:"c3", s:"s3", q:"在平面鏡後面、像的位置放一張白紙。紙上會出現蠟燭的像嗎？",
+      o:[["不會，因為那是虛像，沒有光真的走到鏡子後面",""],["會，因為像就在那個位置","像「看起來」在那裡，但光沒有到那裡。光被鏡面反射回來了。"],["會，不過是倒立的","紙上什麼都沒有。平面鏡成的是正立虛像。"],["把房間弄暗就會出現","跟亮暗無關。虛像不是實際光線會聚而成，屏幕接不到。"]],
+      why:"虛像非由實際光線會聚而成，無法在屏幕上成像，但可由眼睛觀察到。"},
+    {id:"c4", s:"s3", q:"下面哪一個是實像？",
+      o:[["針孔相機紙屏上的像",""],["平面鏡裡自己的臉","平面鏡成的是虛像，屏幕接不到。"],["便利商店凸面鏡裡的像","凸面鏡成的是正立縮小虛像。"],["化妝鏡裡放大的臉","人臉靠近凹面鏡（焦距內），成正立放大虛像。"]],
+      why:"實像由實際光線會聚而成，可在屏幕上成像。針孔成像就是光真的落在紙屏上。"},
+    {id:"c5", s:"s3", q:"實像和虛像，最根本的差別是什麼？",
+      o:[["實像是實際光線會聚成的，屏幕接得到；虛像不是，屏幕接不到",""],["實像看得到，虛像看不到","兩種眼睛都看得到。差別在屏幕接不接得到。"],["實像都是正立，虛像都是倒立","剛好相反的例子很多：針孔的實像是倒立，平面鏡的虛像是正立。"],["實像比較大，虛像比較小","大小不是判斷的方法。放大鏡看到的虛像就是放大的。"]],
+      why:"判斷方法：是不是實際光線會聚而成、屏幕接不接得到。"},
+    {id:"c6", s:"s3", q:"你站在平面鏡前舉起右手。鏡子裡的像是什麼樣子？",
+      o:[["上下不顛倒，但左右相反（像舉的是它的左手）",""],["上下顛倒，左右也相反","那是針孔成像。平面鏡的像是正立的。"],["和你完全一樣，左右沒有相反","像是以鏡面為軸對稱，所以左右會相反。"],["上下顛倒，左右不變","平面鏡的像是正立的，頭還是在上面。"]],
+      why:"平面鏡成像以鏡面為軸對稱：正立、左右相反、虛像。"},
+    {id:"c7", s:"s3", q:"蠟燭和平面鏡都不動。觀察的人從左邊走到右邊去看。鏡子裡蠟燭的像會怎樣？",
+      o:[["留在原地不動",""],["跟著人往右移","像的位置只由物體和鏡子決定，跟誰在看、從哪裡看沒有關係。"],["往相反方向移","像不會動。把模擬裡的眼睛移上移下，虛線的像都在同一個位置。"],["人換位置後像就消失了","只要反射光還能進眼睛就看得到，而且位置一樣。"]],
+      why:"物距＝像距、以鏡面為軸對稱。物體不動，像就不動。"},
+    {id:"c8", s:"s3", q:"小華以每秒 1 公尺的速率走向鏡子。鏡子裡的像，相對於鏡子怎麼動？",
+      o:[["也以每秒 1 公尺靠近鏡面",""],["以每秒 2 公尺靠近鏡面","每秒 2 公尺是像相對於「人」靠近的速率。題目問的是相對於鏡子。"],["不動","物距在變，像距要跟著變（物距＝像距）。"],["以每秒 1 公尺遠離鏡面","物距變小，像距也變小，所以像也是靠近鏡面。"]],
+      why:"物距＝像距。人每秒靠近鏡子 1 公尺，像也每秒靠近鏡子 1 公尺。"},
+    // ---- ④ 凹凸面鏡
+    {id:"d1", s:"s4", q:"設計手電筒時，小燈泡要放在凹面鏡的哪裡，照出去的光才會平行、照得遠？",
+      o:[["焦點上",""],["緊貼在鏡面上","貼在鏡面上，光沒辦法被整面鏡子反射成平行光。"],["離鏡子愈遠愈好","光源要在焦點，反射後才會平行射出。"],["放哪裡都一樣","只有放在焦點，反射光才平行。按模擬的「燈泡放在焦點」看看。"]],
+      why:"從凹面鏡焦點處的光源發出的光線，經鏡面反射後會平行射出。"},
+    {id:"d2", s:"s4", q:"太陽爐用一面大凹面鏡對著太陽，鍋子放在焦點。為什麼鍋子要放在焦點？",
+      o:[["平行主軸射進來的太陽光，反射後都集中在焦點，溫度最高",""],["焦點是離太陽最近的地方","差那一點距離沒有影響。重點是反射光都聚到那一點。"],["凹面鏡自己會發熱","鏡子不發熱。它只是把太陽光反射、集中。"],["焦點是鏡子最厚的地方","焦點不在鏡子上，它在鏡子前面的主軸上。"]],
+      why:"太陽光以平行主軸的方向射向凹面鏡後，集中在焦點而達到高溫。"},
+    {id:"d3", s:"s4", q:"山路的急轉彎，要立一面鏡子讓駕駛看到對向來車，而且看到的範圍愈廣愈好。該用哪一種？",
+      o:[["凸面鏡",""],["凹面鏡","凹面鏡是把光會聚，用在太陽爐、手電筒、化妝鏡。要看得廣是用凸面鏡。"],["平面鏡","平面鏡看得到，但範圍沒有凸面鏡廣。"],["凸透鏡","透鏡是讓光穿過去的，不是鏡子。"]],
+      why:"經由凸面鏡所看到的景物範圍會變廣。"},
+    {id:"d4", s:"s4", q:"便利商店角落的凸面鏡裡，看到的店內景象是哪一種像？",
+      o:[["正立、縮小的虛像",""],["正立、放大的虛像","那是人臉靠近凹面鏡（化妝鏡）的情形。"],["倒立、縮小的實像","凸面鏡不管物體放哪裡，都是正立縮小虛像。"],["倒立、放大的實像","凸面鏡成不了實像。"]],
+      why:"凸面鏡：物體在任何位置，都成正立、縮小、虛像。像縮小了，同一面鏡子才裝得下更大的範圍。"},
+    {id:"d5", s:"s4", q:"媽媽把臉靠近化妝鏡（凹面鏡），看到臉上的毛孔放大了。這是哪一種像？",
+      o:[["正立、放大的虛像",""],["倒立、放大的實像","那是物體在焦距與兩倍焦距之間。而且實像是倒的，化妝會很不方便。"],["正立、縮小的虛像","那是凸面鏡。化妝鏡是要放大。"],["正立、放大的實像","照講義的表，正立的都是虛像。"]],
+      why:"人臉靠近凹面鏡（在焦距內），產生正立的放大虛像。"},
+    {id:"d6", s:"s4", q:"把一支筆放在凹面鏡前面很遠的地方（兩倍焦距外）。它成的像是什麼樣子？",
+      o:[["倒立、縮小的實像",""],["正立、放大的虛像","那是筆在焦距內（很靠近鏡面）的情形。"],["倒立、放大的實像","那是筆在焦距與兩倍焦距之間。"],["正立、縮小的虛像","那是凸面鏡的情形。"]],
+      why:"凹面鏡：物體在兩倍焦距外，成倒立、縮小、實像。在模擬裡把物距拉到 25～30 cm。"},
+    // ---- ⑤ 折射
+    {id:"e1", s:"s5", q:"雷射光從空氣斜斜射進水裡。下面哪一句是對的？",
+      o:[["折射線偏向法線，折射角比入射角小",""],["折射線偏離法線，折射角比入射角大","那是從水進到空氣（慢到快）。現在是快到慢。"],["光不會轉彎","只有沿著法線垂直射入才不轉彎。斜射一定會偏折。"],["光會沿著水面走","光會進到水裡，只是方向改變。"]],
+      why:"光從光速較快的介質進入光速較慢的介質後，會偏向法線。"},
+    {id:"e2", s:"s5", q:"水底的燈斜斜往上照，光從水進到空氣。它會怎麼偏折？",
+      o:[["偏離法線，折射角比入射角大",""],["偏向法線，折射角比入射角小","那是空氣進到水（快到慢）。現在是慢到快。"],["不偏折","斜射進另一種介質，光速變了，方向就會變。"],["原路反射回水裡，不會出去","這一題的光會進到空氣，而且偏離法線。"]],
+      why:"光從光速較慢的介質進入光速較快的介質後，會偏離法線。"},
+    {id:"e3", s:"s5", q:"雷射光垂直水面射進水裡（沿著法線）。會發生什麼事？",
+      o:[["方向不變，直直進去；但速率變慢了",""],["偏向法線","它已經在法線上了，沒有地方可以再偏。入射角 0°，折射角也是 0°。"],["偏離法線","入射角是 0°，折射角也是 0°，方向不變。"],["方向和速率都不變","方向不變，但水裡的光速只有約 3/4 c。"]],
+      why:"垂直射入時方向不變。但光在不同介質中行進速率不同。"},
+    {id:"e4", s:"s5", q:"光為什麼會折射？",
+      o:[["光在不同介質中行進的速率不同",""],["光進到水裡變重，往下沉","光沒有變重。偏折是因為速率改變。"],["水把光吸過去","水沒有吸引光。是光速變了。"],["光進到水裡顏色變了","折射不是顏色改變造成的。"]],
+      why:"折射：光在不同介質中行進速率不同，由一介質進入另一介質時，行進方向發生偏折。"},
+    {id:"e5", s:"s5", q:"光從水斜斜射進玻璃。它會偏向法線，還是偏離法線？（提示：想想 ① 的光速表）",
+      o:[["偏向法線，因為玻璃裡的光速比水裡慢",""],["偏離法線，因為玻璃比較硬","跟軟硬無關，要看光速。水約 3/4 c，玻璃約 2/3 c，是快進到慢。"],["不偏折，因為兩個都不是空氣","只要兩邊光速不同就會偏折，不一定要有空氣。"],["偏離法線，因為玻璃裡的光速比水裡快","順序是 水 ＞ 玻璃。玻璃裡比較慢。"]],
+      why:"光速：水 ＞ 玻璃。從快的進到慢的，會偏向法線。"},
+    {id:"e6", s:"s5", q:"一束光從空氣中的 A 點射進水裡，到達水中的 B 點。如果從 B 點沿著原來的路徑反方向射一束光，它會怎樣？",
+      o:[["沿原路回去，經過 A 點",""],["在水面被擋住，出不來","這條路光剛剛走得通，倒著走也走得通。"],["出水面後走另一條路，不會經過 A","光的可逆性：沿原路徑反向射出，會沿原路徑回去。"],["出水面後不再偏折，直直走","倒著走一樣會在水面偏折，而且剛好偏回原來的路。"]],
+      why:"光的可逆性：在一條光徑的終點發出反方向的光，此光可沿原路徑回到原來的起點。"},
+    {id:"e7", s:"s5", q:"光從空氣射進玻璃，入射角是 40°。折射角最可能是下面哪一個？",
+      o:[["約 25°",""],["40°","斜射進光速不同的介質，方向一定會變，不會還是 40°。"],["約 55°","比 40° 大就是偏離法線了。空氣進玻璃是快到慢，要偏向法線。"],["90°","90° 是沿著玻璃表面走，光沒有進去。"]],
+      why:"空氣到玻璃是快到慢，偏向法線，折射角要比入射角小。四個選項只有約 25° 符合。"},
+    // ---- ⑥ 透鏡、三稜鏡
+    {id:"f1", s:"s6", q:"爺爺用放大鏡（凸透鏡）看報紙，字要放在焦距內。他看到的是哪一種像？",
+      o:[["正立、放大的虛像",""],["倒立、放大的實像","那是字放在焦距與兩倍焦距之間，而且要用屏幕接。"],["正立、縮小的虛像","那是凹透鏡。放大鏡是凸透鏡。"],["倒立、縮小的實像","那是物體在兩倍焦距外，像照相機那樣。"]],
+      why:"凸透鏡：物體在焦距內，成正立、放大、虛像（與物同側）。"},
+    {id:"f2", s:"s6", q:"凸透鏡的焦距是 10 cm。蠟燭放在透鏡前 25 cm。另一邊的紙屏要放在哪裡才接得到清楚的像？像是什麼樣子？",
+      o:[["離透鏡 10～20 cm 之間；倒立、縮小的實像",""],["離透鏡 20 cm 以外；倒立、放大的實像","那是蠟燭放在 10～20 cm 之間。25 cm 已經在兩倍焦距外。"],["剛好 20 cm；倒立、等大的實像","那是蠟燭剛好放在 20 cm（兩倍焦距上）。"],["接不到像","蠟燭在焦點外，成的是實像，接得到。"]],
+      why:"25 cm 在兩倍焦距（20 cm）外：像在焦距與兩倍焦距間，倒立、縮小、實像。"},
+    {id:"f3", s:"s6", q:"同一片凸透鏡（焦距 10 cm），把蠟燭移到透鏡前 15 cm。紙屏上的像是什麼樣子？",
+      o:[["倒立、放大的實像",""],["倒立、縮小的實像","15 cm 在焦距（10）和兩倍焦距（20）之間，像是放大的。"],["正立、放大的虛像","那要放到 10 cm 以內。而且虛像紙屏接不到。"],["倒立、等大的實像","那要剛好放在 20 cm。"]],
+      why:"物體在焦距與兩倍焦距間：像在兩倍焦距外，倒立、放大、實像。"},
+    {id:"f4", s:"s6", q:"把蠟燭剛好放在凸透鏡的焦點上。會怎樣？",
+      o:[["折射後的光互相平行，無法成像",""],["成一個很小的亮點","那是很遠的光（平行光）進來會聚在焦點。這題是光源放在焦點，剛好反過來。"],["成倒立、等大的實像","那是放在兩倍焦距上。"],["成正立、放大的虛像","那要放在焦點以內。"]],
+      why:"物體在焦點上：通過焦點的光線折射後平行主軸，無法成像。"},
+    {id:"f5", s:"s6", q:"小明拿凸透鏡對著太陽，在紙上聚出一個最小最亮的點。這時候紙到透鏡的距離是什麼？",
+      o:[["焦距",""],["兩倍焦距","太陽很遠，光線平行主軸進來，會聚在焦點，不是兩倍焦距。"],["焦距的一半","平行光會聚的地方就是焦點。"],["沒有特別的意義","那一點就是焦點。這是找焦距最簡單的方法。"]],
+      why:"平行主軸的入射光線，經凸透鏡折射後會聚於焦點。物體在無窮遠處，成像在焦點上，是一點。"},
+    {id:"f6", s:"s6", q:"透過凹透鏡看書上的字，不管書放多遠，看到的字都是什麼樣子？",
+      o:[["正立、縮小的虛像",""],["正立、放大的虛像","那是凸透鏡（放大鏡）焦距內的情形。"],["倒立、縮小的實像","凹透鏡把光發散，折射光不會真的交會，成不了實像。"],["要看書放多遠才知道","凹透鏡沒有關卡。任何位置都一樣。"]],
+      why:"凹透鏡：物體在任何位置，都成正立、縮小、虛像。"},
+    {id:"f7", s:"s6", q:"桌上有兩片透鏡，不能用手摸。怎麼分辨哪一片是凸透鏡？",
+      o:[["拿去對著太陽：能把光會聚成一個亮點的是凸透鏡",""],["看哪一片比較重","重量跟大小、材質有關，分不出凸或凹。"],["看哪一片比較透明","兩種都是透明體。"],["能讓光穿過去的就是凸透鏡","兩種透鏡都能讓光穿過。差別是會聚還是發散。"]],
+      why:"凸透鏡中間比邊緣厚，具有會聚光線的功能。凹透鏡中間比邊緣薄，具有發散光線的功能。"},
+    {id:"f8", s:"s6", q:"蠟燭原本在凸透鏡的兩倍焦距外，慢慢往透鏡靠近（還沒到焦點）。紙屏上的實像會怎樣？",
+      o:[["愈來愈大，而且離透鏡愈來愈遠",""],["愈來愈小，而且愈來愈靠近透鏡","反了。這是蠟燭往遠處移的情形。"],["大小不變，只是位置改變","像會從縮小、等大，一路變到放大。"],["愈來愈大，但位置不變","像的位置也會往遠處跑，紙屏要跟著往後移。"]],
+      why:"物體靠近焦點，實像遠離透鏡而且變大。物體和實像往同一個方向移動。"},
+    {id:"f9", s:"s6", q:"一束光射進三稜鏡再穿出來。它整體會往哪裡偏？",
+      o:[["往稜鏡厚度大的部分偏",""],["往稜鏡尖端偏","反了。按模擬把稜鏡倒過來看，光永遠偏向厚的那邊。"],["不偏折，直直穿過去","進去折射一次，出來再折射一次，方向一定變。"],["進去和出來的偏折互相抵消","稜鏡兩個面不平行，兩次偏折是往同一邊，不會抵消。"]],
+      why:"光線通過稜鏡後，會向厚度大的部分偏折。"},
+    {id:"f10", s:"s6", q:"一條光線剛好穿過凸透鏡的鏡心。它折射後會怎樣？",
+      o:[["行進方向不會改變",""],["一定通過焦點","通過焦點的是「平行主軸」進來的光。"],["變成平行主軸","變成平行主軸的是「通過焦點」進來的光。"],["被反射回去","透鏡是讓光穿過去的。"]],
+      why:"鏡心：穿過透鏡中心的光線，經過透鏡折射後的行進方向不會改變。"},
+    {id:"f11", s:"s6", q:"把兩個三稜鏡「底對底」疊在一起（中間厚、上下兩端尖）。平行光射進來會怎樣？這像哪一種透鏡？",
+      o:[["會聚，像凸透鏡",""],["發散，像凹透鏡","尖對尖（中間薄）才是發散。底對底是中間厚。"],["會聚，像凹透鏡","會聚沒錯，但中間厚的是凸透鏡。"],["不會偏折","每個稜鏡都把光往厚的地方（中間）偏，所以會聚。"]],
+      why:"光向厚度大的部分偏折。中間厚，上下的光都往中間偏，就是會聚。凸透鏡也是中間厚。"},
+    {id:"f12", s:"s6", q:"做凸透鏡成像實驗時，紙屏上出現一個和蠟燭一樣大的倒立像。這時候蠟燭離透鏡 30 cm。這片透鏡的焦距是多少？",
+      o:[["15 cm",""],["30 cm","等大的像出現在物體放在「兩倍焦距上」。30 cm 是兩倍焦距。"],["60 cm","方向反了。30 cm 是焦距的兩倍，焦距是 30 的一半。"],["無法判斷","可以。倒立等大的實像只出現在兩倍焦距上。"]],
+      why:"物體在兩倍焦距上，成倒立、等大、實像。所以兩倍焦距＝30 cm，焦距＝15 cm。"},
+    // ---- ⑦ 光學儀器、眼睛
+    {id:"g1", s:"s7", q:"小安坐在教室後面，黑板上的字糊糊的，但看手上的課本很清楚。他的眼睛是什麼情形？該配哪一種眼鏡？",
+      o:[["近視：遠處的物體成像在視網膜前方，配凹透鏡",""],["近視：成像在視網膜後方，配凸透鏡","近視的位置和鏡片都說反了。近視是焦距過短，光太早會聚。"],["遠視：成像在視網膜前方，配凹透鏡","看遠不清楚、看近清楚是近視。"],["近視：成像在視網膜前方，配凸透鏡","凸透鏡會讓光更早會聚，更糟。要用凹透鏡先發散。"]],
+      why:"近視：水晶體焦距過短，遠處物體成像在視網膜前方。配戴凹透鏡，使光線先行發散再進入眼睛。"},
+    {id:"g2", s:"s7", q:"爺爺看報紙時，要把報紙拿得遠遠的才看得清楚。醫師說是老花眼。原因和配的眼鏡是什麼？",
+      o:[["水晶體無法調整焦距；配凸透鏡",""],["水晶體焦距過短；配凹透鏡","那是近視。"],["瞳孔無法控制入射光；配凹透鏡","瞳孔管的是進來的光量，不是對焦。"],["視網膜無法成像；配凸透鏡","視網膜還是能成像。問題出在水晶體調不了焦距。"]],
+      why:"老花眼是由於無法調整水晶體焦距所引起，可配戴適當焦距的凸透鏡。"},
+    {id:"g3", s:"s7", q:"你正在看遠方的一棵大樹。這棵樹在你視網膜上成的是哪一種像？",
+      o:[["縮小、倒立的實像",""],["縮小、正立的實像","我們覺得樹是正的，但視網膜上的像其實是倒立的。"],["放大、正立的虛像","光真的落在視網膜上，所以是實像。而且大樹要縮小才裝得進眼睛。"],["等大、倒立的實像","大樹比眼球大太多了，像一定是縮小的。"]],
+      why:"光線經角膜、瞳孔，再由水晶體折射後，在視網膜上成縮小倒立實像。"},
+    {id:"g4", s:"s7", q:"數位相機裡，功能和眼睛的「瞳孔」最像的是哪一個？",
+      o:[["光圈：控制入射的光線量",""],["快門：控制曝光時間","快門管的是時間長短。管光量多寡的是光圈。"],["鏡頭：把光折射、會聚","鏡頭比較像水晶體。"],["感光元件：成像的地方","感光元件比較像視網膜。"]],
+      why:"瞳孔控制入射光多寡。相機的光圈控制入射光線量。"},
+    {id:"g5", s:"s7", q:"玻片上寫了一個小小的英文字母「p」。放到複式顯微鏡下，看到的是什麼？",
+      o:[["d",""],["p","顯微鏡的像和實物上下顛倒、左右相反，不會一樣。"],["q","q 只有左右相反。還要再上下顛倒。"],["b","b 只有上下顛倒。還要再左右相反。"]],
+      why:"顯微鏡的成像與實物相比為上下顛倒、左右相反。p 轉 180° 就是 d。"},
+    {id:"g6", s:"s7", q:"複式顯微鏡的物鏡和目鏡，各自成什麼像？",
+      o:[["物鏡成放大倒立實像；目鏡再把它放大成虛像",""],["物鏡成放大正立虛像；目鏡成放大倒立實像","順序反了。物體在物鏡焦點外，先成實像。"],["兩個都成實像","物鏡的像落在目鏡的焦點內，所以目鏡成的是虛像。"],["兩個都成虛像","物體放在物鏡焦點外，物鏡成的是實像。"]],
+      why:"物體在物鏡焦點外，成放大倒立實像；這個像在目鏡焦點內，再成放大虛像。對原物是放大倒立虛像。"},
+    {id:"g7", s:"s7", q:"阿姨看遠方很清楚，但看近的手機字會糊。檢查說是遠視。下面哪一句是對的？",
+      o:[["近處物體成像在視網膜後方，要配凸透鏡先把光會聚",""],["近處物體成像在視網膜前方，要配凹透鏡","那是近視。"],["近處物體成像在視網膜後方，要配凹透鏡","凹透鏡會讓光更發散，交會點更往後。要用凸透鏡。"],["近處物體成像在視網膜前方，要配凸透鏡","成像在前方是近視，而且近視配的是凹透鏡。"]],
+      why:"遠視：水晶體焦距過長，近處物體成像在視網膜後方。配戴凸透鏡，使光線先行會聚再進入眼睛。"},
+    {id:"g8", s:"s7", q:"用數位相機拍一座山，感光元件上成的像是什麼樣子？",
+      o:[["縮小、倒立的實像",""],["縮小、正立的實像","凸透鏡成的實像都是倒立的。相機會把照片轉正給你看。"],["放大、倒立的實像","山很遠（在兩倍焦距外），像是縮小的。"],["放大、正立的虛像","感光元件要真的有光落在上面，所以一定是實像。"]],
+      why:"拍照時，光線經透鏡折射後在感光元件上成縮小倒立實像。"},
+    // ---- ⑧ 色散、顏色
+    {id:"h1", s:"s8", q:"舞臺上，紅色和綠色的聚光燈用相同強度照在同一塊白布上。重疊的地方是什麼顏色？",
+      o:[["黃色",""],["咖啡色","那是顏料混合的經驗。光的混合是愈加愈亮，紅光加綠光是黃光。"],["白色","白色要紅、綠、藍三種都有。"],["洋紅色","洋紅是紅光加藍光。"]],
+      why:"加法混合：紅光＋綠光＝黃光。"},
+    {id:"h2", s:"s8", q:"紅、綠、藍三盞燈，用相同的強度照在白牆的同一個地方。那個地方是什麼顏色？",
+      o:[["白色",""],["黑色","顏料愈混愈暗，但光是愈疊愈亮。三原色光等強度混合是白光。"],["灰色","三種光都全開，疊起來是白色。"],["彩虹色","混在同一個地方就合成白光，不會分開成彩虹。"]],
+      why:"三原色光以相同強度共同混合，會顯現白色。"},
+    {id:"h3", s:"s8", q:"太陽光下，蘋果看起來是紅色的。為什麼？",
+      o:[["蘋果只反射紅光，吸收其他色光",""],["蘋果吸收紅光，所以是紅色","被吸收的光進不了眼睛。看到的顏色是被「反射」的色光。"],["蘋果自己發出紅光","蘋果不是發光體。"],["太陽光是紅色的","太陽光是白光，含有各種色光。"]],
+      why:"不透明體：物體反射的色光即為物體的顏色，其餘色光被吸收。"},
+    {id:"h4", s:"s8", q:"房間裡只開一盞綠光燈。這時候看一顆紅蘋果，它是什麼顏色？",
+      o:[["黑色",""],["紅色","紅蘋果要有紅光才反射得出紅色。房間裡只有綠光。"],["綠色","紅蘋果不反射綠光，綠光被它吸收了。"],["黃色","光的顏色不會和物體的顏色「混合」。只看哪些色光被反射進眼睛。"]],
+      why:"紅色物體只反射紅光，吸收其他色光。只有綠光時，沒有任何光反射進眼睛，看起來是黑色。"},
+    {id:"h5", s:"s8", q:"一張白紙拿到只有藍光的房間裡。它看起來是什麼顏色？",
+      o:[["藍色",""],["白色","要有紅、綠、藍光都反射才是白色。現在只有藍光可以反射。"],["黑色","白紙會反射所有色光，包括藍光，所以不會是黑色。"],["青色","青色要同時有藍光和綠光。"]],
+      why:"白色物體反射所有色光。照過來的只有藍光，就只反射藍光。"},
+    {id:"h6", s:"s8", q:"透過一張紅色玻璃紙，看一片綠色的葉子（葉子只反射綠光）。葉子看起來是什麼顏色？",
+      o:[["黑色",""],["綠色","葉子反射的綠光，會被紅色玻璃紙吸收，到不了眼睛。"],["紅色","葉子沒有反射紅光，所以沒有紅光可以穿過玻璃紙。"],["黃色","不是把紅和綠「混合」。玻璃紙是把不能穿透的色光擋掉。"]],
+      why:"紅色透明體只讓紅光穿過。葉子來的是綠光，被吸收，沒有光進眼睛。"},
+    {id:"h7", s:"s8", q:"白光穿過三稜鏡，分成紅橙黃綠藍靛紫。哪一種色光偏折得最多？",
+      o:[["紫光",""],["紅光","紅光偏折最少。看色散那張圖，紅光離原來的方向最近。"],["綠光","綠光在中間。"],["每一種都一樣","如果都一樣，白光就不會被分開了。"]],
+      why:"不同顏色的光偏折的程度不同，紫光偏折角度最大。"},
+    {id:"h8", s:"s8", q:"牛頓讓太陽光穿過三稜鏡，得到一條彩色的光帶。這個實驗說明了什麼？",
+      o:[["白光是由各種顏色的光組成的",""],["三稜鏡替白光染上顏色","稜鏡是透明的，沒有染料。它只是把本來就在一起的色光分開。"],["太陽光只有七種固定的顏色","光譜是連續的色光帶，七色只是主要的顏色。"],["光經過玻璃會變慢，所以變色","變慢會造成偏折。但出現顏色是因為各色光偏折的程度不同。"]],
+      why:"太陽光（白光）通過三稜鏡後，被折射分散成各種色光，這種現象稱為色散。"},
+    {id:"h9", s:"s8", q:"手機螢幕上顯示一大片黃色。用放大鏡看螢幕，會看到三原色的小發光體是什麼狀態？",
+      o:[["紅色和綠色的亮，藍色的不亮",""],["只有黃色的發光體在亮","螢幕上沒有黃色的發光體。只有紅、綠、藍三種。"],["紅色和藍色的亮","紅光加藍光是洋紅。"],["三種都一樣亮","三種都亮是白色。"]],
+      why:"彩色螢幕的顏色，是調整三原色發光體的亮度比例產生的。紅光＋綠光＝黃光。"},
+    {id:"h10", s:"s8", q:"黑色的衣服為什麼看起來是黑的？",
+      o:[["它吸收所有色光，沒有色光反射進眼睛",""],["它反射黑色的光","沒有「黑色的光」。黑就是沒有光進眼睛。"],["它反射所有色光","反射所有色光是白色。"],["它只反射紫色的光","只反射紫光，看起來會是紫色。"]],
+      why:"白色物體反射所有色光；黑色物體吸收所有色光。"},
+    {id:"h11", s:"s8", q:"雨後看到一道虹。照講義小劇場的說法，下面哪一句是對的？",
+      o:[["太陽光在小水滴裡經過兩次折射和一次反射；外圈紅、內圈紫",""],["太陽光只被小水滴反射；外圈紫、內圈紅","光還要進出水滴各折射一次，色光才會分開。顏色順序也反了。"],["太陽光在小水滴裡折射兩次、反射一次；外圈紫、內圈紅","過程對了，顏色反了。外圈是紅，內圈是紫。"],["小水滴自己發出七種色光","水滴不是發光體。它是把太陽光分開。"]],
+      why:"太陽光遇到小水滴，經過一次反射及兩次折射形成虹。外圈是紅，內圈是紫。"},
+  ];
+  const KEY = "light_quiz_v1"; let ST = {};
+  try{ ST = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(e){}
+  const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} };
+  const rec = id => ST[id] || (ST[id] = { n:0, ok:0, last:"" });
+  const isWrong = q => { const r = ST[q.id]; return r && (r.last === "no" || r.last === "guess"); };
+  const shuf = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+  const esc = s => s.replace(/[&<>]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[c]));
+  const box = $("quiz"), ana = $("ana"), back = $("backBtn");
+  let round = [], idx = 0, okN = 0, misses = [];
+
+  // 跳回去看那一段，再跳回題目
+  function goSec(s){
+    const el = $(s); el.scrollIntoView({ behavior:"smooth", block:"start" });
+    el.classList.add("flash"); setTimeout(()=> el.classList.remove("flash"), 2600); back.hidden = false;
+  }
+  back.addEventListener("click", ()=>{ $("s9").scrollIntoView({ behavior:"smooth", block:"start" }); back.hidden = true; });
+  const jumpBtn = s => `<button class="chip jump" data-go="${s}">回去看 ${SEC[s]}</button>`;
+  document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if(b) goSec(b.dataset.go); });
+
+  function build(onlyWrong){
+    const pri = q => isWrong(q) ? 0 : !ST[q.id] || !ST[q.id].n ? 1 : 2;
+    const pool = shuf(Q.filter(q => !onlyWrong || isWrong(q))).sort((a,b) => pri(a)-pri(b));
+    const out = [], cnt = {};
+    // 每一段先各出一題，再補到 10 題，確保八段都考到
+    for(const cap of (onlyWrong ? [99] : [1,2,99]))
+      for(const q of pool){ if(out.length >= 10) break; if(out.includes(q) || (cnt[q.s]||0) >= cap) continue; cnt[q.s] = (cnt[q.s]||0)+1; out.push(q); }
+    return shuf(out);
+  }
+  function start(onlyWrong){
+    round = build(onlyWrong); idx = 0; okN = 0; misses = [];
+    if(!round.length){ box.innerHTML = `<p class="lead">錯題本是空的。先練一回吧。</p><div class="ctrl"><button class="chip on big" id="go">開始練一回（10 題）</button></div>`; $("go").addEventListener("click", ()=> start(false)); return; }
+    show();
+  }
+  function finish(q, right, diag){
+    const guess = box.querySelector(".guess input").checked, r = rec(q.id);
+    r.n++; if(right) r.ok++; r.last = !right ? "no" : guess ? "guess" : "ok"; save();
+    pracCount++; if(right){ pracOk++; okN++; } if(r.last !== "ok") misses.push(q);
+    logEv({ type:"quiz", q:q.id, sec:q.s, ok:right, guess });
+    const fb = box.querySelector(".fb"); fb.hidden = false; fb.className = "fb " + (right ? "good" : "bad");
+    let h = right ? (guess ? "<b>答對了。</b>不過你說是用猜的，我先把它放進錯題本，之後再考你一次。" : "<b>答對了。</b>") : "<b>這題沒答對。</b>";
+    if(!right && diag) h += `<p><span class="dx">你可能是這樣想的</span>${esc(diag)}</p>`;
+    h += `<p><span class="dx k">關鍵</span>${esc(q.why)}</p>`;
+    h += `<div class="ctrl">${right && !guess ? "" : jumpBtn(q.s)}<button class="chip on" id="nextQ">${idx+1 < round.length ? "下一題" : "看這一回的結果"}</button></div>`;
+    fb.innerHTML = h; box.querySelector(".guess").style.display = "none";
+    $("nextQ").addEventListener("click", ()=>{ idx++; idx < round.length ? show() : summary(); });
+    renderAna();
+  }
+  function show(){
+    const q = round[idx];
+    let h = `<div class="q"><div class="qhead"><span>第 ${idx+1} / ${round.length} 題</span><span class="tag">${SEC[q.s]}</span></div><p class="t">${esc(q.q)}</p>`;
+    h += `<label class="guess"><input type="checkbox"> 這題我不太確定，是用猜的</label>`;
+    h += `<div class="opts"></div><div class="fb" hidden></div></div>`;
+    box.innerHTML = h;
+    const opts = box.querySelector(".opts"), order = shuf(q.o.map((_,i) => i)); let done = false;
+    order.forEach(i => { const b = document.createElement("button"); b.textContent = q.o[i][0]; b.dataset.i = i;
+      b.addEventListener("click", ()=>{ if(done) return; done = true; const right = i === 0;
+        b.classList.add(right ? "ok" : "no"); opts.querySelector('[data-i="0"]').classList.add("ok"); finish(q, right, q.o[i][1]); });
+      opts.appendChild(b); });
+  }
+  function summary(){
+    const bySec = {}; misses.forEach(q => (bySec[q.s] = bySec[q.s] || []).push(q));
+    let h = `<div class="q"><p class="t">這一回：${round.length} 題答對 ${okN} 題</p>`;
+    if(!misses.length) h += `<p>全部答對，而且都不是用猜的。很紮實。</p>`;
+    else {
+      h += `<p>下面這幾段再看一次，然後按「只練錯題」。</p>`;
+      for(const s in bySec) h += `<div class="miss"><b>${SEC[s]}</b>（${bySec[s].length} 題）${jumpBtn(s)}<ul>${bySec[s].map(q => `<li>${esc(q.q)}</li>`).join("")}</ul></div>`;
+    }
+    h += `<div class="ctrl"><button class="chip on" id="again">再練一回（錯的和沒做過的先出）</button>${misses.length ? `<button class="chip" id="onlyW">只練錯題</button>` : ""}</div></div>`;
+    box.innerHTML = h;
+    $("again").addEventListener("click", ()=> start(false));
+    if($("onlyW")) $("onlyW").addEventListener("click", ()=> start(true));
+    cloudSend({ type:"小測驗", detail:`認識光 一回 ${round.length} 題；要再看：${Object.keys(bySec).map(s => SEC[s]).join("、") || "無"}`, score:`${okN}/${round.length}` });
+  }
+  function renderAna(){
+    const wrong = Q.filter(isWrong), seen = Q.filter(q => ST[q.id] && ST[q.id].n).length;
+    let h = `<p class="lead">題庫共 ${Q.length} 題，你做過 ${seen} 題。紀錄只存在這台裝置的瀏覽器。</p><div class="bars">`;
+    let weak = null, weakRate = 2;
+    for(const s in SEC){
+      let n = 0, ok = 0; Q.filter(q => q.s === s).forEach(q => { const r = ST[q.id]; if(r){ n += r.n; ok += r.ok; } });
+      const rate = n ? ok/n : 0; if(n >= 2 && rate < weakRate){ weakRate = rate; weak = s; }
+      h += `<div class="bar"><span class="nm">${SEC[s]}</span><span class="tr"><i style="width:${Math.round(rate*100)}%;background:${!n ? "#e5e7eb" : rate >= .8 ? "#16a34a" : rate >= .5 ? "#d97706" : "#dc2626"}"></i></span><span class="pc">${n ? `答對 ${ok}／${n}` : "還沒做"}</span></div>`;
+    }
+    h += `</div>`;
+    if(weak && weakRate < .8) h += `<div class="key">目前最需要再看的是 <b>${SEC[weak]}</b>。${jumpBtn(weak)}</div>`;
+    h += `<h3>錯題本（${wrong.length} 題）</h3>`;
+    if(!wrong.length) h += `<p style="color:var(--sub)">目前沒有錯題。答錯或用猜的題目會出現在這裡，之後答對就會移除。</p>`;
+    else h += `<ul class="wb">${wrong.map(q => `<li>${esc(q.q)} <span class="tag">${ST[q.id].last === "guess" ? "用猜的" : "答錯"}</span> ${jumpBtn(q.s)}</li>`).join("")}</ul><div class="ctrl"><button class="chip on" id="anaW">只練錯題（${Math.min(10, wrong.length)} 題）</button></div>`;
+    h += `<div class="ctrl"><button class="chip" id="clr">清除我的作答紀錄</button></div>`;
+    ana.innerHTML = h;
+    if($("anaW")) $("anaW").addEventListener("click", ()=>{ start(true); $("s9").scrollIntoView({ behavior:"smooth" }); });
+    $("clr").addEventListener("click", ()=>{ if(confirm("確定要清除這一課的作答紀錄和錯題本嗎？清掉就救不回來。")){ ST = {}; save(); renderAna(); } });
+  }
+  box.innerHTML = `<div class="ctrl"><button class="chip on big" id="go">開始練一回（10 題）</button></div>`;
+  $("go").addEventListener("click", ()=> start(false));
+  renderAna();
+})();
+</script>
+</body>
+</html>
