@@ -40,6 +40,9 @@
   .sup .sl{display:inline-block; background:var(--vio); color:#fff; border-radius:6px; padding:0 8px; font-size:.78rem; font-weight:bold; margin-right:6px;}
   .sup small{color:var(--sub);}
   .term{border-bottom:2px dotted var(--pri); font-weight:bold;}
+  details.more{margin-top:10px; border:1px solid var(--border); border-radius:10px; padding:6px 14px; background:#fafbfc; font-size:.92rem;}
+  details.more summary{cursor:pointer; color:var(--sub); font-weight:bold; font-size:.9rem;}
+  details.more[open] summary{margin-bottom:6px;}
 
   .ctrl{display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:8px 0;}
   .ctrl .lab{font-size:.86rem; color:var(--sub); margin-right:2px;}
@@ -118,7 +121,7 @@
 <header class="hero">
   <span class="badge">大氣科學概論 · 第八章 次環流 · 五、成鋒作用和消鋒作用（p.269～274）</span>
   <h1>成鋒作用和消鋒作用：看等溫線怎麼被擠成鋒</h1>
-  <p>課本用六頁文字和五張靜態圖，講「風怎麼把等溫線擠在一起」。這一頁把那五張圖都變成<b>會動的</b>：你可以拉桿子改風場，直接看等溫線被擠緊、被拉開。</p>
+  <p>課本的五張圖，這裡都會動。先玩圖，字很少。</p>
 </header>
 
 <nav class="toc">
@@ -126,29 +129,24 @@
 </nav>
 
 <div class="card">
-  <h2>先用三句話抓住整節</h2>
+  <h2>三句話</h2>
   <ol>
-    <li><b>鋒就是等溫線很密的地方。</b>等溫線變密叫<span class="term">成鋒作用</span>（frontogenesis），散開叫<span class="term">消鋒作用</span>（frontolysis）。</li>
-    <li><b>主角是「變形場」。</b>空氣從一個方向流進來、從垂直的方向流出去，等溫線就被擠成一束。</li>
-    <li><b>光靠水平的風不夠。</b>還要有垂直運動、凝結放熱和蒸發吸熱一起幫忙，鋒才會真的長出來。</li>
+    <li><b>鋒＝等溫線很密的地方。</b>變密叫<span class="term">成鋒</span>，散開叫<span class="term">消鋒</span>。</li>
+    <li><b>主角是變形場。</b>一邊流進、一邊流出，等溫線被擠成一束。</li>
+    <li><b>還要垂直運動、凝結和蒸發幫忙。</b></li>
   </ol>
-  <p style="font-size:.88rem;color:var(--sub)">圖裡的「氣旋形」都是指北半球的逆時針。紫色的「補充」框是課本沒寫的延伸內容，來自文末列的大學教材，和課本內容分開標示。</p>
+  <p style="font-size:.86rem;color:var(--sub)">氣旋形＝北半球逆時針。細節都收在每段最下面的「看更多」。</p>
 </div>
 
 <!-- ============ ① ============ -->
 <div class="card" id="s1">
-  <h2>① 成鋒從哪裡開始：鞍式區（col）<span class="pg">課本 p.269</span></h2>
-  <p class="lead">課本說：鋒不會突然產生。成鋒作用可以發生在氣壓場的<span class="term">鞍式區</span>，也叫<b>中性點</b>。它是槽和脊的交點。</p>
-  <p>想像一個馬鞍。往前後看，你坐的地方最低。往左右看，你坐的地方最高。氣壓場的「鞍」就是這樣的一點：</p>
-  <ul>
-    <li>在<b>兩個高壓之間</b>，它是氣壓相對<b>最低</b>的點。</li>
-    <li>在<b>兩個低壓之間</b>，它是氣壓相對<b>最高</b>的點。</li>
-  </ul>
+  <h2>① 鞍式區（col）<span class="pg">p.269</span></h2>
+  <p class="lead">成鋒可以發生在<span class="term">鞍式區</span>（中性點）：槽和脊的交點。兩高壓之間它最低，兩低壓之間它最高。</p>
 
-  <div class="predict" data-id="p1" data-ans="1" data-exp="鞍式區正中心兩邊的力量剛好抵銷，所以風幾乎是零。這就是它又叫「中性點」的原因。離中心越遠，風才越大。">
-    <p><b>先猜再看：</b>鞍式區正中心那一點，風會怎麼樣？</p>
-    <div class="pb"><button>四股氣流在這裡相撞，風最強</button><button>幾乎沒有風</button></div>
-    <p class="watch" hidden>先不告訴你對不對。看下面的圖，盯著正中央的小點，和四個角落的小點比速度。 <button class="chip rev">我看完了，對答案</button></p>
+  <div class="predict" data-id="p1" data-ans="1" data-exp="正中心兩邊的力量抵銷，風幾乎是零，所以叫中性點。">
+    <p><b>先猜再看：</b>鞍式區正中心的風？</p>
+    <div class="pb"><button>四股氣流相撞，風最強</button><button>幾乎沒有風</button></div>
+    <p class="watch" hidden>看圖正中央的小點，和角落的比速度。 <button class="chip rev">對答案</button></p>
     <p class="res" hidden></p>
   </div>
 
@@ -161,74 +159,78 @@
   <div class="stage"><canvas id="c1"></canvas></div>
   <div class="legend">
     <span><i style="border-color:#64748b"></i>等壓線</span>
-    <span><i style="border-color:#0f172a"></i>會動的小線＝風（高空風大致和等壓線平行）</span>
-    <span>示意圖，北半球。</span>
+    <span><i style="border-color:#0f172a"></i>小線＝風</span>
+    <span>示意圖，北半球</span>
   </div>
   <div class="status" id="cutTxt"></div>
 
-  <div class="key"><b>怎麼在圖上找鞍：</b>課本說，地面天氣圖上通常不容易看出鞍的位置。要靠<b>基準層定壓面圖</b>，最常用 <b>850、700，甚至 500 毫巴</b>圖。高空風大致和等壓線平行，所以畫<b>流線</b>就能很快找出鞍式區。</div>
-  <div class="note"><b>為什麼不看地面：</b>課本說，成鋒、消鋒的活動過程，都以<b>對流層中部或上部</b>最明顯。地面附近的摩擦層裡，地面不規則、局地水汽和溫度擾動，都會把成鋒或消鋒的過程破壞掉。</div>
+  <div class="key"><b>找鞍：</b>看 850、700、500 毫巴圖的流線。成鋒、消鋒在對流層中上部最明顯。</div>
+  <details class="more"><summary>看更多</summary>
+    <p><b>為什麼用高空圖：</b>地面天氣圖上通常不容易看出鞍。高空風大致和等壓線平行，所以畫流線就能很快找到。</p>
+    <p><b>為什麼不看地面：</b>地面附近的摩擦層裡，地面不規則、局地水汽、溫度擾動，都會破壞成鋒或消鋒的過程。</p>
+  </details>
 </div>
 
 <!-- ============ ② ============ -->
 <div class="card" id="s2">
-  <h2>② 變形場怎麼把等溫線擠在一起<span class="pg">課本 p.269～270、272，圖 8-21、8-23</span></h2>
-  <p class="lead">把鏡頭拉近到鞍式區。這裡的流線長得像四條背對背的雙曲線，整個型式叫<span class="term">變形場</span>（deformation field）。</p>
-  <ul>
-    <li>空氣<b>往外流</b>的那條軸，叫<span class="term">伸張軸</span>（axis of dilatation）。</li>
-    <li>空氣<b>往裡流</b>的那條軸，叫<span class="term">收縮軸</span>（axis of contraction）。</li>
-    <li>虛線是等溫線。上面冷、下面暖，和圖 8-21 一樣標 T₀ 到 T₀+6。</li>
-  </ul>
+  <h2>② 變形場怎麼擠等溫線<span class="pg">p.269～272，圖 8-21、8-23</span></h2>
+  <p class="lead">鞍式區放大看就是<span class="term">變形場</span>。往外流的是<span class="term">伸張軸</span>，往裡流的是<span class="term">收縮軸</span>。虛線是等溫線，上冷下暖。</p>
 
-  <div class="predict" data-id="p2" data-ans="0" data-exp="空氣沿收縮軸的方向往中間擠，等溫線被推到伸張軸旁邊排成一束。所以「擠的方向」是收縮軸，「擠完躺的位置」是伸張軸。">
-    <p><b>先猜再看：</b>按下播放後，等溫線最後會擠在哪一條軸的旁邊？</p>
-    <div class="pb"><button>伸張軸（水平那條）</button><button>收縮軸（垂直那條）</button></div>
-    <p class="watch" hidden>先不告訴你對不對。按下面的「播放」，看虛線往哪裡靠。 <button class="chip rev">我看完了，對答案</button></p>
+  <div class="predict" data-id="p2" data-ans="0" data-exp="擠的方向是收縮軸，擠完躺在伸張軸旁邊。">
+    <p><b>先猜再看：</b>等溫線最後擠在哪條軸旁邊？</p>
+    <div class="pb"><button>伸張軸（水平）</button><button>收縮軸（垂直）</button></div>
+    <p class="watch" hidden>按「播放」，看虛線往哪裡靠。 <button class="chip rev">對答案</button></p>
     <p class="res" hidden></p>
   </div>
 
   <div class="slider">
-    <span>一開始等溫線和伸張軸的夾角 <b id="b2v">15°</b></span>
+    <span>等溫線和伸張軸的夾角 <b id="b2v">15°</b></span>
     <input type="range" id="b2" min="0" max="90" step="5" value="15">
     <div class="ends"><span>0°：平行伸張軸</span><span>45°</span><span>90°：平行收縮軸</span></div>
   </div>
   <div class="ctrl">
     <button class="chip on big" id="play2">播放</button>
     <button class="chip" id="re2">重來</button>
-    <button class="chip" data-b2="15">課本圖 8-21 的擺法</button>
-    <button class="chip" data-b2="90">試試平行收縮軸</button>
-    <label class="ck"><input type="checkbox" id="blob2" checked> 放一塊圓形空氣進去</label>
+    <button class="chip" data-b2="15">圖 8-21 的擺法</button>
+    <button class="chip" data-b2="90">平行收縮軸</button>
+    <label class="ck"><input type="checkbox" id="blob2" checked> 放一塊圓形空氣</label>
   </div>
   <div class="stage"><canvas id="c2"></canvas></div>
   <div class="legend">
     <span><i class="d" style="border-color:#334155"></i>等溫線</span>
     <span><i style="border-color:#15803d"></i>伸張軸</span>
     <span><i style="border-color:#6d28d9"></i>收縮軸</span>
-    <span>底色：藍＝冷，紅＝暖</span>
+    <span>藍＝冷，紅＝暖</span>
   </div>
   <div class="count">
-    <div><small>溫度梯度是一開始的</small><b id="r2g">1.0 倍</b></div>
-    <div><small>等溫線間距剩</small><b id="r2s">100%</b></div>
-    <div><small>等溫線和伸張軸夾角</small><b id="r2a">15°</b></div>
-    <div><small>那塊空氣的面積</small><b id="r2m">100%</b></div>
+    <div><small>溫度梯度</small><b id="r2g">1.0 倍</b></div>
+    <div><small>等溫線間距</small><b id="r2s">100%</b></div>
+    <div><small>和伸張軸夾角</small><b id="r2a">15°</b></div>
+    <div><small>空氣塊面積</small><b id="r2m">100%</b></div>
   </div>
   <div class="status" id="st2"></div>
 
-  <div class="key"><b>課本的兩句話是同一件事：</b>p.270 說等溫線「集中在伸張軸附近」，p.272 說「沿收縮軸集中」。看動畫就懂：<b>擠的方向</b>是收縮軸，擠完之後等溫線<b>躺在</b>伸張軸旁邊。這一帶就是成鋒作用的開始。</div>
-  <div class="note"><b>最容易錯：等溫線擠在一起，不代表空氣在這裡堆積。</b>看那塊圓形空氣。它被壓扁、拉長，但面積一直是 100%。課本的說法是：質量的輻合或輻散未必有關，流出的可能和流入的完全相等。</div>
-  <div class="life"><b>那消鋒呢：</b>把夾角拉到 90° 再播放。等溫線和收縮軸平行，這次是被<b>拉開</b>。課本 p.273～274 說，任何變形過程只要有利於等溫線散開，就是消鋒作用的開始階段，所以不另外討論。</div>
-  <div class="sup"><span class="sl">補充（課本沒寫）</span><b>45° 規則。</b>等溫線和伸張軸的夾角<b>小於 45°</b>，變形場此刻在成鋒。<b>大於 45°</b>，此刻在消鋒。把夾角拉到 70° 播放看看：一開始梯度先變小，但等溫線會被風慢慢轉向伸張軸，轉過 45° 之後又開始變密。<br><small>來源：美國國家氣象局 Louisville 辦公室訓練教材（Funk, 2004）；公式是 Petterssen 的成鋒函數 F = ½|∇θ|(D cos 2β − δ)，D 是變形、β 是那個夾角、δ 是輻散。</small></div>
+  <div class="key">
+    <b>成鋒：</b>等溫線被推到伸張軸旁邊擠成一束。<br>
+    <b>消鋒：</b>夾角拉到 90° 再播，等溫線被拉開。<br>
+    <b>別誤會：</b>空氣塊面積一直 100%。等溫線變密，不代表空氣堆積。
+  </div>
+  <details class="more"><summary>看更多</summary>
+    <p><b>課本兩句話是同一件事：</b>p.270「集中在伸張軸附近」講位置，p.272「沿收縮軸集中」講擠的方向。</p>
+    <p><b>消鋒為什麼不另外講：</b>課本說，任何變形過程只要有利於等溫線散開，就是消鋒的開始階段。</p>
+    <div class="sup"><span class="sl">補充（課本沒寫）</span><b>45° 規則：</b>夾角小於 45° 此刻在成鋒，大於 45° 此刻在消鋒。拉到 70° 播放：梯度先變小，等溫線被轉過 45° 後又變密。<br><small>來源：美國國家氣象局訓練教材（Funk, 2004）；Petterssen 成鋒函數 F = ½|∇θ|(D cos 2β − δ)。</small></div>
+  </details>
 </div>
 
 <!-- ============ ③ ============ -->
 <div class="card" id="s3">
-  <h2>③ 一大塊空氣的四種單純運動<span class="pg">課本 p.270～271，圖 8-22</span></h2>
-  <p class="lead">課本先把問題擱一邊，回頭問：一大塊空氣可以怎麼動？先假設運動只在水平方向，可以拆成四種。看下面那塊方形空氣，裡面畫了五條等溫線。</p>
+  <h2>③ 四種單純運動<span class="pg">p.270～271，圖 8-22</span></h2>
+  <p class="lead">一塊空氣在水平面上怎麼動？拆成四種。方塊裡畫了五條等溫線。</p>
 
-  <div class="predict" data-id="p3" data-ans="1" data-exp="純旋轉只改變方位。整塊一起轉，線和線之間的距離不會變，所以轉再快也擠不出鋒。">
-    <p><b>先猜再看：</b>讓這塊空氣原地快速旋轉，裡面的等溫線會被擠密嗎？</p>
-    <div class="pb"><button>會，轉越快越密</button><button>不會</button></div>
-    <p class="watch" hidden>先不告訴你對不對。按「純旋轉」，看下面「等溫線間距」的數字有沒有變。 <button class="chip rev">我看完了，對答案</button></p>
+  <div class="predict" data-id="p3" data-ans="1" data-exp="旋轉只改方位，線和線的距離不變。">
+    <p><b>先猜再看：</b>原地快速旋轉，等溫線會變密嗎？</p>
+    <div class="pb"><button>會，越快越密</button><button>不會</button></div>
+    <p class="watch" hidden>按「純旋轉」，看「等溫線間距」。 <button class="chip rev">對答案</button></p>
     <p class="res" hidden></p>
   </div>
 
@@ -236,48 +238,50 @@
     <button class="chip on" data-m="tr">純移置（圖 a）</button>
     <button class="chip" data-m="ro">純旋轉（圖 b）</button>
     <button class="chip" data-m="co">純輻合（圖 c）</button>
-    <button class="chip" data-m="di">純輻散（和 c 相反）</button>
+    <button class="chip" data-m="di">純輻散</button>
     <button class="chip" data-m="de">純變形（圖 d）</button>
   </div>
   <div class="stage"><canvas id="c3"></canvas></div>
   <div class="count">
-    <div><small>這塊空氣的面積</small><b id="r3a">100%</b></div>
-    <div><small>裡面等溫線的間距</small><b id="r3s">100%</b></div>
+    <div><small>面積</small><b id="r3a">100%</b></div>
+    <div><small>等溫線間距</small><b id="r3s">100%</b></div>
   </div>
   <div class="status" id="st3"></div>
 
   <div class="tw"><table id="t3">
-    <tr><th>運動</th><th>位置</th><th>方位</th><th>面積（容積）</th><th>形狀</th><th>等溫線間距</th></tr>
-    <tr data-m="tr"><td class="l">純移置 pure translation</td><td class="chg">變</td><td>不變</td><td>不變</td><td>不變</td><td>不變</td></tr>
-    <tr data-m="ro"><td class="l">純旋轉 pure rotation</td><td>不變</td><td class="chg">變</td><td>不變</td><td>不變</td><td>不變</td></tr>
-    <tr data-m="co"><td class="l">純輻合（容積收縮）</td><td>不變</td><td>不變</td><td class="chg">變小</td><td>不變</td><td class="chg">變小</td></tr>
-    <tr data-m="di"><td class="l">純輻散（純膨脹 pure expansion）</td><td>不變</td><td>不變</td><td class="chg">變大</td><td>不變</td><td class="chg">變大</td></tr>
-    <tr data-m="de"><td class="l">純變形 pure deformation</td><td>不變</td><td>不變</td><td>不變</td><td class="chg">變</td><td class="chg">變（看等溫線怎麼擺）</td></tr>
+    <tr><th>運動</th><th>位置</th><th>方位</th><th>面積</th><th>形狀</th><th>等溫線間距</th></tr>
+    <tr data-m="tr"><td class="l">純移置</td><td class="chg">變</td><td>不變</td><td>不變</td><td>不變</td><td>不變</td></tr>
+    <tr data-m="ro"><td class="l">純旋轉</td><td>不變</td><td class="chg">變</td><td>不變</td><td>不變</td><td>不變</td></tr>
+    <tr data-m="co"><td class="l">純輻合</td><td>不變</td><td>不變</td><td class="chg">變小</td><td>不變</td><td class="chg">變小</td></tr>
+    <tr data-m="di"><td class="l">純輻散（純膨脹）</td><td>不變</td><td>不變</td><td class="chg">變大</td><td>不變</td><td class="chg">變大</td></tr>
+    <tr data-m="de"><td class="l">純變形</td><td>不變</td><td>不變</td><td>不變</td><td class="chg">變</td><td class="chg">變</td></tr>
   </table></div>
 
-  <div class="key"><b>課本的結論：</b>純移置<b>不會</b>使等溫線密集。純旋轉<b>也一樣</b>不會。變形的情況<b>截然不同</b>，合流運動會讓等溫線集中。</div>
-  <div class="note"><b>輻合明明會讓間距變小，為什麼課本先不談？</b>課本 p.271 說：擴張（負的是輻合、正的是輻散）在其他情況很重要，但和其他運動相比<b>顯得很小</b>，所以目前的討論先剔除。到 p.274 講垂直運動時，課本又把水平輻合請回來，見第 ⑤ 段。</div>
-  <div class="note"><b>提醒：</b>真正的空氣運動不限於水平方向，也不會剛好是其中一種，大都是好幾種結合。這四種是拆開來想的零件。</div>
-  <div class="note" style="background:#fff7ed;color:#7c2d12"><b>課本這一句請向老師確認：</b>p.271 寫「循相等間隔彼此平行的直線等壓線吹的一種地轉風運動為典型的純<b>旋轉</b>」。照前面的定義，每一點風向風速都一樣的氣流，應該是純<b>移置</b>。這可能是誤植，但我不確定，考試請以老師的說法為準。</div>
-  <div class="sup"><span class="sl">補充（課本沒寫）</span>大學教材把「變形」再分成<b>伸縮變形</b>和<b>切變變形</b>兩種，所以有的書說五種運動。切變變形其實只是把伸縮變形轉 45° 來看，兩種可以合成一個「總變形」加一條伸張軸。<br><small>來源：Penn State METEO 300 第 9 課；LMU 慕尼黑大學 Roger Smith 動力氣象講義第 14 章。</small></div>
+  <div class="key"><b>結論：</b>移置、旋轉不會讓等溫線變密。變形會。</div>
+  <details class="more"><summary>看更多（含一處課本疑似誤植）</summary>
+    <p><b>輻合為什麼先不談：</b>課本 p.271 說它和其他運動相比顯得很小，先剔除。p.274 又請回來，見第 ⑤ 段。</p>
+    <p><b>真實大氣：</b>不限於水平方向，也不會剛好是其中一種，大都是幾種結合。</p>
+    <p style="color:#7c2d12"><b>請向老師確認：</b>p.271 寫「循相等間隔彼此平行的直線等壓線吹的地轉風為典型的純<b>旋轉</b>」。照定義應該是純<b>移置</b>，可能是誤植，我不確定。</p>
+    <div class="sup"><span class="sl">補充（課本沒寫）</span>有的書把變形再分成伸縮變形和切變變形，所以說五種運動。切變變形只是把伸縮變形轉 45° 來看。<br><small>來源：Penn State METEO 300 第 9 課；LMU Roger Smith 講義第 14 章。</small></div>
+  </details>
 </div>
 
 <!-- ============ ④ ============ -->
 <div class="card" id="s4">
-  <h2>④ 把零件疊起來：變形＋旋轉<span class="pg">課本 p.272～273，圖 8-24</span></h2>
-  <p class="lead">課本說，看幾種單純運動的組合更有教育意義，在真實大氣中也更有代表性。這裡在變形場上再疊一個旋轉。拉下面的桿子，看流線怎麼變。</p>
+  <h2>④ 變形＋旋轉<span class="pg">p.272～273，圖 8-24</span></h2>
+  <p class="lead">在變形場上再疊一個旋轉。拉桿子看流線怎麼變。</p>
 
-  <div class="predict" data-id="p4" data-ans="2" data-exp="旋轉和變形剛好一樣強時，兩條軸會疊成一條直線。線的兩邊是方向相反的直線氣流，線上的風速是零。">
-    <p><b>先猜再看：</b>旋轉慢慢加強，強到和變形<b>剛好相等</b>的那一刻，流線長什麼樣子？</p>
-    <div class="pb"><button>正圓形</button><button>橢圓形</button><button>互相平行的直線</button></div>
-    <p class="watch" hidden>先不告訴你對不對。把下面的桿子慢慢往右拉到「相等」。 <button class="chip rev">我看完了，對答案</button></p>
+  <div class="predict" data-id="p4" data-ans="2" data-exp="兩條軸疊成一條線。線的兩邊是反向的直線氣流，線上風速為零。">
+    <p><b>先猜再看：</b>旋轉和變形<b>剛好相等</b>時，流線長什麼樣？</p>
+    <div class="pb"><button>正圓</button><button>橢圓</button><button>平行直線</button></div>
+    <p class="watch" hidden>把桿子慢慢往右拉到「相等」。 <button class="chip rev">對答案</button></p>
     <p class="res" hidden></p>
   </div>
 
   <div class="slider">
-    <span>旋轉的強度（變形固定為 1） <b id="r4v">0</b></span>
+    <span>旋轉強度（變形固定為 1） <b id="r4v">0</b></span>
     <input type="range" id="r4" min="-2" max="2" step="0.05" value="0">
-    <div class="ends"><span>← 反氣旋形（順時針）</span><span>0：只有變形</span><span>氣旋形（逆時針）→</span></div>
+    <div class="ends"><span>← 反氣旋形</span><span>0</span><span>氣旋形 →</span></div>
   </div>
   <div class="ctrl" id="pre4">
     <button class="chip on" data-r="0">只有變形</button>
@@ -296,37 +300,35 @@
   </div>
   <div class="status" id="st4"></div>
 
-  <div class="key"><b>課本的三個階段（以氣旋形為例）：</b>
-    <ol>
-      <li><b>旋轉比變形弱：</b>變形場歪斜（圖 8-24a）。氣旋形彎曲的地方被加強，反氣旋形彎曲的地方被抵銷。</li>
-      <li><b>旋轉等於變形：</b>軸更偏斜，直到變成一條直線軸兩邊的反向直線氣流。軸線上氣流淨速度為零。</li>
-      <li><b>旋轉控制變形：</b>低壓周圍形成橢圓形環流，長軸指向兩個低壓原先的位置（圖 8-24b）。</li>
-    </ol>
-    反氣旋形旋轉疊上去，結果類似（圖 8-24c、d）。
+  <div class="key">
+    <b>旋轉較弱：</b>鞍式被扭歪（圖 a、c）。<br>
+    <b>旋轉＝變形：</b>兩股反向的直線氣流，軸線上風速為零。<br>
+    <b>旋轉較強：</b>橢圓環流，長軸指向原先兩個低壓（圖 b）。
   </div>
-  <div class="note"><b>課本的提醒：</b>等溫線密集對成鋒很重要，但不能過度強調雙曲線流線這種合流運動，把問題過於簡化。其他氣流型式也可能對變形有貢獻，甚至範圍更大。這裡至少要看懂：<b>為什麼變形場能當作等溫線密集的機制</b>。</div>
-
-  <div class="sup"><span class="sl">補充（課本沒寫）</span><b>疊上旋轉之後，等溫線還擠得起來嗎？</b>
-    <label class="ck" style="display:block;margin:4px 0"><input type="checkbox" id="iso4"> 在上面的圖加上等溫線，看梯度怎麼變</label>
-    <div class="count" id="iso4box" hidden><div><small>溫度梯度是一開始的</small><b id="r4g">1.0 倍</b></div></div>
-    <p>旋轉本身只會把等溫線<b>轉向</b>，不會讓梯度變大或變小。但它會把等溫線轉離伸張軸，變形的擠壓就打了折扣。旋轉比變形強時，等溫線擠一下又被轉開，梯度只會來回擺動。</p>
-    <small>來源：美國國家氣象局訓練教材「Pure vorticity acts to rotate isotherms, it cannot tighten or weaken the gradient」；Roger Smith 講義推導成鋒函數時，渦度一項不出現在右邊。梯度的數字是照這個線性風場算出來的。</small>
-  </div>
+  <details class="more"><summary>看更多</summary>
+    <p><b>課本的提醒：</b>不能過度強調雙曲線流線這種合流運動。其他氣流型式也可能對變形有貢獻，甚至範圍更大。</p>
+    <div class="sup"><span class="sl">補充（課本沒寫）</span><b>疊上旋轉後，等溫線還擠得起來嗎？</b>
+      <label class="ck" style="display:block;margin:4px 0"><input type="checkbox" id="iso4"> 在上面的圖加上等溫線</label>
+      <div class="count" id="iso4box" hidden><div><small>溫度梯度</small><b id="r4g">1.0 倍</b></div></div>
+      <p>旋轉只會把等溫線轉向，不會直接改變梯度。但它把等溫線轉離伸張軸，擠壓就打折。旋轉比變形強時，梯度只會來回擺動。</p>
+      <small>來源：美國國家氣象局訓練教材；Roger Smith 講義。數字照這個線性風場算。</small>
+    </div>
+  </details>
 </div>
 
 <!-- ============ ⑤ ============ -->
 <div class="card" id="s5">
-  <h2>⑤ 輻合＋旋轉：熟悉的低壓和高壓<span class="pg">課本 p.274，圖 8-25</span></h2>
-  <p class="lead">前面先把輻合輻散放一邊。現在課本把它請回來，和旋轉疊在一起，就是天氣圖上最熟悉的兩種環流。</p>
+  <h2>⑤ 輻合＋旋轉<span class="pg">p.274，圖 8-25</span></h2>
+  <p class="lead">把輻合輻散請回來，和旋轉疊在一起。</p>
   <div class="slider">
     <span>輻合／輻散 <b id="d5v">輻合</b></span>
     <input type="range" id="d5" min="-1" max="1" step="0.1" value="-0.6">
-    <div class="ends"><span>← 輻合（往中心流）</span><span>0</span><span>輻散（往外流）→</span></div>
+    <div class="ends"><span>← 輻合</span><span>0</span><span>輻散 →</span></div>
   </div>
   <div class="slider">
     <span>旋轉 <b id="z5v">氣旋形</b></span>
     <input type="range" id="z5" min="-1" max="1" step="0.1" value="0.7">
-    <div class="ends"><span>← 反氣旋形（順時針）</span><span>0</span><span>氣旋形（逆時針）→</span></div>
+    <div class="ends"><span>← 反氣旋形</span><span>0</span><span>氣旋形 →</span></div>
   </div>
   <div class="ctrl" id="pre5">
     <button class="chip on" data-d="-0.6" data-z="0.7">圖 8-25a：輻合＋氣旋形</button>
@@ -336,60 +338,47 @@
   </div>
   <div class="stage"><canvas id="c5"></canvas></div>
   <div class="status" id="st5"></div>
-  <div class="key"><b>課本的說法：</b>
-    <ul>
-      <li>水平向<b>輻合</b>加上<b>氣旋形</b>旋轉，產生和<b>地面低壓</b>相伴的熟知環流型（圖 8-25a）。</li>
-      <li>水平向<b>輻散</b>加上<b>反氣旋形</b>旋轉，產生和<b>地面高壓</b>相伴的環流型（圖 8-25b）。</li>
-      <li>水平向輻合再加上正（氣旋形）渦度增加，在成鋒作用中佔很重要的地位。水平向輻散也同樣重要。</li>
-    </ul>
+  <div class="key">
+    <b>輻合＋氣旋形＝地面低壓</b>（圖 a）。<br>
+    <b>輻散＋反氣旋形＝地面高壓</b>（圖 b）。
   </div>
-  <div class="sup"><span class="sl">補充（課本沒寫）</span><b>右邊的側面圖在講什麼：</b>低層空氣往中間擠，沒地方去只能往上，所以容易成雲降水。低層空氣往外散，上面的空氣就下沉來補。這就是輻合輻散和「垂直運動」的連結，也是下一段的主題。<br><small>來源：Penn State METEO 300 第 9.5 節「low-level air converges into low-pressure regions, causing uplift, which causes clouds and precipitation」。</small></div>
-  <div class="sup"><span class="sl">補充（課本沒寫）</span><b>合流不等於輻合。</b>合流（confluence）是<b>流線</b>靠近。輻合（convergence）是<b>空氣量</b>真的堆進來。第 ② 段的變形場流線靠近，但面積沒變，所以是合流、不是輻合。<br><small>來源：Penn State METEO 300 第 9.1 節。</small></div>
+  <details class="more"><summary>看更多</summary>
+    <p><b>課本原意：</b>水平向輻合再加上正（氣旋形）渦度增加，在成鋒作用中佔很重要的地位。水平向輻散也同樣重要。</p>
+    <div class="sup"><span class="sl">補充（課本沒寫）</span><b>右邊的側面圖：</b>低層往中間擠，只能往上，容易成雲。低層往外散，上面就下沉來補。<br><small>來源：Penn State METEO 300 第 9.5 節。</small></div>
+    <div class="sup"><span class="sl">補充（課本沒寫）</span><b>合流不等於輻合：</b>合流是流線靠近，輻合是空氣量真的堆進來。第 ② 段是合流、不是輻合。<br><small>來源：Penn State METEO 300 第 9.1 節。</small></div>
+  </details>
 </div>
 
 <!-- ============ ⑥ ============ -->
 <div class="card" id="s6">
-  <h2>⑥ 成鋒是立體的：垂直運動、凝結和蒸發<span class="pg">課本 p.274</span></h2>
-  <p class="lead">課本最後說：還有幾種其他過程，對成鋒作用有重大的貢獻。這一段把鏡頭從「上面往下看」換成「從側面看」。</p>
-  <ul>
-    <li>一個地區<b>除非有斜壓度集中，否則決不會有鋒</b>。白話說：要先有冷暖的對比被集中起來。</li>
-    <li>這必須伴隨<span class="term">熱力性直接環流</span>：<b>暖空氣上升、冷空氣下沉</b>。所以垂直運動對成鋒非常重要。</li>
-    <li>結論：成鋒作用顯然是一種<b>三度空間的過程</b>。</li>
-  </ul>
-  <h3>非保守性過程（nonconservative processes）</h3>
-  <p><span class="term">位溫</span>像空氣塊的身分證。只要<b>沒有凝結或蒸發</b>，空氣塊上升下沉時位溫都不變，這叫「保守」。一旦有凝結或蒸發，位溫就會被改掉，這就是非保守性過程。按下面兩個開關看看：</p>
+  <h2>⑥ 成鋒是立體的<span class="pg">p.274</span></h2>
+  <p class="lead">換成從側面看。沒有冷暖對比集中（斜壓度集中）就沒有鋒，而且要有<span class="term">熱力性直接環流</span>：暖升、冷降。按兩個開關看看。</p>
   <div class="ctrl">
-    <button class="chip" id="cond6">暖區凝結成雲：放出潛熱</button>
-    <button class="chip" id="evap6">雨落進冷空氣被蒸發：取走熱量</button>
+    <button class="chip" id="cond6">暖區凝結：放出潛熱</button>
+    <button class="chip" id="evap6">雨落進冷空氣蒸發：取走熱量</button>
   </div>
   <div class="stage"><canvas id="c6"></canvas></div>
   <div class="legend">
     <span><i style="border-color:#dc2626"></i>暖空氣上升</span>
     <span><i style="border-color:#1d4ed8"></i>冷空氣下沉</span>
-    <span><i class="d" style="border-color:#6d28d9"></i>等位溫線（技術上叫等熵線 isentropes）</span>
-    <span>示意圖，不是算出來的。真實的鋒面坡度比圖上平緩很多。</span>
+    <span><i class="d" style="border-color:#6d28d9"></i>等位溫線（等熵線）</span>
+    <span>示意圖，真實坡度平緩很多</span>
   </div>
   <div class="status" id="st6"></div>
-  <div class="key"><b>課本的因果鏈：</b>
-    <ol>
-      <li>凝結大都發生在<b>暖區</b>。暖空氣上升，可以因為<b>潛熱釋出而加快</b>。</li>
-      <li>雲的降水落進發展中鋒面下方的<b>冷氣團</b>，被蒸發。冷空氣的下降或沉降，有時可以用<b>蒸發取出熱量</b>來解釋。</li>
-      <li>兩者之一或兩者都有，都可<b>增強力管環流</b>，因而直接<b>有利於成鋒作用</b>。</li>
-    </ol>
+  <div class="key">
+    <b>凝結</b>在暖側加熱，<b>蒸發</b>在冷側冷卻。對比更大，力管環流增強，有利成鋒。<br>
+    <b>位溫：</b>沒有凝結或蒸發就不變（保守）。有，就會變（非保守性過程）。
   </div>
-  <div class="note"><b>白話整理：</b>凝結是在暖的那一邊<b>加熱</b>，蒸發是在冷的那一邊<b>冷卻</b>。暖的更暖、冷的更冷，冷暖對比就更大。課本說這個問題在後面講波型氣旋和氣旋生成時還會再談。</div>
-  <div class="sup"><span class="sl">補充（課本沒寫）</span>大學教材把成鋒的原因列成四項：<b>水平變形</b>、<b>水平輻合</b>、<b>垂直運動把等溫面弄斜</b>（tilting）、<b>加熱不均</b>（diabatic heating）。課本這六頁剛好四項都點到了：第 ② 到 ④ 段是變形，第 ⑤ 段是輻合，這一段是後兩項。<br><small>來源：Roger Smith 動力氣象講義第 14 章的 T1～T4 四項；美國國家氣象局訓練教材。</small></div>
+  <details class="more"><summary>看更多</summary>
+    <p><b>課本的因果鏈：</b>凝結大都在暖區，潛熱釋出讓暖空氣上升加快。降水落進鋒面下的冷氣團被蒸發，取走熱量，可解釋冷空氣下沉。兩者之一或都有，都可增強力管環流。</p>
+    <div class="sup"><span class="sl">補充（課本沒寫）</span>大學教材把成鋒原因列成四項：水平變形、水平輻合、垂直運動把等溫面弄斜、加熱不均。課本這六頁四項都點到了。<br><small>來源：Roger Smith 講義第 14 章；美國國家氣象局訓練教材。</small></div>
+  </details>
 </div>
 
 <!-- ============ ⑦ ============ -->
 <div class="card" id="s7">
-  <h2>⑦ 考考你：是真的懂，還是只是背起來？</h2>
-  <p class="lead">這些題目大多是<b>情境題</b>，課本上找不到一樣的句子，要用剛剛看到的畫面去想。一回 10 題，一次一題。</p>
-  <ul style="font-size:.92rem">
-    <li>答錯時，會告訴你<b>可能是哪裡想錯</b>，還有一個按鈕直接跳回那一段動畫。</li>
-    <li>不確定就勾「用猜的」。猜對的題目也會進錯題本，之後再考一次。</li>
-    <li>下一回會先出<b>上次錯的</b>和<b>還沒做過的</b>。</li>
-  </ul>
+  <h2>⑦ 考考你</h2>
+  <p class="lead">情境題，一回 10 題。答錯會說可能哪裡想錯。不確定就勾「用猜的」。</p>
   <div id="quiz"></div>
 </div>
 
@@ -400,34 +389,36 @@
 <button id="backBtn" hidden>↩ 回到題目</button>
 
 <div class="card" id="sx">
-  <h2>課本用詞對照</h2>
+  <h2>用詞和來源</h2>
+  <details class="more"><summary>課本用詞對照（中英）</summary>
   <div class="tw"><table>
     <tr><th>課本用詞</th><th>英文</th><th>一句白話</th></tr>
     <tr><td>成鋒作用</td><td>frontogenesis</td><td class="l">鋒的形成，等溫線變密</td></tr>
     <tr><td>消鋒作用</td><td>frontolysis</td><td class="l">鋒的消散，等溫線散開</td></tr>
-    <tr><td>鞍式區（中性點）</td><td>col</td><td class="l">槽和脊的交點；兩高之間最低、兩低之間最高</td></tr>
-    <tr><td>基準層</td><td>mandatory level</td><td class="l">固定要分析的定壓面，例如 850、700、500 毫巴</td></tr>
-    <tr><td>伸張軸</td><td>axis of dilatation</td><td class="l">空氣往外流的那條軸</td></tr>
-    <tr><td>收縮軸</td><td>axis of contraction</td><td class="l">空氣往裡流的那條軸</td></tr>
-    <tr><td>變形場</td><td>deformation field</td><td class="l">一個方向流進、垂直方向流出的整個型式</td></tr>
-    <tr><td>純移置</td><td>pure translation</td><td class="l">整塊搬走，形狀、體積、方位都不變</td></tr>
+    <tr><td>鞍式區（中性點）</td><td>col</td><td class="l">槽和脊的交點</td></tr>
+    <tr><td>基準層</td><td>mandatory level</td><td class="l">固定要分析的定壓面，如 850、700、500 毫巴</td></tr>
+    <tr><td>伸張軸</td><td>axis of dilatation</td><td class="l">空氣往外流的軸</td></tr>
+    <tr><td>收縮軸</td><td>axis of contraction</td><td class="l">空氣往裡流的軸</td></tr>
+    <tr><td>變形場</td><td>deformation field</td><td class="l">一邊流進、垂直方向流出</td></tr>
+    <tr><td>純移置</td><td>pure translation</td><td class="l">整塊搬走</td></tr>
     <tr><td>純旋轉</td><td>pure rotation</td><td class="l">只改方位</td></tr>
-    <tr><td>純膨脹（輻散）／收縮（輻合）</td><td>pure expansion</td><td class="l">只改體積</td></tr>
+    <tr><td>純膨脹／收縮</td><td>pure expansion</td><td class="l">只改體積（輻散／輻合）</td></tr>
     <tr><td>純變形</td><td>pure deformation</td><td class="l">只改形狀</td></tr>
-    <tr><td>非保守性過程</td><td>nonconservative processes</td><td class="l">會改變位溫的過程，例如凝結、蒸發</td></tr>
+    <tr><td>非保守性過程</td><td>nonconservative processes</td><td class="l">會改變位溫的過程，如凝結、蒸發</td></tr>
     <tr><td>等熵線</td><td>isentropes</td><td class="l">等位溫線</td></tr>
   </table></div>
-  <h3>資料來源</h3>
+  </details>
+  <details class="more"><summary>資料來源和模擬怎麼算</summary>
   <ul class="src">
-    <li><b>主要內容：</b>《大氣科學》第八章「次環流」五、成鋒作用和消鋒作用，p.269～274（依上傳的六張課本照片）。圖都是重新畫的示意動畫，不是課本原圖。</li>
-    <li><b>補充框參考的專家教材：</b></li>
-    <li>Roger K. Smith（慕尼黑大學 LMU）, Dynamic Meteorology 講義 Chapter 14 “Fronts and Frontogenesis”：<a href="https://www.meteo.physik.uni-muenchen.de/~roger/Lectures/Dm_Lectures/DM_L15_2007.pdf" target="_blank" rel="noopener">講義 PDF</a></li>
-    <li>Ted Funk（美國國家氣象局 Louisville）, “Understanding Frontogenesis and its Application to Winter Weather Forecasting”, 2004：<a href="https://www.weather.gov/media/lmk/soo/frontogenesis_lmk2.pdf" target="_blank" rel="noopener">訓練教材 PDF</a></li>
+    <li><b>主要內容：</b>《大氣科學》第八章「次環流」五、成鋒作用和消鋒作用，p.269～274。圖是重新畫的示意動畫。</li>
+    <li>Roger K. Smith（LMU 慕尼黑大學）, Dynamic Meteorology, Ch.14 “Fronts and Frontogenesis”：<a href="https://www.meteo.physik.uni-muenchen.de/~roger/Lectures/Dm_Lectures/DM_L15_2007.pdf" target="_blank" rel="noopener">講義 PDF</a></li>
+    <li>Ted Funk（美國國家氣象局 Louisville）, “Understanding Frontogenesis…”, 2004：<a href="https://www.weather.gov/media/lmk/soo/frontogenesis_lmk2.pdf" target="_blank" rel="noopener">訓練教材 PDF</a></li>
     <li>Penn State METEO 300, Lesson 9 “Kinematics”：<a href="https://courses.ems.psu.edu/meteo300/book/export/html/695" target="_blank" rel="noopener">課程網頁</a></li>
     <li>Roland Stull, Practical Meteorology, 10.9 “Kinematics”：<a href="https://geo.libretexts.org/Bookshelves/Meteorology_and_Climate_Science/Practical_Meteorology_(Stull)/10%3A_Atmospheric_Forces_and_Winds/10.9%3A_Kinematics" target="_blank" rel="noopener">線上教科書</a></li>
     <li>J. D. Wilson（Alberta 大學）EAS 372 “Deformation and frontogenesis” 投影片。</li>
   </ul>
-  <p style="font-size:.86rem;color:var(--sub)">模擬怎麼算的：第 ②④⑤ 段用的是「風速和離中心的距離成正比」的線性風場，等溫線和溫度梯度是照這個風場算出來的。第 ① 段是四個高低壓疊出來的示意氣壓場。第 ⑥ 段是手畫的示意圖。</p>
+  <p style="font-size:.86rem;color:var(--sub)">第 ②④⑤ 段用線性風場，等溫線和梯度是算出來的。第 ①⑥ 段是示意圖。</p>
+  </details>
 </div>
 
 <footer>大氣科學概論自學教材 · 成鋒作用和消鋒作用<br>依課本 p.269～274 的架構與用詞編寫，圖與文字為原創示意。作答紀錄只存在這台裝置的瀏覽器。</footer>
@@ -615,10 +606,10 @@ function chips(sel, attr, fn){
   const lv = []; for(let k=-4;k<=4;k++) lv.push(k*.2);
   const segs = contourSegs(p, B.x0, B.x1, B.y0, B.y1, 80, 50, lv);
   let cut = "hh", T = 0;
-  const CUT = { hh:{ d:[.85,-.55], a:"高", txt:"<b>沿兩個高壓的連線走：</b>氣壓先降後升，鞍式區是這條路上的<b>最低點</b>。", col:"#1d4ed8" },
-                ll:{ d:[.85,.55], a:"低", txt:"<b>沿兩個低壓的連線走：</b>氣壓先升後降，鞍式區是這條路上的<b>最高點</b>。", col:"#dc2626" } };
+  const CUT = { hh:{ d:[.85,-.55], a:"高", txt:"<b>兩高壓之間：</b>先降後升，鞍是<b>最低點</b>。", col:"#1d4ed8" },
+                ll:{ d:[.85,.55], a:"低", txt:"<b>兩低壓之間：</b>先升後降，鞍是<b>最高點</b>。", col:"#dc2626" } };
   for(const k in CUT){ const d = CUT[k].d, m = Math.hypot(d[0], d[1]); CUT[k].L = m; CUT[k].u = [d[0]/m, d[1]/m]; }
-  function setCut(v){ cut = v; $("cutTxt").innerHTML = cut ? CUT[cut].txt + "同一個點，換個方向看，一下是最低、一下是最高，所以叫「鞍」。" : "圖正中央就是鞍式區。它在槽（兩個低壓連起來）和脊（兩個高壓連起來）的交點上。"; }
+  function setCut(v){ cut = v; $("cutTxt").innerHTML = cut ? CUT[cut].txt : "正中央就是鞍式區。"; }
   chips("[data-cut]", "cut", setCut); setCut("hh");
   scene("c1", W, H, (c, dt) => {
     T += dt; ps.step(dt);
@@ -672,9 +663,9 @@ function chips(sel, attr, fn){
     $("r2s").textContent = Math.round(100/r) + "%"; $("r2a").textContent = Math.round(ang) + "°";
     const grow = Math.abs(g[1]) > Math.abs(g[0]) + 1e-9;
     let h = Math.abs(Math.abs(g[1]) - Math.abs(g[0])) < 1e-6 ? "此刻剛好 45°：梯度不增不減。" :
-      grow ? "<b style='color:#dc2626'>此刻在成鋒：</b>等溫線正在被擠密。" : "<b style='color:#1d4ed8'>此刻在消鋒：</b>等溫線正在被拉開。";
-    if(done) h += r >= 7.9 ? " 梯度已經是原來的 8 倍，動畫先停在這裡，等一下自動重播。" : " 動畫先停在這裡，等一下自動重播。";
-    else if(!run && t === 0) h += " 按「播放」開始。";
+      grow ? "<b style='color:#dc2626'>此刻在成鋒：</b>等溫線被擠密。" : "<b style='color:#1d4ed8'>此刻在消鋒：</b>等溫線被拉開。";
+    if(done) h += r >= 7.9 ? " 已到 8 倍，稍後重播。" : " 稍後重播。";
+    else if(!run && t === 0) h += " 按「播放」。";
     $("st2").innerHTML = h;
   }
   $("b2").addEventListener("input", e => { beta = +e.target.value; $("b2v").textContent = beta + "°"; reset(); });
@@ -713,15 +704,15 @@ function chips(sel, attr, fn){
   const B = { x0:-2.15, x1:2.15, y0:-1.28, y1:1.28 };
   const M = {
     tr:{ v:(x,y) => [.62, 0], T:5.2, h:.42, F:t => [1,0,0,1], c:t => [-1.6 + .62*t, 0], area:t => 1, gap:t => 1,
-         s:"<b>純移置：</b>整塊空氣從一處搬到另一處。形狀、體積、方位都不變。等溫線跟著均勻的氣流走，<b>間距不變</b>。" },
+         s:"<b>純移置：</b>整塊搬走，間距不變。" },
     ro:{ v:(x,y) => [-.8*y, .8*x], T:5.2, h:.5, F:t => { const a = .8*t; return [Math.cos(a), -Math.sin(a), Math.sin(a), Math.cos(a)]; }, c:t => [0,0], area:t => 1, gap:t => 1,
-         s:"<b>純旋轉：</b>只改變方位。不改形狀、體積，也不移到新位置。等溫線只是跟著轉向，<b>間距不變</b>。" },
+         s:"<b>純旋轉：</b>只改方位，間距不變。" },
     co:{ v:(x,y) => [-.34*x, -.34*y], T:4.6, h:.85, F:t => { const e = Math.exp(-.34*t); return [e,0,0,e]; }, c:t => [0,0], area:t => Math.exp(-.68*t), gap:t => Math.exp(-.34*t),
-         s:"<b>純輻合：</b>空氣從四面八方流向中心，容積收縮。形狀不變，但整塊縮小，等溫線間距<b>也跟著縮小</b>。課本說它和其他運動比起來很小，這裡先不談。" },
+         s:"<b>純輻合：</b>整塊縮小，間距也變小。課本說它相對很小，先不談。" },
     di:{ v:(x,y) => [.34*x, .34*y], T:4.2, h:.26, F:t => { const e = Math.exp(.34*t); return [e,0,0,e]; }, c:t => [0,0], area:t => Math.exp(.68*t), gap:t => Math.exp(.34*t),
-         s:"<b>純輻散（純膨脹）：</b>空氣從中心直接向外流，容積擴張。等溫線間距<b>變大</b>。" },
+         s:"<b>純輻散：</b>整塊變大，間距變大。" },
     de:{ v:(x,y) => [.34*x, -.34*y], T:4.6, h:.5, F:t => { const e = Math.exp(.34*t); return [e,0,0,1/e]; }, c:t => [0,0], area:t => 1, gap:t => Math.exp(-.34*t),
-         s:"<b>純變形：</b>只改變形狀。面積一直是 100%，但被壓扁、拉長。圖裡的等溫線平行伸張軸，所以<b>被擠密</b>。這就是成鋒要的那一種。" }
+         s:"<b>純變形：</b>面積不變，形狀變。等溫線被擠密，成鋒靠這一種。" }
   };
   let mode = "tr", t = 0, hold = 0;
   const ps = particles(170, B, (x,y) => M[mode].v(x,y));
@@ -767,12 +758,12 @@ function chips(sel, attr, fn){
     if(!fromChip) document.querySelectorAll("#pre4 .chip").forEach(b => b.classList.toggle("on", Math.abs(+b.dataset.r - r) < .001));
     const ar = Math.abs(r), cyc = r > 0;
     let h;
-    if(r === 0) h = "<b>只有變形：</b>標準的鞍式流線。伸張軸和收縮軸互相垂直（圖 8-24 最下面那張）。";
+    if(r === 0) h = "<b>只有變形：</b>兩條軸互相垂直。";
     else if(ar < 1){ const s = Math.sqrt(1 - r*r), ang = Math.abs(Math.atan((1+s)/r) - Math.atan((1-s)/r))*180/Math.PI;
-      h = `<b>旋轉比變形弱（圖 8-24${cyc ? "a" : "c"}）：</b>還是鞍式，但變形場被扭歪了，兩條軸的夾角從 90° 剩下 <b>${Math.round(ang)}°</b>。${cyc ? "低壓那兩側（氣旋形彎曲）彎得更厲害，高壓那兩側被抵銷、變得比較直。" : "高壓那兩側（反氣旋形彎曲）彎得更厲害，低壓那兩側被抵銷、變得比較直。"}`; }
-    else if(ar === 1) h = "<b>旋轉＝變形：</b>兩條軸疊成同一條直線。線的兩邊是<b>方向相反的直線氣流</b>，線上的風速是零。離線越遠風越大。";
-    else h = cyc ? "<b>氣旋形旋轉控制變形（圖 8-24b）：</b>流線閉合成<b>橢圓</b>，繞著低壓逆時針轉。橢圓的長軸指向原先兩個低壓的位置。"
-                 : "<b>反氣旋形旋轉控制變形（圖 8-24d）：</b>流線閉合成<b>橢圓</b>，繞著高壓順時針轉。課本說結果和氣旋形類似；照同樣的道理，長軸指向原先兩個高壓的位置。";
+      h = `<b>旋轉較弱（圖 8-24${cyc ? "a" : "c"}）：</b>鞍式被扭歪，兩軸夾角剩 <b>${Math.round(ang)}°</b>。${cyc ? "低壓" : "高壓"}那兩側彎得更厲害。`; }
+    else if(ar === 1) h = "<b>旋轉＝變形：</b>軸線兩邊是<b>反向的直線氣流</b>，線上風速為零。";
+    else h = cyc ? "<b>旋轉較強（圖 8-24b）：</b><b>橢圓</b>環流繞著低壓。長軸指向原先兩個低壓。"
+                 : "<b>旋轉較強（圖 8-24d）：</b><b>橢圓</b>環流繞著高壓。長軸指向原先兩個高壓（課本只說結果類似，這是照同樣道理推的）。";
     $("st4").innerHTML = h; resetG();
   }
   $("r4").addEventListener("input", e => setR(+e.target.value));
@@ -847,12 +838,12 @@ function chips(sel, attr, fn){
     $("d5v").textContent = d < 0 ? "輻合" : d > 0 ? "輻散" : "沒有"; $("z5v").textContent = z > 0 ? "氣旋形" : z < 0 ? "反氣旋形" : "沒有";
     if(!fromChip) document.querySelectorAll("#pre5 .chip").forEach(b => b.classList.toggle("on", +b.dataset.d === d && +b.dataset.z === z));
     let h;
-    if(d < 0 && z > 0) h = "<b>輻合＋氣旋形旋轉（圖 8-25a）：</b>空氣一邊逆時針轉、一邊往中心流，畫出往內捲的螺旋。這是和<b>地面低壓</b>相伴的環流型。";
-    else if(d > 0 && z < 0) h = "<b>輻散＋反氣旋形旋轉（圖 8-25b）：</b>空氣一邊順時針轉、一邊往外流，畫出往外甩的螺旋。這是和<b>地面高壓</b>相伴的環流型。";
-    else if(d === 0 && z === 0) h = "兩個都是零：沒有風。拉一下桿子。";
-    else if(d === 0) h = "<b>只有旋轉：</b>流線是一圈一圈的圓，空氣不進也不出。";
-    else if(z === 0) h = d < 0 ? "<b>只有輻合：</b>空氣直直流向中心，就是圖 8-22c。" : "<b>只有輻散：</b>空氣從中心直直往外流。";
-    else h = "這個組合不是課本圖 8-25 畫的兩種。課本畫的是「輻合配氣旋形」和「輻散配反氣旋形」。";
+    if(d < 0 && z > 0) h = "<b>圖 8-25a：</b>逆時針往內捲，配<b>地面低壓</b>。";
+    else if(d > 0 && z < 0) h = "<b>圖 8-25b：</b>順時針往外甩，配<b>地面高壓</b>。";
+    else if(d === 0 && z === 0) h = "沒有風。拉一下桿子。";
+    else if(d === 0) h = "<b>只有旋轉：</b>一圈一圈，不進不出。";
+    else if(z === 0) h = d < 0 ? "<b>只有輻合：</b>直直流向中心（圖 8-22c）。" : "<b>只有輻散：</b>從中心直直往外。";
+    else h = "課本圖 8-25 沒有畫這個組合。";
     $("st5").innerHTML = h;
   }
   $("d5").addEventListener("input", e => set(+e.target.value, z)); $("z5").addEventListener("input", e => set(d, +e.target.value));
@@ -901,9 +892,9 @@ function chips(sel, attr, fn){
     $("cond6").classList.toggle("on", cond); $("evap6").classList.toggle("on", evap);
     const n = (cond ? 1 : 0) + (evap ? 1 : 0);
     $("st6").innerHTML = `<b>力管環流強度：</b>${"■".repeat(n+1)}${"□".repeat(2-n)}　` +
-      (n === 0 ? "現在只有最基本的熱力性直接環流：暖空氣沿鋒面爬升，冷空氣在下面下沉。位溫是保守的。" :
-       n === 1 ? "凝結在暖區放出潛熱，暖空氣上升<b>加快</b>。位溫被改變了，這就是非保守性過程。" :
-                 "暖區加熱、冷區冷卻<b>同時發生</b>。上升和下沉都增強，鋒區的等位溫線更集中，直接有利於成鋒。");
+      (n === 0 ? "只有基本的暖升冷降。位溫保守。" :
+       n === 1 ? "潛熱讓暖空氣上升<b>加快</b>。" :
+                 "暖側加熱、冷側冷卻。環流更強，有利成鋒。");
   }
   $("cond6").addEventListener("click", ()=>{ cond = !cond; if(!cond) evap = false; upd(); });
   $("evap6").addEventListener("click", ()=>{ evap = !evap; if(evap) cond = true; upd(); });
